@@ -14,23 +14,24 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using AnotherBlog.Common.Data.Entities;
 
 namespace AnotherBlog.Common.Data.Repositories
 {
     public interface IRepository<DomainType> where DomainType : class
     {
         IUnitOfWork UnitOfWork { get; set; }
+        IRepositoryManager RepositoryManager { get; set; }
 
-        DomainType CreateNewInstance();
+        int UnsavedId { get; }
         string IdPropertyName{ get;}
         DomainType GetById(int itemId);
-        DomainType GetById(int itemId, Blog targetBlog);
-        IList<DomainType> GetAll();
-        IList<DomainType> GetAll(Blog targetBlog);
-        IList<DomainType> GetAllByProperty(string idPropertyName, object idValue);
-        IList<DomainType> GetAllByProperty(string idPropertyName, object idValue, Blog targetBlog);
+        DomainType GetById(int itemId, int blogId);
         DomainType GetByProperty(string idPropertyName, object idValue);
+        DomainType GetByProperty(string idPropertyName, object idValue, int blogId);
+        IList<DomainType> GetAll();
+        IList<DomainType> GetAll(int blogId);
+        IList<DomainType> GetAllByProperty(string idPropertyName, object idValue);
+        IList<DomainType> GetAllByProperty(string idPropertyName, object idValue, int blogId);
         DomainType Save(DomainType itemToSave);
         bool Delete(DomainType itemToDelete);
     }

@@ -17,22 +17,22 @@ using NHibernate.Criterion;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
-using AnotherBlog.Common.Utilities;
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class BlogEntryTagRepository : NHRepository<CE.PostTag, ARBlogEntryTag>, IBlogEntryTagRepository
+    public class BlogEntryTagRepository : ActiveRecordRepository<PostTag, BlogEntryTagsDTO, IPostTag>, IBlogEntryTagRepository
     {
         /// <summary>
         /// Contains all of data access code for working with BlogEntryTags (a table that associates tags to blog entries)
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogEntryTagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogEntryTagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -47,9 +47,32 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// </summary>
         /// <param name="entryId"></param>
         /// <returns></returns>
-        public IList<CE.PostTag> GetByBlogEntry(CE.BlogPost targetEntry)
+        public IList<PostTag> GetByBlogEntry(int blogPostId)
         {
-            return this.GetAllByProperty("BlogEntry", targetEntry);
+            DetachedCriteria criteria = DetachedCriteria.For<BlogEntryTagsDTO>();
+            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.FindAll(criteria));
+        }
+
+        public Boolean DeleteByBlogEntry(int blogPostId)
+        {
+            Boolean retVal = false;
+
+            try
+            {
+                IList<PostTag> postTags = this.GetByBlogEntry(blogPostId);
+
+                DetachedCriteria criteria = DetachedCriteria.For<BlogEntryTagsDTO>();
+                criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
+                Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.DeleteAll(typeof(BlogEntryTagsDTO), postTags);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return retVal;
         }
     }
 }

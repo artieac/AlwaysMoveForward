@@ -27,10 +27,10 @@ namespace AnotherBlog.Data.NHibernate.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : NHRepository<CE.Tag, CE.Tag>, ITagRepository
+    public class TagRepository : NHibernateRepository<CE.Tag, CE.Tag>, ITagRepository
     {
-        internal TagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal TagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -39,19 +39,24 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList GetAllWithCount(CE.Blog targetBlog)
+        public IList GetAllWithCount(int? blogId)
         {
             string queryString = "SELECT  COUNT(bet.BlogEntryTagId) AS Count, t.name as TagName";
             queryString += " FROM Tags t, BlogEntryTags as bet";
-            queryString += " WHERE (t.BlogId = :targetBlog) AND (bet.TagId = t.id)";
-            queryString += " GROUP BY t.Name";
+            queryString += " WHERE (bet.TagId = t.id)";
+
+            if (blogId.HasValue)
+            {
+                queryString += " AND (t.BlogId = :targetBlog)";
+            }
 
             ISQLQuery query = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateSQLQuery(queryString);
             query.AddScalar("Count", NHibernateUtil.Int32);
             query.AddScalar("TagName", NHibernateUtil.String);
-            if (targetBlog != null)
+
+            if (blogId.HasValue)
             {
-                query.SetParameter("targetBlog", targetBlog.BlogId);
+                query.SetParameter("targetBlog", blogId);
             }
             query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(CE.TagCount)));
             return query.List();
@@ -62,9 +67,9 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="name"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.Tag GetByName(string name, CE.Blog targetBlog)
+        public CE.Tag GetByName(string name, int blogId)
         {
-            return this.GetByProperty("Name", name, targetBlog);
+            return this.GetByProperty("Name", name, blogId);
         }
         /// <summary>
         /// Get multiple tag records.
@@ -72,11 +77,19 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="names"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Tag> GetByNames(string[] names, CE.Blog targetBlog)
+        public IList<CE.Tag> GetByNames(string[] names, int blogId)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Tag>();
             criteria.Add(Expression.In("Name", names));
-            criteria.Add(Expression.Eq("Blog", targetBlog));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return criteria.List<CE.Tag>(); 
+        }
+
+        public IList<CE.Tag> GetByBlogEntryId(int entryId)
+        {
+            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Tag>();
+            criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("EntryId", entryId));
+
             return criteria.List<CE.Tag>(); 
         }
     }

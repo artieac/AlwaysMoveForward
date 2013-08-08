@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
+
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class ExtensionConfiguration
+    public class ExtensionConfiguration : IExtensionConfiguration
     {
         public virtual int ConfigurationId{ get; set;}
         public virtual int ExtensionId{ get; set;}

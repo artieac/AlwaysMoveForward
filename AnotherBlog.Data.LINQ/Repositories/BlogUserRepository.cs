@@ -14,22 +14,23 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class BlogUserRepository : LRepository<CE.BlogUser, LBlogUser>, IBlogUserRepository
+    public class BlogUserRepository : LINQRepository<BlogUser, BlogUserDTO, IBlogUser>, IBlogUserRepository
     {
         /// <summary>
         /// This class contains all the code to extract BlogUser data from the repository using LINQ
         /// The BlogUser object maps users and their roles to specific blogs.
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogUserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogUserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -43,9 +44,9 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<CE.BlogUser> GetUserBlogs(CE.User blogUser)
+        public IList<BlogUser> GetUserBlogs(int userId)
         {
-            return this.GetAllByProperty("User", blogUser);
+            return this.GetAllByProperty("UserId", userId);
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -53,9 +54,9 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// <param name="userId"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.BlogUser GetUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public BlogUser GetUserBlog(int userId, int blogId)
         {
-            return this.GetByProperty("User", blogUser, targetBlog);
+            return this.GetByProperty("UserId", userId, blogId);
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.
@@ -63,15 +64,15 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// <param name="blogId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool DeleteUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public bool DeleteUserBlog(int userId, int blogId)
         {
             bool retVal = false;
 
-            LBlogUser targetUserBlog = this.GetUserBlog(blogUser, targetBlog) as LBlogUser;
+            BlogUserDTO targetUserBlog = this.DataMapper.Map(this.GetUserBlog(userId, blogId));
 
             if (targetUserBlog != null)
             {
-                ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogUser>().DeleteOnSubmit(targetUserBlog);
+                ((UnitOfWork)this.UnitOfWork).DataContext.BlogUserDTOs.DeleteOnSubmit(targetUserBlog);
                 this.UnitOfWork.Commit();
                 retVal = true;
             }

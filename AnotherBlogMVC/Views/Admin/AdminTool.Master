@@ -23,21 +23,21 @@
 		</div>
         <div class='adminLinkSection'>
             <span>
-            <% if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.SiteAdministrator))
+            <% if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.SiteAdministrator))
                { %>
                     <a href='/Admin/EditSiteInfo'> Site Info</a> | 
                     <a href='/Admin/ManageBlogs'> Manage Blogs</a> | 
                     <a href='/Admin/ManageUsers'> Manage Users</a> |
              <%}
-                if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.Administrator) == true || 
-                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.SiteAdministrator))
+                if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.Administrator) == true || 
+                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.SiteAdministrator))
                { %>
                     <a href='/Admin/BlogPreferences'> Blog Settings</a> | 
                     <a href='/Admin/BlogManageLinks'> Manage Links</a> | 
              <%} 
-                if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.Administrator) == true || 
-                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.SiteAdministrator) == true ||
-                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog.SubFolder, Role.Blogger))
+                if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.Administrator) == true || 
+                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.SiteAdministrator) == true ||
+                   AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.Blogger))
                { %>
                     <a href='/Admin/BlogManagePosts'> Manage Posts</a> |  
                     <a href='/Admin/BlogManageComments'> Administer Comments</a>

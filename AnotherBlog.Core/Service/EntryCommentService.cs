@@ -29,8 +29,9 @@ namespace AnotherBlog.Core.Service
 
         public Comment Create(Blog targetBlog)
         {
-            Comment retVal = this.Repositories.EntryComments.CreateNewInstance();
+            Comment retVal = new Comment();
             retVal.Blog = targetBlog;
+            retVal.CommentId = -1;
             return retVal;
         }
 
@@ -63,7 +64,7 @@ namespace AnotherBlog.Core.Service
 
         public Comment SetStatus(Blog targetBlog, int commentId, int newStatus)
         {
-            Comment approvedComment = Repositories.EntryComments.GetById(commentId, targetBlog);
+            Comment approvedComment = Repositories.EntryComments.GetById(commentId, targetBlog.BlogId);
 
             if (approvedComment.Status == Comment.CommentStatus.Deleted && newStatus == Comment.CommentStatus.Deleted)
             {
@@ -80,17 +81,17 @@ namespace AnotherBlog.Core.Service
 
         public IList<Comment> GetByEntry(Blog targetBlog, BlogPost blogEntry)
         {
-            return Repositories.EntryComments.GetByEntry(blogEntry, targetBlog);
+            return Repositories.EntryComments.GetByEntry(blogEntry.EntryId, targetBlog.BlogId);
         }
 
         public IList<Comment> GetByEntry(Blog targetBlog, BlogPost blogEntry, int targetStatus)
         {
-            return Repositories.EntryComments.GetByEntry(blogEntry, targetStatus, targetBlog);
+            return Repositories.EntryComments.GetByEntry(blogEntry.EntryId, targetStatus, targetBlog.BlogId);
         }
 
         public IList<Comment> GetAll(Blog targetBlog)
         {
-            IList<Comment> retVal = Repositories.EntryComments.GetAll(targetBlog);
+            IList<Comment> retVal = Repositories.EntryComments.GetAll(targetBlog.BlogId);
             
             if(retVal==null)
             {
@@ -102,22 +103,22 @@ namespace AnotherBlog.Core.Service
 
         public IList<Comment> GetAllUnapproved(Blog targetBlog)
         {
-            return Repositories.EntryComments.GetAllUnapproved(targetBlog);
+            return Repositories.EntryComments.GetAllUnapproved(targetBlog.BlogId);
         }
 
         public IList<Comment> GetAllApproved(Blog targetBlog)
         {
-            return Repositories.EntryComments.GetAllApproved(targetBlog);
+            return Repositories.EntryComments.GetAllApproved(targetBlog.BlogId);
         }
 
         public IList<Comment> GetAllDeleted(Blog targetBlog)
         {
-            return Repositories.EntryComments.GetAllDeleted(targetBlog);
+            return Repositories.EntryComments.GetAllDeleted(targetBlog.BlogId);
         }
 
         public Comment GetByCommentId(Blog targetBlog, int commentId)
         {
-            return Repositories.EntryComments.GetById(commentId, targetBlog);
+            return Repositories.EntryComments.GetById(commentId, targetBlog.BlogId);
         }
     }
 }

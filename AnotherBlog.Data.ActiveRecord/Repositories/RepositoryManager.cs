@@ -75,7 +75,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogEntryRepository == null)
                 {
-                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork);
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogEntryRepository;
@@ -88,7 +88,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogEntryTagRepository == null)
                 {
-                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork);
+                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogEntryTagRepository;
@@ -101,7 +101,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogExtensionRepository == null)
                 {
-                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork);
+                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogExtensionRepository;
@@ -114,7 +114,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogRepository == null)
                 {
-                    this.blogRepository = new BlogRepository(this.UnitOfWork);
+                    this.blogRepository = new BlogRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogRepository;
@@ -127,7 +127,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogLinkRepository == null)
                 {
-                    this.blogLinkRepository = new BlogRollLinkRepository(this.UnitOfWork);
+                    this.blogLinkRepository = new BlogRollLinkRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogLinkRepository;
@@ -140,7 +140,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.blogUserRepository == null)
                 {
-                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork);
+                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork, this);
                 }
 
                 return this.blogUserRepository;
@@ -153,7 +153,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.dbInfoRepository == null)
                 {
-                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork);
+                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork, this);
                 }
 
                 return this.dbInfoRepository;
@@ -166,7 +166,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.entryCommentRepository == null)
                 {
-                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork);
+                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork, this);
                 }
 
                 return this.entryCommentRepository;
@@ -179,7 +179,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.extensionConfigurationRepository == null)
                 {
-                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork);
+                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork, this);
                 }
 
                 return this.extensionConfigurationRepository;
@@ -192,7 +192,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.roleRepository == null)
                 {
-                    this.roleRepository = new RoleRepository(this.UnitOfWork);
+                    this.roleRepository = new RoleRepository(this.UnitOfWork, this);
                 }
 
                 return this.roleRepository;
@@ -205,7 +205,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.siteInfoRepository == null)
                 {
-                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork, this);
                 }
 
                 return this.siteInfoRepository;
@@ -218,7 +218,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.tagRepository == null)
                 {
-                    this.tagRepository = new TagRepository(this.UnitOfWork);
+                    this.tagRepository = new TagRepository(this.UnitOfWork, this);
                 }
 
                 return this.tagRepository;
@@ -231,7 +231,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new UserRepository(this.UnitOfWork);
+                    this.userRepository = new UserRepository(this.UnitOfWork, this);
                 }
 
                 return this.userRepository;

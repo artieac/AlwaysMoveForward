@@ -26,10 +26,10 @@ namespace AnotherBlog.Data.NHibernate.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHRepository<CE.User, CE.User>, IUserRepository
+    public class UserRepository : NHibernateRepository<CE.User, CE.User>, IUserRepository
     {
-        internal UserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal UserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -76,10 +76,11 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.User> GetBlogWriters(CE.Blog targetBlog)
+        public IList<CE.User> GetBlogWriters(int blogId)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.User>();
-            criteria.CreateCriteria("UserBlogs").Add(Expression.Eq("Blog", targetBlog));
+            criteria.CreateCriteria("UserBlogsDTO")
+                .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             return criteria.List<CE.User>();
         }
     }

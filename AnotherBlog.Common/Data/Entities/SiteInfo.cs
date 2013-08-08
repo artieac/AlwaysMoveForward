@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
+
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class SiteInfo
+    public class SiteInfo : ISiteInfo
     {
         public virtual int SiteId{ get; set;}
         public virtual string About{ get; set;}

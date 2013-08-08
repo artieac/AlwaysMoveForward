@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
+
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class BlogRollLink
+    public class BlogRollLink : IBlogRollLink
     {
         public virtual int BlogRollLinkId { get; set; }
         public virtual string LinkName { get; set; }

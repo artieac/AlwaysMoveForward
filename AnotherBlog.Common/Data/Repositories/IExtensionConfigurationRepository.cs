@@ -22,6 +22,6 @@ namespace AnotherBlog.Common.Data.Repositories
     {
         ExtensionConfiguration GetByConfigurationId(int configurationId);
         ExtensionConfiguration GetByExtensionId(int extensionId);
-        ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, Blog targetBlog);
+        ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, int blogId);
     }
 }

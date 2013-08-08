@@ -17,7 +17,7 @@
                                            <a href="<%= Utils.GenerateBlogEntryLink(blogPost.Blog.SubFolder, blogPost, false)%>"><%= blogPost.Title%></a> posted in <a href="/<%= blogPost.Blog.SubFolder %>/Blog/Index"><%= blogPost.Blog.Name%></a>
                                         </div>
                                     </div>
-                                    <div class="blogSubTitle">posted <%= blogPost.DatePosted.ToShortDateString()%> by <%= blogPost.Author.DisplayName%> | <%= blogPost.Comments.Count%> comments</div>
+                                    <div class="blogSubTitle">posted <%= blogPost.DatePosted.ToShortDateString()%> by <%= blogPost.Author.DisplayName%> | <%= blogPost.GetCommentCount()%> comments</div>
                                 </div>
                                 <div class="blogText"><%= blogPost.ShortEntryText%></div>                  
                             </div>

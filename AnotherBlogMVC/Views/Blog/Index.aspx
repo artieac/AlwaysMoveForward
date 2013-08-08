@@ -22,7 +22,7 @@
                                         <a href="<%= Utils.GenerateBlogEntryLink(ViewData.Model.BlogSubFolder, blogPost, false)%>"><%=blogPost.Title %></a>
                                     </div>
                                 </div>
-                                <div class="blogSubTitle">posted <%= blogPost.DatePosted.ToShortDateString()%> by <%= blogPost.Author.DisplayName%> | <%= blogPost.Comments.Count%> comments</div>
+                                <div class="blogSubTitle">posted <%= blogPost.DatePosted.ToShortDateString()%> by <%= blogPost.Author.DisplayName%> | <%= blogPost.GetCommentCount()%> comments</div>
                             </div>
                             <div class="blogText"><%=blogPost.ShortEntryText%><br /> <a href="<%= Utils.GenerateBlogEntryLink(ViewData.Model.BlogSubFolder, blogPost, false)%>">full article</a></div>
                         </div>

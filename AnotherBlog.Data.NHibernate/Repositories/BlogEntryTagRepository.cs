@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NH = NHibernate;
+using NHibernate.Transform;
 using NHibernate.Criterion;
 
 using AnotherBlog.Common.Data;
@@ -22,14 +24,14 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class BlogEntryTagRepository : NHRepository<CE.PostTag, CE.PostTag>, IBlogEntryTagRepository
+    public class BlogEntryTagRepository : NHibernateRepository<CE.PostTag, CE.PostTag>, IBlogEntryTagRepository
     {
         /// <summary>
         /// Contains all of data access code for working with BlogEntryTags (a table that associates tags to blog entries)
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogEntryTagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogEntryTagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -44,9 +46,29 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// </summary>
         /// <param name="entryId"></param>
         /// <returns></returns>
-        public IList<CE.PostTag> GetByBlogEntry(CE.BlogPost targetEntry)
+        public IList<CE.PostTag> GetByBlogEntry(int blogPostId)
         {
-            return this.GetAllByProperty("BlogEntry", targetEntry);
+            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.PostTag>();
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            return criteria.List<CE.PostTag>();
+        }
+
+        public Boolean DeleteByBlogEntry(int blogPostId)
+        {
+            Boolean retVal = false;
+
+            try
+            {
+                IList<CE.PostTag> postTags = this.GetByBlogEntry(blogPostId);
+                ((UnitOfWork)this.UnitOfWork).CurrentSession.Delete(postTags);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return retVal;
         }
     }
 }

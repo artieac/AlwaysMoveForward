@@ -40,7 +40,8 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public BlogPost Create(Blog targetBlog)
         {
-            BlogPost retVal = this.Repositories.BlogEntries.CreateNewInstance();
+            BlogPost retVal = new BlogPost();
+            retVal.EntryId = this.Repositories.BlogEntries.UnsavedId;
             retVal.DateCreated = DateTime.Now;
             retVal.Author = ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser;
             retVal.Blog = targetBlog;
@@ -74,7 +75,7 @@ namespace AnotherBlog.Core.Service
             }
             else
             {
-                itemToSave = Repositories.BlogEntries.GetById(entryId, targetBlog);
+                itemToSave = Repositories.BlogEntries.GetById(entryId, targetBlog.BlogId);
             }
 
             itemToSave.Title = title;
@@ -138,7 +139,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                Repositories.BlogEntries.GetAllByBlog(targetBlog, false, -1);
+                Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, false, -1);
             }
 
             return retVal;
@@ -159,7 +160,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetAllByBlog(targetBlog, publishedOnly, maxResults);
+                retVal = Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults);
             }
 
             return retVal;
@@ -176,7 +177,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetById(entryId, targetBlog);
+                retVal = Repositories.BlogEntries.GetById(entryId, targetBlog.BlogId);
             }
 
             return retVal;
@@ -193,7 +194,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetByTitle(blogTitle, targetBlog);
+                retVal = Repositories.BlogEntries.GetByTitle(blogTitle, targetBlog.BlogId);
             }
 
             return retVal;
@@ -210,7 +211,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetByDateAndTitle(blogTitle, postDate, targetBlog);
+                retVal = Repositories.BlogEntries.GetByDateAndTitle(blogTitle, postDate, targetBlog.BlogId);
             }
 
             return retVal;
@@ -228,8 +229,8 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                Tag targetTag = Repositories.Tags.GetByName(tag, targetBlog);
-                retVal = Repositories.BlogEntries.GetByTag(targetBlog, targetTag, publishedOnly);
+                Tag targetTag = Repositories.Tags.GetByName(tag, targetBlog.BlogId);
+                retVal = Repositories.BlogEntries.GetByTag(targetBlog.BlogId, targetTag.Id, publishedOnly);
             }
             return retVal;
         }
@@ -245,7 +246,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetByMonth(blogDate, targetBlog, publishedOnly);
+                retVal = Repositories.BlogEntries.GetByMonth(blogDate, targetBlog.BlogId, publishedOnly);
             }
             return retVal;
         }
@@ -261,7 +262,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetByDate(blogDate, targetBlog, publishedOnly);
+                retVal = Repositories.BlogEntries.GetByDate(blogDate, targetBlog.BlogId, publishedOnly);
             }
             return retVal;
         }
@@ -272,7 +273,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetMostRecent(targetBlog, true);
+                retVal = Repositories.BlogEntries.GetMostRecent(targetBlog.BlogId, true);
             }
 
             return retVal;
@@ -289,7 +290,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetPreviousEntry(targetBlog, currentEntry);
+                retVal = Repositories.BlogEntries.GetPreviousEntry(targetBlog.BlogId, currentEntry.EntryId);
             }
 
             return retVal;
@@ -301,7 +302,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetNextEntry(targetBlog, currentEntry);
+                retVal = Repositories.BlogEntries.GetNextEntry(targetBlog.BlogId, currentEntry.EntryId);
             }
 
             return retVal;
@@ -314,7 +315,14 @@ namespace AnotherBlog.Core.Service
 
         public IList GetArchiveDates(Blog targetBlog)
         {
-            return Repositories.BlogEntries.GetArchiveDates(targetBlog);
+            if (targetBlog != null)
+            {
+                return Repositories.BlogEntries.GetArchiveDates(targetBlog.BlogId);
+            }
+            else
+            {
+                return Repositories.BlogEntries.GetArchiveDates(null);
+            }
         }
 
         public bool Delete(BlogPost targetEntry)

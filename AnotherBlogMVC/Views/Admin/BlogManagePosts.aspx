@@ -47,7 +47,7 @@
                     <td><%= blogPost.DateCreated %></td>
                     <td><%= blogPost.IsPublished %></td>
                     <td><%= blogPost.DatePosted %></td>
-                    <td><%= blogPost.Comments.Count.ToString()%></td>
+                    <td><%= blogPost.GetCommentCount().ToString()%></td>
                     <td><a href="/Admin/EditBlogPost?entryId=<%= blogPost.EntryId %>&blogSubFolder=<%= ViewData.Model.TargetBlog.SubFolder %>">edit</a></td>
                 </tr>
                 <%

@@ -53,7 +53,8 @@ namespace AnotherBlog.Core.Service
 
         public User Create()
         {
-            User retVal = this.Repositories.Users.CreateNewInstance();
+            User retVal = new User();
+            retVal.UserId = this.Repositories.Users.UnsavedId;
             retVal.IsActive = true;
             return retVal;
         }
@@ -180,7 +181,7 @@ namespace AnotherBlog.Core.Service
 
         public IList<User> GetBlogWriters(Blog targetBlog)
         {
-            return Repositories.Users.GetBlogWriters(targetBlog);
+            return Repositories.Users.GetBlogWriters(targetBlog.BlogId);
         }
     }
 }

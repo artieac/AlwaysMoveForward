@@ -14,7 +14,8 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
@@ -26,10 +27,10 @@ namespace AnotherBlog.Data.LINQ.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : LRepository<CE.SiteInfo, LSiteInfo>, ISiteInfoRepository
+    public class SiteInfoRepository : LINQRepository<SiteInfo, SiteInfoDTO, ISiteInfo>, ISiteInfoRepository
     {
-        internal SiteInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal SiteInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -42,20 +43,20 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// Get stored web site settings.
         /// </summary>
         /// <returns></returns>
-        public CE.SiteInfo GetSiteInfo()
+        public SiteInfo GetSiteInfo()
         {
-            LSiteInfo retVal = null;
+            SiteInfoDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LSiteInfo>() select foundItem).Single();
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.SiteInfoDTOs select foundItem).Single();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
         }
     }
 }

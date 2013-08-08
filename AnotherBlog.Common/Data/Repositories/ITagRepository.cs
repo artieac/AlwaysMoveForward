@@ -19,8 +19,9 @@ namespace AnotherBlog.Common.Data.Repositories
 {
     public interface ITagRepository : IRepository<Tag>
     {
-        IList GetAllWithCount(Blog targetBlog);
-        Tag GetByName(string name, Blog targetBlog);
-        IList<Tag> GetByNames(string[] names, Blog targetBlog);
+        IList GetAllWithCount(int? blogId);
+        Tag GetByName(string name, int blogId);
+        IList<Tag> GetByNames(string[] names, int blogId);
+        IList<Tag> GetByBlogEntryId(int blogEntryId);
     }
 }

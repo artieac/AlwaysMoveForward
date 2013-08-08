@@ -19,11 +19,11 @@ namespace AnotherBlog.Common.Data.Repositories
 {
     public interface IEntryCommentRepository : IRepository<Comment>
     {
-        IList<Comment> GetByEntry(BlogPost blogEntry, int targetStatus, Blog targetBlog);
-        IList<Comment> GetByEntry(BlogPost blogEntry, Blog targetBlog);
-        IList<Comment> GetAllUnapproved(Blog targetBlog);
-        IList<Comment> GetAllApproved(Blog targetBlog);
-        IList<Comment> GetAllDeleted(Blog targetBlog);
+        IList<Comment> GetByEntry(int blogPostId, int targetStatus, int blogId);
+        IList<Comment> GetByEntry(int blogPostId, int blogId);
+        IList<Comment> GetAllUnapproved(int blogId);
+        IList<Comment> GetAllApproved(int blogId);
+        IList<Comment> GetAllDeleted(int blogId);
     }
 }
 

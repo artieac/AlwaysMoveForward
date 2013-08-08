@@ -14,7 +14,7 @@ namespace AnotherBlog.Data.LINQ
     public class UnitOfWork : IUnitOfWork
     {
         static AnotherBlog.Common.DatabaseConfiguration dbConfiguration;
-        DataContext dataContext;
+        AnotherBlogDbDataContext dataContext;
 
         static UnitOfWork()
         {
@@ -59,13 +59,13 @@ namespace AnotherBlog.Data.LINQ
             }
         }
 
-        public DataContext DataContext
+        public AnotherBlogDbDataContext DataContext
         {
             get
             {
                 if (this.dataContext == null)
                 {
-                    this.dataContext = new DataContext(new System.Data.SqlClient.SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString));
+                    this.dataContext = new AnotherBlogDbDataContext(new System.Data.SqlClient.SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString));
                 }
 
                 return this.dataContext;

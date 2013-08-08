@@ -14,21 +14,22 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class BlogEntryTagRepository : LRepository<CE.PostTag, LBlogEntryTag>, IBlogEntryTagRepository
+    public class BlogEntryTagRepository : LINQRepository<PostTag, BlogEntryTagDTO, IPostTag>, IBlogEntryTagRepository
     {
         /// <summary>
         /// Contains all of data access code for working with BlogEntryTags (a table that associates tags to blog entries)
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogEntryTagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogEntryTagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -43,9 +44,28 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="entryId"></param>
         /// <returns></returns>
-        public IList<CE.PostTag> GetByBlogEntry(CE.BlogPost targetEntry)
+        public IList<PostTag> GetByBlogEntry(int blogPostId)
         {
-            return this.GetAllByProperty("BlogEntry", targetEntry);
+            return this.GetAllByProperty("BlogEntryId", blogPostId);
         }
+
+        public Boolean DeleteByBlogEntry(int blogPostId)
+        {
+            Boolean retVal = false;
+
+            try
+            {
+                IList<PostTag> postTags = this.GetByBlogEntry(blogPostId);
+                ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs.DeleteAllOnSubmit(DataMapper.Map(postTags));
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return retVal;
+        }
+
     }
 }

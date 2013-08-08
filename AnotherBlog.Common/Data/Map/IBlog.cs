@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace AnotherBlog.Common.Data.Map
+{
+    public interface IBlog
+    {
+        int BlogId { get; set; }
+        string Name { get; set; }
+        string Description { get; set; }
+        string SubFolder { get; set; }
+        string About { get; set; }
+        string WelcomeMessage { get; set; }
+        string ContactEmail { get; set; }
+        string Theme { get; set; }
+//        IList<IBlogPost> Posts { get; set; }
+//        IList<IBlogUser> Users { get; set; }
+//        IList<IComment> Comments { get; set; }
+    }
+}

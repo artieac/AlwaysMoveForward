@@ -18,21 +18,23 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
+using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class BlogUserRepository : NHRepository<CE.BlogUser, ARBlogUser>, IBlogUserRepository
+    public class BlogUserRepository : ActiveRecordRepository<BlogUser, BlogUserDTO, IBlogUser>, IBlogUserRepository
     {
         /// <summary>
         /// This class contains all the code to extract BlogUser data from the repository using LINQ
         /// The BlogUser object maps users and their roles to specific blogs.
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogUserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogUserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -46,9 +48,11 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<CE.BlogUser> GetUserBlogs(CE.User blogUser)
+        public IList<BlogUser> GetUserBlogs(int userId)
         {
-            return this.GetAllByProperty("User", blogUser);
+            DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
+            criteria.CreateCriteria("UserDTO").Add(Expression.Eq("UserId", userId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria));
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -56,9 +60,12 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="userId"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.BlogUser GetUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public BlogUser GetUserBlog(int userId, int blogId)
         {
-            return this.GetByProperty("User", blogUser, targetBlog);
+            DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
+            criteria.CreateCriteria("UserDTO").Add(Expression.Eq("UserId", userId));
+            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria));
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.
@@ -66,15 +73,16 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="blogId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool DeleteUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public bool DeleteUserBlog(int userId, int blogId)
         {
             bool retVal = false;
 
-            ARBlogUser targetUserBlog = this.GetUserBlog(blogUser, targetBlog) as ARBlogUser;
+            BlogUser targetUserBlog = this.GetUserBlog(userId, blogId);
 
             if (targetUserBlog != null)
             {
-                Castle.ActiveRecord.ActiveRecordMediator<ARBlogUser>.Delete(targetUserBlog);
+                BlogUserDTO dtoItem = this.DataMapper.Map(targetUserBlog);
+                Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.Delete(dtoItem);
                 this.UnitOfWork.Commit();
                 retVal = true;
             }

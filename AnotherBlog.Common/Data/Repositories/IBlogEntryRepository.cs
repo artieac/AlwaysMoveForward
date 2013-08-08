@@ -21,19 +21,19 @@ namespace AnotherBlog.Common.Data.Repositories
     public interface IBlogEntryRepository : IRepository<BlogPost>
     {
         IList<BlogPost> GetAll(bool publishedOnly, int maxResults);
-        IList<BlogPost> GetAllByBlog(Blog targetBlog, bool publishedOnly, int maxResults);
-        BlogPost GetByTitle(string blogTitle, Blog targetBlog);
-        BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, Blog targetBlog);
-        IList<BlogPost> GetByTag(Tag targetTag, bool publishedOnly);
-        IList<BlogPost> GetByTag(Blog targetBlog, Tag targetTag, bool publishedOnly);
+        IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults);
+        BlogPost GetByTitle(string blogTitle, int blogId);
+        BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId);
+        IList<BlogPost> GetByTag(int tagId, bool publishedOnly);
+        IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly);
         IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly);
-        IList<BlogPost> GetByMonth(DateTime blogDate, Blog targetBlog, bool publishedOnly);
+        IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly);
         IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly);
-        IList<BlogPost> GetByDate(DateTime blogDate, Blog targetBlog, bool publishedOnly);
-        BlogPost GetMostRecent(Blog targetBlog, bool published);
-        BlogPost GetPreviousEntry(Blog targetBlog, BlogPost currentEntry);
-        BlogPost GetNextEntry(Blog targetBlog, BlogPost currentEntry);
+        IList<BlogPost> GetByDate(DateTime blogDate, int? blogId, bool publishedOnly);
+        BlogPost GetMostRecent(int blogId, bool published);
+        BlogPost GetPreviousEntry(int blogId, int currentPostId);
+        BlogPost GetNextEntry(int blogId, int currentPostId);
         IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate);
-        IList GetArchiveDates(Blog targetBlog);
+        IList GetArchiveDates(int? blogId);
     }
 }

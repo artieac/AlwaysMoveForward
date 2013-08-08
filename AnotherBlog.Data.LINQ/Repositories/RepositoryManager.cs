@@ -66,7 +66,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogEntryRepository == null)
                 {
-                    BlogEntryRepository newRepository = new BlogEntryRepository(this.UnitOfWork);
+                    BlogEntryRepository newRepository = new BlogEntryRepository(this.UnitOfWork, this);
                     this.blogEntryRepository = newRepository;
                 }
 
@@ -80,7 +80,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogEntryTagRepository == null)
                 {
-                    BlogEntryTagRepository newRepository = new BlogEntryTagRepository(this.UnitOfWork);
+                    BlogEntryTagRepository newRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
                     this.blogEntryTagRepository = newRepository;
                 }
 
@@ -94,7 +94,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogExtensionRepository == null)
                 {
-                    BlogExtensionRepository newRepository = new BlogExtensionRepository(this.UnitOfWork);
+                    BlogExtensionRepository newRepository = new BlogExtensionRepository(this.UnitOfWork, this);
                     this.blogExtensionRepository = newRepository;
                 }
 
@@ -108,7 +108,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogRepository == null)
                 {
-                    BlogRepository newRepository = new BlogRepository(this.UnitOfWork);
+                    BlogRepository newRepository = new BlogRepository(this.UnitOfWork, this);
                     this.blogRepository = newRepository;
                 }
 
@@ -122,7 +122,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogLinkRepository == null)
                 {
-                    BlogRollLinkRepository newRepository = new BlogRollLinkRepository(this.UnitOfWork);
+                    BlogRollLinkRepository newRepository = new BlogRollLinkRepository(this.UnitOfWork, this);
                     this.blogLinkRepository = newRepository;
                 }
 
@@ -136,7 +136,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.blogUserRepository == null)
                 {
-                    BlogUserRepository newRepository = new BlogUserRepository(this.UnitOfWork);
+                    BlogUserRepository newRepository = new BlogUserRepository(this.UnitOfWork, this);
                     this.blogUserRepository = newRepository;
                 }
 
@@ -150,7 +150,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.dbInfoRepository == null)
                 {
-                    DbInfoRepository newRepository = new DbInfoRepository(this.UnitOfWork);
+                    DbInfoRepository newRepository = new DbInfoRepository(this.UnitOfWork, this);
                     this.dbInfoRepository = newRepository;
                 }
 
@@ -164,7 +164,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.entryCommentRepository == null)
                 {
-                    EntryCommentRepository newRepository = new EntryCommentRepository(this.UnitOfWork);
+                    EntryCommentRepository newRepository = new EntryCommentRepository(this.UnitOfWork, this);
                     this.entryCommentRepository = newRepository;
                 }
 
@@ -178,7 +178,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.extensionConfigurationRepository == null)
                 {
-                    ExtensionConfigurationRepository newRepository = new ExtensionConfigurationRepository(this.UnitOfWork);
+                    ExtensionConfigurationRepository newRepository = new ExtensionConfigurationRepository(this.UnitOfWork, this);
                     this.extensionConfigurationRepository = newRepository;
                 }
 
@@ -192,7 +192,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.roleRepository == null)
                 {
-                    RoleRepository newRepository = new RoleRepository(this.UnitOfWork);
+                    RoleRepository newRepository = new RoleRepository(this.UnitOfWork, this);
                     this.roleRepository = newRepository;
                 }
 
@@ -206,7 +206,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.siteInfoRepository == null)
                 {
-                    SiteInfoRepository newRepository = new SiteInfoRepository(this.UnitOfWork);
+                    SiteInfoRepository newRepository = new SiteInfoRepository(this.UnitOfWork, this);
                     this.siteInfoRepository = newRepository;
                 }
 
@@ -220,7 +220,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.tagRepository == null)
                 {
-                    TagRepository newRepository = new TagRepository(this.UnitOfWork);
+                    TagRepository newRepository = new TagRepository(this.UnitOfWork, this);
                     this.tagRepository = newRepository;
                 }
 
@@ -234,7 +234,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (this.userRepository == null)
                 {
-                    UserRepository newRepository = new UserRepository(this.UnitOfWork);
+                    UserRepository newRepository = new UserRepository(this.UnitOfWork, this);
                     this.userRepository = newRepository;
                 }
 

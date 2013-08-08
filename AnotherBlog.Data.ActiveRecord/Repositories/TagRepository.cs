@@ -20,7 +20,8 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -30,10 +31,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : NHRepository<CE.Tag, ARTag>, ITagRepository
+    public class TagRepository : ActiveRecordRepository<Tag, TagDTO, ITag>, ITagRepository
     {
-        internal TagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal TagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -42,21 +43,29 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList GetAllWithCount(CE.Blog targetBlog)
+        public IList GetAllWithCount(int? blogId)
         {
             string queryString = "SELECT  COUNT(bet.BlogEntryTagId) AS Count, t.name as TagName";
             queryString += " FROM Tags t, BlogEntryTags as bet";
-            queryString += " WHERE (t.BlogId = :targetBlog) AND (bet.TagId = t.id)";
+            queryString += " WHERE (bet.TagId = t.id)";
+
+            if (blogId.HasValue)
+            {
+                queryString += " AND (t.BlogId = :targetBlog)";
+            }
+
             queryString += " GROUP BY t.Name";
 
-            HqlBasedQuery query = new HqlBasedQuery(typeof(ARTag), QueryLanguage.Sql, queryString);
+            HqlBasedQuery query = new HqlBasedQuery(typeof(TagDTO), QueryLanguage.Sql, queryString);
             query.AddSqlScalarDefinition(NHibernateUtil.Int32, "Count");
             query.AddSqlScalarDefinition(NHibernateUtil.String, "TagName");
-            if (targetBlog != null)
+
+            if (blogId.HasValue)
             {
-                query.SetParameter("targetBlog", targetBlog.BlogId);
+                query.SetParameter("targetBlog", blogId.Value);
             }
-            query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(CE.TagCount)));
+            
+            query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(TagCount)));
             return (ActiveRecordMediator.ExecuteQuery(query) as ArrayList);
         }
         /// <summary>
@@ -65,9 +74,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="name"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.Tag GetByName(string name, CE.Blog targetBlog)
+        public Tag GetByName(string name, int blogId)
         {
-            return this.GetByProperty("Name", name, targetBlog);
+            return this.GetByProperty("Name", name, blogId);
         }
         /// <summary>
         /// Get multiple tag records.
@@ -75,13 +84,19 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="names"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Tag> GetByNames(string[] names, CE.Blog targetBlog)
+        public IList<Tag> GetByNames(string[] names, int blogId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<ARTag>();
+            DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
             criteria.Add(Expression.In("Name", names));
-            criteria.Add(Expression.Eq("Blog", targetBlog));
+            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
+        }
 
-            return Castle.ActiveRecord.ActiveRecordMediator<ARTag>.FindAll(criteria);
+        public IList<Tag> GetByBlogEntryId(int blogEntryId)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
+            criteria.CreateCriteria("BlogEntriesDTO").Add(Expression.Eq("EntryId", blogEntryId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
         }
     }
 }

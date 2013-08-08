@@ -14,20 +14,24 @@ using System.Linq;
 using System.Text;
 
 using NHibernate.Criterion;
+using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE=AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
+using AnotherBlog.Data.ActiveRecord.DataMapper;
+
 using AnotherBlog.Data.ActiveRecord.Entities;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class EntryCommentRepository : NHRepository<CE.Comment, AREntryComment>, IEntryCommentRepository
+    public class EntryCommentRepository : ActiveRecordRepository<Comment, EntryCommentsDTO, IComment>, IEntryCommentRepository
     {
-        internal EntryCommentRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal EntryCommentRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
@@ -42,14 +46,13 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="targetStatus"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetByEntry(CE.BlogPost blogEntry, int targetStatus, CE.Blog targetBlog)
+        public IList<Comment> GetByEntry(int blogPostId, int targetStatus, int blogId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<AREntryComment>();
-            criteria.Add(Expression.Eq("Post", blogEntry));
+            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Expression.Eq("Status", targetStatus));
-            criteria.Add(Expression.Eq("Blog", targetBlog));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<AREntryComment>.FindAll(criteria);
+            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            return CommentMapper.GetInstance().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
         /// <summary>
         /// 
@@ -58,36 +61,39 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="targetStatus"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetByEntry(CE.BlogPost blogEntry, CE.Blog targetBlog)
+        public IList<Comment> GetByEntry(int blogPostId, int blogId)
         {
-            return this.GetAllByProperty("Post", blogEntry, targetBlog); 
+            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
+            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            return CommentMapper.GetInstance().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
         /// <summary>
         /// Get all comments for a specific blog that need to be approved by a blogger or administrator
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllUnapproved(CE.Blog targetBlog)
+        public IList<Comment> GetAllUnapproved(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Unapproved, targetBlog);
+            return this.GetAllByProperty("Status", Comment.CommentStatus.Unapproved, blogId);
         }
         /// <summary>
         /// Get all approved comments ofr a blog for display with the blog entry.
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllApproved(CE.Blog targetBlog)
+        public IList<Comment> GetAllApproved(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Approved, targetBlog); 
+            return this.GetAllByProperty("Status", Comment.CommentStatus.Approved, blogId); 
         }
         /// <summary>
         /// Get all deleted comments (in case it should be undeleted, or for a report on most frequenc abusers)
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllDeleted(CE.Blog targetBlog)
+        public IList<Comment> GetAllDeleted(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Deleted, targetBlog); 
+            return this.GetAllByProperty("Status", Comment.CommentStatus.Deleted, blogId); 
         }
     }
 }

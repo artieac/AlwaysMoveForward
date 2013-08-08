@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,11 @@
     <AssemblyName>AnotherBlog.Common</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,9 +64,22 @@
   <ItemGroup>
     <Compile Include="Business\Service\ExtensionConfigurationService.cs" />
     <Compile Include="DatabaseConfiguration.cs" />
+    <Compile Include="Data\Map\DataMapper.cs" />
     <Compile Include="Data\Entities\Blog.cs" />
     <Compile Include="Data\Entities\BlogPost.cs" />
     <Compile Include="Data\Entities\BlogPostCount.cs" />
+    <Compile Include="Data\Map\IBlog.cs" />
+    <Compile Include="Data\Map\IBlogExtension.cs" />
+    <Compile Include="Data\Map\IBlogPost.cs" />
+    <Compile Include="Data\Map\IBlogRollLink.cs" />
+    <Compile Include="Data\Map\IBlogUser.cs" />
+    <Compile Include="Data\Map\IComment.cs" />
+    <Compile Include="Data\Map\IDbInfo.cs" />
+    <Compile Include="Data\Map\IExtensionConfiguration.cs" />
+    <Compile Include="Data\Map\IRole.cs" />
+    <Compile Include="Data\Map\ISiteInfo.cs" />
+    <Compile Include="Data\Map\ITag.cs" />
+    <Compile Include="Data\Map\IUser.cs" />
     <Compile Include="Data\Entities\PostTag.cs" />
     <Compile Include="Data\Entities\BlogExtension.cs" />
     <Compile Include="Data\Entities\BlogRollLink.cs" />
@@ -81,12 +99,14 @@
     <Compile Include="Data\Repositories\IBlogUserRepository.cs" />
     <Compile Include="Data\Repositories\IDbInfoRepository.cs" />
     <Compile Include="Data\Repositories\IEntryCommentRepository.cs" />
+    <Compile Include="Data\Map\IPostTag.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Data\Repositories\IRepositoryManager.cs" />
     <Compile Include="Data\Repositories\ISiteInfoRepository.cs" />
     <Compile Include="Data\Repositories\IRoleRepository.cs" />
     <Compile Include="Data\Repositories\ITagRepository.cs" />
     <Compile Include="Data\Repositories\IUserRepository.cs" />
+    <Compile Include="Data\Repositories\RepositoryBase.cs" />
     <Compile Include="Encryption\EncryptionConfiguration.cs" />
     <Compile Include="Encryption\EncryptionUtilities.cs" />
     <Compile Include="Data\Entities\ExtensionConfiguration.cs" />

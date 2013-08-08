@@ -15,7 +15,6 @@ using System.Text;
 using System.Data;
 
 using AnotherBlog.Common.Data;
-using AnotherBlog.Common.Data.Entities;
 
 namespace AnotherBlog.Common.Data.Repositories
 {

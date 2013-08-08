@@ -14,10 +14,11 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Utilities;
+using AnotherBlog.Common.Data.Map;
 
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class BlogPost
+    public class BlogPost : IBlogPost
     {
         public static int MaxShortEntryLength = 1000;
 
@@ -29,8 +30,20 @@ namespace AnotherBlog.Common.Data.Entities
         public virtual string Title { get; set; }
         public virtual DateTime DatePosted { get; set; }
         public virtual DateTime DateCreated { get; set; }
-        public virtual IList<Comment> Comments { get; set; }
-        public virtual IList<Tag> Tags { get; set; }
+        public virtual IList<IComment> Comments { get; set; }
+        public virtual IList<ITag> Tags { get; set; }
+
+        public virtual int GetCommentCount()
+        {
+            int retVal = 0;
+
+            if (this.Comments != null)
+            {
+                retVal = this.Comments.Count;
+            }
+
+            return retVal;
+        }
         
         public virtual string ShortEntryText
         {

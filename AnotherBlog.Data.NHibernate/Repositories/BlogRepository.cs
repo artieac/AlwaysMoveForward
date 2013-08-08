@@ -22,14 +22,14 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class BlogRepository : NHRepository<CE.Blog, CE.Blog>, IBlogRepository
+    public class BlogRepository : NHibernateRepository<CE.Blog, CE.Blog>, IBlogRepository
     {
         /// <summary>
         /// This class contains all the code to extract data from the repository using LINQ
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 

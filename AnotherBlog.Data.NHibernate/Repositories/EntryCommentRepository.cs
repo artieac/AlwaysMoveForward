@@ -22,10 +22,10 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class EntryCommentRepository : NHRepository<CE.Comment, CE.Comment>, IEntryCommentRepository
+    public class EntryCommentRepository : NHibernateRepository<CE.Comment, CE.Comment>, IEntryCommentRepository
     {
-        internal EntryCommentRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal EntryCommentRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
@@ -40,14 +40,13 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="targetStatus"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetByEntry(CE.BlogPost blogEntry, int targetStatus, CE.Blog targetBlog)
+        public IList<CE.Comment> GetByEntry(int blogPostId, int targetStatus, int blogId)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Comment>();
-            criteria.Add(Expression.Eq("Post", blogEntry));
             criteria.Add(Expression.Eq("Status", targetStatus));
-            criteria.Add(Expression.Eq("Blog", targetBlog));
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             return criteria.List<CE.Comment>();
-
         }
         /// <summary>
         /// 
@@ -56,36 +55,39 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="targetStatus"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetByEntry(CE.BlogPost blogEntry, CE.Blog targetBlog)
+        public IList<CE.Comment> GetByEntry(int blogPostId, int blogId)
         {
-            return this.GetAllByProperty("Post", blogEntry, targetBlog); 
+            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Comment>();
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return criteria.List<CE.Comment>();
         }
         /// <summary>
         /// Get all comments for a specific blog that need to be approved by a blogger or administrator
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllUnapproved(CE.Blog targetBlog)
+        public IList<CE.Comment> GetAllUnapproved(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Unapproved, targetBlog);
+            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Unapproved, blogId);
         }
         /// <summary>
         /// Get all approved comments ofr a blog for display with the blog entry.
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllApproved(CE.Blog targetBlog)
+        public IList<CE.Comment> GetAllApproved(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Approved, targetBlog); 
+            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Approved, blogId); 
         }
         /// <summary>
         /// Get all deleted comments (in case it should be undeleted, or for a report on most frequenc abusers)
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Comment> GetAllDeleted(CE.Blog targetBlog)
+        public IList<CE.Comment> GetAllDeleted(int blogId)
         {
-            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Deleted, targetBlog); 
+            return this.GetAllByProperty("Status", CE.Comment.CommentStatus.Deleted, blogId); 
         }
     }
 }

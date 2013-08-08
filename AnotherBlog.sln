@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.MVC", "AnotherBlogMVC\AnotherBlog.MVC.csproj", "{11FBC534-0D9C-4264-8251-284660D73CB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Core", "AnotherBlog.Core\AnotherBlog.Core.csproj", "{D93CDF51-39A1-4094-852B-8235148CAD28}"
@@ -21,9 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.MVC.Tests", "An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Data.ActiveRecord", "AnotherBlog.Data.ActiveRecord\AnotherBlog.Data.ActiveRecord.csproj", "{FB9EE469-71FD-46C0-B1D4-3D289E87F4E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Data.NHibernate", "AnotherBlog.Data.NHibernate\AnotherBlog.Data.NHibernate.csproj", "{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Data.LINQ", "AnotherBlog.Data.LINQ\AnotherBlog.Data.LINQ.csproj", "{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Data.NHibernate", "AnotherBlog.Data.NHibernate\AnotherBlog.Data.NHibernate.csproj", "{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnotherBlog.Data.EntityFramework", "AnotherBlog.Data.EntityFramework\AnotherBlog.Data.EntityFramework.csproj", "{9C3E6D22-8FC9-435A-AAC1-A2FAE9230D31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,14 +61,18 @@ Global
 		{FB9EE469-71FD-46C0-B1D4-3D289E87F4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB9EE469-71FD-46C0-B1D4-3D289E87F4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB9EE469-71FD-46C0-B1D4-3D289E87F4E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E70141B-6FFC-4F57-AC8F-C83C4F857E76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C9BD2C9-D48C-4BA4-AFD8-035B187B0665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C3E6D22-8FC9-435A-AAC1-A2FAE9230D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C3E6D22-8FC9-435A-AAC1-A2FAE9230D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C3E6D22-8FC9-435A-AAC1-A2FAE9230D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C3E6D22-8FC9-435A-AAC1-A2FAE9230D31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

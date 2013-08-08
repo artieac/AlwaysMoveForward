@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NH = NHibernate;
+using NHibernate.Transform;
 using NHibernate.Criterion;
 
 using AnotherBlog.Common.Data;
@@ -21,15 +23,15 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class BlogUserRepository : NHRepository<CE.BlogUser, CE.BlogUser>, IBlogUserRepository
+    public class BlogUserRepository : NHibernateRepository<CE.BlogUser, CE.BlogUser>, IBlogUserRepository
     {
         /// <summary>
         /// This class contains all the code to extract BlogUser data from the repository using LINQ
         /// The BlogUser object maps users and their roles to specific blogs.
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogUserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogUserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -43,9 +45,11 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<CE.BlogUser> GetUserBlogs(CE.User blogUser)
+        public IList<CE.BlogUser> GetUserBlogs(int userId)
         {
-            return this.GetAllByProperty("User", blogUser);
+            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.BlogUser>();
+            criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            return criteria.List<CE.BlogUser>();
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -53,9 +57,12 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="userId"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.BlogUser GetUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public CE.BlogUser GetUserBlog(int userId, int blogId)
         {
-            return this.GetByProperty("User", blogUser, targetBlog);
+            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.BlogUser>();
+            criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return criteria.UniqueResult<CE.BlogUser>();
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.
@@ -63,11 +70,11 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         /// <param name="blogId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool DeleteUserBlog(CE.User blogUser, CE.Blog targetBlog)
+        public bool DeleteUserBlog(int userId, int blogId)
         {
             bool retVal = false;
 
-            CE.BlogUser targetUserBlog = this.GetUserBlog(blogUser, targetBlog) as CE.BlogUser;
+            CE.BlogUser targetUserBlog = this.GetUserBlog(userId, blogId) as CE.BlogUser;
 
             if (targetUserBlog != null)
             {

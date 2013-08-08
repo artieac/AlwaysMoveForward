@@ -24,10 +24,10 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class ExtensionConfigurationRepository : NHRepository<CE.ExtensionConfiguration, CE.ExtensionConfiguration>, IExtensionConfigurationRepository
+    public class ExtensionConfigurationRepository : NHibernateRepository<CE.ExtensionConfiguration, CE.ExtensionConfiguration>, IExtensionConfigurationRepository
     {
-        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
@@ -41,9 +41,9 @@ namespace AnotherBlog.Data.NHibernate.Repositories
             return this.GetByProperty("ExtensionId", extensionId);
         }
 
-        public CE.ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, CE.Blog targetBlog)
+        public CE.ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, int blogId)
         {
-            return this.GetByProperty("ExtensionId", extensionId, targetBlog);
+            return this.GetByProperty("ExtensionId", extensionId, blogId);
         }
     }
 }

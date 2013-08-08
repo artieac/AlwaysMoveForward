@@ -14,17 +14,18 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class BlogExtensionRepository : LRepository<CE.BlogExtension, LBlogExtension>, IBlogExtensionRepository
+    public class BlogExtensionRepository : LINQRepository<BlogExtension, BlogExtensionDTO, IBlogExtension>, IBlogExtensionRepository
     {
-        internal BlogExtensionRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogExtensionRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -34,7 +35,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             get { return "ExtensionId"; }
         }
 
-        public CE.BlogExtension GetByAssemblyName(string assemblyName)
+        public BlogExtension GetByAssemblyName(string assemblyName)
         {
             return this.GetByProperty("AssemblyName", assemblyName);
         }

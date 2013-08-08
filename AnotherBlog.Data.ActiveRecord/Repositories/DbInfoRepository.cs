@@ -14,27 +14,32 @@ using System.Linq;
 using System.Text;
 
 using NHibernate.Criterion;
+using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
+using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class DbInfoRepository : NHRepository<CE.DbInfo, ARDbInfo>, IDbInfoRepository
+    public class DbInfoRepository : ActiveRecordRepository<DbInfo, DbInfoDTO, IDbInfo>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        DbInfoMapper dbInfoMapper = new DbInfoMapper();
+
+        internal DbInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
 
-        public CE.DbInfo GetDbInfo()
+        public DbInfo GetDbInfo()
         {
-            return Castle.ActiveRecord.ActiveRecordMediator<ARDbInfo>.FindOne();
+            return dbInfoMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne());
         }
     }
 }

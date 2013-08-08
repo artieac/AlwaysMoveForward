@@ -18,16 +18,17 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class BlogExtensionRepository : NHRepository<CE.BlogExtension, ARBlogExtension>, IBlogExtensionRepository
+    public class BlogExtensionRepository : ActiveRecordRepository<BlogExtension, BlogExtensionDTO, IBlogExtension>, IBlogExtensionRepository
     {
-        internal BlogExtensionRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogExtensionRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -37,7 +38,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             get { return "ExtensionId"; }
         }
 
-        public CE.BlogExtension GetByAssemblyName(string assemblyName)
+        public BlogExtension GetByAssemblyName(string assemblyName)
         {
             return this.GetByProperty("AssemblyName", assemblyName);
         }

@@ -26,10 +26,10 @@ namespace AnotherBlog.Data.NHibernate.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : NHRepository<CE.SiteInfo, CE.SiteInfo>, ISiteInfoRepository
+    public class SiteInfoRepository : NHibernateRepository<CE.SiteInfo, CE.SiteInfo>, ISiteInfoRepository
     {
-        internal SiteInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal SiteInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

@@ -18,7 +18,8 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -28,10 +29,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHRepository<CE.User, ARUser>, IUserRepository
+    public class UserRepository : ActiveRecordRepository<User, UserDTO, IUser>, IUserRepository
     {
-        internal UserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal UserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -46,7 +47,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public CE.User GetByUserName(string userName)
+        public User GetByUserName(string userName)
         {
             return this.GetByProperty("UserName", userName);
         }
@@ -56,20 +57,20 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public CE.User GetByUserNameAndPassword(string userName, string password)
+        public User GetByUserNameAndPassword(string userName, string password)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<ARUser>();
+            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
             criteria.Add(Expression.Eq("UserName", userName));
             criteria.Add(Expression.Eq("Password", password));
 
-            return Castle.ActiveRecord.ActiveRecordMediator<ARUser>.FindOne(criteria);
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
         }
         /// <summary>
         /// Get a specific user by email
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>
-        public CE.User GetByEmail(string userEmail)
+        public User GetByEmail(string userEmail)
         {
             return this.GetByProperty("Email", userEmail);
         }
@@ -78,12 +79,12 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.User> GetBlogWriters(CE.Blog targetBlog)
+        public IList<User> GetBlogWriters(int blogId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<ARUser>();
-            criteria.CreateCriteria("UserBlogs").Add(Expression.Eq("Blog", targetBlog));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<ARUser>.FindAll(criteria);
+            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
+            criteria.CreateCriteria("UserBlogsDTO")
+                .CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
         }
     }
 }

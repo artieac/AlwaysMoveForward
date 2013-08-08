@@ -15,17 +15,18 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class BlogEntryRepository : LRepository<CE.BlogPost, LBlogPost>, IBlogEntryRepository
+    public class BlogEntryRepository : LINQRepository<BlogPost, BlogEntryDTO, IBlogPost>, IBlogEntryRepository
     {
-        internal BlogEntryRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogEntryRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -35,20 +36,20 @@ namespace AnotherBlog.Data.LINQ.Repositories
             get { return "EntryId"; }
         }
 
-        public IList<CE.BlogPost> GetAll(bool publishedOnly, int maxResults)
+        public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)
         {
-            IQueryable<LBlogPost> dtoList = null;
+            IQueryable<BlogEntryDTO> dtoList = null;
 
             if (publishedOnly == true)
             {
-                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                           where foundItem.IsPublished == true
                           orderby foundItem.DatePosted descending
                           select foundItem;
             }
             else
             {
-                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                           orderby foundItem.DatePosted descending
                           select foundItem;
             }
@@ -58,25 +59,25 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 //                dtoList.M
             }
 
-            return dtoList.Cast<CE.BlogPost>().ToList();
+            return dtoList.Cast<BlogPost>().ToList();
         }
 
-        public IList<CE.BlogPost> GetAllByBlog(CE.Blog targetBlog, bool publishedOnly, int maxResults)
+        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults)
         {
-            IQueryable<LBlogPost> dtoList = null;
+            IQueryable<BlogEntryDTO> dtoList = null;
 
             if (publishedOnly == true)
             {
-                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                           where foundItem.IsPublished == true &&
-                          foundItem.BlogId == targetBlog.BlogId
+                          foundItem.BlogId == blogId
                           orderby foundItem.DatePosted descending
                           select foundItem;
             }
             else
             {
-                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                          where foundItem.BlogId == targetBlog.BlogId
+                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                          where foundItem.BlogId == blogId
                           orderby foundItem.DatePosted descending
                           select foundItem;
             }
@@ -86,59 +87,57 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 //                dtoList.M
             }
 
-            return dtoList.Cast<CE.BlogPost>().ToList();
+            return dtoList.Cast<BlogPost>().ToList();
         }
 
-        public CE.BlogPost GetByTitle(string blogTitle, CE.Blog targetBlog)
+        public BlogPost GetByTitle(string blogTitle, int blogId)
         {
-            return this.GetByProperty("Title", blogTitle, targetBlog);
+            return this.GetByProperty("Title", blogTitle, blogId);
         }
 
-        public CE.BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, CE.Blog targetBlog)
+        public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId)
         {
-            CE.BlogPost retVal = null;
+            BlogEntryDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>() where foundItem.BlogId == targetBlog.BlogId && foundItem.IsPublished == true && foundItem.Title == blogTitle && foundItem.DatePosted.Date == postDate.Date orderby foundItem.DatePosted descending select foundItem).First();
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs where foundItem.BlogId == blogId && foundItem.IsPublished == true && foundItem.Title == blogTitle && foundItem.DatePosted.Date == postDate.Date orderby foundItem.DatePosted descending select foundItem).First();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
         }
 
-        public IList<CE.BlogPost> GetByTag(CE.Tag targetTag, bool publishedOnly)
+        public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
         {
-            return this.GetByTag(null, targetTag, publishedOnly);
+            return this.GetByTag(null, tagId, publishedOnly);
         }
 
-        public IList<CE.BlogPost> GetByTag(CE.Blog targetBlog, CE.Tag targetTag, bool publishedOnly)
+        public IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly)
         {
-            IQueryable<LBlogPost> dtoList = null;
+            IQueryable<BlogEntryDTO> dtoList = null;
 
-            if (targetBlog != null)
+            if (blogId.HasValue)
             {
                 if (publishedOnly == true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogEntryTag>() on foundItem.EntryId equals entryTag.Post.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LTag>() on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Name == targetBlog.Name &&
-                              tagItem.BlogId == targetBlog.BlogId &&
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
+                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
+                              where tagItem.BlogId == blogId.Value &&
                               foundItem.IsPublished == true
                               orderby foundItem.DatePosted descending
                               select foundItem;
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogEntryTag>() on foundItem.EntryId equals entryTag.Post.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LTag>() on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Name == targetBlog.Name &&
-                              tagItem.BlogId == targetBlog.BlogId
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
+                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
+                              where tagItem.BlogId == blogId.Value
                               orderby foundItem.DatePosted descending
                               select foundItem;
                 }
@@ -147,44 +146,42 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (publishedOnly == true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogEntryTag>() on foundItem.EntryId equals entryTag.Post.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LTag>() on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Name == targetBlog.Name &&
-                              foundItem.IsPublished == true
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
+                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
+                              where foundItem.IsPublished == true
                               orderby foundItem.DatePosted descending
                               select foundItem;
 
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogEntryTag>() on foundItem.EntryId equals entryTag.Post.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LTag>() on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Name == targetTag.Name
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
+                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
                               orderby foundItem.DatePosted descending
                               select foundItem;
                 }
             }
 
-            return dtoList.Cast<CE.BlogPost>().ToList();
+            return this.DataMapper.Map(dtoList.ToList());
         }
 
-        public IList<CE.BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
+        public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
         {
             return this.GetByMonth(blogDate, null, publishedOnly);
         }
 
-        public IList<CE.BlogPost> GetByMonth(DateTime blogDate, CE.Blog targetBlog, bool publishedOnly)
+        public IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly)
         {
-            IQueryable<LBlogPost> dtoList = null;
+            IQueryable<BlogEntryDTO> dtoList = null;
             
-            if(targetBlog!=null)
+            if(blogId.HasValue)
             {
                 if(publishedOnly==true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              where foundItem.BlogId == targetBlog.BlogId && 
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              where foundItem.BlogId == blogId.Value && 
                               foundItem.IsPublished == true && 
                               foundItem.DatePosted.Month == blogDate.Month && 
                               foundItem.DatePosted.Year == blogDate.Year 
@@ -192,8 +189,8 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              where foundItem.BlogId == targetBlog.BlogId &&
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              where foundItem.BlogId == blogId.Value &&
                               foundItem.DatePosted.Month == blogDate.Month &&
                               foundItem.DatePosted.Year == blogDate.Year
                               select foundItem;
@@ -203,7 +200,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if(publishedOnly==true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                               where foundItem.IsPublished == true &&
                               foundItem.DatePosted.Month == blogDate.Month &&
                               foundItem.DatePosted.Year == blogDate.Year
@@ -211,39 +208,39 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                               where foundItem.DatePosted.Month == blogDate.Month &&
                               foundItem.DatePosted.Year == blogDate.Year
                               select foundItem;
                 }
             }
 
-            return dtoList.Cast<CE.BlogPost>().ToList();
+            return dtoList.Cast<BlogPost>().ToList();
         }
 
-        public IList<CE.BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
+        public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
         {
             return this.GetByDate(blogDate, null, publishedOnly);
         }
 
-        public IList<CE.BlogPost> GetByDate(DateTime blogDate, CE.Blog targetBlog, bool publishedOnly)
+        public IList<BlogPost> GetByDate(DateTime blogDate, int? blogId, bool publishedOnly)
         {
-            IQueryable<LBlogPost> dtoList = null;
+            IQueryable<BlogEntryDTO> dtoList = null;
 
-            if (targetBlog != null)
+            if (blogId.HasValue)
             {
                 if (publishedOnly == true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              where foundItem.BlogId == targetBlog.BlogId &&
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              where foundItem.BlogId == blogId.Value &&
                               foundItem.IsPublished == true &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
-                              where foundItem.BlogId == targetBlog.BlogId &&
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                              where foundItem.BlogId == blogId.Value &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
@@ -252,69 +249,90 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 if (publishedOnly == true)
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                               where foundItem.IsPublished == true &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
                 else
                 {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>()
+                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                               where foundItem.DatePosted.Month == blogDate.Month &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
             }
 
-            return dtoList.Cast<CE.BlogPost>().ToList();
+            return dtoList.Cast<BlogPost>().ToList();
         }
 
-        public CE.BlogPost GetMostRecent(CE.Blog targetBlog, bool published)
+        public BlogPost GetMostRecent(int blogId, bool published)
         {
-            CE.BlogPost retVal = null;
+            BlogEntryDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>() where foundItem.Blog == targetBlog && foundItem.IsPublished == true orderby foundItem.DatePosted descending select foundItem).First();
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs 
+                          where foundItem.BlogDTO.BlogId == blogId && foundItem.IsPublished == true 
+                          orderby foundItem.DatePosted descending select foundItem).First();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
         }
 
-        public CE.BlogPost GetPreviousEntry(CE.Blog targetBlog, CE.BlogPost currentEntry)
+        public BlogPost GetPreviousEntry(int blogId, int currentPostId)
         {
-            CE.BlogPost retVal = null;
+            BlogEntryDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>() where foundItem.Blog == targetBlog && foundItem.IsPublished == true && foundItem.DatePosted < currentEntry.DatePosted orderby foundItem.DatePosted descending select foundItem).First();
+                BlogEntryDTO currentPost = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs 
+                                            where foundItem.BlogDTO.BlogId == blogId && 
+                                            foundItem.EntryId == currentPostId
+                                            select foundItem).First();
+
+                retVal = (from previousItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                          where previousItem.BlogDTO.BlogId == blogId && 
+                          previousItem.IsPublished == true && 
+                          previousItem.DatePosted < currentPost.DatePosted 
+                          orderby previousItem.DatePosted descending select previousItem).First();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
         }
 
-        public CE.BlogPost GetNextEntry(CE.Blog targetBlog, CE.BlogPost currentEntry)
+        public BlogPost GetNextEntry(int blogId, int currentPostId)
         {
-            CE.BlogPost retVal = null;
+            BlogEntryDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogPost>() where foundItem.Blog == targetBlog && foundItem.IsPublished == true && foundItem.DatePosted > currentEntry.DatePosted orderby foundItem.DatePosted descending select foundItem).First();
+                BlogEntryDTO currentPost = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                                         where foundItem.BlogDTO.BlogId == blogId &&
+                                         foundItem.EntryId == currentPostId
+                                         select foundItem).First();
+
+                retVal = (from previousItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                          where previousItem.BlogDTO.BlogId == blogId &&
+                          previousItem.IsPublished == true &&
+                          previousItem.DatePosted > currentPost.DatePosted
+                          orderby previousItem.DatePosted ascending
+                          select previousItem).First();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
         }
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
@@ -346,28 +364,24 @@ namespace AnotherBlog.Data.LINQ.Repositories
 //            return retVal;
         }
 
-        public IList GetArchiveDates(CE.Blog targetBlog)
+        public IList GetArchiveDates(int? blogId)
         {
             string queryString = "SELECT  COUNT(*) AS PostCount, Max(DatePosted) AS MaxDate";
             queryString += " FROM BlogEntries";
             queryString += " WHERE (IsPublished = 1)";
 
-            IEnumerable<CE.BlogPostCount> foundPosts = null;
+            IEnumerable<BlogPostCount> foundPosts = null;
 
-            if (targetBlog != null)
+            if (blogId.HasValue)
             {
-                if (targetBlog != null)
-                {
-                    queryString += " AND (BlogId = {0})";
-                }
-
+                queryString += " AND (BlogId = {0})";
                 queryString += " GROUP BY YEAR(DatePosted), MONTH(DatePosted)" + " ORDER BY MaxDate";
-                foundPosts = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<CE.BlogPostCount>(queryString, targetBlog.BlogId);
+                foundPosts = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<BlogPostCount>(queryString, blogId);
             }
             else
             {
                 queryString += " GROUP BY YEAR(DatePosted), MONTH(DatePosted)" + " ORDER BY MaxDate";
-                foundPosts = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<CE.BlogPostCount>(queryString);
+                foundPosts = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<BlogPostCount>(queryString);
             }
 
             return foundPosts.ToList();

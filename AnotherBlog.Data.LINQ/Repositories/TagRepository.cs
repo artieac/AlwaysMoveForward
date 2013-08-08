@@ -14,7 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
@@ -25,10 +26,10 @@ namespace AnotherBlog.Data.LINQ.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : LRepository<CE.Tag, LTag>, ITagRepository
+    public class TagRepository : LINQRepository<Tag, TagDTO, ITag>, ITagRepository
     {
-        internal TagRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal TagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -37,14 +38,29 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList GetAllWithCount(CE.Blog targetBlog)
+        public IList GetAllWithCount(int? blogId)
         {
             string queryString = "SELECT  COUNT(bet.BlogEntryTagId) AS Count, t.name as TagName";
             queryString += " FROM Tags t, BlogEntryTags as bet";
-            queryString += " WHERE (t.BlogId = {0}) AND (bet.TagId = t.id)";
+            queryString += " WHERE (bet.TagId = t.id)";
+
+            if (blogId.HasValue)
+            {
+                queryString += " AND (t.BlogId = {0})";
+            }
+
             queryString += " GROUP BY t.Name";
 
-            IEnumerable<CE.TagCount> foundTags = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<CE.TagCount>(queryString, targetBlog.BlogId);
+            IEnumerable<TagCount> foundTags;
+
+            if (blogId.HasValue)
+            {
+                foundTags = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<TagCount>(queryString, blogId.Value);
+            }
+            else
+            {
+                foundTags = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteQuery<TagCount>(queryString, blogId.Value);
+            }
 
             return foundTags.ToList();
         }
@@ -54,9 +70,9 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// <param name="name"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.Tag GetByName(string name, CE.Blog targetBlog)
+        public Tag GetByName(string name, int blogId)
         {
-            return this.GetByProperty("Name", name, targetBlog);
+            return this.GetByProperty("Name", name, blogId);
         }
         /// <summary>
         /// Get multiple tag records.
@@ -64,12 +80,21 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// <param name="names"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Tag> GetByNames(string[] names, CE.Blog targetBlog)
+        public IList<Tag> GetByNames(string[] names, int blogId)
         {
-            IQueryable<LTag> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LTag>()
-                                     where names.Contains(foundItem.Name) && foundItem.BlogId == targetBlog.BlogId
+            IQueryable<TagDTO> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs
+                                     where names.Contains(foundItem.Name) && foundItem.BlogId == blogId
                                      select foundItem;
-            return dtoList.Cast<CE.Tag>().ToList();
+            return dtoList.Cast<Tag>().ToList();
+        }
+
+        public IList<Tag> GetByBlogEntryId(int entryId)
+        {
+            IQueryable<TagDTO> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs
+                                         join blogEntryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.Id equals blogEntryTag.BlogEntryDTO.EntryId
+                                         where blogEntryTag.BlogEntryDTO.EntryId == entryId
+                                         select foundItem;
+            return dtoList.Cast<Tag>().ToList();
         }
     }
 }

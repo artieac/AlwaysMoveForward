@@ -19,6 +19,7 @@ namespace AnotherBlog.Common.Data.Repositories
 {
     public interface IBlogEntryTagRepository : IRepository<PostTag>
     {
-        IList<PostTag> GetByBlogEntry(BlogPost targetEntry);
+        IList<PostTag> GetByBlogEntry(int blogPostId);
+        Boolean DeleteByBlogEntry(int blogPostId);
     }
 }

@@ -18,7 +18,8 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -29,10 +30,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : NHRepository<CE.SiteInfo, ARSiteInfo>, ISiteInfoRepository
+    public class SiteInfoRepository : ActiveRecordRepository<SiteInfo, SiteInfoDTO, ISiteInfo>, ISiteInfoRepository
     {
-        internal SiteInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal SiteInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -45,9 +46,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// Get stored web site settings.
         /// </summary>
         /// <returns></returns>
-        public CE.SiteInfo GetSiteInfo()
+        public SiteInfo GetSiteInfo()
         {
-            return Castle.ActiveRecord.ActiveRecordMediator<ARSiteInfo>.FindFirst();
+            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
         }
     }
 }

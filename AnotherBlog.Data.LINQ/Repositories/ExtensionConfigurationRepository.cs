@@ -15,33 +15,34 @@ using System.Text;
 using System.Data;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class ExtensionConfigurationRepository : LRepository<CE.ExtensionConfiguration, LExtensionConfiguration>, IExtensionConfigurationRepository
+    public class ExtensionConfigurationRepository : LINQRepository<ExtensionConfiguration, ExtensionConfigurationDTO, IExtensionConfiguration>, IExtensionConfigurationRepository
     {
-        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
-        public CE.ExtensionConfiguration GetByConfigurationId(int configurationId)
+        public ExtensionConfiguration GetByConfigurationId(int configurationId)
         {
             return this.GetByProperty("ConfigurationId", configurationId);
         }
 
-        public CE.ExtensionConfiguration GetByExtensionId(int extensionId)
+        public ExtensionConfiguration GetByExtensionId(int extensionId)
         {
             return this.GetByProperty("ExtensionId", extensionId);
         }
 
-        public CE.ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, CE.Blog targetBlog)
+        public ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, int blogId)
         {
-            return this.GetByProperty("ExtensionId", extensionId, targetBlog);
+            return this.GetByProperty("ExtensionId", extensionId, blogId);
         }
     }
 }

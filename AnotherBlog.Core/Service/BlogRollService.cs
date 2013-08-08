@@ -35,7 +35,9 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public BlogRollLink Create()
         {
-            return this.Repositories.BlogLinks.CreateNewInstance();
+            BlogRollLink retVal = new BlogRollLink();
+            retVal.BlogRollLinkId = this.Repositories.BlogLinks.UnsavedId;
+            return retVal;
         }
         /// <summary>
         /// Get all the blog roll inks stored for a particular blog
@@ -44,7 +46,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public IList<BlogRollLink> GetAllByBlog(Blog targetBlog)
         {
-            return Repositories.BlogLinks.GetAll(targetBlog);
+            return Repositories.BlogLinks.GetAll(targetBlog.BlogId);
         }
         /// <summary>
         /// Save a blog roll link for a particulra blog

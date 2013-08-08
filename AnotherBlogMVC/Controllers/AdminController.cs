@@ -18,9 +18,11 @@ namespace AnotherBlog.MVC.Controllers
         {
             targetModel.UserBlogs = new List<Blog>();
 
-            for (int i = 0; i < this.CurrentPrincipal.CurrentUser.UserBlogs.Count; i++)
+            IList<BlogUser> userBlogs = Services.BlogUsers.GetUserBlogs(this.CurrentPrincipal.CurrentUser.UserId);
+
+            for (int i = 0; i < userBlogs.Count; i++)
             {
-                targetModel.UserBlogs.Add(this.CurrentPrincipal.CurrentUser.UserBlogs[i].Blog);
+                targetModel.UserBlogs.Add((Blog)(userBlogs[i].Blog));
             }
 
             if(targetBlog!=null)
@@ -137,10 +139,11 @@ namespace AnotherBlog.MVC.Controllers
             SiteAdminModel model = new SiteAdminModel();
 
             model.UserBlogs = new List<Blog>();
+            IList<BlogUser> userBlogs = Services.BlogUsers.GetUserBlogs(this.CurrentPrincipal.CurrentUser.UserId);
 
-            for (int i = 0; i < this.CurrentPrincipal.CurrentUser.UserBlogs.Count; i++)
+            for (int i = 0; i < userBlogs.Count; i++)
             {
-                model.UserBlogs.Add(this.CurrentPrincipal.CurrentUser.UserBlogs[i].Blog);
+                model.UserBlogs.Add((Blog)(userBlogs[i].Blog));
             }
 
             if (savingBlog != null)
@@ -312,7 +315,7 @@ namespace AnotherBlog.MVC.Controllers
                     }
                     else
                     {
-                        model.PostTags = model.BlogPost.Tags;
+                        model.PostTags = Services.Tags.GetByBlogEntryId(model.BlogPost.EntryId);
                     }
                 }
             }
@@ -449,6 +452,7 @@ namespace AnotherBlog.MVC.Controllers
 
             model.Blogs = Services.Blogs.GetAll();
             model.CurrentUser = Services.Users.GetById(targetUser);
+            model.CurrentUser.UserBlogs = Services.BlogUsers.GetUserBlogs(model.CurrentUser.UserId);
 
             return View(model);
         }
@@ -465,6 +469,7 @@ namespace AnotherBlog.MVC.Controllers
             Services.BlogUsers.Save(targetUser, blogId, roleId);
             model.Blogs = Services.Blogs.GetAll();
             model.CurrentUser = Services.Users.GetById(targetUser);
+            model.CurrentUser.UserBlogs = Services.BlogUsers.GetUserBlogs(model.CurrentUser.UserId);
 
             return View("ManageUserBlogs", model);
         }

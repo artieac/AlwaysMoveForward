@@ -14,7 +14,8 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
@@ -25,10 +26,10 @@ namespace AnotherBlog.Data.LINQ.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : LRepository<CE.User, LUser>, IUserRepository
+    public class UserRepository : LINQRepository<User, UserDTO, IUser>, IUserRepository
     {
-        internal UserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal UserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -43,7 +44,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public CE.User GetByUserName(string userName)
+        public User GetByUserName(string userName)
         {
             return this.GetByProperty("UserName", userName);
         }
@@ -53,20 +54,20 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public CE.User GetByUserNameAndPassword(string userName, string password)
+        public User GetByUserNameAndPassword(string userName, string password)
         {
-            CE.User retVal = null;
+            UserDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LUser>() where foundItem.UserName == userName && foundItem.Password == password select foundItem).Single();
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.UserDTOs where foundItem.UserName == userName && foundItem.Password == password select foundItem).Single();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
 
         }
         /// <summary>
@@ -74,7 +75,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>
-        public CE.User GetByEmail(string userEmail)
+        public User GetByEmail(string userEmail)
         {
             return this.GetByProperty("Email", userEmail);
         }
@@ -83,16 +84,16 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.User> GetBlogWriters(CE.Blog targetBlog)
+        public IList<User> GetBlogWriters(int blogId)
         {
-            IQueryable<LUser> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LUser>()
-                                        join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogUser>() on foundItem.UserId equals userBlog.User.UserId
-                                        join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LRole>() on userBlog.UserRole.RoleId equals userRoles.RoleId
+            IQueryable<UserDTO> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.UserDTOs
+                                        join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUserDTOs on foundItem.UserId equals userBlog.UserDTO.UserId
+                                        join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.RoleDTOs on userBlog.RoleDTO.RoleId equals userRoles.RoleId
                                         where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
-                                          userBlog.BlogId == targetBlog.BlogId && 
-                                          userBlog.UserRole.RoleId == userRoles.RoleId
+                                          userBlog.BlogId == blogId && 
+                                          userBlog.RoleDTO.RoleId == userRoles.RoleId
                                         select foundItem;
-            return dtoList.Cast<CE.User>().ToList();
+            return this.DataMapper.Map(dtoList.ToList());
         }
     }
 }

@@ -14,11 +14,13 @@ using System.Linq;
 using System.Text;
 
 using NHibernate.Criterion;
+using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -28,10 +30,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
     /// The BlogRoll is used to contain all links related to the blog.  This repository class
     /// contains all the LINQ code to perform the CRUD operations on the class.
     /// </summary>
-    public class BlogRollLinkRepository : NHRepository<CE.BlogRollLink, ARBlogRollLink>, IBlogRollLinkRepository
+    public class BlogRollLinkRepository : ActiveRecordRepository<BlogRollLink, BlogRollLinksDTO, IBlogRollLink>, IBlogRollLinkRepository
     {
-        internal BlogRollLinkRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogRollLinkRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
@@ -46,13 +48,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <param name="targetBlog"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public CE.BlogRollLink GetByUrlAndBlogId(CE.Blog targetBlog, string url)
+        public BlogRollLink GetByUrlAndBlogId(int blogId, string url)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<ARBlogRollLink>();
-            criteria.Add(Expression.Eq("Blog", targetBlog));
-            criteria.Add(Expression.Eq("Url", url));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<ARBlogRollLink>.FindOne(criteria);
+            return this.GetByProperty("Url", url, blogId);
         }
     }
 }

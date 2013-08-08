@@ -14,21 +14,22 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class BlogRepository : LRepository<CE.Blog, LBlog>, IBlogRepository
+    public class BlogRepository : LINQRepository<Blog, BlogDTO, IBlog>, IBlogRepository
     {
         /// <summary>
         /// This class contains all the code to extract data from the repository using LINQ
         /// </summary>
         /// <param name="dataContext"></param>
-        internal BlogRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
@@ -41,7 +42,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public CE.Blog GetByName(string name)
+        public Blog GetByName(string name)
         {
             return this.GetByProperty("Name", name); 
         }
@@ -50,7 +51,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="subFolder"></param>
         /// <returns></returns>
-        public CE.Blog GetBySubFolder(string subFolder)
+        public Blog GetBySubFolder(string subFolder)
         {
             return this.GetByProperty("SubFolder", subFolder); 
         }
@@ -59,13 +60,13 @@ namespace AnotherBlog.Data.LINQ.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<CE.Blog> GetByUserId(int userId)
+        public IList<Blog> GetByUserId(int userId)
         {
-            IQueryable<LBlog> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlog>()
-                                      join userBlogs in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LBlogUser>() on foundItem.BlogId equals userBlogs.Blog.BlogId
-                                      where userBlogs.User.UserId == userId
+            IQueryable<BlogDTO> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogDTOs
+                                      join userBlogs in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUserDTOs on foundItem.BlogId equals userBlogs.BlogDTO.BlogId
+                                      where userBlogs.UserDTO.UserId == userId
                                       select foundItem;
-            return dtoList.Cast<CE.Blog>().ToList();
+            return dtoList.Cast<Blog>().ToList();
         }
     }
 }

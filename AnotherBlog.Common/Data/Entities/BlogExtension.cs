@@ -15,10 +15,11 @@ using System.Text;
 using System.Reflection;
 
 using AnotherBlog.Common;
+using AnotherBlog.Common.Data.Map;
 
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class BlogExtension
+    public class BlogExtension : IBlogExtension
     {
         BlogExtensionDefinition blogExtension;
         Assembly loadedAssembly;

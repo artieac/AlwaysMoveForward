@@ -21,10 +21,10 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class DbInfoRepository : NHRepository<CE.DbInfo, CE.DbInfo>, IDbInfoRepository
+    public class DbInfoRepository : NHibernateRepository<CE.DbInfo, CE.DbInfo>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal DbInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

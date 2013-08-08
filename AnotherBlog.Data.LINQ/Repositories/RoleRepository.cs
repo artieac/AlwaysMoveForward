@@ -14,7 +14,8 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
@@ -25,10 +26,10 @@ namespace AnotherBlog.Data.LINQ.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : LRepository<CE.Role, LRole>, IRoleRepository
+    public class RoleRepository : LINQRepository<Role, RoleDTO, IRole>, IRoleRepository
     {
-        internal RoleRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal RoleRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

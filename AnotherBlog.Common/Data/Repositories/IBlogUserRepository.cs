@@ -19,8 +19,8 @@ namespace AnotherBlog.Common.Data.Repositories
 {
     public interface IBlogUserRepository : IRepository<BlogUser>
     {
-        IList<BlogUser> GetUserBlogs(User blogUser);
-        BlogUser GetUserBlog(User blogUser, Blog targetBlog);
-        bool DeleteUserBlog(User blogUser, Blog targetBlog);
+        IList<BlogUser> GetUserBlogs(int userId);
+        BlogUser GetUserBlog(int userId, int blogId);
+        bool DeleteUserBlog(int userId, int blogId);
     }
 }

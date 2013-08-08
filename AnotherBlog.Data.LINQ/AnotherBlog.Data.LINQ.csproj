@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,11 @@
     <AssemblyName>AnotherBlog.Data.LINQ</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,9 +45,12 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,19 +62,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\LBlog.cs" />
-    <Compile Include="Entities\LBlogEntryTag.cs" />
-    <Compile Include="Entities\LBlogExtension.cs" />
-    <Compile Include="Entities\LBlogPost.cs" />
-    <Compile Include="Entities\LBlogRollLink.cs" />
-    <Compile Include="Entities\LBlogUser.cs" />
-    <Compile Include="Entities\LDbInfo.cs" />
-    <Compile Include="Entities\LEntryComment.cs" />
-    <Compile Include="Entities\LExtensionConfiguration.cs" />
-    <Compile Include="Entities\LRole.cs" />
-    <Compile Include="Entities\LSiteInfo.cs" />
-    <Compile Include="Entities\LTag.cs" />
-    <Compile Include="Entities\LUser.cs" />
+    <Compile Include="DataMapper\BlogMapper.cs" />
+    <Compile Include="DataMapper\BlogPostMapper.cs" />
+    <Compile Include="DataMapper\BlogUserMapper.cs" />
+    <Compile Include="DataMapper\CommentMapper.cs" />
+    <Compile Include="DataMapper\DbInfoMapper.cs" />
+    <Compile Include="DataMapper\PostTagMapper.cs" />
+    <Compile Include="DataMapper\RoleMapper.cs" />
+    <Compile Include="DataMapper\TagMapper.cs" />
+    <Compile Include="DataMapper\UserMapper.cs" />
+    <Compile Include="Entities\AnotherBlogDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnotherBlogDb.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BlogDTO.cs" />
+    <Compile Include="Entities\BlogEntryDTO.cs" />
+    <Compile Include="Entities\BlogEntryTagDTO.cs" />
+    <Compile Include="Entities\BlogExtensionDTO.cs" />
+    <Compile Include="Entities\BlogRollLinkDTO.cs" />
+    <Compile Include="Entities\BlogUserDTO.cs" />
+    <Compile Include="Entities\DbInfoDTO.cs" />
+    <Compile Include="Entities\EntryCommentDTO.cs" />
+    <Compile Include="Entities\ExtensionConfigurationDTO.cs" />
+    <Compile Include="Entities\RoleDTO.cs" />
+    <Compile Include="Entities\SiteInfoDTO.cs" />
+    <Compile Include="Entities\TagDTO.cs" />
+    <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -83,7 +105,7 @@
     <Compile Include="Repositories\EntityConfiguration.cs" />
     <Compile Include="Repositories\EntryCommentRepository.cs" />
     <Compile Include="Repositories\ExtensionConfigurationRepository.cs" />
-    <Compile Include="Repositories\LRepository.cs" />
+    <Compile Include="Repositories\LINQRepository.cs" />
     <Compile Include="Repositories\RepositoryManager.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SiteInfoRepository.cs" />
@@ -96,6 +118,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Entities\AnotherBlogDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>AnotherBlogDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,6 +133,11 @@
       <Project>{33606A34-2EB1-4977-AB21-A6A0B09C4869}</Project>
       <Name>AnotherBlog.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entities\AnotherBlogDb.dbml.layout">
+      <DependentUpon>AnotherBlogDb.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

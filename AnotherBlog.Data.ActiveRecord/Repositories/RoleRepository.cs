@@ -18,7 +18,8 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -28,10 +29,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : NHRepository<CE.Role, ARRole>, IRoleRepository
+    public class RoleRepository : ActiveRecordRepository<Role, RoleDTO, IRole>, IRoleRepository
     {
-        internal RoleRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal RoleRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

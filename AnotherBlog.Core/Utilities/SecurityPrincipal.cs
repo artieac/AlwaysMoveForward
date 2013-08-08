@@ -15,6 +15,7 @@ using System.Text;
 using System.Security.Principal;
 
 using AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Core.Service;
 
 namespace AnotherBlog.Core.Utilities
 {
@@ -22,6 +23,7 @@ namespace AnotherBlog.Core.Utilities
     {
         bool isAuthenticated = false;
         User currentUser;
+        ServiceManager serviceManager = null;
 
         public SecurityPrincipal(User _currentUser) : this(_currentUser, false){}
 
@@ -36,6 +38,19 @@ namespace AnotherBlog.Core.Utilities
             get { return this.currentUser; }
         }
 
+        private ServiceManager ServiceManager
+        {
+            get
+            {
+                if (this.serviceManager == null)
+                {
+                    serviceManager = new ServiceManager();
+                    serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                }
+
+                return this.serviceManager;
+            }
+        }
         /// <summary>
         /// Implement the IIDentity interface so that it can be used with built in .Net security methods
         /// </summary>
@@ -121,13 +136,15 @@ namespace AnotherBlog.Core.Utilities
 
                 if (retVal == false)
                 {
-                    if (this.currentUser.UserBlogs != null)
+                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUsers.GetUserBlogs(this.currentUser.UserId);
+
+                    if (userBlogs != null)
                     {
-                        for (int i = 0; i < this.currentUser.UserBlogs.Count; i++)
+                        for (int i = 0; i < userBlogs.Count; i++)
                         {
-                            if (this.currentUser.UserBlogs[i].Blog.SubFolder == blogSubFolder)
+                            if (userBlogs[i].Blog.SubFolder == blogSubFolder)
                             {
-                                if (this.currentUser.UserBlogs[i].UserRole.Name == targetRole)
+                                if (userBlogs[i].UserRole.Name == targetRole)
                                 {
                                     retVal = true;
                                     break;
@@ -168,13 +185,15 @@ namespace AnotherBlog.Core.Utilities
                 {
                     if (targetBlog != null)
                     {
-                        if (this.currentUser.UserBlogs != null)
+                        IList<BlogUser> userBlogs = this.ServiceManager.BlogUsers.GetUserBlogs(this.currentUser.UserId);
+
+                        if (userBlogs != null)
                         {
-                            for (int i = 0; i < this.currentUser.UserBlogs.Count; i++)
+                            for (int i = 0; i < userBlogs.Count; i++)
                             {
-                                if (this.currentUser.UserBlogs[i].Blog.BlogId == targetBlog.BlogId)
+                                if (userBlogs[i].Blog.BlogId == targetBlog.BlogId)
                                 {
-                                    if (targetRole.Contains(this.currentUser.UserBlogs[i].UserRole.Name))
+                                    if (targetRole.Contains(userBlogs[i].UserRole.Name))
                                     {
                                         retVal = true;
                                         break;

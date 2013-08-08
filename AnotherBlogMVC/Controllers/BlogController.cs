@@ -260,8 +260,8 @@ namespace AnotherBlog.MVC.Controllers
             {
                 DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
                 model.BlogEntry = Services.BlogEntries.GetByDateAndTitle(model.TargetBlog, postDate, HttpUtility.UrlDecode(title.Replace("_", " ")));
-                model.EntryTags = model.BlogEntry.Tags;
-                model.Comments = model.BlogEntry.Comments;
+                model.EntryTags = Services.Tags.GetByBlogEntryId(model.BlogEntry.EntryId);
+                model.Comments = Services.EntryComments.GetByEntry(model.TargetBlog, model.BlogEntry);
                 model.PreviousEntry = Services.BlogEntries.GetPreviousEntry(model.TargetBlog, model.BlogEntry);
                 model.NextEntry = Services.BlogEntries.GetNextEntry(model.TargetBlog, model.BlogEntry);
             }

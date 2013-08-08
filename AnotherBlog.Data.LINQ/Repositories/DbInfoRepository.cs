@@ -14,35 +14,36 @@ using System.Linq;
 using System.Text;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.LINQ;
 using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ.Repositories
 {
-    public class DbInfoRepository : LRepository<CE.DbInfo, LDbInfo>, IDbInfoRepository
+    public class DbInfoRepository : LINQRepository<DbInfo, DbInfoDTO, IDbInfo>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal DbInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }
 
-        public CE.DbInfo GetDbInfo()
+        public DbInfo GetDbInfo()
         {
-            LDbInfo retVal = null;
+            DbInfoDTO retVal = null;
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<LDbInfo>() select foundItem).Single();
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.DbInfoDTOs select foundItem).Single();
             }
             catch (Exception e)
             {
                 this.Logger.Warn(e.Message, e);
             }
 
-            return retVal;
+            return this.DataMapper.Map(retVal);
 
         }
     }

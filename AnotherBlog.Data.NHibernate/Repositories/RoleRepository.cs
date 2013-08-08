@@ -25,10 +25,10 @@ namespace AnotherBlog.Data.NHibernate.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : NHRepository<CE.Role, CE.Role>, IRoleRepository
+    public class RoleRepository : NHibernateRepository<CE.Role, CE.Role>, IRoleRepository
     {
-        internal RoleRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal RoleRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

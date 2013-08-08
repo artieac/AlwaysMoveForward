@@ -27,7 +27,9 @@ namespace AnotherBlog.Core.Service
 
         public BlogUser Create()
         {
-            return this.Repositories.BlogUsers.CreateNewInstance();
+            BlogUser retVal = new BlogUser();
+            retVal.BlogUserId = this.Repositories.BlogUsers.UnsavedId;
+            return retVal;
         }
 
         public BlogUser Save(int userId, int blogId, int roleId)
@@ -40,7 +42,7 @@ namespace AnotherBlog.Core.Service
 
             if (validBlog != null && validUser != null && validRole != null)
             {
-                retVal = Repositories.BlogUsers.GetUserBlog(validUser, validBlog);
+                retVal = Repositories.BlogUsers.GetUserBlog(validUser.UserId, validBlog.BlogId);
 
                 if (retVal == null)
                 {
@@ -59,12 +61,12 @@ namespace AnotherBlog.Core.Service
 
         public BlogUser GetUserBlog(int userId, int blogId)
         {
-            return Repositories.BlogUsers.GetUserBlog(Repositories.Users.GetById(userId), Services.Blogs.GetById(blogId));
+            return Repositories.BlogUsers.GetUserBlog(userId, blogId);
         }
 
         public IList<BlogUser> GetUserBlogs(int userId)
         {
-            return Repositories.BlogUsers.GetUserBlogs(Repositories.Users.GetById(userId));
+            return Repositories.BlogUsers.GetUserBlogs(userId);
         }
 
         public bool DeleteUserBlog(BlogUser targetUser)
@@ -81,7 +83,7 @@ namespace AnotherBlog.Core.Service
 
             if (validBlog!=null && validUser!=null)
             {
-                retVal = Repositories.BlogUsers.DeleteUserBlog(validUser, validBlog);
+                retVal = Repositories.BlogUsers.DeleteUserBlog(validUser.UserId, validBlog.BlogId);
             }
 
             return retVal;

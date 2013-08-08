@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
+
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class Role
+    public class Role : IRole
     {
         public const string SiteAdministrator = "SiteAdministrator";
         public const string Administrator = "Administrator";

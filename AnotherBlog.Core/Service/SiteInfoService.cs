@@ -27,7 +27,9 @@ namespace AnotherBlog.Core.Service
 
         public SiteInfo Create()
         {
-            return this.Repositories.SiteInfo.CreateNewInstance();
+            SiteInfo retVal = new SiteInfo();
+            retVal.SiteId = this.Repositories.SiteInfo.UnsavedId;
+            return retVal;
         }
 
         public SiteInfo GetSiteInfo()

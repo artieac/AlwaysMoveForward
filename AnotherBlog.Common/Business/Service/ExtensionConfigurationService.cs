@@ -36,7 +36,9 @@ namespace AnotherBlog.Common.Business.Service
 
         public ExtensionConfiguration Create()
         {
-            return this.repository.CreateNewInstance();
+            ExtensionConfiguration retVal = new ExtensionConfiguration();
+            retVal.ExtensionId = Repository.UnsavedId;
+            return retVal;
         }
 
         public IList<ExtensionConfiguration> GetAll()
@@ -56,7 +58,7 @@ namespace AnotherBlog.Common.Business.Service
 
         public ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, Blog targetBlog)
         {
-            return this.repository.GetByExtensionIdAndBlog(extensionId, targetBlog);
+            return this.repository.GetByExtensionIdAndBlog(extensionId, targetBlog.BlogId);
         }
 
         public ExtensionConfiguration Save(int configurationId, int extensionId, string extensionSettings)

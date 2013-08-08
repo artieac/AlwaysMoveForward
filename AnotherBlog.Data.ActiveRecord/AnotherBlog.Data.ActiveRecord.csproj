@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,11 @@
     <AssemblyName>AnotherBlog.Data.ActiveRecord</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -86,19 +91,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ARExtensionConfiguration.cs" />
-    <Compile Include="Entities\ARBlog.cs" />
-    <Compile Include="Entities\ARBlogPost.cs" />
-    <Compile Include="Entities\ARBlogEntryTag.cs" />
-    <Compile Include="Entities\ARBlogExtension.cs" />
-    <Compile Include="Entities\ARBlogRollLink.cs" />
-    <Compile Include="Entities\ARBlogUser.cs" />
-    <Compile Include="Entities\ARDbInfo.cs" />
-    <Compile Include="Entities\AREntryComment.cs" />
-    <Compile Include="Entities\ARRole.cs" />
-    <Compile Include="Entities\ARSiteInfo.cs" />
-    <Compile Include="Entities\ARTag.cs" />
-    <Compile Include="Entities\ARUser.cs" />
+    <Compile Include="DataMapper\BlogMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\BlogPostMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\BlogUserMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\CommentMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\DbInfoMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\PostTagMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\RoleMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\TagMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataMapper\UserMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\ExtensionConfigurationDTO.cs" />
+    <Compile Include="Entities\BlogDTO.cs" />
+    <Compile Include="Entities\BlogPostDTO.cs" />
+    <Compile Include="Entities\BlogEntryTagsDTO.cs" />
+    <Compile Include="Entities\BlogExtensionDTO.cs" />
+    <Compile Include="Entities\BlogRollLinksDTO.cs" />
+    <Compile Include="Entities\BlogUserDTO.cs" />
+    <Compile Include="Entities\DbInfoDTO.cs" />
+    <Compile Include="Entities\EntryCommentsDTO.cs" />
+    <Compile Include="Entities\RoleDTO.cs" />
+    <Compile Include="Entities\SiteInfoDTO.cs" />
+    <Compile Include="Entities\TagDTO.cs" />
+    <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Repositories\BlogEntryRepository.cs" />
     <Compile Include="Repositories\BlogEntryTagRepository.cs" />
     <Compile Include="Repositories\BlogExtensionRepository.cs" />
@@ -108,7 +140,7 @@
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\EntryCommentRepository.cs" />
     <Compile Include="Repositories\ExtensionConfigurationRepository.cs" />
-    <Compile Include="Repositories\NHRepository.cs" />
+    <Compile Include="Repositories\ActiveRecordRepository.cs" />
     <Compile Include="Repositories\RepositoryManager.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SiteInfoRepository.cs" />

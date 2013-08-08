@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
+
 namespace AnotherBlog.Common.Data.Entities
 {
-    public class PostTag
+    public class PostTag : IPostTag
     {
         public virtual int PostTagId{ get; set;} 
         public virtual Tag Tag { get; set;} 

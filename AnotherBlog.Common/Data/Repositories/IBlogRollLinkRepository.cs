@@ -19,6 +19,6 @@ namespace AnotherBlog.Common.Data.Repositories
 {
     public interface IBlogRollLinkRepository : IRepository<BlogRollLink>
     {
-        BlogRollLink GetByUrlAndBlogId(Blog targetBlog, string url);
+        BlogRollLink GetByUrlAndBlogId(int blogId, string url);
     }
 }

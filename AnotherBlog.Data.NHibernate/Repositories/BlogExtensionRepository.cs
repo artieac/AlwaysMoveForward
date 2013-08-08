@@ -21,10 +21,10 @@ using AnotherBlog.Common.Data.Repositories;
 
 namespace AnotherBlog.Data.NHibernate.Repositories
 {
-    public class BlogExtensionRepository : NHRepository<CE.BlogExtension, CE.BlogExtension>, IBlogExtensionRepository
+    public class BlogExtensionRepository : NHibernateRepository<CE.BlogExtension, CE.BlogExtension>, IBlogExtensionRepository
     {
-        internal BlogExtensionRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        internal BlogExtensionRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
 
         }

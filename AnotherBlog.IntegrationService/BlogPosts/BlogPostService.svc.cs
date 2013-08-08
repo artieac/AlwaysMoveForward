@@ -33,7 +33,7 @@ namespace AnotherBlog.IntegrationService.BlogPosts
 
             if (currentUser != null)
             {
-                retVal.UserBlogInfo = currentUser.UserBlogs;
+                retVal.UserBlogInfo = Services.BlogUsers.GetUserBlogs(currentUser.UserId);
             }
 
             return retVal;

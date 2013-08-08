@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
 
 namespace AnotherBlog.Core.Service
@@ -33,7 +34,9 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public PostTag Create()
         {
-            return this.Repositories.BlogEntryTags.CreateNewInstance();
+            PostTag retVal = new PostTag();
+            retVal.PostTagId = this.Repositories.BlogEntryTags.UnsavedId;
+            return retVal;
         }
         /// <summary>
         /// Relate existing tags to an existing blog entry
@@ -43,20 +46,16 @@ namespace AnotherBlog.Core.Service
         /// <param name="_submitChanges"></param>
         public void AssociateTags(BlogPost blogEntry, IList<Tag> tagsToAssociate)
         {
-            if (blogEntry.Tags != null)
+            if (this.Repositories.BlogEntryTags.DeleteByBlogEntry(blogEntry.EntryId))
             {
-                blogEntry.Tags.Clear();
+                for (int i = 0; i < tagsToAssociate.Count; i++)
+                {
+                    PostTag newTagRelation = this.Services.BlogEntryTags.Create();
+                    newTagRelation.Post = blogEntry;
+                    newTagRelation.Tag = tagsToAssociate[i];
+                    this.Repositories.BlogEntryTags.Save(newTagRelation);
+                }
             }
-            else
-            {
-                blogEntry.Tags = new List<Tag>();
-            }
-
-            for (int i = 0; i < tagsToAssociate.Count; i++)
-            {
-                blogEntry.Tags.Add(tagsToAssociate[i]);
-            }
-            base.Repositories.BlogEntries.Save(blogEntry);
         }
         /// <summary>
         /// Get all tag relationships for a give blog entry
@@ -65,7 +64,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public IList<PostTag> GetByBlogEntry(BlogPost blogEntry)
         {
-            return Repositories.BlogEntryTags.GetByBlogEntry(blogEntry);
+            return Repositories.BlogEntryTags.GetByBlogEntry(blogEntry.EntryId);
         }
     }
 }

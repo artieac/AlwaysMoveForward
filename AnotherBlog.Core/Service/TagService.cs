@@ -30,27 +30,34 @@ namespace AnotherBlog.Core.Service
 
         public Tag Create()
         {
-            return this.Repositories.Tags.CreateNewInstance();
+            Tag retVal = new Tag();
+            retVal.Id = this.Repositories.Tags.UnsavedId;
+            return retVal;
         }
 
         public IList<Tag> GetAll(Blog targetBlog)
         {
-            return Repositories.Tags.GetAll(targetBlog);
+            return Repositories.Tags.GetAll(targetBlog.BlogId);
         }
 
         public IList GetAllWithCount(Blog targetBlog)
         {
-            return Repositories.Tags.GetAllWithCount(targetBlog);
+            return Repositories.Tags.GetAllWithCount(targetBlog.BlogId);
         }
 
         public Tag GetByName(string name, Blog targetBlog)
         {
-            return Repositories.Tags.GetByName(name, targetBlog);
+            return Repositories.Tags.GetByName(name, targetBlog.BlogId);
         }
 
         public IList<Tag> GetByNames(string[] names, Blog targetBlog)
         {
-            return Repositories.Tags.GetByNames(names, targetBlog);
+            return Repositories.Tags.GetByNames(names, targetBlog.BlogId);
+        }
+
+        public IList<Tag> GetByBlogEntryId(int entryId)
+        {
+            return Repositories.Tags.GetByBlogEntryId(entryId);
         }
 
         public IList<Tag> AddTags(Blog targetBlog, string[] names)
@@ -63,14 +70,14 @@ namespace AnotherBlog.Core.Service
 
                 if (trimmedName != String.Empty)
                 {
-                    Tag currentTag = Repositories.Tags.GetByName(trimmedName, targetBlog);
+                    Tag currentTag = Repositories.Tags.GetByName(trimmedName, targetBlog.BlogId);
 
                     if (currentTag == null)
                     {
                         currentTag = this.Create();
                         currentTag.Name = trimmedName;
                         currentTag.Blog = targetBlog;
-                        Repositories.Tags.Save(currentTag);
+                        currentTag = Repositories.Tags.Save(currentTag);
                     }
 
                     retVal.Add(currentTag);

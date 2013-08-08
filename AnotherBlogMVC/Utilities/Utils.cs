@@ -173,5 +173,26 @@ namespace AnotherBlog.MVC.Utilities
 
             return retVal;
         }
+
+        public static bool IsUserInRole(System.Security.Principal.IPrincipal contextUser, Blog targetBlog, String targetRole)
+        {
+            bool retVal = false;
+
+            AnotherBlog.Core.Utilities.SecurityPrincipal currentPrincipal = contextUser as AnotherBlog.Core.Utilities.SecurityPrincipal;
+
+            if (currentPrincipal != null)
+            {
+                if (targetBlog == null)
+                {
+                    retVal = currentPrincipal.IsInRole(targetRole);
+                }
+                else
+                {
+                    retVal = currentPrincipal.IsInRole(targetRole, targetBlog.SubFolder);
+                }
+            }
+
+            return retVal;
+        }
     }
 }

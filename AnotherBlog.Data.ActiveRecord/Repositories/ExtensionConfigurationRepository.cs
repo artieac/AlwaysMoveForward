@@ -21,32 +21,33 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AnotherBlog.Common.Data;
-using CE = AnotherBlog.Common.Data.Entities;
+using AnotherBlog.Common.Data.Map;
+using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
-    public class ExtensionConfigurationRepository : NHRepository<CE.ExtensionConfiguration, ARExtensionConfiguration>, IExtensionConfigurationRepository
+    public class ExtensionConfigurationRepository : ActiveRecordRepository<ExtensionConfiguration, ExtensionConfigurationDTO, IExtensionConfiguration>, IExtensionConfigurationRepository
     {
-        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 
-        public CE.ExtensionConfiguration GetByConfigurationId(int configurationId)
+        public ExtensionConfiguration GetByConfigurationId(int configurationId)
         {
             return this.GetByProperty("ConfigurationId", configurationId);
         }
 
-        public CE.ExtensionConfiguration GetByExtensionId(int extensionId)
+        public ExtensionConfiguration GetByExtensionId(int extensionId)
         {
             return this.GetByProperty("ExtensionId", extensionId);
         }
 
-        public CE.ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, CE.Blog targetBlog)
+        public ExtensionConfiguration GetByExtensionIdAndBlog(int extensionId, int blogId)
         {
-            return this.GetByProperty("ExtensionId", extensionId, targetBlog);
+            return this.GetByProperty("ExtensionId", extensionId, blogId);
         }
     }
 }

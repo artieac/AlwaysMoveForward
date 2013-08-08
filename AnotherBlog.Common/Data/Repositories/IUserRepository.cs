@@ -26,6 +26,6 @@ namespace AnotherBlog.Common.Data.Repositories
         User GetByUserName(string userName);
         User GetByUserNameAndPassword(string userName, string password);
         User GetByEmail(string userEmail);
-        IList<User> GetBlogWriters(Blog targetBlog);
+        IList<User> GetBlogWriters(int blogId);
     }
 }
