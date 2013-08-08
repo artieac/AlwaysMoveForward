@@ -15,6 +15,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
+using AlwaysMoveForward.Common.Data.Entities;
+
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.IntegrationService.BlogPosts.Requests;
 using AnotherBlog.IntegrationService.BlogPosts.Responses;
@@ -85,19 +87,26 @@ namespace AnotherBlog.IntegrationService.BlogPosts
                         newElement.EntryId = foundPosts[i].EntryId;
                         newElement.IsPublished = foundPosts[i].IsPublished;
                         newElement.BlogId = foundPosts[i].Blog.BlogId;
-                        newElement.AuthorId = foundPosts[i].Author.UserId;
-                        newElement.AuthorName = foundPosts[i].Author.DisplayName;
+
+                        User author = this.Services.Users.GetById(foundPosts[i].AuthorId);
+                        newElement.AuthorId = author.UserId;
+                        newElement.AuthorName = author.DisplayName;
                         newElement.EntryText = foundPosts[i].EntryText;
                         newElement.Title = foundPosts[i].Title;
                         newElement.DatePosted = foundPosts[i].DatePosted;
                         newElement.Tags = new List<TagElement>();
 
-                        for (int j = 0; j < foundPosts[i].Tags.Count; j++)
+                        IList<Tag> postTags = this.Services.Tags.GetByBlogEntryId(foundPosts[i].EntryId);
+
+                        if (postTags != null)
                         {
-                            TagElement newTag = new TagElement();
-                            newTag.TagId = foundPosts[i].Tags[j].Id;
-                            newTag.Name = foundPosts[i].Tags[j].Name;
-                            newElement.Tags.Add(newTag);
+                            for (int j = 0; j < postTags.Count; j++)
+                            {
+                                TagElement newTag = new TagElement();
+                                newTag.TagId = postTags[j].Id;
+                                newTag.Name = postTags[j].Name;
+                                newElement.Tags.Add(newTag);
+                            }
                         }
 
                         retVal.BlogEntries.Add(newElement);

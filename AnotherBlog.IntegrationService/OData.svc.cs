@@ -13,6 +13,8 @@ using DataServicesJSONP;
 
 using log4net;
 
+using AlwaysMoveForward.Common.Data;
+
 using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;

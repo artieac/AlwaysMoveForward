@@ -16,6 +16,9 @@ using System.Web;
 using log4net;
 using log4net.Config;
 
+using AlwaysMoveForward.Common.Data;
+using AlwaysMoveForward.Common.Data.Entities;
+
 using AnotherBlog.Common.Data;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;

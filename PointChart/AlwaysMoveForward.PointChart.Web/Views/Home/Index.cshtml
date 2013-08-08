@@ -1,0 +1,71 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.HomeModel
+@using AMF = AlwaysMoveForward.PointChart.DataLayer.Entities; 
+@using AlwaysMoveForward.PointChart.Web.Code.Extensions;        
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+}
+@{
+    AlwaysMoveForward.PointChart.BusinessLayer.Utilities.SecurityPrincipal currentPrinciapl = HttpContext.Current.User as AlwaysMoveForward.PointChart.BusinessLayer.Utilities.SecurityPrincipal;
+    
+    if(currentPrinciapl!=null)
+    {
+        if(currentPrinciapl.IsAuthenticated!=true)
+        {
+            <span>
+                Login to view your point charts, or if you are a new user..<br /><br />I made this site to gamify my kids chores around the house.  THe idea is that they have tasks to perform,
+                and when they perform them they get points.  They can cash those points in for money (such as an allowance), video game time, or some other reward type.  The interesting thing is that this Task/Point/Reward mechanic
+                is something that is pretty generic and applies itself to any situation where you want to reward certain behaviors.
+            </span>
+            <br /><br />
+            <div class="welcomeSection">
+                <div class="sectionDescription">
+                    First you need to define the behavior you want to encourage.  These are known as Tasks in the system.  You use the Task tab to define the task, how many points you want to reward, and how many times a day the task can be repeated for more rewards.            
+                </div>
+                <div class="sectionImage">
+                    <img src="@Url.Content("~/Content/images/TaskSample.png")"/>
+                </div>
+            </div>
+            <br /><br />
+            <div class="welcomeSection chartSection">
+                 <div class="sectionDescription">
+                    Once you've defined taks, you can group them into Charts.  Think of a Chart as a set of tasks that you want a person to do.  Each chart has its own history of points earned
+                    and points spent, and has the full history of what tasks were completed when.
+                </div>
+                <div class="sectionImage">
+                    <img src="@Url.Content("~/Content/images/ChartSample.png")"/>
+                </div>            
+            </div>
+            <br /><br />
+            <div class="welcomeSection completedTaskSection">
+                <div class="sectionDescription">
+                    Finally enter the tasks as they're completed and watch the points grow.
+                </div>
+                <div class="sectionImage">
+                    <img src="@Url.Content("~/Content/images/RecordCompletedTasks.png")"/>            
+                </div>
+            </div>
+        }
+        else
+        {
+            <table>
+            @foreach (AMF.PointEarner pointEarner in @Model.PointEarners)
+            {
+                double pointsOutstanding = pointEarner.PointsEarned - pointEarner.TotalPointsSpent;
+                <tr>
+                    <td><a href="/PointEarner/Charts/@pointEarner.Id">@pointEarner.FirstName&nbsp;@pointEarner.LastName</a></td>
+                    <td>@pointsOutstanding&nbsp;Points Remaining</td>                    
+                </tr>
+            }
+            </table>              
+        }
+    }
+    else
+    {
+        <h1>Please Login</h1>
+    }
+}

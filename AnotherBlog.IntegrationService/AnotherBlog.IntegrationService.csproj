@@ -140,6 +140,10 @@
       <Project>{D93CDF51-39A1-4094-852B-8235148CAD28}</Project>
       <Name>AnotherBlog.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387A0-6903-47FD-AA6C-9ADF4CFE491E}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

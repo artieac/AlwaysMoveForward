@@ -1,0 +1,48 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.ChartModel
+@using AlwaysMoveForward.PointChart.DataLayer.Entities;
+@{
+    Layout = null;
+}
+<div id="chartsContainer">
+    <form id="deleteTaskForm" action="/Chart/DeleteTask" method="post">
+        <input type="hidden" id="chartId" name="chartId" value="" />
+        <input type="hidden" id="taskId" name="taskId" value="" />
+    </form>
+    <br />
+    <h3>Charts</h3>
+    <br />
+    <table class="tableBase">
+        <thead>
+            <tr class="tableHeader">
+                <td width="20%">Name</td>
+                <td width="20%">Tasks Completed</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowCounter = 0;
+                foreach (AlwaysMoveForward.PointChart.DataLayer.Entities.Chart chartItem in @Model.Charts)
+                {
+
+                    if (rowCounter % 2 == 0)
+                    {
+                        <text><tr class='tableRow1'></text>
+                    }
+                    else
+                    {
+                        <text><tr class='tableRow2'></text>
+                    }
+
+                    rowCounter++;
+                    String chartName = "chartName" + @chartItem.Id;
+                
+                    <td><input type="text" id="@chartName" name="@chartName" class="readonly" value="@chartItem.Name" disabled="true"/></td>
+                    <td>@chartItem.CompletedTasks.Count</td>
+                    <td><a class="readonly" href="chartController.eleteChart('@chartItem.Id');"><img src="/Content/images/action_delete.png" class="deleteList" alt=""/></a></td>
+                    @Html.Raw("</tr>")
+                }
+            }
+        </tbody>
+    </table>
+</div>
