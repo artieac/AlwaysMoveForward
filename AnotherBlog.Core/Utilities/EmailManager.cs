@@ -1,0 +1,80 @@
+﻿/**
+ * Copyright (c) 2009 Arthur Correa.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Common Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.opensource.org/licenses/cpl1.0.php
+ *
+ * Contributors:
+ *    Arthur Correa – initial contribution
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net.Mail;
+
+using log4net;
+using log4net.Config;
+
+namespace AnotherBlog.Core.Utilities
+{
+    /// <summary>
+    /// This class drives all email sending from the system.
+    /// </summary>
+    public class EmailManager
+    {
+        private ILog logger;
+        private EmailConfiguration emailConfig = null;
+        /// <summary>
+        /// The constructor forces the caller to define the email configuration options necessary to
+        /// connect to the smtp server.
+        /// </summary>
+        /// <param name="emailConfig"></param>
+        public EmailManager(EmailConfiguration emailConfig)
+        {
+            this.emailConfig = emailConfig;
+        }
+        /// <summary>
+        /// Send an email to a specific address.
+        /// </summary>
+        /// <param name="fromAddress">What address is the email sent from</param>
+        /// <param name="toAddress">Where is the email going</param>
+        /// <param name="emailSubject">The email subject line</param>
+        /// <param name="emailBody">The email message</param>
+        public void SendEmail(string fromAddress, string toAddress, string emailSubject, string emailBody)
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(emailConfig.FromAddress);
+            mail.To.Add(toAddress);
+            mail.Subject = emailSubject;
+            mail.Body = emailBody;
+
+            try
+            {
+                SmtpClient smtpClient = new SmtpClient(emailConfig.SmtpServer, emailConfig.SmtpPort);
+                smtpClient.Send(mail);
+            }
+            catch (Exception e)
+            {
+                this.Logger.Error(e.Message, e);
+            }
+        }
+        /// <summary>
+        /// Instantiate a log4net instance.
+        /// </summary>
+        public ILog Logger
+        {
+            get
+            {
+                if (logger == null)
+                {
+                    logger = LogManager.GetLogger(this.GetType());
+                }
+
+                return this.logger;
+            }
+        }
+
+    }
+}

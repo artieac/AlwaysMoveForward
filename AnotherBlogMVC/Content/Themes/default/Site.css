@@ -1,0 +1,482 @@
+﻿body
+{
+	font-family:Arial, Tahoma, Verdana, Sans-Serif;
+	font-size:medium;
+}
+
+.subBody
+{
+	width:80%;
+	margin-left:10%;	
+}
+
+.header
+{
+	 background:#6B7379 url(/Content/images/header_bg.gif) repeat-x scroll ;
+	 display:block;
+	 height:75px;
+}
+
+.siteTitle
+{
+	font-size: x-large;
+	color: #FFFFFF;
+	font-style:oblique;
+	text-decoration:none;
+}
+
+.loginDiv
+{
+	float:right;
+	text-align:right;
+	width:40%;
+}
+
+.loginLabel
+{
+	font-size: small;
+	padding-right:2px;
+	color:#FFFFFF;
+}
+
+.bodyContainer
+{
+	text-align:left;
+	display:block;
+}
+
+.navigationPanel
+{
+	width: 15%;
+	float:left;
+	background-color:#F4F4F4;
+	border-color:#CCCCCC;
+	border-style:solid;
+	border-width:0 1px 0 1px;
+	height:1600px;
+}
+
+.contentPanel
+{
+	text-align:center;
+	margin-left:15%;
+}
+
+.mainContentPanel
+{
+	margin-right:15%;
+}
+
+.metaContentPanel
+{
+	float:right;
+	width:15%;
+	text-align:left;
+	background-color:#F4F4F4;
+	border-color:#CCCCCC;
+	border-style:solid;
+	border-width:0 1px 0 1px;
+	height:1600px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.bodyContent
+{
+	text-align:left;
+	width:95%;
+}
+
+.navigationSection
+{
+	width: 90%;
+	text-align:left;
+	background-color:White;
+	border:solid 1px #CCCCCC;
+	margin-left:5%;
+	margin-right:5%;
+	margin-top:20px;
+	margin-bottom:1%;
+}
+
+.navigationSectionTitle
+{
+	width:100%;
+	background-color: #5493E0;
+	color: #FFFFFF;
+	font-size:medium;	
+}
+
+.navigationSectionList
+{
+    list-style: none;
+	color: #1B7BBD;
+	font-size: medium;
+}
+
+.navigationSectionItem
+{
+	padding:0 5px 0 5px;
+}
+
+.navigationSectionItem a
+{
+	text-decoration:none;
+}
+
+.linkSectionTitle
+{
+	width:100%;
+	background-color: #5493E0;
+	color: #FFFFFF;
+	font-size:medium;		
+}
+
+.guestLinkSection
+{
+	width: 90%;
+	text-align:left;
+	background-color:White;
+	border:solid 1px #CCCCCC;
+	margin-left:5%;
+	margin-right:5%;
+	margin-top:20px;
+	margin-bottom:1%;
+}
+
+.guestLinkSectionTitle
+{
+	width:100%;
+	background-color: #5493E0;
+	color: #FFFFFF;
+	font-size:medium;		
+}
+
+.guestLinkList
+{
+    list-style: none;
+	color: #1B7BBD;
+	font-size: medium;
+}
+
+.guestLinkItem
+{
+	padding:0 5px 0 5px;
+}
+
+.guestLinkItem a
+{
+	text-decoration:none;
+}
+
+.contentSection
+{
+	width:90%;
+	background-color:White;
+	border:solid 1px #CCCCCC;
+	margin-left:5%;
+	margin-right:5%;
+	margin-top:20px;
+	margin-bottom:1%;
+}
+
+.contentSectionTitle
+{
+	background-color: #5493E0;
+	color: #FFFFFF;
+	font-size:medium;
+}
+
+.contentSectionBody
+{
+	background-color:White;
+	padding:0 5px 0 5px;
+}
+
+.tagClouldControl
+{
+	display:block;
+}
+
+.contentPageTitle
+{
+	font-size:larger;
+	color:#1B7BBD;
+	text-align:center;
+}
+
+.blogEntrySection
+{
+	border-style:none;
+	border-width:1px;
+	border-color:#5493E0;
+}
+
+.editItemLabel
+{
+	text-align:right;
+	font-style:normal;
+}
+
+.editAreaContainer
+{
+	width:100%;
+	text-align:center;
+	background-color:#E4F2FD;	
+}
+
+.editAreaSubContainer
+{
+	width:100%;
+	text-align:left;
+}
+
+.blogEntryTextBox
+{
+	width: 90%;
+}
+
+.blogTitle
+{
+	width:100%;
+	background-color: #5493E0;
+	font-size: large;
+	font-weight:bold;
+	color: #FFFFFF;
+	display:block;
+}
+
+.blogTitleLink
+{
+	display:inline;
+}
+
+.blogTitleLink a:visited, .blogTitleLink a:link, .blogTitleLink a:hover 
+{
+	color: #FFFFFF;
+}
+
+.blogEditLink
+{
+	float:right;
+	display:inline;
+}
+
+.blogEditLink a:visited, .blogEditLink a:link, .blogEditLink a:hover 
+{
+	color: #FFFFFF;
+}
+
+.blogSubTitle, .blogFooter
+{
+	font-size:small;
+	background-color:#F4F4F4;
+	font-style:italic;
+	color:#1B7BBD;
+}
+
+.blogText
+{
+	font-size:medium;
+	background-color:#FFFFFF;
+	color:#000000;
+	margin:10px 10px 10px 10px;
+}
+
+.blogTags
+{
+	margin: 0px 10px 0px 10px;
+	font-size:small;	
+}
+
+.windowPanePanel
+{
+	margin-right:50px;
+}
+
+.windowPaneSection
+{
+	margin-right:50px;
+}
+
+.commentLabel
+{
+	width:5%;
+	text-align:right;
+	font-weight:bold;
+}
+
+.commentPanelTitle
+{
+	background-color: #5493E0;
+	font-size: large;
+	font-weight:bold;
+	color: #FFFFFF;
+}
+
+.commentSection
+{
+	background-color:White;
+	padding-top:10px;
+}
+
+
+.commentTitle
+{
+	background-color: #5493E0;
+	font-size: large;
+	font-weight:bold;
+	color: #FFFFFF;
+	width:100%;
+}
+
+.commentSubTitle
+{
+	font-size:small;
+	background-color:#F4F4F4;
+	font-style:italic;
+	color:#1B7BBD;
+}
+
+.tableBase 
+{
+	border-collapse:collapse;
+	border-style:solid;
+	border-width:1px;
+	margin:0;
+	width:99%;
+	background-color:#FFFFFF;
+}
+
+.tableHeader
+{
+	background-color:#1B7BBD;
+	color:#FFFFFF;
+	font-style:normal;
+}
+
+.controlTitle
+{
+	color:#5493E0;
+	font-style:normal;
+	font-size:medium;
+}
+
+ul
+{
+	padding-left:0px;
+	margin-left:0px;
+	list-style-type:none;
+	list-style-position:outside;
+}
+
+.contentSectionList
+{
+	padding-left:0px;
+	margin-left:0px;
+	list-style-type:none;
+	list-style-position:outside;
+}
+
+.listItem
+{
+	font-size:small;
+}
+
+.leftLinks
+{
+	text-align:left;
+	width:30%;
+	float:left;
+}
+
+.rightLinks
+{
+	text-align:left;
+	width:30%;
+	float:right;
+	margin-left:50%;
+}
+
+/* 3 FOOTER */
+
+.footer 
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 75px;
+	text-align: left;
+	font-size: 10px;
+}
+
+.footerCopyright
+{
+	float:left;
+	width:30%;
+	text-align:left;
+}
+
+.footerAbout
+{
+	float:right;
+	width:30%;
+	text-align:right;
+}
+
+.errorMessage
+{
+	color:Red;
+}
+
+.input-validation-error
+{
+	color:Red;
+}
+
+.aboutContent ul
+{
+
+}
+
+.aboutContent ul li
+{
+	list-style-type:disc;
+	list-style-position:inside;
+}
+
+.blogWritersSection
+{
+
+}
+
+.blogWritersTitle
+{
+	color:#CC6600;
+	text-decoration:underline;
+	font-size:large;
+}
+
+.blogWriterName
+{
+	color:#CC6600;
+	text-indent:5px;
+}
+
+.blogWriterAbout
+{
+	color:Black;
+	text-indent:5px;
+}
+
+.textAreaInput
+{
+	width:90%;
+	height:40em;
+}
+
+.commentAreaInput
+{
+	width:90%;
+	height:10em;
+}

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AnotherBlog.Common"
+                   namespace="AnotherBlog.Common.Data.Entities">
+  <class name="BlogUser" table="BlogUsers">
+    <id name="BlogUserId" column="BlogUserId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <many-to-one name="Blog" class="Blog" column="BlogId"/>
+    <many-to-one name="User" class="User" column="UserId"/>
+    <many-to-one name="UserRole" class="Role" column="RoleId"/>
+  </class>
+</hibernate-mapping>

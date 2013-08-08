@@ -1,0 +1,125 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="AnotherBlog.MVC.Views.Shared.Site" %>
+<%@ Import Namespace="AnotherBlog.MVC" %>
+<%@ Import Namespace="AnotherBlog.MVC.Utilities" %>
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="AnotherBlog.Common.Data.Entities" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title><% 
+       string title = MvcApplication.SiteInfo.Name;
+                       
+       AnotherBlog.MVC.Models.ModelBase model = ViewData.Model as AnotherBlog.MVC.Models.ModelBase;
+
+       if (model != null)
+       {
+           string newTitle = model.GeneratePageTitle();
+           
+           if(newTitle!=null && newTitle!= "")
+               title = model.GeneratePageTitle();
+       }
+       
+       Response.Write(title);
+      %>
+    </title>
+    <%
+       Response.Write("<meta name=\"Description\" content=\"");
+        
+       string description = MvcApplication.SiteInfo.Name;
+       AnotherBlog.MVC.Models.ModelBase model = ViewData.Model as AnotherBlog.MVC.Models.ModelBase;
+        
+       if(model != null)
+       {
+           description += " - " + model.GeneratePageDescription();
+       }
+       
+       Response.Write(description);
+       Response.Write("\" />");
+       %>
+    <script src="/Scripts/MicrosoftAjax.debug.js" type="text/javascript"></script>
+    <script src="/Scripts/MicrosoftMvcAjax.debug.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.form.js" type="text/javascript"></script>
+    <script src="/Scripts/AnotherBlog.js" type="text/javascript"></script>
+</head>
+<% if (MvcApplication.SiteInfo.SiteAnalyticsId != null && MvcApplication.SiteInfo.SiteAnalyticsId != "")
+   { %>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("<%= MvcApplication.SiteInfo.SiteAnalyticsId.ToString() %>");
+            pageTracker._trackPageview();
+        } catch (err) { }
+    </script>
+   <%} %>
+<link href="/Content/Themes/<%= Utils.GetCurrentTheme(this.TargetBlog) %>/Site.css" rel="stylesheet" type="text/css" />
+<link href="/Content/Themes/<%= Utils.GetCurrentTheme(this.TargetBlog) %>/calendar.css" rel="stylesheet" type="text/css" />
+<link href="/Content/Themes/<%= Utils.GetCurrentTheme(this.TargetBlog) %>/Pager.css" rel="stylesheet" type="text/css" />
+<body>
+    <div class="subBody">
+        <div class="header">
+            <div id="loginSection">
+                <% Html.RenderPartial("UserLogin", ViewData.Model); %>
+            </div>
+			<a href="http://<%= MvcApplication.SiteInfo.Url %>" class="siteTitle"><h1><%= MvcApplication.SiteInfo.Name %></h1></a>
+		</div>
+	    <div id="navigationSection" class="navigationPanel">
+	        <div id="blogNavMenuSection">
+	            <% Html.RenderPartial("BlogNavMenu", ViewData.Model); %>
+	        </div>
+	        <form id="blogNavMenuForm" action="/<%= this.BlogSubFolder %>/User/BlogNavMenu" method="post">
+	        </form>
+        </div>
+        <div class="contentPanel">
+		    <div class="mainContentPanel">
+		        <br />
+		        <div class="bodyContainer">
+		            <asp:ContentPlaceHolder ID="bodyContainer" runat="server"/>
+    		    </div>
+		        <br />
+                <div class="footer">
+    		        <br />
+	    		    <div class="footerCopyright">Copyright &copy; 2009 <%= MvcApplication.SiteInfo.Name %></div>
+	    		    <div class="footerAbout"><a href='/<%= ViewData["blogSubFolder"].ToString() %>/Home/About'>About <%= MvcApplication.SiteInfo.Name %></a></div>
+		        </div>
+            </div>
+            <div class="metaContentPanel">   
+	            <div id="blogListSection">
+	                <% Html.RenderPartial("BlogList", ViewData.Model); %>
+	            </div>
+                <div id="blogCalendarSection">
+		            <% Html.RenderPartial("BlogCalendar", ViewData.Model); %>
+		        </div>                           
+                <div id="blogTagsSection">
+		            <% Html.RenderPartial("BlogTags", ViewData.Model); %>
+		        </div>        
+                <div>
+                    <% Html.RenderPartial("SyndicationView"); %>
+                </div>            
+                <div id="blogRollSection">
+                    <% Html.RenderPartial("BlogRoll", ViewData.Model); %>
+                </div>
+		        <div id="blogArchiveSection">
+		            <% Html.RenderPartial("BlogArchive", ViewData.Model); %>
+		        </div>      
+		        <div id="googlePluginSection">
+		            <%  IDictionary<string, string> googleAdParams = new Dictionary<string, string>();
+		                googleAdParams.Add("adClient", "pub-3066200824463272");
+                        googleAdParams.Add("adSlot", "5638996162");
+		                googleAdParams.Add("adWidth", "120");
+		                googleAdParams.Add("adHeight", "600");
+                        Html.RenderPartial("../Plugins/GoogleAd", googleAdParams);      
+		           %>
+		        </div>
+		        <div id="blogExtensionSection">
+                    <% Html.RenderPartial("BlogExtensionsSection", ViewData.Model); %>
+		        </div>      
+            </div>
+        </div>    
+    </div>
+</body>
+</html>

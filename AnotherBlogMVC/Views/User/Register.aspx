@@ -1,0 +1,56 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="bodyContainer" runat="server">
+    <!-- TinyMCE -->
+    <script type="text/javascript" src="../../Content/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript">
+        tinyMCE.init({
+            // General options
+            mode: "textareas",
+            theme: "AnotherBlog"
+        });
+    </script>
+    <!-- /TinyMCE -->
+    <div class="bodyContent">
+        <div class="contentPageTitle">
+            <label>Register</label>
+        </div> 
+        <div class="editAreaContainer">
+            <div class="editAreaSubContainer">
+                <br />
+                <form action='/<%= ViewData["blogSubFolder"].ToString() %>/User/Register?registerAction=save' method="post">
+                    <table>
+                        <tr>
+                            <th class="editItemLabel">user name:</th>
+                            <td><input type="text" id="userName" name="userName"</td>
+                            <td><%= Html.ValidationMessage("userName") %></td>
+                        </tr>
+                        <tr>
+                            <th  class="editItemLabel">password:</th>
+                            <td><input type="password" id="password" name="password"/></td>
+                            <td><%= Html.ValidationMessage("password") %></td>
+                        </tr>
+                        <tr>
+                            <th class="editItemLabel">email:</th>
+                            <td><input type="text" id="email" name="email"/></td>
+                            <td><%= Html.ValidationMessage("email") %></td>
+                        </tr>
+                        <tr>
+                            <th class="editItemLabel">display name:</th>
+                            <td><input type="text" name="displayName" id="displayName" /></td>
+                            <td><span class="errorMessage"><%= Html.ValidationMessage("displayName")%></span></td>
+                        </tr>
+                        <tr>
+                            <th class="editItemLabel">role:</th>
+                            <td>Reader</td>
+                        </tr>
+                        <tr>
+                            <th class="editItemLabel">about:</th>
+                            <td colspan="2"><textarea class="textAreaInput" id="userAbout" name="userAbout"></textarea></td>
+                        </tr>
+                    </table>
+                    <input style="margin-left:25%" type="submit" ID="saveButton" value="Save"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</asp:Content>

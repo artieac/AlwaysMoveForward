@@ -1,0 +1,125 @@
+﻿.subBody
+{
+	width:80%;
+	margin-left:10%;	
+}
+
+.contentPanel
+{
+	width:100%;
+}
+
+.header
+{
+	 background:#6B7379 url(/Content/images/header_bg.gif) repeat-x scroll ;
+	 display:block;
+	 height:75px;
+}
+
+.siteTitle
+{
+	font-size: x-large;
+	color: #FFFFFF;
+	font-style:oblique;
+	text-decoration:none;
+}
+
+.loginDiv
+{
+	float:right;
+	text-align:right;
+	width:40%;
+}
+
+.loginLabel
+{
+	font-size: small;
+	padding-right:2px;
+	color:#FFFFFF;
+}
+
+.bodyContainer
+{
+	text-align:left;
+	display:block;
+}
+
+.bodyContent
+{
+	text-align:left;
+	width:95%;
+}
+
+.editAreaContainer
+{
+	width:100%;
+	text-align:center;
+}
+
+.editAreaSubContainer
+{
+	width:100%;
+	text-align:left;
+}
+
+.adminLinkSection
+{
+	width: 100%;
+	text-align:left;
+	border-bottom:solid 1px #CCCCCC;
+	margin-right:5%;
+	margin-top:1%;
+	margin-bottom:1%;
+}
+
+.adminLinkList
+{
+    list-style: none;
+	list-style-type:none;
+	color: #1B7BBD;
+	font-size: medium;
+}
+
+.adminLinkItem
+{
+	display:inline;
+	padding:0 5px 0 5px;
+}
+
+.adminLinkItem a
+{
+	text-decoration:none;
+	border:none;
+}
+
+.adminImage
+{
+	text-decoration:none;
+	border:none;
+}
+
+.approveComment
+{
+	border-style:none;
+	height:20px;
+	width:20px;
+}
+
+.deleteComment
+{
+	border-style:none;
+	height:20px;
+	width:20px;
+}
+
+.tableRow1
+{
+	background-color:#eeeeee;
+	color:Black;
+}
+
+.tableRow2
+{
+	background-color:White;
+	color:Black;	
+}

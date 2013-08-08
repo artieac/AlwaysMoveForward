@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AnotherBlog.Common"
+                   namespace="AnotherBlog.Common.Data.Entities">
+  <class name="BlogRollLink" table="BlogRollLinks">
+    <id name="BlogRollLinkId" column="BlogRollLinkId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="LinkName" column="LinkName" type="String"/>
+    <property name="Url" column="Url" type="String"/>
+    <many-to-one name="Blog" class="Blog" column="BlogId" />
+  </class>
+</hibernate-mapping>
