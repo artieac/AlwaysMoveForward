@@ -88,15 +88,15 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
             criteria.Add(Expression.In("Name", names));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria);
         }
 
         public IList<Tag> GetByBlogEntryId(int blogEntryId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
-            criteria.CreateCriteria("BlogEntriesDTO").Add(Expression.Eq("EntryId", blogEntryId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
+            criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("EntryId", blogEntryId));
+            return Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria);
         }
     }
 }

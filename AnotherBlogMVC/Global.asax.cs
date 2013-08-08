@@ -12,6 +12,7 @@ using log4net.Config;
 using AnotherBlog.MVC.Utilities;
 using AnotherBlog.Common;
 using AnotherBlog.Common.Utilities;
+using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;
@@ -23,6 +24,7 @@ namespace AnotherBlog.MVC
         private static SiteInfo siteInfo;
         public static WebSiteConfiguration siteConfig;
         public static EmailConfiguration emailConfig;
+        public static DbInfo dbInfo;
 
         static MvcApplication()
         {
@@ -32,14 +34,19 @@ namespace AnotherBlog.MVC
             MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/EmailConfiguration");
         }
 
+        public static String Version
+        {
+            get { return "1.2.0"; }
+        }
+
         public static SiteInfo SiteInfo
         {
             get
             {
                 if (MvcApplication.siteInfo == null)
                 {
-                    ServiceManager serviceManager = new ServiceManager();
-                    serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                    IUnitOfWork unitOfWork = ServiceManager.CreateUnitOfWork();
+                    ServiceManager serviceManager = ServiceManager.CreateServiceManager(unitOfWork);
 
                     if (serviceManager != null)
                     {
@@ -138,37 +145,37 @@ namespace AnotherBlog.MVC
             // Get the authentication cookie
             string cookieName = FormsAuthentication.FormsCookieName;
             HttpCookie authCookie = context.Request.Cookies[cookieName];
-
-            ServiceManager serviceManager = new ServiceManager();
-            serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
-
             SecurityPrincipal currentPrincipal = new SecurityPrincipal(null, false);
 
-            if (authCookie != null)
+            using (IUnitOfWork unitOfWork = ServiceManager.CreateUnitOfWork())
             {
-                if (authCookie.Value != "")
+                ServiceManager serviceManager = ServiceManager.CreateServiceManager(unitOfWork);
+
+                if (authCookie != null)
                 {
-                    // Get the authentication ticket 
-                    // and rebuild the principal & identity
-                    FormsAuthenticationTicket authTicket =
-                    FormsAuthentication.Decrypt(authCookie.Value);
-
-                    AnotherBlog.Common.Data.Entities.User currentUser = serviceManager.Users.GetByUserName(authTicket.Name);
-
-                    if (currentUser == null)
+                    if (authCookie.Value != "")
                     {
-                        currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
-                    }
-                    else
-                    {
-                        currentPrincipal = new SecurityPrincipal(currentUser, true);
-                    }
+                        // Get the authentication ticket 
+                        // and rebuild the principal & identity
+                        FormsAuthenticationTicket authTicket =
+                        FormsAuthentication.Decrypt(authCookie.Value);
 
+                        AnotherBlog.Common.Data.Entities.User currentUser = serviceManager.Users.GetByUserName(authTicket.Name);
+
+                        if (currentUser == null)
+                        {
+                            currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
+                        }
+                        else
+                        {
+                            currentPrincipal = new SecurityPrincipal(currentUser, true);
+                        }
+                    }
                 }
-            }
-            else
-            {
-                currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
+                else
+                {
+                    currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
+                }
             }
 
             System.Threading.Thread.CurrentPrincipal = context.User = currentPrincipal;

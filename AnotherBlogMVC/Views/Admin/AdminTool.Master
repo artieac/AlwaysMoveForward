@@ -12,7 +12,8 @@
     <script src="/Scripts/MicrosoftMvcAjax.debug.js" type="text/javascript"></script>
     <script src="/Scripts/jquery-1.4.1.js" type="text/javascript"></script>
     <script src="/Scripts/jquery.form.js" type="text/javascript"></script>
-    <script src="/Scripts/AnotherBlogAdmin.js" type="text/javascript"></script>
+    <script src="/Scripts/Admin/AdminCommon.js" type="text/javascript"></script>
+    <link href="/Content/Common.css" rel="stylesheet" type="text/css" />
     <link href="/Content/Admin/Admin.css" rel="stylesheet" type="text/css" />
     <link href="/Content/Admin/Pager.css" rel="stylesheet" type="text/css" />
 </head>
@@ -33,16 +34,16 @@
                    AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.SiteAdministrator))
                { %>
                     <a href='/Admin/BlogPreferences'> Blog Settings</a> | 
-                    <a href='/Admin/BlogManageLinks'> Manage Links</a> | 
+                    <a href='/Admin/ManageBlogLists'> Manage Lists</a> | 
              <%} 
                 if (AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.Administrator) == true || 
                    AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.SiteAdministrator) == true ||
                    AnotherBlog.MVC.Utilities.Utils.IsUserInRole(this.Context.User, ViewData.Model.TargetBlog, Role.Blogger))
                { %>
-                    <a href='/Admin/BlogManagePosts'> Manage Posts</a> |  
+                    <a href='/Admin/ManageBlogPosts'> Manage Posts</a> |  
                     <a href='/Admin/BlogManageComments'> Administer Comments</a>
              <%} %>               
-                <select id="targetBlog" name="targetBlog" onchange="javascript:HandleBlogSelectionChange();">
+                <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
                 <%
                     foreach (Blog blogItem in ViewData.Model.UserBlogs)
                     { 

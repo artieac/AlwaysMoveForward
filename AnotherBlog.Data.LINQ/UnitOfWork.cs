@@ -11,7 +11,7 @@ using AnotherBlog.Data.LINQ.Entities;
 
 namespace AnotherBlog.Data.LINQ
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         static AnotherBlog.Common.DatabaseConfiguration dbConfiguration;
         AnotherBlogDbDataContext dataContext;
@@ -25,12 +25,27 @@ namespace AnotherBlog.Data.LINQ
 
         #region IUnitOfWork Members
 
-        public void BeginTransaction(IsolationLevel isolationLevel)
+        public void StartSession()
+        {
+        }
+
+        public void EndSession()
+        {
+        }
+
+        public IDisposable BeginTransaction()
+        {
+            return this.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+
+        public IDisposable BeginTransaction(IsolationLevel isolationLevel)
         {
             if (this.currentTransaction == null)
             {
                 currentTransaction = this.dataContext.Connection.BeginTransaction(isolationLevel);
             }
+
+            return currentTransaction;
         }
 
         public void EndTransaction(bool canCommit)
@@ -51,7 +66,7 @@ namespace AnotherBlog.Data.LINQ
             }
         }
 
-        public void Commit()
+        public void Flush()
         {
             if (this.dataContext != null)
             {
@@ -74,5 +89,13 @@ namespace AnotherBlog.Data.LINQ
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            if (this.currentTransaction != null)
+            {
+                this.currentTransaction.Dispose();
+            }
+        }
     }
 }

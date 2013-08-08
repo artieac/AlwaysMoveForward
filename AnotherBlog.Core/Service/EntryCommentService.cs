@@ -29,7 +29,7 @@ namespace AnotherBlog.Core.Service
 
         public Comment Create(Blog targetBlog)
         {
-            Comment retVal = new Comment();
+            Comment retVal = this.Repositories.EntryComments.Create();
             retVal.Blog = targetBlog;
             retVal.CommentId = -1;
             return retVal;

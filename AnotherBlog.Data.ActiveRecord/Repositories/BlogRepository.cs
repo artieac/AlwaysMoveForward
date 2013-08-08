@@ -67,7 +67,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public IList<Blog> GetByUserId(int userId)
         {
             SimpleQuery<BlogDTO> query = new SimpleQuery<BlogDTO>(@"from Blogs where Blogs.BlogId = BlogUsers.BlogId AND BlogUsers.NHUser.UserId = ?", userId);
-            return this.DataMapper.Map(query.Execute());
+            return query.Execute();
         }
     }
 }

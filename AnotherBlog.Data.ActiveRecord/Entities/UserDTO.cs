@@ -19,12 +19,11 @@ using Castle.ActiveRecord;
 using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Data.ActiveRecord.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("Users")]
-    public class UserDTO : IUser
+    public class UserDTO : User
     {
         public UserDTO() : base()
         {
@@ -32,49 +31,36 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "UserId", UnsavedValue = "-1")]
-        public int UserId{ get; set;}
+        public override int UserId{ get; set;}
 
         [Property("UserName")]
-        public string UserName{ get; set;}
+        public override string UserName { get; set; }
 
         [Property("Password")]
-        public string Password{ get; set;}
+        public override string Password { get; set; }
 
         [Property("Email")]
-        public string Email{ get; set;}
+        public override string Email { get; set; }
 
         [Property("ApprovedCommenter")]
-        public bool ApprovedCommenter{ get; set;}
+        public override bool ApprovedCommenter { get; set; }
 
         [Property("IsActive")]
-        public bool IsActive{ get; set;}
+        public override bool IsActive { get; set; }
 
         [Property("IsSiteAdministrator")]
-        public bool IsSiteAdministrator{ get; set;}
+        public override bool IsSiteAdministrator { get; set; }
 
         [Property("About", ColumnType = "StringClob")]
-        public string About{ get; set;}
+        public override String About{ get; set;}
 
         [HasMany(typeof(BlogUserDTO))]
-        public IList<BlogUserDTO> UserBlogsDTO{ get; set;}
+        public override IList<BlogUser> UserBlogs{ get; set;}
 
         [Property("DisplayName")]
-        public string DisplayName{ get; set;}
+        public override string DisplayName{ get; set;}
 
         [HasMany(typeof(BlogPostDTO), Lazy = true)]
-        public IList<BlogPostDTO> BlogEntriesDTO{ get; set;}
-
-        //public IList<IBlogUser> UserBlogs
-        //{
-        //    get { return BlogUserMapper.GetInstance().IMap(this.UserBlogsDTO); }
-        //    set { this.UserBlogsDTO = BlogUserMapper.GetInstance().Map((IList<BlogUser>)value); }
-        //}
-
-        //public IList<IBlogPost> BlogEntries
-        //{
-        //    get { return BlogPostMapper.GetInstance().IMap(this.BlogEntriesDTO); }
-        //    set { this.BlogEntriesDTO = BlogPostMapper.GetInstance().Map((IList<BlogPost>)value); }
-        //}
-
+        public override IList<BlogPost> BlogEntries{ get; set;}
     }
 }

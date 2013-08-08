@@ -21,7 +21,7 @@ using AnotherBlog.Common.Data.Entities;
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("DbInfo")]
-    public class DbInfoDTO : IDbInfo
+    public class DbInfoDTO : DbInfo
     {
         public DbInfoDTO() : base()
         {
@@ -29,6 +29,6 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey("Version", UnsavedValue = "-1")]
-        public int Version{ get; set;}
+        public override int Version { get; set; }
     }
 }

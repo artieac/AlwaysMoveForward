@@ -28,6 +28,8 @@ namespace AnotherBlog.Core.Service
     /// </summary>
     public class BlogEntryService : ServiceBase
     {
+        public const string DefaultPostSort = "DatePosted";
+
         internal BlogEntryService(ServiceManager serviceManager)
             : base(serviceManager)
         {
@@ -40,7 +42,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public BlogPost Create(Blog targetBlog)
         {
-            BlogPost retVal = new BlogPost();
+            BlogPost retVal = this.Repositories.BlogEntries.Create();
             retVal.EntryId = this.Repositories.BlogEntries.UnsavedId;
             retVal.DateCreated = DateTime.Now;
             retVal.Author = ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser;
@@ -139,7 +141,7 @@ namespace AnotherBlog.Core.Service
 
             if (targetBlog != null)
             {
-                Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, false, -1);
+                Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, false, -1, DefaultPostSort, true);
             }
 
             return retVal;
@@ -156,11 +158,16 @@ namespace AnotherBlog.Core.Service
 
         public IList<BlogPost> GetAllByBlog(Blog targetBlog, bool publishedOnly, int maxResults)
         {
+            return this.GetAllByBlog(targetBlog, publishedOnly, maxResults, DefaultPostSort, false);
+        }
+
+        public IList<BlogPost> GetAllByBlog(Blog targetBlog, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
+        {
             IList<BlogPost> retVal = new List<BlogPost>();
 
             if (targetBlog != null)
             {
-                retVal = Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults);
+                retVal = Repositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults, sortColumn, sortAscending);
             }
 
             return retVal;
@@ -284,6 +291,16 @@ namespace AnotherBlog.Core.Service
             return Repositories.BlogEntries.GetAll(true, maxResults);
         }
 
+        public IList<BlogPost> GetMostRead(int maxResults)
+        {
+            return Repositories.BlogEntries.GetMostRead(maxResults);
+        }
+
+        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        {
+            return Repositories.BlogEntries.GetMostRead(blogId, maxResults);
+        }
+
         public BlogPost GetPreviousEntry(Blog targetBlog, BlogPost currentEntry)
         {
             BlogPost retVal = null;
@@ -328,6 +345,20 @@ namespace AnotherBlog.Core.Service
         public bool Delete(BlogPost targetEntry)
         {
             return this.Repositories.BlogEntries.Delete(targetEntry);
+        }
+
+        public int UpdateTimesViewed(BlogPost targetPost)
+        {
+            int retVal = 0;
+            
+            if (targetPost != null)
+            {
+                targetPost.TimesViewed++;
+                this.Repositories.BlogEntries.Save(targetPost);
+                retVal = targetPost.TimesViewed;
+            }
+
+            return retVal;
         }
     }
 }

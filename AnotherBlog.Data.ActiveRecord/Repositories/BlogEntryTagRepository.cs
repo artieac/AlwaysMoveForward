@@ -50,28 +50,27 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public IList<PostTag> GetByBlogEntry(int blogPostId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogEntryTagsDTO>();
-            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.FindAll(criteria));
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.FindAll(criteria);
         }
 
         public Boolean DeleteByBlogEntry(int blogPostId)
         {
             Boolean retVal = false;
 
-            try
-            {
-                IList<PostTag> postTags = this.GetByBlogEntry(blogPostId);
+            IList<PostTag> postTags = this.GetByBlogEntry(blogPostId);
+            IList<int> postTagIds = new List<int>();
 
-                DetachedCriteria criteria = DetachedCriteria.For<BlogEntryTagsDTO>();
-                criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
-                Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.DeleteAll(typeof(BlogEntryTagsDTO), postTags);
-                retVal = true;
-            }
-            catch (Exception e)
+            for (int i = 0; i < postTags.Count(); i++)
             {
-
+                postTagIds.Add(postTags[i].PostTagId);
             }
 
+            DetachedCriteria criteria = DetachedCriteria.For<BlogEntryTagsDTO>();
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            Castle.ActiveRecord.ActiveRecordMediator<BlogEntryTagsDTO>.DeleteAll(typeof(BlogEntryTagsDTO), postTagIds);
+            retVal = true;
+ 
             return retVal;
         }
     }

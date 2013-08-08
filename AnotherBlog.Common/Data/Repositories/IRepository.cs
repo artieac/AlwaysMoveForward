@@ -24,6 +24,8 @@ namespace AnotherBlog.Common.Data.Repositories
 
         int UnsavedId { get; }
         string IdPropertyName{ get;}
+
+        DomainType Create();
         DomainType GetById(int itemId);
         DomainType GetById(int itemId, int blogId);
         DomainType GetByProperty(string idPropertyName, object idValue);

@@ -48,7 +48,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         /// <returns></returns>
         public SiteInfo GetSiteInfo()
         {
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
+            return Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst();
         }
     }
 }

@@ -2,6 +2,7 @@
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="AnotherBlog.Common.Data.Entities" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="bodyContainer" runat="server">
+    <script src="/Scripts/Admin/ManageUsers.js" type="text/javascript"></script>
     <!-- TinyMCE -->
     <script type="text/javascript" src="/Content/tiny_mce/tiny_mce.js"></script>
     <script type="text/javascript">
@@ -67,7 +68,7 @@
                             <input type="hidden" name="userId" value="<%= ViewData.Model.CurrentUser.UserId %>" />
                     </form>
                      <script type="text/javascript">
-                        EditUserInitializeUserBlogs();
+                        ManageUsers.EditUserInitializeUserBlogs();
                     </script>
                 </div>
                 <form id="userAddBlogForm" action="/Admin/AddUserBlog" method="post">
@@ -107,7 +108,7 @@
                     <input type="submit" id="submitAddNewBlog" value="Grant Blog Access"/>
                 </form>
                 <script type="text/javascript">
-                    EditUserSetupUserBlogAjax();
+                    ManageUsers.EditUserSetupUserBlogAjax();
                 </script>
              </div>
         </div>

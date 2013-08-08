@@ -17,6 +17,12 @@
 	 height:75px;
 }
 
+.siteTitleDiv
+{
+    margin-left:10%;
+    background-image:url(/Content/images/SiteIcon.png);    
+}
+
 .siteTitle
 {
 	font-size: x-large;

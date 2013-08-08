@@ -100,6 +100,25 @@ namespace AnotherBlog.MVC.Controllers
             return View(model);
         }
 
+        public ActionResult DisplayListControl(string blogSubFolder, String targetBlogListName)
+        {
+            ListControlModel model = new ListControlModel();
+            Blog targetBlog = Services.Blogs.GetBySubFolder(blogSubFolder);
+
+            if (targetBlog != null)
+            {
+                BlogList blogList = Services.BlogLists.GetByName(targetBlog, targetBlogListName);
+
+                if (blogList != null)
+                {
+                    model.Title = blogList.Name;
+                    model.ShowOrdered = blogList.ShowOrdered;
+                    model.ListItems = Services.BlogLists.GetListItems(blogList);
+                }
+            }
+
+            return View("ListControl", model);
+        }
 
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator)]
         public ActionResult ManageExtensions(string[] blogExtensions)

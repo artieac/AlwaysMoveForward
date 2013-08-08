@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataMapper\BlogListMapper.cs" />
     <Compile Include="DataMapper\BlogMapper.cs" />
     <Compile Include="DataMapper\BlogPostMapper.cs" />
     <Compile Include="DataMapper\BlogUserMapper.cs" />
@@ -80,7 +81,8 @@
     <Compile Include="Entities\BlogEntryDTO.cs" />
     <Compile Include="Entities\BlogEntryTagDTO.cs" />
     <Compile Include="Entities\BlogExtensionDTO.cs" />
-    <Compile Include="Entities\BlogRollLinkDTO.cs" />
+    <Compile Include="Entities\BlogListDTO.cs" />
+    <Compile Include="Entities\BlogListItemDTO.cs" />
     <Compile Include="Entities\BlogUserDTO.cs" />
     <Compile Include="Entities\DbInfoDTO.cs" />
     <Compile Include="Entities\EntryCommentDTO.cs" />
@@ -98,8 +100,9 @@
     <Compile Include="Repositories\BlogEntryRepository.cs" />
     <Compile Include="Repositories\BlogEntryTagRepository.cs" />
     <Compile Include="Repositories\BlogExtensionRepository.cs" />
+    <Compile Include="Repositories\BlogListItemRepository.cs" />
+    <Compile Include="Repositories\BlogListRepository.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
-    <Compile Include="Repositories\BlogRollLinkRepository.cs" />
     <Compile Include="Repositories\BlogUserRepository.cs" />
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\EntityConfiguration.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Repositories\RepositoryManager.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SiteInfoRepository.cs" />
+    <Compile Include="Repositories\Sorter.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />

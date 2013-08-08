@@ -12,5 +12,7 @@ namespace AnotherBlog.MVC.Models.Admin
     {
         public Blog TargetBlog { get; set; }
         public IList<Blog> UserBlogs { get; set; }
+        public String SortColumn { get; set; }
+        public Boolean SortAscending { get; set; }
     }
 }

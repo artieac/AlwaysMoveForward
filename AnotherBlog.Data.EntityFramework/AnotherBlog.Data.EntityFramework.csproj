@@ -87,13 +87,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.EntityFramework.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.EntityFramework.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.EntityFramework.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-
-copy "$(ProjectDir)$(OutDir)Microsoft.Data.Entity.CTP.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)Microsoft.Data.Entity.CTP.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)Microsoft.Data.Entity.CTP.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

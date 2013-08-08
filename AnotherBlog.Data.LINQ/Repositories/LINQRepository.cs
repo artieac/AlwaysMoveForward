@@ -35,6 +35,15 @@ namespace AnotherBlog.Data.LINQ.Repositories
 
         }
 
+        public LambdaExpression GenerateSortBy(String sortColumn, bool sortAscending)
+        {
+            ParameterExpression sortParameter = Expression.Parameter(typeof(DTOClass), "sortParam");
+
+            // Now we'll make our lambda function that returns the
+            // "DateOfBirth" property by it's name.
+            return Expression.Lambda<Func<DTOClass, object>>(Expression.Property(sortParameter, sortColumn), sortParameter);
+        }
+
         public virtual DataMapper<DomainClass, DTOClass, CommonInterface> DataMapper
         {
             get { return DataMapper<DomainClass, DTOClass, CommonInterface>.GetInstance(); }
@@ -223,7 +232,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             if (targetItem == null)
             {
                 ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().InsertOnSubmit(targetItem);
-                this.UnitOfWork.Commit();
+                this.UnitOfWork.Flush();
             }
 
             return this.DataMapper.Map(targetItem);
@@ -243,7 +252,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             {
                 ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().DeleteOnSubmit(targetItem);
                 retVal = true;
-                this.UnitOfWork.Commit();
+                this.UnitOfWork.Flush();
             }
 
             return retVal;

@@ -10,7 +10,6 @@ namespace AnotherBlog.MVC.Models.Admin
 {
     public class BlogAdminModel : AdminModel
     {
-        public IList<BlogRollLink> BlogRoll { get; set; }
         public PagedList<BlogPost> EntryList { get; set; }
         public BlogPost BlogPost { get; set; }
         public IList<Tag> PostTags { get; set; }

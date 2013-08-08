@@ -91,39 +91,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMapper\BlogMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\BlogPostMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\BlogUserMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\CommentMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\DbInfoMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\PostTagMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\RoleMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\TagMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataMapper\UserMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Entities\BlogListDTO.cs" />
+    <Compile Include="Entities\BlogListItemDTO.cs" />
     <Compile Include="Entities\ExtensionConfigurationDTO.cs" />
     <Compile Include="Entities\BlogDTO.cs" />
     <Compile Include="Entities\BlogPostDTO.cs" />
     <Compile Include="Entities\BlogEntryTagsDTO.cs" />
     <Compile Include="Entities\BlogExtensionDTO.cs" />
-    <Compile Include="Entities\BlogRollLinksDTO.cs" />
     <Compile Include="Entities\BlogUserDTO.cs" />
     <Compile Include="Entities\DbInfoDTO.cs" />
     <Compile Include="Entities\EntryCommentsDTO.cs" />
@@ -131,21 +105,22 @@
     <Compile Include="Entities\SiteInfoDTO.cs" />
     <Compile Include="Entities\TagDTO.cs" />
     <Compile Include="Entities\UserDTO.cs" />
-    <Compile Include="Repositories\BlogEntryRepository.cs" />
-    <Compile Include="Repositories\BlogEntryTagRepository.cs" />
-    <Compile Include="Repositories\BlogExtensionRepository.cs" />
-    <Compile Include="Repositories\BlogRepository.cs" />
-    <Compile Include="Repositories\BlogRollLinkRepository.cs" />
-    <Compile Include="Repositories\BlogUserRepository.cs" />
-    <Compile Include="Repositories\DbInfoRepository.cs" />
-    <Compile Include="Repositories\EntryCommentRepository.cs" />
-    <Compile Include="Repositories\ExtensionConfigurationRepository.cs" />
-    <Compile Include="Repositories\ActiveRecordRepository.cs" />
-    <Compile Include="Repositories\RepositoryManager.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Repositories\SiteInfoRepository.cs" />
-    <Compile Include="Repositories\TagRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogEntryRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogEntryTagRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogExtensionRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogListItemRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogListRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogRepository.cs" />
+    <Compile Include="Entities\Repositories\BlogUserRepository.cs" />
+    <Compile Include="Entities\Repositories\DbInfoRepository.cs" />
+    <Compile Include="Entities\Repositories\EntryCommentRepository.cs" />
+    <Compile Include="Entities\Repositories\ExtensionConfigurationRepository.cs" />
+    <Compile Include="Entities\Repositories\ActiveRecordRepository.cs" />
+    <Compile Include="Entities\Repositories\RepositoryManager.cs" />
+    <Compile Include="Entities\Repositories\RoleRepository.cs" />
+    <Compile Include="Entities\Repositories\SiteInfoRepository.cs" />
+    <Compile Include="Entities\Repositories\TagRepository.cs" />
+    <Compile Include="Entities\Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

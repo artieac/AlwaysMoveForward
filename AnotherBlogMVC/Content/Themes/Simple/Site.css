@@ -12,17 +12,34 @@
 
 .header
 {
-	 background:#6B7379 url(/Content/images/header_bg.gif) repeat-x scroll ;
-	 display:block;
-	 height:75px;
+	display:block;
+	height:150px;
+	background:#F4F4F4 url(/Content/images/header_bg.gif) repeat-x scroll ;
+    border-bottom:1px solid #CCCCCC;
+ }
+
+.headerImageSection
+{
+    background-image:url(/Content/images/SiteIcon.png);
+    background-repeat:no-repeat;
+}
+
+.siteTitleSection
+{
+    height:150px;
+    margin-left:150px;
 }
 
 .siteTitle
 {
+    font-family:Lucida Grande;
 	font-size: x-large;
 	color: #FFFFFF;
-	font-style:oblique;
-	text-decoration:none;
+	font-style:normal;
+    position: absolute;
+    height: 75px;
+    display: table;
+    text-decoration:none;
 }
 
 .loginDiv
@@ -36,7 +53,7 @@
 {
 	font-size: small;
 	padding-right:2px;
-	color:#FFFFFF;
+	color:#5493E0;
 }
 
 .bodyContainer
@@ -60,8 +77,6 @@
 	text-align:left;
 	float:left;
 	width:80%;
-	background-image:/images/gymBackground.png;
-	background-repeat:no-repeat;
 }
 
 .metaContentPanel

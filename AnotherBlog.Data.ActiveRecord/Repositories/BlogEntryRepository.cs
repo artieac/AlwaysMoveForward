@@ -60,27 +60,63 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
         }
 
-        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults)
+        public IList<BlogPost> GetMostRead(int maxResults)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-
-            if (publishedOnly == true)
-            {
-                criteria.Add(Expression.Eq("IsPublished", true));
-            }
-
-            criteria.AddOrder(Order.Desc("DatePosted"));
+            criteria.Add(Expression.Eq("IsPublished", true));
+            criteria.AddOrder(Order.Desc("TimesViewed"));
 
             if (maxResults > 0)
             {
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
+        }
+
+        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
+            criteria.Add(Expression.Eq("IsPublished", true));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            criteria.AddOrder(Order.Desc("TimesViewed"));
+
+            if (maxResults > 0)
+            {
+                criteria.SetMaxResults(maxResults);
+            }
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
+        }
+
+        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+
+            if (publishedOnly == true)
+            {
+                criteria.Add(Expression.Eq("IsPublished", true));
+            }
+
+            if (sortAscending == true)
+            {
+                criteria.AddOrder(Order.Asc(sortColumn));
+            }
+            else
+            {
+                criteria.AddOrder(Order.Desc(sortColumn));
+            }
+
+            if (maxResults > 0)
+            {
+                criteria.SetMaxResults(maxResults);
+            }
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)
@@ -92,12 +128,12 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
             criteria.Add(Expression.Eq("Title", blogTitle));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Year));
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Month));
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Day));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
         }
 
         public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
@@ -111,7 +147,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 
             if (blogId.HasValue)
             {
-                criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId.Value));
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
             }
 
             if (publishedOnly == true)
@@ -119,10 +155,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
                 criteria.Add(Expression.Eq("IsPublished", true));
             }
 
-            criteria.CreateCriteria("TagsDTO").Add(Expression.Eq("Id", tagId));
+            criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", tagId));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
         }
 
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
@@ -136,7 +172,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 
             if (blogId.HasValue)
             {
-                criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId.Value));
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
             }
         
             if (publishedOnly == true)
@@ -148,7 +184,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
         }
 
         public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
@@ -162,7 +198,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 
             if (blogId.HasValue)
             {
-                criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId.Value));
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
             }
 
             if (publishedOnly == true)
@@ -175,54 +211,54 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Day));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
         }
 
         public BlogPost GetMostRecent(int blogId, bool published)
         {
             DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
-            getMaxEntryId.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.SetProjection(Projections.Max("EntryId"));
 
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
         }
 
         public BlogPost GetPreviousEntry(int blogId, int currentPostId)
         {
             DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
-            getMaxEntryId.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.Add(Expression.Lt("EntryId", currentPostId));
             getMaxEntryId.SetProjection(Projections.Max("EntryId"));
 
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
         }
 
         public BlogPost GetNextEntry(int blogId, int currentPostId)
         {
             DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
-            getMaxEntryId.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.Add(Expression.Gt("EntryId", currentPostId));
             getMaxEntryId.SetProjection(Projections.Min("EntryId"));
 
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
         }
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
@@ -232,7 +268,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             criteria.SetProjection(Projections.Distinct(Projections.Alias(Projections.Property("DatePosted"), "DatePosted")));
             criteria.SetResultTransformer(new NHibernate.Transform.AliasToBeanResultTransformer(typeof(BlogPostDTO)));
 
-            IList<BlogPost> foundDates = this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            IList<BlogPost> foundDates = Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria);
 
             IList<DateTime> retVal = new List<DateTime>();
 

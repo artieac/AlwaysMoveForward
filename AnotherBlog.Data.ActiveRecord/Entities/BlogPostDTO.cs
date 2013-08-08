@@ -18,12 +18,11 @@ using Castle.ActiveRecord;
 using AnotherBlog.Common.Utilities;
 using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("BlogEntries")]
-    public class BlogPostDTO : IBlogPost
+    public class BlogPostDTO : BlogPost
     {
         public BlogPostDTO()
         {
@@ -31,58 +30,49 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "EntryId", UnsavedValue = "-1")]
-        public int EntryId{ get; set;}
+        public override int EntryId { get; set; }
 
         [Property("IsPublished")]
-        public bool IsPublished{ get; set;}
+        public override bool IsPublished { get; set; }
 
         [BelongsTo("BlogId", Type = typeof(BlogDTO))]
-        public BlogDTO BlogDTO{ get; set;}
-
-        public Blog Blog
-        {
-            get { return BlogMapper.GetInstance().Map(this.BlogDTO); }
-            set { this.BlogDTO = BlogMapper.GetInstance().Map(value); }
-        }
+        public override Blog Blog { get; set; }
 
         [BelongsTo("UserId", Type = typeof(UserDTO))]
-        public UserDTO AuthorDTO{ get; set;}
-
-        public User Author
-        {
-            get { return UserMapper.GetInstance().Map(this.AuthorDTO); }
-            set { this.AuthorDTO = UserMapper.GetInstance().Map(value); }
-        }
+        public override User Author { get; set; }
 
         [Property(ColumnType = "StringClob")]
-        public string EntryText{ get; set;}
+        public override string EntryText { get; set; }
 
         [Property("Title")]
-        public string Title{ get; set;}
+        public override string Title { get; set; }
 
         [Property("DatePosted")]
-        public DateTime DatePosted{ get; set;}
+        public override DateTime DatePosted { get; set; }
 
         [Property("DateCreated")]
-        public DateTime DateCreated { get; set; }
+        public override DateTime DateCreated { get; set; }
+
+        [Property("TimesViewed")]
+        public override int TimesViewed { get; set;}
 
         [HasMany(typeof(EntryCommentsDTO), Where = "Status=1")]
-        public IList<EntryCommentsDTO> CommentsDTO { get; set; }
+        public override IList<IComment> Comments { get; set; }
 
-        public int GetCommentCount()
+        public override int GetCommentCount()
         {
             int retVal = 0;
 
-            if (this.CommentsDTO != null)
+            if (this.Comments != null)
             {
-                retVal = this.CommentsDTO.Count();
+                retVal = this.Comments.Count();
             }
 
             return retVal;
         }
 
         [HasAndBelongsToMany(typeof(TagDTO), ColumnRef = "TagId", ColumnKey = "BlogEntryId", Table = "BlogEntryTags")]
-        public IList<TagDTO> TagsDTO { get; set; }
+        public override IList<ITag> Tags { get; set; }
 
     }
 }

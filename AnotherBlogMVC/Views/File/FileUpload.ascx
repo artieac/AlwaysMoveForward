@@ -3,5 +3,5 @@
     <label style="text-align:left">upload file</label>
     <input id="imageFile" name="imageFile" type="file"  />
     <br />
-    <input type="button" id="submitFileUploadButton" value="upload" onclick="javascript:SubmitFileUpload();"/>
+    <input type="button" id="submitFileUploadButton" value="upload" onclick="ManageBlogPosts:SubmitFileUpload();"/>
 </form>

@@ -21,31 +21,26 @@ namespace AnotherBlog.MVC.Models
 {
     public class ModelBase 
     {
-        private string blogSubFolder;
         private DateTime targetMonth;
 
         public ModelBase()
         {
             targetMonth = DateTime.Now;
-            blogSubFolder = "All";
+            this.BlogSubFolder = "All";
         }
 
         #region Properties
 
         public Blog TargetBlog{ get; set;}
         public string BlogName{ get; set;}
-        public string BlogSubFolder
-        {
-            get { return this.blogSubFolder; }
-            set { this.blogSubFolder = value; }
-        }
-
+        public string BlogSubFolder{ get; set;}
         public string ContentTitle{ get; set;}
         public IList<Blog> BlogList{ get; set;}
         public IList BlogDates{ get; set;}
         public IList BlogTags{ get; set;}
-        public IList<BlogRollLink> BlogRoll{ get; set;}
         public IList<DateTime> CurrentMonthBlogDates{ get; set;}
+        public IList<String> ListNames { get; set; }
+        public ListControlModel MostViewedPosts { get; set; }
 
         public DateTime TargetMonth
         {

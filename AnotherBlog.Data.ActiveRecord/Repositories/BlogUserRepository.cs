@@ -22,7 +22,6 @@ using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
@@ -51,8 +50,8 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public IList<BlogUser> GetUserBlogs(int userId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
-            criteria.CreateCriteria("UserDTO").Add(Expression.Eq("UserId", userId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria));
+            criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria);
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -63,9 +62,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public BlogUser GetUserBlog(int userId, int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
-            criteria.CreateCriteria("UserDTO").Add(Expression.Eq("UserId", userId));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria));
+            criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria);
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.
@@ -81,9 +80,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 
             if (targetUserBlog != null)
             {
-                BlogUserDTO dtoItem = this.DataMapper.Map(targetUserBlog);
-                Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.Delete(dtoItem);
-                this.UnitOfWork.Commit();
+                Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.Delete(targetUserBlog);
                 retVal = true;
             }
 

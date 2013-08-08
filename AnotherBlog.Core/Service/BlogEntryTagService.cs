@@ -34,7 +34,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public PostTag Create()
         {
-            PostTag retVal = new PostTag();
+            PostTag retVal = this.Repositories.BlogEntryTags.Create();
             retVal.PostTagId = this.Repositories.BlogEntryTags.UnsavedId;
             return retVal;
         }

@@ -94,7 +94,7 @@ namespace AnotherBlog.Data.NHibernate.Repositories
                 try
                 {
                     ((UnitOfWork)this.UnitOfWork).CurrentSession.SaveOrUpdate(saveType);
-                    this.UnitOfWork.Commit();
+                    this.UnitOfWork.Flush();
                 }
                 catch (Exception e)
                 {
@@ -120,7 +120,7 @@ namespace AnotherBlog.Data.NHibernate.Repositories
                 try
                 {
                     ((UnitOfWork)this.UnitOfWork).CurrentSession.Delete(deleteType);
-                    this.UnitOfWork.Commit();
+                    this.UnitOfWork.Flush();
                     retVal = true;
                 }
                 catch (Exception e)

@@ -45,7 +45,8 @@ namespace AnotherBlog.Core.Utilities
                 if (this.serviceManager == null)
                 {
                     serviceManager = new ServiceManager();
-                    serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                    serviceManager.UnitOfWork = ServiceManager.CreateUnitOfWork();
+                    serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager(serviceManager.UnitOfWork);
                 }
 
                 return this.serviceManager;

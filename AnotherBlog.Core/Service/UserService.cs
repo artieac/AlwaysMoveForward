@@ -53,7 +53,7 @@ namespace AnotherBlog.Core.Service
 
         public User Create()
         {
-            User retVal = new User();
+            User retVal = this.Repositories.Users.Create();
             retVal.UserId = this.Repositories.Users.UnsavedId;
             retVal.IsActive = true;
             return retVal;

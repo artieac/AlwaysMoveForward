@@ -31,7 +31,6 @@ namespace AnotherBlog.Data.LINQ.Repositories
         IBlogEntryTagRepository blogEntryTagRepository;
         IBlogExtensionRepository blogExtensionRepository;
         IBlogRepository blogRepository;
-        IBlogRollLinkRepository blogLinkRepository;
         IBlogUserRepository blogUserRepository;
         IDbInfoRepository dbInfoRepository;
         IEntryCommentRepository entryCommentRepository;
@@ -40,6 +39,8 @@ namespace AnotherBlog.Data.LINQ.Repositories
         ISiteInfoRepository siteInfoRepository;
         ITagRepository tagRepository;
         IUserRepository userRepository;
+        IBlogListRepository blogLists;
+        IBlogListItemRepository blogListItems;
 
         public IUnitOfWork UnitOfWork { get; set; }
 
@@ -113,20 +114,6 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 }
 
                 return this.blogRepository;
-            }
-        }
-
-        public IBlogRollLinkRepository BlogLinks
-        {
-            get
-            {
-                if (this.blogLinkRepository == null)
-                {
-                    BlogRollLinkRepository newRepository = new BlogRollLinkRepository(this.UnitOfWork, this);
-                    this.blogLinkRepository = newRepository;
-                }
-
-                return this.blogLinkRepository;
             }
         }
 
@@ -239,6 +226,32 @@ namespace AnotherBlog.Data.LINQ.Repositories
                 }
 
                 return this.userRepository;
+            }
+        }
+
+        public IBlogListRepository BlogLists
+        {
+            get
+            {
+                if (this.blogLists == null)
+                {
+                    this.blogLists = new BlogListRepository(this.UnitOfWork, this);
+                }
+
+                return this.blogLists;
+            }
+        }
+
+        public IBlogListItemRepository BlogListItems
+        {
+            get
+            {
+                if (this.blogListItems == null)
+                {
+                    this.blogListItems = new BlogListItemRepository(this.UnitOfWork, this);
+                }
+
+                return this.blogListItems;
             }
         }
     }

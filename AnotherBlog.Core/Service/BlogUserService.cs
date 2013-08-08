@@ -27,7 +27,7 @@ namespace AnotherBlog.Core.Service
 
         public BlogUser Create()
         {
-            BlogUser retVal = new BlogUser();
+            BlogUser retVal = this.Repositories.BlogUsers.Create();
             retVal.BlogUserId = this.Repositories.BlogUsers.UnsavedId;
             return retVal;
         }

@@ -20,6 +20,7 @@ using System.Security.Permissions;
 using log4net;
 using log4net.Config;
 
+using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;
@@ -32,7 +33,21 @@ namespace AnotherBlog.MVC.Controllers
     public abstract class BaseController : Controller
     {
         private ILog logger;
+        private IUnitOfWork unitOfWork;
         private ServiceManager serviceManager;
+
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                if (this.unitOfWork == null)
+                {
+                    this.unitOfWork = ServiceManager.CreateUnitOfWork();
+                }
+
+                return this.unitOfWork;
+            }
+        }
 
         public ServiceManager Services
         {
@@ -40,8 +55,7 @@ namespace AnotherBlog.MVC.Controllers
             {
                 if (this.serviceManager == null)
                 {
-                    this.serviceManager = new ServiceManager();
-                    this.serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                    this.serviceManager = ServiceManager.CreateServiceManager(this.UnitOfWork);
                 }
 
                 return this.serviceManager;

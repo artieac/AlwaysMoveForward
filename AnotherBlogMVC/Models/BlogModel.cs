@@ -27,7 +27,6 @@ namespace AnotherBlog.MVC.Models
         }
 
         public PagedList<BlogPost> BlogEntries{ get; set;}
-        public IList<BlogRollLink> BlogLinks{ get; set;}
         public IList<User> BlogWriters{ get; set;}
         public BlogPost BlogEntry { get; set; }
         public IList<Tag> EntryTags { get; set; }

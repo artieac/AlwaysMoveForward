@@ -55,7 +55,7 @@ namespace AnotherBlog.Data.NHibernate.Repositories
             return criteria.List<BlogPost>(); 
         }
 
-        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults)
+        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
         {
             NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
@@ -65,7 +65,14 @@ namespace AnotherBlog.Data.NHibernate.Repositories
                 criteria.Add(Expression.Eq("IsPublished", true));
             }
 
-            criteria.AddOrder(Order.Desc("DatePosted"));
+            if (sortAscending == true)
+            {
+                criteria.AddOrder(Order.Asc(sortColumn));
+            }
+            else
+            {
+                criteria.AddOrder(Order.Desc(sortColumn));
+            }
 
             if (maxResults > 0)
             {
@@ -73,6 +80,16 @@ namespace AnotherBlog.Data.NHibernate.Repositories
             }
 
             return criteria.List<BlogPost>(); 
+        }
+
+        public IList<BlogPost> GetMostRead(int maxResults)
+        {
+            return new List<BlogPost>();
+        }
+
+        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        {
+            return new List<BlogPost>();
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)

@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 using AnotherBlog.Common.Data;
@@ -62,24 +63,31 @@ namespace AnotherBlog.Data.LINQ.Repositories
             return dtoList.Cast<BlogPost>().ToList();
         }
 
-        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults)
+        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
         {
             IQueryable<BlogEntryDTO> dtoList = null;
 
             if (publishedOnly == true)
             {
-                dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
-                          where foundItem.IsPublished == true &&
-                          foundItem.BlogId == blogId
-                          orderby foundItem.DatePosted descending
-                          select foundItem;
+                dtoList =  from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
+                            where foundItem.IsPublished == true &&
+                            foundItem.BlogId == blogId
+                            select foundItem;
             }
             else
             {
                 dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
                           where foundItem.BlogId == blogId
-                          orderby foundItem.DatePosted descending
                           select foundItem;
+            }
+
+            if (sortAscending == true)
+            {
+                dtoList = dtoList.OrderBy(foundItem => foundItem.GetType().GetProperty(sortColumn));
+            }
+            else
+            {
+                dtoList = dtoList.OrderByDescending(foundItem => foundItem.GetType().GetProperty(sortColumn));
             }
 
             if (maxResults > 0)
@@ -88,6 +96,16 @@ namespace AnotherBlog.Data.LINQ.Repositories
             }
 
             return dtoList.Cast<BlogPost>().ToList();
+        }
+
+        public IList<BlogPost> GetMostRead(int maxResults)
+        {
+            return new List<BlogPost>();
+        }
+
+        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        {
+            return new List<BlogPost>();
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)

@@ -84,6 +84,7 @@ namespace AnotherBlog.MVC.Controllers
                     }
 
                     model.CurrentMonthBlogDates = this.GetBlogDatesForMonth2(model.TargetBlog, model.TargetMonth);
+                    model.ListNames = Services.BlogLists.GetListNames(model.TargetBlog);
                 }
             }
             else
@@ -93,26 +94,6 @@ namespace AnotherBlog.MVC.Controllers
             }
 
             return View(model);
-        }
-
-        public ActionResult ViewBlogRoll(string blogSubFolder)
-        {
-            IList<BlogRollLink> retVal = null;
-
-            Blog targetBlog = this.GetTargetBlog(blogSubFolder);
-
-            if (targetBlog != null)
-            {
-                retVal = Services.BlogLinks.GetAllByBlog(targetBlog);
-            }
-            else
-            {
-                retVal = new List<BlogRollLink>();
-            }
-
-            ViewData["blogRollLinks"] = retVal;
-
-            return View("BlogRoll");
         }
 
         public ActionResult ViewArchive(string blogSubFolder)
@@ -221,7 +202,9 @@ namespace AnotherBlog.MVC.Controllers
 
                     if (ViewData.ModelState.IsValid)
                     {
+                        this.UnitOfWork.BeginTransaction();
                         Comment savedComment = Services.EntryComments.Save(model.TargetBlog, targetEntry, authorName, authorEmail, commentText, commentLink, this.CurrentPrincipal.CurrentUser);
+                        this.UnitOfWork.EndTransaction(true);
                     }
                 }
             }
@@ -244,7 +227,20 @@ namespace AnotherBlog.MVC.Controllers
 
             if (targetEntry != null)
             {
-                Comment savedComment = Services.EntryComments.Save(targetBlog, targetEntry, authorName, authorEmail, commentText, commentLink, ((User)this.HttpContext.User));
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Comment savedComment = Services.EntryComments.Save(targetBlog, targetEntry, authorName, authorEmail, commentText, commentLink, ((User)this.HttpContext.User));
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+
                 ViewData["EntryComments"] = Services.EntryComments.GetByEntry(targetBlog, targetEntry);
             }
 
@@ -260,6 +256,21 @@ namespace AnotherBlog.MVC.Controllers
             {
                 DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
                 model.BlogEntry = Services.BlogEntries.GetByDateAndTitle(model.TargetBlog, postDate, HttpUtility.UrlDecode(title.Replace("_", " ")));
+
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Services.BlogEntries.UpdateTimesViewed(model.BlogEntry);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+
                 model.EntryTags = Services.Tags.GetByBlogEntryId(model.BlogEntry.EntryId);
                 model.Comments = Services.EntryComments.GetByEntry(model.TargetBlog, model.BlogEntry);
                 model.PreviousEntry = Services.BlogEntries.GetPreviousEntry(model.TargetBlog, model.BlogEntry);
@@ -271,6 +282,8 @@ namespace AnotherBlog.MVC.Controllers
                 model.EntryTags = new List<Tag>();
                 model.Comments = new PagedList<Comment>();
             }
+
+            model.ListNames = Services.BlogLists.GetListNames(model.TargetBlog);
 
             return View(model);
         }

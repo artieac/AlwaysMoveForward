@@ -1,24 +1,25 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UserLogin.ascx.cs" Inherits="AnotherBlog.MVC.Views.Shared.UserLogin" %>
 <%@ Import Namespace="AnotherBlog.MVC.Utilities" %>
+<script src="/Scripts/Common/SiteLogin.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document.body).click(function(e) {
         var target = jQuery(e.target);
         var id = target.attr('id');
 
         if (id == 'submitLoginButton') {
-            SubmitLogin();
+            SiteLogin.SubmitLogin();
         }
 
         if (id == 'submitLogoutButton') {
-            SubmitLogin();
+            SiteLogin.SubmitLogin();
         }
 
         if (id == 'submitForgotPasswordButton') {
-            SubmitForgotPassword();
+            SiteLogin.SubmitForgotPassword();
         }
 
         if (id == 'showForgotPasswordLink') {
-            ShowForgotPassword();
+            SiteLogin.ShowForgotPassword();
         }
     });
 </script>
@@ -28,27 +29,23 @@
         {
       %>
             <form id='loginForm' action="<%= Utils.GetSecureURL(ViewData.Model.BlogSubFolder, "/User/Login") %>" method='post'>   
-                <table>
-                    <tr>
-                        <td>
-                            <span class="loginLabel">username:</span>
-                            <input type="text" id="userName" name="userName"/>
-                        </td>
-                        <td>
-                            <span class="loginLabel">password:</span>
-                            <input type="password" id="password" name="password"/>                    
-                        </td>
-                        <td>
-                            <input type="hidden" id="Hidden1" name="loginAction" value="login" />
-                            <input type="button" id="submitLoginButton" value="log in"/>                    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><%= Html.ValidationMessage("loginError") %></td>
-                        <td><a class='loginLabel' id="showForgotPasswordLink">forgot password?</a></td>
-                        <td><a class='loginLabel' href='/<%= ViewData.Model.BlogSubFolder %>/User/Register'>register</a></td>
-                    </tr>
-                </table>
+                <div>
+                    <span class="loginLabel">username:</span>
+                    <input type="text" id="userName" name="userName"/>  
+                </div>
+                <div>
+                    <span class="loginLabel">password:</span>
+                    <input type="password" id="password" name="password"/>                    
+                </div> 
+                <div>
+                    <input type="hidden" id="Hidden1" name="loginAction" value="login" />
+                    <%= Html.ValidationMessage("loginError") %>
+                    <input type="button" id="submitLoginButton" value="log in"/>                    
+                </div>
+                <div>
+                    <a class='loginLabel' id="showForgotPasswordLink">forgot password?</a>
+                    <a class='loginLabel' href='/<%= ViewData.Model.BlogSubFolder %>/User/Register'>register</a>
+                </div>
                 <br />
             </form>
       <%}

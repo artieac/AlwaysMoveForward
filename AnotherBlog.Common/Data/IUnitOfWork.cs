@@ -16,10 +16,12 @@ using System.Data;
 
 namespace AnotherBlog.Common.Data
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        void BeginTransaction(IsolationLevel isolationLevel);
+        IDisposable BeginTransaction();
+        IDisposable BeginTransaction(IsolationLevel isolationLevel);
         void EndTransaction(bool shouldCommit);
-        void Commit();
+
+        void Flush();
     }
 }

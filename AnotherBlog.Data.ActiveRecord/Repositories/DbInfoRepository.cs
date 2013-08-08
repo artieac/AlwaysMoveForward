@@ -23,14 +23,11 @@ using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
 using AnotherBlog.Data.ActiveRecord.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
     public class DbInfoRepository : ActiveRecordRepository<DbInfo, DbInfoDTO, IDbInfo>, IDbInfoRepository
     {
-        DbInfoMapper dbInfoMapper = new DbInfoMapper();
-
         internal DbInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
             : base(unitOfWork, repositoryManager)
         {
@@ -39,7 +36,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 
         public DbInfo GetDbInfo()
         {
-            return dbInfoMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne());
+            return Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne();
         }
     }
 }

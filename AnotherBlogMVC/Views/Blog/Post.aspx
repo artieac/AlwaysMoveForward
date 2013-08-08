@@ -4,13 +4,14 @@
 <%@ Import Namespace="AnotherBlog.MVC" %>
 <%@ Import Namespace="AnotherBlog.MVC.Utilities" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="bodyContainer" runat="server">
+    <script src="/Scripts/Blog/BlogPost.js" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document.body).click(function(e) {
             var target = jQuery(e.target);
             var id = target.attr('id');
 
             if (id == 'submitCommentButton') {
-                ViewPublishedSubmitComment();
+                BlogPost.ViewPublishedSubmitComment();
             }
         });
     </script>
@@ -63,7 +64,7 @@
                         <input type="hidden" id="Hidden1" name="entryId" value="<%= ViewData.Model.BlogEntry.EntryId.ToString() %>" />            
                     </form>
                     <script type="text/javascript">
-                        ViewPublishedInitializeComments();
+                        BlogPost.ViewPublishedInitializeComments();
                     </script>
                 </div>   
                 <br /> 

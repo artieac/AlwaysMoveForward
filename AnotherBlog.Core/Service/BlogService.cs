@@ -34,7 +34,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public Blog Create()
         {
-            Blog retVal = new Blog();
+            Blog retVal = this.Repositories.Blogs.Create();
             retVal.BlogId = this.Repositories.Blogs.UnsavedId;
             return retVal;
         }

@@ -16,6 +16,7 @@ using System.Web;
 using log4net;
 using log4net.Config;
 
+using AnotherBlog.Common.Data;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;
 
@@ -24,7 +25,21 @@ namespace AnotherBlog.IntegrationService
     public class ServiceBase
     {
         private ILog logger;
+        IUnitOfWork unitOfWork;
         private ServiceManager serviceManager;
+
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                if (this.unitOfWork == null)
+                {
+                    this.unitOfWork = ServiceManager.CreateUnitOfWork();
+                }
+
+                return this.unitOfWork;
+            }
+        }
 
         public ServiceManager Services
         {
@@ -32,8 +47,7 @@ namespace AnotherBlog.IntegrationService
             {
                 if (this.serviceManager == null)
                 {
-                    this.serviceManager = new ServiceManager();
-                    this.serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                    this.serviceManager = ServiceManager.CreateServiceManager(this.UnitOfWork);
                 }
 
                 return this.serviceManager;

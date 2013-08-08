@@ -11,7 +11,7 @@ using NHC = NHibernate.Cfg;
 
 namespace AnotherBlog.Data.NHibernate
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private static NHC.Configuration nhibernateConfig;
 
@@ -26,7 +26,6 @@ namespace AnotherBlog.Data.NHibernate
 
         private NH.ISessionFactory sessionFactory;
         private NH.ISession currentSession;
-        NH.ITransaction currentTransaction;
 
         private NH.ISessionFactory SessionFactory
         {
@@ -42,54 +41,84 @@ namespace AnotherBlog.Data.NHibernate
 
         public NH.ISession CurrentSession
         {
-            get
-            {
-                if (currentSession == null)
-                {
-                    currentSession = UnitOfWork.nhibernateConfig.BuildSessionFactory().OpenSession();
-                }
-
-                return currentSession;
-            }
+            get { return this.currentSession; }
         }
 
         #region IUnitOfWork Members
 
-        public void BeginTransaction(IsolationLevel isolationLevel)
+        public void StartSession()
         {
-            if (currentTransaction == null)
+            this.currentSession = this.SessionFactory.OpenSession(); ;
+        }
+
+        public void EndSession()
+        {
+            if (this.currentSession!=null)
             {
-                currentTransaction = sessionFactory.OpenSession().BeginTransaction();
+                this.currentSession.Dispose();
             }
+        }
+
+        public IDisposable BeginTransaction()
+        {
+            return this.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+
+        public IDisposable BeginTransaction(IsolationLevel isolationLevel)
+        {
+            IDisposable retVal = null;
+
+            if (this.currentSession == null)
+            {
+                this.StartSession();
+            }
+
+            if (this.currentSession != null)
+            {
+                retVal = this.currentSession.BeginTransaction();
+            }
+
+            return retVal;
         }
 
         public void EndTransaction(bool canCommit)
         {
-            if (currentTransaction != null)
+            if(this.currentSession!=null)
             {
-                if (canCommit)
+                if(this.currentSession.Transaction!=null)
                 {
-                    currentTransaction.Commit();
-                }
-                else
-                {
-                    currentTransaction.Rollback();
-                }
+                    if (this.currentSession.Transaction.IsActive)
+                    {
+                        if (canCommit)
+                        {
+                            this.currentSession.Transaction.Commit();
+                        }
+                        else
+                        {
+                            this.currentSession.Transaction.Rollback();
+                        }
+                    }
 
-                currentTransaction.Dispose();
-                currentTransaction = null;
+                    this.currentSession.Transaction.Dispose();
+                }
             }
         }
-
-        public void Commit()
+        
+        public void Flush()
         {
-            if (currentSession != null)
+            if (this.currentSession != null)
             {
-                currentSession.Flush();
+                this.currentSession.Flush();
             }
         }
 
 
         #endregion
+
+        public void Dispose()
+        {
+            this.EndTransaction(true);
+            this.EndSession();
+        }
     }
 }

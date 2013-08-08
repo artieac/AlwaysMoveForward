@@ -3,6 +3,7 @@
 <%@ Import Namespace="AnotherBlog.Common.Data.Entities" %>
 <%@ Import Namespace="AnotherBlog.MVC.Utilities" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="bodyContainer" runat="server">
+    <script src="/Scripts/Admin/ManageUsers.js" type="text/javascript"></script>
     <div class="bodyContent">        
         <div class="contentPageTitle">
             <label>Manage Users</label>
@@ -17,6 +18,7 @@
                             <td width="20%">User</td>
                             <td width="20%">Display Name</td>
                             <td width="20%">Email</td>
+                            <td>&nbsp;</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +40,7 @@
                             <td><a href="/Admin/EditUser?userId=<%= blogUser.UserId.ToString() %>"><%= blogUser.UserName %></a></td>
                             <td><%= blogUser.DisplayName %></td>
                             <td><%= blogUser.Email %></td>
+                            <td><a href="/Admin/DeleteUser?userId=<%= blogUser.UserId.ToString() %>"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
                         </tr>
                     <%
                         }
@@ -47,7 +50,7 @@
                 <div class="pager">    
                     <%= Html.Pager(ViewData.Model.Users.PageSize, ViewData.Model.Users.PageNumber, ViewData.Model.Users.TotalItemCount, "ManageUsers", null)%>
                 </div>
-                <a href="Admin/EditUser">Add User</a>
+                <a href="/Admin/EditUser">Add User</a>
             </div>
         </div>
     </div>

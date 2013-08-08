@@ -17,12 +17,11 @@ using Castle.ActiveRecord;
 
 using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("EntryComments")]
-    public class EntryCommentsDTO : IComment
+    public class EntryCommentsDTO : Comment
     {
         public EntryCommentsDTO() : base()
         {
@@ -30,42 +29,30 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "CommentId", UnsavedValue="-1")]
-        public int CommentId{ get; set;}
+        public override int CommentId { get; set; }
 
         [Property("Status")]
-        public int Status{ get; set;}
+        public override int Status { get; set; }
 
         [BelongsTo("BlogId", Type=typeof(BlogDTO))]
-        public BlogDTO BlogDTO{ get; set;}
-
-        public Blog Blog
-        {
-            get { return BlogMapper.GetInstance().Map(this.BlogDTO); }
-            set { this.BlogDTO = BlogMapper.GetInstance().Map(value); }
-        }
+        public override Blog Blog { get; set; }
 
         [Property("Link")]
-        public string Link{ get; set;}
+        public override string Link { get; set; }
 
         [Property("AuthorEmail")]
-        public string AuthorEmail{ get; set;}
+        public override string AuthorEmail { get; set; }
 
         [Property("Comment", ColumnType = "StringClob")]
-        public string Text{ get; set;}
+        public override string Text { get; set; }
 
         [Property("AuthorName")]
-        public string AuthorName{ get; set;}
+        public override string AuthorName { get; set; }
 
         [BelongsTo("EntryId", Type=typeof(BlogPostDTO))]
-        public BlogPostDTO PostDTO{ get; set;}
-
-        public BlogPost Post
-        {
-            get { return BlogPostMapper.GetInstance().Map(this.PostDTO); }
-            set { this.PostDTO = BlogPostMapper.GetInstance().Map(value); }
-        }
+        public override BlogPost Post { get; set; }
 
         [Property("DatePosted")]
-        public DateTime DatePosted{ get; set;}
+        public override DateTime DatePosted { get; set; }
     }
 }

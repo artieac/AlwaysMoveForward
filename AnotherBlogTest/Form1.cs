@@ -36,11 +36,6 @@ namespace AnotherBlogTest
 //            blogTests.GetDefaultBlog();
 //            blogTests.TearDown();
 
-            BlogRollTest blogRollTests = new BlogRollTest();
-//            blogRollTests.Setup();
-//            blogRollTests.GetAllByBlog();
-//            blogRollTests.TearDown();
-
             BlogUserTest blogUserTests = new BlogUserTest();
 //            blogUserTests.Setup();
 //            blogUserTests.Create();

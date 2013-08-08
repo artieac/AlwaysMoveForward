@@ -47,20 +47,20 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files\Microsoft ASP.NET\ASP.NET MVC CodePlex Preview 5\Assemblies\System.Web.Abstractions.dll</HintPath>
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -68,20 +68,20 @@
     <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Microsoft ASP.NET\ASP.NET MVC 1.0\Assemblies\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Routing">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Configuration">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Services">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -103,18 +103,29 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Admin\AdminModel.cs" />
-    <Compile Include="Models\Admin\BlogAdminModel.cs" />
-    <Compile Include="Models\Admin\AjaxSaveModel.cs" />
-    <Compile Include="Models\BlogEntryModel.cs" />
+    <Compile Include="Models\Admin\AdminModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\AjaxBlogListModel.cs" />
+    <Compile Include="Models\Admin\AjaxSaveModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\BlogAdminModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\BlogListModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\SiteAdminModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\EntryCommentModel.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\Home\IndexModel.cs" />
-    <Compile Include="Models\IndexItemModel.cs" />
+    <Compile Include="Models\ListControlModel.cs" />
     <Compile Include="Models\RSSModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
-    <Compile Include="Models\Admin\SiteAdminModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,6 +195,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Common.css" />
     <Content Include="Content\images\action_check.png" />
     <Content Include="Content\images\action_delete.png" />
     <Content Include="Content\images\delicious.gif" />
@@ -192,8 +204,15 @@
     <Content Include="Content\images\header_bg.gif" />
     <Content Include="Content\images\rss.png" />
     <Content Include="Content\images\technorati.gif" />
+    <Content Include="Content\ManageBlogLists.js" />
+    <Content Include="Scripts\Admin\AdminCommon.js" />
+    <Content Include="Scripts\Admin\ManageBlogLists.js" />
+    <Content Include="Scripts\Admin\ManageBlogPosts.js" />
+    <Content Include="Scripts\Admin\ManageUsers.js" />
+    <Content Include="Scripts\Blog\BlogPost.js" />
+    <Content Include="Scripts\Common\SiteCommon.js" />
+    <Content Include="Scripts\Common\SiteLogin.js" />
     <Content Include="Scripts\jquery.form.js" />
-    <Content Include="Scripts\AnotherBlog.js" />
     <Content Include="Content\Rss.css" />
     <Content Include="Content\Themes\Box\calendar.css" />
     <Content Include="Content\Themes\Box\Site.css" />
@@ -466,10 +485,16 @@
     <Content Include="Scripts\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="robots.txt" />
+    <Content Include="Views\Admin\ManageBlogLists.aspx" />
+    <Content Include="Views\Admin\ManageBlogPosts.aspx" />
+    <Content Include="Views\Admin\ShowBlogList.ascx" />
     <Content Include="Views\Blog\ViewComments.ascx" />
     <Content Include="Views\Blog\About.aspx" />
     <Content Include="Views\Error\Unknown.aspx" />
     <Content Include="Views\Plugins\GoogleAd.ascx" />
+    <Content Include="Views\Shared\BlogListsControl.ascx" />
+    <Content Include="Views\Shared\ListControl.ascx" />
     <Content Include="Views\Plugins\TwitterFeed.ascx" />
     <Content Include="Views\RSS\Atom.aspx" />
     <Content Include="Views\RSS\Comments.aspx" />
@@ -481,7 +506,6 @@
     <Content Include="Views\Shared\BlogExtensionsSection.ascx" />
     <Content Include="Views\Shared\BlogList.ascx" />
     <Content Include="Views\Shared\BlogNavMenu.ascx" />
-    <Content Include="Views\Shared\BlogRoll.ascx" />
     <Content Include="Views\Shared\BlogTags.ascx" />
     <Content Include="Views\Admin\ManageUserBlogs.ascx" />
     <Content Include="Views\Shared\SyndicationView.ascx" />
@@ -512,11 +536,8 @@
     <Content Include="Content\Themes\Box\Pager.css" />
     <Content Include="Content\Themes\default\Pager.css" />
     <Content Include="Content\Themes\Simple\Pager.css" />
-    <Content Include="Scripts\AnotherBlogAdmin.js" />
     <Content Include="Views\Admin\AdminTool.Master" />
     <Content Include="Views\Admin\BlogManageComments.aspx" />
-    <Content Include="Views\Admin\BlogManageLinks.aspx" />
-    <Content Include="Views\Admin\BlogManagePosts.aspx" />
     <Content Include="Views\Admin\BlogPreferences.aspx" />
     <Content Include="Views\Admin\EditBlog.aspx" />
     <Content Include="Views\Admin\EditBlogPost.aspx" />
@@ -535,6 +556,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <Content Include="Web.sitemap" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -553,7 +575,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55375</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/AnotherBlogMVC</IISUrl>
+          <IISUrl>http://WTML07L3ADZ5E.corp.intuit.net/AnotherBlogMVC</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

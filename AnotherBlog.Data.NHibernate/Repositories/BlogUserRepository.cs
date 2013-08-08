@@ -79,7 +79,7 @@ namespace AnotherBlog.Data.NHibernate.Repositories
             if (targetUserBlog != null)
             {
                 ((UnitOfWork)this.UnitOfWork).CurrentSession.Delete(targetUserBlog);
-                this.UnitOfWork.Commit();
+                this.UnitOfWork.Flush();
                 retVal = true;
             }
 

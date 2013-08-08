@@ -21,7 +21,7 @@ using AnotherBlog.Common.Data.Entities;
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("Roles")]
-    public class RoleDTO : IRole
+    public class RoleDTO : Role
     {
         public RoleDTO() : base()
         {
@@ -29,9 +29,9 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "RoleId", UnsavedValue = "-1")]
-        public int RoleId{ get; set;}
+        public override int RoleId { get; set; }
 
         [Property("Name")]
-        public string Name{ get; set;}
+        public override string Name { get; set; }
     }
 }

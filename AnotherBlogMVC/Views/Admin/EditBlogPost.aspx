@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Admin/AdminTool.Master" Inherits="System.Web.Mvc.ViewPage<AnotherBlog.MVC.Models.Admin.BlogAdminModel>" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="bodyContainer" runat="server">
+    <script src="/Scripts/Admin/ManageBlogPosts.js" type="text/javascript"></script>
     <!-- TinyMCE -->
     <script type="text/javascript" src="/Content/tiny_mce/tiny_mce.js"></script>
     <script type="text/javascript">
@@ -9,7 +10,7 @@
             theme: "AnotherBlog"
         });
 
-        setTimeout("ExecuteBlogEntryAutoSave()", 300000);
+        setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 300000);
         
         
     </script>

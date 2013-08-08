@@ -32,77 +32,63 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
 {
     public class ActiveRecordRepository<DomainType, DTOType, CommonInterface> : RepositoryBase<DomainType, DTOType>
         where DomainType : class, CommonInterface
-        where DTOType : class, CommonInterface
+        where DTOType : class, CommonInterface, DomainType
     {
         public ActiveRecordRepository(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager) :
             base(_unitOfWork, repositoryManager)
         {
         }
         
-        public virtual DataMapper<DomainType, DTOType, CommonInterface> DataMapper
-        {
-            get { return DataMapper<DomainType, DTOType, CommonInterface>.GetInstance(); }
-        }
         public override DomainType GetByProperty(string idPropertyName, object idValue)
         {
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindOne(criteria);
         }
 
         public override DomainType GetByProperty(string idPropertyName, object idValue, int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindOne(criteria));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindOne(criteria);
         }
 
         public override IList<DomainType> GetAll()
         {
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll());
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll();
         }
 
         public override IList<DomainType> GetAll(int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria);
         }
 
         public override IList<DomainType> GetAllByProperty(string idPropertyName, object idValue)
         {
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria);
         }
 
         public override IList<DomainType> GetAllByProperty(string idPropertyName, object idValue, int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<DTOType>.FindAll(criteria);
         }
 
         public override DomainType Save(DomainType itemToSave)
         {
-            DTOType dtoItemToSave = this.DataMapper.Map(itemToSave);
-
-            if (dtoItemToSave != null)
+            if (itemToSave != null)
             {
-                try
-                {
-                    Castle.ActiveRecord.ActiveRecordMediator<DTOType>.Save(dtoItemToSave);
-                    this.UnitOfWork.Commit();
-                }
-                catch (Exception e)
-                {
-                    this.Logger.Error(e.Message, e);
-                }
+                Castle.ActiveRecord.ActiveRecordMediator<DTOType>.Save(itemToSave);
             }
 
-            return this.DataMapper.Map(dtoItemToSave);
+            return itemToSave;
         }
 
         /// <summary>
@@ -113,20 +99,10 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         {
             bool retVal = false;
 
-            DTOType dtoItemToDelete = this.DataMapper.Map(itemToDelete);
-
-            if (dtoItemToDelete != null)
+            if (itemToDelete != null)
             {
-                try
-                {
-                    Castle.ActiveRecord.ActiveRecordMediator<DTOType>.Delete(dtoItemToDelete);
-                    this.UnitOfWork.Commit();
-                    retVal = true;
-                }
-                catch (Exception e)
-                {
-                    this.Logger.Error(e.Message, e);
-                }
+                Castle.ActiveRecord.ActiveRecordMediator<DTOType>.Delete(itemToDelete);
+                retVal = true;
             }
 
             return retVal;

@@ -30,7 +30,6 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         IBlogEntryTagRepository blogEntryTagRepository;
         IBlogExtensionRepository blogExtensionRepository;
         IBlogRepository blogRepository;
-        IBlogRollLinkRepository blogLinkRepository;
         IBlogUserRepository blogUserRepository;
         IDbInfoRepository dbInfoRepository;
         IEntryCommentRepository entryCommentRepository;
@@ -39,6 +38,8 @@ namespace AnotherBlog.Data.NHibernate.Repositories
         ISiteInfoRepository siteInfoRepository;
         ITagRepository tagRepository;
         IUserRepository userRepository;
+        IBlogListRepository blogLists;
+        IBlogListItemRepository blogListItems;
 
         public RepositoryManager()
         {
@@ -107,19 +108,6 @@ namespace AnotherBlog.Data.NHibernate.Repositories
                 }
 
                 return this.blogRepository;
-            }
-        }
-
-        public IBlogRollLinkRepository BlogLinks
-        {
-            get
-            {
-                if (this.blogLinkRepository == null)
-                {
-                    this.blogLinkRepository = new BlogRollLinkRepository(this.UnitOfWork, this);
-                }
-
-                return this.blogLinkRepository;
             }
         }
 
@@ -226,5 +214,32 @@ namespace AnotherBlog.Data.NHibernate.Repositories
                 return this.userRepository;
             }
         }
+
+        public IBlogListRepository BlogLists
+        {
+            get
+            {
+                if (this.blogLists == null)
+                {
+                    this.blogLists = new BlogListRepository(this.UnitOfWork, this);
+                }
+
+                return this.blogLists;
+            }
+        }
+
+        public IBlogListItemRepository BlogListItems
+        {
+            get
+            {
+                if (this.blogListItems == null)
+                {
+                    this.blogListItems = new BlogListItemRepository(this.UnitOfWork, this);
+                }
+
+                return this.blogListItems;
+            }
+        }
+
     }
 }

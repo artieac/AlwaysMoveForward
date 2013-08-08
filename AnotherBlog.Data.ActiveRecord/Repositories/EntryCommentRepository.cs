@@ -22,7 +22,6 @@ using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Common.Data.Repositories;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 using AnotherBlog.Data.ActiveRecord.Entities;
 
@@ -50,9 +49,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Expression.Eq("Status", targetStatus));
-            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return CommentMapper.GetInstance().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria);
         }
         /// <summary>
         /// 
@@ -64,9 +63,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public IList<Comment> GetByEntry(int blogPostId, int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
-            criteria.CreateCriteria("PostDTO").Add(Expression.Eq("EntryId", blogPostId));
-            criteria.CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return CommentMapper.GetInstance().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
+            criteria.CreateCriteria("Post").Add(Expression.Eq("EntryId", blogPostId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria);
         }
         /// <summary>
         /// Get all comments for a specific blog that need to be approved by a blogger or administrator

@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using log4net;
 using log4net.Config;
 
+using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;
@@ -51,7 +52,8 @@ namespace AnotherBlog.MVC.Controllers
 
                 if (urlSegments.Length >= 2)
                 {
-                    ServiceManager serviceManager = new ServiceManager();
+                    IUnitOfWork unitOfWork = ServiceManager.CreateUnitOfWork();
+                    ServiceManager serviceManager = ServiceManager.CreateServiceManager(unitOfWork);
                     retVal = serviceManager.Blogs.GetByName(urlSegments[1].Substring(0, urlSegments[1].Length - 1));
                 }
             }

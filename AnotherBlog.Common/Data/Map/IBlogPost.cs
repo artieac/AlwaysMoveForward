@@ -17,6 +17,7 @@ namespace AnotherBlog.Common.Data.Map
         string Title { get; set; }
         DateTime DatePosted { get; set; }
         DateTime DateCreated { get; set; }
+        int TimesViewed { get; set; }
 
         int GetCommentCount();
     }

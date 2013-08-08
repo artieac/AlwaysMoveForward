@@ -32,6 +32,7 @@ namespace AnotherBlog.Common.Data.Entities
         public virtual DateTime DateCreated { get; set; }
         public virtual IList<IComment> Comments { get; set; }
         public virtual IList<ITag> Tags { get; set; }
+        public virtual int TimesViewed { get; set; }
 
         public virtual int GetCommentCount()
         {

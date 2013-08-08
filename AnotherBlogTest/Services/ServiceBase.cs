@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;
 
@@ -20,20 +21,32 @@ namespace AnotherBlogTest.Services
 {
     public class ServiceTestBase
     {
+        IUnitOfWork unitOfWork;
         ServiceManager services;
 
         public ServiceTestBase()
         {
         }
 
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                if (this.unitOfWork == null)
+                {
+                    this.unitOfWork = ServiceManager.CreateUnitOfWork();
+                }
+
+                return this.unitOfWork;
+            }
+        }
         public ServiceManager Services
         {
             get
             {
                 if (services == null)
                 {
-                    services = new ServiceManager();
-                    services.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                    this.services = ServiceManager.CreateServiceManager(this.UnitOfWork);
                 }
 
                 return services;

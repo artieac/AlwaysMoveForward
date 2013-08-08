@@ -76,7 +76,8 @@ namespace AnotherBlog.Core.Service
                 RegisteredExtensions = new Dictionary<int,BlogExtension>();
 
                 ServiceManager serviceManager = new ServiceManager();
-                serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager();
+                serviceManager.UnitOfWork = ServiceManager.CreateUnitOfWork();
+                serviceManager.RepositoryManager = ServiceManager.CreateRepositoryManager(serviceManager.UnitOfWork);
                 BlogExtensionService extensionService = serviceManager.BlogExtensions;
 
                 IList<BlogExtension> registeredExtensions = extensionService.GetAll();
@@ -112,7 +113,7 @@ namespace AnotherBlog.Core.Service
         /// <returns></returns>
         public BlogExtension Create()
         {
-            BlogExtension retVal = new BlogExtension();
+            BlogExtension retVal = this.Repositories.BlogExtensions.Create();
             return retVal;
         }
         /// <summary>

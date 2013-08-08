@@ -41,7 +41,7 @@
     <script src="/Scripts/MicrosoftMvcAjax.debug.js" type="text/javascript"></script>
     <script src="/Scripts/jquery-1.4.1.js" type="text/javascript"></script>
     <script src="/Scripts/jquery.form.js" type="text/javascript"></script>
-    <script src="/Scripts/AnotherBlog.js" type="text/javascript"></script>
+    <script src="/Scripts/Common/SiteCommon.js" type="text/javascript"></script>
 </head>
 <% if (MvcApplication.SiteInfo.SiteAnalyticsId != null && MvcApplication.SiteInfo.SiteAnalyticsId != "")
    { %>
@@ -65,7 +65,11 @@
             <div id="loginSection">
                 <% Html.RenderPartial("UserLogin", ViewData.Model); %>
             </div>
-			<a href="http://<%= MvcApplication.SiteInfo.Url %>" class="siteTitle"><h1><%= MvcApplication.SiteInfo.Name %></h1></a>
+            <div class="headerImageSection">
+                <div class="siteTitleSection">
+    			    <a href="http://<%= MvcApplication.SiteInfo.Url %>" class="siteTitle"><h1><%= MvcApplication.SiteInfo.Name %></h1></a>        
+                </div>
+            </div>
 		</div>
 	    <div id="navigationSection" class="navigationPanel">
 	        <div id="blogNavMenuSection">
@@ -83,7 +87,7 @@
 		        <br />
                 <div class="footer">
     		        <br />
-	    		    <div class="footerCopyright">Copyright &copy; 2009 <%= MvcApplication.SiteInfo.Name %></div>
+	    		    <div class="footerCopyright">Copyright &copy; <%= DateTime.Now.Year.ToString() %> <%= MvcApplication.SiteInfo.Name %> v<%= MvcApplication.Version %></div>
 	    		    <div class="footerAbout"><a href='/<%= ViewData["blogSubFolder"].ToString() %>/Home/About'>About <%= MvcApplication.SiteInfo.Name %></a></div>
 		        </div>
             </div>
@@ -93,15 +97,18 @@
 	            </div>
                 <div id="blogCalendarSection">
 		            <% Html.RenderPartial("BlogCalendar", ViewData.Model); %>
-		        </div>                           
+		        </div>      
+                <div id="mostViewed">
+                    <% Html.RenderPartial("ListControl", ViewData["MostViewedPosts"]); %>
+                </div>                     
                 <div id="blogTagsSection">
 		            <% Html.RenderPartial("BlogTags", ViewData.Model); %>
 		        </div>        
                 <div>
                     <% Html.RenderPartial("SyndicationView"); %>
                 </div>            
-                <div id="blogRollSection">
-                    <% Html.RenderPartial("BlogRoll", ViewData.Model); %>
+                <div id="blogListsSection">
+                    <% Html.RenderPartial("BlogListsControl", ViewData.Model); %>
                 </div>
 		        <div id="blogArchiveSection">
 		            <% Html.RenderPartial("BlogArchive", ViewData.Model); %>

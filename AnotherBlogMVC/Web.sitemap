@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode 
+        url="/" 
+        title="Home"  
+        description="The Home Page">
+      <siteMapNode
+        url="/Home"
+        title="Home"
+        description="The Home Page">
+        <siteMapNode
+            url="/Home/Index"
+            title="All Blogs Index"
+            description="Show the latest posts from all blogs on the site" />
+        <siteMapNode
+            url="/Home/About"
+            title="About"
+            description="About AlwaysMoveForward.com" />
+      </siteMapNode>
+      <siteMapNode
+        url="/Software"
+        title="Software Development Blog"
+        description="The Home Page for the Software Development Blog">
+        <siteMapNode
+            url="/Software/Blog/Index"
+            title="Software Blog Index"
+            description="Show the latest posts from the Software blog" />
+        <siteMapNode
+            url="/Software/Blog/About"
+            title="About"
+            description="About the Software Development Blog" />
+      </siteMapNode>
+      <siteMapNode
+        url="/Games"
+        title="Games Blog"
+        description="The Home Page for the Games Blog">
+        <siteMapNode
+            url="/Games/Blog/Index"
+            title="Games Blog Index"
+            description="Show the latest posts from the Games blog" />
+        <siteMapNode
+            url="/Games/Blog/About"
+            title="About"
+            description="About the Games Blog" />
+      </siteMapNode>
+      <siteMapNode
+        url="/artie"
+        title="Artie's Blog"
+        description="The Home Page for the Artie's Blog">
+        <siteMapNode
+            url="/artie/Blog/Index"
+            title="artie Blog Index"
+            description="Show the latest posts from  Artie's Blog" />
+        <siteMapNode
+            url="/artie/Blog/About"
+            title="About"
+            description="About Artie's Blog" />
+      </siteMapNode>    
+   </siteMapNode>
+</siteMap>

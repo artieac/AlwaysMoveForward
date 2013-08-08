@@ -73,7 +73,7 @@ namespace AnotherBlog.Data.LINQ.Repositories
             if (targetUserBlog != null)
             {
                 ((UnitOfWork)this.UnitOfWork).DataContext.BlogUserDTOs.DeleteOnSubmit(targetUserBlog);
-                this.UnitOfWork.Commit();
+                this.UnitOfWork.Flush();
                 retVal = true;
             }
 

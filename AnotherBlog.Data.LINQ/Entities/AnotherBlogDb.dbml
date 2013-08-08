@@ -1,28 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ABTestDb" Class="AnotherBlogDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=ABTestDb;Integrated Security=True" SettingsObjectName="AnotherBlog.Data.LINQ.Properties.Settings" SettingsPropertyName="ABTestDbConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.BlogEntries" Member="BlogEntryDTOs">
-    <Type Name="BlogEntryDTO">
-      <Column Name="EntryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="EntryText" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="BlogId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="IsPublished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DatePosted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="BlogEntryDTO_BlogEntryTagDTO" Member="BlogEntryTagDTOs" ThisKey="EntryId" OtherKey="BlogEntryId" Type="BlogEntryTagDTO" />
-      <Association Name="BlogEntryDTO_EntryCommentDTO" Member="EntryCommentDTOs" ThisKey="EntryId" OtherKey="EntryId" Type="EntryCommentDTO" />
-      <Association Name="BlogDTO_BlogEntryDTO" Member="BlogDTO" ThisKey="BlogId" OtherKey="BlogId" Type="BlogDTO" IsForeignKey="true" />
-      <Association Name="UserDTO_BlogEntryDTO" Member="UserDTO" ThisKey="UserId" OtherKey="UserId" Type="UserDTO" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.BlogEntryTags" Member="BlogEntryTagDTOs">
     <Type Name="BlogEntryTagDTO">
       <Column Name="TagId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BlogEntryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BlogEntryTagId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Association Name="BlogEntryDTO_BlogEntryTagDTO" Member="BlogEntryDTO" ThisKey="BlogEntryId" OtherKey="EntryId" Type="BlogEntryDTO" IsForeignKey="true" />
       <Association Name="TagDTO_BlogEntryTagDTO" Member="TagDTO" ThisKey="TagId" OtherKey="Id" Type="TagDTO" IsForeignKey="true" />
+      <Association Name="BlogEntry_BlogEntryTagDTO" Member="BlogEntryDTO" ThisKey="BlogEntryId" OtherKey="EntryId" Type="BlogEntryDTO" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BlogExtensions" Member="BlogExtensionDTOs">
@@ -54,11 +38,12 @@
       <Column Name="WelcomeMessage" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="ContactEmail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Theme" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="BlogDTO_BlogEntryDTO" Member="BlogEntryDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="BlogEntryDTO" />
       <Association Name="BlogDTO_BlogRollLinkDTO" Member="BlogRollLinkDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="BlogRollLinkDTO" />
       <Association Name="BlogDTO_BlogUserDTO" Member="BlogUserDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="BlogUserDTO" />
       <Association Name="BlogDTO_EntryCommentDTO" Member="EntryCommentDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="EntryCommentDTO" />
       <Association Name="BlogDTO_TagDTO" Member="TagDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="TagDTO" />
+      <Association Name="BlogDTO_BlogListDTO" Member="BlogListDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="BlogListDTO" />
+      <Association Name="BlogDTO_BlogEntry" Member="BlogEntryDTOs" ThisKey="BlogId" OtherKey="BlogId" Type="BlogEntryDTO" />
     </Type>
   </Table>
   <Table Name="dbo.BlogUsers" Member="BlogUserDTOs">
@@ -89,8 +74,8 @@
       <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Link" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="DatePosted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="BlogEntryDTO_EntryCommentDTO" Member="BlogEntryDTO" ThisKey="EntryId" OtherKey="EntryId" Type="BlogEntryDTO" IsForeignKey="true" />
       <Association Name="BlogDTO_EntryCommentDTO" Member="BlogDTO" ThisKey="BlogId" OtherKey="BlogId" Type="BlogDTO" IsForeignKey="true" />
+      <Association Name="BlogEntry_EntryCommentDTO" Member="BlogEntryDTO" ThisKey="EntryId" OtherKey="EntryId" Type="BlogEntryDTO" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ExtensionConfiguration" Member="ExtensionConfigurationDTOs">
@@ -138,8 +123,45 @@
       <Column Name="IsSiteAdministrator" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="About" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="DisplayName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Association Name="UserDTO_BlogEntryDTO" Member="BlogEntryDTOs" ThisKey="UserId" OtherKey="UserId" Type="BlogEntryDTO" />
       <Association Name="UserDTO_BlogUserDTO" Member="BlogUserDTOs" ThisKey="UserId" OtherKey="UserId" Type="BlogUserDTO" />
+      <Association Name="UserDTO_BlogEntry" Member="BlogEntryDTOs" ThisKey="UserId" OtherKey="UserId" Type="BlogEntryDTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BlogListItems" Member="BlogListItemDTOs">
+    <Type Name="BlogListItemDTO">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RelatedLink" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="DisplayOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BlogListId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="BlogListDTO_BlogListItemDTO" Member="BlogListDTO" ThisKey="BlogListId" OtherKey="Id" Type="BlogListDTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BlogLists" Member="BlogListDTOs">
+    <Type Name="BlogListDTO">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BlogId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ShowOrdered" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="BlogListDTO_BlogListItemDTO" Member="BlogListItemDTOs" ThisKey="Id" OtherKey="BlogListId" Type="BlogListItemDTO" />
+      <Association Name="BlogDTO_BlogListDTO" Member="BlogDTO" ThisKey="BlogId" OtherKey="BlogId" Type="BlogDTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BlogEntries" Member="BlogEntryDTOs">
+    <Type Name="BlogEntryDTO">
+      <Column Name="EntryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EntryText" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="BlogId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DatePosted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TimesViewed" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="BlogEntry_BlogEntryTagDTO" Member="BlogEntryTagDTOs" ThisKey="EntryId" OtherKey="BlogEntryId" Type="BlogEntryTagDTO" />
+      <Association Name="BlogEntry_EntryCommentDTO" Member="EntryCommentDTOs" ThisKey="EntryId" OtherKey="EntryId" Type="EntryCommentDTO" />
+      <Association Name="BlogDTO_BlogEntry" Member="BlogDTO" ThisKey="BlogId" OtherKey="BlogId" Type="BlogDTO" IsForeignKey="true" />
+      <Association Name="UserDTO_BlogEntry" Member="UserDTO" ThisKey="UserId" OtherKey="UserId" Type="UserDTO" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

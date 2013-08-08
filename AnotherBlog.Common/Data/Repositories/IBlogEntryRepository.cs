@@ -21,7 +21,9 @@ namespace AnotherBlog.Common.Data.Repositories
     public interface IBlogEntryRepository : IRepository<BlogPost>
     {
         IList<BlogPost> GetAll(bool publishedOnly, int maxResults);
-        IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults);
+        IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending);
+        IList<BlogPost> GetMostRead(int maxResults);
+        IList<BlogPost> GetMostRead(int blogId, int maxResults);
         BlogPost GetByTitle(string blogTitle, int blogId);
         BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId);
         IList<BlogPost> GetByTag(int tagId, bool publishedOnly);

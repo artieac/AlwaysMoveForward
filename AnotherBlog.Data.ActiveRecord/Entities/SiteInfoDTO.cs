@@ -21,7 +21,7 @@ using AnotherBlog.Common.Data.Entities;
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("SiteInfo")]
-    public class SiteInfoDTO : ISiteInfo
+    public class SiteInfoDTO : SiteInfo
     {
         public SiteInfoDTO() : base()
         {
@@ -29,24 +29,24 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "SiteId", UnsavedValue = "-1")]
-        public int SiteId{ get; set;}
+        public override int SiteId { get; set; }
 
         [Property("About", ColumnType = "StringClob")]
-        public string About{ get; set;}
+        public override string About { get; set; }
 
         [Property("Name")]
-        public string Name{ get; set;}
+        public override string Name { get; set; }
 
         [Property("Url")]
-        public string Url{ get; set;}
+        public override string Url { get; set; }
 
         [Property("ContactEmail")]
-        public string ContactEmail{ get; set;}
+        public override string ContactEmail { get; set; }
 
         [Property("DefaultTheme")]
-        public string DefaultTheme{ get; set;}
+        public override string DefaultTheme { get; set; }
 
         [Property("SiteAnalyticsId")]
-        public string SiteAnalyticsId{ get; set;}
+        public override string SiteAnalyticsId { get; set; }
     }
 }

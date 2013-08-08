@@ -25,7 +25,6 @@ namespace AnotherBlog.Common.Data.Repositories
         IBlogEntryTagRepository BlogEntryTags{ get;}
         IBlogExtensionRepository BlogExtensions{ get;}
         IBlogRepository Blogs{ get;}
-        IBlogRollLinkRepository BlogLinks{ get;}
         IBlogUserRepository BlogUsers{ get;}
         IDbInfoRepository DbInfo{ get;}
         IEntryCommentRepository EntryComments{ get;}
@@ -34,5 +33,7 @@ namespace AnotherBlog.Common.Data.Repositories
         ISiteInfoRepository SiteInfo{ get;}
         ITagRepository Tags{ get;}
         IUserRepository Users{ get;}
+        IBlogListRepository BlogLists { get; }
+        IBlogListItemRepository BlogListItems { get; }
     }
 }

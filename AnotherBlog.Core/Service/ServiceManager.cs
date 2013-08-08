@@ -21,7 +21,15 @@ namespace AnotherBlog.Core.Service
 {
     public class ServiceManager
     {
-        public static IRepositoryManager CreateRepositoryManager()
+        public static ServiceManager CreateServiceManager(IUnitOfWork unitOfWork)
+        {
+            ServiceManager retVal = new ServiceManager();
+            retVal.UnitOfWork = unitOfWork;
+            retVal.RepositoryManager = ServiceManager.CreateRepositoryManager(unitOfWork);
+            return retVal;
+        }
+
+        public static IRepositoryManager CreateRepositoryManager(IUnitOfWork unitOfWork)
         {
             IRepositoryManager retVal = null;
 
@@ -29,7 +37,7 @@ namespace AnotherBlog.Core.Service
             {
                 RepositoryConfiguration repositoryConfiguration = (RepositoryConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/RepositoryConfiguration");
                 retVal = Activator.CreateInstance(repositoryConfiguration.ManagerAssembly, repositoryConfiguration.ManagerClass).Unwrap() as IRepositoryManager;
-                retVal.UnitOfWork = Activator.CreateInstance(repositoryConfiguration.ManagerAssembly, repositoryConfiguration.UnitOfWorkClass).Unwrap() as IUnitOfWork;
+                retVal.UnitOfWork = unitOfWork;
             }
             catch (Exception e)
             {
@@ -39,11 +47,17 @@ namespace AnotherBlog.Core.Service
             return retVal;
         }
 
+        public static IUnitOfWork CreateUnitOfWork()
+        {
+            RepositoryConfiguration repositoryConfiguration = (RepositoryConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/RepositoryConfiguration");
+            IUnitOfWork retVal = Activator.CreateInstance(repositoryConfiguration.ManagerAssembly, repositoryConfiguration.UnitOfWorkClass).Unwrap() as IUnitOfWork;
+            return retVal;
+        }
+
         IRepositoryManager repositoryManager;
         BlogEntryService blogEntryService;
         BlogEntryTagService blogEntryTagService;
         BlogExtensionService blogExtensions;
-        BlogRollService blogLinkService;
         BlogService blogService;
         BlogUserService blogUserService;
         EntryCommentService entryCommentService;
@@ -52,8 +66,11 @@ namespace AnotherBlog.Core.Service
         TagService tagService;
         UploadedFileManager uploadedFileManager;
         UserService userService;
+        BlogListService blogListService;
 
-        public ServiceManager()
+        IUnitOfWork unitOfWork;
+
+        internal ServiceManager()
         {
 
         }
@@ -62,6 +79,20 @@ namespace AnotherBlog.Core.Service
         {
             get { return this.repositoryManager; }
             set { this.repositoryManager = value; }
+        }
+
+        public IUnitOfWork UnitOfWork
+        {
+            get { return this.unitOfWork; }
+            set 
+            { 
+                this.unitOfWork = value;
+
+                if (this.RepositoryManager != null)
+                {
+                    this.RepositoryManager.UnitOfWork = value;
+                }
+            }
         }
 
         public BlogEntryService BlogEntries
@@ -103,20 +134,6 @@ namespace AnotherBlog.Core.Service
                 }
 
                 return this.blogExtensions;
-            }
-        }
-
-        public BlogRollService BlogLinks
-        {
-            get
-            {
-                if (this.blogLinkService == null)
-                {
-                    this.blogLinkService = new BlogRollService(this);
-                    this.blogLinkService.Repositories = this.RepositoryManager;
-                }
-
-                return this.blogLinkService;
             }
         }
 
@@ -232,5 +249,20 @@ namespace AnotherBlog.Core.Service
                 return this.userService;
             }
         }
+
+        public BlogListService BlogLists
+        {
+            get
+            {
+                if (this.blogListService == null)
+                {
+                    this.blogListService = new BlogListService(this);
+                    this.blogListService.Repositories = this.RepositoryManager;
+                }
+
+                return this.blogListService;
+            }
+        }
+
     }
 }

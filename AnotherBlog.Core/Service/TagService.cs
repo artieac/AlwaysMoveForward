@@ -30,7 +30,7 @@ namespace AnotherBlog.Core.Service
 
         public Tag Create()
         {
-            Tag retVal = new Tag();
+            Tag retVal = this.Repositories.Tags.Create();
             retVal.Id = this.Repositories.Tags.UnsavedId;
             return retVal;
         }
@@ -90,6 +90,20 @@ namespace AnotherBlog.Core.Service
         public bool Delete(Tag targetTag)
         {
             return this.Repositories.Tags.Delete(targetTag);
+        }
+
+        public bool AssociateTags(BlogPost blogPost, IList<Tag> tags)
+        {
+            bool retVal = false;
+
+            blogPost.Tags.Clear();
+
+            for (int i = 0; i < tags.Count(); i++)
+            {
+                blogPost.Tags.Add(tags[i]);
+            }
+
+            return retVal;
         }
     }
 }

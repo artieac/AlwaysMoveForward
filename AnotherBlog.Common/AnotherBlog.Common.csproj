@@ -64,14 +64,17 @@
   <ItemGroup>
     <Compile Include="Business\Service\ExtensionConfigurationService.cs" />
     <Compile Include="DatabaseConfiguration.cs" />
+    <Compile Include="Data\Entities\BlogList.cs" />
+    <Compile Include="Data\Entities\BlogListItem.cs" />
     <Compile Include="Data\Map\DataMapper.cs" />
     <Compile Include="Data\Entities\Blog.cs" />
     <Compile Include="Data\Entities\BlogPost.cs" />
     <Compile Include="Data\Entities\BlogPostCount.cs" />
     <Compile Include="Data\Map\IBlog.cs" />
     <Compile Include="Data\Map\IBlogExtension.cs" />
+    <Compile Include="Data\Map\IBlogList.cs" />
+    <Compile Include="Data\Map\IBlogListItem.cs" />
     <Compile Include="Data\Map\IBlogPost.cs" />
-    <Compile Include="Data\Map\IBlogRollLink.cs" />
     <Compile Include="Data\Map\IBlogUser.cs" />
     <Compile Include="Data\Map\IComment.cs" />
     <Compile Include="Data\Map\IDbInfo.cs" />
@@ -82,7 +85,6 @@
     <Compile Include="Data\Map\IUser.cs" />
     <Compile Include="Data\Entities\PostTag.cs" />
     <Compile Include="Data\Entities\BlogExtension.cs" />
-    <Compile Include="Data\Entities\BlogRollLink.cs" />
     <Compile Include="Data\Entities\BlogUser.cs" />
     <Compile Include="Data\Entities\DbInfo.cs" />
     <Compile Include="Data\Entities\Comment.cs" />
@@ -94,8 +96,9 @@
     <Compile Include="Data\Repositories\IBlogEntryRepository.cs" />
     <Compile Include="Data\Repositories\IBlogEntryTagRepository.cs" />
     <Compile Include="Data\Repositories\IBlogExtensionRepository.cs" />
+    <Compile Include="Data\Repositories\IBlogListItemRepository.cs" />
+    <Compile Include="Data\Repositories\IBlogListRepository.cs" />
     <Compile Include="Data\Repositories\IBlogRepository.cs" />
-    <Compile Include="Data\Repositories\IBlogRollLinkRepository.cs" />
     <Compile Include="Data\Repositories\IBlogUserRepository.cs" />
     <Compile Include="Data\Repositories\IDbInfoRepository.cs" />
     <Compile Include="Data\Repositories\IEntryCommentRepository.cs" />

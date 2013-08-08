@@ -6,6 +6,7 @@ using System.Data;
 
 using AnotherBlog.Common.Data;
 using AnotherBlog.Common.Data.Repositories;
+using AnotherBlog.Data.EntityFramework.Entities;
 
 namespace AnotherBlog.Data.EntityFramework
 {

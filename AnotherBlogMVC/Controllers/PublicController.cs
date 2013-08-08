@@ -10,6 +10,7 @@ using System.Security.Permissions;
 using AnotherBlog.Common.Data.Entities;
 using AnotherBlog.Core.Service;
 using AnotherBlog.Core.Utilities;
+using AnotherBlog.MVC.Utilities;
 using AnotherBlog.MVC.Models;
 
 namespace AnotherBlog.MVC.Controllers
@@ -72,10 +73,10 @@ namespace AnotherBlog.MVC.Controllers
             modelBase.BlogList = Services.Blogs.GetAll();
             modelBase.BlogDates = Services.BlogEntries.GetArchiveDates(modelBase.TargetBlog);
             modelBase.BlogTags = this.GetBlogTags(modelBase.TargetBlog);
-            modelBase.BlogRoll = this.GetBlogRoll(modelBase.TargetBlog);
             modelBase.RegisteredExtensions = Services.BlogExtensions.GetAll();
             modelBase.TargetMonth = DateTime.Now;
             modelBase.CurrentMonthBlogDates = this.GetBlogDatesForMonth2(modelBase.TargetBlog, modelBase.TargetMonth);
+            ViewData["MostViewedPosts"] = this.GetMostViewedPosts(modelBase.TargetBlog);
 
             return modelBase;
         }
@@ -87,22 +88,6 @@ namespace AnotherBlog.MVC.Controllers
             if (targetBlog != null)
             {
                 retVal = Services.Tags.GetAllWithCount(targetBlog);
-            }
-
-            return retVal;
-        }
-
-        public IList<BlogRollLink> GetBlogRoll(Blog targetBlog)
-        {
-            IList<BlogRollLink> retVal = null;
-
-            if (targetBlog != null)
-            {
-                retVal = Services.BlogLinks.GetAllByBlog(targetBlog);
-            }
-            else
-            {
-                retVal = new List<BlogRollLink>();
             }
 
             return retVal;
@@ -146,6 +131,35 @@ namespace AnotherBlog.MVC.Controllers
                 {
                     retVal.Add(blogDates[i].Date);
                 }
+            }
+
+            return retVal;
+        }
+
+        public ListControlModel GetMostViewedPosts(Blog targetBlog)
+        {
+            ListControlModel retVal = new ListControlModel();
+            IList<BlogPost> postList = new List<BlogPost>();
+
+            if (targetBlog == null)
+            {
+                postList = Services.BlogEntries.GetMostRead(5);
+            }
+            else
+            {
+                postList = Services.BlogEntries.GetMostRead(targetBlog.BlogId, 5);
+            }
+
+            retVal.Title = "Most Viewed";
+            retVal.ShowOrdered = true;
+            retVal.ListItems = new List<BlogListItem>();
+
+            for (int i = 0; i < postList.Count; i++)
+            {
+                BlogListItem newItem = new BlogListItem();
+                newItem.Name = postList[i].Title;
+                newItem.RelatedLink = Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i], false);
+                retVal.ListItems.Add(newItem);
             }
 
             return retVal;

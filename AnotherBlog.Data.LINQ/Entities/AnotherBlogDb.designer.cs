@@ -30,9 +30,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertBlogEntryDTO(BlogEntryDTO instance);
-    partial void UpdateBlogEntryDTO(BlogEntryDTO instance);
-    partial void DeleteBlogEntryDTO(BlogEntryDTO instance);
     partial void InsertBlogEntryTagDTO(BlogEntryTagDTO instance);
     partial void UpdateBlogEntryTagDTO(BlogEntryTagDTO instance);
     partial void DeleteBlogEntryTagDTO(BlogEntryTagDTO instance);
@@ -69,6 +66,15 @@ namespace AnotherBlog.Data.LINQ.Entities
     partial void InsertUserDTO(UserDTO instance);
     partial void UpdateUserDTO(UserDTO instance);
     partial void DeleteUserDTO(UserDTO instance);
+    partial void InsertBlogListItemDTO(BlogListItemDTO instance);
+    partial void UpdateBlogListItemDTO(BlogListItemDTO instance);
+    partial void DeleteBlogListItemDTO(BlogListItemDTO instance);
+    partial void InsertBlogListDTO(BlogListDTO instance);
+    partial void UpdateBlogListDTO(BlogListDTO instance);
+    partial void DeleteBlogListDTO(BlogListDTO instance);
+    partial void InsertBlogEntryDTO(BlogEntryDTO instance);
+    partial void UpdateBlogEntryDTO(BlogEntryDTO instance);
+    partial void DeleteBlogEntryDTO(BlogEntryDTO instance);
     #endregion
 		
 		public AnotherBlogDbDataContext() : 
@@ -99,14 +105,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<BlogEntryDTO> BlogEntryDTOs
-		{
-			get
-			{
-				return this.GetTable<BlogEntryDTO>();
-			}
 		}
 		
 		public System.Data.Linq.Table<BlogEntryTagDTO> BlogEntryTagDTOs
@@ -204,373 +202,29 @@ namespace AnotherBlog.Data.LINQ.Entities
 				return this.GetTable<UserDTO>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BlogEntries")]
-	public partial class BlogEntryDTO : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _EntryId;
-		
-		private string _EntryText;
-		
-		private int _BlogId;
-		
-		private int _UserId;
-		
-		private string _Title;
-		
-		private bool _IsPublished;
-		
-		private System.DateTime _DatePosted;
-		
-		private System.DateTime _DateCreated;
-		
-		private EntitySet<BlogEntryTagDTO> _BlogEntryTagDTOs;
-		
-		private EntitySet<EntryCommentDTO> _EntryCommentDTOs;
-		
-		private EntityRef<BlogDTO> _BlogDTO;
-		
-		private EntityRef<UserDTO> _UserDTO;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnEntryIdChanging(int value);
-    partial void OnEntryIdChanged();
-    partial void OnEntryTextChanging(string value);
-    partial void OnEntryTextChanged();
-    partial void OnBlogIdChanging(int value);
-    partial void OnBlogIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnIsPublishedChanging(bool value);
-    partial void OnIsPublishedChanged();
-    partial void OnDatePostedChanging(System.DateTime value);
-    partial void OnDatePostedChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public BlogEntryDTO()
-		{
-			this._BlogEntryTagDTOs = new EntitySet<BlogEntryTagDTO>(new Action<BlogEntryTagDTO>(this.attach_BlogEntryTagDTOs), new Action<BlogEntryTagDTO>(this.detach_BlogEntryTagDTOs));
-			this._EntryCommentDTOs = new EntitySet<EntryCommentDTO>(new Action<EntryCommentDTO>(this.attach_EntryCommentDTOs), new Action<EntryCommentDTO>(this.detach_EntryCommentDTOs));
-			this._BlogDTO = default(EntityRef<BlogDTO>);
-			this._UserDTO = default(EntityRef<UserDTO>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int EntryId
+		public System.Data.Linq.Table<BlogListItemDTO> BlogListItemDTOs
 		{
 			get
 			{
-				return this._EntryId;
-			}
-			set
-			{
-				if ((this._EntryId != value))
-				{
-					this.OnEntryIdChanging(value);
-					this.SendPropertyChanging();
-					this._EntryId = value;
-					this.SendPropertyChanged("EntryId");
-					this.OnEntryIdChanged();
-				}
+				return this.GetTable<BlogListItemDTO>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryText", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string EntryText
+		public System.Data.Linq.Table<BlogListDTO> BlogListDTOs
 		{
 			get
 			{
-				return this._EntryText;
-			}
-			set
-			{
-				if ((this._EntryText != value))
-				{
-					this.OnEntryTextChanging(value);
-					this.SendPropertyChanging();
-					this._EntryText = value;
-					this.SendPropertyChanged("EntryText");
-					this.OnEntryTextChanged();
-				}
+				return this.GetTable<BlogListDTO>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlogId", DbType="Int NOT NULL")]
-		public int BlogId
+		public System.Data.Linq.Table<BlogEntryDTO> BlogEntryDTOs
 		{
 			get
 			{
-				return this._BlogId;
+				return this.GetTable<BlogEntryDTO>();
 			}
-			set
-			{
-				if ((this._BlogId != value))
-				{
-					if (this._BlogDTO.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBlogIdChanging(value);
-					this.SendPropertyChanging();
-					this._BlogId = value;
-					this.SendPropertyChanged("BlogId");
-					this.OnBlogIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
-		public int UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					if (this._UserDTO.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublished", DbType="Bit NOT NULL")]
-		public bool IsPublished
-		{
-			get
-			{
-				return this._IsPublished;
-			}
-			set
-			{
-				if ((this._IsPublished != value))
-				{
-					this.OnIsPublishedChanging(value);
-					this.SendPropertyChanging();
-					this._IsPublished = value;
-					this.SendPropertyChanged("IsPublished");
-					this.OnIsPublishedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePosted", DbType="DateTime NOT NULL")]
-		public System.DateTime DatePosted
-		{
-			get
-			{
-				return this._DatePosted;
-			}
-			set
-			{
-				if ((this._DatePosted != value))
-				{
-					this.OnDatePostedChanging(value);
-					this.SendPropertyChanging();
-					this._DatePosted = value;
-					this.SendPropertyChanged("DatePosted");
-					this.OnDatePostedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntryDTO_BlogEntryTagDTO", Storage="_BlogEntryTagDTOs", ThisKey="EntryId", OtherKey="BlogEntryId")]
-		public EntitySet<BlogEntryTagDTO> BlogEntryTagDTOs
-		{
-			get
-			{
-				return this._BlogEntryTagDTOs;
-			}
-			set
-			{
-				this._BlogEntryTagDTOs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntryDTO_EntryCommentDTO", Storage="_EntryCommentDTOs", ThisKey="EntryId", OtherKey="EntryId")]
-		public EntitySet<EntryCommentDTO> EntryCommentDTOs
-		{
-			get
-			{
-				return this._EntryCommentDTOs;
-			}
-			set
-			{
-				this._EntryCommentDTOs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogEntryDTO", Storage="_BlogDTO", ThisKey="BlogId", OtherKey="BlogId", IsForeignKey=true)]
-		public BlogDTO BlogDTO
-		{
-			get
-			{
-				return this._BlogDTO.Entity;
-			}
-			set
-			{
-				BlogDTO previousValue = this._BlogDTO.Entity;
-				if (((previousValue != value) 
-							|| (this._BlogDTO.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BlogDTO.Entity = null;
-						previousValue.BlogEntryDTOs.Remove(this);
-					}
-					this._BlogDTO.Entity = value;
-					if ((value != null))
-					{
-						value.BlogEntryDTOs.Add(this);
-						this._BlogId = value.BlogId;
-					}
-					else
-					{
-						this._BlogId = default(int);
-					}
-					this.SendPropertyChanged("BlogDTO");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserDTO_BlogEntryDTO", Storage="_UserDTO", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
-		public UserDTO UserDTO
-		{
-			get
-			{
-				return this._UserDTO.Entity;
-			}
-			set
-			{
-				UserDTO previousValue = this._UserDTO.Entity;
-				if (((previousValue != value) 
-							|| (this._UserDTO.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserDTO.Entity = null;
-						previousValue.BlogEntryDTOs.Remove(this);
-					}
-					this._UserDTO.Entity = value;
-					if ((value != null))
-					{
-						value.BlogEntryDTOs.Add(this);
-						this._UserId = value.UserId;
-					}
-					else
-					{
-						this._UserId = default(int);
-					}
-					this.SendPropertyChanged("UserDTO");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BlogEntryTagDTOs(BlogEntryTagDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogEntryDTO = this;
-		}
-		
-		private void detach_BlogEntryTagDTOs(BlogEntryTagDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogEntryDTO = null;
-		}
-		
-		private void attach_EntryCommentDTOs(EntryCommentDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogEntryDTO = this;
-		}
-		
-		private void detach_EntryCommentDTOs(EntryCommentDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogEntryDTO = null;
 		}
 	}
 	
@@ -586,9 +240,9 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		private int _BlogEntryTagId;
 		
-		private EntityRef<BlogEntryDTO> _BlogEntryDTO;
-		
 		private EntityRef<TagDTO> _TagDTO;
+		
+		private EntityRef<BlogEntryDTO> _BlogEntryDTO;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -604,8 +258,8 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		public BlogEntryTagDTO()
 		{
-			this._BlogEntryDTO = default(EntityRef<BlogEntryDTO>);
 			this._TagDTO = default(EntityRef<TagDTO>);
+			this._BlogEntryDTO = default(EntityRef<BlogEntryDTO>);
 			OnCreated();
 		}
 		
@@ -677,40 +331,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntryDTO_BlogEntryTagDTO", Storage="_BlogEntryDTO", ThisKey="BlogEntryId", OtherKey="EntryId", IsForeignKey=true)]
-		public BlogEntryDTO BlogEntryDTO
-		{
-			get
-			{
-				return this._BlogEntryDTO.Entity;
-			}
-			set
-			{
-				BlogEntryDTO previousValue = this._BlogEntryDTO.Entity;
-				if (((previousValue != value) 
-							|| (this._BlogEntryDTO.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BlogEntryDTO.Entity = null;
-						previousValue.BlogEntryTagDTOs.Remove(this);
-					}
-					this._BlogEntryDTO.Entity = value;
-					if ((value != null))
-					{
-						value.BlogEntryTagDTOs.Add(this);
-						this._BlogEntryId = value.EntryId;
-					}
-					else
-					{
-						this._BlogEntryId = default(int);
-					}
-					this.SendPropertyChanged("BlogEntryDTO");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TagDTO_BlogEntryTagDTO", Storage="_TagDTO", ThisKey="TagId", OtherKey="Id", IsForeignKey=true)]
 		public TagDTO TagDTO
 		{
@@ -741,6 +361,40 @@ namespace AnotherBlog.Data.LINQ.Entities
 						this._TagId = default(int);
 					}
 					this.SendPropertyChanged("TagDTO");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntry_BlogEntryTagDTO", Storage="_BlogEntryDTO", ThisKey="BlogEntryId", OtherKey="EntryId", IsForeignKey=true)]
+		public BlogEntryDTO BlogEntryDTO
+		{
+			get
+			{
+				return this._BlogEntryDTO.Entity;
+			}
+			set
+			{
+				BlogEntryDTO previousValue = this._BlogEntryDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._BlogEntryDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BlogEntryDTO.Entity = null;
+						previousValue.BlogEntryTagDTOs.Remove(this);
+					}
+					this._BlogEntryDTO.Entity = value;
+					if ((value != null))
+					{
+						value.BlogEntryTagDTOs.Add(this);
+						this._BlogEntryId = value.EntryId;
+					}
+					else
+					{
+						this._BlogEntryId = default(int);
+					}
+					this.SendPropertyChanged("BlogEntryDTO");
 				}
 			}
 		}
@@ -1145,8 +799,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		private string _Theme;
 		
-		private EntitySet<BlogEntryDTO> _BlogEntryDTOs;
-		
 		private EntitySet<BlogRollLinkDTO> _BlogRollLinkDTOs;
 		
 		private EntitySet<BlogUserDTO> _BlogUserDTOs;
@@ -1154,6 +806,10 @@ namespace AnotherBlog.Data.LINQ.Entities
 		private EntitySet<EntryCommentDTO> _EntryCommentDTOs;
 		
 		private EntitySet<TagDTO> _TagDTOs;
+		
+		private EntitySet<BlogListDTO> _BlogListDTOs;
+		
+		private EntitySet<BlogEntryDTO> _BlogEntryDTOs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1179,11 +835,12 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		public BlogDTO()
 		{
-			this._BlogEntryDTOs = new EntitySet<BlogEntryDTO>(new Action<BlogEntryDTO>(this.attach_BlogEntryDTOs), new Action<BlogEntryDTO>(this.detach_BlogEntryDTOs));
 			this._BlogRollLinkDTOs = new EntitySet<BlogRollLinkDTO>(new Action<BlogRollLinkDTO>(this.attach_BlogRollLinkDTOs), new Action<BlogRollLinkDTO>(this.detach_BlogRollLinkDTOs));
 			this._BlogUserDTOs = new EntitySet<BlogUserDTO>(new Action<BlogUserDTO>(this.attach_BlogUserDTOs), new Action<BlogUserDTO>(this.detach_BlogUserDTOs));
 			this._EntryCommentDTOs = new EntitySet<EntryCommentDTO>(new Action<EntryCommentDTO>(this.attach_EntryCommentDTOs), new Action<EntryCommentDTO>(this.detach_EntryCommentDTOs));
 			this._TagDTOs = new EntitySet<TagDTO>(new Action<TagDTO>(this.attach_TagDTOs), new Action<TagDTO>(this.detach_TagDTOs));
+			this._BlogListDTOs = new EntitySet<BlogListDTO>(new Action<BlogListDTO>(this.attach_BlogListDTOs), new Action<BlogListDTO>(this.detach_BlogListDTOs));
+			this._BlogEntryDTOs = new EntitySet<BlogEntryDTO>(new Action<BlogEntryDTO>(this.attach_BlogEntryDTOs), new Action<BlogEntryDTO>(this.detach_BlogEntryDTOs));
 			OnCreated();
 		}
 		
@@ -1347,19 +1004,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogEntryDTO", Storage="_BlogEntryDTOs", ThisKey="BlogId", OtherKey="BlogId")]
-		public EntitySet<BlogEntryDTO> BlogEntryDTOs
-		{
-			get
-			{
-				return this._BlogEntryDTOs;
-			}
-			set
-			{
-				this._BlogEntryDTOs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogRollLinkDTO", Storage="_BlogRollLinkDTOs", ThisKey="BlogId", OtherKey="BlogId")]
 		public EntitySet<BlogRollLinkDTO> BlogRollLinkDTOs
 		{
@@ -1412,6 +1056,32 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogListDTO", Storage="_BlogListDTOs", ThisKey="BlogId", OtherKey="BlogId")]
+		public EntitySet<BlogListDTO> BlogListDTOs
+		{
+			get
+			{
+				return this._BlogListDTOs;
+			}
+			set
+			{
+				this._BlogListDTOs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogEntry", Storage="_BlogEntryDTOs", ThisKey="BlogId", OtherKey="BlogId")]
+		public EntitySet<BlogEntryDTO> BlogEntryDTOs
+		{
+			get
+			{
+				return this._BlogEntryDTOs;
+			}
+			set
+			{
+				this._BlogEntryDTOs.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1430,18 +1100,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_BlogEntryDTOs(BlogEntryDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogDTO = this;
-		}
-		
-		private void detach_BlogEntryDTOs(BlogEntryDTO entity)
-		{
-			this.SendPropertyChanging();
-			entity.BlogDTO = null;
 		}
 		
 		private void attach_BlogRollLinkDTOs(BlogRollLinkDTO entity)
@@ -1487,6 +1145,30 @@ namespace AnotherBlog.Data.LINQ.Entities
 		}
 		
 		private void detach_TagDTOs(TagDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogDTO = null;
+		}
+		
+		private void attach_BlogListDTOs(BlogListDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogDTO = this;
+		}
+		
+		private void detach_BlogListDTOs(BlogListDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogDTO = null;
+		}
+		
+		private void attach_BlogEntryDTOs(BlogEntryDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogDTO = this;
+		}
+		
+		private void detach_BlogEntryDTOs(BlogEntryDTO entity)
 		{
 			this.SendPropertyChanging();
 			entity.BlogDTO = null;
@@ -1838,9 +1520,9 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		private System.DateTime _DatePosted;
 		
-		private EntityRef<BlogEntryDTO> _BlogEntryDTO;
-		
 		private EntityRef<BlogDTO> _BlogDTO;
+		
+		private EntityRef<BlogEntryDTO> _BlogEntryDTO;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1870,8 +1552,8 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		public EntryCommentDTO()
 		{
-			this._BlogEntryDTO = default(EntityRef<BlogEntryDTO>);
 			this._BlogDTO = default(EntityRef<BlogDTO>);
+			this._BlogEntryDTO = default(EntityRef<BlogEntryDTO>);
 			OnCreated();
 		}
 		
@@ -2083,40 +1765,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntryDTO_EntryCommentDTO", Storage="_BlogEntryDTO", ThisKey="EntryId", OtherKey="EntryId", IsForeignKey=true)]
-		public BlogEntryDTO BlogEntryDTO
-		{
-			get
-			{
-				return this._BlogEntryDTO.Entity;
-			}
-			set
-			{
-				BlogEntryDTO previousValue = this._BlogEntryDTO.Entity;
-				if (((previousValue != value) 
-							|| (this._BlogEntryDTO.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BlogEntryDTO.Entity = null;
-						previousValue.EntryCommentDTOs.Remove(this);
-					}
-					this._BlogEntryDTO.Entity = value;
-					if ((value != null))
-					{
-						value.EntryCommentDTOs.Add(this);
-						this._EntryId = value.EntryId;
-					}
-					else
-					{
-						this._EntryId = default(int);
-					}
-					this.SendPropertyChanged("BlogEntryDTO");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_EntryCommentDTO", Storage="_BlogDTO", ThisKey="BlogId", OtherKey="BlogId", IsForeignKey=true)]
 		public BlogDTO BlogDTO
 		{
@@ -2147,6 +1795,40 @@ namespace AnotherBlog.Data.LINQ.Entities
 						this._BlogId = default(int);
 					}
 					this.SendPropertyChanged("BlogDTO");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntry_EntryCommentDTO", Storage="_BlogEntryDTO", ThisKey="EntryId", OtherKey="EntryId", IsForeignKey=true)]
+		public BlogEntryDTO BlogEntryDTO
+		{
+			get
+			{
+				return this._BlogEntryDTO.Entity;
+			}
+			set
+			{
+				BlogEntryDTO previousValue = this._BlogEntryDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._BlogEntryDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BlogEntryDTO.Entity = null;
+						previousValue.EntryCommentDTOs.Remove(this);
+					}
+					this._BlogEntryDTO.Entity = value;
+					if ((value != null))
+					{
+						value.EntryCommentDTOs.Add(this);
+						this._EntryId = value.EntryId;
+					}
+					else
+					{
+						this._EntryId = default(int);
+					}
+					this.SendPropertyChanged("BlogEntryDTO");
 				}
 			}
 		}
@@ -2805,9 +2487,9 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		private string _DisplayName;
 		
-		private EntitySet<BlogEntryDTO> _BlogEntryDTOs;
-		
 		private EntitySet<BlogUserDTO> _BlogUserDTOs;
+		
+		private EntitySet<BlogEntryDTO> _BlogEntryDTOs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2835,8 +2517,8 @@ namespace AnotherBlog.Data.LINQ.Entities
 		
 		public UserDTO()
 		{
-			this._BlogEntryDTOs = new EntitySet<BlogEntryDTO>(new Action<BlogEntryDTO>(this.attach_BlogEntryDTOs), new Action<BlogEntryDTO>(this.detach_BlogEntryDTOs));
 			this._BlogUserDTOs = new EntitySet<BlogUserDTO>(new Action<BlogUserDTO>(this.attach_BlogUserDTOs), new Action<BlogUserDTO>(this.detach_BlogUserDTOs));
+			this._BlogEntryDTOs = new EntitySet<BlogEntryDTO>(new Action<BlogEntryDTO>(this.attach_BlogEntryDTOs), new Action<BlogEntryDTO>(this.detach_BlogEntryDTOs));
 			OnCreated();
 		}
 		
@@ -3020,19 +2702,6 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserDTO_BlogEntryDTO", Storage="_BlogEntryDTOs", ThisKey="UserId", OtherKey="UserId")]
-		public EntitySet<BlogEntryDTO> BlogEntryDTOs
-		{
-			get
-			{
-				return this._BlogEntryDTOs;
-			}
-			set
-			{
-				this._BlogEntryDTOs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserDTO_BlogUserDTO", Storage="_BlogUserDTOs", ThisKey="UserId", OtherKey="UserId")]
 		public EntitySet<BlogUserDTO> BlogUserDTOs
 		{
@@ -3043,6 +2712,19 @@ namespace AnotherBlog.Data.LINQ.Entities
 			set
 			{
 				this._BlogUserDTOs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserDTO_BlogEntry", Storage="_BlogEntryDTOs", ThisKey="UserId", OtherKey="UserId")]
+		public EntitySet<BlogEntryDTO> BlogEntryDTOs
+		{
+			get
+			{
+				return this._BlogEntryDTOs;
+			}
+			set
+			{
+				this._BlogEntryDTOs.Assign(value);
 			}
 		}
 		
@@ -3066,6 +2748,18 @@ namespace AnotherBlog.Data.LINQ.Entities
 			}
 		}
 		
+		private void attach_BlogUserDTOs(BlogUserDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserDTO = this;
+		}
+		
+		private void detach_BlogUserDTOs(BlogUserDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserDTO = null;
+		}
+		
 		private void attach_BlogEntryDTOs(BlogEntryDTO entity)
 		{
 			this.SendPropertyChanging();
@@ -3077,17 +2771,799 @@ namespace AnotherBlog.Data.LINQ.Entities
 			this.SendPropertyChanging();
 			entity.UserDTO = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BlogListItems")]
+	public partial class BlogListItemDTO : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_BlogUserDTOs(BlogUserDTO entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _RelatedLink;
+		
+		private int _DisplayOrder;
+		
+		private System.Nullable<int> _BlogListId;
+		
+		private EntityRef<BlogListDTO> _BlogListDTO;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnRelatedLinkChanging(string value);
+    partial void OnRelatedLinkChanged();
+    partial void OnDisplayOrderChanging(int value);
+    partial void OnDisplayOrderChanged();
+    partial void OnBlogListIdChanging(System.Nullable<int> value);
+    partial void OnBlogListIdChanged();
+    #endregion
+		
+		public BlogListItemDTO()
 		{
-			this.SendPropertyChanging();
-			entity.UserDTO = this;
+			this._BlogListDTO = default(EntityRef<BlogListDTO>);
+			OnCreated();
 		}
 		
-		private void detach_BlogUserDTOs(BlogUserDTO entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RelatedLink", DbType="NVarChar(255)")]
+		public string RelatedLink
+		{
+			get
+			{
+				return this._RelatedLink;
+			}
+			set
+			{
+				if ((this._RelatedLink != value))
+				{
+					this.OnRelatedLinkChanging(value);
+					this.SendPropertyChanging();
+					this._RelatedLink = value;
+					this.SendPropertyChanged("RelatedLink");
+					this.OnRelatedLinkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayOrder", DbType="Int NOT NULL")]
+		public int DisplayOrder
+		{
+			get
+			{
+				return this._DisplayOrder;
+			}
+			set
+			{
+				if ((this._DisplayOrder != value))
+				{
+					this.OnDisplayOrderChanging(value);
+					this.SendPropertyChanging();
+					this._DisplayOrder = value;
+					this.SendPropertyChanged("DisplayOrder");
+					this.OnDisplayOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlogListId", DbType="Int")]
+		public System.Nullable<int> BlogListId
+		{
+			get
+			{
+				return this._BlogListId;
+			}
+			set
+			{
+				if ((this._BlogListId != value))
+				{
+					if (this._BlogListDTO.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBlogListIdChanging(value);
+					this.SendPropertyChanging();
+					this._BlogListId = value;
+					this.SendPropertyChanged("BlogListId");
+					this.OnBlogListIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogListDTO_BlogListItemDTO", Storage="_BlogListDTO", ThisKey="BlogListId", OtherKey="Id", IsForeignKey=true)]
+		public BlogListDTO BlogListDTO
+		{
+			get
+			{
+				return this._BlogListDTO.Entity;
+			}
+			set
+			{
+				BlogListDTO previousValue = this._BlogListDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._BlogListDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BlogListDTO.Entity = null;
+						previousValue.BlogListItemDTOs.Remove(this);
+					}
+					this._BlogListDTO.Entity = value;
+					if ((value != null))
+					{
+						value.BlogListItemDTOs.Add(this);
+						this._BlogListId = value.Id;
+					}
+					else
+					{
+						this._BlogListId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("BlogListDTO");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BlogLists")]
+	public partial class BlogListDTO : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _BlogId;
+		
+		private string _Name;
+		
+		private bool _ShowOrdered;
+		
+		private EntitySet<BlogListItemDTO> _BlogListItemDTOs;
+		
+		private EntityRef<BlogDTO> _BlogDTO;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnBlogIdChanging(System.Nullable<int> value);
+    partial void OnBlogIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnShowOrderedChanging(bool value);
+    partial void OnShowOrderedChanged();
+    #endregion
+		
+		public BlogListDTO()
+		{
+			this._BlogListItemDTOs = new EntitySet<BlogListItemDTO>(new Action<BlogListItemDTO>(this.attach_BlogListItemDTOs), new Action<BlogListItemDTO>(this.detach_BlogListItemDTOs));
+			this._BlogDTO = default(EntityRef<BlogDTO>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlogId", DbType="Int")]
+		public System.Nullable<int> BlogId
+		{
+			get
+			{
+				return this._BlogId;
+			}
+			set
+			{
+				if ((this._BlogId != value))
+				{
+					if (this._BlogDTO.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBlogIdChanging(value);
+					this.SendPropertyChanging();
+					this._BlogId = value;
+					this.SendPropertyChanged("BlogId");
+					this.OnBlogIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShowOrdered", DbType="Bit NOT NULL")]
+		public bool ShowOrdered
+		{
+			get
+			{
+				return this._ShowOrdered;
+			}
+			set
+			{
+				if ((this._ShowOrdered != value))
+				{
+					this.OnShowOrderedChanging(value);
+					this.SendPropertyChanging();
+					this._ShowOrdered = value;
+					this.SendPropertyChanged("ShowOrdered");
+					this.OnShowOrderedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogListDTO_BlogListItemDTO", Storage="_BlogListItemDTOs", ThisKey="Id", OtherKey="BlogListId")]
+		public EntitySet<BlogListItemDTO> BlogListItemDTOs
+		{
+			get
+			{
+				return this._BlogListItemDTOs;
+			}
+			set
+			{
+				this._BlogListItemDTOs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogListDTO", Storage="_BlogDTO", ThisKey="BlogId", OtherKey="BlogId", IsForeignKey=true)]
+		public BlogDTO BlogDTO
+		{
+			get
+			{
+				return this._BlogDTO.Entity;
+			}
+			set
+			{
+				BlogDTO previousValue = this._BlogDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._BlogDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BlogDTO.Entity = null;
+						previousValue.BlogListDTOs.Remove(this);
+					}
+					this._BlogDTO.Entity = value;
+					if ((value != null))
+					{
+						value.BlogListDTOs.Add(this);
+						this._BlogId = value.BlogId;
+					}
+					else
+					{
+						this._BlogId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("BlogDTO");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_BlogListItemDTOs(BlogListItemDTO entity)
 		{
 			this.SendPropertyChanging();
-			entity.UserDTO = null;
+			entity.BlogListDTO = this;
+		}
+		
+		private void detach_BlogListItemDTOs(BlogListItemDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogListDTO = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BlogEntries")]
+	public partial class BlogEntryDTO : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _EntryId;
+		
+		private string _EntryText;
+		
+		private int _BlogId;
+		
+		private int _UserId;
+		
+		private string _Title;
+		
+		private bool _IsPublished;
+		
+		private System.DateTime _DatePosted;
+		
+		private System.DateTime _DateCreated;
+		
+		private int _TimesViewed;
+		
+		private EntitySet<BlogEntryTagDTO> _BlogEntryTagDTOs;
+		
+		private EntitySet<EntryCommentDTO> _EntryCommentDTOs;
+		
+		private EntityRef<BlogDTO> _BlogDTO;
+		
+		private EntityRef<UserDTO> _UserDTO;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEntryIdChanging(int value);
+    partial void OnEntryIdChanged();
+    partial void OnEntryTextChanging(string value);
+    partial void OnEntryTextChanged();
+    partial void OnBlogIdChanging(int value);
+    partial void OnBlogIdChanged();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnIsPublishedChanging(bool value);
+    partial void OnIsPublishedChanged();
+    partial void OnDatePostedChanging(System.DateTime value);
+    partial void OnDatePostedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnTimesViewedChanging(int value);
+    partial void OnTimesViewedChanged();
+    #endregion
+		
+		public BlogEntryDTO()
+		{
+			this._BlogEntryTagDTOs = new EntitySet<BlogEntryTagDTO>(new Action<BlogEntryTagDTO>(this.attach_BlogEntryTagDTOs), new Action<BlogEntryTagDTO>(this.detach_BlogEntryTagDTOs));
+			this._EntryCommentDTOs = new EntitySet<EntryCommentDTO>(new Action<EntryCommentDTO>(this.attach_EntryCommentDTOs), new Action<EntryCommentDTO>(this.detach_EntryCommentDTOs));
+			this._BlogDTO = default(EntityRef<BlogDTO>);
+			this._UserDTO = default(EntityRef<UserDTO>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int EntryId
+		{
+			get
+			{
+				return this._EntryId;
+			}
+			set
+			{
+				if ((this._EntryId != value))
+				{
+					this.OnEntryIdChanging(value);
+					this.SendPropertyChanging();
+					this._EntryId = value;
+					this.SendPropertyChanged("EntryId");
+					this.OnEntryIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryText", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string EntryText
+		{
+			get
+			{
+				return this._EntryText;
+			}
+			set
+			{
+				if ((this._EntryText != value))
+				{
+					this.OnEntryTextChanging(value);
+					this.SendPropertyChanging();
+					this._EntryText = value;
+					this.SendPropertyChanged("EntryText");
+					this.OnEntryTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlogId", DbType="Int NOT NULL")]
+		public int BlogId
+		{
+			get
+			{
+				return this._BlogId;
+			}
+			set
+			{
+				if ((this._BlogId != value))
+				{
+					if (this._BlogDTO.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBlogIdChanging(value);
+					this.SendPropertyChanging();
+					this._BlogId = value;
+					this.SendPropertyChanged("BlogId");
+					this.OnBlogIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					if (this._UserDTO.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublished", DbType="Bit NOT NULL")]
+		public bool IsPublished
+		{
+			get
+			{
+				return this._IsPublished;
+			}
+			set
+			{
+				if ((this._IsPublished != value))
+				{
+					this.OnIsPublishedChanging(value);
+					this.SendPropertyChanging();
+					this._IsPublished = value;
+					this.SendPropertyChanged("IsPublished");
+					this.OnIsPublishedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePosted", DbType="DateTime NOT NULL")]
+		public System.DateTime DatePosted
+		{
+			get
+			{
+				return this._DatePosted;
+			}
+			set
+			{
+				if ((this._DatePosted != value))
+				{
+					this.OnDatePostedChanging(value);
+					this.SendPropertyChanging();
+					this._DatePosted = value;
+					this.SendPropertyChanged("DatePosted");
+					this.OnDatePostedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimesViewed", DbType="Int NOT NULL")]
+		public int TimesViewed
+		{
+			get
+			{
+				return this._TimesViewed;
+			}
+			set
+			{
+				if ((this._TimesViewed != value))
+				{
+					this.OnTimesViewedChanging(value);
+					this.SendPropertyChanging();
+					this._TimesViewed = value;
+					this.SendPropertyChanged("TimesViewed");
+					this.OnTimesViewedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntry_BlogEntryTagDTO", Storage="_BlogEntryTagDTOs", ThisKey="EntryId", OtherKey="BlogEntryId")]
+		public EntitySet<BlogEntryTagDTO> BlogEntryTagDTOs
+		{
+			get
+			{
+				return this._BlogEntryTagDTOs;
+			}
+			set
+			{
+				this._BlogEntryTagDTOs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogEntry_EntryCommentDTO", Storage="_EntryCommentDTOs", ThisKey="EntryId", OtherKey="EntryId")]
+		public EntitySet<EntryCommentDTO> EntryCommentDTOs
+		{
+			get
+			{
+				return this._EntryCommentDTOs;
+			}
+			set
+			{
+				this._EntryCommentDTOs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BlogDTO_BlogEntry", Storage="_BlogDTO", ThisKey="BlogId", OtherKey="BlogId", IsForeignKey=true)]
+		public BlogDTO BlogDTO
+		{
+			get
+			{
+				return this._BlogDTO.Entity;
+			}
+			set
+			{
+				BlogDTO previousValue = this._BlogDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._BlogDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BlogDTO.Entity = null;
+						previousValue.BlogEntryDTOs.Remove(this);
+					}
+					this._BlogDTO.Entity = value;
+					if ((value != null))
+					{
+						value.BlogEntryDTOs.Add(this);
+						this._BlogId = value.BlogId;
+					}
+					else
+					{
+						this._BlogId = default(int);
+					}
+					this.SendPropertyChanged("BlogDTO");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserDTO_BlogEntry", Storage="_UserDTO", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
+		public UserDTO UserDTO
+		{
+			get
+			{
+				return this._UserDTO.Entity;
+			}
+			set
+			{
+				UserDTO previousValue = this._UserDTO.Entity;
+				if (((previousValue != value) 
+							|| (this._UserDTO.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UserDTO.Entity = null;
+						previousValue.BlogEntryDTOs.Remove(this);
+					}
+					this._UserDTO.Entity = value;
+					if ((value != null))
+					{
+						value.BlogEntryDTOs.Add(this);
+						this._UserId = value.UserId;
+					}
+					else
+					{
+						this._UserId = default(int);
+					}
+					this.SendPropertyChanged("UserDTO");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_BlogEntryTagDTOs(BlogEntryTagDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogEntryDTO = this;
+		}
+		
+		private void detach_BlogEntryTagDTOs(BlogEntryTagDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogEntryDTO = null;
+		}
+		
+		private void attach_EntryCommentDTOs(EntryCommentDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogEntryDTO = this;
+		}
+		
+		private void detach_EntryCommentDTOs(EntryCommentDTO entity)
+		{
+			this.SendPropertyChanging();
+			entity.BlogEntryDTO = null;
 		}
 	}
 }

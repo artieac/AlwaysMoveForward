@@ -17,12 +17,11 @@ using Castle.ActiveRecord;
 
 using AnotherBlog.Common.Data.Map;
 using AnotherBlog.Common.Data.Entities;
-using AnotherBlog.Data.ActiveRecord.DataMapper;
 
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("Tags")]
-    public class TagDTO : ITag
+    public class TagDTO : Tag
     {
         public TagDTO() : base()
         {
@@ -30,21 +29,15 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "id", UnsavedValue = "-1")]
-        public int Id{ get; set;}
+        public override int Id { get; set; }
 
         [Property("name")]
-        public string Name{ get; set;}
+        public override string Name { get; set; }
 
         [BelongsTo("BlogId", Type = typeof(BlogDTO))]
-        public BlogDTO BlogDTO{ get; set;}
-
-        public Blog Blog
-        {
-            get { return BlogMapper.GetInstance().Map(this.BlogDTO); }
-            set { this.BlogDTO = BlogMapper.GetInstance().Map(value); }
-        }
+        public override Blog Blog { get; set; }
 
         [HasAndBelongsToMany(typeof(BlogPostDTO), ColumnRef = "BlogEntryId", ColumnKey = "TagID", Table = "BlogEntryTags", Lazy = true)]
-        public IList<BlogPostDTO> BlogEntriesDTO{ get; set;}
+        public override IList<IBlogPost> BlogEntries { get; set; }
     }
 }

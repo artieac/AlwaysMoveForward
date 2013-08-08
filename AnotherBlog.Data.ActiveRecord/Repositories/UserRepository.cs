@@ -63,7 +63,7 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
             criteria.Add(Expression.Eq("UserName", userName));
             criteria.Add(Expression.Eq("Password", password));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
+            return Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria);
         }
         /// <summary>
         /// Get a specific user by email
@@ -82,9 +82,9 @@ namespace AnotherBlog.Data.ActiveRecord.Repositories
         public IList<User> GetBlogWriters(int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.CreateCriteria("UserBlogsDTO")
-                .CreateCriteria("BlogDTO").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
+            criteria.CreateCriteria("UserBlogs")
+                .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria);
         }
     }
 }

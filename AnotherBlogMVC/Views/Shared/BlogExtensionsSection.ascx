@@ -49,7 +49,7 @@
     //        Response.Write("<form id=\"" + baseExtensionSectionName + "Form\" action=\"/" + blogSubFolder + "/" + blogExtension.ShowControlAction.TargetController + "/" + blogExtension.ShowControlAction.TargetAction + "\">");
     //        Response.Write("</form>");
     //        Response.Write("<script type=\"text/javascript\">");
-    //        Response.Write("SubmitExtensionRequest('#" + baseExtensionSectionName + "Div','#" + baseExtensionSectionName + "Form');");
+    //        Response.Write("SiteCommon.SubmitExtensionRequest('#" + baseExtensionSectionName + "Div','#" + baseExtensionSectionName + "Form');");
     //        Response.Write("</script>");
     //    }
     //    else

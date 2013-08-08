@@ -21,7 +21,7 @@ using AnotherBlog.Common.Data.Entities;
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("ExtensionConfiguration")]
-    public class ExtensionConfigurationDTO : IExtensionConfiguration
+    public class ExtensionConfigurationDTO : ExtensionConfiguration
     {
         public ExtensionConfigurationDTO()
             : base()
@@ -30,12 +30,12 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "ConfigurationId", UnsavedValue = "-1")]
-        public int ConfigurationId{ get; set;}
+        public override int ConfigurationId { get; set; }
 
         [Property]
-        public int ExtensionId{ get; set;}
+        public override int ExtensionId { get; set; }
 
         [Property]
-        public string ExtensionSettings{ get; set;}
+        public override string ExtensionSettings { get; set; }
     }
 }

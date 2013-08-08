@@ -42,6 +42,8 @@ namespace AnotherBlog.MVC.Controllers
                 }
             }
 
+            targetModel.SortColumn = "";
+            targetModel.SortAscending = true;
             return targetModel;
         }
 
@@ -75,7 +77,19 @@ namespace AnotherBlog.MVC.Controllers
 
                 if (ViewData.ModelState.IsValid)
                 {
-                    Services.SiteInfo.Save(siteName, siteUrl, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                    using (this.UnitOfWork.BeginTransaction())
+                    {
+                        try
+                        {
+                            Services.SiteInfo.Save(siteName, siteUrl, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                            this.UnitOfWork.EndTransaction(true);
+                        }
+                        catch (Exception e)
+                        {
+                            this.Logger.Error(e.Message);
+                            this.UnitOfWork.EndTransaction(false);
+                        }
+                    }
                 }
             }
 
@@ -120,7 +134,9 @@ namespace AnotherBlog.MVC.Controllers
 
                         if (ViewData.ModelState.IsValid)
                         {
+                            this.UnitOfWork.BeginTransaction();
                             model.TargetBlog = Services.Blogs.Save(model.TargetBlog.BlogId, model.TargetBlog.Name, model.TargetBlog.SubFolder, description, about, blogWelcome, blogTheme);
+                            this.UnitOfWork.EndTransaction(true);
                         }
                     }
                 }
@@ -162,7 +178,26 @@ namespace AnotherBlog.MVC.Controllers
 
                 if (ViewData.ModelState.IsValid)
                 {
-                    model.TargetBlog = Services.Blogs.Save(targetBlogId, blogName, targetSubFolder, blogDescription, blogAbout, blogWelcome, blogTheme);
+                    using (this.UnitOfWork.BeginTransaction())
+                    {
+                        try
+                        {
+                            model.TargetBlog = Services.Blogs.Save(targetBlogId, blogName, targetSubFolder, blogDescription, blogAbout, blogWelcome, blogTheme);
+                            this.UnitOfWork.EndTransaction(true);
+                        }
+                        catch (Exception e)
+                        {
+                            model.TargetBlog = Services.Blogs.Create();
+                            model.TargetBlog.Name = blogName;
+                            model.TargetBlog.About = blogAbout;
+                            model.TargetBlog.Description = blogDescription;
+                            model.TargetBlog.SubFolder = targetSubFolder;
+                            model.TargetBlog.WelcomeMessage = blogWelcome;
+
+                            this.Logger.Error(e.Message);
+                            this.UnitOfWork.EndTransaction(false);
+                        }
+                    }
                 }
                 else
                 {
@@ -178,6 +213,8 @@ namespace AnotherBlog.MVC.Controllers
                         model.TargetBlog.WelcomeMessage = blogWelcome;
                     }
                 }
+
+                this.UnitOfWork.EndTransaction(true);
             }
             else
             {
@@ -194,41 +231,236 @@ namespace AnotherBlog.MVC.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Blog List Management
+
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
-        public ActionResult BlogManageLinks(string blogSubFolder, bool? performSave, string linkName, string url)
+        public ActionResult ManageBlogLists(string blogSubFolder)
         {
-            BlogAdminModel model = (BlogAdminModel)this.InitializeModel(blogSubFolder, new BlogAdminModel());
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
 
             if (model.TargetBlog != null)
             {
-                if (performSave.HasValue)
+                model.BlogLists = Services.BlogLists.GetByBlog(model.TargetBlog);
+            }
+
+            return View(model);
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult DeleteBlogList(string blogSubFolder, int listId)
+        {
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
+
+            if (model.TargetBlog != null)
+            {
+                using (this.UnitOfWork.BeginTransaction())
                 {
-                    if (performSave.Value == true)
+                    try
                     {
-                        if (linkName == "")
+                        Services.BlogLists.Delete(Services.BlogLists.GetById(listId));
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return RedirectToAction("ManageBlogLists", new { blogSubFolder = blogSubFolder });
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult ShowBlogList(string blogSubFolder, int blogListId)
+        {
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
+            model.CurrentList = Services.BlogLists.GetById(blogListId);
+            model.CurrentListItems = Services.BlogLists.GetListItems(model.CurrentList);
+
+            return View(model);
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult AddBlogList(string blogSubFolder, String newListName, Boolean newListShowOrdered)
+        {
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
+
+            if (model.TargetBlog != null)
+            {
+                if (newListName == "")
+                {
+                    ViewData.ModelState.AddModelError("newListName", "Please enter a name");
+                }
+
+                if (ViewData.ModelState.IsValid == true)
+                {
+                    using (this.UnitOfWork.BeginTransaction())
+                    {
+                        try
                         {
-                            ViewData.ModelState.AddModelError("linkName", "Please enter a url name.");
+                            model.CurrentList = Services.BlogLists.Save(model.TargetBlog, -1, newListName, newListShowOrdered);
+                            this.UnitOfWork.EndTransaction(true);
                         }
-
-                        if (url == "")
+                        catch (Exception e)
                         {
-                            ViewData.ModelState.AddModelError("url", "Please enter a valid url.");
-                        }
-
-                        if (!url.Contains("http://"))
-                            url = "http://" + url;
-
-                        if (ViewData.ModelState.IsValid)
-                        {
-                            Services.BlogLinks.Save(model.TargetBlog, linkName, url);
+                            this.Logger.Error(e.Message);
+                            this.UnitOfWork.EndTransaction(false);
                         }
                     }
                 }
             }
 
-            model.BlogRoll = Services.BlogLinks.GetAllByBlog(model.TargetBlog);
+            return RedirectToAction("ManageBlogLists", new { blogSubFolder = blogSubFolder });
+        }
 
-            return View(model);
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public JsonResult EditBlogList(string blogSubFolder, int listId, String listName, Boolean showOrdered)
+        {
+            AjaxBlogListModel model = new AjaxBlogListModel();
+            model.BlogSubFolder = blogSubFolder;
+
+            Blog targetBlog = this.Services.Blogs.GetBySubFolder(model.BlogSubFolder);
+            BlogList currentList = null;
+
+            if (targetBlog != null)
+            {
+                if (listName == "")
+                {
+                    ViewData.ModelState.AddModelError("listName", "Please enter a name");
+                }
+
+                if (ViewData.ModelState.IsValid == true)
+                {
+                    using (this.UnitOfWork.BeginTransaction())
+                    {
+                        try
+                        {
+                            currentList = Services.BlogLists.Save(targetBlog, listId, listName, showOrdered);
+                            this.UnitOfWork.EndTransaction(true);
+                        }
+                        catch (Exception e)
+                        {
+                            this.Logger.Error(e.Message);
+                            this.UnitOfWork.EndTransaction(false);
+                        }
+                    }
+                }
+            }
+
+            if (currentList != null)
+            {
+                model.BlogListId = currentList.Id;
+            }
+
+            return Json(model);
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult AddBlogListItem(string blogSubFolder, int blogListId, string newListItemName, string newListItemRelatedLink, int? newListItemDisplayOrder)
+        {
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
+
+            model.CurrentList = this.Services.BlogLists.GetById(blogListId);
+
+            if(model.CurrentList!=null)
+            {
+                if(newListItemName=="")
+                {
+                    ViewData.ModelState.AddModelError("newListItemName", "Please enter a name for the item.");
+                }
+
+                int displayOrderValue = 0;
+
+                if (newListItemDisplayOrder.HasValue)
+                {
+                    displayOrderValue = newListItemDisplayOrder.Value;
+                }
+
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        this.Services.BlogLists.SaveBlogListItem(model.TargetBlog, model.CurrentList, -1, newListItemName, newListItemRelatedLink, displayOrderValue);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return RedirectToAction("ShowBlogList", new { blogSubFolder = blogSubFolder, blogListId = blogListId });
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public JsonResult EditBlogListItem(string blogSubFolder, int blogListId, int editListItemId, string editListItemName, string editListItemRelatedLink, int editListItemDisplayOrder)
+        {
+            AjaxBlogListModel model = new AjaxBlogListModel();
+            model.BlogSubFolder = blogSubFolder;
+
+            Blog targetBlog = this.Services.Blogs.GetBySubFolder(model.BlogSubFolder);
+            BlogList currentList = this.Services.BlogLists.GetById(blogListId);
+            BlogListItem savedItem = null;
+            
+            if (currentList != null)
+            {
+                if (editListItemName == "")
+                {
+                    ViewData.ModelState.AddModelError("itemName", "Please enter a name for the item.");
+                }
+
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        savedItem = this.Services.BlogLists.SaveBlogListItem(targetBlog, currentList, editListItemId, editListItemName, editListItemRelatedLink, editListItemDisplayOrder);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            if (savedItem != null)
+            {
+                model.BlogListId = savedItem.BlogList.Id;
+                model.BlogListItemId = savedItem.Id;
+            }
+
+            return Json(model);
+        }
+        
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult DeleteBlogListItem(string blogSubFolder, int listItemId, int blogListId)
+        {
+            BlogListModel model = (BlogListModel)this.InitializeModel(blogSubFolder, new BlogListModel());
+
+            if (model.TargetBlog != null)
+            {
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Services.BlogLists.DeleteListItem(Services.BlogLists.GetListItemById(listItemId));
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return RedirectToAction("ManageBlogLists", new { blogSubFolder = blogSubFolder });
         }
 
         #endregion
@@ -236,9 +468,27 @@ namespace AnotherBlog.MVC.Controllers
         #region Blog Post Management
 
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator + "," + Role.Blogger)]
-        public ActionResult BlogManagePosts(string blogSubFolder, string filterType, string filterValue, int? page)
+        public ActionResult ManageBlogPosts(string blogSubFolder, string filterType, string filterValue, int? page, string sortColumn, Boolean? sortAscending)
         {
             BlogAdminModel model = (BlogAdminModel)this.InitializeModel(blogSubFolder, new BlogAdminModel());
+
+            if (sortAscending.HasValue)
+            {
+                model.SortAscending = sortAscending.Value;
+            }
+            else
+            {
+                model.SortAscending = false;
+            }
+
+            if (sortColumn != null)
+            {
+                model.SortColumn = sortColumn;
+            }
+            else
+            {
+                model.SortColumn = "DateCreated";
+            }
 
             if (model.TargetBlog != null)
             {
@@ -260,7 +510,7 @@ namespace AnotherBlog.MVC.Controllers
                 }
                 else
                 {
-                    model.EntryList = Pagination.ToPagedList(Services.BlogEntries.GetAllByBlog(model.TargetBlog, false), currentPageIndex, Constants.PageSize);
+                    model.EntryList = Pagination.ToPagedList(Services.BlogEntries.GetAllByBlog(model.TargetBlog, false, -1, model.SortColumn, model.SortAscending), currentPageIndex, Constants.PageSize);
                 }
             }
             else
@@ -299,9 +549,21 @@ namespace AnotherBlog.MVC.Controllers
                             }
                         }
 
-                        model.PostTags = Services.Tags.AddTags(model.TargetBlog, tagInput.Split(','));
-                        model.BlogPost = Services.BlogEntries.Save(model.TargetBlog, title, entryText, blogEntryId, isEntryPublished, true);
-                        Services.BlogEntryTags.AssociateTags(model.BlogPost, model.PostTags);
+                        using (this.UnitOfWork.BeginTransaction())
+                        {
+                            try
+                            {
+                                model.PostTags = Services.Tags.AddTags(model.TargetBlog, tagInput.Split(','));
+                                model.BlogPost = Services.BlogEntries.Save(model.TargetBlog, title, entryText, blogEntryId, isEntryPublished, true);
+                                Services.Tags.AssociateTags(model.BlogPost, model.PostTags);
+                                this.UnitOfWork.EndTransaction(true);
+                            }
+                            catch (Exception e)
+                            {
+                                this.Logger.Error(e.Message);
+                                this.UnitOfWork.EndTransaction(false);
+                            }
+                        }
                     }
                 }
                 else
@@ -351,9 +613,21 @@ namespace AnotherBlog.MVC.Controllers
                     }
                 }
 
-                model.PostTags = Services.Tags.AddTags(model.TargetBlog, ajaxTagInput.Split(','));
-                model.BlogPost = Services.BlogEntries.Save(model.TargetBlog, ajaxTitle, ajaxEntryText, blogEntryId, isEntryPublished, true);
-                Services.BlogEntryTags.AssociateTags(model.BlogPost, model.PostTags);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        model.PostTags = Services.Tags.AddTags(model.TargetBlog, ajaxTagInput.Split(','));
+                        model.BlogPost = Services.BlogEntries.Save(model.TargetBlog, ajaxTitle, ajaxEntryText, blogEntryId, isEntryPublished, true);
+                        Services.BlogEntryTags.AssociateTags(model.BlogPost, model.PostTags);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
             }
 
             AjaxSaveModel retVal = new AjaxSaveModel();
@@ -368,7 +642,7 @@ namespace AnotherBlog.MVC.Controllers
         #region User Management
 
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
-        public ActionResult ManageUsers(string blogSubFolder, int? page)
+        public ActionResult ManageUsers(int? page)
         {
             SiteAdminModel model = (SiteAdminModel)this.InitializeModel("", new SiteAdminModel());
             int currentPageIndex = 0;
@@ -424,7 +698,19 @@ namespace AnotherBlog.MVC.Controllers
 
                     if (ViewData.ModelState.IsValid)
                     {
-                        model.CurrentUser = Services.Users.Save(userName, password, email, targetUserId, isSiteAdmin.Value, approvedCommenter.Value, isActive.Value, userAbout, displayName);
+                        using (this.UnitOfWork.BeginTransaction())
+                        {
+                            try
+                            {
+                                model.CurrentUser = Services.Users.Save(userName, password, email, targetUserId, isSiteAdmin.Value, approvedCommenter.Value, isActive.Value, userAbout, displayName);
+                                this.UnitOfWork.EndTransaction(true);
+                            }
+                            catch (Exception e)
+                            {
+                                this.Logger.Error(e.Message);
+                                this.UnitOfWork.EndTransaction(false);
+                            }
+                        }
                     }
                     else
                     {
@@ -444,6 +730,31 @@ namespace AnotherBlog.MVC.Controllers
         }
 
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
+        public ActionResult DeleteUser(string userId)
+        {
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    int targetUserId = Int32.Parse(userId);
+                    Services.Users.Delete(targetUserId);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    this.Logger.Error(e.Message);
+                    this.UnitOfWork.EndTransaction(false);
+                }
+            }
+
+            SiteAdminModel model = (SiteAdminModel)this.InitializeModel("", new SiteAdminModel());
+            model.Roles = Services.Roles.GetAll();
+            model.Blogs = Services.Blogs.GetAll();
+
+            return RedirectToAction("ManageUsers");
+        }
+
+        [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
         public ActionResult ManageUserBlogs(string userId)
         {
             SiteAdminModel model = (SiteAdminModel)this.InitializeModel("", new SiteAdminModel());
@@ -452,7 +763,11 @@ namespace AnotherBlog.MVC.Controllers
 
             model.Blogs = Services.Blogs.GetAll();
             model.CurrentUser = Services.Users.GetById(targetUser);
-            model.CurrentUser.UserBlogs = Services.BlogUsers.GetUserBlogs(model.CurrentUser.UserId);
+
+            if (model.CurrentUser != null)
+            {
+                model.CurrentUser.UserBlogs = Services.BlogUsers.GetUserBlogs(model.CurrentUser.UserId);
+            }
 
             return View(model);
         }
@@ -466,12 +781,25 @@ namespace AnotherBlog.MVC.Controllers
             int blogId = int.Parse(targetBlog);
             int roleId = int.Parse(blogRole);
 
-            Services.BlogUsers.Save(targetUser, blogId, roleId);
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    Services.BlogUsers.Save(targetUser, blogId, roleId);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    this.Logger.Error(e.Message);
+                    this.UnitOfWork.EndTransaction(false);
+                }
+            }
+
             model.Blogs = Services.Blogs.GetAll();
             model.CurrentUser = Services.Users.GetById(targetUser);
             model.CurrentUser.UserBlogs = Services.BlogUsers.GetUserBlogs(model.CurrentUser.UserId);
 
-            return View("ManageUserBlogs", model);
+            return View("ManageUserBlogs", new { userId = userId });
         }
 
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator)]
@@ -482,7 +810,19 @@ namespace AnotherBlog.MVC.Controllers
                 int targetBlog = Convert.ToInt32(blogId);
                 int targetUser = Convert.ToInt32(userId);
 
-                Services.BlogUsers.DeleteUserBlog(targetBlog, targetUser);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Services.BlogUsers.DeleteUserBlog(targetBlog, targetUser);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
             }
 
             return Redirect("/Admin/EditUser?userId=" + userId.ToString());
@@ -516,7 +856,19 @@ namespace AnotherBlog.MVC.Controllers
 
             if (model.TargetBlog != null)
             {
-                Services.EntryComments.SetStatus(model.TargetBlog, id, Comment.CommentStatus.Approved);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Services.EntryComments.SetStatus(model.TargetBlog, id, Comment.CommentStatus.Approved);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger.Error(e.Message);
+                        this.UnitOfWork.EndTransaction(false);
+                    }
+                }
             }
 
             return RedirectToAction("BlogManageComments", new { blogSubFolder = blogSubFolder });
@@ -525,11 +877,23 @@ namespace AnotherBlog.MVC.Controllers
         [CustomAuthorization(RequiredRoles = Role.SiteAdministrator + "," + Role.Administrator + "," + Role.Blogger)]
         public ActionResult BlogDeleteComment(string blogSubFolder, int id)
         {
-            BlogAdminModel model = (BlogAdminModel)this.InitializeModel(blogSubFolder, new BlogAdminModel());
-
-            if (model.TargetBlog != null)
+            using (this.UnitOfWork.BeginTransaction())
             {
-                Services.EntryComments.SetStatus(model.TargetBlog, id, Comment.CommentStatus.Deleted);
+                try
+                {
+                    BlogAdminModel model = (BlogAdminModel)this.InitializeModel(blogSubFolder, new BlogAdminModel());
+
+                    if (model.TargetBlog != null)
+                    {
+                        Services.EntryComments.SetStatus(model.TargetBlog, id, Comment.CommentStatus.Deleted);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                }
+                catch (Exception e)
+                {
+                    this.Logger.Error(e.Message);
+                    this.UnitOfWork.EndTransaction(false);
+                }
             }
 
             return RedirectToAction("BlogManageComments", new { blogSubFolder = blogSubFolder });

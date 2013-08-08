@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Reflection;
 
+using NHibernate;
+using NHibernate.Cfg;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework;
 
@@ -11,47 +14,66 @@ using AnotherBlog.Common.Data;
 
 namespace AnotherBlog.Data.ActiveRecord
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        TransactionScope currentTransaction;
+        static UnitOfWork()
+        {
+            Castle.ActiveRecord.Framework.IConfigurationSource source = System.Configuration.ConfigurationManager.GetSection("activeRecord") as Castle.ActiveRecord.Framework.IConfigurationSource;
+            Castle.ActiveRecord.ActiveRecordStarter.Initialize(Assembly.GetExecutingAssembly(), source);
+            
+            NHibernate.Cfg.Environment.UseReflectionOptimizer = false;
+        }
+
+        SessionScope sessionScope;
+        TransactionScope transactionScope;
 
         #region IUnitOfWork Members
 
-        public void BeginTransaction(IsolationLevel isolationLevel)
+        public IDisposable BeginTransaction()
         {
-            if (currentTransaction == null)
-            {
-                currentTransaction = new TransactionScope(TransactionMode.New, isolationLevel, OnDispose.Commit);
-            }
+            return this.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+
+        public IDisposable BeginTransaction(IsolationLevel isolationLevel)
+        {
+            transactionScope = new TransactionScope(TransactionMode.Inherits, isolationLevel, OnDispose.Commit);
+            return transactionScope;
         }
 
         public void EndTransaction(bool canCommit)
         {
-            if (currentTransaction != null)
+            if(this.transactionScope!=null)
             {
-                if (canCommit)
+                if (canCommit == true)
                 {
-                    currentTransaction.VoteCommit();
+                    this.transactionScope.VoteCommit();
                 }
                 else
                 {
-                    currentTransaction.VoteRollBack();
+                    this.transactionScope.VoteRollBack();
                 }
 
-                currentTransaction.Dispose();
-                currentTransaction = null;
+                this.transactionScope.Flush();
             }
         }
 
-        public void Commit()
+        public void Flush()
         {
-            if (SessionScope.Current != null)
+            if (this.transactionScope != null)
             {
-                SessionScope.Current.Flush();
+                this.transactionScope.Flush();
             }
         }
-
 
         #endregion
+
+        public void Dispose()
+        {
+            if (this.transactionScope != null)
+            {
+                this.transactionScope.Dispose();
+                this.transactionScope = null;
+            }
+        }
     }
 }

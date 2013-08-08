@@ -22,7 +22,7 @@ using AnotherBlog.Common.Data.Entities;
 namespace AnotherBlog.Data.ActiveRecord.Entities
 {
     [ActiveRecord("BlogExtensions")]
-    public class BlogExtensionDTO : IBlogExtension
+    public class BlogExtensionDTO : BlogExtension
     {
         public BlogExtensionDTO() : base()
         {
@@ -30,21 +30,21 @@ namespace AnotherBlog.Data.ActiveRecord.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, UnsavedValue = "-1")]
-        public int ExtensionId{ get; set;}
+        public override int ExtensionId { get; set; }
 
         [Property]
-        public int PageLocation{ get; set;}
+        public override int PageLocation { get; set; }
 
         [Property]
-        public int SectionOrder{ get; set;}
+        public override int SectionOrder { get; set; }
 
         [Property]
-        public string AssemblyName{ get; set;}
+        public override string AssemblyName { get; set; }
 
         [Property]
-        public string ClassName{ get; set;}
+        public override string ClassName { get; set; }
 
         [Property]
-        public string AssemblyPath{ get; set;}
+        public override string AssemblyPath { get; set; }
     }
 }

@@ -94,7 +94,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\BlogRollTest.cs" />
     <Compile Include="Services\BlogTest.cs" />
     <Compile Include="Services\BlogUserTest.cs" />
     <Compile Include="Services\EntryCommentTest.cs" />
