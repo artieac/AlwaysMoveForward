@@ -1,0 +1,14 @@
+﻿@model IDictionary<string,string>
+@using System.Collections.Generic
+<div class="contentSection">
+    @{
+        Response.Write("<script type=\"text/javascript\">");
+        Response.Write("google_ad_client = '" + Model["adClient"].ToString() + "';");
+        Response.Write("google_ad_slot = '" + Model["adSlot"].ToString() + "';");
+        Response.Write("google_ad_width = '" + Model["adWidth"].ToString() + "';"); 
+        Response.Write("google_ad_height = '" + Model["adHeight"].ToString() + "';");
+        Response.Write("</script>");
+    }
+    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>            
+</div>
