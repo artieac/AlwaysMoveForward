@@ -1,0 +1,10 @@
+2013-04-12 19:16:04,137 [17] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NotImplementedException:The method or operation is not implemented. 
+2013-04-12 19:18:00,817 [17] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NotImplementedException:The method or operation is not implemented. 
+2013-04-12 19:29:59,546 [16] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NotImplementedException:The method or operation is not implemented. 
+2013-04-12 19:52:42,268 [6] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NotImplementedException:The method or operation is not implemented. 
+2013-04-12 20:49:14,528 [15] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:ActiveRecordException:Could not perform Save for BlogPostDTO:InnerException:NonUniqueObjectException:a different object with the same identifier value was already associated with the session: 51, of entity: AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogPostDTO 
+2013-04-12 21:40:27,196 [19] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NullReferenceException:Object reference not set to an instance of an object. 
+2013-04-12 21:41:28,251 [12] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NullReferenceException:Object reference not set to an instance of an object. 
+2013-04-12 21:42:08,429 [12] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NullReferenceException:Object reference not set to an instance of an object. 
+2013-04-12 21:42:49,516 [12] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NullReferenceException:Object reference not set to an instance of an object. 
+2013-04-12 21:43:17,151 [12] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:NullReferenceException:Object reference not set to an instance of an object. 

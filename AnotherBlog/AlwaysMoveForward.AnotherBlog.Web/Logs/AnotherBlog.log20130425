@@ -1,0 +1,18 @@
+2013-04-25 20:45:51,220 [15] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:StaleStateException:Unexpected row count: 0; expected: 1 
+2013-04-25 20:45:51,242 [15] ERROR NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session 
+NHibernate.StaleStateException: Unexpected row count: 0; expected: 1
+   at NHibernate.AdoNet.Expectations.BasicExpectation.VerifyOutcomeNonBatched(Int32 rowCount, IDbCommand statement)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2013-04-25 21:20:21,265 [29] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ActiveRecordException:You have accessed an ActiveRecord class that wasn't properly initialized. There are two possible explanations: that the call to ActiveRecordStarter.Initialize() didn't include AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class, or that AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class is not decorated with the [ActiveRecord] attribute. 
+2013-04-25 21:20:27,119 [6] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ActiveRecordException:You have accessed an ActiveRecord class that wasn't properly initialized. There are two possible explanations: that the call to ActiveRecordStarter.Initialize() didn't include AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class, or that AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class is not decorated with the [ActiveRecord] attribute. 
+2013-04-25 21:21:29,953 [10] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ActiveRecordException:You have accessed an ActiveRecord class that wasn't properly initialized. There are two possible explanations: that the call to ActiveRecordStarter.Initialize() didn't include AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class, or that AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogUser class is not decorated with the [ActiveRecord] attribute. 
+2013-04-25 21:28:01,695 [5] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ObjectDeletedException:deleted object would be re-saved by cascade (remove deleted object from associations)[AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogUserDTO#4] 
+2013-04-25 21:29:52,603 [13] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ObjectDeletedException:deleted object would be re-saved by cascade (remove deleted object from associations)[AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogUserDTO#4] 

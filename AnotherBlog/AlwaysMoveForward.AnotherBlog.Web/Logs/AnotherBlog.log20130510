@@ -1,0 +1,77 @@
+2013-05-10 20:29:59,868 [15] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO][SQL: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (?, ?, ?, ?, ?, ?, ?); select SCOPE_IDENTITY()]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 20:29:59,888 [15] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
+NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO entry (don't flush the Session after an exception occurs)
+2013-05-10 20:30:40,719 [15] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute query: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6); select SCOPE_IDENTITY() 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2013-05-10 20:30:40,757 [15] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 20:32:24,129 [15] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO][SQL: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (?, ?, ?, ?, ?, ?, ?); select SCOPE_IDENTITY()]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 20:32:24,143 [15] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
+NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO entry (don't flush the Session after an exception occurs)
+2013-05-10 20:34:43,770 [63] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute query: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6); select SCOPE_IDENTITY() 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2013-05-10 20:34:43,770 [63] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 20:34:43,771 [63] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO][SQL: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (?, ?, ?, ?, ?, ?, ?); select SCOPE_IDENTITY()]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 20:34:43,777 [63] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
+NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO entry (don't flush the Session after an exception occurs)
+2013-05-10 21:01:20,801 [50] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute query: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6); select SCOPE_IDENTITY() 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2013-05-10 21:01:20,802 [50] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 21:01:20,803 [50] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO][SQL: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (?, ?, ?, ?, ?, ?, ?); select SCOPE_IDENTITY()]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 21:01:20,815 [50] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
+NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO entry (don't flush the Session after an exception occurs)
+2013-05-10 21:02:43,558 [44] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - guest:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO][SQL: INSERT INTO EntryComments (Status, Link, AuthorEmail, Comment, AuthorName, DatePosted, EntryId) VALUES (?, ?, ?, ?, ?, ?, ?); select SCOPE_IDENTITY()]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. INSERT fails.
+The statement has been terminated. 
+2013-05-10 21:02:43,574 [44] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
+NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO entry (don't flush the Session after an exception occurs)

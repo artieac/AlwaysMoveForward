@@ -6,7 +6,7 @@
     width: 100%;
 	background-color: @foreGroundColor;
 	color: @foreGroundTextColor;
-	
+
 	ul
 	{
 		.ulDefaults;
@@ -14,6 +14,7 @@
 		list-style: none;
 		font-size: small;   
 		display: table; 
+		padding: .5em;
 
 		.tabItem
 		{
@@ -43,9 +44,6 @@
 			background-color:@mainBackgroundColor;
 			color: @foreGroundTextColor;
 			vertical-align:middle;
-			border-style:solid;
-			border-width: thin;
-			border-color: @foreGroundColor;
 				
 			.selectedLink
 			{
@@ -59,4 +57,3 @@
 		}
 	}
 }
-

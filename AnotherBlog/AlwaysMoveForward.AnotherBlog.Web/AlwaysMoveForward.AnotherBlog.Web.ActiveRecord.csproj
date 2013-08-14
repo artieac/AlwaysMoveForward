@@ -259,10 +259,10 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\themes\Box\Admin.css" />
     <Content Include="Areas\API\Views\Web.config" />
-    <None Include="Content\themes\Box\calendar.less" />
+    <Content Include="Content\themes\Box\calendar.less" />
     <Content Include="Content\themes\Box\Pager.css" />
-    <None Include="Content\themes\Box\Site.less" />
-    <None Include="Content\themes\Box\TabControl.less" />
+    <Content Include="Content\themes\Box\Site.less" />
+    <Content Include="Content\themes\Box\TabControl.less" />
     <Content Include="Content\themes\default\Admin.css" />
     <Content Include="Content\themes\default\calendar.css" />
     <Content Include="Content\themes\default\Pager.css" />
@@ -365,7 +365,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Shared\_ContentNavigationPanel.cshtml" />
-    <None Include="Content\themes\Box\ThemeDefaults.less" />
+    <Content Include="Content\themes\Box\ThemeDefaults.less" />
     <Content Include="Content\themes\default\Site.css" />
     <Content Include="Content\themes\default\TabControl.css" />
     <Content Include="Content\themes\default\ThemeDefaults.css" />

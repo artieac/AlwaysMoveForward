@@ -1,0 +1,151 @@
+2013-04-15 22:20:45,650 [14] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:GenericADOException:could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:20:45,725 [14] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2013-04-15 22:20:45,760 [14] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:20:45,774 [14] ERROR NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session 
+NHibernate.Exceptions.GenericADOException: could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1] ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   at NHibernate.Action.CollectionUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2013-04-15 22:24:48,062 [20] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2013-04-15 22:24:48,092 [20] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:24:48,107 [20] ERROR NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session 
+NHibernate.Exceptions.GenericADOException: could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1] ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   at NHibernate.Action.CollectionUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2013-04-15 22:24:48,127 [20] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:GenericADOException:could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:24:48,196 [20] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2013-04-15 22:24:48,228 [20] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:24:48,242 [20] ERROR NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session 
+NHibernate.Exceptions.GenericADOException: could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1] ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   at NHibernate.Action.CollectionUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2013-04-15 22:29:45,066 [15] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:GenericADOException:could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1]:InnerException:SqlException:Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:29:45,136 [15] ERROR NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1 
+System.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2013-04-15 22:29:45,169 [15] ERROR NHibernate.Util.ADOExceptionReporter - Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated. 
+2013-04-15 22:29:45,183 [15] ERROR NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session 
+NHibernate.Exceptions.GenericADOException: could not delete collection rows: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogDTO.Comments#1][SQL: UPDATE EntryComments SET BlogId = null WHERE BlogId = @p0 AND CommentId = @p1] ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'BlogId', table 'AMForwardDb.dbo.EntryComments'; column does not allow nulls. UPDATE fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.DeleteRows(IPersistentCollection collection, Object id, ISessionImplementor session)
+   at NHibernate.Action.CollectionUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2013-04-15 22:31:47,296 [22] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ObjectDeletedException:deleted object would be re-saved by cascade (remove deleted object from associations)[AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO#622] 

@@ -1,0 +1,2 @@
+2013-04-14 16:09:12,813 [16] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NonUniqueObjectException:a different object with the same identifier value was already associated with the session: 2, of entity: AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO 
+2013-04-14 16:09:56,526 [14] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NonUniqueObjectException:a different object with the same identifier value was already associated with the session: 2, of entity: AlwaysMoveForward.AnotherBlog.DataLayer.Entities.EntryCommentsDTO 
