@@ -80,6 +80,13 @@
     <Compile Include="DomainModel\Role.cs" />
     <Compile Include="DomainModel\SiteInfo.cs" />
     <Compile Include="DomainModel\User.cs" />
+    <Compile Include="Encryption\AESEncryptionConfiguration.cs" />
+    <Compile Include="Encryption\AESEncryptionManager.cs" />
+    <Compile Include="Encryption\KeyFileEncryptionConfiguration.cs" />
+    <Compile Include="Encryption\KeyStoreEncryptionConfiguration.cs" />
+    <Compile Include="Encryption\MD5HashHelper.cs" />
+    <Compile Include="Encryption\RSAEncryptionHelper.cs" />
+    <Compile Include="Encryption\X509CertificateManager.cs" />
     <Compile Include="Utilities\DateCompare.cs" />
     <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="Business\EmailManager.cs" />
@@ -98,8 +105,6 @@
     </Compile>
     <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
     <Compile Include="DataLayer\Repositories\RepositoryBase.cs" />
-    <Compile Include="Encryption\EncryptionConfiguration.cs" />
-    <Compile Include="Encryption\EncryptionUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\LoggerBase.cs" />

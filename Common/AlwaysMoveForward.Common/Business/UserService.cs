@@ -80,7 +80,7 @@ namespace AlwaysMoveForward.Common.Business
 
         public User Login(string userName, string password)
         {
-            User retVal = Repositories.Users.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.EncryptionUtilities.MD5HashString(password));
+            User retVal = Repositories.Users.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
 
             if (retVal != null)
             {
@@ -124,7 +124,7 @@ namespace AlwaysMoveForward.Common.Business
 
             if (password != "")
             {
-                userToSave.Password = AlwaysMoveForward.Common.Encryption.EncryptionUtilities.MD5HashString(password);
+                userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password);
             }
 
             userToSave.Email = email;
@@ -174,7 +174,7 @@ namespace AlwaysMoveForward.Common.Business
                 string newPassword = this.GenerateNewPassword();
 
                 emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.EncryptionUtilities.MD5HashString(newPassword);
+                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(newPassword);
 
                 Repositories.Users.Save(changePasswordUser);
             }
