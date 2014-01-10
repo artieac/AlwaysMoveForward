@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Map;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;

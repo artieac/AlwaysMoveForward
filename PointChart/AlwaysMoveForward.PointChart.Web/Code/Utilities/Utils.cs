@@ -16,7 +16,7 @@ using System.IO;
 using System.Xml.Linq;
 
 using AlwaysMoveForward.PointChart.Web;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 

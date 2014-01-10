@@ -17,7 +17,7 @@ using System.Web.Mvc.Ajax;
 using System.Reflection;
 using System.IO;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.Web.Models;

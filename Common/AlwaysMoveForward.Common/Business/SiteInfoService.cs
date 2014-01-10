@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business

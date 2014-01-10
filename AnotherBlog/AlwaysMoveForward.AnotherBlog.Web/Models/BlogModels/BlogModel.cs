@@ -14,8 +14,7 @@ using System.Linq;
 using System.Web;
 
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
 

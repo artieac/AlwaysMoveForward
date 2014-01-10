@@ -18,7 +18,7 @@ using System.Security.Principal;
 using System.Web.Security;
 
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.Entities;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;

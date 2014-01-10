@@ -13,12 +13,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Map;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 
-namespace AlwaysMoveForward.Common.DataLayer.Entities
+namespace AlwaysMoveForward.Common.DomainModel
 {
-    public class DbInfo : IDbInfo
+    public class Role : IRole
     {
-        public virtual int Version{ get; set;}
+        public virtual int RoleId{ get; set;}
+        public virtual string Name{ get; set;}
     }
 }

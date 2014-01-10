@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\PollService.cs" />
     <Compile Include="Business\ServiceManager.cs" />
     <Compile Include="Business\IServiceManager.cs" />
     <Compile Include="Business\RoleService.cs" />
@@ -65,39 +67,37 @@
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
-    <Compile Include="Data\Map\IDbInfo.cs" />
-    <Compile Include="Data\Map\IRole.cs" />
-    <Compile Include="Data\Map\ISiteInfo.cs" />
-    <Compile Include="Data\Map\IUser.cs" />
-    <Compile Include="Data\Repositories\AutoMappedRepository.cs" />
+    <Compile Include="DataLayer\Repositories\AutoMappedRepository.cs" />
+    <Compile Include="DataLayer\Repositories\IPollRepository.cs" />
+    <Compile Include="DomainModel\DbInfo.cs" />
+    <Compile Include="DomainModel\DataMap\IDbInfo.cs" />
+    <Compile Include="DomainModel\DataMap\IRole.cs" />
+    <Compile Include="DomainModel\DataMap\ISiteInfo.cs" />
+    <Compile Include="DomainModel\DataMap\IUser.cs" />
+    <Compile Include="DomainModel\Poll\PollOption.cs" />
+    <Compile Include="DomainModel\Poll\PollQuestion.cs" />
+    <Compile Include="DomainModel\Poll\VoterAddress.cs" />
+    <Compile Include="DomainModel\Role.cs" />
+    <Compile Include="DomainModel\SiteInfo.cs" />
+    <Compile Include="DomainModel\User.cs" />
     <Compile Include="Utilities\DateCompare.cs" />
     <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="Business\EmailManager.cs" />
     <Compile Include="Configuration\RepositoryConfiguration.cs" />
-    <Compile Include="Data\Entities\DbInfo.cs" />
-    <Compile Include="Data\Entities\Role.cs">
+    <Compile Include="DataLayer\IUnitOfWork.cs" />
+    <Compile Include="DataLayer\Repositories\IDbInfoRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Entities\SiteInfo.cs">
+    <Compile Include="DataLayer\Repositories\IRepository.cs" />
+    <Compile Include="DataLayer\Repositories\IRepositoryManager.cs" />
+    <Compile Include="DataLayer\Repositories\IRoleRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Entities\User.cs">
+    <Compile Include="DataLayer\Repositories\ISiteInfoRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\IUnitOfWork.cs" />
-    <Compile Include="Data\Repositories\IDbInfoRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Data\Repositories\IRepository.cs" />
-    <Compile Include="Data\Repositories\IRepositoryManager.cs" />
-    <Compile Include="Data\Repositories\IRoleRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Data\Repositories\ISiteInfoRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Data\Repositories\IUserRepository.cs" />
-    <Compile Include="Data\Repositories\RepositoryBase.cs" />
+    <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
+    <Compile Include="DataLayer\Repositories\RepositoryBase.cs" />
     <Compile Include="Encryption\EncryptionConfiguration.cs" />
     <Compile Include="Encryption\EncryptionUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,8 +18,8 @@ using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;

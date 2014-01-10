@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
     public interface IRepositoryManager
     {
-        IUnitOfWork UnitOfWork { get; set; }
+        IUnitOfWork UnitOfWork { get; }
         IDbInfoRepository DbInfo{ get; }
         IRoleRepository Roles{ get; }
         ISiteInfoRepository SiteInfo{ get; }

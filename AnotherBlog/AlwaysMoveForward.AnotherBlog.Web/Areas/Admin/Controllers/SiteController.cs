@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;

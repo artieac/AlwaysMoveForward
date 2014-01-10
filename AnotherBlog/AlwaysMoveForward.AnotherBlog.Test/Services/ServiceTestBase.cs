@@ -15,7 +15,7 @@ using System.Text;
 
 using Moq;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;

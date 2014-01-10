@@ -13,8 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business

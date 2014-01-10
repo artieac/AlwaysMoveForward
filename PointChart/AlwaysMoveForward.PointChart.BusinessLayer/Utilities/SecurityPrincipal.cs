@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Security.Principal;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.Entities;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 

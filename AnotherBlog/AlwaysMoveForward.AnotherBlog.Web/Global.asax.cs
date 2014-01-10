@@ -7,7 +7,7 @@ using System.Web.Routing;
 
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;

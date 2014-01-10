@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
                     FormsAuthenticationTicket authTicket =
                     FormsAuthentication.Decrypt(authCookie.Value);
 
-                    AlwaysMoveForward.Common.DataLayer.Entities.User currentUser = serviceManager.Users.GetByUserName(authTicket.Name);
+                    AlwaysMoveForward.Common.DomainModel.User currentUser = serviceManager.Users.GetByUserName(authTicket.Name);
 
                     if (currentUser == null)
                     {

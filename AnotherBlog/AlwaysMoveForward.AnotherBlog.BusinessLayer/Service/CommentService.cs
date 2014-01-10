@@ -5,9 +5,9 @@ using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.Business;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;

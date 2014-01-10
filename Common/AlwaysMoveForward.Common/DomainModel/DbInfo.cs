@@ -13,17 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Map;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 
-namespace AlwaysMoveForward.Common.DataLayer.Entities
+namespace AlwaysMoveForward.Common.DomainModel
 {
-    public class SiteInfo : ISiteInfo
+    public class DbInfo : IDbInfo
     {
-        public virtual int SiteId{ get; set;}
-        public virtual string About{ get; set;}
-        public virtual string Name{ get; set;}
-        public virtual string ContactEmail{ get; set;}
-        public virtual string DefaultTheme{ get; set;}
-        public virtual string SiteAnalyticsId{ get; set;}
+        public virtual int Version{ get; set;}
     }
 }

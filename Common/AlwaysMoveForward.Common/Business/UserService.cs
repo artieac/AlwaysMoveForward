@@ -18,8 +18,8 @@ using System.Text.RegularExpressions;
 
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business

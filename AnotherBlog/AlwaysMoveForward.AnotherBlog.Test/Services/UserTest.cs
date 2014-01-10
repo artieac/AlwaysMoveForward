@@ -15,8 +15,7 @@ using System.Text;
 
 using NUnit.Framework;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 

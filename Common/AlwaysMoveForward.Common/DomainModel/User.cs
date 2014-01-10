@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.Common.DataLayer.DataMap;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 
-namespace AlwaysMoveForward.Common.DataLayer.Entities
+namespace AlwaysMoveForward.Common.DomainModel
 {
     public class User : IUser
     {

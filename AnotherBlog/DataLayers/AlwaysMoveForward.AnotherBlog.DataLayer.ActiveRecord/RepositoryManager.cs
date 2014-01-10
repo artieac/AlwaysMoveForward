@@ -20,8 +20,8 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework;
 
 using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;

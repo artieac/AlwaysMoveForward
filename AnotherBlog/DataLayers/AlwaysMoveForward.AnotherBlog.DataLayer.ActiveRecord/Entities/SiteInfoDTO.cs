@@ -15,7 +15,7 @@ using System.Text;
 
 using Castle.ActiveRecord;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 

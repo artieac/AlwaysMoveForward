@@ -12,16 +12,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
 
-namespace AlwaysMoveForward.Common.DataLayer
+using AlwaysMoveForward.Common.DomainModel.DataMap;
+
+namespace AlwaysMoveForward.Common.DomainModel
 {
-    public interface IUnitOfWork : IDisposable
+    public class SiteInfo : ISiteInfo
     {
-        IDisposable BeginTransaction();
-        IDisposable BeginTransaction(IsolationLevel isolationLevel);
-        void EndTransaction(bool shouldCommit);
-
-        void Flush();
+        public virtual int SiteId{ get; set;}
+        public virtual string About{ get; set;}
+        public virtual string Name{ get; set;}
+        public virtual string ContactEmail{ get; set;}
+        public virtual string DefaultTheme{ get; set;}
+        public virtual string SiteAnalyticsId{ get; set;}
     }
 }

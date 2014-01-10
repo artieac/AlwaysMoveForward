@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.DataLayer.Map
+namespace AlwaysMoveForward.Common.DomainModel.DataMap
 {
     public interface ISiteInfo
     {
