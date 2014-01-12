@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.MOQ.Repositories
         public static void ConfigureSave(Mock<ITagRepository> moqObject)
         {
             moqObject.Setup(x => x.Save(It.IsAny<Tag>()))
-                .Returns((Tag t) => new Mock<Tag>().SetupProperty(f => f.Name, t.Name).SetupProperty(f=>f.Blog, t.Blog).Object)
+                .Returns((Tag t) => new Mock<Tag>().SetupProperty(f => f.Name, t.Name).Object)
                 .Callback<Tag>(f => MOQTagRepositoryHelper.defaultList.Add(f));
         }
     }

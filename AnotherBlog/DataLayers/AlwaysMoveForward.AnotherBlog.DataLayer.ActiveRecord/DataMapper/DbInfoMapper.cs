@@ -15,23 +15,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         public override DbInfoDTO MapProperties(DbInfo source, DbInfoDTO destination)
         {
-            DbInfoDTO retVal = destination;
-
-            if (source != null)
-            {
-                if (retVal == null)
-                {
-                    retVal = new DbInfoDTO();
-                }
-                retVal.Version = source.Version;
-            }
-
-            return retVal;
+            return AutoMapper.Mapper.Map(source, destination);
         }
 
         public override DbInfo MapProperties(DbInfoDTO source, DbInfo destination)
         {
-            throw new NotImplementedException();
+            return AutoMapper.Mapper.Map(source, destination);
         }
     }
 }

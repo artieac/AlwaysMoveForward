@@ -27,7 +27,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public virtual int Id { get; set; }
         public virtual String Name { get; set; }
-        public virtual Blog Blog { get; set; }
-        public virtual IList<BlogPost> BlogEntries { get; set; }
+//        public virtual Blog Blog { get; set; }
     }
 }

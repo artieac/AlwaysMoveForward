@@ -13,28 +13,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         public override SiteInfo MapProperties(SiteInfoDTO source, SiteInfo destination)
         {
-            SiteInfo retVal = destination;
-
-            if (source != null)
-            {
-                if (retVal == null)
-                {
-                    retVal = new SiteInfo();
-                }
-                retVal.About = source.About;
-                retVal.ContactEmail = source.ContactEmail;
-                retVal.DefaultTheme = source.DefaultTheme;
-                retVal.Name = source.Name;
-                retVal.SiteAnalyticsId = source.SiteAnalyticsId;
-                retVal.SiteId = source.SiteId;
-            }
-
-            return retVal;
+            return AutoMapper.Mapper.Map(source, destination);
         }
 
         public override SiteInfoDTO MapProperties(SiteInfo source, SiteInfoDTO destination)
         {
-            throw new NotImplementedException();
+            return AutoMapper.Mapper.Map(source, destination);
         }
     }
 }

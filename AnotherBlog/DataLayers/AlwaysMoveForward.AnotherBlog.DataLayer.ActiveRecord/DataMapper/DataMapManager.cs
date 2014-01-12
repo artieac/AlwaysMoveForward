@@ -7,6 +7,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class DataMapManager
     {
+        static DataMapManager()
+        {
+            AutoMapperConfiguration.Configure();
+        }
+
         private static DataMapManager _dataMapManager = null;
 
         public static DataMapManager Mappers()

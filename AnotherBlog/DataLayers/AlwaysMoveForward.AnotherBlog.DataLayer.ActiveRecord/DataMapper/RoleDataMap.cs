@@ -13,36 +13,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         public override RoleDTO MapProperties(Role source, RoleDTO destination)
         {
-            RoleDTO retVal = destination;
-
-            if (source != null)
-            {
-                if (retVal == null)
-                {
-                    retVal = new RoleDTO();
-                }
-                retVal.Name = source.Name;
-                retVal.RoleId = source.RoleId;
-            }
-
-            return retVal;
+            return AutoMapper.Mapper.Map(source, destination);
         }
 
         public override Role MapProperties(RoleDTO source, Role destination)
         {
-            Role retVal = destination;
-
-            if (source != null)
-            {
-                if (retVal == null)
-                {
-                    retVal = new Role();
-                }
-                retVal.Name = source.Name;
-                retVal.RoleId = source.RoleId;
-            }
-
-            return retVal;
+            return AutoMapper.Mapper.Map(source, destination);
         }
     }
 }

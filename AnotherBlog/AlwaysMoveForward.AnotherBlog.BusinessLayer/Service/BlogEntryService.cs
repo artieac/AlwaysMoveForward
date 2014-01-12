@@ -110,7 +110,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                     {
                         currentTag = new Tag();
                         currentTag.Name = trimmedName;
-                        currentTag.Blog = targetPost.Blog;
                     }
 
                     targetPost.Tags.Add(currentTag);

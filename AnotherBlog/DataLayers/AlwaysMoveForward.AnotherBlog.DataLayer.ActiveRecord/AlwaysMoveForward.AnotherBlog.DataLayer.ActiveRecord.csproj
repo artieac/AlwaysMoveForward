@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataMapper\AutoMapperConfiguration.cs" />
     <Compile Include="DataMapper\BlogDataMap.cs" />
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
     <Compile Include="DataMapper\BlogUserDataMap.cs" />

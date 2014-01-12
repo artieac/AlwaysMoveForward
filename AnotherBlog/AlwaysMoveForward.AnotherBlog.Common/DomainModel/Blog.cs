@@ -33,7 +33,5 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public virtual string ContactEmail { get; set; }
         public virtual string Theme { get; set; }
         public virtual int CurrentPollId { get; set; }
-        public virtual IList<BlogPost> Posts { get; set; }
-        public virtual IList<BlogUser> Users { get; set; }
     }
 }
