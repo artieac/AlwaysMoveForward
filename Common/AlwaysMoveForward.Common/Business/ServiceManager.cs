@@ -8,70 +8,65 @@ using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business
 {
-    public class ServiceManager : ServiceRegisterBase
-    {
-        public static TService CreateService<TService>(ServiceContext serviceContext) where TService : class
-        {
-            return Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   serviceContext
-                                                               }) as TService;
-        }
-
-        public static TServiceInterface CreateService<TServiceInterface, TService>(ServiceContext serviceContext) where TService : class, TServiceInterface where TServiceInterface : class
-        {
-            return Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   serviceContext
-                                                               }) as TServiceInterface;
-        }
-        
+    public class ServiceManager
+    {        
         public ServiceManager(ServiceContext serviceContext)
         {
-            this.RepositoryManager = serviceContext.RepositoryManager;
-            this.UnitOfWork = serviceContext.UnitOfWork;
+            this.ServiceContext = serviceContext;
         }
 
-        public IRepositoryManager RepositoryManager{ get; private set;}
-        public IUnitOfWork UnitOfWork { get; private set;}
-
-        public TServiceInterface ResolveOrRegister<TServiceInterface, TService>()
-            where TServiceInterface : class
-            where TService : class, TServiceInterface
+        public ServiceContext ServiceContext { get; private set; }
+        
+        public IRepositoryManager RepositoryManager
         {
-            TServiceInterface retVal = this.Resolve<TServiceInterface>();
+            get { return this.ServiceContext.RepositoryManager; }
+        }
 
-            if (retVal == null)
+        public IUnitOfWork UnitOfWork 
+        {
+            get { return this.ServiceContext.UnitOfWork; }
+        }
+
+        RoleService roleService;
+        public RoleService RoleService
+        {
+            get
             {
-                TServiceInterface newService = Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   new ServiceContext(this.UnitOfWork, this.RepositoryManager)
-                                                               }) as TServiceInterface;
-
-                if (newService != null)
+                if(roleService==null)
                 {
-                    retVal = this.RegisterService<TServiceInterface>(newService);
+                    roleService = new RoleService(this.ServiceContext);
                 }
+
+                return roleService;
             }
-
-            return retVal;
         }
-        public RoleService Roles
+
+        SiteInfoService siteInfo;
+        public SiteInfoService SiteInfoService
         {
-            get{ return this.ResolveOrRegister<RoleService, RoleService>();}
+            get
+            {
+                if (siteInfo == null)
+                {
+                    siteInfo = new SiteInfoService(this.ServiceContext);
+                }
+
+                return siteInfo;
+            }
         }
 
-        public SiteInfoService SiteInfo
-        {
-            get { return this.ResolveOrRegister<SiteInfoService, SiteInfoService>(); }
-        }
-
+        UserService userService;
         public UserService UserService
         {
-            get { return this.ResolveOrRegister<UserService, UserService>(); }
+            get
+            {
+                if (userService == null)
+                {
+                    userService = new UserService(this.ServiceContext);
+                }
+
+                return userService;
+            }
         }
     }
 }

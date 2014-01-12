@@ -72,7 +72,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         {
             CommonModel retVal = new CommonModel();
 
-            retVal.RegisteredExtensions = Services.BlogExtensionService.GetAll();
             retVal.TargetMonth = DateTime.Now;
 
             return retVal;

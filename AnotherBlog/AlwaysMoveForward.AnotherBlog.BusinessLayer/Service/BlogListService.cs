@@ -36,7 +36,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             BlogListItem retVal = new BlogListItem();
             retVal.Id = -1;
-            retVal.BlogList = blogList;
             return retVal;
         }
 
@@ -121,7 +120,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             targetItem.Name = itemName;
             targetItem.RelatedLink = relatedLink;
             targetItem.DisplayOrder = displayOrder;
-            targetItem.BlogList = blogList;
 
             retVal = AnotherBlogRepositories.BlogLists.Save(retVal);
             return retVal;

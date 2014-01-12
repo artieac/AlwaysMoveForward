@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             {
                 if (this.serviceManager == null)
                 {
-                    this.serviceManager = ServiceManager.BuildServiceManager();
+                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return this.serviceManager;
@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 {
                     try
                     {
-                        retVal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                        retVal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                         System.Threading.Thread.CurrentPrincipal = retVal;
                     }
                     catch (Exception e)

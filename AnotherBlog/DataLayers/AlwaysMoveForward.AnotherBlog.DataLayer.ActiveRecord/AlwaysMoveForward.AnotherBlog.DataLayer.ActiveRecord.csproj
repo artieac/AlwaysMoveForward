@@ -18,6 +18,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,9 +83,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\NHibernate.Search.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\..\..\Lib\Ninject\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -108,32 +107,33 @@
     <Compile Include="DataMapper\DataMapManager.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
+    <Compile Include="DataMapper\PollQuestionDataMap.cs" />
     <Compile Include="DataMapper\RoleDataMap.cs" />
     <Compile Include="DataMapper\SiteInfoDataMap.cs" />
     <Compile Include="DataMapper\TagDataMap.cs" />
     <Compile Include="DataMapper\UserDataMap.cs" />
     <Compile Include="Entities\BlogListDTO.cs" />
     <Compile Include="Entities\BlogListItemDTO.cs" />
-    <Compile Include="Entities\ExtensionConfigurationDTO.cs" />
     <Compile Include="Entities\BlogDTO.cs" />
     <Compile Include="Entities\BlogPostDTO.cs" />
-    <Compile Include="Entities\BlogExtensionDTO.cs" />
     <Compile Include="Entities\BlogUserDTO.cs" />
     <Compile Include="Entities\DbInfoDTO.cs" />
     <Compile Include="Entities\EntryCommentsDTO.cs" />
+    <Compile Include="Entities\PollOptionDTO.cs" />
+    <Compile Include="Entities\PollQuestionDTO.cs" />
     <Compile Include="Entities\RoleDTO.cs" />
     <Compile Include="Entities\SiteInfoDTO.cs" />
     <Compile Include="Entities\TagDTO.cs" />
     <Compile Include="Entities\UserDTO.cs" />
+    <Compile Include="Entities\VoterAddressDTO.cs" />
     <Compile Include="Repositories\ActiveRecordRepository.cs" />
     <Compile Include="Repositories\BlogEntryRepository.cs" />
-    <Compile Include="Repositories\BlogExtensionRepository.cs" />
     <Compile Include="Repositories\BlogListRepository.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\BlogUserRepository.cs" />
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
-    <Compile Include="Repositories\ExtensionConfigurationRepository.cs" />
+    <Compile Include="Repositories\PollRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,6 +153,9 @@
       <Project>{EE543152-B86A-43F0-974F-AA97DD094BFF}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -176,4 +179,5 @@ copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
 copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
 copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

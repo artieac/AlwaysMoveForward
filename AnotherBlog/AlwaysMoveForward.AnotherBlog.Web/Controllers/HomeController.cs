@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.Common = this.InitializeCommonModel();
             model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
             
-            model.SiteInfo = Services.SiteInfo.GetSiteInfo();
+            model.SiteInfo = Services.SiteInfoService.GetSiteInfo();
 
             if (model.SiteInfo == null)
             {
@@ -96,26 +96,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
 
             return View("Index", model);
-        }
-
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
-        public ActionResult ConfigureExtension(string blogSubFolder, int? extensionId)
-        {
-            SiteModel model = new SiteModel();
-            model.Common = this.InitializeCommonModel();
-            model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
-
-            if (extensionId.HasValue)
-            {
-                BlogExtensionDefinition blogExtension = BlogExtensionService.GetExtensionInstance(extensionId.Value);
-
-                if (blogExtension != null)
-                {
-                    blogExtension.AdminDisplay.HandleSubmission(-1, this.ControllerContext.RequestContext.HttpContext.Request.Params);
-                }
-            }
-
-            return View(model);
         }
 
     //    public ActionResult DisplayListControl(string blogSubFolder, String targetBlogListName)

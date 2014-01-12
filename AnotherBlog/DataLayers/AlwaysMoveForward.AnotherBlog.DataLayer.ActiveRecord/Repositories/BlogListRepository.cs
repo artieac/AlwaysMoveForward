@@ -73,7 +73,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (dtoItem != null)
             {
-                dtoItem = ((ListDataMap)this.DataMapper).Map(itemToSave, dtoItem);
+                dtoItem = ((ListDataMap)this.DataMapper).Map(itemToSave);
                 dtoItem = this.Save(dtoItem);
             }
 

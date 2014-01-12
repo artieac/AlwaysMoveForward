@@ -28,7 +28,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
 
         public string ContentTitle{ get; set;}
         public DateTime TargetMonth{ get; set;}
-        public IList<BlogExtension> RegisteredExtensions{ get; set;}
         public CalendarModel Calendar { get; set; }
     }
 }

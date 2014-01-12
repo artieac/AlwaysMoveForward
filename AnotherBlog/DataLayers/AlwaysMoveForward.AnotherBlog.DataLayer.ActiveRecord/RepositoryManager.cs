@@ -55,20 +55,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             }
         }
 
-        IBlogExtensionRepository blogExtensions;
-        public IBlogExtensionRepository BlogExtensions
-        {
-            get
-            {
-                if (blogExtensions == null)
-                {
-                    blogExtensions = new BlogExtensionRepository(this.UnitOfWork);
-                }
-
-                return blogExtensions;
-            }
-        }
-
         IBlogRepository blogRepository;
         public IBlogRepository Blogs
         {
@@ -108,20 +94,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return dbInfoRepository;
-            }
-        }
-
-        IExtensionConfigurationRepository extensionConfiguration;
-        public IExtensionConfigurationRepository ExtensionConfiguration
-        {
-            get
-            {
-                if (extensionConfiguration == null)
-                {
-                    extensionConfiguration = new ExtensionConfigurationRepository(this.UnitOfWork);
-                }
-
-                return extensionConfiguration;
             }
         }
 
@@ -206,6 +178,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return commentRepository;
+            }
+        }
+
+        IPollRepository pollRepository;
+        public IPollRepository PollRepository
+        {
+            get
+            {
+                if (pollRepository == null)
+                {
+                    pollRepository = new PollRepository(this.UnitOfWork);
+                }
+
+                return pollRepository;
             }
         }
     }

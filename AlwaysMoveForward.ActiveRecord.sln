@@ -28,7 +28,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Web", "Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.Test", "AnotherBlog\AlwaysMoveForward.AnotherBlog.Test\AlwaysMoveForward.AnotherBlog.Test.csproj", "{2D57C1B4-73B1-4664-B396-64A50FA28E8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.DataLayer.MOQ", "AnotherBlog\AlwaysMoveForward.AnotherBlog.DataLayer.MOQ\AlwaysMoveForward.AnotherBlog.DataLayer.MOQ.csproj", "{44CAC3BF-6183-4DCB-9774-2958AE6AC853}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2EB24998-0F6C-4B80-8E25-783E115B3EB2}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,16 +145,6 @@ Global
 		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|x86.ActiveCfg = Release|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{44CAC3BF-6183-4DCB-9774-2958AE6AC853}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

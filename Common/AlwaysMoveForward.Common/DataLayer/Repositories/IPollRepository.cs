@@ -9,5 +9,6 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
     public interface IPollRepository : IRepository<PollQuestion>
     {
+        PollQuestion GetByPollOptionId(int pollOptionId);
     }
 }

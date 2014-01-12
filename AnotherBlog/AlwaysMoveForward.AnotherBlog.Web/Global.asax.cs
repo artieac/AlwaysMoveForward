@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web
 
                     if (serviceManager != null)
                     {
-                        MvcApplication.siteInfo = serviceManager.SiteInfo.GetSiteInfo();
+                        MvcApplication.siteInfo = serviceManager.SiteInfoService.GetSiteInfo();
 
                         if (MvcApplication.siteInfo == null)
                         {

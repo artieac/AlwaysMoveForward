@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             SiteModel model = new SiteModel();
-            model.SiteInfo = this.Services.SiteInfo.GetSiteInfo();
+            model.SiteInfo = this.Services.SiteInfoService.GetSiteInfo();
 
             if (model.SiteInfo == null)
             {
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                     {
                         try
                         {
-                            MvcApplication.SiteInfo = Services.SiteInfo.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                            MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
                             this.Services.UnitOfWork.EndTransaction(true);
                         }
                         catch (Exception e)

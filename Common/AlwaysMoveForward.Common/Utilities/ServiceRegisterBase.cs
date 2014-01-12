@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Ninject;
-
 using AlwaysMoveForward.Common.Configuration;
 
 namespace AlwaysMoveForward.Common.Utilities

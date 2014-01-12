@@ -37,11 +37,11 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
 
             Assert.NotNull(newSite);
 
-            newSite = Services.SiteInfo.Save("TestSite", "", "", "", "");
+            newSite = Services.SiteInfoService.Save("TestSite", "", "", "", "");
 
             Assert.NotNull(newSite);
 
-            newSite = Services.SiteInfo.GetSiteInfo();
+            newSite = Services.SiteInfoService.GetSiteInfo();
 
             Assert.NotNull(newSite);
         }

@@ -22,8 +22,8 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
                 {
                     systemRoles = new Dictionary<int, Role>();
 
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager() as ServiceManager;
-                    IList<Role> roles = serviceManager.Roles.GetAll();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    IList<Role> roles = serviceManager.RoleService.GetAll();
 
                     for (int i = 0; i < roles.Count; i++)
                     {

@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection;
 
 using Castle.ActiveRecord;
 
@@ -21,30 +20,24 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
-    [ActiveRecord("BlogExtensions")]
-    public class BlogExtensionDTO : BlogExtension
+    [ActiveRecord("PollQuestions")]
+    public class PollQuestionDTO
     {
-        public BlogExtensionDTO() : base()
+        public PollQuestionDTO()
         {
-            this.ExtensionId = -1;
+            this.Id = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, UnsavedValue = "-1")]
-        public override int ExtensionId { get; set; }
+        [PrimaryKey(PrimaryKeyType.Identity, "PollQuestionId", UnsavedValue = "-1")]
+        public int Id { get; set; }
 
-        [Property]
-        public override int PageLocation { get; set; }
+        [Property("QuestionText")]
+        public String QuestionText { get; set; }
 
-        [Property]
-        public override int SectionOrder { get; set; }
+        [Property("Title")]
+        public String Title { get; set; }
 
-        [Property]
-        public override string AssemblyName { get; set; }
-
-        [Property]
-        public override string ClassName { get; set; }
-
-        [Property]
-        public override string AssemblyPath { get; set; }
+        [HasMany(typeof(PollOptionDTO), Inverse=true)]
+        public IList<PollOptionDTO> Options { get; set; }
     }
 }

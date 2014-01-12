@@ -39,11 +39,11 @@ namespace AlwaysMoveForward.PointChart.Web
             {
                 if (MvcApplication.siteInfo == null)
                 {
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
 
                     if (serviceManager != null)
                     {
-                        MvcApplication.siteInfo = serviceManager.SiteInfo.GetSiteInfo();
+                        MvcApplication.siteInfo = serviceManager.SiteInfoService.GetSiteInfo();
 
                         if (MvcApplication.siteInfo == null)
                         {

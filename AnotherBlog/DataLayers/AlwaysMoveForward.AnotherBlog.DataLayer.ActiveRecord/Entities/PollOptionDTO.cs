@@ -20,22 +20,24 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
-    [ActiveRecord("ExtensionConfiguration")]
-    public class ExtensionConfigurationDTO : ExtensionConfiguration
+    [ActiveRecord("PollOptions")]
+    public class PollOptionDTO
     {
-        public ExtensionConfigurationDTO()
-            : base()
+        public PollOptionDTO()
         {
-            this.ConfigurationId = -1;
+            this.Id = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, "ConfigurationId", UnsavedValue = "-1")]
-        public override int ConfigurationId { get; set; }
+        [PrimaryKey(PrimaryKeyType.Identity, "PollOptionId", UnsavedValue = "-1")]
+        public int Id { get; set; }
+        
+        [Property("OptionText")]
+        public String OptionText { get; set; }
 
-        [Property]
-        public override int ExtensionId { get; set; }
+        [BelongsTo("PollQuestionId", Type = typeof(PollQuestionDTO))]
+        public PollQuestionDTO Question { get; set; }
 
-        [Property]
-        public override string ExtensionSettings { get; set; }
+        [HasMany(typeof(VoterAddressDTO), Inverse = true)]
+        public IList<VoterAddressDTO> VoterAddresses { get; set; }
     }
 }

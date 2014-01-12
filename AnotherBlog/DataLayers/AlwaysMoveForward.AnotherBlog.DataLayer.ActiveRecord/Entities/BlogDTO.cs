@@ -53,6 +53,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [Property("Theme")]
         public string Theme { get; set; }
 
+        [Property("CurrentPollId")]
+        public int CurrentPollId { get; set; }
+
         [HasMany(typeof(BlogPostDTO), Cascade = ManyRelationCascadeEnum.SaveUpdate)]
         public IList<BlogPostDTO> Posts { get; set; }
 

@@ -32,8 +32,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
                 {
                     systemRoles = new Dictionary<int, Role>();
 
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager();
-                    IList<Role> roles = serviceManager.Roles.GetAll();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    IList<Role> roles = serviceManager.RoleService.GetAll();
 
                     for (int i = 0; i < roles.Count; i++)
                     {
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             {
                 if (this.serviceManager == null)
                 {
-                    serviceManager = ServiceManager.BuildServiceManager();
+                    serviceManager = ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return this.serviceManager;
@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
                 {
                     userRoles = new Dictionary<int, Role>();
 
-                    IList<Role> allRoles = this.ServiceManager.Roles.GetAll();
+                    IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
 
                     for (int i = 0; i < allRoles.Count; i++)
                     {

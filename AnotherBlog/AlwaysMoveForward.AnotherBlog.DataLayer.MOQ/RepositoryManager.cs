@@ -15,12 +15,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     {
         Mock<IBlogEntryRepository> blogEntryRepository;
         Mock<IBlogEntryTagRepository> blogEntryTagRepository;
-        Mock<IBlogExtensionRepository> blogExtensionRepository;
         Mock<IBlogRepository> blogRepository;
         Mock<IBlogUserRepository> blogUserRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
         Mock<ICommentRepository> entryCommentRepository;
-        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository;
         Mock<IRoleRepository> roleRepository;
         Mock<ISiteInfoRepository> siteInfoRepository;
         Mock<ITagRepository> tagRepository;
@@ -60,19 +58,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.blogEntryTagRepository.Object;
-            }
-        }
-
-        public IBlogExtensionRepository BlogExtensions
-        {
-            get
-            {
-                if (this.blogExtensionRepository == null)
-                {
-                    this.blogExtensionRepository = new Mock<IBlogExtensionRepository>();
-                }
-
-                return this.blogExtensionRepository.Object;
             }
         }
 
@@ -126,19 +111,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.entryCommentRepository.Object;
-            }
-        }
-
-        public IExtensionConfigurationRepository ExtensionConfiguration
-        {
-            get
-            {
-                if (this.extensionConfigurationRepository == null)
-                {
-                    this.extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                }
-
-                return this.extensionConfigurationRepository.Object;
             }
         }
 

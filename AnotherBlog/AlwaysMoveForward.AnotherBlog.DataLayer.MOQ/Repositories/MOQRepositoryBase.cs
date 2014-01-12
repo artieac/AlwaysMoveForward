@@ -14,8 +14,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                                                           IRepository<DomainType>
         where DomainType : class, new() where DTOType : class, DomainType, new()
     {
-        private Mock<DomainType> defaultDomain;
-
         public MOQRepositoryBase(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager)
             : base(_unitOfWork, repositoryManager) {}
 

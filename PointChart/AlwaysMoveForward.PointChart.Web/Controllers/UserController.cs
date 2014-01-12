@@ -81,12 +81,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             if (loginAction == "login")
             {
-                model.CurrentUser = Services.Users.Login(userName, password);
+                model.CurrentUser = Services.UserService.Login(userName, password);
 
                 if (model.CurrentUser == null)
                 {
                     this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     model.CurrentUser = this.CurrentPrincipal.CurrentUser;
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             else
             {
                 this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                 model.CurrentUser = this.CurrentPrincipal.CurrentUser;
             }
 
@@ -119,12 +119,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             {
                 retVal.ProcessedLogin = true;
 
-                User currentUser = Services.Users.Login(userName, password);
+                User currentUser = Services.UserService.Login(userName, password);
 
                 if (currentUser == null)
                 {
                     this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
                 else
@@ -137,7 +137,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             else
             {
                 this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
             }
 
             return Json(retVal);
@@ -161,7 +161,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             userToSave.Password = password;
             userToSave.Email = email;
 
-            model.CurrentUser = Services.Users.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
+            model.CurrentUser = Services.UserService.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
 
             return View("Preferences", model);
         }
@@ -189,7 +189,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
                 if(ModelState.IsValid)
                 {
-                    model.CurrentUser = Services.Users.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
+                    model.CurrentUser = Services.UserService.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
 
                     this.CurrentPrincipal = new SecurityPrincipal(model.CurrentUser, true);
 
@@ -204,7 +204,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult ForgotPassword(string userEmail)
         {
             UserModel model = new UserModel();
-            Services.Users.SendPassword(userEmail, MvcApplication.emailConfig);
+            Services.UserService.SendPassword(userEmail, MvcApplication.emailConfig);
             return View("UserLogin", model);
         }
     }

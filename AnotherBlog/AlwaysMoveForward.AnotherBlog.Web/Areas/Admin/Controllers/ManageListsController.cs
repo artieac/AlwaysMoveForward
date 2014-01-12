@@ -163,15 +163,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
 
             retVal = this.Services.BlogListService.GetByBlog(targetBlog);
-
-            for (int i = 0; i < retVal.Count; i++)
-            {
-                for (int j = 0; j < retVal[i].Items.Count; j++)
-                {
-                    retVal[i].Items[j].BlogList = null;
-                }
-            }
-
             return Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
@@ -211,15 +202,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public JsonResult GetBlogListItems(int listId)
         {
             BlogList retVal = this.Services.BlogListService.GetById(listId);
-
-            if (retVal != null)
-            {
-                for (int i = 0; i < retVal.Items.Count; i++)
-                {
-                    retVal.Items[i].BlogList = null;
-                }
-            }
-
             return Json(retVal, JsonRequestBehavior.AllowGet);
         }
     }

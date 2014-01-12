@@ -22,6 +22,12 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -155,6 +161,7 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManagePollsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminCommon.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageListsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageBlogController.cs" />
@@ -164,6 +171,7 @@
     <Compile Include="Areas\Admin\Models\AjaxSaveModel.cs" />
     <Compile Include="Areas\Admin\Models\BlogListModel.cs" />
     <Compile Include="Areas\Admin\Models\ManageBlogModel.cs" />
+    <Compile Include="Areas\Admin\Models\ManagePollsModel.cs" />
     <Compile Include="Areas\Admin\Models\SiteModel.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
     <Compile Include="Areas\API\APIAreaRegistration.cs" />
@@ -185,6 +193,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\API\Controllers\DisplayListAPIController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\RSSController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -206,9 +215,11 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\Controllers\ManagePollsController.js" />
     <Content Include="Scripts\Controllers\ManageBlogController.js" />
     <Content Include="Scripts\Controllers\BlogController.js" />
     <Content Include="Scripts\Controllers\ManageListsController.js" />
+    <Content Include="Scripts\Controllers\PollController.js" />
     <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -379,6 +390,9 @@
     <Content Include="Content\themes\Simple\Site.css" />
     <Content Include="Content\themes\Simple\TabControl.css" />
     <Content Include="Content\themes\Simple\ThemeDefaults.css" />
+    <Content Include="Views\Shared\_PollControl.cshtml" />
+    <Content Include="Areas\Admin\Views\ManagePolls\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManagePolls\Edit.cshtml" />
     <None Include="Views\User\Register.cshtml" />
     <None Include="Views\User\RegisterComplete.cshtml" />
     <Content Include="Scripts\Modules\FactoryModule.js" />
@@ -567,4 +581,5 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

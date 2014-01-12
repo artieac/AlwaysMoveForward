@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [Property("ShowOrdered")]
         public Boolean ShowOrdered { get; set; }
 
-        [HasMany(typeof(BlogListItemDTO), Cascade = ManyRelationCascadeEnum.SaveUpdate)]
+        [HasMany(typeof(BlogListItemDTO), Inverse = true)]
         public IList<BlogListItemDTO> Items { get; set; }
 
     }

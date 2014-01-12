@@ -18,6 +18,5 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public virtual String Name { get; set; }
         public virtual String RelatedLink { get; set; }
         public virtual int DisplayOrder { get; set; }
-        public virtual BlogList BlogList { get; set; }
     }
 }
