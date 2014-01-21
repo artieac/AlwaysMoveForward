@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AutoMapper;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DomainModel.Poll;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
@@ -13,12 +13,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         #region Blog Aggregate root
 
-        public override PollQuestion MapProperties(PollQuestionDTO source, PollQuestion destination)
+        public override PollQuestion Map(PollQuestionDTO source, PollQuestion destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override PollQuestionDTO MapProperties(PollQuestion source, PollQuestionDTO destination)
+        public override PollQuestionDTO Map(PollQuestion source, PollQuestionDTO destination)
         {
             PollQuestionDTO retVal = AutoMapper.Mapper.Map(source, destination);
 

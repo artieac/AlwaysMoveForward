@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
@@ -10,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class BlogPostDataMap : DataMapBase<BlogPost, BlogPostDTO>
     {
-        public override BlogPost MapProperties(BlogPostDTO source, BlogPost destination)
+        public override BlogPost Map(BlogPostDTO source, BlogPost destination)
         {
             if(destination==null)
             {
@@ -20,7 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override BlogPostDTO MapProperties(BlogPost source, BlogPostDTO destination)
+        public override BlogPostDTO Map(BlogPost source, BlogPostDTO destination)
         {
             if(destination==null)
             {
@@ -34,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public BlogPost Map(Blog ownerBlog, Comment owner, BlogPostDTO source)
         {
-            BlogPost retVal = this.MapProperties(source, null);
+            BlogPost retVal = this.Map(source, null);
             retVal.Blog = ownerBlog;
             retVal.Author = DataMapManager.Mappers().UserDataMap.Map(source.Author);
             return retVal;
@@ -42,7 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public BlogPostDTO Map(BlogDTO ownerBlog, EntryCommentsDTO owner, BlogPost source)
         {
-            BlogPostDTO retVal = this.MapProperties(source, null);
+            BlogPostDTO retVal = this.Map(source, null);
             retVal.Blog = ownerBlog;
             retVal.Author = DataMapManager.Mappers().UserDataMap.Map(source.Author);
             return retVal;

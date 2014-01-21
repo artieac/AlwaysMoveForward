@@ -65,6 +65,7 @@
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
+    <Compile Include="DataLayer\DataMapBase.cs" />
     <Compile Include="DataLayer\Repositories\AutoMappedRepository.cs" />
     <Compile Include="DataLayer\Repositories\IPollRepository.cs" />
     <Compile Include="DomainModel\DbInfo.cs" />

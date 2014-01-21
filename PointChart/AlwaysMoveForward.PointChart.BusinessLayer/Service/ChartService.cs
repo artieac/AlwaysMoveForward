@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
@@ -63,7 +63,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 if(earnerCharts==null || earnerCharts.Count==0)
                 {
                     retVal = new Chart();
-                    retVal.PointEarner = pointEarner;
                     retVal.AdministratorId = currentUser.UserId;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
@@ -81,8 +80,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (retVal != null && pointEarner!=null)
             {
-                if (retVal.AdministratorId == currentUser.UserId &&
-                    retVal.PointEarner == pointEarner)
+                if (retVal.AdministratorId == currentUser.UserId) 
+//                    retVal.PointEarner == pointEarner)
                 {
                     retVal.Name = chartName;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -103,7 +102,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (retVal.AdministratorId == currentUser.UserId)
                 {
-                    retVal.PointEarner = pointEarner;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
             }
@@ -118,7 +116,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         public PointEarner GetPointEarnerByChart(Chart chart)
         {
-            return this.PointChartRepositories.PointEarner.GetById(chart.PointEarner.Id);
+            return this.PointChartRepositories.PointEarner.GetById(0);
         }
 
         public Chart AddTask(int chartId, int taskId)
@@ -176,15 +174,13 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chart != null)
             {
-                retVal = chart.CompletedTasks.FirstOrDefault(t => t.Task.Id == task.Id && t.DateCompleted.Date==dateCompleted.Date);
+//                retVal = chart.CompletedTasks.FirstOrDefault(t => t.Task.Id == task.Id && t.DateCompleted.Date==dateCompleted.Date);
 
                 if (retVal == null)
                 {
                     if (numberOfTimesCompleted > 0)
                     {
                         retVal = new CompletedTask();
-                        retVal.Chart = chart;
-                        retVal.Task = task;
                         retVal.DateCompleted = dateCompleted;
                         retVal.NumberOfTimesCompleted = numberOfTimesCompleted;
                         pointsToAdd = numberOfTimesCompleted * task.Points;
@@ -201,7 +197,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             using (this.UnitOfWork.BeginTransaction())
             {
-                chart.PointEarner.PointsEarned += pointsToAdd;
+//                chart.PointEarner.PointsEarned += pointsToAdd;
                     
                 if(PointChartRepositories.Charts.Save(chart)!=null)
                 {

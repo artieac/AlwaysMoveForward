@@ -9,7 +9,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 
@@ -25,94 +25,24 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         public override PointEarnerDTO Map(PointEarner source)
         {
-            PointEarnerDTO retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointEarnerDTO();
-                retVal.Id = source.Id;
-                retVal.UserName = source.UserName;
-                retVal.Password = source.Password;
-                retVal.Email = source.Email;
-                retVal.FirstName = source.FirstName;
-                retVal.LastName = source.LastName;
-                retVal.PointsEarned = source.PointsEarned;
-
-                if (source.PointsSpent != null)
-                {
-                    retVal.PointsSpent = new List<PointsSpentDTO>();
-                    for (int i = 0; i < source.PointsSpent.Count; i++)
-                    {
-                        retVal.PointsSpent.Add(this.Map(retVal, source.PointsSpent[i]));
-                    }
-                }
-            }
-
-            return retVal;
+            return DataMapper.DataMapManager.Mappers().PointEarner.Map(source);
         }
 
         public override PointEarner Map(PointEarnerDTO source)
         {
-            PointEarner retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointEarner();
-                retVal.Id = source.Id;
-                retVal.Id = source.Id;
-                retVal.UserName = source.UserName;
-                retVal.Password = source.Password;
-                retVal.Email = source.Email;
-                retVal.FirstName = source.FirstName;
-                retVal.LastName = source.LastName;
-                retVal.PointsEarned = source.PointsEarned;
-
-                if(source.PointsSpent!=null)
-                {
-                    retVal.PointsSpent = new List<PointsSpent>();
-                    for(int i = 0; i < source.PointsSpent.Count; i++)
-                    {
-                        retVal.PointsSpent.Add(this.Map(retVal, source.PointsSpent[i]));
-                    }
-                }
-            }
-
-            return retVal;
+            return DataMapper.DataMapManager.Mappers().PointEarner.Map(source);
         }
 
         public PointsSpentDTO Map(PointEarnerDTO owningEarner, PointsSpent source)
         {
-            PointsSpentDTO retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointsSpentDTO();
-                retVal.Id = source.Id;
-                retVal.DateSpent = source.DateSpent;
-                retVal.Amount = source.Amount;
-                retVal.Description = source.Description;
-                retVal.PointEarner = owningEarner;
-            }
-
-            return retVal;
+            return DataMapper.DataMapManager.Mappers().PointsSpent.Map(source);
         }
 
         public PointsSpent Map(PointEarner owningEarner, PointsSpentDTO source)
         {
-            PointsSpent retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointsSpent();
-                retVal.Id = source.Id;
-                retVal.DateSpent = source.DateSpent;
-                retVal.Amount = source.Amount;
-                retVal.Description = source.Description;
-                retVal.PointEarner = owningEarner;
-            }
-
-            return retVal;
+            return DataMapper.DataMapManager.Mappers().PointsSpent.Map(source);
         }
+
         public override PointEarner Save(PointEarner itemToSave)
         {
             PointEarner retVal = null;
@@ -128,12 +58,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             }
             else
             {
-                dtoItem.UserName = itemToSave.UserName;
-                dtoItem.Password = itemToSave.Password;
-                dtoItem.Email = itemToSave.Email;
-                dtoItem.FirstName = itemToSave.FirstName;
-                dtoItem.LastName = itemToSave.LastName;
-                dtoItem.PointsEarned = itemToSave.PointsEarned;
+                dtoItem = DataMapper.DataMapManager.Mappers().PointEarner.Map(itemToSave, dtoItem);
 
                 if (itemToSave.PointsSpent != null)
                 {

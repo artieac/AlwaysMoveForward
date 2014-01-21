@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         }
 
-        public override DataMapper.DataMapBase<DbInfo, DbInfoDTO> DataMapper
+        public override DataMapBase<DbInfo, DbInfoDTO> DataMapper
         {
             get { return DataMapManager.Mappers().DbInfoMapper;}
         }

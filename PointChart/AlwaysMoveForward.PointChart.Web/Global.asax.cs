@@ -82,14 +82,14 @@ namespace AlwaysMoveForward.PointChart.Web
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
-            routes.MapRoute("DeleteSpentPoints", // Route name
-                            "{controller}/{action}/{pointEarnerId}/{spentPointsId}", // URL with parameters
+            routes.MapRoute("PointEarnerObject", // Route name
+                            "{controller}/{action}/{pointEarnerId}/{id}", // URL with parameters
                             new
                             {
                                 controller = "Home",
                                 action = "Index",
                                 pointEarnerId = UrlParameter.Optional,
-                                spentPointsId = UrlParameter.Optional
+                                id = UrlParameter.Optional
                             } // Parameter defaults
                 );
 

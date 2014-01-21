@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {

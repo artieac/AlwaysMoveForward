@@ -9,7 +9,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories

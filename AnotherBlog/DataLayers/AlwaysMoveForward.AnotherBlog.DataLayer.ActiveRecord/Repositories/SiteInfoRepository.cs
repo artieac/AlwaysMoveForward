@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         }
 
-        public override DataMapper.DataMapBase<SiteInfo, SiteInfoDTO> DataMapper
+        public override DataMapBase<SiteInfo, SiteInfoDTO> DataMapper
         {
             get { return DataMapManager.Mappers().SiteInfoDataMap; }
         }

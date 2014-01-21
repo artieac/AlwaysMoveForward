@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         }
 
-        public override DataMapper.DataMapBase<Tag, TagDTO> DataMapper
+        public override DataMapBase<Tag, TagDTO> DataMapper
         {
             get { return DataMapManager.Mappers().TagDataMap; }
         }

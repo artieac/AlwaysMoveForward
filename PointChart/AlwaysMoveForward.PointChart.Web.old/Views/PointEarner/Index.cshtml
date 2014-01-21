@@ -1,0 +1,82 @@
+﻿@model IList<AlwaysMoveForward.PointChart.Common.DomainModel.PointEarner>
+@using AMF = AlwaysMoveForward.PointChart.Common.DomainModel;   
+@{
+    ViewBag.Title = "Point Earners";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+    <script src="@Url.Content("~/Scripts/Charts/PointEarners.js")" type="text/javascript"></script>
+}
+<form id="addPointEarnerForm" action="/PointEarner/Add" method="post">
+    <input type="hidden" name="firstName" id="firstName" value=""/>
+    <input type="hidden" name="lastName" id="lastName" value=""/>
+    <input type="hidden" name="email" id="email" value=""/>
+</form>
+<form id="editPointEarnerForm" action="/PointEarner/Edit" method="post">
+    <input type="hidden" id="pointEarnerId" name="pointEarnerId" value="" />
+    <input type="hidden" name="editFirstName" id="editFirstName" value=""/>
+    <input type="hidden" name="editLastName" id="editLastName" value=""/>
+    <input type="hidden" name="editEmail" id="editEmail" value=""/>
+</form>
+<br/>
+<table class="tableBase">
+    <thead>
+        <tr class="tableHeader">
+            <td width="1%">&nbsp;</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Email</td>
+            <td>Points Earned</td>
+            <td>Points Spent</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        int rowCounter = 0;
+
+        foreach (AMF.PointEarner pointEarnerItem in Model)
+        {
+            if (rowCounter % 2 == 0)
+            {
+                <text><tr class='tableRow1'></text>
+            }
+            else
+            {
+                <text><tr class='tableRow2'></text>
+            }
+
+            rowCounter++;
+            String inputRoot = "pointEarnerInput" + @pointEarnerItem.Id + "Element";
+            String firstNameInput = inputRoot + "FirstName";
+            String lastNameInput = inputRoot + "LastName";
+            String emailInput = inputRoot + "Email";
+            String actionItems = inputRoot + "ActionItems";
+            <td><input type="radio" name="selectedChart" onclick="PointEarner.HandleSelection('@pointEarnerItem.Id');"/></td>
+            <td><input type="text" name="@firstNameInput" id="@firstNameInput" value="@pointEarnerItem.FirstName" class="readonly" disabled="true" /></td>
+            <td><input type="text" name="@lastNameInput" id="@lastNameInput" value="@pointEarnerItem.LastName" class="readonly" disabled="true" /></td>
+            <td><input type="text" name="@emailInput" id="@emailInput" value="@pointEarnerItem.Email" class="readonly" disabled="true" /></td>
+            <td>@pointEarnerItem.PointsEarned</td>
+            <td><a href="/PointEarner/PointsDetail/@pointEarnerItem.Id">@pointEarnerItem.TotalPointsSpent</a></td>
+            <td>
+                <div id="@actionItems" name="@actionItems" class="readonly hidden">
+                    <a  href="javascript:PointEarner.SaveEdit(@pointEarnerItem.Id);"><img src="@Url.Content("~/Content/images/save.png")" alt=""/></a>
+                </div>               
+            </td>
+            @Html.Raw("</tr>")
+        }
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="text" id="newFirstName" name="newFirstName" /></td>
+            <td><input type="text" id="newLastName" name="newLastName" /></td>
+            <td><input type="text" id="newEmail" name="newEmail" /></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td><input type="button" id="saveListItemButton" value="Add Item" onclick="PointEarner.Add();"/></td>
+        </tr>
+    }
+    </tbody>
+</table>
+  

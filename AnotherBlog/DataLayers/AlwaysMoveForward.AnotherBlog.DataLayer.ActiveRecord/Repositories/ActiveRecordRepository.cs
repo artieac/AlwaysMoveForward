@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
         }
 
-        public abstract DataMapper.DataMapBase<DomainType, DTOType> DataMapper { get; }
+        public abstract DataMapBase<DomainType, DTOType> DataMapper { get; }
 
         private DTOType GetDtoById(DomainType domainEntity)
         {
@@ -110,7 +110,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (dtoItem != null)
             {
-                dtoItem = this.DataMapper.MapProperties(itemToSave, dtoItem);
+                dtoItem = this.DataMapper.Map(itemToSave, dtoItem);
                 dtoItem = this.Save(dtoItem);
             }
 

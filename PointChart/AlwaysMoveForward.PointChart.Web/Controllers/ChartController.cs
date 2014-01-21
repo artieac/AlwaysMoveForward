@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Web.Models;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
 using AlwaysMoveForward.PointChart.Web.Code.Responses;
@@ -90,7 +90,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.ShowTasks(chartId);
         }
 
-        private ChartTaskModel GenerateCompletedTasks(DateTime? targetDate, int chartId)
+        private ChartTaskModel GenerateCompletedTasks(DateTime? targetDate, int pointEarnerId, int chartId)
         {
             ChartTaskModel retVal = new ChartTaskModel();
 
@@ -104,13 +104,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             retVal.Calendar = new CalendarModel();
             retVal.Calendar.TargetMonth = _targetDate;
             retVal.Calendar.ViewDate = _targetDate;
-            retVal.Calendar.RouteInformation = "/Chart/ViewChart/" + chartId;
             retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(_targetDate);
 
-            retVal.Chart = this.Services.Charts.GetById(chartId);
+            retVal.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
+            retVal.Chart = (from targetChart in retVal.PointEarner.Charts where targetChart.Id==chartId select targetChart).Single();
             retVal.ChartTasks = retVal.Chart.Tasks;
             retVal.CompletedTasks = new Dictionary<int, IDictionary<DateTime, CompletedTask>>();
-            retVal.PointEarner = retVal.Chart.PointEarner;
 
             IList<CompletedTask> tasksCompletedDuringWeek = this.Services.Tasks.GetCompletedByDateRangeAndChart(retVal.Calendar.WeekStartDate, retVal.Calendar.WeekStartDate.AddDays(7), retVal.Chart, this.CurrentPrincipal.CurrentUser);
 
@@ -128,13 +127,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         }
 
         [RequestAuthorization]
-        public ActionResult ViewChart(DateTime? targetDate, int id)
+        public ActionResult ViewChart(DateTime? targetDate, int pointEarnerId, int id)
         {
-            return View("ViewChart", this.GenerateCompletedTasks(targetDate, id));
+            return View("ViewChart", this.GenerateCompletedTasks(targetDate, pointEarnerId, id));
         }
 
         [RequestAuthorization]
-        public ActionResult CompleteTask(int chartId, int taskId, DateTime weekStartDate, int sundayInput, int mondayInput, int tuesdayInput, int wednesdayInput, int thursdayInput, int fridayInput, int saturdayInput)
+        public ActionResult CompleteTask(int pointEarnerId, int chartId, int taskId, DateTime weekStartDate, int sundayInput, int mondayInput, int tuesdayInput, int wednesdayInput, int thursdayInput, int fridayInput, int saturdayInput)
         {
             Chart chart = this.Services.Charts.GetById(chartId);
             Task task = this.Services.Tasks.GetById(taskId);
@@ -145,13 +144,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             this.Services.Charts.AddCompletedTask(chart, task, weekStartDate.AddDays(4).Date, thursdayInput, this.CurrentPrincipal.CurrentUser);
             this.Services.Charts.AddCompletedTask(chart, task, weekStartDate.AddDays(5).Date, fridayInput, this.CurrentPrincipal.CurrentUser);
             this.Services.Charts.AddCompletedTask(chart, task, weekStartDate.AddDays(6).Date, saturdayInput, this.CurrentPrincipal.CurrentUser);
-            return this.ViewChart(weekStartDate, chartId);
+            return this.ViewChart(weekStartDate, pointEarnerId, chartId);
         }
 
         [RequestAuthorization]
-        public ActionResult Export(int id, String fileType, DateTime? targetDate)
+        public ActionResult Export(int pointEarnerId, int chartId, String fileType, DateTime? targetDate)
         {
-            ChartTaskModel model = this.GenerateCompletedTasks(targetDate, id);
+            ChartTaskModel model = this.GenerateCompletedTasks(targetDate, pointEarnerId, chartId);
 
             IList<String> reportHeaders = this.GenerateReportHeaders();
             IList<Dictionary<string, string>> rowData = new List<Dictionary<string, string>>();
@@ -224,9 +223,9 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         }
 
         [RequestAuthorization]
-        public ActionResult ExportEmpty(int id, String fileType, DateTime? targetDate)
+        public ActionResult ExportEmpty(int pointEarnerId, int chartId, String fileType, DateTime? targetDate)
         {
-            ChartTaskModel model = this.GenerateCompletedTasks(targetDate, id);
+            ChartTaskModel model = this.GenerateCompletedTasks(targetDate, pointEarnerId, chartId);
 
             IList<String> reportHeaders = this.GenerateReportHeaders();
             IList<Dictionary<string, string>> rowData = new List<Dictionary<string, string>>();

@@ -349,7 +349,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("EntryId", itemToSave.EntryId));
             BlogPostDTO dtoItem = ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
 
-            dtoItem = ((BlogPostDataMap)this.DataMapper).MapProperties(itemToSave, dtoItem);
+            dtoItem = ((BlogPostDataMap)this.DataMapper).Map(itemToSave, dtoItem);
 
             if (dtoItem != null)
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class CommentDataMap : DataMapBase<Comment, EntryCommentsDTO>
     {
-        public override Comment MapProperties(EntryCommentsDTO source, Comment destination)
+        public override Comment Map(EntryCommentsDTO source, Comment destination)
         {
             Comment retVal = destination;
 
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             return retVal;
         }
 
-        public override EntryCommentsDTO MapProperties(Comment source, EntryCommentsDTO destination)
+        public override EntryCommentsDTO Map(Comment source, EntryCommentsDTO destination)
         {
             EntryCommentsDTO retVal = destination;
 
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 for (int i = 0; i < source.Count; i++)
                 {
-                    Comment newItem = this.MapProperties(source[i], null);
+                    Comment newItem = this.Map(source[i], null);
                     retVal.Add(newItem);
                 }
             }
@@ -78,7 +78,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             if (source != null)
             {
-                destination = this.MapProperties(source, destination);
+                destination = this.Map(source, destination);
             }
 
             return destination;

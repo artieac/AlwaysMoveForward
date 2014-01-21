@@ -1,5 +1,5 @@
 ﻿@model AlwaysMoveForward.PointChart.Web.Models.ChartModel
-@using AMF = AlwaysMoveForward.PointChart.DataLayer.Entities;           
+@using AMF = AlwaysMoveForward.PointChart.Common.DomainModel;           
 @{
     ViewBag.Title = "Charts";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,6 +19,7 @@
 </form>
 
 <form id="showChartTasks" action="/Chart/ShowTasks" method="post">
+    <input type="hidden" id="pointEarnerId" name="pointEarnerId" value=""/>
     <input type="hidden" id="chartId" name="chartId" value="" />
 </form>
 <table class="tableBase">

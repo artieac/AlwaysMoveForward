@@ -26,6 +26,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
     {
         public ServiceManager(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) :  base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager))
         {
+            this.PointChartRepositoryManager = repositoryManager;
         }
 
         public IPointChartRepositoryManager PointChartRepositoryManager { get; set; }

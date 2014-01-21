@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class TagDataMap : DataMapBase<Tag, TagDTO>
     {
-        public override Tag MapProperties(TagDTO source, Tag destination)
+        public override Tag Map(TagDTO source, Tag destination)
         {
             if(destination==null)
             {
@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override TagDTO MapProperties(Tag source, TagDTO destination)
+        public override TagDTO Map(Tag source, TagDTO destination)
         {
             if(destination==null)
             {

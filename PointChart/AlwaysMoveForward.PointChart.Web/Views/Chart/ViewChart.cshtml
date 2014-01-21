@@ -1,5 +1,5 @@
 ﻿@model AlwaysMoveForward.PointChart.Web.Models.ChartTaskModel
-@using AlwaysMoveForward.PointChart.DataLayer.Entities;
+@using AlwaysMoveForward.PointChart.Common.DomainModel;
 @{
     ViewBag.Title = "ViewChart";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,32 +25,35 @@
     <div style="width:75%;float:left;">
         <div>
             <span>
-                <label>@Model.PointEarner.FirstName</label>&nbsp;
+                <label>Name: @Model.PointEarner.FirstName</label>&nbsp;
                 <label>@Model.PointEarner.LastName</label>&nbsp;
-                <label>@Model.Chart.Name</label>&nbsp;
-                <a href="/Chart/ExportEmpty/@Model.Chart.Id?fileType=excel"><img src="@Url.Content("~/Content/images/paper_white.png")" alt="Export Empty"/></a>&nbsp;
-                <a href="/Chart/Export/@Model.Chart.Id?fileType=excel&@AlwaysMoveForward.PointChart.Web.Models.CalendarModel.GenerateDateFilter(@Model.Calendar.WeekStartDate)"><img src="@Url.Content("~/Content/images/download.png")" alt="Download"/></a>
             </span>
+            <table>
+                <tr>
+                    <th>Points Earned</th>
+                    <th>Points Spent</th>
+                    <th>Available Points</th>
+                </tr>
+                <tr>
+                    <td width="30%" align="center">@Model.PointEarner.PointsEarned</td>
+                    <td width="30%" align="center">@Model.PointEarner.TotalPointsSpent</td>
+                    <td align="center">@Model.PointEarner.PointsAvailable</td>
+                </tr>
+            </table>
         </div>
-        <br />
-        <table>
-            <tr>
-                <th>Points Earned</th>
-                <th>Points Spent</th>
-                <th>Available Points</th>
-            </tr>
-            <tr>
-                <td width="30%" align="center">@Model.PointEarner.PointsEarned</td>
-                <td width="30%" align="center">@Model.PointEarner.TotalPointsSpent</td>    
-                <td align="center">@Model.PointEarner.PointsAvailable</td>    
-            </tr>
-        </table>
     </div>
     <div style="width:24%;float:right;">
+        @{
+            Model.Calendar.RouteInformation = "/Chart/ViewChart/" + Model.PointEarner.Id + "/" + Model.Chart.Id;   
+        }
         @Html.Partial("_CalendarControl", @Model.Calendar)
     </div>
 </div>
 <div>
+    <label>Chart: @Model.Chart.Name</label>&nbsp;
+    <br />
+    <a href="/Chart/ExportEmpty/@Model.Chart.Id?fileType=excel"><img src="@Url.Content("~/Content/images/paper_white.png")" alt="Export Empty" /></a>&nbsp;
+    <a href="/Chart/Export/@Model.Chart.Id?fileType=excel&@AlwaysMoveForward.PointChart.Web.Models.CalendarModel.GenerateDateFilter(@Model.Calendar.WeekStartDate)"><img src="@Url.Content("~/Content/images/download.png")" alt="Download" /></a>
     <table class="tableBase">
         <thead>
             <tr class="tableHeader">

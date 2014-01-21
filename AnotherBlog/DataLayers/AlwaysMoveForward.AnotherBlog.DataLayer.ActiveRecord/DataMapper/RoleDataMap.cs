@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
@@ -11,12 +11,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class RoleDataMap : DataMapBase<Role, RoleDTO>
     {
-        public override RoleDTO MapProperties(Role source, RoleDTO destination)
+        public override RoleDTO Map(Role source, RoleDTO destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override Role MapProperties(RoleDTO source, Role destination)
+        public override Role Map(RoleDTO source, Role destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
