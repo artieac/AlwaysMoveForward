@@ -113,7 +113,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 currentPage = "/" + blogSubFolder + "/Home/Index";
             }
 
-            return View("UserLogin", blogSubFolder);
+            return this.View("UserLogin", blogSubFolder);
         }
 
         public JsonResult AjaxLogin(string blogSubFolder, string userName, string password, string loginAction)
@@ -145,7 +145,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
             }
 
-            return Json(retVal);
+            return this.Json(retVal);
         }
 
         [CustomAuthorization]
@@ -154,7 +154,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             UserModel model = this.InitializeUserModel(blogSubFolder);
             model.Common.ContentTitle = "My Account";
             model.CurrentUser = this.CurrentPrincipal.CurrentUser;
-            return View(model);
+            return this.View(model);
         }
 
         [CustomAuthorization]
@@ -170,7 +170,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             model.CurrentUser = Services.UserService.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
 
-            return View("Preferences", model);
+            return this.View("Preferences", model);
         }
 
         public ActionResult Register(string blogSubFolder, string registerAction, string userName, string password, string email, string userAbout, string displayName)
@@ -215,20 +215,20 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult BlogNavMenu()
         {
             UserModel model = this.InitializeUserModel();
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult ForgotPassword(string blogSubFolder, string userEmail)
         {
             UserModel model = this.InitializeUserModel(blogSubFolder);
             Services.UserService.SendPassword(userEmail, MvcApplication.EmailConfiguration);
-            return View("UserLogin", model);
+            return this.View("UserLogin", model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
@@ -239,7 +239,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             int targetUser = int.Parse(userId);
             model.CurrentUser = Services.UserService.GetById(targetUser);
 
-            return View(model);
+            return this.View(model);
         }
     }
 }

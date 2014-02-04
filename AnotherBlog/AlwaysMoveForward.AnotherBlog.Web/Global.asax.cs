@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/EmailConfiguration");
         }
 
-        public static String Version
+        public static string Version
         {
             get { return "1.2.0"; }
         }
@@ -90,7 +90,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web
 
             #region Explicit Route Mappings
 
-            String[] blogControllerNamespace = new String[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
+            string[] blogControllerNamespace = new String[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
 
             routes.MapRoute(
                 "HomeMonthIndex",
@@ -109,13 +109,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             routes.MapRoute(
                 "BlogTagSearch",
                 "{blogSubFolder}/Tag/{targetTag}",
-                new { blogSubFolder = "", controller = "Blog", action = "Tag", targetTag = "" },   // Parameter defaults
+                new { blogSubFolder = string.Empty, controller = "Blog", action = "Tag", targetTag = string.Empty },   // Parameter defaults
                 blogControllerNamespace
              );
 
             routes.MapRoute(
                 "root",
-                "",
+                string.Empty,
                 new { controller = "Home", action = "Index" }
                 );
 
@@ -123,13 +123,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}",
-                new { controller = "", action = "" }
+                new { controller = string.Empty, action = string.Empty }
                 );
 
             routes.MapRoute(
                 "BlogSpecific",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}",                           // URL with parameters
-                new { blogSubFolder = "", controller = "", action = "" },   // Parameter defaults
+                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty },   // Parameter defaults
                 blogControllerNamespace
             );
 
@@ -150,7 +150,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             routes.MapRoute(
                 "BlogSpecificWithId",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}/{id}",                           // URL with parameters
-                new { blogSubFolder = "", controller = "", action = "" , id = "0"},   // Parameter defaults
+                new { blogSubFolder = string.Empty, controller = string.Empty, action = "", id = "0"},   // Parameter defaults
                 blogControllerNamespace
             );
 

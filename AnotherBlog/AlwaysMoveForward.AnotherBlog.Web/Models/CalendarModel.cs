@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         private DateTime targetMonth;
         public DateTime TargetMonth 
         {
-            get { return targetMonth; }
+            get { return this.targetMonth; }
             set
             {
                 this.targetMonth = value;
