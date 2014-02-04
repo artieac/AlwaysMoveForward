@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 {
     public class PageManager
     {
-        static IDictionary<int, Role> systemRoles = null;
+        private static IDictionary<int, Role> systemRoles = null;
 
         public static IDictionary<int, Role> Roles
         {
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 
             if (currentPrincipal != null)
             {
-                retVal = currentPrincipal.IsInRole(RoleType.SiteAdministrator);
+                retVal = currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString());
             }
 
             return retVal;
@@ -57,8 +57,8 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 
             if (currentPrincipal != null)
             {
-                if(currentPrincipal.IsInRole(RoleType.SiteAdministrator) ||
-                   currentPrincipal.IsInRole(RoleType.Administrator))
+                if(currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString()) ||
+                   currentPrincipal.IsInRole(RoleType.Administrator.ToString()))
                 {
                     retVal = true;
                 }

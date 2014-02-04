@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             for (int i = 0; i < userBlogs.Count; i++)
             {
-                model.Common.UserBlogs.Add((Blog)(userBlogs[i].Blog));
+                model.Common.UserBlogs.Add((Blog)userBlogs[i].Blog);
             }
 
             if (savingBlog != null)

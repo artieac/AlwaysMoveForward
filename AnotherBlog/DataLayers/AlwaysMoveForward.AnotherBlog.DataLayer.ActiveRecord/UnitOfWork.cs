@@ -16,8 +16,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        static ISessionFactory sessionFactory;
-
         static UnitOfWork()
         {
             Castle.ActiveRecord.Framework.IConfigurationSource source = System.Configuration.ConfigurationManager.GetSection("activeRecord") as Castle.ActiveRecord.Framework.IConfigurationSource;
@@ -26,8 +24,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             NHibernate.Cfg.Environment.UseReflectionOptimizer = false;
         }
 
-        SessionScope sessionScope;
-        TransactionScope transactionScope;
+        private SessionScope sessionScope;
+        private TransactionScope transactionScope;
 
         public UnitOfWork()
         {

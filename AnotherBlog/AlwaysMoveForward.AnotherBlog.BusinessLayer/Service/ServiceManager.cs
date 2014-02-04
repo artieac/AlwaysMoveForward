@@ -29,101 +29,101 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public ServiceManager(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) {}
 
-        BlogEntryService blogEntryService;
+        private BlogEntryService blogEntryService;
         public BlogEntryService BlogEntryService
         {
             get
             {
-                if(blogEntryService==null)
+                if(this.blogEntryService==null)
                 {
-                    blogEntryService = new BlogEntryService(this, this.RepositoryManager);
+                    this.blogEntryService = new BlogEntryService(this, this.RepositoryManager);
                 }
 
-                return blogEntryService;
+                return this.blogEntryService;
             }
         }
 
-        BlogService blogService;
+        private BlogService blogService;
         public BlogService BlogService
         {
             get
             {
-                if (blogService == null)
+                if (this.blogService == null)
                 {
-                    blogService = new BlogService(this, this.RepositoryManager);
+                    this.blogService = new BlogService(this, this.RepositoryManager);
                 }
 
-                return blogService;
+                return this.blogService;
             }
         }
 
-        BlogUserService blogUserService;
+        private BlogUserService blogUserService;
         public BlogUserService BlogUserService
         {
             get
             {
-                if (blogUserService == null)
+                if (this.blogUserService == null)
                 {
-                    blogUserService = new BlogUserService(this, this.RepositoryManager);
+                    this.blogUserService = new BlogUserService(this, this.RepositoryManager);
                 }
 
-                return blogUserService;
+                return this.blogUserService;
             }
         }
 
-        TagService tagService;
+        private TagService tagService;
         public TagService TagService
         {
             get
             {
-                if (tagService == null)
+                if (this.tagService == null)
                 {
-                    tagService = new TagService(this, this.RepositoryManager);
+                    this.tagService = new TagService(this, this.RepositoryManager);
                 }
 
-                return tagService;
+                return this.tagService;
             }
         }
 
-        UploadedFileManager uploadedFileManager;
+        private UploadedFileManager uploadedFileManager;
         public UploadedFileManager UploadedFiles
         {
             get
             {
-                if (uploadedFileManager == null)
+                if (this.uploadedFileManager == null)
                 {
-                    uploadedFileManager = new UploadedFileManager(this, this.RepositoryManager);
+                    this.uploadedFileManager = new UploadedFileManager(this, this.RepositoryManager);
                 }
 
-                return uploadedFileManager;
+                return this.uploadedFileManager;
             }
         }
 
-        BlogListService blogListService;
+        private BlogListService blogListService;
         public BlogListService BlogListService
         {
             get
             {
-                if (blogListService == null)
+                if (this.blogListService == null)
                 {
-                    blogListService = new BlogListService(this, this.RepositoryManager);
+                    this.blogListService = new BlogListService(this, this.RepositoryManager);
                 }
 
-                return blogListService;
+                return this.blogListService;
             }
         }
 
-        AnotherBlogUserService userService;
-        public AnotherBlogUserService UserService
+        private AnotherBlogUserService userService;
+        public new AnotherBlogUserService UserService
         {
             get
             {
-                if (userService == null)
+                if (this.userService == null)
                 {
-                    userService = new AnotherBlogUserService(this, this.RepositoryManager);
+                    this.userService = new AnotherBlogUserService(this, this.RepositoryManager);
                 }
 
-                return userService;
+                return this.userService;
             }
         }
 

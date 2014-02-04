@@ -13,17 +13,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
     public class ChartController : BaseController
     {
-        private class ReportColumns
-        {
-            public static String Task = "Task";
-            public static String SundayTasks = "Sunday";
-            public static String MondayTasks = "Monday";
-            public static String TuesdayTasks = "Tuesday";
-            public static String WednesdayTasks = "Wednesday";
-            public static String ThursdayTasks = "Thursday";
-            public static String FridayTasks = "Friday";
-            public static String SaturdayTasks = "Saturday";
-        }
+        private const string TaskColumn = "Task";
 
         //
         // GET: /Chart/
@@ -94,17 +84,17 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         {
             ChartTaskModel retVal = new ChartTaskModel();
 
-            DateTime _targetDate = DateTime.Now.Date;
+            DateTime completedDate = DateTime.Now.Date;
 
             if (targetDate.HasValue)
             {
-                _targetDate = targetDate.Value.Date;
+                completedDate = targetDate.Value.Date;
             }
 
             retVal.Calendar = new CalendarModel();
-            retVal.Calendar.TargetMonth = _targetDate;
-            retVal.Calendar.ViewDate = _targetDate;
-            retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(_targetDate);
+            retVal.Calendar.TargetMonth = completedDate;
+            retVal.Calendar.ViewDate = completedDate;
+            retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(completedDate);
 
             retVal.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
             retVal.Chart = (from targetChart in retVal.PointEarner.Charts where targetChart.Id==chartId select targetChart).Single();
@@ -158,7 +148,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             for (int i = 0; i < model.ChartTasks.Count; i++)
             {
                 Dictionary<string, string> columnData = new Dictionary<string, string>();
-                columnData.Add(ReportColumns.Task, model.ChartTasks[i].Name + " (" + model.ChartTasks[i].Points + ")");
+                columnData.Add(TaskColumn, model.ChartTasks[i].Name + " (" + model.ChartTasks[i].Points + ")");
 
                 if (model.CompletedTasks.ContainsKey(model.ChartTasks[i].Id))
                 {
@@ -174,25 +164,25 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                         switch (j)
                         {
                             case 0:
-                                columnData.Add(ReportColumns.SundayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Sunday.ToString(), columnValue);
                                 break;
                             case 1:
-                                columnData.Add(ReportColumns.MondayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Monday.ToString(), columnValue);
                                 break;
                             case 2:
-                                columnData.Add(ReportColumns.TuesdayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Tuesday.ToString(), columnValue);
                                 break;
                             case 3:
-                                columnData.Add(ReportColumns.WednesdayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Wednesday.ToString(), columnValue);
                                 break;
                             case 4:
-                                columnData.Add(ReportColumns.ThursdayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Thursday.ToString(), columnValue);
                                 break;
                             case 5:
-                                columnData.Add(ReportColumns.FridayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Friday.ToString(), columnValue);
                                 break;
                             case 6:
-                                columnData.Add(ReportColumns.SaturdayTasks, columnValue);
+                                columnData.Add(DayOfWeek.Saturday.ToString(), columnValue);
                                 break;
                         }
                     }
@@ -201,18 +191,18 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 }
                 else
                 {
-                    columnData.Add(ReportColumns.SundayTasks, "");
-                    columnData.Add(ReportColumns.MondayTasks, "");
-                    columnData.Add(ReportColumns.TuesdayTasks, "");
-                    columnData.Add(ReportColumns.WednesdayTasks, "");
-                    columnData.Add(ReportColumns.ThursdayTasks, "");
-                    columnData.Add(ReportColumns.FridayTasks, "");
-                    columnData.Add(ReportColumns.SaturdayTasks, "");
+                    columnData.Add(DayOfWeek.Sunday.ToString(), "");
+                    columnData.Add(DayOfWeek.Monday.ToString(), "");
+                    columnData.Add(DayOfWeek.Tuesday.ToString(), "");
+                    columnData.Add(DayOfWeek.Wednesday.ToString(), "");
+                    columnData.Add(DayOfWeek.Thursday.ToString(), "");
+                    columnData.Add(DayOfWeek.Friday.ToString(), "");
+                    columnData.Add(DayOfWeek.Saturday.ToString(), "");
                     rowData.Add(columnData);
                 }
             }
 
-            if (String.Compare(fileType, FileExtension.FileType_Excel, true) == 0)
+            if (String.Compare(fileType, FileExtension.FileType.Excel.ToString(), true) == 0)
             {
                 return this.Excel(this.GenerateHeaderPrefix(model), reportHeaders, rowData, model.PointEarner.FirstName + "_" + model.PointEarner.LastName + ".xls");
             }
@@ -233,18 +223,18 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             for (int i = 0; i < model.ChartTasks.Count; i++)
             {
                 Dictionary<string, string> columnData = new Dictionary<string, string>();
-                columnData.Add(ReportColumns.Task, model.ChartTasks[i].Name + " (" + model.ChartTasks[i].Points + ")");
-                columnData.Add(ReportColumns.SundayTasks, "");
-                columnData.Add(ReportColumns.MondayTasks, "");
-                columnData.Add(ReportColumns.TuesdayTasks, "");
-                columnData.Add(ReportColumns.WednesdayTasks, "");
-                columnData.Add(ReportColumns.ThursdayTasks, "");
-                columnData.Add(ReportColumns.FridayTasks, "");
-                columnData.Add(ReportColumns.SaturdayTasks, "");
+                columnData.Add(TaskColumn, model.ChartTasks[i].Name + " (" + model.ChartTasks[i].Points + ")");
+                columnData.Add(DayOfWeek.Sunday.ToString(), "");
+                columnData.Add(DayOfWeek.Monday.ToString(), "");
+                columnData.Add(DayOfWeek.Tuesday.ToString(), "");
+                columnData.Add(DayOfWeek.Wednesday.ToString(), "");
+                columnData.Add(DayOfWeek.Thursday.ToString(), "");
+                columnData.Add(DayOfWeek.Friday.ToString(), "");
+                columnData.Add(DayOfWeek.Saturday.ToString(), "");
                 rowData.Add(columnData);
             }
 
-            if (String.Compare(fileType, FileExtension.FileType_Excel, true)==0)
+            if (String.Compare(fileType, FileExtension.FileType.Excel.ToString(), true)==0)
             {
                 return this.Excel(this.GenerateHeaderPrefix(model), reportHeaders, rowData, model.PointEarner.FirstName + "_" + model.PointEarner.LastName + ".xls");
             }
@@ -283,15 +273,15 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         private IList<String> GenerateReportHeaders()
         {
             IList<String> retVal = new List<String>();
-            retVal.Add(ReportColumns.Task);
-            retVal.Add(ReportColumns.SundayTasks);
-            retVal.Add(ReportColumns.MondayTasks);
-            retVal.Add(ReportColumns.TuesdayTasks);
-            retVal.Add(ReportColumns.WednesdayTasks);
-            retVal.Add(ReportColumns.ThursdayTasks);
-            retVal.Add(ReportColumns.FridayTasks);
-            retVal.Add(ReportColumns.SaturdayTasks);
-
+            retVal.Add(TaskColumn);
+            retVal.Add(DayOfWeek.Sunday.ToString());
+            retVal.Add(DayOfWeek.Monday.ToString());
+            retVal.Add(DayOfWeek.Tuesday.ToString());
+            retVal.Add(DayOfWeek.Wednesday.ToString());
+            retVal.Add(DayOfWeek.Thursday.ToString());
+            retVal.Add(DayOfWeek.Friday.ToString());
+            retVal.Add(DayOfWeek.Saturday.ToString());
+            
             return retVal;
         }
     }

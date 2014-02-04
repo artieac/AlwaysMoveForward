@@ -37,6 +37,13 @@
         $scope.pointEarnerCharts = getPointEarnerChartsRequest.get();
     }
 
+    $scope.addChart = function(){
+        $http.put('/api/pointearnerapi/DeleteChart', chartId)
+           .success(function (data) {
+               $scope.pointEarnerCharts = data;
+           });
+    }
+
     $scope.deleteChart = function (chartId) {
         $http.put('/api/pointearnerapi/DeleteChart', chartId)
            .success(function (data) {

@@ -14,22 +14,9 @@ using System.Linq;
 
 namespace AlwaysMoveForward.Common.Utilities
 {
-    public interface IPagedList<T> : IList<T>
-    {
-        int PageCount { get; }
-        int TotalItemCount { get; }
-        int PageIndex { get; }
-        int PageNumber { get; }
-        int PageSize { get; }
-        bool HasPreviousPage { get; }
-        bool HasNextPage { get; }
-        bool IsFirstPage { get; }
-        bool IsLastPage { get; }
-    }
-
     public class PagedList<T> : List<T>, IPagedList<T>
     {
-        int totalItemCount;
+        private int totalItemCount;
 
         public PagedList()
             : this(null, 0, 1)
@@ -61,8 +48,8 @@ namespace AlwaysMoveForward.Common.Utilities
         public int PageCount { get; private set; }
         public int TotalItemCount 
         {
-            get { return totalItemCount; }
-            set{ totalItemCount = value;}
+            get { return this.totalItemCount; }
+            set{ this.totalItemCount = value;}
         }
         public int PageIndex { get; private set; }
         public int PageNumber { get { return PageIndex + 1; } }
@@ -112,6 +99,7 @@ namespace AlwaysMoveForward.Common.Utilities
             {
                 PageCount = 0;
             }
+
             HasPreviousPage = (PageIndex > 0);
             HasNextPage = (PageIndex < (PageCount - 1));
             IsFirstPage = (PageIndex <= 0);
@@ -120,31 +108,8 @@ namespace AlwaysMoveForward.Common.Utilities
             //### add items to internal list
             if (TotalItemCount > 0)
             {
-                AddRange(source.Skip((index) * pageSize).Take(pageSize).ToList());
+                AddRange(source.Skip(index * pageSize).Take(pageSize).ToList());
             }
-        }
-    }
-
-    public static class Pagination
-    {
-        public static PagedList<T> ToPagedList<T>(this IList<T> source)
-        {
-            return new PagedList<T>(source, 0, AlwaysMoveForward.Common.Utilities.Constants.PageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source)
-        {
-            return new PagedList<T>(source, 0, AlwaysMoveForward.Common.Utilities.Constants.PageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index, int pageSize)
-        {
-            return new PagedList<T>(source, index, pageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int index, int pageSize)
-        {
-            return new PagedList<T>(source, index, pageSize);
         }
     }
 }

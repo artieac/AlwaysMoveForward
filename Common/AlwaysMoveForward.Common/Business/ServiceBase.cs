@@ -16,15 +16,29 @@ using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business
 {
+    /// <summary>
+    /// A base class for Services
+    /// </summary>
+    /// <typeparam name="ServiceManagerType"></typeparam>
     public class ServiceBase<ServiceManagerType> where ServiceManagerType : class, new()
     {
-        public ServiceBase(ServiceManagerType _serviceManager, IRepositoryManager repositoryManager)
+        /// <summary>
+        /// Initializes the service
+        /// </summary>
+        /// <param name="_serviceManager"></param>
+        /// <param name="repositoryManager"></param>
+        public ServiceBase(ServiceManagerType serviceManager, IRepositoryManager repositoryManager)
         {
-            this.Services = _serviceManager;
+            this.Services = serviceManager;
             this.Repositories = repositoryManager;
         }
-
+        /// <summary>
+        /// Gets and sets the Service Manager
+        /// </summary>
         public ServiceManagerType Services { get; set; }
+        /// <summary>
+        /// Gets and sets the Repository Manager
+        /// </summary>
         public IRepositoryManager Repositories { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.Common.DomainModel.Poll
         }
 
         public int Id { get; set; }
-        public String OptionText { get; set; }
+        public string OptionText { get; set; }
         public IList<VoterAddress> VoterAddresses { get; set; }
     }
 }

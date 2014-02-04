@@ -22,8 +22,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
     public class BlogPost
     {
-        public static int MaxShortEntryLength = 1000;
-        public static DateTime StartDate = new DateTime(2009, 1, 1);
+        public const int MaxShortEntryLength = 1000;
+        public static readonly DateTime StartDate = new DateTime(2009, 1, 1);
 
         public BlogPost()
         {
@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
                 if (retVal.Length > BlogPost.MaxShortEntryLength)
                 {
-                    retVal = retVal.Substring(0, MaxShortEntryLength);
+                    retVal = retVal.Substring(0, BlogPost.MaxShortEntryLength);
                 }
 
                 return retVal;

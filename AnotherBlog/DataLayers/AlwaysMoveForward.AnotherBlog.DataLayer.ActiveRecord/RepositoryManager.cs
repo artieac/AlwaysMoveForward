@@ -41,157 +41,157 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public IUnitOfWork UnitOfWork { get; private set; }
 
-        IBlogEntryRepository blogEntryRepository;
+        private IBlogEntryRepository blogEntryRepository;
         public IBlogEntryRepository BlogEntries
         {
             get
             {
-                if (blogEntryRepository == null)
+                if (this.blogEntryRepository == null)
                 {
-                    blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this.Tags);
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this.Tags);
                 }
 
-                return blogEntryRepository;
+                return this.blogEntryRepository;
             }
         }
 
-        IBlogRepository blogRepository;
+        private IBlogRepository blogRepository;
         public IBlogRepository Blogs
         {
             get
             {
-                if (blogRepository == null)
+                if (this.blogRepository == null)
                 {
-                    blogRepository = new BlogRepository(this.UnitOfWork);
+                    this.blogRepository = new BlogRepository(this.UnitOfWork);
                 }
 
-                return blogRepository;
+                return this.blogRepository;
             }
         }
 
-        IBlogUserRepository blogUserRepositry;
+        private IBlogUserRepository blogUserRepositry;
         public IBlogUserRepository BlogUsers
         {
             get
             {
-                if (blogUserRepositry == null)
+                if (this.blogUserRepositry == null)
                 {
-                    blogUserRepositry = new BlogUserRepository(this.UnitOfWork);
+                    this.blogUserRepositry = new BlogUserRepository(this.UnitOfWork);
                 }
 
-                return blogUserRepositry;
+                return this.blogUserRepositry;
             }
         }
 
-        IDbInfoRepository dbInfoRepository;
+        private IDbInfoRepository databaseInfoRepository;
         public IDbInfoRepository DbInfo
         {
             get
             {
-                if (dbInfoRepository == null)
+                if (this.databaseInfoRepository == null)
                 {
-                    dbInfoRepository = new DbInfoRepository(this.UnitOfWork);
+                    this.databaseInfoRepository = new DbInfoRepository(this.UnitOfWork);
                 }
 
-                return dbInfoRepository;
+                return this.databaseInfoRepository;
             }
         }
 
-        IRoleRepository roleRepository;
+        private IRoleRepository roleRepository;
         public IRoleRepository Roles
         {
             get
             {
-                if (roleRepository == null)
+                if (this.roleRepository == null)
                 {
-                    roleRepository = new RoleRepository(this.UnitOfWork);
+                    this.roleRepository = new RoleRepository(this.UnitOfWork);
                 }
 
-                return roleRepository;
+                return this.roleRepository;
             }
         }
 
-        ISiteInfoRepository siteInfoRepository;
+        private ISiteInfoRepository siteInfoRepository;
         public ISiteInfoRepository SiteInfo
         {
             get
             {
-                if (siteInfoRepository == null)
+                if (this.siteInfoRepository == null)
                 {
-                    siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
                 }
 
-                return siteInfoRepository;
+                return this.siteInfoRepository;
             }
         }
 
-        ITagRepository tagRepository;
+        private ITagRepository tagRepository;
         public ITagRepository Tags
         {
             get
             {
-                if (tagRepository == null)
+                if (this.tagRepository == null)
                 {
-                    tagRepository = new TagRepository(this.UnitOfWork);
+                    this.tagRepository = new TagRepository(this.UnitOfWork);
                 }
 
-                return tagRepository;
+                return this.tagRepository;
             }
         }
 
-        IUserRepository userRepository;
+        private IUserRepository userRepository;
         public IUserRepository Users
         {
             get
             {
-                if (userRepository == null)
+                if (this.userRepository == null)
                 {
-                    userRepository = new UserRepository(this.UnitOfWork);
+                    this.userRepository = new UserRepository(this.UnitOfWork);
                 }
 
-                return userRepository;
+                return this.userRepository;
             }
         }
 
-        IBlogListRepository blogListRepository;
+        private IBlogListRepository blogListRepository;
         public IBlogListRepository BlogLists
         {
             get
             {
-                if (blogListRepository == null)
+                if (this.blogListRepository == null)
                 {
-                    blogListRepository = new BlogListRepository(this.UnitOfWork);
+                    this.blogListRepository = new BlogListRepository(this.UnitOfWork);
                 }
 
-                return blogListRepository;
+                return this.blogListRepository;
             }
         }
 
-        ICommentRepository commentRepository;
+        private ICommentRepository commentRepository;
         public ICommentRepository CommentRepository
         {
             get
             {
-                if (commentRepository == null)
+                if (this.commentRepository == null)
                 {
-                    commentRepository = new CommentRepository(this.UnitOfWork);
+                    this.commentRepository = new CommentRepository(this.UnitOfWork);
                 }
 
-                return commentRepository;
+                return this.commentRepository;
             }
         }
 
-        IPollRepository pollRepository;
+        private IPollRepository pollRepository;
         public IPollRepository PollRepository
         {
             get
             {
-                if (pollRepository == null)
+                if (this.pollRepository == null)
                 {
-                    pollRepository = new PollRepository(this.UnitOfWork);
+                    this.pollRepository = new PollRepository(this.UnitOfWork);
                 }
 
-                return pollRepository;
+                return this.pollRepository;
             }
         }
     }

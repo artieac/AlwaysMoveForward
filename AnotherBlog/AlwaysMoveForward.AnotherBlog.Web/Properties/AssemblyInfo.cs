@@ -9,9 +9,9 @@ using System.Security;
 [assembly: AssemblyTitle("AlwaysMoveForward.AnotherBlog.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("AlwaysMoveForward")]
 [assembly: AssemblyProduct("AlwaysMoveForward.AnotherBlog.Web")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
+[assembly: AssemblyCopyright("Copyright © AlwaysMoveForward 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

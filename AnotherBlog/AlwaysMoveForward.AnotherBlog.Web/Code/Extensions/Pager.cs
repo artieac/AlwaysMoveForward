@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
         public string RenderHtml()
         {
             int pageCount = (int)Math.Ceiling(this.totalItemCount / (double)this.pageSize);
-            int nrOfPagesToDisplay = 10;
+            int numberOfPagesToDisplay = 10;
 
             var sb = new StringBuilder();
 
@@ -52,21 +52,21 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
             int start = 1;
             int end = pageCount;
 
-            if (pageCount > nrOfPagesToDisplay)
+            if (pageCount > numberOfPagesToDisplay)
             {
-                int middle = (int)Math.Ceiling(nrOfPagesToDisplay / 2d) - 1;
-                int below = (this.currentPage - middle);
-                int above = (this.currentPage + middle);
+                int middle = (int)Math.Ceiling(numberOfPagesToDisplay / 2d) - 1;
+                int below = this.currentPage - middle;
+                int above = this.currentPage + middle;
 
                 if (below < 4)
                 {
-                    above = nrOfPagesToDisplay;
+                    above = numberOfPagesToDisplay;
                     below = 1;
                 }
                 else if (above > (pageCount - 4))
                 {
                     above = pageCount;
-                    below = (pageCount - nrOfPagesToDisplay);
+                    below = pageCount - numberOfPagesToDisplay;
                 }
 
                 start = below;
@@ -100,7 +100,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
             // Next
             if (this.currentPage < pageCount)
             {
-                sb.Append(GeneratePageLink("&gt;", (this.currentPage + 1)));
+                sb.Append(GeneratePageLink("&gt;", this.currentPage + 1));
             }
             else
             {

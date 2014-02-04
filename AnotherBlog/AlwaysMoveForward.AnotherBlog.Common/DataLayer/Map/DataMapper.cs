@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Map
 {
     public class DataMapper<DomainClass, DTOClass, CommonInterface> where DomainClass : class, CommonInterface, new() where DTOClass : class, CommonInterface, new()
     {
-        static DataMapper<DomainClass, DTOClass, CommonInterface> mapperInstance;
+        private static DataMapper<DomainClass, DTOClass, CommonInterface> mapperInstance;
 
         public static DataMapper<DomainClass, DTOClass, CommonInterface> GetInstance()
         {

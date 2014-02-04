@@ -5,11 +5,14 @@ using System.Text;
 
 namespace AlwaysMoveForward.PointChart.Common.DomainModel
 {
-    public class RoleType
+    /// <summary>
+    /// The types of roles
+    /// </summary>
+    public enum RoleType
     {
-        public static String SiteAdministrator = "SiteAdministrator";
-        public static String Administrator = "Administrator";
-        public static String ChartAdministrator = "ChartAdministrator";
-        public static String ChartFiller = "ChartFiller";
+        SiteAdministrator,
+        Administrator,
+        ChartAdministrator,
+        PointEarner
     }
 }

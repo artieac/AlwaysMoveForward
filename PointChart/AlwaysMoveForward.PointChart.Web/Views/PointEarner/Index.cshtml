@@ -1,5 +1,4 @@
-﻿@using AMF = AlwaysMoveForward.PointChart.Common.DomainModel;
-@{
+﻿@{
     ViewBag.Title = "Point Earners";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -24,7 +23,7 @@
         <tbody>
         <tbody ng-init="getAllPointEarners();">
             <tr ng-repeat="pointEarner in pointEarners" ng-class-even="tableRow1" ng-class-odd="tablerow2">
-                <td><input type="text" name="firstName" value="{{ pointEarner.FirstName }}" ng-model="pointEarner.FirstName" ng-blur="updatePointEarner(pointEarner)"/></td>
+                <td><input type="text" name="firstName" value="{{ pointEarner.FirstName }}" ng-model="pointEarner.FirstName" ng-blur="updatePointEarner(pointEarner)" /></td>
                 <td><input type="text" name="lastName" value="{{ pointEarner.LastName }}" ng-model="pointEarner.LastName" ng-blur="updatePointEarner(pointEarner)" /></td>
                 <td><input type="text" name="email" value="{{ pointEarner.Email }}" ng-model="pointEarner.Email" ng-blur="updatePointEarner(pointEarner)" /></td>
                 <td>{{ pointEarner.PointsEarned }}</td>

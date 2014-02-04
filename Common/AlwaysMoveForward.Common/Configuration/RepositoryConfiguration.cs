@@ -18,11 +18,11 @@ namespace AlwaysMoveForward.Common.Configuration
 {
     public class RepositoryConfiguration : ConfigurationSection 
     {
-        public const string k_ManagerClass = "ManagerClass";
-        public const string k_ManagerAssembly = "ManagerAssembly";
-        public const string k_UnitOfWorkClass = "UnitOfWorkClass";
+        public const string ManagerClassSetting = "ManagerClass";
+        public const string ManagerAssemblySetting = "ManagerAssembly";
+        public const string UnitOfWorkClassSetting = "UnitOfWorkClass";
 
-        public const String k_DefaultConfiguration = "AlwaysMoveForward/RepositoryConfiguration";
+        public const String DefaultConfiguration = "AlwaysMoveForward/RepositoryConfiguration";
 
         public RepositoryConfiguration() { }
         public RepositoryConfiguration(string managerClass, string managerAssembly, string unitOfWorkClass)
@@ -34,27 +34,27 @@ namespace AlwaysMoveForward.Common.Configuration
         /// <summary>
         /// Define the email address outgoing emails are tagged with.
         /// </summary>
-        [ConfigurationProperty(k_ManagerClass, IsRequired = true)]
+        [ConfigurationProperty(ManagerClassSetting, IsRequired = true)]
         public string ManagerClass
         {
-            get { return (string)this[k_ManagerClass]; }
-            set { this[k_ManagerClass] = value; }
+            get { return (string)this[ManagerClassSetting]; }
+            set { this[ManagerClassSetting] = value; }
         }
         /// <summary>
         /// Define the email server to use
         /// </summary>
-        [ConfigurationProperty(k_ManagerAssembly, IsRequired = true)]
+        [ConfigurationProperty(ManagerAssemblySetting, IsRequired = true)]
         public string ManagerAssembly
         {
-            get { return (string)this[k_ManagerAssembly]; }
-            set { this[k_ManagerAssembly] = value; }
+            get { return (string)this[ManagerAssemblySetting]; }
+            set { this[ManagerAssemblySetting] = value; }
         }
 
-        [ConfigurationProperty(k_UnitOfWorkClass, IsRequired = true)]
+        [ConfigurationProperty(UnitOfWorkClassSetting, IsRequired = true)]
         public string UnitOfWorkClass
         {
-            get { return (string)this[k_UnitOfWorkClass]; }
-            set { this[k_UnitOfWorkClass] = value; }
+            get { return (string)this[UnitOfWorkClassSetting]; }
+            set { this[UnitOfWorkClassSetting] = value; }
         }
     }
 }

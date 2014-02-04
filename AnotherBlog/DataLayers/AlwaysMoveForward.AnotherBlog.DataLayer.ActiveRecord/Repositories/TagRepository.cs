@@ -74,7 +74,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             }
             
             query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(TagCount)));
-            return (ActiveRecordMediator.ExecuteQuery(query) as ArrayList);
+            return ActiveRecordMediator.ExecuteQuery(query) as ArrayList;
         }
         /// <summary>
         /// Get a specific tag.

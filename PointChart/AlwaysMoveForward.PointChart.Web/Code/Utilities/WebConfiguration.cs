@@ -18,10 +18,10 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 {
     public class WebSiteConfiguration : ConfigurationSection
     {
-        public const string k_UpdateDatabase = "UpdateDb";
-        public const string k_EnableSSL = "EnableSSL";
-        public const string k_DefaultSiteName = "DefaultSiteName";
-        public const String k_DefaultConfiguration = "PointChart/WebSiteConfiguration";
+        public const string UpdateDatabaseSetting = "UpdateDb";
+        public const string EnableSSLSetting = "EnableSSL";
+        public const string DefaultSiteNameSetting = "DefaultSiteName";
+        public const String DefaultConfiguration = "PointChart/WebSiteConfiguration";
 
         public WebSiteConfiguration() { }
         public WebSiteConfiguration(bool updateDb)
@@ -34,25 +34,25 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             return false;
         }
 
-        [ConfigurationProperty(k_UpdateDatabase, IsRequired = true)]
+        [ConfigurationProperty(WebSiteConfiguration.UpdateDatabaseSetting, IsRequired = true)]
         public bool UpdateDb
         {
-            get { return (bool)this[k_UpdateDatabase]; }
-            set { this[k_UpdateDatabase] = value; }
+            get { return (bool)this[WebSiteConfiguration.UpdateDatabaseSetting]; }
+            set { this[WebSiteConfiguration.UpdateDatabaseSetting] = value; }
         }
 
-        [ConfigurationProperty(k_EnableSSL, IsRequired = true)]
+        [ConfigurationProperty(WebSiteConfiguration.EnableSSLSetting, IsRequired = true)]
         public bool EnableSSL
         {
-            get { return (bool)this[k_EnableSSL]; }
-            set { this[k_EnableSSL] = value; }
+            get { return (bool)this[WebSiteConfiguration.EnableSSLSetting]; }
+            set { this[WebSiteConfiguration.EnableSSLSetting] = value; }
         }
 
-        [ConfigurationProperty(k_DefaultSiteName, IsRequired = true)]
-        public String DefaultSiteName
+        [ConfigurationProperty(WebSiteConfiguration.DefaultSiteNameSetting, IsRequired = true)]
+        public string DefaultSiteName
         {
-            get { return (String)this[k_DefaultSiteName]; }
-            set { this[k_DefaultSiteName] = value; }
+            get { return (string)this[WebSiteConfiguration.DefaultSiteNameSetting]; }
+            set { this[WebSiteConfiguration.DefaultSiteNameSetting] = value; }
         }
     }
 }

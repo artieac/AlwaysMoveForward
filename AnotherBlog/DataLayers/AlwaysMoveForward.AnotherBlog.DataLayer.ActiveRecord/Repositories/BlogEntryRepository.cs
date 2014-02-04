@@ -338,9 +338,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             {
                 query.SetParameter("targetBlog", blogId.Value);
             }
+
             query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(BlogPostCount)));
             new ArrayList().Add("testing");
-            return (ActiveRecordMediator.ExecuteQuery(query) as ArrayList);
+            return ActiveRecordMediator.ExecuteQuery(query) as ArrayList;
         }
 
         public override BlogPost Save(BlogPost itemToSave)

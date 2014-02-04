@@ -14,10 +14,10 @@ namespace AlwaysMoveForward.Common.DomainModel.Poll
             this.Address = IPAddress.None;
         }
 
-        public VoterAddress(IPAddress ipAddress)
+        public VoterAddress(IPAddress address)
         {
             this.Id = -1;
-            this.Address = ipAddress;
+            this.Address = address;
         }
 
         public int Id { get; set; }

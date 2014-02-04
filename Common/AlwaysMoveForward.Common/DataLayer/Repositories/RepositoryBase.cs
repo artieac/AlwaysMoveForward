@@ -13,9 +13,9 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
         where DomainType  : class, new()
         where DTOType : class, new()
     {
-        public RepositoryBase(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager)
+        public RepositoryBase(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
         {
-            this.UnitOfWork = _unitOfWork;
+            this.UnitOfWork = unitOfWork;
             this.RepositoryManager = repositoryManager;
         }
 

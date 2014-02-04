@@ -31,7 +31,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Encrypt(byte[] plainData, bool fOAEP,
+        public byte[] Encrypt(byte[] plainData, bool useOAEPPadding,
                                      X509Certificate2 certificate)
         {
             if (plainData == null)
@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.Common.Encryption
                 // Note that we use the public key to encrypt
                 provider.FromXmlString(GetPublicKey(certificate));
 
-                return provider.Encrypt(plainData, fOAEP);
+                return provider.Encrypt(plainData, useOAEPPadding);
             }
         }
 
@@ -72,7 +72,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Decrypt(byte[] encryptedData, bool fOAEP,
+        public byte[] Decrypt(byte[] encryptedData, bool useOEAPPadding,
                                      X509Certificate2 certificate)
         {
             if (encryptedData == null)
@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.Common.Encryption
                 // Note that we use the private key to decrypt
                 provider.FromXmlString(GetXmlKeyPair(certificate));
 
-                return provider.Decrypt(encryptedData, fOAEP);
+                return provider.Decrypt(encryptedData, useOEAPPadding);
             }
         }
 

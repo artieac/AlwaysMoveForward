@@ -50,15 +50,15 @@ namespace AlwaysMoveForward.Common.Encryption
                     ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
                     // Create the streams used for encryption.
-                    MemoryStream msEncrypt = new MemoryStream();
+                    MemoryStream encryptionStream = new MemoryStream();
 
-                    using (StreamWriter swEncrypt = new StreamWriter(new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write)))
+                    using (StreamWriter streamWriter = new StreamWriter(new CryptoStream(encryptionStream, encryptor, CryptoStreamMode.Write)))
                     {
                         //Write all data to the stream.
-                        swEncrypt.Write(plainText);
+                        streamWriter.Write(plainText);
                     }
 
-                    retVal = Convert.ToBase64String(msEncrypt.ToArray());
+                    retVal = Convert.ToBase64String(encryptionStream.ToArray());
                 }
                 finally
                 {
@@ -103,12 +103,12 @@ namespace AlwaysMoveForward.Common.Encryption
                     ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
                     // Create the streams used for encryption.
-                    MemoryStream msDecrypt = new MemoryStream(encryptedTextBytes);
+                    MemoryStream decryptedStream = new MemoryStream(encryptedTextBytes);
 
-                    using (StreamReader srDecrypt = new StreamReader(new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read)))
+                    using (StreamReader streamReader = new StreamReader(new CryptoStream(decryptedStream, decryptor, CryptoStreamMode.Read)))
                     {
                         //Write all data to the stream.
-                        retVal = srDecrypt.ReadToEnd();
+                        retVal = streamReader.ReadToEnd();
                     }
                 }
                 catch (Exception e)

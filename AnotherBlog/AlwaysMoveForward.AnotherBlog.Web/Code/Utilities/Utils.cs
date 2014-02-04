@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
         {
             string retVal = "";
 
-            if (MvcApplication.siteConfig.EnableSSL == true)
+            if (MvcApplication.WebSiteConfiguration.EnableSSL == true)
             {
                 retVal = "http://" + siteAuthority;
 

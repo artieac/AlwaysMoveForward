@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 {
     public class PageManager
     {
-        static IDictionary<int, Role> systemRoles = null;
+        private static IDictionary<int, Role> systemRoles = null;
 
         public static IDictionary<int, Role> Roles
         {

@@ -21,19 +21,28 @@ namespace AlwaysMoveForward.AnotherBlog.Web
     public class MvcApplication : System.Web.HttpApplication
     {
         private static SiteInfo siteInfo;
-        public static WebSiteConfiguration siteConfig;
-        public static EmailConfiguration emailConfig;
-        public static DbInfo dbInfo;
+        private static WebSiteConfiguration siteConfig;
+        private static EmailConfiguration emailConfig;
 
         static MvcApplication()
         {
-             MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/WebSiteConfiguration");
+            MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/WebSiteConfiguration");
             MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/EmailConfiguration");
         }
 
         public static String Version
         {
             get { return "1.2.0"; }
+        }
+
+        public static WebSiteConfiguration WebSiteConfiguration
+        {
+            get { return MvcApplication.siteConfig; }
+        }
+
+        public static EmailConfiguration EmailConfiguration
+        {
+            get { return MvcApplication.emailConfig; }
         }
 
         public static SiteInfo SiteInfo

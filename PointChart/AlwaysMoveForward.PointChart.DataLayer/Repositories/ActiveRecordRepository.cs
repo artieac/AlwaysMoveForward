@@ -30,8 +30,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         where DomainType : class, new()
         where DTOType : class, new()
     {
-        public ActiveRecordRepository(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager) :
-            base(_unitOfWork, repositoryManager)
+        public ActiveRecordRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager) :
+            base(unitOfWork, repositoryManager)
         {
         }
 

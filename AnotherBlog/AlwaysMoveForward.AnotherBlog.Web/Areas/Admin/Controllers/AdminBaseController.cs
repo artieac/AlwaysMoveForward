@@ -15,7 +15,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     {
         public AdminCommon InitializeCommonModel()
         {
-            return this.InitializeCommonModel("");
+            return this.InitializeCommonModel(string.Empty);
         }
 
         public AdminCommon InitializeCommonModel(string targetBlog)

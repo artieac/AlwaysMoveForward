@@ -18,7 +18,7 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class Utils
     {
-        const string HTML_TAG_PATTERN = "<.*?>";
+        private const string HtmlTagPattern = "<.*?>";
         /// <summary>
         /// Clean all HTML tags out of the given string
         /// </summary>
@@ -49,7 +49,7 @@ namespace AlwaysMoveForward.Common.Utilities
             if (scriptStart > -1)
             {
                 int scriptEnd = retVal.IndexOf("</script>");
-                retVal.Remove(scriptStart, ((scriptEnd + 9) - scriptStart));
+                retVal.Remove(scriptStart, (scriptEnd + 9) - scriptStart);
             }
 
             return retVal;

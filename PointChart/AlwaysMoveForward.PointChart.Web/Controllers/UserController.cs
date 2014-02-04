@@ -50,8 +50,8 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, "");
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
-                HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
-                this.HttpContext.Response.Cookies.Add(faCookie);
+                HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                this.HttpContext.Response.Cookies.Add(authenticationCookie);
 
                 this.CurrentPrincipal = currentPrincipal;
             }
@@ -204,7 +204,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult ForgotPassword(string userEmail)
         {
             UserModel model = new UserModel();
-            Services.UserService.SendPassword(userEmail, MvcApplication.emailConfig);
+            Services.UserService.SendPassword(userEmail, MvcApplication.EmailConfiguration);
             return View("UserLogin", model);
         }
     }

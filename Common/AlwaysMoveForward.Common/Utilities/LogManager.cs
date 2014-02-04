@@ -9,14 +9,14 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class LogManager
     {
-        private static LoggerBase _currentLogger;
+        private static LoggerBase currentLogger;
 
         public static LoggerBase GetLogger()
         {
-            _currentLogger = null;
+            LogManager.currentLogger = null;
 
             //Get Logger configuration from Config file
-            LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.k_DefaultConfigurationSetting);
+            LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.DefaultConfigurationSetting);
 
             if (logConfig != null)
             {
@@ -24,17 +24,17 @@ namespace AlwaysMoveForward.Common.Utilities
                     !String.IsNullOrEmpty(logConfig.LoggingAssembly))
                 {
                     //Create Logger instance of specified Logger class
-                    _currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
+                    LogManager.currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
                 }
             }
 
             //If null create deafult logger
-            if (_currentLogger == null)
+            if (LogManager.currentLogger == null)
             {
-                _currentLogger = new DefaultLogger();
+                LogManager.currentLogger = new DefaultLogger();
             }
 
-            return _currentLogger;
+            return LogManager.currentLogger;
         }
     }
 }

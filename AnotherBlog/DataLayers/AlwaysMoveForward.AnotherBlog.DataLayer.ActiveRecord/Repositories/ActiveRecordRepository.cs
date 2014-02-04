@@ -36,8 +36,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         where DomainType : class, new()
         where DTOType : class, new()
     {
-        public ActiveRecordRepository(IUnitOfWork _unitOfWork) :
-            base(_unitOfWork, null)
+        public ActiveRecordRepository(IUnitOfWork unitOfWork) :
+            base(unitOfWork, null)
         {
         }
 

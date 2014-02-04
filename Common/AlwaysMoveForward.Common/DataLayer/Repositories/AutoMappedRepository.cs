@@ -7,8 +7,8 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
     public abstract class AutoMappedRepository<DomainType, DTOType> : RepositoryBase<DomainType, DTOType> where DomainType : class, new() where DTOType : class, new()
     {
-        public AutoMappedRepository(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager)
-            : base(_unitOfWork, repositoryManager)
+        public AutoMappedRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
+            : base(unitOfWork, repositoryManager)
         {
         }
 

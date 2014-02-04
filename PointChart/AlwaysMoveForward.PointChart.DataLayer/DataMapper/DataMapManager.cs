@@ -12,16 +12,16 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
             AutoMapperConfiguration.Configure();
         }
 
-        private static DataMapManager _dataMapManager = null;
+        private static DataMapManager dataMapManager = null;
 
         public static DataMapManager Mappers()
         {
-            if(_dataMapManager==null)
+            if (DataMapManager.dataMapManager == null)
             {
-                _dataMapManager = new DataMapManager();
+                DataMapManager.dataMapManager = new DataMapManager();
             }
 
-            return _dataMapManager;
+            return DataMapManager.dataMapManager;
         }
 
         private ChartDataMap chartDataMap = null;

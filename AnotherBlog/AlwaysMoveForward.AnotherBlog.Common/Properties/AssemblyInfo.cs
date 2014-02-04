@@ -6,11 +6,11 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AnotherBlog.Common")]
+[assembly: AssemblyTitle("AlwaysMoveForward.AnotherBlog.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("AlwaysMoveForward")]
-[assembly: AssemblyProduct("AnotherBlog.Common")]
+[assembly: AssemblyProduct("AlwaysMoveForward.AnotherBlog.Common")]
 [assembly: AssemblyCopyright("Copyright © AlwaysMoveForward 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

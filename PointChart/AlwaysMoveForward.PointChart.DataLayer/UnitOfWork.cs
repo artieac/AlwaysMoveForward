@@ -24,8 +24,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
             NHibernate.Cfg.Environment.UseReflectionOptimizer = false;
         }
 
-        SessionScope sessionScope;
-        TransactionScope transactionScope;
+        private TransactionScope transactionScope;
 
         #region IUnitOfWork Members
 
@@ -36,8 +35,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer
 
         public IDisposable BeginTransaction(IsolationLevel isolationLevel)
         {
-            transactionScope = new TransactionScope(TransactionMode.Inherits, isolationLevel, OnDispose.Commit);
-            return transactionScope;
+            this.transactionScope = new TransactionScope(TransactionMode.Inherits, isolationLevel, OnDispose.Commit);
+            return this.transactionScope;
         }
 
         public void EndTransaction(bool canCommit)

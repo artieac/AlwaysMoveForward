@@ -13,8 +13,11 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 {
     public static class FileExtension
     {
-        public static String FileType_Excel = "Excel";
-        public static String FileType_CSV = "CSV";
+        public enum FileType
+        {
+            Excel,
+            CSV
+        }
 
         public static ActionResult Excel(this Controller controller, IList<IList<String>> headerPrefix, IList<string> headers, IList<Dictionary<string, string>> rows, string fileName)
         {

@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
     public class UserManagementController : AdminBaseController
     {
-        static int UserPageSize = 25;
+        private const int UserPageSize = 25;
 
         public ActionResult Index(int? page)
         {

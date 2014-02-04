@@ -13,8 +13,8 @@ namespace AlwaysMoveForward.Common.DomainModel.Poll
         }
 
         public int Id { get; set; }
-        public String Title { get; set; }
-        public String QuestionText { get; set; }
+        public string Title { get; set; }
+        public string QuestionText { get; set; }
         public IList<PollOption> Options { get; set; }
     }
 }

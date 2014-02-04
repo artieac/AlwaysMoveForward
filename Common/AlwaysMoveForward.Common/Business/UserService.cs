@@ -26,8 +26,8 @@ namespace AlwaysMoveForward.Common.Business
 {
     public class UserService
     {
-        private static String GuestUserName = "guest";
-        private static User GuestUser = null;
+        private const String GuestUserName = "guest";
+        private static User guestUser = null;
 
         public UserService(ServiceContext serviceContext)
         {
@@ -70,12 +70,12 @@ namespace AlwaysMoveForward.Common.Business
 
         public User GetDefaultUser()
         {
-            if (UserService.GuestUser == null)
+            if (UserService.guestUser == null)
             {
-                UserService.GuestUser = Repositories.Users.GetByUserName(UserService.GuestUserName);
+                UserService.guestUser = Repositories.Users.GetByUserName(UserService.GuestUserName);
             }
 
-            return UserService.GuestUser;
+            return UserService.guestUser;
         }
 
         public User Login(string userName, string password)

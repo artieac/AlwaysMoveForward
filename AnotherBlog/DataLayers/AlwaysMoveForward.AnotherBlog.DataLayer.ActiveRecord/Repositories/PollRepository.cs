@@ -34,10 +34,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class PollRepository: ActiveRecordRepository<PollQuestion, PollQuestionDTO>, IPollRepository
     {
-        static PollRepository()
-        {
-        }
-
         public PollRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {

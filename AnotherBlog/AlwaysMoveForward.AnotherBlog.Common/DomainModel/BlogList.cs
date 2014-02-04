@@ -17,7 +17,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public virtual int Id { get; set; }
         public virtual Blog Blog { get; set; }
         public virtual string Name{ get; set;}
-        public virtual Boolean ShowOrdered { get; set; }
+        public virtual bool ShowOrdered { get; set; }
         public virtual IList<BlogListItem> Items { get; set; }
 
         public bool RemoveListItem(int listItemId)

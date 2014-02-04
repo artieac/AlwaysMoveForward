@@ -31,45 +31,45 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         public IPointChartRepositoryManager PointChartRepositoryManager { get; set; }
 
-        ChartService chartService;
+        private ChartService chartService;
         public ChartService Charts
         {
             get 
             {
-                if (chartService == null)
+                if (this.chartService == null)
                 {
-                    chartService = new ChartService(this, this.PointChartRepositoryManager);
+                    this.chartService = new ChartService(this, this.PointChartRepositoryManager);
                 }
 
-                return chartService;
+                return this.chartService;
             }
         }
 
-        TaskService taskService;
+        private TaskService taskService;
         public TaskService Tasks
         {
             get
             {
-                if (taskService == null)
+                if (this.taskService == null)
                 {
-                    taskService = new TaskService(this, this.PointChartRepositoryManager);
+                    this.taskService = new TaskService(this, this.PointChartRepositoryManager);
                 }
 
-                return taskService;
+                return this.taskService;
             }
         }
 
-        PointEarnerService pointEarnerService;
+        private PointEarnerService pointEarnerService;
         public PointEarnerService PointEarner
         {
             get
             {
-                if (pointEarnerService == null)
+                if (this.pointEarnerService == null)
                 {
-                    pointEarnerService = new PointEarnerService(this, this.PointChartRepositoryManager);
+                    this.pointEarnerService = new PointEarnerService(this, this.PointChartRepositoryManager);
                 }
 
-                return pointEarnerService;
+                return this.pointEarnerService;
             }
         }
     }

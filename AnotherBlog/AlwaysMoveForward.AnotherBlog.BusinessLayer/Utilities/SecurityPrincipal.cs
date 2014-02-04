@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
     {
-        static IDictionary<int, Role> systemRoles = null;
+        private static IDictionary<int, Role> systemRoles = null;
 
         public static IDictionary<int, Role> Roles
         {
@@ -45,23 +45,18 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             }
         }
 
-        bool isAuthenticated = false;
-        User currentUser;
-        ServiceManager serviceManager = null;
-        static Dictionary<int, Role> userRoles;
+        private ServiceManager serviceManager = null;
+        private static Dictionary<int, Role> userRoles;
 
-        public SecurityPrincipal(User _currentUser) : this(_currentUser, false){}
+        public SecurityPrincipal(User currentUser) : this(currentUser, false){}
 
-        public SecurityPrincipal(User _currentUser, bool _isAuthenticated)
+        public SecurityPrincipal(User currentUser, bool isAuthenticated)
         {
-            isAuthenticated = _isAuthenticated;
-            currentUser = _currentUser;
+            this.IsAuthenticated = isAuthenticated;
+            this.CurrentUser = currentUser;
         }
 
-        public User CurrentUser
-        {
-            get { return this.currentUser; }
-        }
+        public User CurrentUser { get; private set; }
 
         private ServiceManager ServiceManager
         {
@@ -100,11 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
         /// </summary>
         #region IIdentity
 
-        public bool IsAuthenticated
-        {
-            get { return this.isAuthenticated; }
-            set { this.isAuthenticated = value; }
-        }
+        public bool IsAuthenticated { get; set; }
 
         public string AuthenticationType
         {
@@ -117,8 +108,10 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             {
                 string retVal = "";
                 
-                if(this.currentUser!=null)
-                    retVal = this.currentUser.UserName;
+                if(this.CurrentUser!=null)
+                {
+                    retVal = this.CurrentUser.UserName;
+                }
 
                 return retVal;
             }
@@ -145,16 +138,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
         {
             bool retVal = false;
 
-            if (this.currentUser != null)
+            if (this.CurrentUser != null)
             {
                 if (targetRole == RoleType.SiteAdministrator)
                 {
-                    retVal = this.currentUser.IsSiteAdministrator;
+                    retVal = this.CurrentUser.IsSiteAdministrator;
                 }
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.currentUser.UserId);
+                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
 
                     if (userBlogs != null)
                     {
@@ -185,11 +178,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
         {
             bool retVal = false;
 
-            if (this.currentUser != null)
+            if (this.CurrentUser != null)
             {
                 if (targetRole.Contains(RoleType.SiteAdministrator))
                 {
-                    if (this.currentUser.IsSiteAdministrator)
+                    if (this.CurrentUser.IsSiteAdministrator)
                     {
                         retVal = true;
                     }
@@ -197,7 +190,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.currentUser.UserId);
+                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
 
                     if (userBlogs != null)
                     {
@@ -229,13 +222,13 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
         {
             bool retVal = false;
 
-            if (this.currentUser != null)
+            if (this.CurrentUser != null)
             {
                 if (targetRole != null)
                 {
                     if (targetRole.Contains(RoleType.SiteAdministrator))
                     {
-                        if (this.currentUser.IsSiteAdministrator)
+                        if (this.CurrentUser.IsSiteAdministrator)
                         {
                             retVal = true;
                         }
@@ -246,7 +239,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 {
                     if (targetBlog != null)
                     {
-                        IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.currentUser.UserId);
+                        IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
 
                         if (userBlogs != null)
                         {

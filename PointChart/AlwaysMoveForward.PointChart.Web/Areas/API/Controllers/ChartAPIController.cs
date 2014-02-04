@@ -22,6 +22,14 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
             return Json(userCharts, JsonRequestBehavior.AllowGet);
         }
 
+        [RequestAuthorizationAttribute]
+        public JsonResult GetAll()
+        {
+            IList<PointEarner> pointEarnerCharts = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
+            return Json(pointEarnerCharts, JsonRequestBehavior.AllowGet);
+        }
+
+
         //
         // GET: /API/ChartAPI/
         [RequestAuthorizationAttribute]

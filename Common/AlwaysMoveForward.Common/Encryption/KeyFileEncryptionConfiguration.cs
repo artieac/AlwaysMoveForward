@@ -8,16 +8,16 @@ namespace AlwaysMoveForward.Common.Encryption
 {
     public class KeyFileEncryptionConfiguration : ConfigurationSection
     {
-        public const string k_DefaultSection = "Vistaprint/Digital/KeyFileEncryptionConfiguration";
+        public const string DefaultSection = "Vistaprint/Digital/KeyFileEncryptionConfiguration";
 
-        public const string k_EncryptionKeyFile = "KeyFile";
-        public const string k_KeyFilePassword = "KeyFilePassword";
+        public const string EncryptionKeyFileSetting = "KeyFile";
+        public const string KeyFilePasswordSetting = "KeyFilePassword";
 
-        static KeyFileEncryptionConfiguration configurationInstance;
+        private static KeyFileEncryptionConfiguration configurationInstance;
 
         public static KeyFileEncryptionConfiguration GetInstance()
         {
-            return KeyFileEncryptionConfiguration.GetInstance(k_DefaultSection);
+            return KeyFileEncryptionConfiguration.GetInstance(DefaultSection);
         }
 
         public static KeyFileEncryptionConfiguration GetInstance(String configurationSection)
@@ -34,20 +34,20 @@ namespace AlwaysMoveForward.Common.Encryption
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_EncryptionKeyFile, IsRequired = false)]
+        [ConfigurationProperty(EncryptionKeyFileSetting, IsRequired = false)]
         public string KeyFile
         {
-            get { return (string)this[k_EncryptionKeyFile]; }
-            set { this[k_EncryptionKeyFile] = value; }
+            get { return (string)this[EncryptionKeyFileSetting]; }
+            set { this[EncryptionKeyFileSetting] = value; }
         }
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_KeyFilePassword, IsRequired = false)]
+        [ConfigurationProperty(KeyFilePasswordSetting, IsRequired = false)]
         public string KeyFilePassword
         {
-            get { return (string)this[k_KeyFilePassword]; }
-            set { this[k_KeyFilePassword] = value; }
+            get { return (string)this[KeyFilePasswordSetting]; }
+            set { this[KeyFilePasswordSetting] = value; }
         }
     }
 }

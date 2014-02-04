@@ -12,16 +12,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             AutoMapperConfiguration.Configure();
         }
 
-        private static DataMapManager _dataMapManager = null;
+        private static DataMapManager dataMapManager = null;
 
         public static DataMapManager Mappers()
         {
-            if (_dataMapManager == null)
+            if (DataMapManager.dataMapManager == null)
             {
-                _dataMapManager = new DataMapManager();
+                DataMapManager.dataMapManager = new DataMapManager();
             }
 
-            return _dataMapManager;
+            return DataMapManager.dataMapManager;
         }
 
         private BlogDataMap blogDataMap = null;
@@ -71,12 +71,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (roleDataMap == null)
+                if (this.roleDataMap == null)
                 {
-                    roleDataMap = new RoleDataMap();
+                    this.roleDataMap = new RoleDataMap();
                 }
 
-                return roleDataMap;
+                return this.roleDataMap;
             }
         }
 
@@ -85,12 +85,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (userDataMap == null)
+                if (this.userDataMap == null)
                 {
-                    userDataMap = new UserDataMap();
+                    this.userDataMap = new UserDataMap();
                 }
 
-                return userDataMap;
+                return this.userDataMap;
             }
         }
 
@@ -99,12 +99,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (blogPostDataMap == null)
+                if (this.blogPostDataMap == null)
                 {
-                    blogPostDataMap = new BlogPostDataMap();
+                    this.blogPostDataMap = new BlogPostDataMap();
                 }
 
-                return blogPostDataMap;
+                return this.blogPostDataMap;
             }
         }
 
@@ -113,12 +113,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (commentDataMap == null)
+                if (this.commentDataMap == null)
                 {
-                    commentDataMap = new CommentDataMap();
+                    this.commentDataMap = new CommentDataMap();
                 }
 
-                return commentDataMap;
+                return this.commentDataMap;
             }
         }
 
@@ -127,12 +127,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (siteInfoDataMap == null)
+                if (this.siteInfoDataMap == null)
                 {
-                    siteInfoDataMap = new SiteInfoDataMap();
+                    this.siteInfoDataMap = new SiteInfoDataMap();
                 }
 
-                return siteInfoDataMap;
+                return this.siteInfoDataMap;
             }
         }
 
@@ -141,28 +141,27 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (tagDataMap == null)
+                if (this.tagDataMap == null)
                 {
-                    tagDataMap = new TagDataMap();
+                    this.tagDataMap = new TagDataMap();
                 }
 
-                return tagDataMap;
+                return this.tagDataMap;
             }
         }
 
-        private DbInfoMapper dbInfoMapper = null;
+        private DbInfoMapper databaseInfoMapper = null;
         public DbInfoMapper DbInfoMapper
         {
             get
             {
-                if (dbInfoMapper == null)
+                if (this.databaseInfoMapper == null)
                 {
-                    dbInfoMapper = new DbInfoMapper();
+                    this.databaseInfoMapper = new DbInfoMapper();
                 }
 
-                return dbInfoMapper;
+                return this.databaseInfoMapper;
             }
         }
-
     }
 }

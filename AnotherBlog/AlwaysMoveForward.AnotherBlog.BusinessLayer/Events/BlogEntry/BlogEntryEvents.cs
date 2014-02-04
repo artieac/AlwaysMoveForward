@@ -15,7 +15,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Events.BlogEntry
 {
-    class BlogEntryEvents
+    public class BlogEntryEvents
     {
     }
 }

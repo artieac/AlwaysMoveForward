@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     [RequestAuthenticationFilter]
     public class ManagePollsController : AdminBaseController
     {
-        static int PollPageSize = 25;
+        private const int PollPageSize = 25;
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
         public ActionResult Index(int? page)
