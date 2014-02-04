@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class BlogController : PublicController
     {
-        public CommonBlogModel InitializeCommonModel(String blogSubFolder)
+        public CommonBlogModel InitializeCommonModel(string blogSubFolder)
         {
             ViewBag.BlogSubFolder = blogSubFolder;
 
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.BlogWriters = new List<User>();
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Index(string blogSubFolder, string filterType, string filterValue, int? page)
@@ -102,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
             model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Month(string blogSubFolder, int yearFilter, int monthFilter, int? page)
@@ -137,7 +137,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
             model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         public ActionResult Day(string blogSubFolder, int yearFilter, int monthFilter, int dayFilter, int? page)
@@ -172,7 +172,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
             model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         public ActionResult Tag(string blogSubFolder, string targetTag, int? page)
@@ -204,7 +204,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
             model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         public JsonResult SaveComment(string blogSubFolder, string entryId, string authorName, string authorEmail, string commentText, string commentLink)
@@ -251,7 +251,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 }
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Post(string blogSubFolder, string year, string month, string day, string title)
@@ -293,7 +293,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.Comments = new PagedList<Comment>();
             }
 
-            return View(model);
+            return this.View(model);
         }
     }
 }

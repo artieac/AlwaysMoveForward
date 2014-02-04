@@ -157,7 +157,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             routes.MapRoute(
                 "BlogEntry",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}/{year}/{month}/{day}/{title}",                           // URL with parameters
-                new { blogSubFolder = "", controller = "", action = "", year = "", month = "", day = "", title = "" },   // Parameter defaults
+                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty, year = string.Empty, month = string.Empty, day = string.Empty, title = string.Empty },   // Parameter defaults
                 blogControllerNamespace
            );
 

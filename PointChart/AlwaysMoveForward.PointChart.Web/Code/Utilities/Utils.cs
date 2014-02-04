@@ -53,7 +53,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             return retVal + targetUrl;
         }
 
-        public static string GetInSecureURL(string blogSubFolder, string targetUrl, String siteAuthority)
+        public static string GetInSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
         {
             string retVal = "http://" + siteAuthority;
 

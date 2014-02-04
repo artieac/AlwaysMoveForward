@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return retVal;
         }
 
-        public UserModel InitializeUserModel(String blogSubFolder)
+        public UserModel InitializeUserModel(string blogSubFolder)
         {
             UserModel retVal = new UserModel();
             return retVal;
@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, "");
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
@@ -108,7 +108,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 currentPage = "/Home/Index";
             }
 
-            return View("UserLogin");
+            return this.View("UserLogin");
         }
 
         public JsonResult AjaxLogin(string blogSubFolder, string userName, string password, string loginAction)
@@ -140,7 +140,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
             }
 
-            return Json(retVal);
+            return this.Json(retVal);
         }
 
         [RequestAuthorizationAttribute]
@@ -148,7 +148,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         {
             UserModel model = new UserModel();
             model.CurrentUser = this.CurrentPrincipal.CurrentUser;
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
@@ -163,7 +163,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             model.CurrentUser = Services.UserService.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
 
-            return View("Preferences", model);
+            return this.View("Preferences", model);
         }
 
         public ActionResult Register(string registerAction, string userName, string password, string email, string userAbout, string displayName)
@@ -172,17 +172,17 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             if (registerAction == "save")
             {
-                if (userName == "")
+                if (string.IsNullOrEmpty(userName))
                 {
                     ModelState.AddModelError("userName", "Please enter a user name.");
                 }
 
-                if (password == "")
+                if (string.IsNullOrEmpty(password))
                 {
                     ModelState.AddModelError("password", "Please enter a password.");
                 }
 
-                if (email == "")
+                if (string.IsNullOrEmpty(email))
                 {
                     ModelState.AddModelError("email", "Please enter an email address.");
                 }
@@ -194,18 +194,18 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                     this.CurrentPrincipal = new SecurityPrincipal(model.CurrentUser, true);
 
                     this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-                    return RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Home");
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult ForgotPassword(string userEmail)
         {
             UserModel model = new UserModel();
             Services.UserService.SendPassword(userEmail, MvcApplication.EmailConfiguration);
-            return View("UserLogin", model);
+            return this.View("UserLogin", model);
         }
     }
 }

@@ -24,19 +24,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class CustomAuthorizationAttribute : RequestAuthenticationFilter
     {
-        private string requiredRoles;
-
         public CustomAuthorizationAttribute()
             : base()
         {
-            requiredRoles = "";
+            this.RequiredRoles = string.Empty;
         }
 
-        public string RequiredRoles
-        {
-            get { return this.requiredRoles; }
-            set { this.requiredRoles = value; }
-        }
+        public string RequiredRoles { get; set; }
 
         protected Blog GetTargetBlog(AuthorizationContext filterContext)
         {
@@ -76,7 +70,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 
                     if (this.RequiredRoles != null)
                     {
-                        if (requiredRoles == "")
+                        if (this.RequiredRoles == string.Empty)
                         {
                             // no required roles allow everyone.  But since this is being flagged at all
                             // we want to be sure that the useris at least logged in

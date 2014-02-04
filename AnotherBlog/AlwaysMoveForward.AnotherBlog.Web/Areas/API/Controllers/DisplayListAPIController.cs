@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
 {
     public class DisplayListAPIController : PublicController
     {
-        public JsonResult GetMostViewed(String blogSubFolder)
+        public JsonResult GetMostViewed(string blogSubFolder)
         {
             ListControlModel retVal = new ListControlModel();
             IList<BlogPost> postList = new List<BlogPost>();
@@ -40,10 +40,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 retVal.ListItems.Add(newItem);
             }
 
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetBlogLists(String blogSubFolder)
+        public JsonResult GetBlogLists(string blogSubFolder)
         {
             IList<ListControlModel> model = new List<ListControlModel>();
 
@@ -68,7 +68,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 model.Add(newList);
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

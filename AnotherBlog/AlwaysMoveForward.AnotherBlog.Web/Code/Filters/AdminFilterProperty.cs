@@ -7,7 +7,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 {
     public class AdminFilterProperty
     {
-        public AdminFilterProperty(String requiredRole, Boolean blogSpecific)
+        public AdminFilterProperty(string requiredRole, bool blogSpecific)
         {
             this.RequiredRole = requiredRole;
             this.BlogSpecific = blogSpecific;
@@ -15,6 +15,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 
         public string RequiredRole { get; set; }
 
-        public Boolean BlogSpecific { get; set; }
+        public bool BlogSpecific { get; set; }
     }
 }

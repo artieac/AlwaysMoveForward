@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Models
 
         public bool OpenLinkInNewWindow { get; set; }
         public bool ShowOrdered { get; set; }
-        public String Title { get; set; }
+        public string Title { get; set; }
         public IList<BlogListItem> ListItems { get; set; }
     }
 }

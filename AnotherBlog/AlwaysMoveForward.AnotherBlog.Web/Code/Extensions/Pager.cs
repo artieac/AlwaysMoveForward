@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
             // Previous
             if (this.currentPage > 1)
             {
-                sb.Append(GeneratePageLink("&lt;", this.currentPage - 1));
+                sb.Append(this.GeneratePageLink("&lt;", this.currentPage - 1));
             }
             else
             {
@@ -75,8 +75,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 
             if (start > 3)
             {
-                sb.Append(GeneratePageLink("1", 1));
-                sb.Append(GeneratePageLink("2", 2));
+                sb.Append(this.GeneratePageLink("1", 1));
+                sb.Append(this.GeneratePageLink("2", 2));
                 sb.Append("...");
             }
             for (int i = start; i <= end; i++)
@@ -87,20 +87,20 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
                 }
                 else
                 {
-                    sb.Append(GeneratePageLink(i.ToString(), i));
+                    sb.Append(this.GeneratePageLink(i.ToString(), i));
                 }
             }
             if (end < (pageCount - 3))
             {
                 sb.Append("...");
-                sb.Append(GeneratePageLink((pageCount - 1).ToString(), pageCount - 1));
-                sb.Append(GeneratePageLink(pageCount.ToString(), pageCount));
+                sb.Append(this.GeneratePageLink((pageCount - 1).ToString(), pageCount - 1));
+                sb.Append(this.GeneratePageLink(pageCount.ToString(), pageCount));
             }
 
             // Next
             if (this.currentPage < pageCount)
             {
-                sb.Append(GeneratePageLink("&gt;", this.currentPage + 1));
+                sb.Append(this.GeneratePageLink("&gt;", this.currentPage + 1));
             }
             else
             {
@@ -119,7 +119,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
             if (virtualPathData != null)
             {
                 string linkFormat = "<a href=\"/{0}\">{1}</a>";
-                return String.Format(linkFormat, virtualPathData.VirtualPath, linkText);
+                return string.Format(linkFormat, virtualPathData.VirtualPath, linkText);
             }
             else
             {

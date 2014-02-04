@@ -17,11 +17,11 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         {
             TaskModel model = new TaskModel();
             model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
-        public ActionResult Add(String addTaskName, double addTaskPoints, int addTaskMaxPerDay)
+        public ActionResult Add(string addTaskName, double addTaskPoints, int addTaskMaxPerDay)
         {
             TaskModel model = new TaskModel();
 
@@ -34,11 +34,11 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
 
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         [RequestAuthorizationAttribute]
-        public ActionResult Edit(int editTaskId, String editTaskName, double editTaskPoints, int editTaskMaxPerDay)
+        public ActionResult Edit(int editTaskId, string editTaskName, double editTaskPoints, int editTaskMaxPerDay)
         {
             TaskModel model = new TaskModel();
 
@@ -51,8 +51,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
 
-            return View("Index", model);
+            return this.View("Index", model);
         }
-
     }
 }

@@ -7,7 +7,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
 {
     public class AjaxLoginModel
     {
-        public Boolean ProcessedLogin { get; set; }
-        public Boolean IsAuthorized { get; set; }
+        public bool ProcessedLogin { get; set; }
+        public bool IsAuthorized { get; set; }
     }
 }

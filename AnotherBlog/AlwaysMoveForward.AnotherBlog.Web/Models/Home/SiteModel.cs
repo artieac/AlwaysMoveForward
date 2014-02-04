@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.Home
 {
     public class SiteModel : ModelBase
     {
-        public IList<String> FoundExtensions { get; set; }
+        public IList<string> FoundExtensions { get; set; }
         public SiteInfo SiteInfo { get; set; }
     }
 }

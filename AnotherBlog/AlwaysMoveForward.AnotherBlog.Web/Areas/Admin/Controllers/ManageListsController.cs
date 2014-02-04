@@ -166,7 +166,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddList(string blogSubFolder, String name, Boolean showOrdered)
+        public JsonResult AddList(string blogSubFolder, string name, bool showOrdered)
         {
             IList<BlogList> retVal = new List<BlogList>();
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);

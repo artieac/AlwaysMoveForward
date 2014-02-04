@@ -41,32 +41,29 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
         public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
         {
-            if (siteName != null && siteAbout != null)
+            if (string.IsNullOrEmpty(siteName))
             {
-                if (siteName == "")
-                {
-                    ViewData.ModelState.AddModelError("siteName", "Please enter a name for your site.");
-                }
+                ViewData.ModelState.AddModelError("siteName", "Please enter a name for your site.");
+            }
 
-                if (siteAbout == "")
-                {
-                    ViewData.ModelState.AddModelError("siteAbout", "Please enter an about message for your site.");
-                }
+            if (string.IsNullOrEmpty(siteAbout))
+            {
+                ViewData.ModelState.AddModelError("siteAbout", "Please enter an about message for your site.");
+            }
 
-                if (ViewData.ModelState.IsValid)
+            if (ViewData.ModelState.IsValid)
+            {
+                using (this.Services.UnitOfWork.BeginTransaction())
                 {
-                    using (this.Services.UnitOfWork.BeginTransaction())
+                    try
                     {
-                        try
-                        {
-                            MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
-                            this.Services.UnitOfWork.EndTransaction(true);
-                        }
-                        catch (Exception e)
-                        {
-                            LogManager.GetLogger().Error(e);
-                            this.Services.UnitOfWork.EndTransaction(false);
-                        }
+                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.Services.UnitOfWork.EndTransaction(false);
                     }
                 }
             }

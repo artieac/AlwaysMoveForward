@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.Web
             MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection(WebSiteConfiguration.DefaultConfiguration);
         }
 
-        public static String Version
+        public static string Version
         {
             get { return "1.2.0"; }
         }

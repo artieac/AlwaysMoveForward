@@ -32,12 +32,12 @@ namespace AlwaysMoveForward.PointChart.Web.Models
 
         public string GenerateUrlForDay(DateTime startDate)
         {
-            return RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(startDate);
+            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(startDate);
         }
 
         public string GenerateUrlForMonth(int offset)
         {
-            return RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(this.TargetMonth.AddMonths(offset));
+            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(this.TargetMonth.AddMonths(offset));
         }
 
         // Not sure I like this......Not sure how else to do it though

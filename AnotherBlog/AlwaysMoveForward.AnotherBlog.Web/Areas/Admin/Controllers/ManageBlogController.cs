@@ -113,7 +113,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator, IsBlogSpecific = true)]
@@ -128,7 +128,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 {
                     if (performSave.Value == true)
                     {
-                        if (description == "")
+                        if (string.IsNullOrEmpty(description))
                         {
                             ViewData.ModelState.AddModelError("description", "Please enter a description.");
                         }
@@ -161,7 +161,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult ManagePosts(string blogSubFolder, string filterType, string filterValue, int? page, string sortColumn, Boolean? sortAscending)
+        public ActionResult ManagePosts(string blogSubFolder, string filterType, string filterValue, int? page, string sortColumn, bool? sortAscending)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
@@ -296,7 +296,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 int blogEntryId = 0;
 
-                if (ajaxEntryId != "")
+                if (!string.IsNullOrEmpty(ajaxEntryId))
                 {
                     blogEntryId = int.Parse(ajaxEntryId);
                 }
@@ -345,7 +345,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
-                if (status == null || String.Compare(status, "All", true) == 0)
+                if (status == null || string.Compare(status, "All", true) == 0)
                 {
                     model = this.Services.CommentService.GetAll(targetBlog);
                 }
@@ -356,7 +356,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
         
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -382,7 +382,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
+            return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -418,7 +418,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             model.Common = this.InitializeCommonModel(blogSubFolder);
             model.CommentFilter = commentFilter;
 
-            return View(model);
+            return this.View(model);
         }
 
         #endregion

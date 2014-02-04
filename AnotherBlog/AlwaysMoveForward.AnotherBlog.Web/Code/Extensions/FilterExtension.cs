@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
         }
 
         #endregion
-        public static String GenerateFilterOption(string optionName, string selectedOption)
+        public static string GenerateFilterOption(string optionName, string selectedOption)
         {
             string retVal = "<option";
             retVal += " id='" + optionName + "'";

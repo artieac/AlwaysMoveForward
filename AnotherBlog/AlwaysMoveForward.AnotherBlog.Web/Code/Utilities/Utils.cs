@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
     {
         public static string GenerateBlogEntryLink(string blogSubFolder, BlogPost blogEntry, bool generateEditLink)
         {
-            string retVal = "";
+            string retVal = string.Empty;
 
             if (blogEntry != null)
             {
@@ -40,9 +40,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static string GetSecureURL(string blogSubFolder, string targetUrl, String siteAuthority)
+        public static string GetSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
         {
-            string retVal = "";
+            string retVal = string.Empty;
 
             if (MvcApplication.WebSiteConfiguration.EnableSSL == true)
             {
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal + targetUrl;
         }
 
-        public static string GetInSecureURL(string blogSubFolder, string targetUrl, String siteAuthority)
+        public static string GetInSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
         {
             string retVal = "http://" + siteAuthority;
 
@@ -104,13 +104,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static string GetTinyUrl(BlogPost blogEntry, String siteAuthority)
+        public static string GetTinyUrl(BlogPost blogEntry, string siteAuthority)
         {
             string retVal = GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false);
 
             try
             {
-                retVal = XDocument.Load(string.Format("http://api.bit.ly/shorten?format=xml&version=2.0.1&longUrl={0}&login={1}&apiKey={2}", HttpUtility.UrlEncode(GetInSecureURL("", GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false), siteAuthority)), "artieac", "R_0a7032095b2bbc15c909c87436cde198")).Descendants("nodeKeyVal").Select<XElement, string>(delegate(XElement result)
+                retVal = XDocument.Load(string.Format("http://api.bit.ly/shorten?format=xml&version=2.0.1&longUrl={0}&login={1}&apiKey={2}", HttpUtility.UrlEncode(GetInSecureURL(string.Empty, GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false), siteAuthority)), "artieac", "R_0a7032095b2bbc15c909c87436cde198")).Descendants("nodeKeyVal").Select<XElement, string>(delegate(XElement result)
                 {
                     return result.Element("shortUrl").Value;
                 }).Single<string>();
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static bool IsUserInRole(System.Security.Principal.IPrincipal contextUser, String targetSubFolder, String targetRole)
+        public static bool IsUserInRole(System.Security.Principal.IPrincipal contextUser, string targetSubFolder, string targetRole)
         {
             bool retVal = false;
 
@@ -135,7 +135,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static bool IsUserInRole(System.Security.Principal.IPrincipal contextUser, Blog targetBlog, String targetRole)
+        public static bool IsUserInRole(System.Security.Principal.IPrincipal contextUser, Blog targetBlog, string targetRole)
         {
             bool retVal = false;
 

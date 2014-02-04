@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 
             if (authCookie != null)
             {
-                if (authCookie.Value != "")
+                if (authCookie.Value != string.Empty)
                 {
                     // Get the authentication ticket 
                     // and rebuild the principal & identity

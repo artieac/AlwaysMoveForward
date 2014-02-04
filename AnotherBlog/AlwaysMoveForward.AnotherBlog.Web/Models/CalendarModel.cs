@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         }
 
         // Not sure I like this......Not sure how else to do it though
-        public String RouteInformation { get; set; }
+        public string RouteInformation { get; set; }
         public Blog TargetBlog { get; set; }
         
         private DateTime targetMonth;
@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
             get { return targetMonth; }
             set
             {
-                targetMonth = value;
+                this.targetMonth = value;
 
                 DateTime trackingDate = value;
                 trackingDate = trackingDate.AddDays(-(value.Day - 1));
@@ -76,18 +76,18 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         public DateTime TrackingDate { get; set; }
         public IList<DateTime> CurrentMonthBlogDates { get; set; }
 
-        public String GenerateUrlForMonth(int monthOffset)
+        public string GenerateUrlForMonth(int monthOffset)
         {
-            String retVal = this.RouteInformation + "/Month";
+            string retVal = this.RouteInformation + "/Month";
             DateTime targetMonth = this.TargetMonth.AddMonths(monthOffset);
             retVal += "/" + targetMonth.Year + "/" + targetMonth.Month;
 
             return retVal;
         }
 
-        public String GenerateUrlForDay(DateTime trackingDate)
+        public string GenerateUrlForDay(DateTime trackingDate)
         {
-            String retVal = "";
+            string retVal = string.Empty;
 
             retVal += this.RouteInformation + "/Day/" + trackingDate.Year + "/" + trackingDate.Month + "/" + trackingDate.Day;
 

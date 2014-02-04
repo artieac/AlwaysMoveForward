@@ -35,9 +35,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             }
         }
 
-        public static Boolean IsSiteAdministrator()
+        public static bool IsSiteAdministrator()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
@@ -49,9 +49,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static Boolean CanAccessAdminTool()
+        public static bool CanAccessAdminTool()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
@@ -67,7 +67,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static String GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
+        public static string GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
         {
             string retVal = "default";
 

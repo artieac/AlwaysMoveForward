@@ -12,12 +12,11 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
     public class PointEarnerController : BaseController
     {
-        //
         // GET: /PointEarner/
         [RequestAuthorizationAttribute]
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         [RequestAuthorizationAttribute]
@@ -26,7 +25,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             PointEarnerModel model = new PointEarnerModel();
             model.PointEarner = this.Services.PointEarner.GetById(id);
             model.Charts = this.Services.Charts.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
@@ -35,16 +34,16 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             PointEarnerModel model = new PointEarnerModel();
             model.PointEarner = this.Services.PointEarner.GetById(id);
             model.Charts = this.Services.Charts.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
-        public ActionResult SpendPoints(int pointEarnerId, DateTime dateSpent, double pointsToSpend, String description)
+        public ActionResult SpendPoints(int pointEarnerId, DateTime dateSpent, double pointsToSpend, string description)
         {
             PointEarnerModel model = new PointEarnerModel();
             model.PointEarner = this.Services.PointEarner.SpendPoints(pointEarnerId, pointsToSpend, dateSpent, description);
             model.Charts = this.Services.Charts.GetByPointEarner(pointEarnerId, this.CurrentPrincipal.CurrentUser);
-            return View("PointsDetail", model);
+            return this.View("PointsDetail", model);
         }
 
         [RequestAuthorizationAttribute]
@@ -54,7 +53,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             this.Services.PointEarner.DeleteSpentPoints(pointEarnerId, id);
             model.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
             model.Charts = this.Services.Charts.GetByPointEarner(pointEarnerId, this.CurrentPrincipal.CurrentUser);
-            return View("PointsDetail", model);
+            return this.View("PointsDetail", model);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
             return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTags(String blogSubFolder)
+        public JsonResult GetTags(string blogSubFolder)
         {
             System.Collections.IList model = new System.Collections.ArrayList();
 
@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
             return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetArchiveDates(String blogSubFolder)
+        public JsonResult GetArchiveDates(string blogSubFolder)
         {
             ListControlModel model = new ListControlModel();
             model.Title = "Archive Dates";
@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
 
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
 
-            String urlRoot = "/Home/Month";
+            string urlRoot = "/Home/Month";
 
             if (targetBlog != null)
             {

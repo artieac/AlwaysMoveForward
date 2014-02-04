@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
-        public JsonResult AddPollOption(int pollQuestionId, String optionText)
+        public JsonResult AddPollOption(int pollQuestionId, string optionText)
         {
             PollQuestion retVal = null;
 

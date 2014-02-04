@@ -14,9 +14,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 
         public class TabItem
         {
-            public String Title { get; set; }
-            public String TargetUrl { get; set; }
-            public String Image { get; set; }
+            public string Title { get; set; }
+            public string TargetUrl { get; set; }
+            public string Image { get; set; }
         }
 
         public int SelectedTab { get; set; }
@@ -24,9 +24,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 
         public void SetSelectedTab(Uri currentUrl)
         {
-            for (int i = 0; i < TabItems.Count; i++)
+            for (int i = 0; i < this.TabItems.Count; i++)
             {
-                if (currentUrl.ToString().Contains(TabItems[i].TargetUrl))
+                if (currentUrl.ToString().Contains(this.TabItems[i].TargetUrl))
                 {
                     this.SelectedTab = i;
                     break;
@@ -34,13 +34,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
             }
         }
 
-        public void Add(String title, String targetUrl, String image)
+        public void Add(string title, string targetUrl, string image)
         {
             TabItem newTab = new TabItem();
             newTab.Title = title;
             newTab.TargetUrl = targetUrl;
             newTab.Image = image;
-            TabItems.Add(newTab);
+            this.TabItems.Add(newTab);
         }
     }
 }

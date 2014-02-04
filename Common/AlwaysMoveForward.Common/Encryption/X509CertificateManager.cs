@@ -81,8 +81,7 @@ namespace AlwaysMoveForward.Common.Encryption
                             store.Open(OpenFlags.ReadOnly);
 
                             X509Certificate2Collection certificateCollection =
-                                store.Certificates.Find(X509FindType.FindBySubjectName,
-                                                        this.KeyStoreInfo.CertificateName, false);
+                                store.Certificates.Find(X509FindType.FindBySubjectName, this.KeyStoreInfo.CertificateName, false);
 
                             if (certificateCollection.Count > 0)
                             {

@@ -9,7 +9,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
     {
         public CommonModel Common { get; set; }
 
-        public String GetPageTitle()
+        public string GetPageTitle()
         {
             return MvcApplication.SiteInfo.Name;
         }
