@@ -15,8 +15,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         }
 
         public virtual int Id { get; set; }
-        public virtual String Name { get; set; }
-        public virtual String RelatedLink { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string RelatedLink { get; set; }
         public virtual int DisplayOrder { get; set; }
     }
 }

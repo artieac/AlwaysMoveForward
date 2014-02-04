@@ -88,13 +88,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             dtoItem = ((BlogDataMap)this.DataMapper).Map(itemToSave, dtoItem);
 
-            if(dtoItem!=null)
+            if (dtoItem != null)
             {
                 dtoItem = this.Save(dtoItem);
             }
 
             return this.DataMapper.Map(dtoItem);
         }
-
     }
 }

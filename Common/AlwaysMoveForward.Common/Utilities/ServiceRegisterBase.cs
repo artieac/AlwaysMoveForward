@@ -22,9 +22,9 @@ namespace AlwaysMoveForward.Common.Utilities
         {
             TService retVal = null;
 
-            if (!serviceContainer.ContainsKey(serviceType))
+            if (!this.serviceContainer.ContainsKey(serviceType))
             {
-                serviceContainer.Add(serviceType, service);
+                this.serviceContainer.Add(serviceType, service);
                 retVal = service;
             }
 
@@ -36,9 +36,9 @@ namespace AlwaysMoveForward.Common.Utilities
             TService retVal = null;
             Type serviceType = typeof(TService);
 
-            if (serviceContainer.ContainsKey(serviceType))
+            if (this.serviceContainer.ContainsKey(serviceType))
             {
-                retVal = serviceContainer[serviceType] as TService;
+                retVal = this.serviceContainer[serviceType] as TService;
             }
 
             return retVal;

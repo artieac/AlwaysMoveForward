@@ -22,28 +22,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer
     {
         public void UpdateDatabase(string databaseScriptPath)
         {
-            //DbInfoRepository repository = new DbInfoRepository();
-            //DbInfo dbInfo = repository.GetDbInfo();
-
-            //if (dbInfo == null)
-            //{
-            //    this.CreateSchema(databaseScriptPath);
-            //    this.InitializeData(databaseScriptPath);
-            //}
-
-            //this.UpdateSchema(databaseScriptPath);
         }
 
         protected void CreateSchema(string databaseScriptPath)
         {
-//            string sqlScript = System.IO.File.ReadAllText(databaseScriptPath + "/AnotherBlogDb.sql");
-//            contextManager.DataContext.ExecuteCommand(sqlScript);
         }
 
         protected void InitializeData(string databaseScriptPath)
         {
-//            string initializationData = System.IO.File.ReadAllText(databaseScriptPath + "/AnotherBlogData.sql");
-//            contextManager.DataContext.ExecuteCommand(initializationData);
         }
 
         protected void UpdateSchema(string databaseScriptPath)

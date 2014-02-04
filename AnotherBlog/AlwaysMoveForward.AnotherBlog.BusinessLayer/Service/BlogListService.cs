@@ -54,14 +54,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return AnotherBlogRepositories.BlogLists.Delete(targetBlogList);
         }
 
-        public BlogList GetByName(Blog targetBlog, String listName)
+        public BlogList GetByName(Blog targetBlog, string listName)
         {
             return AnotherBlogRepositories.BlogLists.GetByProperty("Name", listName, targetBlog.BlogId);
         }
 
-        public IList<String> GetListNames(Blog targetBlog)
+        public IList<string> GetListNames(Blog targetBlog)
         {
-            IList<String> retVal = new List<String>();
+            IList<string> retVal = new List<string>();
 
             if (targetBlog != null)
             {
@@ -79,7 +79,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public BlogList Save(Blog targetBlog, int blogListId, String name, Boolean showOrdered)
+        public BlogList Save(Blog targetBlog, int blogListId, string name, bool showOrdered)
         {
             BlogList itemToSave = null;
 
@@ -100,12 +100,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return itemToSave;
         }
 
-        public BlogList AddItem(BlogList blogList, String itemName, String relatedLink, int displayOrder)
+        public BlogList AddItem(BlogList blogList, string itemName, string relatedLink, int displayOrder)
         {
             return this.UpdateItem(blogList, -1, itemName, relatedLink, displayOrder);
         }
 
-        public BlogList UpdateItem(BlogList blogList, int blogListItemId, String itemName, String relatedLink, int displayOrder)
+        public BlogList UpdateItem(BlogList blogList, int blogListItemId, string itemName, string relatedLink, int displayOrder)
         {
             BlogList retVal = blogList;
 

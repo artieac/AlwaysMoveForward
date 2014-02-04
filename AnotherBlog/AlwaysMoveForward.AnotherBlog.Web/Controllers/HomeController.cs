@@ -97,25 +97,5 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             return View("Index", model);
         }
-
-    //    public ActionResult DisplayListControl(string blogSubFolder, String targetBlogListName)
-    //    {
-    //        ListControlModel model = new ListControlModel();
-    //        Blog targetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-
-    //        if (targetBlog != null)
-    //        {
-    //            BlogList blogList = Services.BlogListService.GetByName(targetBlog, targetBlogListName);
-
-    //            if (blogList != null)
-    //            {
-    //                model.Title = blogList.Name;
-    //                model.ShowOrdered = blogList.ShowOrdered;
-    //                model.ListItems = blogList.Items;
-    //            }
-    //        }
-
-    //        return View("_ListControl", model);
-    //    }
     }
 }

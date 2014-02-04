@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common
 
         public static void FirePublishBlogEntryEvent(int blogId)
         {
-            if(EntryPublishedSubscribers!=null)
+            if (EntryPublishedSubscribers != null)
             {
                 EntryPublishedSubscribers(blogId);
             }

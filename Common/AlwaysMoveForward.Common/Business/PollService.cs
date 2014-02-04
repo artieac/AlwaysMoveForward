@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.Common.Business
         /// <param name="questionText"></param>
         /// <param name="title"></param>
         /// <returns>The saved Poll Question</returns>
-        public PollQuestion AddPollQuestion(String questionText, String title)
+        public PollQuestion AddPollQuestion(string questionText, string title)
         {
             PollQuestion newQuestion = new PollQuestion();
             newQuestion.QuestionText = questionText;
@@ -68,16 +68,16 @@ namespace AlwaysMoveForward.Common.Business
         /// <param name="pollQuestionId"></param>
         /// <param name="optionText"></param>
         /// <returns>The updated Poll Question with the option in it</returns>
-        public PollQuestion AddPollOption(int pollQuestionId, String optionText)
+        public PollQuestion AddPollOption(int pollQuestionId, string optionText)
         {
             PollQuestion targetQuestion = this.GetById(pollQuestionId);
 
-            if(targetQuestion!=null)
+            if (targetQuestion != null)
             {
                 PollOption newOption = new PollOption();
                 newOption.OptionText = optionText;
 
-                if(targetQuestion.Options==null)
+                if (targetQuestion.Options == null)
                 {
                     targetQuestion.Options = new List<PollOption>();
                 }
@@ -110,7 +110,7 @@ namespace AlwaysMoveForward.Common.Business
         {
             PollQuestion pollQuestion = this.PollRepository.GetByPollOptionId(pollOptionId);
 
-            if( pollQuestion != null)
+            if (pollQuestion != null)
             {
                 PollOption previousVote = (from targetOption in pollQuestion.Options 
                                                       where targetOption.VoterAddresses.Any(var => var.Address == address)

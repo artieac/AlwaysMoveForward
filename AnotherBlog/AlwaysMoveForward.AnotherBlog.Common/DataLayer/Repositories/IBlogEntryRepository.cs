@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
         IList<BlogPost> GetMostRead(int blogId, int maxResults);
         BlogPost GetByTitle(string blogTitle, int blogId);
         BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId);
-        IList<BlogPost> GetByTag(int blogId, String tagText, bool publishedOnly);
+        IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly);
         IList<BlogPost> GetByTag(int tagId, bool publishedOnly);
         IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly);
         IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly);

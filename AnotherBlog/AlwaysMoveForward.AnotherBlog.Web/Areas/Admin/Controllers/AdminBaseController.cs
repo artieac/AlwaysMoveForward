@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            retVal.SortColumn = "";
+            retVal.SortColumn = string.Empty;
             retVal.SortAscending = true;
             return retVal;
         }

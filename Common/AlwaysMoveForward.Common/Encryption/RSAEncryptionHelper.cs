@@ -11,15 +11,14 @@ namespace AlwaysMoveForward.Common.Encryption
     {
         private const int RSAKeySize = 2048;
       
-        public String Encrypt(String plainData, X509Certificate2 certificate)
+        public string Encrypt(string plainData, X509Certificate2 certificate)
         {
             return this.Encrypt(plainData, false, certificate);
         }
 
-        public String Encrypt(String plainData, bool useOAEPPadding,
-                                     X509Certificate2 certificate)
+        public string Encrypt(string plainData, bool useOAEPPadding, X509Certificate2 certificate)
         {
-            String retVal = "";
+            string retVal = string.Empty;
 
             byte[] encryptedData = this.Encrypt(System.Text.Encoding.Unicode.GetBytes(plainData), useOAEPPadding, certificate);
 
@@ -31,8 +30,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Encrypt(byte[] plainData, bool useOAEPPadding,
-                                     X509Certificate2 certificate)
+        public byte[] Encrypt(byte[] plainData, bool useOAEPPadding, X509Certificate2 certificate)
         {
             if (plainData == null)
             {
@@ -46,21 +44,20 @@ namespace AlwaysMoveForward.Common.Encryption
             using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RSAKeySize))
             {
                 // Note that we use the public key to encrypt
-                provider.FromXmlString(GetPublicKey(certificate));
+                provider.FromXmlString(this.GetPublicKey(certificate));
 
                 return provider.Encrypt(plainData, useOAEPPadding);
             }
         }
 
-        public String Decrypt(String encryptedData, X509Certificate2 certificate)
+        public string Decrypt(string encryptedData, X509Certificate2 certificate)
         {
             return this.Decrypt(encryptedData, false, certificate);
         }
 
-        public String Decrypt(String encryptedData, bool useOAEPPadding,
-                             X509Certificate2 certificate)
+        public string Decrypt(string encryptedData, bool useOAEPPadding, X509Certificate2 certificate)
         {
-            String retVal = "";
+            string retVal = string.Empty;
 
             byte[] decryptedData = this.Decrypt(Convert.FromBase64String(encryptedData), useOAEPPadding, certificate);
 
@@ -72,8 +69,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Decrypt(byte[] encryptedData, bool useOEAPPadding,
-                                     X509Certificate2 certificate)
+        public byte[] Decrypt(byte[] encryptedData, bool useOEAPPadding, X509Certificate2 certificate)
         {
             if (encryptedData == null)
             {
@@ -87,7 +83,7 @@ namespace AlwaysMoveForward.Common.Encryption
             using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RSAKeySize))
             {
                 // Note that we use the private key to decrypt
-                provider.FromXmlString(GetXmlKeyPair(certificate));
+                provider.FromXmlString(this.GetXmlKeyPair(certificate));
 
                 return provider.Decrypt(encryptedData, useOEAPPadding);
             }

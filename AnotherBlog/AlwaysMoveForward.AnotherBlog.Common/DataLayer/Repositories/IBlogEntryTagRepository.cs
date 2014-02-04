@@ -21,6 +21,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
     public interface IBlogEntryTagRepository : IRepository<PostTag>
     {
         IList<PostTag> GetByBlogEntry(int blogPostId);
-        Boolean DeleteByBlogEntry(int blogPostId);
+        bool DeleteByBlogEntry(int blogPostId);
     }
 }

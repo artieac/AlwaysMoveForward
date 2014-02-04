@@ -49,12 +49,12 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Text = Utils.StripJavascript(this.Text);
         }
 
-        public String DefaultDateStringFormat
+        public string DefaultDateStringFormat
         {
             get { return this.DatePosted.ToShortDateString(); }
         }
 
-        public String StatusText
+        public string StatusText
         {
             get { return this.Status.ToString(); }
         }

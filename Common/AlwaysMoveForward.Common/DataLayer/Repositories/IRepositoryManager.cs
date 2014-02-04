@@ -21,9 +21,9 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
     public interface IRepositoryManager
     {
         IUnitOfWork UnitOfWork { get; }
-        IDbInfoRepository DbInfo{ get; }
-        IRoleRepository Roles{ get; }
-        ISiteInfoRepository SiteInfo{ get; }
-        IUserRepository Users{ get; }
+        IDbInfoRepository DbInfo { get; }
+        IRoleRepository Roles { get; }
+        ISiteInfoRepository SiteInfo { get; }
+        IUserRepository Users { get; }
     }
 }

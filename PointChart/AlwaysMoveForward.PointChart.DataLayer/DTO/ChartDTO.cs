@@ -17,7 +17,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public PointEarnerDTO PointEarner { get; set; }
 
         [Property("Name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [Property("AdministratorId")]
         public int AdministratorId { get; set; }

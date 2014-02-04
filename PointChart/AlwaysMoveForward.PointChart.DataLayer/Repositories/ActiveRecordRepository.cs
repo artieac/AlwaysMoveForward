@@ -42,9 +42,9 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         {
             IList<DomainType> retVal = new List<DomainType>();
 
-            if(source!=null)
+            if (source != null)
             {
-                for(int i = 0; i < source.Count; i++)
+                for (int i = 0; i < source.Count; i++)
                 {
                     retVal.Add(this.Map(source[i]));
                 }

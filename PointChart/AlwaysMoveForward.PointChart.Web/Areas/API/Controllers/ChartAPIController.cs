@@ -13,24 +13,21 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
 {
     public class ChartAPIController : BaseController
     {
-        //
         // GET: /API/ChartAPI/
         [RequestAuthorizationAttribute]
         public JsonResult GetCharts()
         {
             IList<Chart> userCharts = this.Services.Charts.GetByUser(this.CurrentPrincipal.CurrentUser);
-            return Json(userCharts, JsonRequestBehavior.AllowGet);
+            return this.Json(userCharts, JsonRequestBehavior.AllowGet);
         }
 
         [RequestAuthorizationAttribute]
         public JsonResult GetAll()
         {
             IList<PointEarner> pointEarnerCharts = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
-            return Json(pointEarnerCharts, JsonRequestBehavior.AllowGet);
+            return this.Json(pointEarnerCharts, JsonRequestBehavior.AllowGet);
         }
 
-
-        //
         // GET: /API/ChartAPI/
         [RequestAuthorizationAttribute]
         public JsonResult GetByPointEarnerId(int id)
@@ -38,7 +35,7 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
             PointEarnerModel retVal = new PointEarnerModel();
             retVal.PointEarner = this.Services.PointEarner.GetById(id);
             retVal.Charts = retVal.PointEarner.Charts;
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
 {
     public class AjaxSaveModel
     {
-        public string BlogSubFolder{ get; set;}
-        public int EntryId{ get; set;}
+        public string BlogSubFolder { get; set; }
+
+        public int EntryId { get; set; }
     }
 }

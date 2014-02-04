@@ -11,8 +11,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map
     {
         int Id { get; set; }
         BlogList BlogList { get; set; }
-        String Name { get; set; }
-        String RelatedLink { get; set; }
+        string Name { get; set; }
+        string RelatedLink { get; set; }
         int DisplayOrder { get; set; }
     }
 }

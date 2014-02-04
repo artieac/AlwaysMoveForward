@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.Common.Encryption
     {
         public static string HashString(string inVal)
         {
-            string retVal = "";
+            string retVal = string.Empty;
 
             MD5CryptoServiceProvider md5Service = new MD5CryptoServiceProvider();
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(inVal);

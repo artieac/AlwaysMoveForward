@@ -23,13 +23,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API
             context.MapRoute(
                 "API_BlogSubFolderDefault",
                 "{blogSubFolder}/API/{controller}/{action}",
-                new { blogSubFolder =  "", controller="", action = "Index"}
+                new { blogSubFolder = string.Empty, controller = string.Empty, action = "Index"}
             );
 
             context.MapRoute(
                 "API_BlogSubFolderWithId",
                 "{blogSubFolder}/API/{controller}/{action}/{id}",
-                new { blogSubFolder = "", action = "Index", id=UrlParameter.Optional }
+                new { blogSubFolder = string.Empty, action = "Index", id = UrlParameter.Optional }
             );
         }
     }

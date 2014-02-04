@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
             PointsSpentDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<PointsSpentDTO>.FindOne(criteria);
 
-            if(dtoItem==null)
+            if (dtoItem == null)
             {
                 dtoItem = this.Map(itemToSave);
             }

@@ -35,10 +35,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public BlogDTO Blog { get; set; }
 
         [Property("Name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [Property("ShowOrdered")]
-        public Boolean ShowOrdered { get; set; }
+        public bool ShowOrdered { get; set; }
 
         [HasMany(typeof(BlogListItemDTO), Inverse = true)]
         public IList<BlogListItemDTO> Items { get; set; }

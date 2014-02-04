@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.Common.Business
         {
             get
             {
-                if(this.roleService==null)
+                if (this.roleService == null)
                 {
                     this.roleService = new RoleService(this.ServiceContext);
                 }
@@ -46,12 +46,12 @@ namespace AlwaysMoveForward.Common.Business
         {
             get
             {
-                if (siteInfo == null)
+                if (this.siteInfo == null)
                 {
-                    siteInfo = new SiteInfoService(this.ServiceContext);
+                    this.siteInfo = new SiteInfoService(this.ServiceContext);
                 }
 
-                return siteInfo;
+                return this.siteInfo;
             }
         }
 
@@ -60,12 +60,12 @@ namespace AlwaysMoveForward.Common.Business
         {
             get
             {
-                if (userService == null)
+                if (this.userService == null)
                 {
-                    userService = new UserService(this.ServiceContext);
+                    this.userService = new UserService(this.ServiceContext);
                 }
 
-                return userService;
+                return this.userService;
             }
         }
     }

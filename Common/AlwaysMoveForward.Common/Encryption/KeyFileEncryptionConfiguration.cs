@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return KeyFileEncryptionConfiguration.GetInstance(DefaultSection);
         }
 
-        public static KeyFileEncryptionConfiguration GetInstance(String configurationSection)
+        public static KeyFileEncryptionConfiguration GetInstance(string configurationSection)
         {
             if (configurationInstance == null)
             {

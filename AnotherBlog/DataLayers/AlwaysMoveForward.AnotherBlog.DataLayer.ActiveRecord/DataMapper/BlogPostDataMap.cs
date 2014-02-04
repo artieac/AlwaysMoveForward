@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         public override BlogPost Map(BlogPostDTO source, BlogPost destination)
         {
-            if(destination==null)
+            if (destination == null)
             {
                 destination = new BlogPost();
             }
@@ -23,7 +23,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public override BlogPostDTO Map(BlogPost source, BlogPostDTO destination)
         {
-            if(destination==null)
+            if (destination == null)
             {
                 destination = new BlogPostDTO();
             }

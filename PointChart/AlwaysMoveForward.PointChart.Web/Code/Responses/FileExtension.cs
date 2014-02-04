@@ -19,12 +19,12 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             CSV
         }
 
-        public static ActionResult Excel(this Controller controller, IList<IList<String>> headerPrefix, IList<string> headers, IList<Dictionary<string, string>> rows, string fileName)
+        public static ActionResult Excel(this Controller controller, IList<IList<string>> headerPrefix, IList<string> headers, IList<Dictionary<string, string>> rows, string fileName)
         {
             return new ExcelResult(headerPrefix, headers, rows, fileName, null, null, null);
         }
 
-        public static ActionResult Excel(this Controller controller, IList<IList<String>> headerPrefix, IList<string> headers, IList<Dictionary<string, string>> rows, string fileName, TableStyle tableStyle, TableItemStyle headerStyle, TableItemStyle itemStyle)
+        public static ActionResult Excel(this Controller controller, IList<IList<string>> headerPrefix, IList<string> headers, IList<Dictionary<string, string>> rows, string fileName, TableStyle tableStyle, TableItemStyle headerStyle, TableItemStyle itemStyle)
         {
             return new ExcelResult(headerPrefix, headers, rows, fileName, tableStyle, headerStyle, itemStyle);
         }

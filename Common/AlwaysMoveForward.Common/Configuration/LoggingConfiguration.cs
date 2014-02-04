@@ -18,28 +18,28 @@ namespace AlwaysMoveForward.Common.Configuration
         public LoggingConfiguration() { }
 
         [ConfigurationProperty(LoggingConfiguration.SourceSetting, IsRequired = true)]
-        public String Source
+        public string Source
         {
             get { return (string)this[LoggingConfiguration.SourceSetting]; }
             set { this[LoggingConfiguration.SourceSetting] = value; }
         }
 
         [ConfigurationProperty(LoggingConfiguration.LevelSetting, IsRequired = true)]
-        public String Level
+        public string Level
         {
             get { return (string)this[LoggingConfiguration.LevelSetting]; }
             set { this[LoggingConfiguration.LevelSetting] = value; }
         }
 
         [ConfigurationProperty(LoggingConfiguration.LoggingClassSetting, IsRequired = false)]
-        public String LoggingClass
+        public string LoggingClass
         {
             get { return (string)this[LoggingConfiguration.LoggingClassSetting]; }
             set { this[LoggingConfiguration.LoggingClassSetting] = value; }
         }
 
         [ConfigurationProperty(LoggingConfiguration.LoggingAssemblySetting, IsRequired = false)]
-        public String LoggingAssembly
+        public string LoggingAssembly
         {
             get { return (string)this[LoggingConfiguration.LoggingAssemblySetting]; }
             set { this[LoggingConfiguration.LoggingAssemblySetting] = value; }

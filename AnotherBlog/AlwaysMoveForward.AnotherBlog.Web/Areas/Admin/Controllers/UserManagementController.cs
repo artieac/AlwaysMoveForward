@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             model.Users = Pagination.ToPagedList(Services.UserService.GetAll(), currentPageIndex, UserPageSize);
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Edit(bool? performSave, string userName, string password, string email, string userId, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
@@ -40,14 +40,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
 
-            for(int i = 0; i < blogs.Count; i++)
+            for (int i = 0; i < blogs.Count; i++)
             {
                 model.Blogs.Add(blogs[i].BlogId, blogs[i]);
             }
 
             int targetUserId = 0;
 
-            if (userId != null && userId != "")
+            if (string.IsNullOrEmpty(userId))
             {
                 targetUserId = int.Parse(userId);
                 model.CurrentUser = Services.UserService.GetById(targetUserId);
@@ -62,17 +62,17 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 if (performSave.Value == true)
                 {
-                    if (userName == "")
+                    if (string.IsNullOrEmpty(userName))
                     {
                         ViewData.ModelState.AddModelError("userName", "User name required.");
                     }
 
-                    if (email == "")
+                    if (string.IsNullOrEmpty(email))
                     {
                         ViewData.ModelState.AddModelError("email", "Email required.");
                     }
 
-                    if (displayName == "")
+                    if (string.IsNullOrEmpty(displayName))
                     {
                         ViewData.ModelState.AddModelError("displayName", "Display Name required.");
                     }
@@ -107,7 +107,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Delete(string userId)
@@ -126,7 +126,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction("Index");
         }
 
         public ActionResult ManageBlogs(string userId)
@@ -154,7 +154,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.BlogsUserCanAccess = new List<BlogUser>();
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult AddBlog(string blogSubFolder, string userId, string targetBlog, string blogRole)
@@ -190,7 +190,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             model.CurrentUser = Services.UserService.GetById(targetUser);
             model.BlogsUserCanAccess = Services.BlogUserService.GetUserBlogs(model.CurrentUser.UserId);
 
-            return RedirectToAction("ManageBlogs", new { userId = userId });
+            return this.RedirectToAction("ManageBlogs", new { userId = userId });
         }
 
         public ActionResult DeleteRole(string blogSubFolder, int blogId, int userId)
@@ -209,7 +209,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Redirect("/Admin/UserManagement/Edit?userId=" + userId.ToString());
+            return this.Redirect("/Admin/UserManagement/Edit?userId=" + userId.ToString());
         }
     }
 }

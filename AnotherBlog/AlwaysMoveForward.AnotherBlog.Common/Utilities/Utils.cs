@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
         /// <returns></returns>
         public static string StripHtml(string inputString)
         {
-            string retVal = "";
+            string retVal = string.Empty;
 
             if (inputString != null)
             {

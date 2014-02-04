@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
         private void EstablishCurrentUserCookie(SecurityPrincipal currentPrincipal)
         {
-            if (currentPrincipal != null && currentPrincipal.CurrentUser!=null)
+            if (currentPrincipal != null && currentPrincipal.CurrentUser != null)
             {
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
@@ -195,7 +195,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     ModelState.AddModelError("email", "Please enter an email address.");
                 }
 
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     model.CurrentUser = Services.UserService.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
 

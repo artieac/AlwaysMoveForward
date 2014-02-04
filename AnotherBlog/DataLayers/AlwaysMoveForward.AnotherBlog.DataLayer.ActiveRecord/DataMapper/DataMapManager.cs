@@ -29,12 +29,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (blogDataMap == null)
+                if (this.blogDataMap == null)
                 {
-                    blogDataMap = new BlogDataMap();
+                    this.blogDataMap = new BlogDataMap();
                 }
 
-                return blogDataMap;
+                return this.blogDataMap;
             }
         }
 
@@ -43,12 +43,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (listDataMap == null)
+                if (this.listDataMap == null)
                 {
-                    listDataMap = new ListDataMap();
+                    this.listDataMap = new ListDataMap();
                 }
 
-                return listDataMap;
+                return this.listDataMap;
             }
         }
 
@@ -57,12 +57,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             get
             {
-                if (blogUserDataMap == null)
+                if (this.blogUserDataMap == null)
                 {
-                    blogUserDataMap = new BlogUserDataMap();
+                    this.blogUserDataMap = new BlogUserDataMap();
                 }
 
-                return blogUserDataMap;
+                return this.blogUserDataMap;
             }
         }
 

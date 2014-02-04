@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public override DataMapBase<BlogPost, BlogPostDTO> DataMapper
         {
-            get { return DataMapManager.Mappers().BlogPostDataMap;}
+            get { return DataMapManager.Mappers().BlogPostDataMap; }
         }
 
         public override string IdPropertyName
@@ -170,7 +170,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
-        public IList<BlogPost> GetByTag(int blogId, String tagText, bool publishedOnly)
+        public IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly)
         {
             IList<BlogPost> retVal = new List<BlogPost>();
 
@@ -356,9 +356,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             {
                 if (this.TagRepository != null)
                 {
-                    IList<String> tagNames = new List<String>();
+                    IList<string> tagNames = new List<string>();
 
-                    for(int i = 0; i < itemToSave.Tags.Count; i++)
+                    for (int i = 0; i < itemToSave.Tags.Count; i++)
                     {
                         tagNames.Add(itemToSave.Tags[i].Name);
                     }

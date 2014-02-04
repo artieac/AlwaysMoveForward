@@ -13,7 +13,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
             this.BlogSpecific = blogSpecific;
         }
 
-        public string RequiredRole{ get; set;}
-        public Boolean BlogSpecific{ get; set;}
+        public string RequiredRole { get; set; }
+
+        public Boolean BlogSpecific { get; set; }
     }
 }

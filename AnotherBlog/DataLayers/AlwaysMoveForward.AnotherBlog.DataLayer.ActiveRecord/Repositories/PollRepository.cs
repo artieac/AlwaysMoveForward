@@ -32,7 +32,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class PollRepository: ActiveRecordRepository<PollQuestion, PollQuestionDTO>, IPollRepository
+    public class PollRepository : ActiveRecordRepository<PollQuestion, PollQuestionDTO>, IPollRepository
     {
         public PollRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -46,15 +46,15 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public override DataMapBase<PollQuestion, PollQuestionDTO> DataMapper
         {
-            get { return new PollQuestionDataMap();}
+            get { return new PollQuestionDataMap(); }
         }
 
         public override string IdPropertyName
         {
-            get{ return "Id";}
+            get { return "Id"; }
         }
 
-        public IList<PollQuestion> GetAllByActiveFlag(Boolean isActive)
+        public IList<PollQuestion> GetAllByActiveFlag(bool isActive)
         {
             DetachedCriteria criteria = DetachedCriteria.For<PollQuestionDTO>();
             criteria.Add(Expression.Eq("IsActive", isActive));
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("Id", pollOptionId));
             PollOptionDTO foundOption = Castle.ActiveRecord.ActiveRecordMediator<PollOptionDTO>.FindOne(criteria);
 
-            if(foundOption!=null)
+            if (foundOption != null)
             {
                 retVal = this.DataMapper.Map(foundOption.Question);
             }

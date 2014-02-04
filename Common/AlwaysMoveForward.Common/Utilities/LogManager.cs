@@ -15,20 +15,20 @@ namespace AlwaysMoveForward.Common.Utilities
         {
             LogManager.currentLogger = null;
 
-            //Get Logger configuration from Config file
+            // Get Logger configuration from Config file
             LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.DefaultConfigurationSetting);
 
             if (logConfig != null)
             {
-                if (!String.IsNullOrEmpty(logConfig.LoggingClass) &&
-                    !String.IsNullOrEmpty(logConfig.LoggingAssembly))
+                if (!string.IsNullOrEmpty(logConfig.LoggingClass) &&
+                    !string.IsNullOrEmpty(logConfig.LoggingAssembly))
                 {
-                    //Create Logger instance of specified Logger class
+                    // Create Logger instance of specified Logger class
                     LogManager.currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
                 }
             }
 
-            //If null create deafult logger
+            // If null create deafult logger
             if (LogManager.currentLogger == null)
             {
                 LogManager.currentLogger = new DefaultLogger();

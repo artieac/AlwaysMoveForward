@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
         DomainType Create();
 
         int UnsavedId { get; }
-        string IdPropertyName{ get;}
+        string IdPropertyName { get; }
 
         DomainType GetById(int itemId);
         DomainType GetById(int itemId, int blogId);

@@ -169,7 +169,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             AutoMapper.Mapper.CreateMap<PollOptionDTO, PollOption>();
             AutoMapper.Mapper.CreateMap<PollQuestion, PollQuestionDTO>()
                 .ForMember(pq => pq.Options, pollOptions => pollOptions.ResolveUsing<PollOptionDtoListResolver>());
-            AutoMapper.Mapper.CreateMap<PollQuestionDTO, PollQuestion>(); AutoMapper.Mapper.CreateMap<Tag, TagDTO>()
+            AutoMapper.Mapper.CreateMap<PollQuestionDTO, PollQuestion>(); 
+            AutoMapper.Mapper.CreateMap<Tag, TagDTO>()
                 .ForMember(t => t.Blog, opt => opt.Ignore())
                 .ForMember(t => t.BlogEntries, opt => opt.Ignore());
             AutoMapper.Mapper.CreateMap<TagDTO, Tag>();

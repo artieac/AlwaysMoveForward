@@ -32,12 +32,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public int Id { get; set; }
 
         [Property("QuestionText")]
-        public String QuestionText { get; set; }
+        public string QuestionText { get; set; }
 
         [Property("Title")]
-        public String Title { get; set; }
+        public string Title { get; set; }
 
-        [HasMany(typeof(PollOptionDTO), Inverse=true)]
+        [HasMany(typeof(PollOptionDTO), Inverse = true)]
         public IList<PollOptionDTO> Options { get; set; }
     }
 }

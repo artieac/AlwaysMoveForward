@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if(pointEarner!=null)
+            if (pointEarner != null)
             {
                 retVal = this.Add(pointEarner, currentUser);
             }
@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 IList<Chart> earnerCharts = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarner.Id, currentUser.UserId);
 
-                if(earnerCharts==null || earnerCharts.Count==0)
+                if (earnerCharts == null || earnerCharts.Count == 0)
                 {
                     retVal = new Chart();
                     retVal.AdministratorId = currentUser.UserId;
@@ -71,17 +71,16 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart Edit(int chartId, String chartName, int pointEarnerId, User currentUser)
+        public Chart Edit(int chartId, string chartName, int pointEarnerId, User currentUser)
         {
             Chart retVal = null;
 
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if (retVal != null && pointEarner!=null)
+            if (retVal != null && pointEarner != null)
             {
                 if (retVal.AdministratorId == currentUser.UserId) 
-//                    retVal.PointEarner == pointEarner)
                 {
                     retVal.Name = chartName;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -98,7 +97,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if(retVal!=null)
+            if (retVal != null)
             {
                 if (retVal.AdministratorId == currentUser.UserId)
                 {
@@ -127,11 +126,11 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 Task targetTask = retVal.Tasks.FirstOrDefault(t => t.Id == taskId);
 
-                if(targetTask==null)
+                if (targetTask == null)
                 {
                     targetTask = this.PointChartRepositories.Tasks.GetById(taskId);
 
-                    if(targetTask!=null)
+                    if (targetTask != null)
                     {
                         retVal.Tasks.Add(targetTask);
                         retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -174,8 +173,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chart != null)
             {
-//                retVal = chart.CompletedTasks.FirstOrDefault(t => t.Task.Id == task.Id && t.DateCompleted.Date==dateCompleted.Date);
-
                 if (retVal == null)
                 {
                     if (numberOfTimesCompleted > 0)
@@ -196,10 +193,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             }
 
             using (this.UnitOfWork.BeginTransaction())
-            {
-//                chart.PointEarner.PointsEarned += pointsToAdd;
-                    
-                if(PointChartRepositories.Charts.Save(chart)!=null)
+            {                    
+                if (PointChartRepositories.Charts.Save(chart) != null)
                 {
                     this.UnitOfWork.EndTransaction(true);
                 }
@@ -220,8 +215,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chartPointEarner != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId,
-                                                                                     currentUser.UserId);
+                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId, currentUser.UserId);
             }
 
             return retVal;

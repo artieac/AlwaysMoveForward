@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public ActionResult Landing()
         {
             SiteModel model = new SiteModel();
-            return View(model);
+            return this.View(model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.SiteInfo = new SiteInfo();
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction("Index");
         }
     }
 }

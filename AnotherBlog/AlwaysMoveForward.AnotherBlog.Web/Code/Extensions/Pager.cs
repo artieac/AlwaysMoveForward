@@ -17,11 +17,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 {
     public class Pager
     {
-        private ViewContext viewContext;
         private readonly int pageSize;
         private readonly int currentPage;
         private readonly int totalItemCount;
         private readonly RouteValueDictionary linkWithoutPageValuesDictionary;
+        private ViewContext viewContext;
 
         public Pager(ViewContext viewContext, int pageSize, int currentPage, int totalItemCount, RouteValueDictionary valuesDictionary)
         {

@@ -23,10 +23,10 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
     public interface IAnotherBlogRepositoryManager : IRepositoryManager
     {
-        IBlogEntryRepository BlogEntries{ get;}
-        IBlogRepository Blogs{ get;}
-        IBlogUserRepository BlogUsers{ get;}
-        ITagRepository Tags{ get;}
+        IBlogEntryRepository BlogEntries { get; }
+        IBlogRepository Blogs { get; }
+        IBlogUserRepository BlogUsers { get; }
+        ITagRepository Tags { get; }
         IBlogListRepository BlogLists { get; }
         ICommentRepository CommentRepository { get; }
         IPollRepository PollRepository { get; }

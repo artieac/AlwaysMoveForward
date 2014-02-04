@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public int Id { get; set; }
         
         [Property("OptionText")]
-        public String OptionText { get; set; }
+        public string OptionText { get; set; }
 
         [BelongsTo("PollQuestionId", Type = typeof(PollQuestionDTO))]
         public PollQuestionDTO Question { get; set; }

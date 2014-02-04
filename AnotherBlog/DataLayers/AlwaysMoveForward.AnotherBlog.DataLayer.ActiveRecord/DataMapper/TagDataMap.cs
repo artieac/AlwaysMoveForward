@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         public override Tag Map(TagDTO source, Tag destination)
         {
-            if(destination==null)
+            if (destination == null)
             {
                 destination = new Tag();
             }
@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public override TagDTO Map(Tag source, TagDTO destination)
         {
-            if(destination==null)
+            if (destination == null)
             {
                 destination = new TagDTO();
             }

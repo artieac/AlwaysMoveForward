@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
             this.CommentId = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, "CommentId", UnsavedValue="-1")]
+        [PrimaryKey(PrimaryKeyType.Identity, "CommentId", UnsavedValue = "-1")]
         public int CommentId { get; set; }
 
         [Property("Status")]

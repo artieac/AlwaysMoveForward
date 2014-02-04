@@ -19,6 +19,6 @@ namespace AlwaysMoveForward.Common.DomainModel
 {
     public class DbInfo : IDbInfo
     {
-        public virtual int Version{ get; set;}
+        public virtual int Version { get; set; }
     }
 }

@@ -28,8 +28,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         }
 
         public Blog TargetBlog { get; set; }
-        public User CurrentUser{ get; set;}
-        public PagedList<User> UserList{ get; set;}
-        public IList<Role> RoleList{ get; set;}
+        public User CurrentUser { get; set; }
+        public PagedList<User> UserList { get; set; }
+        public IList<Role> RoleList { get; set; }
     }
 }

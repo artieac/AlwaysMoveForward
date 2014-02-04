@@ -57,13 +57,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public IDisposable BeginTransaction(IsolationLevel isolationLevel)
         {
-            transactionScope = new TransactionScope(TransactionMode.Inherits, isolationLevel, OnDispose.Commit);
-            return transactionScope;
+            this.transactionScope = new TransactionScope(TransactionMode.Inherits, isolationLevel, OnDispose.Commit);
+            return this.transactionScope;
         }
 
         public void EndTransaction(bool canCommit)
         {
-            if(this.transactionScope!=null)
+            if (this.transactionScope != null)
             {
                 if (canCommit == true)
                 {

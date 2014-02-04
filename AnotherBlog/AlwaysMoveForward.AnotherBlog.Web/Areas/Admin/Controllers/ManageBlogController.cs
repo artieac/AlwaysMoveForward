@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel();
-            return View(model);
+            return this.View(model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             SiteModel model = new SiteModel();
             model.Blogs = Services.BlogService.GetAll();
 
-            return View(model);
+            return this.View(model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
@@ -51,12 +51,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (savingBlog != null)
             {
-                if (blogName == "")
+                if (string.IsNullOrEmpty(blogName))
                 {
                     ViewData.ModelState.AddModelError("blogName", "Blog name is required.");
                 }
 
-                if (targetSubFolder == "")
+                if (string.IsNullOrEmpty(targetSubFolder))
                 {
                     ViewData.ModelState.AddModelError("targetSubFolder", "Sub folder is required.");
                 }
@@ -157,7 +157,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.Common.TargetBlog = model.Common.UserBlogs[0];
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -214,7 +214,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             model.EntryList = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-            return View(model);
+            return this.View(model);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -278,10 +278,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
             else
             {
-                RedirectToAction("Index");
+                this.RedirectToAction("Index");
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -331,13 +331,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             retVal.EntryId = currentPost.EntryId;
             retVal.BlogSubFolder = model.Common.TargetBlog.SubFolder;
 
-            return Json(retVal);
+            return this.Json(retVal);
         }
 
         #region Comment Management
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public JsonResult GetComments(string blogSubFolder, String status)
+        public JsonResult GetComments(string blogSubFolder, string status)
         {
             IList<Comment> model = new List<Comment>();
 
@@ -345,7 +345,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
-                if (status==null || String.Compare(status, "All", true)==0)
+                if (status == null || String.Compare(status, "All", true) == 0)
                 {
                     model = this.Services.CommentService.GetAll(targetBlog);
                 }
@@ -408,7 +408,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
+            return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
@@ -446,8 +446,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
-
     }
 }

@@ -14,7 +14,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class ChartRepository: ActiveRecordRepository<Chart, ChartDTO>
+    public class ChartRepository : ActiveRecordRepository<Chart, ChartDTO>
     {
         public ChartRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork, null)
@@ -61,7 +61,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
             return this.Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));   
         }
-        public IList<Chart> GetByAdministratorId(String firstName, String lastName, int administratorId)
+        public IList<Chart> GetByAdministratorId(string firstName, string lastName, int administratorId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<ChartDTO>();
             criteria.Add(Expression.Eq("AdministratorId", administratorId));

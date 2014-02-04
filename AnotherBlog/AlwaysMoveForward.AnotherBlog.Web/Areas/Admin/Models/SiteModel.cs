@@ -12,6 +12,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
     {
         public AdminCommon Common { get; set; }
         public SiteInfo SiteInfo { get; set; }
-        public IList<Blog> Blogs{ get; set;}
+        public IList<Blog> Blogs { get; set; }
     }
 }

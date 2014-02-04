@@ -218,12 +218,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 ViewData.ModelState.AddModelError("authorName", "Please enter your name.");
             }
 
-            if(authorEmail == "")
+            if (authorEmail == "")
             {
                 ViewData.ModelState.AddModelError("authorEmail", "Please enter your email.");
             }
 
-            if(commentText=="")
+            if (commentText == "")
             {
                 ViewData.ModelState.AddModelError("commentText", "Please enter a comment.");
             }

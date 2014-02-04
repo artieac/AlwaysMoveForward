@@ -51,7 +51,7 @@ namespace AlwaysMoveForward.Common.Business
 
             try
             {
-                SmtpClient smtpClient = new SmtpClient(this.emailConfig.SmtpServer, emailConfig.SmtpPort);
+                SmtpClient smtpClient = new SmtpClient(this.emailConfig.SmtpServer, this.emailConfig.SmtpPort);
                 smtpClient.Send(mail);
             }
             catch (Exception e)

@@ -23,7 +23,7 @@ using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.PointChart.DataLayer
 {
-    public class RepositoryManager : ServiceRegisterBase, IPointChartRepositoryManager
+    public class RepositoryManager : IPointChartRepositoryManager
     {
         public RepositoryManager(IUnitOfWork unitOfWork)
         {
@@ -32,72 +32,131 @@ namespace AlwaysMoveForward.PointChart.DataLayer
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public TServiceInterface ResolveOrRegister<TServiceInterface, TService>()
-            where TServiceInterface : class
-            where TService : class, TServiceInterface
-        {
-            TServiceInterface retVal = this.Resolve<TServiceInterface>();
-
-            if (retVal == null)
-            {
-                TServiceInterface newService = Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   this.UnitOfWork
-                                                               }) as TServiceInterface;
-
-                if (newService != null)
-                {
-                    retVal = this.RegisterService<TServiceInterface>(newService);
-                }
-            }
-
-            return retVal;
-        }
+        private ChartRepository chartRepository;
+        private CompletedTaskRepository completedTaskRepository;
+        private TaskRepository taskRepository;
+        private IDbInfoRepository databaseInfoRepository;
+        private ISiteInfoRepository siteInfoRepository;
+        private IRoleRepository roleRepository;
+        private IUserRepository userRepository;
+        private PointEarnerRepository pointEarnerRepository;
+        private PointsSpentRepository pointsSpentRepository;
 
         public ChartRepository Charts
         {
-            get { return this.ResolveOrRegister<ChartRepository, ChartRepository>();}
+            get
+            {
+                if (this.chartRepository == null)
+                {
+                    this.chartRepository = new ChartRepository(this.UnitOfWork);
+                }
+
+                return this.chartRepository;
+            }
         }
 
         public CompletedTaskRepository CompletedTask
         {
-            get { return this.ResolveOrRegister<CompletedTaskRepository, CompletedTaskRepository>(); }
+            get
+            {
+                if (this.completedTaskRepository == null)
+                {
+                    this.completedTaskRepository = new CompletedTaskRepository(this.UnitOfWork);
+                }
+
+                return this.completedTaskRepository;
+            }
         }
 
         public TaskRepository Tasks
         {
-            get { return this.ResolveOrRegister<TaskRepository, TaskRepository>(); }
+            get
+            {
+                if (this.taskRepository == null)
+                {
+                    this.taskRepository = new TaskRepository(this.UnitOfWork);
+                }
+
+                return this.taskRepository;
+            }
         }
 
         public IDbInfoRepository DbInfo
         {
-            get { return this.ResolveOrRegister<IDbInfoRepository, DbInfoRepository>(); }
+            get
+            {
+                if (this.databaseInfoRepository == null)
+                {
+                    this.databaseInfoRepository = new DbInfoRepository(this.UnitOfWork);
+                }
+
+                return this.databaseInfoRepository;
+            }
         }
 
         public IRoleRepository Roles
         {
-            get { return this.ResolveOrRegister<IRoleRepository, RoleRepository>(); }
+            get
+            {
+                if (this.roleRepository == null)
+                {
+                    this.roleRepository = new RoleRepository(this.UnitOfWork);
+                }
+
+                return this.roleRepository;
+            }
         }
 
         public ISiteInfoRepository SiteInfo
         {
-            get { return this.ResolveOrRegister<ISiteInfoRepository, SiteInfoRepository>(); }
+            get
+            {
+                if (this.siteInfoRepository == null)
+                {
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
+                }
+
+                return this.siteInfoRepository;
+            }
         }
 
         public IUserRepository Users
         {
-            get { return this.ResolveOrRegister<IUserRepository, UserRepository>(); }
+            get
+            {
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new UserRepository(this.UnitOfWork);
+                }
+
+                return this.userRepository;
+            }
         }
 
         public PointEarnerRepository PointEarner
         {
-            get { return this.ResolveOrRegister<PointEarnerRepository, PointEarnerRepository>(); }
+            get
+            {
+                if (this.pointEarnerRepository == null)
+                {
+                    this.pointEarnerRepository = new PointEarnerRepository(this.UnitOfWork);
+                }
+
+                return this.pointEarnerRepository;
+            }
         }
 
         public PointsSpentRepository PointsSpent
         {
-            get { return this.ResolveOrRegister<PointsSpentRepository, PointsSpentRepository>(); }
+            get
+            {
+                if (this.pointsSpentRepository == null)
+                {
+                    this.pointsSpentRepository = new PointsSpentRepository(this.UnitOfWork);
+                }
+
+                return this.pointsSpentRepository;
+            }
         }
     }
 }

@@ -19,7 +19,8 @@ namespace AlwaysMoveForward.Common.DomainModel
 {
     public class Role : IRole
     {
-        public virtual int RoleId{ get; set;}
-        public virtual string Name{ get; set;}
+        public virtual int RoleId { get; set; }
+
+        public virtual string Name { get; set; }
     }
 }

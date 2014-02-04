@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
 
         public void EndTransaction(bool canCommit)
         {
-            if(this.transactionScope!=null)
+            if (this.transactionScope != null)
             {
                 if (canCommit == true)
                 {

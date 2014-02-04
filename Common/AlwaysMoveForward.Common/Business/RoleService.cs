@@ -51,7 +51,7 @@ namespace AlwaysMoveForward.Common.Business
         /// <returns></returns>
         public Role GetDefaultRole()
         {
-            return Repositories.Roles.GetById(DefaultRoleId);
+            return this.Repositories.Roles.GetById(DefaultRoleId);
         }
         /// <summary>
         /// Get all roles in the system
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.Common.Business
         /// <returns></returns>
         public IList<Role> GetAll()
         {
-            return Repositories.Roles.GetAll();
+            return this.Repositories.Roles.GetAll();
         }
         /// <summary>
         /// Get a role by a specific Id
@@ -68,16 +68,16 @@ namespace AlwaysMoveForward.Common.Business
         /// <returns></returns>
         public Role GetById(int roleId)
         {
-            return Repositories.Roles.GetById(roleId);
+            return this.Repositories.Roles.GetById(roleId);
         }
         /// <summary>
         /// Get a role by a role name
         /// </summary>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public Role GetByName(String roleName)
+        public Role GetByName(string roleName)
         {
-            return Repositories.Roles.GetByProperty("Name", roleName);
+            return this.Repositories.Roles.GetByProperty("Name", roleName);
         }
     }
 }

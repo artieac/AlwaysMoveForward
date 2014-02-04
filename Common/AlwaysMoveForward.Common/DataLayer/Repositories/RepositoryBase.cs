@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
     public abstract class RepositoryBase<DomainType, DTOType> 
         : IRepository<DomainType> 
-        where DomainType  : class, new()
+        where DomainType : class, new()
         where DTOType : class, new()
     {
         public RepositoryBase(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
 
         public virtual string IdPropertyName
         {
-            get{ return "Id";}
+            get { return "Id"; }
         }
 
         public virtual DomainType GetById(int itemId)

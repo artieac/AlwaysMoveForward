@@ -17,7 +17,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
 {
     public class ServiceResponse<ReturnClass> where ReturnClass : class
     {
-        public ServiceResponse(int errorCode, String errorMessage)
+        public ServiceResponse(int errorCode, string errorMessage)
         {
             this.ErrorCode = errorCode;
             this.ErrorMessage = errorMessage;
@@ -30,9 +30,9 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
             this.HasError = false;
         }
 
-        public Boolean HasError{ get; set;}
+        public bool HasError { get; set; }
         public int ErrorCode { get; set; }
-        public String ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
         public ReturnClass ReturnValue { get; set; }
     }
 }

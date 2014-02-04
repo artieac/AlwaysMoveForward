@@ -25,8 +25,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.PostTagId = -1;
         }
 
-        public virtual int PostTagId{ get; set;}
+        public virtual int PostTagId { get; set; }
         public virtual Tag Tag { get; set; }
-        public virtual BlogPost Post{ get; set;}
+        public virtual BlogPost Post { get; set; }
     }
 }

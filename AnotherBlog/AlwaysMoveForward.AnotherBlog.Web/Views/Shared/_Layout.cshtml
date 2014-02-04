@@ -44,7 +44,7 @@
             </div>
         </div>    
     </div>                     
-    @if(ViewBag.BlogSubFolder!=null && !String.IsNullOrEmpty(ViewBag.BlogSubFolder))
+    @if(ViewBag.BlogSubFolder!=null && !string.IsNullOrEmpty(ViewBag.BlogSubFolder))
     {
         @Html.Partial("_TagControl")        
         @Html.Partial("_BlogListsControl")

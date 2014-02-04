@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
         private ServiceManager serviceManager = null;
         private static Dictionary<int, Role> userRoles;
 
-        public SecurityPrincipal(User currentUser) : this(currentUser, false){}
+        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
 
         public SecurityPrincipal(User currentUser, bool isAuthenticated)
         {
@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             {
                 if (this.serviceManager == null)
                 {
-                    serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return this.serviceManager;
@@ -99,16 +99,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
         public string AuthenticationType
         {
-            get { return ""; }
+            get { return string.Empty; }
         }
 
         public string Name
         {
             get 
             {
-                string retVal = "";
+                string retVal = string.Empty;
                 
-                if(this.CurrentUser!=null)
+                if (this.CurrentUser != null)
                 {
                     retVal = this.CurrentUser.UserName;
                 }

@@ -22,14 +22,14 @@ namespace AlwaysMoveForward.Common.Configuration
         public const string ManagerAssemblySetting = "ManagerAssembly";
         public const string UnitOfWorkClassSetting = "UnitOfWorkClass";
 
-        public const String DefaultConfiguration = "AlwaysMoveForward/RepositoryConfiguration";
+        public const string DefaultConfiguration = "AlwaysMoveForward/RepositoryConfiguration";
 
         public RepositoryConfiguration() { }
         public RepositoryConfiguration(string managerClass, string managerAssembly, string unitOfWorkClass)
         {
             this.ManagerClass = managerClass;
             this.ManagerAssembly = managerAssembly;
-            this.UnitOfWorkClass = UnitOfWorkClass;
+            this.UnitOfWorkClass = unitOfWorkClass;
         }
         /// <summary>
         /// Define the email address outgoing emails are tagged with.

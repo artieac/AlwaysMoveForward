@@ -148,7 +148,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("CommentId", itemToDelete.CommentId));
             EntryCommentsDTO dtoItem = ActiveRecordMediator<EntryCommentsDTO>.FindOne(criteria);
 
-            if(dtoItem!=null)
+            if (dtoItem != null)
             {
                 retVal = this.Delete(dtoItem);
             }

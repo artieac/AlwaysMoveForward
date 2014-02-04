@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
         public const string UpdateDatabaseSetting = "UpdateDb";
         public const string EnableSSLSetting = "EnableSSL";
         public const string DefaultSiteNameSetting = "DefaultSiteName";
-        public const String DefaultConfiguration = "PointChart/WebSiteConfiguration";
+        public const string DefaultConfiguration = "PointChart/WebSiteConfiguration";
 
         public WebSiteConfiguration() { }
         public WebSiteConfiguration(bool updateDb)

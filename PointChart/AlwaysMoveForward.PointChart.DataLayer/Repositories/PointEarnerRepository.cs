@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
                 {
                     for (int i = 0; i < itemToSave.PointsSpent.Count; i++)
                     {
-                        Boolean shouldAdd = true;
+                        bool shouldAdd = true;
 
                         for (int j = 0; j < dtoItem.PointsSpent.Count; j++)
                         {
@@ -75,10 +75,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
                             }
                         }
 
-                        if(shouldAdd==true)
+                        if (shouldAdd == true)
                         {
                             PointsSpentDTO pointsSpent = this.Map(dtoItem, itemToSave.PointsSpent[i]);
-                            pointsSpent = ((RepositoryManager) this.RepositoryManager).PointsSpent.Save(pointsSpent);
+                            pointsSpent = ((RepositoryManager)this.RepositoryManager).PointsSpent.Save(pointsSpent);
                             dtoItem.PointsSpent.Add(pointsSpent);
                             break;
                         }
@@ -86,7 +86,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
                     for (int i = dtoItem.PointsSpent.Count - 1; i > -1; i--)
                     {
-                        Boolean shouldRemove = true;
+                        bool shouldRemove = true;
 
                         for (int j = 0; j < itemToSave.PointsSpent.Count; j++)
                         {
@@ -125,7 +125,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return retVal;
         }
 
-        public PointEarner GetByEmail(String email, int administratorId)
+        public PointEarner GetByEmail(string email, int administratorId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
             criteria.Add(Expression.Eq("Email", email));
@@ -134,7 +134,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return this.Map(Castle.ActiveRecord.ActiveRecordMediator<PointEarnerDTO>.FindOne(criteria));
         }
 
-        public PointEarner GetByFirstNameLastName(String firstName, String lastName, int administratorId)
+        public PointEarner GetByFirstNameLastName(string firstName, string lastName, int administratorId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
             criteria.Add(Expression.Eq("FirstName", firstName));

@@ -15,11 +15,11 @@ using System.Text;
 
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
-using CommonBusiness = AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
+using CommonBusiness = AlwaysMoveForward.Common.Business;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
@@ -27,14 +27,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public new IAnotherBlogRepositoryManager RepositoryManager { get { return base.RepositoryManager as IAnotherBlogRepositoryManager; } }
 
-        public ServiceManager(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) {}
+        public ServiceManager(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) { }
 
         private BlogEntryService blogEntryService;
         public BlogEntryService BlogEntryService
         {
             get
             {
-                if(this.blogEntryService==null)
+                if (this.blogEntryService == null)
                 {
                     this.blogEntryService = new BlogEntryService(this, this.RepositoryManager);
                 }
@@ -132,12 +132,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             get
             {
-                if (commentService == null)
+                if (this.commentService == null)
                 {
-                    commentService = new CommentService(this.UnitOfWork, this.RepositoryManager);
+                    this.commentService = new CommentService(this.UnitOfWork, this.RepositoryManager);
                 }
 
-                return commentService;
+                return this.commentService;
             }
         }
 
@@ -146,12 +146,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             get
             {
-                if (pollService == null)
+                if (this.pollService == null)
                 {
-                    pollService = new CommonBusiness.PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
+                    this.pollService = new CommonBusiness.PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
                 }
 
-                return pollService;
+                return this.pollService;
             }
         }
     }

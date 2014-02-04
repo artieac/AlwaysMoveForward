@@ -31,11 +31,11 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
         }
 
-        public PointEarner AddOrUpdate(String firstName, String lastName, String email, User currentUser)
+        public PointEarner AddOrUpdate(string firstName, string lastName, string email, User currentUser)
         {
             PointEarner retVal = null;
             
-            if(email==null)
+            if (email == null)
             {
                 retVal = this.PointChartRepositories.PointEarner.GetByFirstNameLastName(firstName, lastName, currentUser.UserId);
             }
@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 retVal = this.PointChartRepositories.PointEarner.GetByEmail(email, currentUser.UserId);
             }
 
-            if(retVal==null)
+            if (retVal == null)
             {
                 retVal = new PointEarner();
             }
@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public PointEarner SpendPoints(int pointEarnerId, double pointsToSpend, DateTime dateSpent, String description)
+        public PointEarner SpendPoints(int pointEarnerId, double pointsToSpend, DateTime dateSpent, string description)
         {
             PointEarner retVal = this.GetById(pointEarnerId);
 
@@ -92,11 +92,11 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (retVal != null)
             {
-                if(retVal.PointsSpent!=null)
+                if (retVal.PointsSpent != null)
                 {
-                    for(int i = 0; i < retVal.PointsSpent.Count; i++)
+                    for (int i = 0; i < retVal.PointsSpent.Count; i++)
                     {
-                        if(retVal.PointsSpent[i].Id==spentPointsId)
+                        if (retVal.PointsSpent[i].Id == spentPointsId)
                         {
                             retVal.PointsSpent.RemoveAt(i);
                             break;

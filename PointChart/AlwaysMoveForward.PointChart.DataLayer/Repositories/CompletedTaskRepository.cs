@@ -15,7 +15,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class CompletedTaskRepository: ActiveRecordRepository<CompletedTask, CompletedTaskDTO>
+    public class CompletedTaskRepository : ActiveRecordRepository<CompletedTask, CompletedTaskDTO>
     {
         public CompletedTaskRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork, null)

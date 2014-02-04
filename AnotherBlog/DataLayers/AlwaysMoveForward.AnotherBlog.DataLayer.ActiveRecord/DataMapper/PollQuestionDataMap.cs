@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             PollQuestionDTO retVal = AutoMapper.Mapper.Map(source, destination);
 
-            foreach(PollOptionDTO currentOption in retVal.Options)
+            foreach (PollOptionDTO currentOption in retVal.Options)
             {
                 currentOption.Question = retVal;
 

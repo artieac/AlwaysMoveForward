@@ -16,32 +16,31 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
         public JsonResult GetAll()
         {
             IList<PointEarner> retVal = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         [RequestAuthorizationAttribute]
         public ActionResult Delete()
         {
-            return View();
+            return this.View();
         }
 
         [RequestAuthorizationAttribute]
-        public JsonResult Update(String firstName, String lastName, String email)
+        public JsonResult Update(string firstName, string lastName, string email)
         {
             this.Services.PointEarner.AddOrUpdate(firstName, lastName, email, this.CurrentPrincipal.CurrentUser);
             IList<PointEarner> retVal = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         [RequestAuthorizationAttribute]
-        public JsonResult Add(String firstName, String lastName, String email)
+        public JsonResult Add(string firstName, string lastName, string email)
         {
             this.Services.PointEarner.AddOrUpdate(firstName, lastName, email, this.CurrentPrincipal.CurrentUser);
             IList<PointEarner> retVal = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        //
         // GET: /API/ChartAPI/
         [RequestAuthorizationAttribute]
         public JsonResult GetChartsByPointEarnerId(int id)
@@ -49,7 +48,7 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
             PointEarnerModel retVal = new PointEarnerModel();
             retVal.PointEarner = this.Services.PointEarner.GetById(id);
             retVal.Charts = retVal.PointEarner.Charts;
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
     }

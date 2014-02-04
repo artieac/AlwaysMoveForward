@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.Common.Business
 {
     public class UserService
     {
-        private const String GuestUserName = "guest";
+        private const string GuestUserName = "guest";
         private static User guestUser = null;
 
         public UserService(ServiceContext serviceContext)
@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.Common.Business
 
         private string GenerateNewPassword()
         {
-            string retVal = "";
+            string retVal = string.Empty;
             Random random = new Random();
             string legalChars = "abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890";
             StringBuilder sb = new StringBuilder();
@@ -72,7 +72,7 @@ namespace AlwaysMoveForward.Common.Business
         {
             if (UserService.guestUser == null)
             {
-                UserService.guestUser = Repositories.Users.GetByUserName(UserService.GuestUserName);
+                UserService.guestUser = this.Repositories.Users.GetByUserName(UserService.GuestUserName);
             }
 
             return UserService.guestUser;
@@ -80,7 +80,7 @@ namespace AlwaysMoveForward.Common.Business
 
         public User Login(string userName, string password)
         {
-            User retVal = Repositories.Users.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
+            User retVal = this.Repositories.Users.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
 
             if (retVal != null)
             {
@@ -99,10 +99,10 @@ namespace AlwaysMoveForward.Common.Business
 
             if (userId != 0)
             {
-                userToSave = Repositories.Users.GetById(userId);
+                userToSave = this.Repositories.Users.GetById(userId);
             }
 
-            if(userToSave==null)
+            if (userToSave == null)
             {
                 userToSave = this.Create();
             }
@@ -119,45 +119,45 @@ namespace AlwaysMoveForward.Common.Business
             }
             else
             {
-                userToSave.About = "";
+                userToSave.About = string.Empty;
             }
 
-            if (password != "")
+            if (password != string.Empty)
             {
                 userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password);
             }
 
             userToSave.Email = email;
 
-            return Repositories.Users.Save(userToSave);
+            return this.Repositories.Users.Save(userToSave);
         }
 
 
         public IList<User> GetAll()
         {
-            return Repositories.Users.GetAll();
+            return this.Repositories.Users.GetAll();
         }
 
         public User GetByUserName(string userName)
         {
-            return Repositories.Users.GetByUserName(userName);
+            return this.Repositories.Users.GetByUserName(userName);
         }
 
         public User GetById(int userId)
         {
-            return Repositories.Users.GetById(userId);
+            return this.Repositories.Users.GetById(userId);
         }
 
         public void Delete(int userId)
         {
-            User targetUser = Repositories.Users.GetById(userId);
+            User targetUser = this.Repositories.Users.GetById(userId);
 
             using (this.UnitOfWork.BeginTransaction())
             {
                 if (targetUser != null)
                 {
-                    Repositories.Users.DeleteDependencies(targetUser);
-                    Repositories.Users.Delete(targetUser);
+                    this.Repositories.Users.DeleteDependencies(targetUser);
+                    this.Repositories.Users.Delete(targetUser);
                     this.UnitOfWork.EndTransaction(true);
                 }
             }
@@ -165,7 +165,7 @@ namespace AlwaysMoveForward.Common.Business
 
         public void SendPassword(string userEmail, EmailConfiguration emailConfig)
         {
-            User changePasswordUser = Repositories.Users.GetByEmail(userEmail);
+            User changePasswordUser = this.Repositories.Users.GetByEmail(userEmail);
 
             string emailBody = "A user was not found with that email address.  Please try again.";
 
@@ -176,7 +176,7 @@ namespace AlwaysMoveForward.Common.Business
                 emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
                 changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(newPassword);
 
-                Repositories.Users.Save(changePasswordUser);
+                this.Repositories.Users.Save(changePasswordUser);
             }
 
             EmailManager emailManager = new EmailManager(emailConfig);
@@ -185,7 +185,7 @@ namespace AlwaysMoveForward.Common.Business
 
         public User GetByEmail(string userEmail)
         {
-            return Repositories.Users.GetByEmail(userEmail);
+            return this.Repositories.Users.GetByEmail(userEmail);
         }
     }
 }

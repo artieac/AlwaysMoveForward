@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         private DTOType GetDtoById(DomainType domainEntity)
         {
-            Object idValue = typeof(DomainType).GetProperty(this.IdPropertyName).GetValue(domainEntity,null);
+            object idValue = typeof(DomainType).GetProperty(this.IdPropertyName).GetValue(domainEntity, null);
 
             DetachedCriteria criteria = DetachedCriteria.For<DTOType>();
             criteria.Add(Expression.Eq(this.IdPropertyName, idValue));

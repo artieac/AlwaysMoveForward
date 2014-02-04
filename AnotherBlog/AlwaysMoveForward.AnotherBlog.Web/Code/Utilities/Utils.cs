@@ -34,8 +34,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
                 retVal += blogEntry.DatePosted.Year + "/";
                 retVal += blogEntry.DatePosted.Month + "/";
                 retVal += blogEntry.DatePosted.Day + "/";
-//                retVal += HttpUtility.UrlEncode(blogEntry.Title);
-//                retVal += blogEntry.EntryId;// +"/";
                 retVal += HttpUtility.UrlEncode(blogEntry.Title.Replace(" ", "_"));
             }
 
@@ -50,14 +48,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             {
                 retVal = "http://" + siteAuthority;
 
-                if (!String.IsNullOrEmpty(blogSubFolder))
+                if (!string.IsNullOrEmpty(blogSubFolder))
                 {
                     retVal += "/" + blogSubFolder;
                 }
             }
             else
             {
-                if (!String.IsNullOrEmpty(blogSubFolder))
+                if (!string.IsNullOrEmpty(blogSubFolder))
                 {
                     retVal = "/" + blogSubFolder;
                 }
@@ -75,7 +73,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
         {
             string retVal = "http://" + siteAuthority;
 
-            if (!String.IsNullOrEmpty(blogSubFolder))
+            if (!string.IsNullOrEmpty(blogSubFolder))
             {
                 retVal += "/" + blogSubFolder;
             }

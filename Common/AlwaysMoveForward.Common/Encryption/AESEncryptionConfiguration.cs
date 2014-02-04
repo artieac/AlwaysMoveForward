@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.Common.Encryption
             return AESEncryptionConfiguration.GetInstance(DefaultSection);
         }
 
-        public static AESEncryptionConfiguration GetInstance(String configurationSection)
+        public static AESEncryptionConfiguration GetInstance(string configurationSection)
         {
             if (configurationInstance == null)
             {

@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public int Id { get; set; }
 
         [Property("Address", ColumnType = "String")]
-        public String AddressString
+        public string AddressString
         {
             get { return this.Address.ToString(); }
             set { this.Address = IPAddress.Parse(value); }

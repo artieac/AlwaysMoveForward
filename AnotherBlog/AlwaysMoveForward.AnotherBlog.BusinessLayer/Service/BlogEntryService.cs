@@ -102,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 string trimmedName = names[i].Trim();
 
-                if (trimmedName != String.Empty)
+                if (trimmedName != string.Empty)
                 {
                     Tag currentTag = AnotherBlogRepositories.Tags.GetByName(trimmedName, targetPost.Blog.BlogId);
 

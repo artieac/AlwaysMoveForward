@@ -35,9 +35,9 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             }
         }
 
-        public static Boolean IsSiteAdministrator()
+        public static bool IsSiteAdministrator()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
@@ -49,16 +49,16 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             return retVal;
         }
 
-        public static Boolean CanAccessAdminTool()
+        public static bool CanAccessAdminTool()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
-                if(currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString()) ||
-                   currentPrincipal.IsInRole(RoleType.Administrator.ToString()))
+                if (currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString()) ||
+                    currentPrincipal.IsInRole(RoleType.Administrator.ToString()))
                 {
                     retVal = true;
                 }

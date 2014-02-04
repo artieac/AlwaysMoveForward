@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             // Create HtmlTextWriter  
             StringWriter sw = new StringWriter();
 
-            foreach (String header in this.ColumnHeaders)
+            foreach (string header in this.ColumnHeaders)
             {
                 sw.Write(header);
                 sw.Write(",");
@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             {
                 foreach (string header in this.ColumnHeaders)
                 {
-                    string strValue = "";
+                    string strValue = string.Empty;
 
                     if (this.Rows[i].ContainsKey(header))
                     {
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             HttpContext context = HttpContext.Current;
             context.Response.Clear();
             context.Response.AddHeader("content-disposition", "attachment;filename=" + fileName);
-            context.Response.Charset = "";
+            context.Response.Charset = string.Empty;
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             context.Response.ContentType = contentType;
             context.Response.Write(content);

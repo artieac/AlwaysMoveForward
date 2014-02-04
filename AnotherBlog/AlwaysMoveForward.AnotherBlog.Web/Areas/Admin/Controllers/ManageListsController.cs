@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.BlogLists = Services.BlogListService.GetByBlog(model.Common.TargetBlog);
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult DeleteList(string blogSubFolder, int listId)
@@ -52,10 +52,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
+            return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
         }
 
-        public JsonResult EditList(string blogSubFolder, int listId, String listName, Boolean showOrdered)
+        public JsonResult EditList(string blogSubFolder, int listId, string listName, bool showOrdered)
         {
             AjaxBlogListModel model = new AjaxBlogListModel();
             model.BlogSubFolder = blogSubFolder;
@@ -65,7 +65,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
-                if (listName == "")
+                if (string.IsNullOrEmpty(listName))
                 {
                     ViewData.ModelState.AddModelError("listName", "Please enter a name");
                 }
@@ -93,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.BlogListId = currentList.Id;
             }
 
-            return Json(model);
+            return this.Json(model);
         }
 
         public JsonResult EditListItem(string blogSubFolder, int blogListId, int editListItemId, string editListItemName, string editListItemRelatedLink, int editListItemDisplayOrder)
@@ -106,7 +106,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (currentList != null)
             {
-                if (editListItemName == "")
+                if (string.IsNullOrEmpty(editListItemName))
                 {
                     ViewData.ModelState.AddModelError("itemName", "Please enter a name for the item.");
                 }
@@ -129,7 +129,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             model.BlogListId = currentList.Id;
             model.BlogListItemId = editListItemId;
 
-            return Json(model);
+            return this.Json(model);
         }
 
         public ActionResult DeleteListItem(string blogSubFolder, int listItemId, int blogListId)
@@ -154,16 +154,16 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
+            return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
         }
 
-        public JsonResult GetAllListsByBlog(String blogSubFolder)
+        public JsonResult GetAllListsByBlog(string blogSubFolder)
         {
             IList<BlogList> retVal = new List<BlogList>();
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
 
             retVal = this.Services.BlogListService.GetByBlog(targetBlog);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AddList(string blogSubFolder, String name, Boolean showOrdered)
@@ -173,7 +173,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
-                if (name == "")
+                if (string.IsNullOrEmpty(name))
                 {
                     ViewData.ModelState.AddModelError("newListName", "Please enter a name");
                 }
@@ -202,7 +202,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public JsonResult GetBlogListItems(int listId)
         {
             BlogList retVal = this.Services.BlogListService.GetById(listId);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
     }
 }

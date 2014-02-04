@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public bool IsSiteAdministrator { get; set; }
 
         [Property("About", ColumnType = "StringClob")]
-        public String About { get; set; }
+        public string About { get; set; }
 
         [Property("DisplayName")]
         public string DisplayName { get; set; }

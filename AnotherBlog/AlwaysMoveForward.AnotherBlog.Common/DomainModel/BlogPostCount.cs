@@ -17,7 +17,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
     public class BlogPostCount
     {
-        public int PostCount{ get; set;}
-        public DateTime MaxDate{ get; set;}
+        public int PostCount { get; set; }
+
+        public DateTime MaxDate { get; set; }
     }
 }

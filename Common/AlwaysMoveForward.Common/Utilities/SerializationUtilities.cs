@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class SerializationUtilities
     {
-        static public XmlElement SerializeObjectToXml(object sourceData)
+        public static XmlElement SerializeObjectToXml(object sourceData)
         {
             XmlElement retVal = null;
 
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.Common.Utilities
             return retVal;
         }
 
-        static public object DeserializeXmlToObject(XmlElement sourceData, Type targetType)
+        public static object DeserializeXmlToObject(XmlElement sourceData, Type targetType)
         {
             object retVal = null;
 
@@ -61,7 +61,7 @@ namespace AlwaysMoveForward.Common.Utilities
             return retVal;
         }
 
-        static public object DeserializeXmlToObject(XmlElement sourceData, Type targetType, string defaultNamespace)
+        public static object DeserializeXmlToObject(XmlElement sourceData, Type targetType, string defaultNamespace)
         {
             object retVal = null;
 
@@ -78,6 +78,5 @@ namespace AlwaysMoveForward.Common.Utilities
 
             return retVal;
         }
-
     }
 }

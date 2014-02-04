@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.Common.Configuration
         public const string ConnectionStringSetting = "ConnectionString";
         public const string AdminConnectionStringSetting = "AdminConnectionString";
 
-        public const String DefaultSection = "AlwaysMoveForward/DatabaseConfiguration";
+        public const string DefaultSection = "AlwaysMoveForward/DatabaseConfiguration";
 
         private static DatabaseConfiguration configurationInstance;
 
@@ -35,9 +35,9 @@ namespace AlwaysMoveForward.Common.Configuration
             return configurationInstance;
         }
 
-        public static String GetConnectionString()
+        public static string GetConnectionString()
         {
-            string retVal = "";
+            string retVal = string.Empty;
             DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
 
             if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.ConnectionString] != null)
@@ -48,9 +48,9 @@ namespace AlwaysMoveForward.Common.Configuration
             return retVal;
         }
 
-        public static String GetAdminConnectionString()
+        public static string GetAdminConnectionString()
         {
-            string retVal = "";
+            string retVal = string.Empty;
             DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
 
             if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.AdminConnectionString] != null)

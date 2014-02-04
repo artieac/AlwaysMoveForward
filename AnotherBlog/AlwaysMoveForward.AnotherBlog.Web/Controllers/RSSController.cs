@@ -49,7 +49,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 IList<Blog> allBlogs = this.Services.BlogService.GetAll();
 
-                for(int i = 0; i < allBlogs.Count; i++)
+                for (int i = 0; i < allBlogs.Count; i++)
                 {
                     model.BlogEntries[allBlogs[i]] = Services.BlogEntryService.GetAllByBlog(allBlogs[i], true, 10);
                 }
@@ -74,16 +74,16 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 IList<Blog> allBlogs = this.Services.BlogService.GetAll();
 
-                for(int i =0; i < allBlogs.Count; i++)
+                for (int i = 0; i < allBlogs.Count; i++)
                 {
                     IList<BlogPost> blogEntries = Services.BlogEntryService.GetAllByBlog(allBlogs[i], true);
                     model.BlogEntries[allBlogs[i]] = blogEntries;
 
                     DateTime mostRecent = DateTime.MinValue;
 
-                    if(blogEntries!=null)
+                    if (blogEntries != null)
                     {
-                        if(blogEntries.Count > 0)
+                        if (blogEntries.Count > 0)
                         {
                             mostRecent = blogEntries[0].DatePosted;
                         }
@@ -124,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 IList<Blog> allBlogs = this.Services.BlogService.GetAll();
 
-                for(int i = 0; i < allBlogs.Count; i++)
+                for (int i = 0; i < allBlogs.Count; i++)
                 {
                     model.Comments[allBlogs[i]] = this.Services.CommentService.GetAll(allBlogs[i], Comment.CommentStatus.Approved);
                 }

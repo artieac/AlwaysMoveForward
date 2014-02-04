@@ -14,7 +14,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class TaskRepository: ActiveRecordRepository<Task, TaskDTO>
+    public class TaskRepository : ActiveRecordRepository<Task, TaskDTO>
     {
         public TaskRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork, null)
@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
             TaskDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria);
 
-            if(dtoItem==null)
+            if (dtoItem == null)
             {
                 dtoItem = this.Map(itemToSave);
             }
@@ -62,7 +62,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return retVal;
         }
 
-        public Task GetByName(String taskName)
+        public Task GetByName(string taskName)
         {
             DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
             criteria.Add(Expression.Eq("Name", taskName));

@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public virtual int EntryId { get; set; }
         public virtual bool IsPublished { get; set; }
         public virtual Blog Blog { get; set; }
-        public virtual User Author { get; set;}
+        public virtual User Author { get; set; }
         public virtual string EntryText { get; set; }
         public virtual string Title { get; set; }
         public virtual DateTime DatePosted { get; set; }

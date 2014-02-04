@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 model.ListItems.Add(newItem);
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTags(String blogSubFolder)
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 model = this.Services.TagService.GetAllWithCount(targetBlog);
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetArchiveDates(String blogSubFolder)
@@ -80,10 +80,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 }
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetComments(String blogSubFolder, int id)
+        public JsonResult GetComments(string blogSubFolder, int id)
         {
             IList<Comment> model = new List<Comment>();
 
@@ -99,8 +99,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
                 }
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return this.Json(model, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

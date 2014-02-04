@@ -19,14 +19,14 @@ namespace AlwaysMoveForward.Common.DomainModel
 {
     public class User : IUser
     {
-        public virtual int UserId{ get; set;}
-        public virtual string UserName{ get; set;}
-        public virtual string Password{ get; set;}
-        public virtual string Email{ get; set;}
-        public virtual bool ApprovedCommenter{ get; set;}
-        public virtual bool IsActive{ get; set;}
-        public virtual bool IsSiteAdministrator{ get; set;}
-        public virtual string About{ get; set;}
-        public virtual string DisplayName{ get; set;}
+        public virtual int UserId { get; set; }
+        public virtual string UserName { get; set; }
+        public virtual string Password { get; set; }
+        public virtual string Email { get; set; }
+        public virtual bool ApprovedCommenter { get; set; }
+        public virtual bool IsActive { get; set; }
+        public virtual bool IsSiteAdministrator { get; set; }
+        public virtual string About { get; set; }
+        public virtual string DisplayName { get; set; }
     }
 }

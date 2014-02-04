@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.Common.Configuration
         public const string SmtpServerSetting = "SmtpServer";
         public const string SmtpPortSetting = "SmtpPort";
 
-        public const String DefaultConfiguration = "AlwaysMoveForward/Email";
+        public const string DefaultConfiguration = "AlwaysMoveForward/Email";
 
         public EmailConfiguration() { }
         public EmailConfiguration(string fromAddress, string smtpServer)

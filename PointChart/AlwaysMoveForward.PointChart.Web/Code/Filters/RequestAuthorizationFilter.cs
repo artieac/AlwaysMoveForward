@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 
             if (authCookie != null)
             {
-                if (authCookie.Value != "")
+                if (!string.IsNullOrEmpty(authCookie.Value))
                 {
                     // Get the authentication ticket 
                     // and rebuild the principal & identity

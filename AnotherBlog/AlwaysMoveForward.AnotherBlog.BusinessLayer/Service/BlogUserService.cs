@@ -39,7 +39,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             this.RoleService = dependencies.RoleService;
         }
 
-        private BlogService BlogService { get; set;}
+        private BlogService BlogService { get; set; }
         private AnotherBlogUserService UserService { get; set; }
         public RoleService RoleService { get; set; }
 
@@ -104,7 +104,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             Blog validBlog = this.BlogService.GetById(blogId);
             User validUser = this.UserService.GetById(userId);
 
-            if (validBlog!=null && validUser!=null)
+            if (validBlog != null && validUser != null)
             {
                 retVal = AnotherBlogRepositories.BlogUsers.DeleteUserBlog(validUser.UserId, validBlog.BlogId);
             }

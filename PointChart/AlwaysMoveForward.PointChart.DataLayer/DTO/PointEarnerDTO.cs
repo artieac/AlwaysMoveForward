@@ -26,10 +26,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public string Email { get; set; }
 
         [Property("FirstName")]
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Property("LastName")]
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         [Property("PointsEarned")]
         public double PointsEarned { get; set; }
@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [HasMany(typeof(ChartDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
         public IList<ChartDTO> Charts { get; set; }
 
-        [HasMany(typeof (PointsSpentDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
+        [HasMany(typeof(PointsSpentDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
         public IList<PointsSpentDTO> PointsSpent { get; set; }
     }
 }

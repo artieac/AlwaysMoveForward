@@ -24,19 +24,13 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class RequestAuthorizationAttribute : RequestAuthorizationFilter
     {
-        private string requiredRoles;
-
         public RequestAuthorizationAttribute()
             : base()
         {
-            requiredRoles = "";
+            this.RequiredRoles = string.Empty;
         }
 
-        public string RequiredRoles
-        {
-            get { return this.requiredRoles; }
-            set { this.requiredRoles = value; }
-        }
+        public string RequiredRoles { get; set; }
 
         #region IAuthorizationFilter Members
 
@@ -52,9 +46,28 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
                 {
                     SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
 
-                    if (this.RequiredRoles != null)
+                    if (string.IsNullOrEmpty(this.RequiredRoles))
                     {
-                        if (requiredRoles == "")
+                        // no required roles allow everyone.  But since this is being flagged at all
+                        // we want to be sure that the useris at least logged in
+                        if (currentPrincipal != null)
+                        {
+                            if (currentPrincipal.IsAuthenticated == true)
+                            {
+                                isAuthorized = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // If no currentUser then they can't have the desired roles
+                        if (currentPrincipal != null)
+                        {
+                            string[] roleList = this.RequiredRoles.Split(',');
+                            isAuthorized = currentPrincipal.IsInRole(roleList);
+                        }
+
+                        else
                         {
                             // no required roles allow everyone.  But since this is being flagged at all
                             // we want to be sure that the useris at least logged in
@@ -66,27 +79,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
                                 }
                             }
                         }
-                        else
-                        {
-                            // If no currentUser then they can't have the desired roles
-                            if (currentPrincipal != null)
-                            {
-                                string[] roleList = this.RequiredRoles.Split(',');
-                                isAuthorized = currentPrincipal.IsInRole(roleList);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // no required roles allow everyone.  But since this is being flagged at all
-                        // we want to be sure that the useris at least logged in
-                        if (currentPrincipal != null)
-                        {
-                            if (currentPrincipal.IsAuthenticated == true)
-                            {
-                                isAuthorized = true;
-                            }
-                        }
+
                     }
                 }
             }

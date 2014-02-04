@@ -14,17 +14,16 @@ using System.Linq;
 using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer;
-using CommonBusiness = AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
-
 using AlwaysMoveForward.PointChart.DataLayer;
+using CommonBusiness = AlwaysMoveForward.Common.Business;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class ServiceManager : CommonBusiness.ServiceManager, ChartService.IDependencies, PointEarnerService.IDependencies, TaskService.IDependencies
     {
-        public ServiceManager(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) :  base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager))
+        public ServiceManager(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager))
         {
             this.PointChartRepositoryManager = repositoryManager;
         }

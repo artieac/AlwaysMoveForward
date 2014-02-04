@@ -29,10 +29,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
             this.BlogUserId = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, "BlogUserId", UnsavedValue="-1")]
+        [PrimaryKey(PrimaryKeyType.Identity, "BlogUserId", UnsavedValue = "-1")]
         public int BlogUserId { get; set; }
 
-        [BelongsTo("BlogId", Type=typeof(BlogDTO))]
+        [BelongsTo("BlogId", Type = typeof(BlogDTO))]
         public BlogDTO Blog { get; set; }
 
         [BelongsTo("UserId", Type = typeof(UserDTO))]

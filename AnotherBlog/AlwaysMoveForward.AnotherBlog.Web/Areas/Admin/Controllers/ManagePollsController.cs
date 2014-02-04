@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             ManagePollsModel model = new ManagePollsModel();
             model.Common = this.InitializeCommonModel();
             model.Polls = Pagination.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex, PollPageSize);
-            return View(model);
+            return this.View(model);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
@@ -49,27 +49,27 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             IPagedList<PollQuestion> retVal = Pagination.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex, PollPageSize);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
          }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
         public JsonResult GetById(int pollQuestionId)
         {
             PollQuestion retVal = this.Services.PollService.GetById(pollQuestionId);
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
-        public JsonResult AddPoll(String title, String question)
+        public JsonResult AddPoll(string title, string question)
         {
             IList<PollQuestion> retVal = new List<PollQuestion>();
 
-            if (title == "")
+            if (string.IsNullOrEmpty(title))
             {
                 ViewData.ModelState.AddModelError("title", "Please enter a title");
             }
 
-            if (question == "")
+            if (string.IsNullOrEmpty(question))
             {
                 ViewData.ModelState.AddModelError("question", "Please enter a question");
             }
@@ -91,7 +91,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Json(this.Services.PollService.GetAll(), JsonRequestBehavior.AllowGet);
+            return this.Json(this.Services.PollService.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             PollQuestion retVal = null;
 
-            if (optionText == "")
+            if (string.IsNullOrEmpty(optionText))
             {
                 ViewData.ModelState.AddModelError("optionText", "Please enter a text for the option");
             }
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
     }
 }

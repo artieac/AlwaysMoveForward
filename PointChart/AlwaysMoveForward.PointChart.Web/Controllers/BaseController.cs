@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 {
                     try
                     {
-                        retVal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
+                        retVal = new SecurityPrincipal(this.Services.UserService.GetDefaultUser());
                         System.Threading.Thread.CurrentPrincipal = retVal;
                     }
                     catch (Exception e)

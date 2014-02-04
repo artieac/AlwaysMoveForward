@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
                 {
                     blogSubFolder = filterContext.RequestContext.HttpContext.Request.Form["blogSubFolder"];
                 }
-                else if(filterContext.RequestContext.HttpContext.Request.QueryString["blogSubFolder"]!=null)
+                else if (filterContext.RequestContext.HttpContext.Request.QueryString["blogSubFolder"] != null)
                 {
                     blogSubFolder = filterContext.RequestContext.HttpContext.Request.QueryString["blogSubFolder"];
                 }
@@ -73,7 +73,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
                 {
                     SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
 
-                    if (this.RequiredRoles == null || this.RequiredRoles=="")
+                    if (this.RequiredRoles == null || this.RequiredRoles == "")
                     {
                         // Admin section needs at least one role specified.
                         isAuthorized = false;
@@ -82,7 +82,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
                     {
                         String[] roleList = this.RequiredRoles.Split(',');
 
-                        if(this.IsBlogSpecific==false)
+                        if (this.IsBlogSpecific == false)
                         {
                             for (int i = 0; i < roleList.Count(); i++)
                             {

@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             DateTime currentDate = DateTime.Now;
             string currentMonthPath = AppDomain.CurrentDomain.BaseDirectory + this.UploadedFileRoot(targetBlog) + "/" + currentDate.Year + "/" + currentDate.Month;
 
-            if(Directory.Exists(currentMonthPath))
+            if (Directory.Exists(currentMonthPath))
             {
                 string[] currentMonthFiles = Directory.GetFiles(currentMonthPath);
                 retVal.AddRange(new List<string>(currentMonthFiles));
@@ -57,7 +57,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             DateTime lastMonth = currentDate.AddMonths(-1);
             string lastMonthPath = AppDomain.CurrentDomain.BaseDirectory + this.UploadedFileRoot(targetBlog) + "/" + lastMonth.Year + "/" + lastMonth.Month;
             
-            if(Directory.Exists(lastMonthPath))
+            if (Directory.Exists(lastMonthPath))
             {
                 string[] lastMonthFiles = Directory.GetFiles(lastMonthPath);
                 retVal.AddRange(new List<string>(lastMonthFiles));

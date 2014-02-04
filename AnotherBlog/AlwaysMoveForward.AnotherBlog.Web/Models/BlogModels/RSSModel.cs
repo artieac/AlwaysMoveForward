@@ -20,8 +20,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels
     public class RSSModel
     {
         public CommonBlogModel BlogCommon { get; set; }
-        public Dictionary<Blog, IList<BlogPost>> BlogEntries{ get; set;}
-        public Dictionary<Blog, DateTime> MostRecentPosts{ get; set;}
-        public Dictionary<Blog, IList<Comment>> Comments{ get; set;}
+
+        public Dictionary<Blog, IList<BlogPost>> BlogEntries { get; set; }
+        
+        public Dictionary<Blog, DateTime> MostRecentPosts { get; set; }
+        
+        public Dictionary<Blog, IList<Comment>> Comments { get; set; }
     }
 }

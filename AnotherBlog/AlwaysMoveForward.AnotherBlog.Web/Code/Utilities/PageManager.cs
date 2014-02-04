@@ -57,8 +57,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (currentPrincipal != null)
             {
-                if(currentPrincipal.IsInRole(RoleType.SiteAdministrator) ||
-                   currentPrincipal.IsInRole(RoleType.Administrator))
+                if (currentPrincipal.IsInRole(RoleType.SiteAdministrator) ||
+                    currentPrincipal.IsInRole(RoleType.Administrator))
                 {
                     retVal = true;
                 }
@@ -69,13 +69,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
         public static String GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
         {
-            String retVal = "default";
+            string retVal = "default";
 
             SiteInfo siteInfo = MvcApplication.SiteInfo;
 
             if (siteInfo != null)
             {
-                if (!String.IsNullOrEmpty(siteInfo.DefaultTheme))
+                if (!string.IsNullOrEmpty(siteInfo.DefaultTheme))
                 {
                     retVal = siteInfo.DefaultTheme;
                 }

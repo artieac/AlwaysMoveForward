@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.Common.Business
 
         public SiteInfo GetSiteInfo()
         {
-            return Repositories.SiteInfo.GetSiteInfo();
+            return this.Repositories.SiteInfo.GetSiteInfo();
         }
 
         public SiteInfo Save(string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.Common.Business
             newItem.DefaultTheme = defaultTheme;
             newItem.SiteAnalyticsId = siteAnalyticsId;
 
-            return Repositories.SiteInfo.Save(newItem);
+            return this.Repositories.SiteInfo.Save(newItem);
         }
     }
 }

@@ -15,8 +15,5 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map
         string WelcomeMessage { get; set; }
         string ContactEmail { get; set; }
         string Theme { get; set; }
-//        IList<IBlogPost> Posts { get; set; }
-//        IList<IBlogUser> Users { get; set; }
-//        IList<IComment> Comments { get; set; }
     }
 }

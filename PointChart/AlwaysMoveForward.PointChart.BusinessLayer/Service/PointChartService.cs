@@ -19,6 +19,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
         }
 
         public IUnitOfWork UnitOfWork { get; private set; }
-        public IPointChartRepositoryManager PointChartRepositories { get; private set;}
+        public IPointChartRepositoryManager PointChartRepositories { get; private set; }
     }
 }

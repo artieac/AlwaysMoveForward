@@ -19,6 +19,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         }
 
         public IUnitOfWork UnitOfWork { get; set; }
-        public IAnotherBlogRepositoryManager AnotherBlogRepositories{ get; set;}
+
+        public IAnotherBlogRepositoryManager AnotherBlogRepositories { get; set; }
     }
 }

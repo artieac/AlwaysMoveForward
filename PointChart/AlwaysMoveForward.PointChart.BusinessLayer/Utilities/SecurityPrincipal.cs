@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         private ServiceManager serviceManager = null;
         private static Dictionary<int, Role> userRoles;
 
-        public SecurityPrincipal(User currentUser) : this(currentUser, false){}
+        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
 
         public SecurityPrincipal(User currentUser, bool isAuthenticated)
         {
@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             {
                 if (this.serviceManager == null)
                 {
-                    serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return this.serviceManager;
@@ -75,19 +75,19 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         {
             get
             {
-                if (userRoles == null)
+                if (SecurityPrincipal.userRoles == null)
                 {
-                    userRoles = new Dictionary<int, Role>();
+                    SecurityPrincipal.userRoles = new Dictionary<int, Role>();
 
                     IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
 
                     for (int i = 0; i < allRoles.Count; i++)
                     {
-                        userRoles.Add(allRoles[i].RoleId, allRoles[i]);
+                        SecurityPrincipal.userRoles.Add(allRoles[i].RoleId, allRoles[i]);
                     }
                 }
 
-                return userRoles;
+                return SecurityPrincipal.userRoles;
             }
         }
         /// <summary>
@@ -99,14 +99,14 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
 
         public string AuthenticationType
         {
-            get { return ""; }
+            get { return string.Empty; }
         }
 
         public string Name
         {
             get 
             {
-                string retVal = "";
+                string retVal = string.Empty;
 
                 if (this.CurrentUser != null)
                 {

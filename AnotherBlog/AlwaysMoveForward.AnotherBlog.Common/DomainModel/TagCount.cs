@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Count = tagCount;
         }
 
-        public string TagName{ get; set;}
-        public int Count{ get; set;}
+        public string TagName { get; set; }
+        public int Count { get; set; }
     }
 }

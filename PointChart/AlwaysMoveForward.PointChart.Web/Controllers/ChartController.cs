@@ -15,14 +15,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
     {
         private const string TaskColumn = "Task";
 
-        //
         // GET: /Chart/
         [RequestAuthorizationAttribute]
         public ActionResult Index()
         {
             ChartModel model = new ChartModel();
             model.Charts = this.Services.Charts.GetByUser(this.CurrentPrincipal.CurrentUser);
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
@@ -40,11 +39,11 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 }
             }
 
-            return Index();
+            return this.Index();
         }
 
         [RequestAuthorizationAttribute]
-        public ActionResult Edit(int editChartId, int editPointEarnerId, String editChartName)
+        public ActionResult Edit(int editChartId, int editPointEarnerId, string editChartName)
         {
             PointEarner pointEarner = this.Services.PointEarner.GetById(editPointEarnerId);
 
@@ -53,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 this.Services.Charts.Edit(editChartId, editChartName, pointEarner.Id, this.CurrentPrincipal.CurrentUser);
             }
 
-            return Index();
+            return this.Index();
         }
         
         [RequestAuthorizationAttribute]
@@ -63,7 +62,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             model.Chart = this.Services.Charts.GetById(chartId);
             model.ChartTasks = model.Chart.Tasks;
             model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
-            return View("_ShowTasks", model);
+            return this.View("_ShowTasks", model);
         }
 
         [RequestAuthorization]
@@ -97,7 +96,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(completedDate);
 
             retVal.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
-            retVal.Chart = (from targetChart in retVal.PointEarner.Charts where targetChart.Id==chartId select targetChart).Single();
+            retVal.Chart = (from targetChart in retVal.PointEarner.Charts where targetChart.Id == chartId select targetChart).Single();
             retVal.ChartTasks = retVal.Chart.Tasks;
             retVal.CompletedTasks = new Dictionary<int, IDictionary<DateTime, CompletedTask>>();
 
@@ -119,7 +118,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         [RequestAuthorization]
         public ActionResult ViewChart(DateTime? targetDate, int pointEarnerId, int id)
         {
-            return View("ViewChart", this.GenerateCompletedTasks(targetDate, pointEarnerId, id));
+            return this.View("ViewChart", this.GenerateCompletedTasks(targetDate, pointEarnerId, id));
         }
 
         [RequestAuthorization]
@@ -154,7 +153,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        String columnValue = "0";
+                        string columnValue = "0";
 
                         if (model.CompletedTasks[model.ChartTasks[i].Id].ContainsKey(model.Calendar.WeekStartDate.AddDays(j).Date))
                         {
@@ -234,7 +233,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 rowData.Add(columnData);
             }
 
-            if (String.Compare(fileType, FileExtension.FileType.Excel.ToString(), true)==0)
+            if (string.Compare(fileType, FileExtension.FileType.Excel.ToString(), true) == 0)
             {
                 return this.Excel(this.GenerateHeaderPrefix(model), reportHeaders, rowData, model.PointEarner.FirstName + "_" + model.PointEarner.LastName + ".xls");
             }
@@ -244,7 +243,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             }
         }
 
-        private IList<IList<String>>  GenerateHeaderPrefix(ChartTaskModel model)
+        private IList<IList<String>> GenerateHeaderPrefix(ChartTaskModel model)
         {
             IList<IList<String>> retVal = new List<IList<String>>();
             IList<String> nameRow = new List<String>();

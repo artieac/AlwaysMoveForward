@@ -26,8 +26,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
             this.TargetMonth = DateTime.Now;
         }
 
-        public string ContentTitle{ get; set;}
-        public DateTime TargetMonth{ get; set;}
+        public string ContentTitle { get; set; }
+
+        public DateTime TargetMonth { get; set; }
+        
         public CalendarModel Calendar { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
             this.BlogId = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, "BlogId", UnsavedValue="-1")]
-        public int BlogId{ get; set;}
+        [PrimaryKey(PrimaryKeyType.Identity, "BlogId", UnsavedValue = "-1")]
+        public int BlogId { get; set; }
 
         [Property("Name")]
         public string Name { get; set; }

@@ -81,9 +81,9 @@ namespace AlwaysMoveForward.Common.DataLayer.Map
             return retVal;
         }
 
-        public DTOClass MapCopy(DomainClass source, DTOClass destination, String valueToExclude)
+        public DTOClass MapCopy(DomainClass source, DTOClass destination, string valueToExclude)
         {
-            if (source != null && destination!=null)
+            if (source != null && destination != null)
             {
                 if (destination is CommonInterface && source is CommonInterface)
                 {
