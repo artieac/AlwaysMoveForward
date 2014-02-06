@@ -97,7 +97,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             else
             {
                 foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = "";
+                model.BlogCommon.Common.ContentTitle = string.Empty;
             }
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
@@ -132,7 +132,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             else
             {
                 foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = "";
+                model.BlogCommon.Common.ContentTitle = string.Empty;
             }
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
@@ -167,7 +167,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             else
             {
                 foundPosts = new List<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = "";
+                model.BlogCommon.Common.ContentTitle = string.Empty;
             }
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
@@ -199,7 +199,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             else
             {
                 foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = "";
+                model.BlogCommon.Common.ContentTitle = string.Empty;
             }
 
             model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
@@ -213,17 +213,17 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             Blog targetBlog = this.GetTargetBlog(blogSubFolder);
             BlogPost targetEntry = Services.BlogEntryService.GetById(targetBlog, int.Parse(entryId));
 
-            if (authorName == "")
+            if (string.IsNullOrEmpty(authorName))
             {
                 ViewData.ModelState.AddModelError("authorName", "Please enter your name.");
             }
 
-            if (authorEmail == "")
+            if (string.IsNullOrEmpty(authorEmail))
             {
                 ViewData.ModelState.AddModelError("authorEmail", "Please enter your email.");
             }
 
-            if (commentText == "")
+            if (string.IsNullOrEmpty(commentText))
             {
                 ViewData.ModelState.AddModelError("commentText", "Please enter a comment.");
             }

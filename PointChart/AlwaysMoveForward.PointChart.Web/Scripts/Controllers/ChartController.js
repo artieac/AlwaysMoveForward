@@ -26,4 +26,8 @@
                 $scope.blogPostComments = data;
             });
     }
+
+    $scope.handlePointEarnerSelectionChanged = function(){
+
+    }
 }

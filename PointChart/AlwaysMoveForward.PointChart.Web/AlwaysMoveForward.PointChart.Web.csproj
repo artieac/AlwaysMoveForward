@@ -135,7 +135,6 @@
     <Compile Include="Code\Utilities\WebConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PointEarnerController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -626,9 +625,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Chart\Index.cshtml" />
-    <Content Include="Views\Chart\ViewChart.cshtml" />
-    <Content Include="Views\Chart\_ShowTasks.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\PointEarner\Charts.cshtml" />
     <Content Include="Views\PointEarner\Index.cshtml" />

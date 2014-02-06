@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.SiteInfo = new SiteInfo();
             }
 
-            return View(model);
+            return this.View(model);
         }
 
 
@@ -57,7 +57,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.BlogEntries = this.PopulateBlogPostInfo(foundBlogEntries);
             model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Month(int yearFilter, int monthFilter)
@@ -76,7 +76,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.BlogEntries = this.PopulateBlogPostInfo(foundBlogEntries);
             model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
 
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         public ActionResult Day(int yearFilter, int monthFilter, int dayFilter)
@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.BlogEntries = this.PopulateBlogPostInfo(foundBlogEntries);
             model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
 
-            return View("Index", model);
+            return this.View("Index", model);
         }
     }
 }

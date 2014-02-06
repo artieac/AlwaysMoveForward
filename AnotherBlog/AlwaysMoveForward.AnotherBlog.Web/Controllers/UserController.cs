@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return retVal;
         }
 
-        public UserModel InitializeUserModel(String blogSubFolder)
+        public UserModel InitializeUserModel(string blogSubFolder)
         {
             UserModel retVal = new UserModel();
             retVal.Common = this.InitializeCommonModel(this.Services.BlogService.GetBySubFolder(blogSubFolder));
@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, "");
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
@@ -180,17 +180,17 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             if (registerAction == "save")
             {
-                if (userName == "")
+                if (string.IsNullOrEmpty(userName))
                 {
                     ModelState.AddModelError("userName", "Please enter a user name.");
                 }
 
-                if (password == "")
+                if (string.IsNullOrEmpty(password))
                 {
                     ModelState.AddModelError("password", "Please enter a password.");
                 }
 
-                if (email == "")
+                if (string.IsNullOrEmpty(email))
                 {
                     ModelState.AddModelError("email", "Please enter an email address.");
                 }
@@ -206,11 +206,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     // Using redirect because redirec to action loses the preceeding blogSubFolder
                     if (blogSubFolder == null)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return this.RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Blog", new { blogSubFolder = blogSubFolder });
+                        return this.RedirectToAction("Index", "Blog", new { blogSubFolder = blogSubFolder });
                     }
                 }
             }

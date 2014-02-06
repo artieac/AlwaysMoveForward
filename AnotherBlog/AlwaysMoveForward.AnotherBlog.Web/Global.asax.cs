@@ -88,16 +88,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            #region Explicit Route Mappings
-
-            string[] blogControllerNamespace = new String[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
+            string[] blogControllerNamespace = new string[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
 
             routes.MapRoute(
                 "HomeMonthIndex",
                 "Home/Month/{yearFilter}/{monthFilter}",
                 new { controller = "Home", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month},
-                blogControllerNamespace
-               );
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "HomeDayIndex",
@@ -110,58 +107,47 @@ namespace AlwaysMoveForward.AnotherBlog.Web
                 "BlogTagSearch",
                 "{blogSubFolder}/Tag/{targetTag}",
                 new { blogSubFolder = string.Empty, controller = "Blog", action = "Tag", targetTag = string.Empty },   // Parameter defaults
-                blogControllerNamespace
-             );
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "root",
                 string.Empty,
-                new { controller = "Home", action = "Index" }
-                );
-
+                new { controller = "Home", action = "Index" });
 
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}",
-                new { controller = string.Empty, action = string.Empty }
-                );
+                new { controller = string.Empty, action = string.Empty });
 
             routes.MapRoute(
                 "BlogSpecific",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}",                           // URL with parameters
                 new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty },   // Parameter defaults
-                blogControllerNamespace
-            );
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "BlogMonthIndex",
                 "{blogSubFolder}/Month/{yearFilter}/{monthFilter}",
                 new { controller = "Blog", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month },
-                blogControllerNamespace
-               );
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "BlogDayIndex",
                 "{blogSubFolder}/Day/{yearFilter}/{monthFilter}/{dayFilter}",
                 new { controller = "Blog", action = "Day", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month, dayFilter = DateTime.Now.Day },
-                blogControllerNamespace
-               );
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "BlogSpecificWithId",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}/{id}",                           // URL with parameters
-                new { blogSubFolder = string.Empty, controller = string.Empty, action = "", id = "0"},   // Parameter defaults
-                blogControllerNamespace
-            );
+                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty, id = "0"},   // Parameter defaults
+                blogControllerNamespace);
 
             routes.MapRoute(
                 "BlogEntry",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}/{year}/{month}/{day}/{title}",                           // URL with parameters
                 new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty, year = string.Empty, month = string.Empty, day = string.Empty, title = string.Empty },   // Parameter defaults
-                blogControllerNamespace
-           );
-
-            #endregion
+                blogControllerNamespace);
         }
 
         protected void Application_Start()

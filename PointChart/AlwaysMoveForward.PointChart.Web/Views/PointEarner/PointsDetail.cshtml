@@ -59,7 +59,7 @@
             <td>@pointsSpentItem.Amount</td>
             <td>@pointsSpentItem.Description</td>
             <td>
-                <a class="readonly" href="/PointEarner/DeletePointsSpent/@pointsSpentItem.PointEarner.Id/@pointsSpentItem.Id"><img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteList" alt=""/></a>
+                <a class="readonly" href="/PointEarner/DeletePointsSpent/@Model.PointEarner.Id/@pointsSpentItem.Id"><img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteList" alt=""/></a>
             </td>
             @Html.Raw("</tr>")
         }

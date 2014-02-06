@@ -60,6 +60,13 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets the combined first name and last name
+        /// </summary>
+        public string FullName
+        {
+            get { return this.FirstName + " " + this.LastName; }
+        }
+        /// <summary>
         /// Gets and sets the calculated Points Earned 
         /// </summary>
         public double PointsEarned { get; set; }

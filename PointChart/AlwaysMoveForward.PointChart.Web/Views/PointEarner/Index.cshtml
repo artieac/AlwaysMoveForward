@@ -17,6 +17,7 @@
                 <td>Email</td>
                 <td>Points Earned</td>
                 <td>Points Spent</td>
+                <td>Charts</td>
                 <td>Action</td>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td><input type="text" name="email" value="{{ pointEarner.Email }}" ng-model="pointEarner.Email" ng-blur="updatePointEarner(pointEarner)" /></td>
                 <td>{{ pointEarner.PointsEarned }}</td>
                 <td><a href="/PointEarner/PointsDetail/{{pointEarner.Id}}">{{ pointEarner.TotalPointsSpent}}</a></td>
+                <td><a href="/PointEarner/Charts/{{ pointEarner.Id }}">View</a></td>
                 <td>
                     <a class="readonly" ng-click="delete('{{ pointEarner.Id }}');">
                         <img src="/Content/images/action_delete.png" class="deleteList" alt="" />
@@ -38,6 +40,8 @@
                 <td><input type="text" name="firstName" ng-model="newPointEarner.firstName" required /></td>
                 <td><input type="text" name="lastName" ng-model="newPointEarner.lastName" required /></td>
                 <td><input type="text" name="email" ng-model="newPointEarner.email" required /></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
                 <td><input type="button" value="Add Item" ng-disabled="newPointEarner.$invalid" ng-click="addPointEarner();" /></td>
             </tr>
         </tbody>

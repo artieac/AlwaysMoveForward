@@ -23,7 +23,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class RSSController : PublicController
     {
-        public RSSModel InitializeRSSModel(String blogSubFolder)
+        public RSSModel InitializeRSSModel(string blogSubFolder)
         {
             RSSModel retVal = new RSSModel();
             retVal.BlogCommon = new CommonBlogModel();
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.BlogEntries[targetBlog] = Services.BlogEntryService.GetAllByBlog(targetBlog, true, 10);
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Atom(string blogSubFolder)
@@ -110,7 +110,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.MostRecentPosts[targetBlog] = mostRecent;
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult Comments(string blogSubFolder)
@@ -134,7 +134,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 model.Comments[targetBlog] = this.Services.CommentService.GetAll(targetBlog);
             }
 
-            return View(model);
+            return this.View(model);
         }
     }
 }
