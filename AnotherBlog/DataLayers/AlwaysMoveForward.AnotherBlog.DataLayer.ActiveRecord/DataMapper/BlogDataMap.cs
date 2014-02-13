@@ -10,7 +10,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class BlogDataMap : DataMapBase<Blog, BlogDTO>
     {
-        #region Blog Aggregate root
+        public static void ConfigureAutoMapper()
+        {
+            if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<BlogPost, BlogPostDTO>()
+                    .ForMember(bp => bp.Tags, postTags => postTags.ResolveUsing<TagDTOListResolver>());
+            }
+
+            if (AutoMapper.Mapper.FindTypeMapFor<BlogPostDTO, BlogPost>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<BlogPostDTO, BlogPost>()
+                   .ForMember(bp => bp.CommentCount, opt => opt.Ignore());
+            }
+        }
 
         public override Blog Map(BlogDTO source, Blog destination)
         {
@@ -21,42 +34,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
-
-        #endregion
-
-        #region BlogUser Aggregate Root
-
-        public Blog Map(BlogUser owner, BlogDTO source)
-        {
-            Blog retVal = this.Map(source, null);
-
-            return retVal;
-        }
-
-        public BlogDTO Map(BlogUserDTO owner, Blog source)
-        {
-            BlogDTO retVal = this.Map(source, null);
-
-            return retVal;
-        }
-        #endregion
-
-        #region BlogPost AggregateRoot
-
-        public Blog Map(BlogPost owner, BlogDTO source)
-        {
-            Blog retVal = this.Map(source, null);
-
-            return retVal;
-        }
-
-        public BlogDTO Map(BlogPostDTO owner, Blog source)
-        {
-            BlogDTO retVal = this.Map(source, null);
-
-            return retVal;
-        }
-
-        #endregion
     }
 }

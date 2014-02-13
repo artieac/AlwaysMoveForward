@@ -31,8 +31,8 @@
             <tbody ng-init="getPointEarnerCharts(@Model.PointEarner.Id);">
                 <tr ng-repeat="chart in pointEarnerCharts.Charts" ng-class-even="tableRow1" ng-class-odd="tablerow2">
                     <td><input type="radio" name="selectedChart" value="{{chart.Id}}" ng-change="handleChartSelection({{ chart }});" ng-model="chartElements.selectedChart" /></td>
-                    <td><a href="/Chart/ViewChart/{{ pointEarnerCharts.PointEarner.Id }}/{{chart.Id}}">{{chart.Name}}</a></td>
-                    <td></td>
+                    <td><a href="/Chart/CompletedTasks/{{ pointEarnerCharts.PointEarner.Id }}/{{chart.Id}}">{{chart.Name}}</a></td>
+                    <td>{{chart.PointsEarned}}</td>
                     <td>
                         <a class="readonly" ng-click="deleteChart('{{ task.Id }}');">
                             <img src="/Content/images/action_delete.png" class="deleteList" alt="" />

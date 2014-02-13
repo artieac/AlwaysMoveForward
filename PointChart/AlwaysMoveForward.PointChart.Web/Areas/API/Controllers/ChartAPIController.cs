@@ -37,5 +37,12 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
             retVal.Charts = retVal.PointEarner.Charts;
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
+
+        [RequestAuthorizationAttribute]
+        public ActionResult CompleteTask(int chartId, int taskId, int numberOfTimesCompleted, DateTime dateCompleted)
+        {
+            this.Services.Charts.AddCompletedTask(chartId, taskId, dateCompleted, numberOfTimesCompleted, this.CurrentPrincipal.CurrentUser);
+            return this.Json(null, JsonRequestBehavior.AllowGet);
+        }
     }
 }

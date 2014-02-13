@@ -11,6 +11,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class UserDataMap : DataMapBase<User, UserDTO>
     {
+        public static void ConfigureAutoMapper()
+        {
+            if (AutoMapper.Mapper.FindTypeMapFor<User, UserDTO>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<User, UserDTO>();
+            }
+
+            if (AutoMapper.Mapper.FindTypeMapFor<UserDTO, User>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<UserDTO, User>();
+            }
+        }
+
         public override User Map(UserDTO source, User destination)
         {
             return AutoMapper.Mapper.Map(source, destination);

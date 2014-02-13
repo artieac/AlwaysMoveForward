@@ -111,6 +111,7 @@
     <Compile Include="DataMapper\RoleDataMap.cs" />
     <Compile Include="DataMapper\SiteInfoDataMap.cs" />
     <Compile Include="DataMapper\TagDataMap.cs" />
+    <Compile Include="DataMapper\TagDTOListResolver.cs" />
     <Compile Include="DataMapper\UserDataMap.cs" />
     <Compile Include="Entities\BlogListDTO.cs" />
     <Compile Include="Entities\BlogListItemDTO.cs" />

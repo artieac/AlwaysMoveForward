@@ -135,6 +135,7 @@
     <Compile Include="Code\Utilities\WebConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PointEarnerController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -614,6 +615,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Chart\CompletedTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

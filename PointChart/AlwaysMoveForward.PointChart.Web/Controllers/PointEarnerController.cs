@@ -54,6 +54,6 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             model.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
             model.Charts = this.Services.Charts.GetByPointEarner(pointEarnerId, this.CurrentPrincipal.CurrentUser);
             return this.View("PointsDetail", model);
-        }
+        }      
     }
 }

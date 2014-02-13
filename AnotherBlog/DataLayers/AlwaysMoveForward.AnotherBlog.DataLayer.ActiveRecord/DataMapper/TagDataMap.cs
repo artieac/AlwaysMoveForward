@@ -10,6 +10,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class TagDataMap : DataMapBase<Tag, TagDTO>
     {
+        public static void ConfigureAutoMapper()
+        {
+            if (AutoMapper.Mapper.FindTypeMapFor<Tag, TagDTO>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<Tag, TagDTO>();
+            }
+
+            if (AutoMapper.Mapper.FindTypeMapFor<TagDTO, Tag>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<TagDTO, Tag>();
+            }
+        }
+
         public override Tag Map(TagDTO source, Tag destination)
         {
             if (destination == null)
