@@ -10,6 +10,7 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -20,64 +21,52 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogListRepository : ActiveRecordRepository<BlogList, BlogListDTO>, IBlogListRepository
+    public class BlogListRepository : ActiveRecordRepositoryBase<BlogList, BlogListDTO, int>, IBlogListRepository
     {
-        public BlogListRepository(IUnitOfWork unitOfWork)
+        public BlogListRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override DataMapBase<BlogList, BlogListDTO> DataMapper
+        protected override BlogListDTO GetDTOById(BlogList domainInstance)
         {
-            get { return DataMapManager.Mappers().ListDataMap; }
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override string IdPropertyName
+        protected override BlogListDTO GetDTOById(int idSource)
         {
-            get { return "Id"; }
+            DetachedCriteria criteria = DetachedCriteria.For<BlogListDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<BlogList, BlogListDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().ListDataMap;
+        }
+
+        public BlogList GetByIdAndBlogId(int listId, int blogId)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<BlogListDTO>();
+            criteria.Add(Expression.Eq("Id", listId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindOne(criteria));
         }
 
         public IList<BlogList> GetByBlog(int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogListDTO>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindAll(criteria));
         }
 
-        public override bool Delete(BlogList itemToDelete)
-        {
-            bool retVal = false;
-
-            DetachedCriteria criteria = DetachedCriteria.For<BlogListDTO>();
-            criteria.Add(Expression.Eq("Id", itemToDelete.Id));
-            BlogListDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindOne(criteria);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Delete(dtoItem);
-            }
-
-            return retVal;
-        }
-
-        public override BlogList Save(BlogList itemToSave)
+        public BlogList GetByNameAndBlogId(string name, int blogId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogListDTO>();
-            criteria.Add(Expression.Eq("Id", itemToSave.Id));
-            BlogListDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindOne(criteria);
-
-            if (dtoItem == null)
-            {
-                dtoItem = new BlogListDTO();
-            }
-
-            if (dtoItem != null)
-            {
-                dtoItem = ((ListDataMap)this.DataMapper).Map(itemToSave);
-                dtoItem = this.Save(dtoItem);
-            }
-
-            return this.DataMapper.Map(dtoItem);
+            criteria.Add(Expression.Eq("Name", name));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogListDTO>.FindOne(criteria));
         }
 
     }

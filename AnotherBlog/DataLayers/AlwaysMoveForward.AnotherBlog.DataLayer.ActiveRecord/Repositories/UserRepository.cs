@@ -19,6 +19,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -33,22 +34,30 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : ActiveRecordRepository<User, UserDTO>, IUserRepository
+    public class UserRepository : ActiveRecordRepositoryBase<User, UserDTO, int>, IUserRepository
     {
-        public UserRepository(IUnitOfWork unitOfWork)
+        public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
 
         }
 
-        public override DataMapBase<User, UserDTO> DataMapper
+        protected override UserDTO GetDTOById(User domainInstance)
         {
-            get { return DataMapManager.Mappers().UserDataMap; }
+            return this.GetDTOById(domainInstance.UserId);
         }
 
-        public override string IdPropertyName
+        protected override UserDTO GetDTOById(int idSource)
         {
-            get { return "UserId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
+            criteria.Add(Expression.Eq("UserId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<User, UserDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().UserDataMap; 
         }
 
         /// <summary>
@@ -72,8 +81,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("UserName", userName));
             criteria.Add(Expression.Eq("Password", password));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
         }
+
         /// <summary>
         /// Get a specific user by email
         /// </summary>
@@ -83,6 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             return this.GetByProperty("Email", userEmail);
         }
+
         /// <summary>
         /// Get all users that have the Administrator or Blogger role for the specific blog.
         /// </summary>
@@ -93,12 +104,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
             criteria.CreateCriteria("UserBlogs")
                 .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
         }
 
         public override bool DeleteDependencies(User parentItem)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
+            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
             criteria.Add(Expression.Eq("UserId", parentItem.UserId));
             IList<BlogUserDTO> dtoItems = Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria);
 
@@ -108,22 +119,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             }
 
             return true;
-        }
-
-        public override bool Delete(User itemToDelete)
-        {
-            bool retVal = false;
-
-            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.Add(Expression.Eq("UserId", itemToDelete.UserId));
-            UserDTO dtoITem = ActiveRecordMediator<UserDTO>.FindOne(criteria);
-
-            if (dtoITem != null)
-            {
-                retVal = this.Delete(dtoITem);
-            }
-
-            return retVal;
         }
     }
 }

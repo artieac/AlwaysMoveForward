@@ -22,6 +22,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -31,23 +32,31 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryRepository : ActiveRecordRepository<BlogPost, BlogPostDTO>, IBlogEntryRepository
+    public class BlogEntryRepository : ActiveRecordRepositoryBase<BlogPost, BlogPostDTO, int>, IBlogEntryRepository
     {
-        public BlogEntryRepository(IUnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork)
+        public BlogEntryRepository(UnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork)
         {
             this.TagRepository = tagRepository as TagRepository;    
         }
 
         protected TagRepository TagRepository { get; set; }
 
-        public override DataMapBase<BlogPost, BlogPostDTO> DataMapper
+        protected override BlogPostDTO GetDTOById(BlogPost domainInstance)
         {
-            get { return DataMapManager.Mappers().BlogPostDataMap; }
+            return this.GetDTOById(domainInstance.EntryId);
         }
 
-        public override string IdPropertyName
+        protected override BlogPostDTO GetDTOById(int idSource)
         {
-            get { return "EntryId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
+            criteria.Add(Expression.Eq("EntryId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<BlogPost, BlogPostDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().BlogPostDataMap; 
         }
 
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)
@@ -69,7 +78,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public IList<BlogPost> GetMostRead(int maxResults)
@@ -83,7 +92,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public IList<BlogPost> GetMostRead(int blogId, int maxResults)
@@ -98,7 +107,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
@@ -125,12 +134,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)
         {
-            return this.GetByProperty("Title", blogTitle, blogId);
+            DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
+            criteria.Add(Expression.Eq("Title", blogTitle));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
 
         public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId)
@@ -142,7 +155,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Month));
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Day));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
 
         public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
@@ -167,7 +180,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", tagId));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly)
@@ -192,7 +205,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
                 criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", targetTag.Id));
                 criteria.AddOrder(Order.Desc("DatePosted"));
-                retVal = this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+                retVal = this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
             }
 
             return retVal;
@@ -221,7 +234,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
@@ -248,7 +261,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Day));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindAll(criteria));
         }
 
         public BlogPost GetMostRecent(int blogId, bool published)
@@ -263,7 +276,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
 
         public BlogPost GetPreviousEntry(int blogId, int currentPostId)
@@ -279,7 +292,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
 
         public BlogPost GetNextEntry(int blogId, int currentPostId)
@@ -295,7 +308,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
@@ -344,65 +357,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return ActiveRecordMediator.ExecuteQuery(query) as ArrayList;
         }
 
-        public override BlogPost Save(BlogPost itemToSave)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
-            criteria.Add(Expression.Eq("EntryId", itemToSave.EntryId));
-            BlogPostDTO dtoItem = ActiveRecordMediator<BlogPostDTO>.FindOne(criteria);
-
-            dtoItem = ((BlogPostDataMap)this.DataMapper).Map(itemToSave, dtoItem);
-
-            if (dtoItem != null)
-            {
-                if (this.TagRepository != null)
-                {
-                    IList<string> tagNames = new List<string>();
-
-                    for (int i = 0; i < itemToSave.Tags.Count; i++)
-                    {
-                        tagNames.Add(itemToSave.Tags[i].Name);
-                    }
-
-                    IList<TagDTO> tagDTOs = this.TagRepository.GetDTOByNames(tagNames.ToArray(), dtoItem.Blog.BlogId);
-
-                    if (dtoItem.Tags == null)
-                    {
-                        dtoItem.Tags = new List<TagDTO>();
-                    }
-                    else
-                    {
-                        dtoItem.Tags.Clear();
-                    }
-
-                    for (int i = 0; i < itemToSave.Tags.Count; i++)
-                    {
-                        TagDTO targetTag = tagDTOs.FirstOrDefault(tag => tag.Name == itemToSave.Tags[i].Name);
-
-                        if (targetTag == null)
-                        {
-                            targetTag = new TagDTO();
-                            targetTag.Name = itemToSave.Tags[i].Name;
-                            targetTag.Blog = dtoItem.Blog;
-                            targetTag.BlogEntries = new List<BlogPostDTO>();
-                            targetTag.BlogEntries.Add(dtoItem);
-                        }
-
-                        dtoItem.Tags.Add(targetTag);
-                    }
-                }
-
-                dtoItem = this.Save(dtoItem);
-            }
-
-            return this.DataMapper.Map(dtoItem);
-        }
-
         public BlogPost GetByCommentId(int commentId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
             criteria.CreateCriteria("Comments").Add(Expression.Eq("CommentId", commentId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
         }
-
     }
 }

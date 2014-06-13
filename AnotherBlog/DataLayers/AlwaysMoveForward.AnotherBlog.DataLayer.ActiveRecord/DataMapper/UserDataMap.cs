@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class UserDataMap : DataMapBase<User, UserDTO>
     {
-        public static void ConfigureAutoMapper()
+        static UserDataMap()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<User, UserDTO>() == null)
             {

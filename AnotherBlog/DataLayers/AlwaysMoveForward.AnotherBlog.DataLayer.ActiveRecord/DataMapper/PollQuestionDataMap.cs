@@ -79,18 +79,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             }
         }
 
-        public static void ConfigureAutoMapper()
+        static PollQuestionDataMap()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<PollQuestion, PollQuestionDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<VoterAddress, VoterAddressDTO>()
-                    .ForMember(va => va.AddressString, opt => opt.Ignore())
-                    .ForMember(va => va.Option, opt => opt.Ignore());
+                    .ForMember(dest => dest.AddressString, opt => opt.Ignore())
+                    .ForMember(dest => dest.Option, opt => opt.Ignore());
                 AutoMapper.Mapper.CreateMap<PollOption, PollOptionDTO>()
-                    .ForMember(po => po.Question, opt => opt.Ignore())
-                    .ForMember(po => po.VoterAddresses, pollOptions => pollOptions.ResolveUsing<VoterAddressDtoListResolver>());
+                    .ForMember(dest => dest.Question, opt => opt.Ignore())
+                    .ForMember(dest => dest.VoterAddresses, pollOptions => pollOptions.ResolveUsing<VoterAddressDtoListResolver>());
                 AutoMapper.Mapper.CreateMap<PollQuestion, PollQuestionDTO>()
-                    .ForMember(pq => pq.Options, pollOptions => pollOptions.ResolveUsing<PollOptionDtoListResolver>());
+                    .ForMember(dest => dest.Options, pollOptions => pollOptions.ResolveUsing<PollOptionDtoListResolver>());
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<PollQuestionDTO, PollQuestion>() == null)

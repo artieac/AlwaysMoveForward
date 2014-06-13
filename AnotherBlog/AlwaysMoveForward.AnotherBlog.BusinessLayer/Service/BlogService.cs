@@ -23,15 +23,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     /// </summary>
     public class BlogService : AnotherBlogService
     {
-        public BlogService(IServiceDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public BlogService(IUnitOfWork unitOfWork, IBlogRepository blogRepository) : base(unitOfWork) 
+        {
+            this.BlogRepository = blogRepository;
+        }
+
+        protected IBlogRepository BlogRepository { get; private set; }
+
         /// <summary>
         /// Initialize and instantiate a Blog object instance.
         /// </summary>
         /// <returns></returns>
         public Blog Create()
         {
-            Blog retVal = this.AnotherBlogRepositories.Blogs.Create();
-            retVal.BlogId = this.AnotherBlogRepositories.Blogs.UnsavedId;
+            Blog retVal = new Blog();
             return retVal;
         }
         /// <summary>
@@ -40,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public Blog GetDefaultBlog()
         {
-            return AnotherBlogRepositories.Blogs.GetById(1);
+            return this.BlogRepository.GetById(1);
         }
         /// <summary>
         /// Get all blogs configured in the system.
@@ -48,7 +53,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public IList<Blog> GetAll()
         {
-            return AnotherBlogRepositories.Blogs.GetAll();
+            return this.BlogRepository.GetAll();
         }
         /// <summary>
         /// Get all blogs that a user is associated with (via different security roles)
@@ -57,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public IList<Blog> GetByUserId(int userId)
         {
-            return AnotherBlogRepositories.Blogs.GetByUserId(userId);
+            return this.BlogRepository.GetByUserId(userId);
         }
         /// <summary>
         /// Get a particular blog by an id.
@@ -66,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public Blog GetById(int id)
         {
-            return AnotherBlogRepositories.Blogs.GetById(id);
+            return this.BlogRepository.GetById(id);
         }
         /// <summary>
         /// Delete a blog entry.
@@ -74,11 +79,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <param name="blogId"></param>
         public void Delete(int blogId)
         {
-            Blog targetBlog = AnotherBlogRepositories.Blogs.GetById(blogId);
+            Blog targetBlog = this.BlogRepository.GetById(blogId);
 
             if (targetBlog != null)
             {
-                AnotherBlogRepositories.Blogs.Delete(targetBlog);
+                this.BlogRepository.Delete(targetBlog);
             }
         }
         /// <summary>
@@ -88,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public Blog GetByName(string name)
         {
-            return AnotherBlogRepositories.Blogs.GetByName(name);
+            return this.BlogRepository.GetByName(name);
         }
         /// <summary>
         /// Get a particular blog by its site subfolder
@@ -97,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public Blog GetBySubFolder(string subFolder)
         {
-            return AnotherBlogRepositories.Blogs.GetBySubFolder(subFolder);
+            return this.BlogRepository.GetBySubFolder(subFolder);
         }
         /// <summary>
         /// Save a blog instance and its configuration settings.
@@ -119,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
             else
             {
-                itemToSave = AnotherBlogRepositories.Blogs.GetById(blogId);
+                itemToSave = this.BlogRepository.GetById(blogId);
             }
 
             itemToSave.Name = name;
@@ -129,7 +134,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.WelcomeMessage = blogWelcome;
             itemToSave.Theme = blogTheme;
 
-            return AnotherBlogRepositories.Blogs.Save(itemToSave);
+            return this.BlogRepository.Save(itemToSave);
         }
     }
 }

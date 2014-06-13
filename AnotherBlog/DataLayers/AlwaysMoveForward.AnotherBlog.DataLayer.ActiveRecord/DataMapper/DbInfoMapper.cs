@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class DbInfoMapper : DataMapBase<DbInfo, DbInfoDTO>
     {
-        public static void ConfigureAutoMapper()
+        static DbInfoMapper()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<DbInfo, DbInfoDTO>() == null)
             {

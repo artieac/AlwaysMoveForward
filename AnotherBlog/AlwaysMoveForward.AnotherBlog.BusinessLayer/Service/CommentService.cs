@@ -17,16 +17,21 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class CommentService : AnotherBlogService
     {
-        public CommentService(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
+        public CommentService(IUnitOfWork unitOfWork, ICommentRepository commentRepository) : base(unitOfWork) 
+        {
+            this.CommentRepository = commentRepository;
+        }
+
+        protected ICommentRepository CommentRepository { get; private set; }
 
         public IList<Comment> GetAll()
         {
-            return this.AnotherBlogRepositories.CommentRepository.GetAll();
+            return this.CommentRepository.GetAll();
         }
 
         public IList<Comment> GetAll(Blog blog)
         {
-            return this.AnotherBlogRepositories.CommentRepository.GetByBlogId(blog.BlogId);
+            return this.CommentRepository.GetByBlogId(blog.BlogId);
         }
 
         public IList<Comment> GetAll(Blog blog, Comment.CommentStatus status)
@@ -36,13 +41,13 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             switch (status)
             {
                 case Comment.CommentStatus.Approved:
-                    retVal = this.AnotherBlogRepositories.CommentRepository.GetAllApproved(blog.BlogId);
+                    retVal = this.CommentRepository.GetAllApproved(blog.BlogId);
                     break;
                 case Comment.CommentStatus.Deleted:
-                    retVal = this.AnotherBlogRepositories.CommentRepository.GetAllDeleted(blog.BlogId);
+                    retVal = this.CommentRepository.GetAllDeleted(blog.BlogId);
                     break;
                 case Comment.CommentStatus.Unapproved:
-                    retVal = this.AnotherBlogRepositories.CommentRepository.GetAllUnapproved(blog.BlogId);
+                    retVal = this.CommentRepository.GetAllUnapproved(blog.BlogId);
                     break;
             }
 
@@ -51,28 +56,28 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<Comment> GetAll(BlogPost blogPost, Comment.CommentStatus commentStatus)
         {
-            return this.AnotherBlogRepositories.CommentRepository.GetByEntry(blogPost.EntryId, blogPost.Blog.BlogId, commentStatus);
+            return this.CommentRepository.GetByEntry(blogPost.EntryId, blogPost.Blog.BlogId, commentStatus);
         }
 
         public int GetCommentCount(BlogPost blogPost)
         {
-            return this.AnotherBlogRepositories.CommentRepository.GetCount(blogPost.EntryId, Comment.CommentStatus.Approved);
+            return this.CommentRepository.GetCount(blogPost.EntryId, Comment.CommentStatus.Approved);
         }
 
         public Comment SetCommentStatus(int commentId, Comment.CommentStatus newStatus)
         {
-            Comment retVal = this.AnotherBlogRepositories.CommentRepository.GetById(commentId);
+            Comment retVal = this.CommentRepository.GetById(commentId);
 
             if (retVal != null)
             {
                 if (retVal.Status == Comment.CommentStatus.Deleted && newStatus == Comment.CommentStatus.Deleted)
                 {
-                    this.AnotherBlogRepositories.CommentRepository.Delete(retVal);
+                    this.CommentRepository.Delete(retVal);
                 }
                 else
                 {
                     retVal.Status = newStatus;
-                    retVal = this.AnotherBlogRepositories.CommentRepository.Save(retVal);
+                    retVal = this.CommentRepository.Save(retVal);
                 }
             }
 
@@ -89,7 +94,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public Comment UpdateComment(BlogPost blogEntry, int commentId, string authorName, string authorEmail, string commentText, string commentLink, User currentUser)
         {
-            Comment itemToSave = this.AnotherBlogRepositories.CommentRepository.GetById(commentId);
+            Comment itemToSave = this.CommentRepository.GetById(commentId);
 
             if (itemToSave == null)
             {
@@ -117,7 +122,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 itemToSave.Status = Comment.CommentStatus.Approved;
             }
 
-            retVal = AnotherBlogRepositories.CommentRepository.Save(itemToSave);
+            retVal = this.CommentRepository.Save(itemToSave);
 
             return retVal;
         }

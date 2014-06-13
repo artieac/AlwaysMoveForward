@@ -11,8 +11,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class RoleDataMap : DataMapBase<Role, RoleDTO>
     {
-        public static void ConfigureAutoMapper()
+        static RoleDataMap()
         {
+            RoleDataMap.ConfigureAutoMapper();
+        }
+
+        internal static void ConfigureAutoMapper()
+        {        
             if (AutoMapper.Mapper.FindTypeMapFor<Role, RoleDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<Role, RoleDTO>();

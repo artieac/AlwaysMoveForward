@@ -27,9 +27,9 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.BlogUserId = -1;
         }
 
-        public virtual int BlogUserId { get; set; }
-        public virtual Blog Blog { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
+        public int BlogUserId { get; set; }
+        public Blog Blog { get; set; }
+        public Role Role { get; set; }
+        public User User { get; set; }
     }
 }

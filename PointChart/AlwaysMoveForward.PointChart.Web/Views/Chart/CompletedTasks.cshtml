@@ -56,7 +56,7 @@
     </div>
 </div>
 <div>
-    <table class="tableBase">
+    <table class="tableBase taskInputTable">
         <thead>
             <tr class="tableHeader">
                 <td>Task</td>
@@ -67,7 +67,6 @@
                 <td>@Model.Calendar.WeekStartDate.AddDays(4).ToShortDateString()</td>
                 <td>@Model.Calendar.WeekStartDate.AddDays(5).ToShortDateString()</td>
                 <td>@Model.Calendar.WeekStartDate.AddDays(6).ToShortDateString()</td>
-                <td>Action</td>
             </tr>
         </thead>
         <tbody>
@@ -88,42 +87,28 @@
                         </text>
                     }
 
-                    rowCounter++;
-                    String inputRoot = "input" + +@chartTaskItem.Id;
-                    String sundayInput = inputRoot + "Sunday";
-                    String mondayinput = inputRoot + "Monday";
-                    String tuesdayInput = inputRoot + "Tuesday";
-                    String wednesdayInput = inputRoot + "Wednesday";
-                    String thursdayInput = inputRoot + "Thursday";
-                    String fridayInput = inputRoot + "Friday";
-                    String saturdayInput = inputRoot + "Saturday";
-                    String editButton = "editButton" + @chartTaskItem.Id;
-                    String saveButton = "saveButton" + @chartTaskItem.Id;
                     <td>@chartTaskItem.Name (@chartTaskItem.Points) </td>
 
                     if (Model.CompletedTasks.ContainsKey(chartTaskItem.Id))
                     {
-                        <td><input type="text" id="@sundayInput" name="@sundayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate)){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@mondayinput" name="@mondayinput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(1))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(1)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@tuesdayInput" name="@tuesdayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(2))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(2)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@wednesdayInput" name="@wednesdayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(3))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(3)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@thursdayInput" name="@thursdayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(4))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(4)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@fridayInput" name="@fridayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(5))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(5)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
-                        <td><input type="text" id="@saturdayInput" name="@saturdayInput" class="readonly" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(6))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(6)].NumberOfTimesCompleted } else { <text>0</text>}" disabled="true" /></td>
+                        <td><input type="text" name="sundayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate)){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate].NumberOfTimesCompleted } else { <text>0</text>}" /></td>
+                        <td><input type="text" name="mondayinput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(1))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(1)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="tuesdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(2))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(2)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="wednesdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(3))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(3)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="thursdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(4))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(4)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="fridayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(5))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(5)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="saturdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(6))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(6)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
                     }
                     else
                     {
-                        <td><input type="text" id="@sundayInput" name="@sundayInput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@mondayinput" name="@mondayinput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@tuesdayInput" name="@tuesdayInput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@wednesdayInput" name="@wednesdayInput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@thursdayInput" name="@thursdayInput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@fridayInput" name="@fridayInput" class="readonly" value="0" disabled="true" /></td>
-                        <td><input type="text" id="@saturdayInput" name="@saturdayInput" class="readonly" value="0" disabled="true" /></td>
+                        <td><input type="text" name="sundayInput" value="0" /></td>
+                        <td><input type="text" name="mondayinput" value="0" /></td>
+                        <td><input type="text" name="tuesdayInput" value="0" /></td>
+                        <td><input type="text" name="wednesdayInput" value="0" /></td>
+                        <td><input type="text" name="thursdayInput" value="0" /></td>
+                        <td><input type="text" name="fridayInput" value="0" /></td>
+                        <td><input type="text" name="saturdayInput" value="0" /></td>
                     }
-                    <td>
-                        <input type="button" id="@editButton" value="Edit" onclick="Chart.TaskInputEditable(@chartTaskItem.Id);" /><input type="button" id="@saveButton" value="Save" style="display:none" onclick="Chart.CompleteTask(@chartTaskItem.Id);" />
-                    </td>
                     @Html.Raw("</tr>")
                 }
             }

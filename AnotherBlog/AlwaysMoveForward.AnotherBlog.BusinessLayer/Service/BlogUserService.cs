@@ -25,29 +25,23 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class BlogUserService : AnotherBlogService
     {
-        public interface IDependencies : IServiceDependencies
+        public BlogUserService(IUnitOfWork unitOfWork, BlogService blogService, AnotherBlogUserService userService, RoleService roleService, IBlogUserRepository blogUserRepository) : base(unitOfWork) 
         {
-            BlogService BlogService { get; }
-            AnotherBlogUserService UserService { get; }
-            RoleService RoleService { get; }
+            this.BlogService = blogService;
+            this.UserService = userService;
+            this.RoleService = roleService;
+            this.BlogUserRepository = blogUserRepository;
         }
 
-        public BlogUserService(IDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) 
-        {
-            this.BlogService = dependencies.BlogService;
-            this.UserService = dependencies.UserService;
-            this.RoleService = dependencies.RoleService;
-        }
+        protected IBlogUserRepository BlogUserRepository { get; private set; }
 
         private BlogService BlogService { get; set; }
         private AnotherBlogUserService UserService { get; set; }
-        public RoleService RoleService { get; set; }
+        private RoleService RoleService { get; set; }
 
         public BlogUser Create()
         {
-            BlogUser retVal = this.AnotherBlogRepositories.BlogUsers.Create();
-            retVal.BlogUserId = this.AnotherBlogRepositories.BlogUsers.UnsavedId;
-            return retVal;
+            return new BlogUser();
         }
 
         public BlogUser Save(int userId, int blogId, int roleId)
@@ -60,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (validBlog != null && validUser != null && validRole != null)
             {
-                retVal = AnotherBlogRepositories.BlogUsers.GetUserBlog(validUser.UserId, validBlog.BlogId);
+                retVal = this.BlogUserRepository.GetUserBlog(validUser.UserId, validBlog.BlogId);
 
                 if (retVal == null)
                 {
@@ -71,7 +65,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 retVal.Blog = validBlog;
                 retVal.Role = validRole;
 
-                retVal = AnotherBlogRepositories.BlogUsers.Save(retVal);
+                retVal = this.BlogUserRepository.Save(retVal);
             }
 
             return retVal;
@@ -79,22 +73,22 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public BlogUser GetUserBlog(int userId, int blogId)
         {
-            return AnotherBlogRepositories.BlogUsers.GetUserBlog(userId, blogId);
+            return this.BlogUserRepository.GetUserBlog(userId, blogId);
         }
 
         public IList<BlogUser> GetUserBlogs(int userId)
         {
-            return AnotherBlogRepositories.BlogUsers.GetUserBlogs(userId);
+            return this.BlogUserRepository.GetUserBlogs(userId);
         }
 
         public IList<Blog> GetBlogsByUserId(int userId)
         {
-            return AnotherBlogRepositories.Blogs.GetByUserId(userId);
+            return this.BlogService.GetByUserId(userId);
         }
 
         public bool DeleteUserBlog(BlogUser targetUser)
         {
-            return this.AnotherBlogRepositories.BlogUsers.Delete(targetUser);
+            return this.BlogUserRepository.Delete(targetUser);
         }
 
         public bool DeleteUserBlog(int blogId, int userId)
@@ -106,7 +100,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (validBlog != null && validUser != null)
             {
-                retVal = AnotherBlogRepositories.BlogUsers.DeleteUserBlog(validUser.UserId, validBlog.BlogId);
+                retVal = this.BlogUserRepository.DeleteUserBlog(validUser.UserId, validBlog.BlogId);
             }
 
             return retVal;

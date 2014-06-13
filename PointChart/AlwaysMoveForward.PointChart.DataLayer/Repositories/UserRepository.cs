@@ -15,6 +15,7 @@ using System.Text;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 using NHibernate.Criterion;
@@ -29,59 +30,30 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : ActiveRecordRepository<User, UserDTO>, IUserRepository
+    public class UserRepository : ActiveRecordRepositoryBase<User, UserDTO, int>, IUserRepository
     {
-        public UserRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public UserRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override UserDTO Map(User source)
+        protected override UserDTO GetDTOById(User domainInstance)
         {
-            UserDTO retVal = null;
-
-            if (source != null)
-            {
-                retVal = new UserDTO();
-                retVal.About = source.About;
-                retVal.ApprovedCommenter = source.ApprovedCommenter;
-                retVal.DisplayName = source.DisplayName;
-                retVal.Email = source.Email;
-                retVal.IsActive = source.IsActive;
-                retVal.IsSiteAdministrator = source.IsSiteAdministrator;
-                retVal.Password = source.Password;
-                retVal.UserId = source.UserId;
-                retVal.UserName = source.UserName;
-            }
-
-            return retVal;
+            return this.GetDTOById(domainInstance.UserId);
         }
 
-        public override User Map(UserDTO source)
+        protected override UserDTO GetDTOById(int idSource)
         {
-            User retVal = null;
+            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
+            criteria.Add(Expression.Eq("UserId", idSource));
 
-            if (source != null)
-            {
-                retVal = new User();
-                retVal.About = source.About;
-                retVal.ApprovedCommenter = source.ApprovedCommenter;
-                retVal.DisplayName = source.DisplayName;
-                retVal.Email = source.Email;
-                retVal.IsActive = source.IsActive;
-                retVal.IsSiteAdministrator = source.IsSiteAdministrator;
-                retVal.Password = source.Password;
-                retVal.UserId = source.UserId;
-                retVal.UserName = source.UserName;
-            }
-
-            return retVal;
+            return Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria);
         }
 
-        public override string IdPropertyName
+        protected override DataMapBase<User, UserDTO> GetDataMapper()
         {
-            get { return "UserId"; }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -93,6 +65,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         {
             return this.GetByProperty("UserName", userName);
         }
+
         /// <summary>
         /// This method is used by the login.  If no match is found then something doesn't jibe in the login attempt.
         /// </summary>
@@ -105,7 +78,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             criteria.Add(Expression.Eq("UserName", userName));
             criteria.Add(Expression.Eq("Password", password));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
         }
         /// <summary>
         /// Get a specific user by email
@@ -126,41 +99,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
             criteria.CreateCriteria("UserBlogs")
                 .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
-        }
-
-        public override User Save(User itemToSave)
-        {
-            User retVal = null;
-            
-            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.Add(Expression.Eq(this.IdPropertyName, itemToSave.UserId));
-            UserDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria);
-
-            if (dtoItem == null)
-            {
-                dtoItem = this.Map(itemToSave);
-            }
-            else
-            {
-                dtoItem.About = itemToSave.About;
-                dtoItem.ApprovedCommenter = itemToSave.ApprovedCommenter;
-                dtoItem.DisplayName = itemToSave.DisplayName;
-                dtoItem.Email = itemToSave.Email;
-                dtoItem.IsActive = itemToSave.IsActive;
-                dtoItem.IsSiteAdministrator = itemToSave.IsSiteAdministrator;
-                dtoItem.Password = itemToSave.Password;
-                dtoItem.UserName = itemToSave.UserName;
-            }
-
-            dtoItem = this.Save(dtoItem);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
         }
     }
 }

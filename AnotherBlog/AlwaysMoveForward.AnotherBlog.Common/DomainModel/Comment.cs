@@ -35,16 +35,16 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.CommentId = -1;
         }
 
-        public virtual int CommentId { get; set; }
-        public virtual CommentStatus Status { get; set; }
-        public virtual string Link { get; set; }
-        public virtual string AuthorEmail { get; set; }
-        public virtual string Text { get; set; }
-        public virtual string AuthorName { get; set; }
+        public int CommentId { get; set; }
+        public CommentStatus Status { get; set; }
+        public string Link { get; set; }
+        public string AuthorEmail { get; set; }
+        public string Text { get; set; }
+        public string AuthorName { get; set; }
         public int PostId { get; set; }
-        public virtual DateTime DatePosted { get; set; }
+        public DateTime DatePosted { get; set; }
         
-        public virtual void CleanCommentText()
+        public void CleanCommentText()
         {
             this.Text = Utils.StripJavascript(this.Text);
         }

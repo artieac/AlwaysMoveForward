@@ -22,6 +22,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DomainModel.Poll;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -32,33 +33,36 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class PollRepository : ActiveRecordRepository<PollQuestion, PollQuestionDTO>, IPollRepository
+    public class PollRepository : ActiveRecordRepositoryBase<PollQuestion, PollQuestionDTO, int>, IPollRepository
     {
-        public PollRepository(IUnitOfWork unitOfWork)
+        public PollRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override PollQuestion Create()
+        protected override PollQuestionDTO GetDTOById(PollQuestion domainInstance)
         {
-            return new PollQuestion();
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override DataMapBase<PollQuestion, PollQuestionDTO> DataMapper
+        protected override PollQuestionDTO GetDTOById(int idSource)
         {
-            get { return new PollQuestionDataMap(); }
+            DetachedCriteria criteria = DetachedCriteria.For<PollQuestionDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<PollQuestionDTO>.FindOne(criteria);
         }
 
-        public override string IdPropertyName
+        protected override DataMapBase<PollQuestion, PollQuestionDTO> GetDataMapper()
         {
-            get { return "Id"; }
+            return new PollQuestionDataMap(); 
         }
 
         public IList<PollQuestion> GetAllByActiveFlag(bool isActive)
         {
             DetachedCriteria criteria = DetachedCriteria.For<PollQuestionDTO>();
             criteria.Add(Expression.Eq("IsActive", isActive));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<PollQuestionDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<PollQuestionDTO>.FindAll(criteria));
         }
 
         public PollQuestion GetByPollOptionId(int pollOptionId)
@@ -71,7 +75,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (foundOption != null)
             {
-                retVal = this.DataMapper.Map(foundOption.Question);
+                retVal = this.GetDataMapper().Map(foundOption.Question);
             }
 
             return retVal;

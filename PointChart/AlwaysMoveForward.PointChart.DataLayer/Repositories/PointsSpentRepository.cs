@@ -8,80 +8,37 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointsSpentRepository : ActiveRecordRepository<PointsSpent, PointsSpentDTO>
+    public class PointsSpentRepository : ActiveRecordRepositoryBase<PointsSpent, PointsSpentDTO, int>
     {
-        public PointsSpentRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public PointsSpentRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override PointsSpentDTO Map(PointsSpent source)
+        protected override PointsSpentDTO GetDTOById(PointsSpent domainInstance)
         {
-            PointsSpentDTO retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointsSpentDTO();
-                retVal.Id = source.Id;
-                retVal.DateSpent = source.DateSpent;
-                retVal.Amount = source.Amount;
-                retVal.Description = source.Description;
-            }
-
-            return retVal;
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override PointsSpent Map(PointsSpentDTO source)
+        protected override PointsSpentDTO GetDTOById(int idSource)
         {
-            PointsSpent retVal = null;
-
-            if (source != null)
-            {
-                retVal = new PointsSpent();
-                retVal.Id = source.Id;
-                retVal.DateSpent = source.DateSpent;
-                retVal.Amount = source.Amount;
-                retVal.Description = source.Description;
-            }
-
-            return retVal;
-        }
-
-        public override PointsSpent Save(PointsSpent itemToSave)
-        {
-            PointsSpent retVal = null;
-
             DetachedCriteria criteria = DetachedCriteria.For<PointsSpentDTO>();
-            criteria.Add(Expression.Eq("Id", itemToSave.Id));
+            criteria.Add(Expression.Eq("Id", idSource));
 
-            PointsSpentDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<PointsSpentDTO>.FindOne(criteria);
+            return Castle.ActiveRecord.ActiveRecordMediator<PointsSpentDTO>.FindOne(criteria);
+        }
 
-            if (dtoItem == null)
-            {
-                dtoItem = this.Map(itemToSave);
-            }
-            else
-            {
-                dtoItem.Amount = itemToSave.Amount;
-                dtoItem.Description = itemToSave.Description;
-                dtoItem.DateSpent = itemToSave.DateSpent;
-            }
-
-            dtoItem = this.Save(dtoItem);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+        protected override DataMapBase<PointsSpent, PointsSpentDTO> GetDataMapper()
+        {
+            throw new NotImplementedException();
         }
     }
 }

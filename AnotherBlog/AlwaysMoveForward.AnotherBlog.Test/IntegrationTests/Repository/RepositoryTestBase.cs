@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository

@@ -23,7 +23,7 @@ using CommonBusiness = AlwaysMoveForward.Common.Business;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
-    public class ServiceManager : CommonBusiness.ServiceManager, IServiceDependencies, BlogUserService.IDependencies
+    public class ServiceManager : CommonBusiness.ServiceManager
     {
         public new IAnotherBlogRepositoryManager RepositoryManager { get { return base.RepositoryManager as IAnotherBlogRepositoryManager; } }
 
@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogEntryService == null)
                 {
-                    this.blogEntryService = new BlogEntryService(this, this.RepositoryManager);
+                    this.blogEntryService = new BlogEntryService(this.UnitOfWork, this.RepositoryManager.BlogEntries, this.RepositoryManager.Tags);
                 }
 
                 return this.blogEntryService;
@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogService == null)
                 {
-                    this.blogService = new BlogService(this, this.RepositoryManager);
+                    this.blogService = new BlogService(this.UnitOfWork, this.RepositoryManager.Blogs);
                 }
 
                 return this.blogService;
@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogUserService == null)
                 {
-                    this.blogUserService = new BlogUserService(this, this.RepositoryManager);
+                    this.blogUserService = new BlogUserService(this.UnitOfWork, this.BlogService, this.UserService, this.RoleService,  this.RepositoryManager.BlogUsers);
                 }
 
                 return this.blogUserService;
@@ -78,7 +78,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.tagService == null)
                 {
-                    this.tagService = new TagService(this, this.RepositoryManager);
+                    this.tagService = new TagService(this.UnitOfWork, this.RepositoryManager.Tags);
                 }
 
                 return this.tagService;
@@ -92,7 +92,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.uploadedFileManager == null)
                 {
-                    this.uploadedFileManager = new UploadedFileManager(this, this.RepositoryManager);
+                    this.uploadedFileManager = new UploadedFileManager(this.UnitOfWork);
                 }
 
                 return this.uploadedFileManager;
@@ -106,7 +106,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogListService == null)
                 {
-                    this.blogListService = new BlogListService(this, this.RepositoryManager);
+                    this.blogListService = new BlogListService(this.UnitOfWork, this.RepositoryManager.BlogLists);
                 }
 
                 return this.blogListService;
@@ -120,7 +120,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new AnotherBlogUserService(this, this.RepositoryManager);
+                    this.userService = new AnotherBlogUserService(this.UnitOfWork, this.RepositoryManager.Users);
                 }
 
                 return this.userService;
@@ -134,7 +134,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.commentService == null)
                 {
-                    this.commentService = new CommentService(this.UnitOfWork, this.RepositoryManager);
+                    this.commentService = new CommentService(this.UnitOfWork, this.RepositoryManager.CommentRepository);
                 }
 
                 return this.commentService;

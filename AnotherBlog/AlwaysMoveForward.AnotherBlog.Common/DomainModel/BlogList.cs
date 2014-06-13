@@ -14,11 +14,11 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Id = -1;
         }
 
-        public virtual int Id { get; set; }
-        public virtual Blog Blog { get; set; }
-        public virtual string Name { get; set; }
-        public virtual bool ShowOrdered { get; set; }
-        public virtual IList<BlogListItem> Items { get; set; }
+        public int Id { get; set; }
+        public Blog Blog { get; set; }
+        public string Name { get; set; }
+        public bool ShowOrdered { get; set; }
+        public IList<BlogListItem> Items { get; set; }
 
         public bool RemoveListItem(int listItemId)
         {

@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             }
         }
 
-        public static void ConfigureAutoMapper()
+        static ListDataMap()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<BlogList, DbInfoDTO>() == null)
             {

@@ -19,6 +19,7 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -29,27 +30,36 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogRepository : ActiveRecordRepository<Blog, BlogDTO>, IBlogRepository
+    public class BlogRepository : ActiveRecordRepositoryBase<Blog, BlogDTO, int>, IBlogRepository
     {
 
         /// <summary>
         /// This class contains all the code to extract data from the repository using LINQ
         /// </summary>
         /// <param name="dataContext"></param>
-        public BlogRepository(IUnitOfWork unitOfWork)
+        public BlogRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override DataMapBase<Blog, BlogDTO> DataMapper
+        protected override BlogDTO GetDTOById(Blog domainInstance)
         {
-            get { return DataMapManager.Mappers().BlogDataMap; }
+            return this.GetDTOById(domainInstance.BlogId);
         }
 
-        public override string IdPropertyName
+        protected override BlogDTO GetDTOById(int idSource)
         {
-            get { return "BlogId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<BlogDTO>();
+            criteria.Add(Expression.Eq("BlogId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogDTO>.FindOne(criteria);
         }
+
+        protected override DataMapBase<Blog, BlogDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().BlogDataMap; 
+        }
+
         /// <summary>
         /// Get a blog as specified by the name.
         /// </summary>
@@ -77,23 +87,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogDTO>();
             criteria.CreateCriteria("Users").CreateCriteria("User").Add(Expression.Eq("UserId", userId));
-            return this.DataMapper.Map(ActiveRecordMediator<BlogDTO>.FindAll(criteria));
-        }
-
-        public override Blog Save(Blog itemToSave)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<BlogDTO>();
-            criteria.Add(Expression.Eq("BlogId", itemToSave.BlogId));
-            BlogDTO dtoItem = ActiveRecordMediator<BlogDTO>.FindOne(criteria);
-
-            dtoItem = ((BlogDataMap)this.DataMapper).Map(itemToSave, dtoItem);
-
-            if (dtoItem != null)
-            {
-                dtoItem = this.Save(dtoItem);
-            }
-
-            return this.DataMapper.Map(dtoItem);
+            return this.GetDataMapper().Map(ActiveRecordMediator<BlogDTO>.FindAll(criteria));
         }
     }
 }

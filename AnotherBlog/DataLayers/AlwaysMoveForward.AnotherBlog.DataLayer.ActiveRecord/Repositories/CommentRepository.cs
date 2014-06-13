@@ -19,6 +19,7 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -29,22 +30,31 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class CommentRepository : ActiveRecordRepository<Comment, EntryCommentsDTO>, ICommentRepository
+    public class CommentRepository : ActiveRecordRepositoryBase<Comment, EntryCommentsDTO, int>, ICommentRepository
     {
-        public CommentRepository(IUnitOfWork unitOfWork)
+        public CommentRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override DataMapBase<Comment, EntryCommentsDTO> DataMapper
+        protected override EntryCommentsDTO GetDTOById(Comment domainInstance)
         {
-            get { return DataMapManager.Mappers().CommentDataMap; }
+            return this.GetDTOById(domainInstance.CommentId);
         }
 
-        public override string IdPropertyName
+        protected override EntryCommentsDTO GetDTOById(int idSource)
         {
-            get { return "CommentId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
+            criteria.Add(Expression.Eq("CommentId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindOne(criteria);
         }
+
+        protected override DataMapBase<Comment, EntryCommentsDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().CommentDataMap; 
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -57,7 +67,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Expression.Eq("Status", (int)targetStatus));
             criteria.Add(Expression.Eq("PostId", blogPostId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
         /// <summary>
         /// 
@@ -70,7 +80,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Expression.Eq("PostId", blogPostId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
 
         public int GetCount(int blogPostId, Comment.CommentStatus targetStatus)
@@ -98,7 +108,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
          
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Subqueries.PropertyIn("PostId", blogPostCriteria));
-            return this.DataMapper.Map(ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
         /// <summary>
         /// Get all comments for a specific blog that need to be approved by a blogger or administrator
@@ -137,23 +147,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
             criteria.Add(Expression.Eq("Status", (int)commentStatus));
             criteria.Add(Subqueries.PropertyIn("PostId", blogPostCriteria));
-            return this.DataMapper.Map(ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
-        }
-
-        public override bool Delete(Comment itemToDelete)
-        {
-            bool retVal = false;
-
-            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
-            criteria.Add(Expression.Eq("CommentId", itemToDelete.CommentId));
-            EntryCommentsDTO dtoItem = ActiveRecordMediator<EntryCommentsDTO>.FindOne(criteria);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Delete(dtoItem);
-            }
-
-            return retVal;
+            return this.GetDataMapper().Map(ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
     }
 }

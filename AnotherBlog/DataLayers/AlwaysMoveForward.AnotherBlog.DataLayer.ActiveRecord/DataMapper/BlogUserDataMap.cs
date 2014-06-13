@@ -10,7 +10,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class BlogUserDataMap : DataMapBase<BlogUser, BlogUserDTO>
     {
-        public static void ConfigureAutoMapper()
+        static BlogUserDataMap()
+        {
+            BlogUserDataMap.ConfigureAutoMapper();
+        }
+
+        internal static void ConfigureAutoMapper()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<BlogUser, BlogUserDTO>() == null)
             {

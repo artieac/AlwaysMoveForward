@@ -10,18 +10,21 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class BlogDataMap : DataMapBase<Blog, BlogDTO>
     {
-        public static void ConfigureAutoMapper()
+        static BlogDataMap()
         {
-            if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
+            BlogDataMap.ConfigureAutoMapper();
+        }
+
+        internal static void ConfigureAutoMapper()
+        {
+            if (AutoMapper.Mapper.FindTypeMapFor<Blog, BlogDTO>() == null)
             {
-                AutoMapper.Mapper.CreateMap<BlogPost, BlogPostDTO>()
-                    .ForMember(bp => bp.Tags, postTags => postTags.ResolveUsing<TagDTOListResolver>());
+                AutoMapper.Mapper.CreateMap<Blog, BlogDTO>();
             }
 
-            if (AutoMapper.Mapper.FindTypeMapFor<BlogPostDTO, BlogPost>() == null)
+            if (AutoMapper.Mapper.FindTypeMapFor<BlogDTO, Blog>() == null)
             {
-                AutoMapper.Mapper.CreateMap<BlogPostDTO, BlogPost>()
-                   .ForMember(bp => bp.CommentCount, opt => opt.Ignore());
+                AutoMapper.Mapper.CreateMap<BlogDTO, Blog>();
             }
         }
 

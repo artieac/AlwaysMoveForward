@@ -10,11 +10,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class TagDataMap : DataMapBase<Tag, TagDTO>
     {
-        public static void ConfigureAutoMapper()
+        static TagDataMap()
+        {
+            TagDataMap.ConfigureAutoMapper();
+        }
+
+        internal static void ConfigureAutoMapper()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<Tag, TagDTO>() == null)
             {
-                AutoMapper.Mapper.CreateMap<Tag, TagDTO>();
+                AutoMapper.Mapper.CreateMap<Tag, TagDTO>()
+                    .ForMember(dest => dest.Blog, opt => opt.Ignore())
+                    .ForMember(dest => dest.BlogEntries, opt => opt.Ignore());
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<TagDTO, Tag>() == null)

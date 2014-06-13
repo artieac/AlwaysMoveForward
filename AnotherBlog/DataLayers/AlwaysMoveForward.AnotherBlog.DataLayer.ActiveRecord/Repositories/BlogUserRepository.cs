@@ -19,7 +19,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -29,34 +29,38 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogUserRepository : ActiveRecordRepository<BlogUser, BlogUserDTO>, IBlogUserRepository
+    public class BlogUserRepository : ActiveRecordRepositoryBase<BlogUser, BlogUserDTO, int>, IBlogUserRepository
     {
 
         /// <summary>
         /// This class contains all the code to extract BlogUser data from the repository using LINQ
         /// The BlogUser object maps users and their roles to specific blogs.
         /// </summary>
-        /// <param name="dataContext"></param>
-        public BlogUserRepository(IUnitOfWork unitOfWork)
+        /// <param name="unitOfWork"></param>
+        public BlogUserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
 
         }
 
-        public override DataMapBase<BlogUser, BlogUserDTO> DataMapper
+        protected override BlogUserDTO GetDTOById(BlogUser domainInstance)
         {
-            get { return DataMapManager.Mappers().BlogUserDataMap; }
+            return this.GetDTOById(domainInstance.BlogUserId);
         }
 
-        public override BlogUser Save(BlogUser itemTosave)
+        protected override BlogUserDTO GetDTOById(int idSource)
         {
-            return base.Save(itemTosave);
+            DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
+            criteria.Add(Expression.Eq("BlogUserId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria);
         }
 
-        public override string IdPropertyName
+        protected override DataMapBase<BlogUser, BlogUserDTO> GetDataMapper()
         {
-            get { return "BlogUserId"; }
+            return DataMapManager.Mappers().BlogUserDataMap;
         }
+
         /// <summary>
         /// Get all specified blog roles for a given user.
         /// </summary>
@@ -66,14 +70,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
             criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindAll(criteria));
         }
 
         public IList<Blog> GetBlogsByUserId(int userId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<BlogDTO>();
             criteria.CreateCriteria("Users").Add(Expression.Eq("UserId", userId));
-            return DataMapManager.Mappers().BlogDataMap.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogDTO>.FindAll(criteria));
+
+            BlogDataMap blogDataMapper = new BlogDataMap();
+            return blogDataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogDTO>.FindAll(criteria));
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -86,7 +92,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<BlogUserDTO>();
             criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogUserDTO>.FindOne(criteria));
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.

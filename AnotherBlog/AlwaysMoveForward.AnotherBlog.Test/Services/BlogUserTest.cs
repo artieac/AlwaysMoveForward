@@ -50,14 +50,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void Create()
+        public void BlogUserService_Create()
         {
             BlogUser test = Services.BlogUserService.Create();
             Assert.IsNotNull(test);
         }
 
         [TestCase]
-        public void Save()
+        public void BlogUserService_Save()
         {
             Assert.IsNotNull(testBlog);
             Assert.IsNotNull(testUser);
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetUserBlog()
+        public void BlogUserService_GetUserBlog()
         {
             Assert.IsNotNull(testBlog);
             Assert.IsNotNull(testUser);
@@ -92,7 +92,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetUserBlogs()
+        public void BlogUserService_GetUserBlogs()
         {
             Assert.IsNotNull(testUser);
 
@@ -105,7 +105,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void DeleteUserBlog()
+        public void BlogUserService_DeleteUserBlog()
         {
             Assert.IsNotNull(testBlog);
             Assert.IsNotNull(testUser);

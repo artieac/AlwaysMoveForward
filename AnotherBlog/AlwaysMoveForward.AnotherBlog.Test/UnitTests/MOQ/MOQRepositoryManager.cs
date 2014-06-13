@@ -15,7 +15,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test
     public class MOQRepositoryManager : IAnotherBlogRepositoryManager
     {
         Mock<IBlogEntryRepository> blogEntryRepository;
-        Mock<IBlogEntryTagRepository> blogEntryTagRepository;
         Mock<IBlogRepository> blogRepository;
         Mock<IBlogUserRepository> blogUserRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
@@ -47,19 +46,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test
                 }
 
                 return this.blogEntryRepository.Object;
-            }
-        }
-
-        public IBlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    this.blogEntryTagRepository = new Mock<IBlogEntryTagRepository>();
-                }
-
-                return this.blogEntryTagRepository.Object;
             }
         }
 
@@ -149,7 +135,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test
                 if (this.tagRepository == null)
                 {
                     this.tagRepository = new Mock<ITagRepository>();
-                    MOQTagRepositoryHelper.ConfigureCreate(this.tagRepository);
                     MOQTagRepositoryHelper.ConfigureGetAll(this.tagRepository);
                     MOQTagRepositoryHelper.ConfigureGetByName(this.tagRepository);
                     MOQTagRepositoryHelper.ConfigureSave(this.tagRepository);

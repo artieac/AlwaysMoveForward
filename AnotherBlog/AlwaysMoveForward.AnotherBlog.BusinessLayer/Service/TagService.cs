@@ -26,7 +26,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class TagService : AnotherBlogService
     {
-        public TagService(IServiceDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public TagService(IUnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork) 
+        {
+            this.TagRepository = tagRepository;
+        }
+
+        protected ITagRepository TagRepository { get; private set; }
 
         public Tag Create()
         {
@@ -37,12 +42,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<Tag> GetAll(Blog targetBlog)
         {
-            return AnotherBlogRepositories.Tags.GetAll(targetBlog.BlogId);
+            return this.TagRepository.GetAll(targetBlog.BlogId);
         }
 
         public IList GetAllWithCount(Blog targetBlog)
         {
-            return AnotherBlogRepositories.Tags.GetAllWithCount(targetBlog.BlogId);
+            return this.TagRepository.GetAllWithCount(targetBlog.BlogId);
         }
     }
 }

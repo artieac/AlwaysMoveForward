@@ -22,6 +22,7 @@ using Castle.ActiveRecord.Framework;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -34,12 +35,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
     public class RepositoryManager : IAnotherBlogRepositoryManager, IRepositoryManager
     {
-        public RepositoryManager(IUnitOfWork unitOfWork)
+        public RepositoryManager(UnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
         }
 
-        public IUnitOfWork UnitOfWork { get; private set; }
+        public UnitOfWork UnitOfWork { get; private set; }
 
         private IBlogEntryRepository blogEntryRepository;
         public IBlogEntryRepository BlogEntries

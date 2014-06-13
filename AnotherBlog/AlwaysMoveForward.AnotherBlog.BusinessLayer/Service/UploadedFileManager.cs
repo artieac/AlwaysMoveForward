@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class UploadedFileManager : AnotherBlogService
     {
-        public UploadedFileManager(IServiceDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public UploadedFileManager(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
         public string UploadedFileRoot(Blog targetBlog)
         {

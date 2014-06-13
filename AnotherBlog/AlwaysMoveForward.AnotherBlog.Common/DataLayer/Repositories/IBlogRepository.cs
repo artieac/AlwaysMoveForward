@@ -13,12 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogRepository : IRepository<Blog>
+    public interface IBlogRepository : IRepository<Blog, int>
     {
         Blog GetByName(string name);
         Blog GetBySubFolder(string subFolder);

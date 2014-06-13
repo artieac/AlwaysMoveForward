@@ -20,7 +20,7 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -34,18 +34,39 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : ActiveRecordRepository<Tag, TagDTO>, ITagRepository
+    public class TagRepository : ActiveRecordRepositoryBase<Tag, TagDTO, int>, ITagRepository
     {
-        public TagRepository(IUnitOfWork unitOfWork)
+        public TagRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
 
         }
 
-        public override DataMapBase<Tag, TagDTO> DataMapper
+        protected override TagDTO GetDTOById(Tag domainInstance)
         {
-            get { return DataMapManager.Mappers().TagDataMap; }
+            return this.GetDTOById(domainInstance.Id);
         }
+
+        protected override TagDTO GetDTOById(int idSource)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<Tag, TagDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().TagDataMap; 
+        }
+
+        public IList<Tag> GetAll(int blogId)
+        {
+            DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
+        }
+
         /// <summary>
         /// Get all tags related to a specific blog
         /// </summary>
@@ -84,7 +105,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <returns></returns>
         public Tag GetByName(string name, int blogId)
         {
-            return this.GetByProperty("Name", name, blogId);
+            DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
+            criteria.Add(Expression.Eq("Name", name));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindOne(criteria));
         }
         /// <summary>
         /// Get multiple tag records.
@@ -94,7 +118,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <returns></returns>
         public IList<Tag> GetByNames(string[] names, int blogId)
         {
-            return this.DataMapper.Map(this.GetDTOByNames(names, blogId));
+            return this.GetDataMapper().Map(this.GetDTOByNames(names, blogId));
         }
 
         public IList<TagDTO> GetDTOByNames(string[] names, int blogId)
@@ -109,7 +133,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             DetachedCriteria criteria = DetachedCriteria.For<TagDTO>();
             criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("EntryId", blogEntryId));
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TagDTO>.FindAll(criteria));
         }
     }
 }

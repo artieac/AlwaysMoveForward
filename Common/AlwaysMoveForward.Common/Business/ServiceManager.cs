@@ -62,7 +62,7 @@ namespace AlwaysMoveForward.Common.Business
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.ServiceContext);
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.Users);
                 }
 
                 return this.userService;

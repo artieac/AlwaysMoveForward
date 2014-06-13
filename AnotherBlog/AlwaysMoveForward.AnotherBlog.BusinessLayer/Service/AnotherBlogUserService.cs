@@ -13,12 +13,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class AnotherBlogUserService : UserService
     {
-        public AnotherBlogUserService(IServiceDependencies dependencies, IRepositoryManager repositoryManager) : base(new ServiceContext(dependencies.UnitOfWork, repositoryManager)) { }
+        public AnotherBlogUserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base(unitOfWork, userRepository) { }
 
         public IList<User> GetBlogWriters(Blog targetBlog)
         {
-            return Repositories.Users.GetBlogWriters(targetBlog.BlogId);
+            return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
-
     }
 }

@@ -18,6 +18,7 @@ using System.Data;
 
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
@@ -25,12 +26,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer
 {
     public class RepositoryManager : IPointChartRepositoryManager
     {
-        public RepositoryManager(IUnitOfWork unitOfWork)
+        public RepositoryManager(UnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;            
         }
 
-        public IUnitOfWork UnitOfWork { get; set; }
+        public UnitOfWork UnitOfWork { get; set; }
 
         private ChartRepository chartRepository;
         private CompletedTaskRepository completedTaskRepository;

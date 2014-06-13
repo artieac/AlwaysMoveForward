@@ -19,6 +19,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -33,22 +34,30 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : ActiveRecordRepository<Role, RoleDTO>, IRoleRepository
+    public class RoleRepository : ActiveRecordRepositoryBase<Role, RoleDTO, int>, IRoleRepository
     {
-        public RoleRepository(IUnitOfWork unitOfWork)
+        public RoleRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
 
         }
 
-        public override DataMapBase<Role, RoleDTO> DataMapper
+        protected override RoleDTO GetDTOById(Role domainInstance)
         {
-            get { return DataMapManager.Mappers().RoleDataMap; }
+            return this.GetDTOById(domainInstance.RoleId);
         }
 
-        public override string IdPropertyName
+        protected override RoleDTO GetDTOById(int idSource)
         {
-            get { return "RoleId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<RoleDTO>();
+            criteria.Add(Expression.Eq("RoleId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<RoleDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<Role, RoleDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().RoleDataMap; 
         }
     }
 }

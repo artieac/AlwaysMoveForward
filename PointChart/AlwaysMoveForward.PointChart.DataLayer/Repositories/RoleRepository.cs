@@ -15,6 +15,7 @@ using System.Text;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 using NHibernate.Criterion;
@@ -29,60 +30,30 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : ActiveRecordRepository<Role, RoleDTO>, IRoleRepository
+    public class RoleRepository : ActiveRecordRepositoryBase<Role, RoleDTO, int>, IRoleRepository
     {
-        public RoleRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public RoleRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override string IdPropertyName
+        protected override RoleDTO GetDTOById(Role domainInstance)
         {
-            get { return "RoleId"; }
+            return this.GetDTOById(domainInstance.RoleId);
         }
 
-        public override RoleDTO Map(Role source)
+        protected override RoleDTO GetDTOById(int idSource)
         {
-            RoleDTO retVal = new RoleDTO();
-            retVal.RoleId = source.RoleId;
-            retVal.Name = source.Name;
-            return retVal;
-        }
-
-        public override Role Map(RoleDTO source)
-        {
-            Role retVal = new Role();
-            retVal.RoleId = source.RoleId;
-            retVal.Name = source.Name;
-            return retVal;
-        }
-
-        public override Role Save(Role itemToSave)
-        {
-            Role retVal = null;
-
             DetachedCriteria criteria = DetachedCriteria.For<RoleDTO>();
-            criteria.Add(Expression.Eq(this.IdPropertyName, itemToSave.RoleId));
-            RoleDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<RoleDTO>.FindFirst(criteria);
+            criteria.Add(Expression.Eq("RoleId", idSource));
 
-            if (dtoItem != null)
-            {
-                dtoItem.Name = itemToSave.Name;
-            }
-            else
-            {
-                dtoItem = this.Map(itemToSave);
-            }
+            return Castle.ActiveRecord.ActiveRecordMediator<RoleDTO>.FindOne(criteria);
+        }
 
-            this.Save(dtoItem);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+        protected override DataMapBase<Role, RoleDTO> GetDataMapper()
+        {
+            throw new NotImplementedException();
         }
     }
 }

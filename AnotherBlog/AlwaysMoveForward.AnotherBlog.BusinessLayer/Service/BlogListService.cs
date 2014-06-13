@@ -21,12 +21,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class BlogListService : AnotherBlogService
     {
-        public BlogListService(IServiceDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public BlogListService(IUnitOfWork unitOfWork, IBlogListRepository blogListRepository) : base(unitOfWork) 
+        {
+            this.BlogListRepository = blogListRepository;
+        }
+
+        protected IBlogListRepository BlogListRepository { get; private set; }
 
         public BlogList Create(Blog targetBlog)
         {
-            BlogList retVal = this.AnotherBlogRepositories.BlogLists.Create();
-            retVal.Id = this.AnotherBlogRepositories.BlogLists.UnsavedId;
+            BlogList retVal = new BlogList();
             retVal.Blog = targetBlog;
 
             return retVal;
@@ -41,22 +45,29 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public BlogList GetById(int blogListId)
         {
-            return AnotherBlogRepositories.BlogLists.GetById(blogListId);
+            return this.BlogListRepository.GetById(blogListId);
         }
 
         public IList<BlogList> GetByBlog(Blog targetBlog)
         {
-            return AnotherBlogRepositories.BlogLists.GetByBlog(targetBlog.BlogId);
+            return this.BlogListRepository.GetByBlog(targetBlog.BlogId);
         }
 
         public bool DeleteBlogList(BlogList targetBlogList)
         {
-            return AnotherBlogRepositories.BlogLists.Delete(targetBlogList);
+            return this.BlogListRepository.Delete(targetBlogList);
         }
 
         public BlogList GetByName(Blog targetBlog, string listName)
         {
-            return AnotherBlogRepositories.BlogLists.GetByProperty("Name", listName, targetBlog.BlogId);
+            BlogList retVal = null;
+
+            if (targetBlog != null)
+            {
+                retVal = this.BlogListRepository.GetByNameAndBlogId(listName, targetBlog.BlogId);
+            }
+
+            return retVal;
         }
 
         public IList<string> GetListNames(Blog targetBlog)
@@ -89,14 +100,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
             else
             {
-                itemToSave = AnotherBlogRepositories.BlogLists.GetById(blogListId, targetBlog.BlogId);
+                itemToSave = this.BlogListRepository.GetByIdAndBlogId(blogListId, targetBlog.BlogId);
             }
 
             itemToSave.Name = name;
             itemToSave.ShowOrdered = showOrdered;
             itemToSave.Blog = targetBlog;
 
-            itemToSave = AnotherBlogRepositories.BlogLists.Save(itemToSave);
+            itemToSave = this.BlogListRepository.Save(itemToSave);
             return itemToSave;
         }
 
@@ -121,14 +132,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             targetItem.RelatedLink = relatedLink;
             targetItem.DisplayOrder = displayOrder;
 
-            retVal = AnotherBlogRepositories.BlogLists.Save(retVal);
+            retVal = this.BlogListRepository.Save(retVal);
             return retVal;
         }
 
         public bool Delete(BlogList blogList)
         {
             blogList.Items.Clear();
-            return AnotherBlogRepositories.BlogLists.Delete(blogList);
+            return this.BlogListRepository.Delete(blogList);
         }
 
         public BlogList DeleteItem(int blogListId, int listItemId)
@@ -144,7 +155,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (retVal.RemoveListItem(listItemId))
                 {
-                    retVal = AnotherBlogRepositories.BlogLists.Save(retVal);
+                    retVal = this.BlogListRepository.Save(retVal);
                 }
             }
 

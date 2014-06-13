@@ -43,14 +43,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetDefaultRole()
+        public void RoleService_GetDefaultRole()
         {
             Role testRole = Services.RoleService.GetDefaultRole();
             Assert.IsNotNull(testRole);
         }
 
         [TestCase]
-        public void GetAll()
+        public void RoleService_GetAll()
         {
             IList<Role> testRoles = Services.RoleService.GetAll();
 
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetById()
+        public void RoleService_GetById()
         {
             Role testRole = Services.RoleService.GetById(3);
             Assert.IsNotNull(testRole);

@@ -13,13 +13,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface ITagRepository : IRepository<Tag>
+    public interface ITagRepository : IRepository<Tag, int>
     {
+        IList<Tag> GetAll(int blogId);
         IList GetAllWithCount(int? blogId);
         Tag GetByName(string name, int blogId);
         IList<Tag> GetByNames(string[] names, int blogId);

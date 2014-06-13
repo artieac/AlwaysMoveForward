@@ -66,7 +66,6 @@
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="DataLayer\DataMapBase.cs" />
-    <Compile Include="DataLayer\Repositories\AutoMappedRepository.cs" />
     <Compile Include="DataLayer\Repositories\IPollRepository.cs" />
     <Compile Include="DomainModel\DbInfo.cs" />
     <Compile Include="DomainModel\DataMap\IDbInfo.cs" />
@@ -94,7 +93,7 @@
     <Compile Include="DataLayer\Repositories\IDbInfoRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataLayer\Repositories\IRepository.cs" />
+    <Compile Include="DataLayer\IRepository.cs" />
     <Compile Include="DataLayer\Repositories\IRepositoryManager.cs" />
     <Compile Include="DataLayer\Repositories\IRoleRepository.cs">
       <SubType>Code</SubType>
@@ -103,7 +102,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
-    <Compile Include="DataLayer\Repositories\RepositoryBase.cs" />
+    <Compile Include="DataLayer\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\IPagedList.cs" />

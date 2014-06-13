@@ -8,58 +8,37 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class TaskRepository : ActiveRecordRepository<Task, TaskDTO>
+    public class TaskRepository : ActiveRecordRepositoryBase<Task, TaskDTO, int>
     {
-        public TaskRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public TaskRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override TaskDTO Map(Task source)
+        protected override DataMapBase<Task, TaskDTO> GetDataMapper()
         {
-            return DataMapper.DataMapManager.Mappers().Task.Map(source);
+            return DataMapper.DataMapManager.Mappers().Task;
         }
 
-        public override Task Map(TaskDTO source)
+        protected override TaskDTO GetDTOById(Task domainInstance)
         {
-            return DataMapper.DataMapManager.Mappers().Task.Map(source);
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override Task Save(Task itemToSave)
+        protected override TaskDTO GetDTOById(int idSource)
         {
-            Task retVal = null;
-
             DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
-            criteria.Add(Expression.Eq("Id", itemToSave.Id));
+            criteria.Add(Expression.Eq("Id", idSource));
 
-            TaskDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria);
-
-            if (dtoItem == null)
-            {
-                dtoItem = this.Map(itemToSave);
-            }
-            else
-            {
-                dtoItem.Name = itemToSave.Name;
-                dtoItem.Points = itemToSave.Points;
-                dtoItem.MaxAllowedDaily = itemToSave.MaxAllowedDaily;
-            }
-
-            dtoItem = this.Save(dtoItem);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+            return Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria);
         }
 
         public Task GetByName(string taskName)
@@ -67,7 +46,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
             criteria.Add(Expression.Eq("Name", taskName));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria));
         }
 
         public IList<Task> GetByUserId(int userId)
@@ -75,7 +54,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
             criteria.Add(Expression.Eq("AdministratorId", userId));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindAll(criteria));
         }
     }
 }

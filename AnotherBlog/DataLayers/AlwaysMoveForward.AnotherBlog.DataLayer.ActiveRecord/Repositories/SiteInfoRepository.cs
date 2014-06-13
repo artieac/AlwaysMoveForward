@@ -19,6 +19,7 @@ using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
@@ -34,30 +35,39 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : ActiveRecordRepository<SiteInfo, SiteInfoDTO>, ISiteInfoRepository
+    public class SiteInfoRepository : ActiveRecordRepositoryBase<SiteInfo, SiteInfoDTO, int>, ISiteInfoRepository
     {
-        public SiteInfoRepository(IUnitOfWork unitOfWork)
+        public SiteInfoRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
         {
 
         }
 
-        public override DataMapBase<SiteInfo, SiteInfoDTO> DataMapper
+        protected override SiteInfoDTO GetDTOById(SiteInfo domainInstance)
         {
-            get { return DataMapManager.Mappers().SiteInfoDataMap; }
+            return this.GetDTOById(domainInstance.SiteId);
         }
 
-        public override string IdPropertyName
+        protected override SiteInfoDTO GetDTOById(int idSource)
         {
-            get { return "SiteId"; }
+            DetachedCriteria criteria = DetachedCriteria.For<SiteInfoDTO>();
+            criteria.Add(Expression.Eq("SiteId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindOne(criteria);
         }
+
+        protected override DataMapBase<SiteInfo, SiteInfoDTO> GetDataMapper()
+        {
+            return DataMapManager.Mappers().SiteInfoDataMap; 
+        }
+
         /// <summary>
         /// Get stored web site settings.
         /// </summary>
         /// <returns></returns>
         public SiteInfo GetSiteInfo()
         {
-            return this.DataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
         }
 
         public override bool Delete(SiteInfo itemToDelete)

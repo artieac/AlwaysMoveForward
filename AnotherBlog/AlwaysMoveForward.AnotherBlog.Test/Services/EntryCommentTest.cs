@@ -62,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void AddComment()
+        public void EntryCommentService_AddComment()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, "TestCommentAuthor", "testcommentauthor@test.com", "Test Comment", "www.test.com", testUser);
@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void AddLoggedInComment()
+        public void EntryCommentService_AddLoggedInComment()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
@@ -106,7 +106,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAllUnapprovedComments()
+        public void EntryCommentService_GetAllUnapprovedComments()
         {
             int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count;
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
@@ -129,7 +129,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void ApproveComment()
+        public void EntryCommentService_ApproveComment()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
@@ -147,7 +147,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAllApprovedComments()
+        public void EntryCommentService_GetAllApprovedComments()
         {
             int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count;
             int initialApprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count;
@@ -175,7 +175,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void DeleteComment()
+        public void EntryCommentService_DeleteComment()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
@@ -194,7 +194,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAllDeletedComments()
+        public void EntryCommentService_GetAllDeletedComments()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
@@ -216,7 +216,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void FullDeleteComment()
+        public void EntryCommentService_FullDeleteComment()
         {
             int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
             Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);

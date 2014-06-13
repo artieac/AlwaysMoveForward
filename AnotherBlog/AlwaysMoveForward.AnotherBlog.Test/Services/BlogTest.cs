@@ -38,26 +38,32 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             testBlog = this.TestBlog;
             testUser = this.TestUser;
 
-            Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);
+            using(this.Services.UnitOfWork.BeginTransaction())
+            {
+                Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);
+            }
         }
 
         [TearDown]
         public void TearDown()
         {
-            Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
-            Services.UserService.Delete(testUser.UserId);
-            Services.BlogService.Delete(testBlog.BlogId);
+            using(this.Services.UnitOfWork.BeginTransaction())
+            {
+                Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
+                Services.UserService.Delete(testUser.UserId);
+                Services.BlogService.Delete(testBlog.BlogId);
+            }
         }
 
         [TestCase]
-        public void Create()
+        public void BlogService_Create()
         {
             Blog test = Services.BlogService.Create();
             Assert.IsNotNull(test);
         }
 
         [TestCase]
-        public void GetDefaultBlog()
+        public void BlogService_GetDefaultBlog()
         {
             Blog test = Services.BlogService.GetDefaultBlog();
             Assert.IsNotNull(test);
@@ -65,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAll()
+        public void BlogService_GetAll()
         {
             IList<Blog> test = Services.BlogService.GetAll();
             Assert.IsNotNull(test);
@@ -73,7 +79,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetByUserId()
+        public void BlogService_GetByUserId()
         {
             Assert.IsNotNull(testUser);
 
@@ -82,7 +88,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetById()
+        public void BlogService_GetById()
         {
             Assert.IsNotNull(testBlog);
 
@@ -92,7 +98,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetByName()
+        public void BlogService_GetByName()
         {
             Assert.IsNotNull(testBlog);
 
@@ -102,7 +108,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetBySubFolder()
+        public void BlogService_GetBySubFolder()
         {
             Assert.IsNotNull(testBlog);
 

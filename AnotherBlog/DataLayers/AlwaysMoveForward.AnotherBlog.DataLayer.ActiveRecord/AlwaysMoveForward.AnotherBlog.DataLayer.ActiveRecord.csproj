@@ -127,7 +127,6 @@
     <Compile Include="Entities\TagDTO.cs" />
     <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Entities\VoterAddressDTO.cs" />
-    <Compile Include="Repositories\ActiveRecordRepository.cs" />
     <Compile Include="Repositories\BlogEntryRepository.cs" />
     <Compile Include="Repositories\BlogListRepository.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
@@ -149,6 +148,10 @@
     <ProjectReference Include="..\..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
       <Project>{600387A0-6903-47FD-AA6C-9ADF4CFE491E}</Project>
       <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\DataLayer.ActiveRecord\AlwaysMoveForward.Common.DataLayer.ActiveRecord.csproj">
+      <Project>{c2a84066-a2a4-4f44-bef3-6cd8f96d0833}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.ActiveRecord</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\AlwaysMoveForward.AnotherBlog.Common\AlwaysMoveForward.AnotherBlog.Common.csproj">
       <Project>{EE543152-B86A-43F0-974F-AA97DD094BFF}</Project>

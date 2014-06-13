@@ -42,6 +42,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 
         [HasMany(typeof(BlogListItemDTO), Inverse = true)]
         public IList<BlogListItemDTO> Items { get; set; }
-
     }
 }

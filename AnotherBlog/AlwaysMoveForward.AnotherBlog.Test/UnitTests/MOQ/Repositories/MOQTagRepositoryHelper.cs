@@ -20,11 +20,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.MOQ.Repositories
             defaultList = new List<Tag>();
         }
 
-        public static void ConfigureCreate(Mock<ITagRepository> moqObject)
-        {
-            moqObject.Setup(x => x.Create())
-                .Returns(new Mock<Tag>().Object);
-        }
         public static void ConfigureGetAll(Mock<ITagRepository> moqObject)
         {
             moqObject.Setup(x => x.GetAll(It.IsAny<int>()))

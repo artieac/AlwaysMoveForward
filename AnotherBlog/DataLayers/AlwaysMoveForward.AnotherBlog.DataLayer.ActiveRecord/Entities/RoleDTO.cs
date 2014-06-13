@@ -22,7 +22,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     [ActiveRecord("Roles")]
-    public class RoleDTO : Role
+    public class RoleDTO 
     {
         public RoleDTO() : base()
         {
@@ -30,9 +30,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "RoleId", UnsavedValue = "-1")]
-        public override int RoleId { get; set; }
+        public int RoleId { get; set; }
 
         [Property("Name")]
-        public override string Name { get; set; }
+        public string Name { get; set; }
     }
 }

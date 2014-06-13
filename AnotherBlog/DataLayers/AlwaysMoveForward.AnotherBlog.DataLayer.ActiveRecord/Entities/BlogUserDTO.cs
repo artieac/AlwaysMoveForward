@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
     [ActiveRecord("BlogUsers")]
     public class BlogUserDTO 
     {
-        public BlogUserDTO() : base()
+        public BlogUserDTO()
         {
             this.BlogUserId = -1;
         }

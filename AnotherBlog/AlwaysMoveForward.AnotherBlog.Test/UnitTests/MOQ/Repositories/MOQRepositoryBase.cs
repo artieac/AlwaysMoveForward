@@ -6,30 +6,20 @@ using System.Text;
 using Moq;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.Test.MOQ.Repositories
 {
-    public class MOQRepositoryBase<DomainType, DTOType> : RepositoryBase<DomainType, DTOType>,
-                                                          IRepository<DomainType>
+    public abstract class MOQRepositoryBase<DomainType, DTOType, TIDType> : ActiveRecordRepositoryBase<DomainType, DTOType, TIDType>,
+                                                          IRepository<DomainType, TIDType>
         where DomainType : class, new() where DTOType : class, DomainType, new()
     {
-        public MOQRepositoryBase(IUnitOfWork _unitOfWork, IRepositoryManager repositoryManager)
-            : base(_unitOfWork, repositoryManager) {}
-
-        public override DomainType Create()
-        {
-            Mock<DomainType> retVal = new Mock<DomainType>();
-            return retVal.Object;
-        }
+        public MOQRepositoryBase(UnitOfWork _unitOfWork)
+            : base(_unitOfWork) {}
 
         public override DomainType GetByProperty(string idPropertyName, object idValue)
-        {
-            Mock<DomainType> retVal = new Mock<DomainType>();
-            return retVal.Object;
-        }
-
-        public override DomainType GetByProperty(string idPropertyName, object idValue, int blogId)
         {
             Mock<DomainType> retVal = new Mock<DomainType>();
             return retVal.Object;
@@ -41,19 +31,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.MOQ.Repositories
             return retVal.Object;
         }
 
-        public override IList<DomainType> GetAll(int blogId)
-        {
-            Mock<IList<DomainType>> retVal = new Mock<IList<DomainType>>();
-            return retVal.Object;
-        }
-
         public override IList<DomainType> GetAllByProperty(string idPropertyName, object idValue)
-        {
-            Mock<IList<DomainType>> retVal = new Mock<IList<DomainType>>();
-            return retVal.Object;
-        }
-
-        public override IList<DomainType> GetAllByProperty(string idPropertyName, object idValue, int blogId)
         {
             Mock<IList<DomainType>> retVal = new Mock<IList<DomainType>>();
             return retVal.Object;

@@ -32,19 +32,19 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Tags = new List<Tag>();
         }
 
-        public virtual int EntryId { get; set; }
-        public virtual bool IsPublished { get; set; }
-        public virtual Blog Blog { get; set; }
-        public virtual User Author { get; set; }
-        public virtual string EntryText { get; set; }
-        public virtual string Title { get; set; }
-        public virtual DateTime DatePosted { get; set; }
-        public virtual DateTime DateCreated { get; set; }
-        public virtual int CommentCount { get; set; }
-        public virtual int TimesViewed { get; set; }
-        public virtual IList<Tag> Tags { get; set; }
+        public int EntryId { get; set; }
+        public bool IsPublished { get; set; }
+        public Blog Blog { get; set; }
+        public User Author { get; set; }
+        public string EntryText { get; set; }
+        public string Title { get; set; }
+        public DateTime DatePosted { get; set; }
+        public DateTime DateCreated { get; set; }
+        public int CommentCount { get; set; }
+        public int TimesViewed { get; set; }
+        public IList<Tag> Tags { get; set; }
                 
-        public virtual string ShortEntryText
+        public string ShortEntryText
         {
             get
             {

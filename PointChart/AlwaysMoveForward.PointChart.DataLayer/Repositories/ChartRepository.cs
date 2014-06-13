@@ -8,41 +8,37 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class ChartRepository : ActiveRecordRepository<Chart, ChartDTO>
+    public class ChartRepository : ActiveRecordRepositoryBase<Chart, ChartDTO, int>
     {
-        public ChartRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public ChartRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override ChartDTO Map(Chart source)
+        protected override ChartDTO GetDTOById(Chart domainInstance)
         {
-            return DataMapper.DataMapManager.Mappers().Chart.Map(source);
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override Chart Map(ChartDTO source)
+        protected override ChartDTO GetDTOById(int idSource)
         {
-            return DataMapper.DataMapManager.Mappers().Chart.Map(source);
+            DetachedCriteria criteria = DetachedCriteria.For<ChartDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindOne(criteria);
         }
 
-        public override Chart Save(Chart itemToSave)
+        protected override DataMapBase<Chart, ChartDTO> GetDataMapper()
         {
-            Chart retVal = null;
-            ChartDTO dtoItem = this.Save(this.Map(itemToSave));
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+            return DataMapper.DataMapManager.Mappers().Chart;
         }
 
         public IList<Chart> GetByUserId(int userId)
@@ -50,7 +46,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<ChartDTO>();
             criteria.Add(Expression.Eq("AdministratorId", userId));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));
         }
 
         public IList<Chart> GetByPointEarnerAndAdministratorId(int pointEarnerId, int administratorId)
@@ -59,14 +55,14 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             criteria.CreateCriteria("PointEarner").Add(Expression.Eq("Id", pointEarnerId));
             criteria.Add(Expression.Eq("AdministratorId", administratorId));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));   
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));   
         }
         public IList<Chart> GetByAdministratorId(string firstName, string lastName, int administratorId)
         {
             DetachedCriteria criteria = DetachedCriteria.For<ChartDTO>();
             criteria.Add(Expression.Eq("AdministratorId", administratorId));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<ChartDTO>.FindAll(criteria));
         }
     }
 }

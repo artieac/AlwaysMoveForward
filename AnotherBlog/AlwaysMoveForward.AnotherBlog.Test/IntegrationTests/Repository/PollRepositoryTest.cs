@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository
     public class PollRepositoryTest : RepositoryTestBase
     {
         [Test]
-        public void GetAllTest()
+        public void PollRepository_GetAllTest()
         {
             IList<PollQuestion> foundQuestions = this.RepositoryManager.PollRepository.GetAll();
 
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository
         }
 
         [Test]
-        public void SaveTest()
+        public void PollRepository_SaveTest()
         {
             PollQuestion newQuestion = new PollQuestion();
             newQuestion.Title = "TestTitle";
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository
         }
 
         [Test]
-        public void UpdateTest()
+        public void PollRepository_UpdateTest()
         {
             PollQuestion targetQuestion = this.RepositoryManager.PollRepository.GetById(1);            
             PollOption newPoll = new PollOption();

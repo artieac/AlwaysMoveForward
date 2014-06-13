@@ -35,7 +35,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public const string DefaultPostSort = "DatePosted";
 
-        public BlogEntryService(IServiceDependencies dependencies, IAnotherBlogRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public BlogEntryService(IUnitOfWork unitOfWork, IBlogEntryRepository blogEntryRepository, ITagRepository tagRepository) : base(unitOfWork) 
+        {
+            this.BlogEntryRepository = blogEntryRepository;
+            this.TagRepository = tagRepository;
+        }
+
+        protected IBlogEntryRepository BlogEntryRepository { get; private set; }
+
+        protected ITagRepository TagRepository { get; private set; }
+
         /// <summary>
         /// Instantiate and initialize a BlogEntry instance.
         /// </summary>
@@ -43,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public BlogPost Create(Blog targetBlog)
         {
-            BlogPost retVal = this.AnotherBlogRepositories.BlogEntries.Create();
+            BlogPost retVal = new BlogPost();
             retVal.DateCreated = DateTime.Now;
             retVal.Author = ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser;
             retVal.Blog = targetBlog;
@@ -72,7 +81,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
             else
             {
-                itemToSave = AnotherBlogRepositories.BlogEntries.GetById(entryId, targetBlog.BlogId);
+                itemToSave = this.BlogEntryRepository.GetById(entryId);
             }
 
             itemToSave.Title = title;
@@ -82,7 +91,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.SetPublishState(isPublished);
             itemToSave = this.AddTags(itemToSave, tagNames);
 
-            itemToSave = AnotherBlogRepositories.BlogEntries.Save(itemToSave);
+            itemToSave = this.BlogEntryRepository.Save(itemToSave);
 
             return itemToSave;
         }
@@ -104,7 +113,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 if (trimmedName != string.Empty)
                 {
-                    Tag currentTag = AnotherBlogRepositories.Tags.GetByName(trimmedName, targetPost.Blog.BlogId);
+                    Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.BlogId);
 
                     if (currentTag == null)
                     {
@@ -125,7 +134,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public IList<BlogPost> GetAll()
         {
-            return AnotherBlogRepositories.BlogEntries.GetAll();
+            return this.BlogEntryRepository.GetAll();
         }
         /// <summary>
         /// Get all blog entries related to a single blog
@@ -138,7 +147,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                AnotherBlogRepositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, false, -1, DefaultPostSort, true);
+                this.BlogEntryRepository.GetAllByBlog(targetBlog.BlogId, false, -1, DefaultPostSort, true);
             }
 
             return retVal;
@@ -164,7 +173,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults, sortColumn, sortAscending);
+                retVal = this.BlogEntryRepository.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults, sortColumn, sortAscending);
             }
 
             return retVal;
@@ -181,7 +190,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetById(entryId, targetBlog.BlogId);
+                retVal = this.BlogEntryRepository.GetById(entryId);
             }
 
             return retVal;
@@ -198,7 +207,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetByTitle(blogTitle, targetBlog.BlogId);
+                retVal = this.BlogEntryRepository.GetByTitle(blogTitle, targetBlog.BlogId);
             }
 
             return retVal;
@@ -215,7 +224,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetByDateAndTitle(blogTitle, postDate, targetBlog.BlogId);
+                retVal = this.BlogEntryRepository.GetByDateAndTitle(blogTitle, postDate, targetBlog.BlogId);
             }
 
             return retVal;
@@ -233,14 +242,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetByTag(targetBlog.BlogId, tag, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByTag(targetBlog.BlogId, tag, publishedOnly);
             }
             return retVal;
         }
 
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
         {
-            return AnotherBlogRepositories.BlogEntries.GetByMonth(blogDate, publishedOnly);
+            return this.BlogEntryRepository.GetByMonth(blogDate, publishedOnly);
         }
 
         public IList<BlogPost> GetByMonth(Blog targetBlog, DateTime blogDate, bool publishedOnly)
@@ -249,14 +258,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetByMonth(blogDate, targetBlog.BlogId, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByMonth(blogDate, targetBlog.BlogId, publishedOnly);
             }
             return retVal;
         }
 
         public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
         {
-            return AnotherBlogRepositories.BlogEntries.GetByDate(blogDate, publishedOnly);
+            return this.BlogEntryRepository.GetByDate(blogDate, publishedOnly);
         }
 
         public IList<BlogPost> GetByDate(Blog targetBlog, DateTime blogDate, bool publishedOnly)
@@ -265,7 +274,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetByDate(blogDate, targetBlog.BlogId, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByDate(blogDate, targetBlog.BlogId, publishedOnly);
             }
             return retVal;
         }
@@ -276,7 +285,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetMostRecent(targetBlog.BlogId, true);
+                retVal = this.BlogEntryRepository.GetMostRecent(targetBlog.BlogId, true);
             }
 
             return retVal;
@@ -284,17 +293,17 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<BlogPost> GetMostRecent(int maxResults)
         {
-            return AnotherBlogRepositories.BlogEntries.GetAll(true, maxResults);
+            return this.BlogEntryRepository.GetAll(true, maxResults);
         }
 
         public IList<BlogPost> GetMostRead(int maxResults)
         {
-            return AnotherBlogRepositories.BlogEntries.GetMostRead(maxResults);
+            return this.BlogEntryRepository.GetMostRead(maxResults);
         }
 
         public IList<BlogPost> GetMostRead(int blogId, int maxResults)
         {
-            return AnotherBlogRepositories.BlogEntries.GetMostRead(blogId, maxResults);
+            return this.BlogEntryRepository.GetMostRead(blogId, maxResults);
         }
 
         public BlogPost GetPreviousEntry(Blog targetBlog, BlogPost currentEntry)
@@ -303,7 +312,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetPreviousEntry(targetBlog.BlogId, currentEntry.EntryId);
+                retVal = this.BlogEntryRepository.GetPreviousEntry(targetBlog.BlogId, currentEntry.EntryId);
             }
 
             return retVal;
@@ -315,7 +324,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = AnotherBlogRepositories.BlogEntries.GetNextEntry(targetBlog.BlogId, currentEntry.EntryId);
+                retVal = this.BlogEntryRepository.GetNextEntry(targetBlog.BlogId, currentEntry.EntryId);
             }
 
             return retVal;
@@ -323,24 +332,24 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
         {
-            return AnotherBlogRepositories.BlogEntries.GetPublishedDatesByMonth(blogDate);
+            return this.BlogEntryRepository.GetPublishedDatesByMonth(blogDate);
         }
 
         public IList GetArchiveDates(Blog targetBlog)
         {
             if (targetBlog != null)
             {
-                return AnotherBlogRepositories.BlogEntries.GetArchiveDates(targetBlog.BlogId);
+                return this.BlogEntryRepository.GetArchiveDates(targetBlog.BlogId);
             }
             else
             {
-                return AnotherBlogRepositories.BlogEntries.GetArchiveDates(null);
+                return this.BlogEntryRepository.GetArchiveDates(null);
             }
         }
 
         public bool Delete(BlogPost targetEntry)
         {
-            return this.AnotherBlogRepositories.BlogEntries.Delete(targetEntry);
+            return this.BlogEntryRepository.Delete(targetEntry);
         }
 
         public int UpdateTimesViewed(BlogPost targetPost)
@@ -350,7 +359,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             if (targetPost != null)
             {
                 targetPost.TimesViewed++;
-                this.AnotherBlogRepositories.BlogEntries.Save(targetPost);
+                this.BlogEntryRepository.Save(targetPost);
                 retVal = targetPost.TimesViewed;
             }
 

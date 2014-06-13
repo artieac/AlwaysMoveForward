@@ -7,7 +7,7 @@ using AlwaysMoveForward.Common.DomainModel.Poll;
 
 namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
-    public interface IPollRepository : IRepository<PollQuestion>
+    public interface IPollRepository : IRepository<PollQuestion, int>
     {
         PollQuestion GetByPollOptionId(int pollOptionId);
     }

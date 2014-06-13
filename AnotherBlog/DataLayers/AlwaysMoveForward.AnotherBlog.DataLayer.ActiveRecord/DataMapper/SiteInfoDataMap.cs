@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class SiteInfoDataMap : DataMapBase<SiteInfo, SiteInfoDTO>
     {
-        public static void ConfigureAutoMapper()
+        static SiteInfoDataMap()
         {
             if (AutoMapper.Mapper.FindTypeMapFor<SiteInfo, SiteInfoDTO>() == null)
             {

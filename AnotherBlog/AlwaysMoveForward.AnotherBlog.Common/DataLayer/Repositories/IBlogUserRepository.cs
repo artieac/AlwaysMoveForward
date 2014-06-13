@@ -13,12 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogUserRepository : IRepository<BlogUser>
+    public interface IBlogUserRepository : IRepository<BlogUser, int>
     {
         IList<BlogUser> GetUserBlogs(int userId);
         BlogUser GetUserBlog(int userId, int blogId);

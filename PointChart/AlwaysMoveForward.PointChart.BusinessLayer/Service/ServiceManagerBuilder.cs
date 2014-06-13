@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
@@ -37,7 +38,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         protected virtual IPointChartRepositoryManager CreateRepositoryManager(IUnitOfWork unitOfWork)
         {
-            return new RepositoryManager(unitOfWork);
+            return new RepositoryManager(unitOfWork as UnitOfWork);
         }
     }
 }

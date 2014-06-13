@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAll()
+        public void TagService_GetAll()
         {
             IList<Tag> blogTags = Services.TagService.GetAll(this.testBlog);
 
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         }
 
         [TestCase]
-        public void GetAllWithCount()
+        public void TagService_GetAllWithCount()
         {
             IList blogTags = Services.TagService.GetAllWithCount(this.testBlog);
 

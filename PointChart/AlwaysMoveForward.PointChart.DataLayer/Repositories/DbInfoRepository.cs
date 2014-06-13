@@ -12,58 +12,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-
 using NHibernate.Criterion;
 using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
-
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
+using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class DbInfoRepository : ActiveRecordRepository<DbInfo, DbInfoDTO>, IDbInfoRepository
+    public class DbInfoRepository : ActiveRecordRepositoryBase<DbInfo, DbInfoDTO, int>, IDbInfoRepository
     {
-        public DbInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public DbInfoRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override DbInfoDTO Map(DbInfo source)
+        protected override DbInfoDTO GetDTOById(DbInfo domainInstance)
         {
-            DbInfoDTO retVal = new DbInfoDTO();
-            retVal.Version = source.Version;
-            return retVal;
+            return this.GetDTOById(domainInstance.Version);
         }
 
-        public override DbInfo Map(DbInfoDTO source)
+        protected override DbInfoDTO GetDTOById(int idSource)
         {
-            DbInfo retVal = new DbInfo();
-            retVal.Version = source.Version;
-            return retVal;
+            DetachedCriteria criteria = DetachedCriteria.For<DbInfoDTO>();
+            criteria.Add(Expression.Eq("Version", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne(criteria);
+        }
+
+        protected override DataMapBase<DbInfo, DbInfoDTO> GetDataMapper()
+        {
+            throw new NotImplementedException();
         }
 
         public DbInfo GetDbInfo()
         {
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne());
-        }
-
-        public override DbInfo Save(DbInfo itemToSave)
-        {
-            DbInfo retVal = null;
-            DbInfoDTO dtoItem = this.Map(itemToSave);
-
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<DbInfoDTO>.FindOne());
         }
 
         public override bool Delete(DbInfo itemToDelete)

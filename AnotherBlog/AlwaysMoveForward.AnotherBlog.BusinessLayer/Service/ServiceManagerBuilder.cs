@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -37,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected virtual IAnotherBlogRepositoryManager CreateRepositoryManager(IUnitOfWork unitOfWork)
         {
-            return new RepositoryManager(unitOfWork);
+            return new RepositoryManager(unitOfWork as UnitOfWork);
         }
     }
 }

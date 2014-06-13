@@ -24,14 +24,14 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.BlogId = -1;
         }
 
-        public virtual int BlogId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Description { get; set; }
-        public virtual string SubFolder { get; set; }
-        public virtual string About { get; set; }
-        public virtual string WelcomeMessage { get; set; }
-        public virtual string ContactEmail { get; set; }
-        public virtual string Theme { get; set; }
-        public virtual int CurrentPollId { get; set; }
+        public int BlogId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string SubFolder { get; set; }
+        public string About { get; set; }
+        public string WelcomeMessage { get; set; }
+        public string ContactEmail { get; set; }
+        public string Theme { get; set; }
+        public int CurrentPollId { get; set; }
     }
 }

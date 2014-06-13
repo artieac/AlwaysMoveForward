@@ -22,7 +22,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     [ActiveRecord("SiteInfo")]
-    public class SiteInfoDTO : SiteInfo
+    public class SiteInfoDTO 
     {
         public SiteInfoDTO() : base()
         {
@@ -30,21 +30,21 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "SiteId", UnsavedValue = "-1")]
-        public override int SiteId { get; set; }
+        public int SiteId { get; set; }
 
         [Property("About", ColumnType = "StringClob")]
-        public override string About { get; set; }
+        public string About { get; set; }
 
         [Property("Name")]
-        public override string Name { get; set; }
+        public string Name { get; set; }
 
         [Property("ContactEmail")]
-        public override string ContactEmail { get; set; }
+        public string ContactEmail { get; set; }
 
         [Property("DefaultTheme")]
-        public override string DefaultTheme { get; set; }
+        public string DefaultTheme { get; set; }
 
         [Property("SiteAnalyticsId")]
-        public override string SiteAnalyticsId { get; set; }
+        public string SiteAnalyticsId { get; set; }
     }
 }

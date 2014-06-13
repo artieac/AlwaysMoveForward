@@ -22,7 +22,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     [ActiveRecord("DbInfo")]
-    public class DbInfoDTO : DbInfo
+    public class DbInfoDTO
     {
         public DbInfoDTO() : base()
         {
@@ -30,6 +30,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         }
 
         [PrimaryKey("Version", UnsavedValue = "-1")]
-        public override int Version { get; set; }
+        public int Version { get; set; }
     }
 }

@@ -14,12 +14,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogEntryRepository : IRepository<BlogPost>
+    public interface IBlogEntryRepository : IRepository<BlogPost, int>
     {
         IList<BlogPost> GetAll(bool publishedOnly, int maxResults);
         IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending);

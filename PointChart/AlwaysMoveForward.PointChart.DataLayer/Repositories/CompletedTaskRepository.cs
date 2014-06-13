@@ -8,43 +8,37 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
 using AlwaysMoveForward.PointChart.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class CompletedTaskRepository : ActiveRecordRepository<CompletedTask, CompletedTaskDTO>
+    public class CompletedTaskRepository : ActiveRecordRepositoryBase<CompletedTask, CompletedTaskDTO, int>
     {
-        public CompletedTaskRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public CompletedTaskRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override CompletedTaskDTO Map(CompletedTask source)
+        protected override CompletedTaskDTO GetDTOById(CompletedTask domainInstance)
         {
-            return DataMapManager.Mappers().CompletedTask.Map(source);
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        public override CompletedTask Map(CompletedTaskDTO source)
+        protected override CompletedTaskDTO GetDTOById(int idSource)
         {
-            return DataMapManager.Mappers().CompletedTask.Map(source);
+            DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindOne(criteria);
         }
 
-        public override CompletedTask Save(CompletedTask itemToSave)
+        protected override DataMapBase<CompletedTask, CompletedTaskDTO> GetDataMapper()
         {
-            CompletedTask retVal = null;
-
-            CompletedTaskDTO dtoItem = this.Save(this.Map(itemToSave));
-            
-            if (dtoItem != null)
-            {
-                retVal = this.Map(dtoItem);
-            }
-
-            return retVal;
+            return DataMapManager.Mappers().CompletedTask;
         }
 
         public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, int administratorId)
@@ -55,7 +49,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
                 .Add(Expression.Eq("AdministratorId", administratorId));
             criteria.Add(Expression.Between("DateCompleted", weekStartDate, weekEndDate));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
         }
 
         public IList<CompletedTask> GetByChart(Chart chart, int administratorId)
@@ -63,7 +57,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
             criteria.CreateCriteria("Chart").Add(Expression.Eq("Id", chart.Id));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
         }
         
         public CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted, int administratorId)
@@ -74,7 +68,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             criteria.Add(Expression.Eq("DateCompleted", dateCompleted));
             criteria.Add(Expression.Eq("AdministratorId", administratorId));
 
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindOne(criteria));
         }
     }
 }

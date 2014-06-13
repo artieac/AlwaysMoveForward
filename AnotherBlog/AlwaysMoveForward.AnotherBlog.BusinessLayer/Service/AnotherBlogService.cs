@@ -12,14 +12,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class AnotherBlogService
     {
-        public AnotherBlogService(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager)
+        public AnotherBlogService(IUnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
-            this.AnotherBlogRepositories = repositoryManager;
         }
 
         public IUnitOfWork UnitOfWork { get; set; }
-
-        public IAnotherBlogRepositoryManager AnotherBlogRepositories { get; set; }
     }
 }

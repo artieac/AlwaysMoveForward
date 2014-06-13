@@ -178,6 +178,10 @@
     <Compile Include="WebServiceTests\BlogPostServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\DataLayer.ActiveRecord\AlwaysMoveForward.Common.DataLayer.ActiveRecord.csproj">
+      <Project>{c2a84066-a2a4-4f44-bef3-6cd8f96d0833}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.ActiveRecord</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AlwaysMoveForward.AnotherBlog.BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj">
       <Project>{378A5D90-9D1E-4317-8722-3549A4B85507}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.BusinessLayer</Name>

@@ -88,6 +88,10 @@
       <Project>{600387A0-6903-47FD-AA6C-9ADF4CFE491E}</Project>
       <Name>AlwaysMoveForward.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\DataLayer.ActiveRecord\AlwaysMoveForward.Common.DataLayer.ActiveRecord.csproj">
+      <Project>{c2a84066-a2a4-4f44-bef3-6cd8f96d0833}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.ActiveRecord</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AlwaysMoveForward.PointChart.Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>
       <Name>AlwaysMoveForward.PointChart.Common</Name>

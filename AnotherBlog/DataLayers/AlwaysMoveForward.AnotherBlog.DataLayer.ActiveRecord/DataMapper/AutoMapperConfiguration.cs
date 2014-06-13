@@ -13,17 +13,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     public class AutoMapperConfiguration
     {        
         public static void Configure()
-        {
-            DbInfoMapper.ConfigureAutoMapper();
-            SiteInfoDataMap.ConfigureAutoMapper();
-            RoleDataMap.ConfigureAutoMapper();
-            UserDataMap.ConfigureAutoMapper();
-            PollQuestionDataMap.ConfigureAutoMapper();
-            TagDataMap.ConfigureAutoMapper();
-            BlogPostDataMap.ConfigureAutoMapper();
-            BlogDataMap.ConfigureAutoMapper();
-            ListDataMap.ConfigureAutoMapper();
-            BlogUserDataMap.ConfigureAutoMapper();
+        {            
+            //BlogPostDataMap.ConfigureAutoMapper();
+            //BlogDataMap.ConfigureAutoMapper();
+            //ListDataMap.ConfigureAutoMapper();
+            //BlogUserDataMap.ConfigureAutoMapper();
             AutoMapper.Mapper.AssertConfigurationIsValid();
         }
     }
