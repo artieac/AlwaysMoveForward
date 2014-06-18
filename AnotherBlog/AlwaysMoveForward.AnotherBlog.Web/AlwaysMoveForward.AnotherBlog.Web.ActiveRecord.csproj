@@ -282,7 +282,7 @@
     <Content Include="Content\themes\Box\Site.less" />
     <Content Include="Content\themes\Box\TabControl.less" />
     <Content Include="Content\themes\default\Admin.css" />
-    <Content Include="Content\themes\default\calendar.css" />
+    <None Include="Content\themes\default\calendar.less" />
     <Content Include="Content\themes\default\Pager.css" />
     <Content Include="Content\themes\Simple\Admin.css" />
     <Content Include="Content\themes\Simple\calendar.css" />
@@ -384,15 +384,15 @@
     </Content>
     <Content Include="Views\Shared\_ContentNavigationPanel.cshtml" />
     <Content Include="Content\themes\Box\ThemeDefaults.less" />
-    <Content Include="Content\themes\default\Site.css" />
-    <Content Include="Content\themes\default\TabControl.css" />
-    <Content Include="Content\themes\default\ThemeDefaults.css" />
     <Content Include="Content\themes\Simple\Site.css" />
     <Content Include="Content\themes\Simple\TabControl.css" />
     <Content Include="Content\themes\Simple\ThemeDefaults.css" />
     <Content Include="Views\Shared\_PollControl.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePolls\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePolls\Edit.cshtml" />
+    <Content Include="Content\themes\default\TabControl.less" />
+    <Content Include="Content\themes\default\Site.less" />
+    <Content Include="Content\themes\default\ThemeDefaults.less" />
     <None Include="Views\User\Register.cshtml" />
     <None Include="Views\User\RegisterComplete.cshtml" />
     <Content Include="Scripts\Modules\FactoryModule.js" />

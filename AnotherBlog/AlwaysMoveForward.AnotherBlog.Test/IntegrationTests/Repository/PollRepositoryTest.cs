@@ -19,7 +19,7 @@ using AlwaysMoveForward.Common.DomainModel.Poll;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository
+namespace AlwaysMoveForward.AnotherBlog.Test.IntegrationTests.Repository
 {
     [TestFixture]
     public class PollRepositoryTest : RepositoryTestBase

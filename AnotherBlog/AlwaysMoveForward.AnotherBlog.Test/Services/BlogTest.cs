@@ -24,9 +24,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
     [TestFixture]
     public class BlogTest : ServiceTestBase
     {
-        Blog testBlog;
-        User testUser;
-
         public BlogTest()
             : base()
         {
@@ -35,23 +32,13 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void Setup()
         {
-            testBlog = this.TestBlog;
-            testUser = this.TestUser;
+            User testUser = this.TestUser;
+            Blog testBlog = this.TestBlog;
 
             using(this.Services.UnitOfWork.BeginTransaction())
             {
-                Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);
-            }
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            using(this.Services.UnitOfWork.BeginTransaction())
-            {
-                Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
-                Services.UserService.Delete(testUser.UserId);
-                Services.BlogService.Delete(testBlog.BlogId);
+                Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);
+                this.Services.UnitOfWork.EndTransaction(true);
             }
         }
 
@@ -60,14 +47,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         {
             Blog test = Services.BlogService.Create();
             Assert.IsNotNull(test);
-        }
-
-        [TestCase]
-        public void BlogService_GetDefaultBlog()
-        {
-            Blog test = Services.BlogService.GetDefaultBlog();
-            Assert.IsNotNull(test);
-            Assert.AreEqual(test.BlogId, 1);
         }
 
         [TestCase]
@@ -81,40 +60,40 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void BlogService_GetByUserId()
         {
-            Assert.IsNotNull(testUser);
+            Assert.IsNotNull(this.TestUser);
 
-            IList<Blog> test = Services.BlogService.GetByUserId(testUser.UserId);
+            IList<Blog> test = Services.BlogService.GetByUserId(this.TestUser.UserId);
             Assert.IsNotNull(test);
         }
 
         [TestCase]
         public void BlogService_GetById()
         {
-            Assert.IsNotNull(testBlog);
+            Assert.IsNotNull(this.TestBlog);
 
-            Blog test = Services.BlogService.GetById(testBlog.BlogId);
+            Blog test = Services.BlogService.GetById(this.TestBlog.BlogId);
             Assert.IsNotNull(test);
-            Assert.AreEqual(test.BlogId, testBlog.BlogId);
+            Assert.AreEqual(test.BlogId, this.TestBlog.BlogId);
         }
 
         [TestCase]
         public void BlogService_GetByName()
         {
-            Assert.IsNotNull(testBlog);
+            Assert.IsNotNull(this.TestBlog);
 
-            Blog test = Services.BlogService.GetByName(testBlog.Name);
+            Blog test = Services.BlogService.GetByName(this.TestBlog.Name);
             Assert.IsNotNull(test);
-            Assert.AreEqual(test.Name, testBlog.Name);
+            Assert.AreEqual(test.Name, this.TestBlog.Name);
         }
 
         [TestCase]
         public void BlogService_GetBySubFolder()
         {
-            Assert.IsNotNull(testBlog);
+            Assert.IsNotNull(this.TestBlog);
 
-            Blog test = Services.BlogService.GetBySubFolder(testBlog.SubFolder);
+            Blog test = Services.BlogService.GetBySubFolder(this.TestBlog.SubFolder);
             Assert.IsNotNull(test);
-            Assert.AreEqual(test.Name, testBlog.SubFolder);
+            Assert.AreEqual(test.Name, this.TestBlog.SubFolder);
         }        
     }
 }

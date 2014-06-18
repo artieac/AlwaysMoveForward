@@ -51,7 +51,11 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
 
                 if (retVal == null)
                 {
-                    retVal = Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
+                    using(this.Services.UnitOfWork.BeginTransaction())
+                    {
+                        retVal = Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
                 }
 
                 return retVal;
@@ -66,7 +70,11 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
 
                 if (retVal == null)
                 {
-                    retVal = Services.UserService.Save("TestUser", "Password", "testuser@alwaysmoveforward.com", -1, false, false, true, "", "");
+                    using (this.Services.UnitOfWork.BeginTransaction())
+                    {
+                        retVal = Services.UserService.Save("TestUser", "Password", "testuser@alwaysmoveforward.com", -1, false, false, true, "", "");
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
                 }
 
                 System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(retVal, true);

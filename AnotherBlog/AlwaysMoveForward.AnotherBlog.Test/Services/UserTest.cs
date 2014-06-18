@@ -35,16 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void SetUp()
         {
-            testUser = this.TestUser;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if(testUser!=null)
-            {
-                Services.UserService.Delete(testUser.UserId);
-            }
+            testUser = this.Services.UserService.GetById(1);
         }
 
         [TestCase]
@@ -72,7 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void UserService_Login()
         {
-            User loginUser = Services.UserService.Login("TestUser", "TestPassword");
+            User loginUser = Services.UserService.Login("acorrea", "AMFCa1tl1n3");
 
             Assert.NotNull(loginUser);
             Assert.AreEqual(testUser.UserId, loginUser.UserId);
@@ -81,12 +72,22 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void UserService_CreateTestUser()
         {
-            User newUser = Services.UserService.Save("TestUser2", "TestPassword2", "test2@test.com", -1, false, false, true, "", "Test2");
+            User newUser = null;
+
+            using(this.Services.UnitOfWork.BeginTransaction())
+            {
+                newUser = Services.UserService.Save("TestUser2", "TestPassword2", "test2@test.com", -1, false, false, true, "", "Test2");
+                this.Services.UnitOfWork.EndTransaction(true);
+            }
 
             Assert.IsNotNull(newUser);
             Assert.AreEqual(newUser.UserName, "TestUser2");
 
-            Services.UserService.Delete(newUser.UserId);
+            using (this.Services.UnitOfWork.BeginTransaction())
+            {
+                Services.UserService.Delete(newUser.UserId);
+                this.Services.UnitOfWork.EndTransaction(true);
+            }
         }
 
         [TestCase]

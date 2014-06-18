@@ -1,9 +1,11 @@
-﻿.monthTitle
+﻿@import "ThemeDefaults.less";
+
+.monthTitle
 {
 	text-align:center;
 	width:100%;
-	background-color: #5493E0;
-	color: #FFFFFF;
+	background-color: @foreGroundColor;
+	color: @foreGroundTextColor;
 	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;
 }
@@ -17,7 +19,7 @@
 .changeMonth
 {
 	text-decoration:none;
-	color:White;
+	color: @foreGroundTextColor;
 	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;
 }
@@ -41,7 +43,7 @@
 
 .weekDayCell
 {
-	border:solid 1px #CCCCCC;
+	border:solid 1px @alternateTextColor;
 	color: #5493E0;
 	text-align:center;
 }
@@ -53,14 +55,14 @@
 
 .weekdayCellOtherMonth
 {
-	background-color:#CCCCCC;
+	background-color:@alternateTextColor;
 	color:Gray;
 }
 
 .weekdayCellSelected
 {
 	background-color:#5493E0;
-	color:White;	
+	color: @foreGroundTextColor;
 }
 
 .weekdayCellSelected a

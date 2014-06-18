@@ -6,7 +6,7 @@ using System.Text;
 using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.Test.Integration.Repository
+namespace AlwaysMoveForward.AnotherBlog.Test.IntegrationTests.Repository
 {
     public class RepositoryTestBase
     {

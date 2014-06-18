@@ -24,8 +24,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
     [TestFixture]
     public class BlogUserTest : ServiceTestBase
     {
-        Blog testBlog;
-        User testUser;
         Role testRole;
 
         public BlogUserTest()
@@ -37,16 +35,10 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void Setup()
         {
-            testBlog = this.TestBlog;
-            testUser = this.TestUser;
-            testRole = Services.RoleService.GetById(1);
-        }
+            User testUser = this.TestUser;
+            Blog testBlog = this.TestBlog;
 
-        [TearDown]
-        public void TearDown()
-        {
-            Services.BlogService.Delete(testBlog.BlogId);
-            Services.UserService.Delete(testUser.UserId);
+            testRole = Services.RoleService.GetById(1);
         }
 
         [TestCase]
@@ -59,46 +51,46 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void BlogUserService_Save()
         {
-            Assert.IsNotNull(testBlog);
-            Assert.IsNotNull(testUser);
-            Assert.IsNotNull(testRole);
+            Assert.IsNotNull(this.TestBlog);
+            Assert.IsNotNull(this.TestUser);
+            Assert.IsNotNull(this.testRole);
 
-            BlogUser test = Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, testRole.RoleId);
+            BlogUser test = Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, testRole.RoleId);
 
             Assert.IsNotNull(test);
 
-            Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
+            Services.BlogUserService.DeleteUserBlog(this.TestBlog.BlogId, this.TestUser.UserId);
         }
 
         [TestCase]
         public void BlogUserService_GetUserBlog()
         {
-            Assert.IsNotNull(testBlog);
-            Assert.IsNotNull(testUser);
-            Assert.IsNotNull(testRole);
+            Assert.IsNotNull(this.TestBlog);
+            Assert.IsNotNull(this.TestUser);
+            Assert.IsNotNull(this.testRole);
 
-            BlogUser test = Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, testRole.RoleId);
-            test = Services.BlogUserService.GetUserBlog(testUser.UserId, testBlog.BlogId);
+            BlogUser test = Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, testRole.RoleId);
+            test = Services.BlogUserService.GetUserBlog(this.TestUser.UserId, this.TestBlog.BlogId);
 
             if(test==null)
             {
-                test = Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, testRole.RoleId);
-                test = Services.BlogUserService.GetUserBlog(testUser.UserId, testBlog.BlogId);
+                test = Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, testRole.RoleId);
+                test = Services.BlogUserService.GetUserBlog(this.TestUser.UserId, this.TestBlog.BlogId);
             }
 
             Assert.IsNotNull(test);
 
-            Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
+            Services.BlogUserService.DeleteUserBlog(this.TestBlog.BlogId, this.TestUser.UserId);
         }
 
         [TestCase]
         public void BlogUserService_GetUserBlogs()
         {
-            Assert.IsNotNull(testUser);
+            Assert.IsNotNull(this.TestUser);
 
-            BlogUser test = Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, testRole.RoleId);
+            BlogUser test = Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, testRole.RoleId);
 
-            IList<BlogUser> testList = Services.BlogUserService.GetUserBlogs(testUser.UserId);
+            IList<BlogUser> testList = Services.BlogUserService.GetUserBlogs(this.TestUser.UserId);
             Assert.IsNotNull(testList);
 
             Services.BlogUserService.DeleteUserBlog(test);
@@ -107,21 +99,21 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void BlogUserService_DeleteUserBlog()
         {
-            Assert.IsNotNull(testBlog);
-            Assert.IsNotNull(testUser);
+            Assert.IsNotNull(this.TestBlog);
+            Assert.IsNotNull(this.TestUser);
 
-            BlogUser test = Services.BlogUserService.GetUserBlog(testUser.UserId, testBlog.BlogId);
+            BlogUser test = Services.BlogUserService.GetUserBlog(this.TestUser.UserId, this.TestBlog.BlogId);
 
             if (test == null)
             {
-                test = Services.BlogUserService.Save(testUser.UserId, testBlog.BlogId, testRole.RoleId);
+                test = Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, testRole.RoleId);
             }
 
             Assert.IsNotNull(test);
 
-            Services.BlogUserService.DeleteUserBlog(testBlog.BlogId, testUser.UserId);
+            Services.BlogUserService.DeleteUserBlog(this.TestBlog.BlogId, this.TestUser.UserId);
 
-            test = Services.BlogUserService.GetUserBlog(testUser.UserId, testBlog.BlogId);
+            test = Services.BlogUserService.GetUserBlog(this.TestUser.UserId, this.TestBlog.BlogId);
 
             Assert.IsNull(test);
         }

@@ -118,8 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeTest.cs" />
+    <Compile Include="IntegrationTests\Repository\CommentRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Repository\PollRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Repository\RepositoryTestBase.cs" />
+    <Compile Include="IntegrationTests\Repository\UserRepositoryTests.cs" />
     <Compile Include="Service References\BlogPostReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

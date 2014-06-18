@@ -170,18 +170,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.ActiveRecord.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.ActiveRecord.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.ActiveRecord.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-copy "$(ProjectDir)$(OutDir)Castle*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)Castle*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)Castle*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)Iesi*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>

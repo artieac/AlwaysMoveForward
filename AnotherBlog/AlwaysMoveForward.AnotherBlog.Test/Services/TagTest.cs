@@ -35,13 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void SetUp()
         {
-            testBlog = this.TestBlog;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Services.BlogService.Delete(testBlog.BlogId);
+            testBlog = this.Services.BlogService.GetBySubFolder("artie");
         }
 
         [TestCase]

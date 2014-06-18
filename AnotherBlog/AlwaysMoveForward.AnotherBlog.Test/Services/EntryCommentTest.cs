@@ -37,27 +37,35 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void SetUp()
         {
-            testBlog = this.TestBlog;
-            testUser = this.TestUser;
-            testEntry = Services.BlogEntryService.Save(testBlog, "Test Blog Entry", "Testing a blog entry", 0, true, new string[] { "testTag1", "testTag2"});
+            using(this.Services.UnitOfWork.BeginTransaction())
+            {
+                testBlog = this.TestBlog;
+                testUser = this.TestUser;
+                testEntry = Services.BlogEntryService.Save(testBlog, "Test Blog Entry", "Testing a blog entry", 0, true, new string[] { "testTag1", "testTag2" });
+                this.Services.UnitOfWork.EndTransaction(true);
+            }
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (testEntry != null)
+            using (this.Services.UnitOfWork.BeginTransaction())
             {
-                Services.BlogEntryService.Delete(testEntry);
-            }
+                if (testEntry != null)
+                {
+                    Services.BlogEntryService.Delete(testEntry);
+                }
 
-            if (testBlog != null)
-            {
-                Services.BlogService.Delete(testBlog.BlogId);
-            }
+                if (testBlog != null)
+                {
+                    Services.BlogService.Delete(testBlog.BlogId);
+                }
 
-            if (testUser != null)
-            {
-                Services.UserService.Delete(testUser.UserId);
+                if (testUser != null)
+                {
+                    Services.UserService.Delete(testUser.UserId);
+                }
+                this.Services.UnitOfWork.EndTransaction(true);
             }
         }
 
