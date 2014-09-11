@@ -42,14 +42,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
 
         }
 
-        [TestCase]
+        [Test]
         public void RoleService_GetDefaultRole()
         {
             Role testRole = Services.RoleService.GetDefaultRole();
             Assert.IsNotNull(testRole);
         }
 
-        [TestCase]
+        [Test]
         public void RoleService_GetAll()
         {
             IList<Role> testRoles = Services.RoleService.GetAll();
@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.Greater(testRoles.Count, 0);
         }
 
-        [TestCase]
+        [Test]
         public void RoleService_GetById()
         {
             Role testRole = Services.RoleService.GetById(3);

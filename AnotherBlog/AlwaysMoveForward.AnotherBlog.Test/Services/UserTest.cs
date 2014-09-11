@@ -38,14 +38,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             testUser = this.Services.UserService.GetById(1);
         }
 
-        [TestCase]
+        [Test]
         public void UserTest_GetDefaultUser()
         {
             User defaultUser = Services.UserService.GetDefaultUser();
             Assert.AreEqual(string.Compare(defaultUser.UserName, "Guest", true), 0);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_Create()
         {
             User newUser = Services.UserService.Create();
@@ -53,14 +53,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.IsTrue(newUser.IsActive);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_IsValidEmail()
         {
             Assert.IsTrue(Services.UserService.IsValidEmail("acorrea@alwaysmoveforward.com"));
             Assert.IsFalse(Services.UserService.IsValidEmail("acorrea.alwaysmoveforward.com"));
         }
 
-        [TestCase]
+        [Test]
         public void UserService_Login()
         {
             User loginUser = Services.UserService.Login("acorrea", "AMFCa1tl1n3");
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.AreEqual(testUser.UserId, loginUser.UserId);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_CreateTestUser()
         {
             User newUser = this.Services.UserService.GetByUserName("TestUser2");
@@ -93,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void UserService_GetAll()
         {
             IList<User> allUsers = Services.UserService.GetAll();
@@ -102,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.Greater(allUsers.Count, 0);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_GetByUserName()
         {
             User targetUser = Services.UserService.GetByUserName(testUser.UserName);
@@ -111,7 +111,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.AreEqual(targetUser.UserName, testUser.UserName);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_GetById()
         {
             int testId = 0;
@@ -124,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.AreEqual(testId, testIdUser.UserId);
         }
 
-        [TestCase]
+        [Test]
         public void UserService_GetByEmail()
         {
             string testEmail = testUser.Email;

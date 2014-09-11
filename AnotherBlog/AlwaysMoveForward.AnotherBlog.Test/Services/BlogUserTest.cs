@@ -38,14 +38,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             testRole = Services.RoleService.GetById(1);
         }
 
-        [TestCase]
+        [Test]
         public void BlogUserService_Create()
         {
             BlogUser test = Services.BlogUserService.Create();
             Assert.IsNotNull(test);
         }
 
-        [TestCase]
+        [Test]
         public void BlogUserService_Save()
         {
             Assert.IsNotNull(this.TestBlog);
@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Services.BlogUserService.DeleteUserBlog(this.TestBlog.BlogId, this.TestUser.UserId);
         }
 
-        [TestCase]
+        [Test]
         public void BlogUserService_GetUserBlog()
         {
             Assert.IsNotNull(this.TestBlog);
@@ -80,7 +80,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Services.BlogUserService.DeleteUserBlog(this.TestBlog.BlogId, this.TestUser.UserId);
         }
 
-        [TestCase]
+        [Test]
         public void BlogUserService_GetUserBlogs()
         {
             Assert.IsNotNull(this.TestUser);
@@ -93,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Services.BlogUserService.DeleteUserBlog(test);
         }
 
-        [TestCase]
+        [Test]
         public void BlogUserService_DeleteUserBlog()
         {
             Assert.IsNotNull(this.TestBlog);

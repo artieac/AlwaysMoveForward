@@ -39,14 +39,14 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_Create()
         {
             Blog test = Services.BlogService.Create();
             Assert.IsNotNull(test);
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_GetAll()
         {
             IList<Blog> test = Services.BlogService.GetAll();
@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.Greater(test.Count, 0);
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_GetByUserId()
         {
             Assert.IsNotNull(this.TestUser);
@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.IsNotNull(test);
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_GetById()
         {
             Assert.IsNotNull(this.TestBlog);
@@ -73,7 +73,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.AreEqual(test.BlogId, this.TestBlog.BlogId);
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_GetByName()
         {
             Assert.IsNotNull(this.TestBlog);
@@ -83,7 +83,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.AreEqual(test.Name, this.TestBlog.Name);
         }
 
-        [TestCase]
+        [Test]
         public void BlogService_GetBySubFolder()
         {
             Assert.IsNotNull(this.TestBlog);

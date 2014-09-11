@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             testBlog = this.Services.BlogService.GetBySubFolder("artie");
         }
 
-        [TestCase]
+        [Test]
         public void TagService_GetAll()
         {
             IList<Tag> blogTags = Services.TagService.GetAll(this.testBlog);
@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.Greater(blogTags.Count, 0);
         }
 
-        [TestCase]
+        [Test]
         public void TagService_GetAllWithCount()
         {
             IList blogTags = Services.TagService.GetAllWithCount(this.testBlog);

@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             Comment itemToSave = new Comment();
             itemToSave.PostId = blogEntry.EntryId;
 
-            return this.UpdateComment(itemToSave, authorEmail, authorName, commentText, commentLink, currentUser);
+            return this.UpdateComment(itemToSave, authorName, authorEmail, commentText, commentLink, currentUser);
         }
 
         public Comment UpdateComment(BlogPost blogEntry, int commentId, string authorName, string authorEmail, string commentText, string commentLink, User currentUser)
@@ -102,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 itemToSave.PostId = blogEntry.EntryId;
             }
 
-            return this.UpdateComment(itemToSave, authorEmail, authorName, commentText, commentLink, currentUser);
+            return this.UpdateComment(itemToSave, authorName, authorEmail, commentText, commentLink, currentUser);
         }
 
         private Comment UpdateComment(Comment itemToSave, string authorName, string authorEmail, string commentText, string commentLink, User currentUser)

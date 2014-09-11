@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
 
         }
 
-        [TestCase]
+        [Test]
         public void SiteFunctions()
         {
             SiteInfo newSite = new SiteInfo();
