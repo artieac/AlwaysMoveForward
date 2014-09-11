@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             {
                 if (services == null)
                 {
-                    this.services = ServiceManagerBuilder.BuildServiceManager();
+                    this.services = AlwaysMoveForward.AnotherBlog.Test.Services.ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return services;
@@ -82,6 +82,5 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
                 return retVal;
             }
         }
-
     }
 }

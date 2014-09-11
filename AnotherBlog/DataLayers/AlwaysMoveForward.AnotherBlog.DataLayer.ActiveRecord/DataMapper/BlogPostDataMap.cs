@@ -18,6 +18,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         internal static void ConfigureAutoMapper()
         {
+            UserDataMap.ConfigureAutoMapper();
             TagDataMap.ConfigureAutoMapper();
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
@@ -52,24 +53,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
             return AutoMapper.Mapper.Map(source, destination);
         }
-
-        #region Comment aggregate root
-
-        public BlogPost Map(Blog ownerBlog, Comment owner, BlogPostDTO source)
-        {
-            BlogPost retVal = this.Map(source, null);
-            retVal.Blog = ownerBlog;
-            retVal.Author = DataMapManager.Mappers().UserDataMap.Map(source.Author);
-            return retVal;
-        }
-
-        public BlogPostDTO Map(BlogDTO ownerBlog, EntryCommentsDTO owner, BlogPost source)
-        {
-            BlogPostDTO retVal = this.Map(source, null);
-            retVal.Blog = ownerBlog;
-            retVal.Author = DataMapManager.Mappers().UserDataMap.Map(source.Author);
-            return retVal;
-        }
-        #endregion
     }
 }

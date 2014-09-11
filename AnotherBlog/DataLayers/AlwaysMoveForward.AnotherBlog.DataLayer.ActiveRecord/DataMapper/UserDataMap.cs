@@ -13,6 +13,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
     {
         static UserDataMap()
         {
+            UserDataMap.ConfigureAutoMapper();
+        }
+
+        public static void ConfigureAutoMapper()
+        {
             if (AutoMapper.Mapper.FindTypeMapFor<User, UserDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<User, UserDTO>();

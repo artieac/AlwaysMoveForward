@@ -15,5 +15,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         }
 
         public UnitOfWork() : base(Assembly.GetExecutingAssembly()) { }
+
+        public UnitOfWork(bool createSession) : base(Assembly.GetExecutingAssembly(), createSession) { }
     }
 }

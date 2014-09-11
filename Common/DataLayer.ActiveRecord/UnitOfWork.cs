@@ -20,10 +20,19 @@ namespace AlwaysMoveForward.Common.DataLayer.ActiveRecord
     public abstract class ActiveRecordUnitOfWork : IUnitOfWork, IDisposable
     {
         private static bool isInitialized = false;
+        
         /// <summary>
         /// A default constructor that will result in using NHibernate configuration settings just from the .config file
         /// </summary>
-        public ActiveRecordUnitOfWork(Assembly dtoAssembly) 
+        public ActiveRecordUnitOfWork(Assembly dtoAssembly) : this(dtoAssembly, false)
+        {
+
+        }
+
+        /// <summary>
+        /// A default constructor that will result in using NHibernate configuration settings just from the .config file
+        /// </summary>
+        public ActiveRecordUnitOfWork(Assembly dtoAssembly, bool createSession)
         {
             if (ActiveRecordUnitOfWork.isInitialized == false)
             {
@@ -34,38 +43,18 @@ namespace AlwaysMoveForward.Common.DataLayer.ActiveRecord
 
                 ActiveRecordUnitOfWork.isInitialized = true;
             }
+
+            if(createSession == true)
+            {
+                this.sessionCope = new SessionScope();
+            }
         }
 
-        /// <summary>
-        /// An NHibernate session factory
-        /// </summary>
-        private SessionScope sessionScope;
-        
+        private SessionScope sessionCope;
+
         private TransactionScope transactionScope;
 
         #region IUnitOfWork Members
-
-        /// <summary>
-        /// Starts a new session
-        /// </summary>
-        public void StartSession()
-        {
-            if (this.sessionScope == null)
-            {
-                this.sessionScope = new SessionScope();
-            }
-        }
-
-        /// <summary>
-        /// Ends the current session
-        /// </summary>
-        public void EndSession()
-        {
-            if (this.sessionScope != null)
-            {
-                this.sessionScope.Dispose();
-            }
-        }
 
         /// <summary>
         /// Begins a transaction with a default isolation level

@@ -125,6 +125,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
             if (this.currentSession != null)
             {
                 this.currentSession.Dispose();
+                this.currentSession = null;
             }
         }
 

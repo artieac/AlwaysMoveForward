@@ -72,12 +72,15 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [TestCase]
         public void UserService_CreateTestUser()
         {
-            User newUser = null;
+            User newUser = this.Services.UserService.GetByUserName("TestUser2");
 
-            using(this.Services.UnitOfWork.BeginTransaction())
+            if(newUser == null)
             {
-                newUser = Services.UserService.Save("TestUser2", "TestPassword2", "test2@test.com", -1, false, false, true, "", "Test2");
-                this.Services.UnitOfWork.EndTransaction(true);
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    newUser = Services.UserService.Save("TestUser2", "TestPassword2", "test2@test.com", -1, false, false, true, "", "Test2");
+                    this.Services.UnitOfWork.EndTransaction(true);
+                }
             }
 
             Assert.IsNotNull(newUser);

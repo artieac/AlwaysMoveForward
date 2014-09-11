@@ -86,7 +86,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public int GetCount(int blogPostId, Comment.CommentStatus targetStatus)
         {
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
-            criteria.Add(Expression.Eq("Status", targetStatus));
+            criteria.Add(Expression.Eq("Status", (int)targetStatus));
             criteria.Add(Expression.Eq("PostId", blogPostId));
             return Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.Count(criteria);
         }

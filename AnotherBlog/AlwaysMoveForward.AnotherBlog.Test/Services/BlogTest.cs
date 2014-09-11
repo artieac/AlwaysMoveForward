@@ -32,9 +32,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void Setup()
         {
-            User testUser = this.TestUser;
-            Blog testBlog = this.TestBlog;
-
             using(this.Services.UnitOfWork.BeginTransaction())
             {
                 Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);

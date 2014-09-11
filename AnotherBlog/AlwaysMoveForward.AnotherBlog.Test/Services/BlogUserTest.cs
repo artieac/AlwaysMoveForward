@@ -35,9 +35,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void Setup()
         {
-            User testUser = this.TestUser;
-            Blog testBlog = this.TestBlog;
-
             testRole = Services.RoleService.GetById(1);
         }
 

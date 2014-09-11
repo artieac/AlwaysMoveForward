@@ -54,24 +54,26 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             public ResolutionResult Resolve(ResolutionResult source)
             {
-                IList<PollOptionDTO> optionsDestination = ((PollQuestionDTO)source.Context.DestinationValue).Options;
+                IList<PollOptionDTO> optionsDestination = new List<PollOptionDTO>();
 
-                if (optionsDestination == null)
+                PollQuestionDTO pollQuestion = source.Context.DestinationValue as PollQuestionDTO;
+
+                if (pollQuestion != null && pollQuestion.Options != null)
                 {
-                    optionsDestination = new List<PollOptionDTO>();
-                }
+                    optionsDestination = pollQuestion.Options;
 
-                PollQuestion sourceObject = (PollQuestion)source.Value;
+                    PollQuestion sourceObject = (PollQuestion)source.Value;
 
-                for (int i = 0; i < sourceObject.Options.Count; i++)
-                {
-                    if (i >= optionsDestination.Count())
+                    for (int i = 0; i < sourceObject.Options.Count; i++)
                     {
-                        optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
-                    }
-                    else
-                    {
-                        optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
+                        if (i >= optionsDestination.Count())
+                        {
+                            optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
+                        }
+                        else
+                        {
+                            optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
+                        }
                     }
                 }
 

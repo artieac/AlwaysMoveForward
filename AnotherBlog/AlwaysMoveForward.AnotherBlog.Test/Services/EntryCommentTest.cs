@@ -24,8 +24,6 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
     [TestFixture]
     public class EntryCommentTest : ServiceTestBase
     {
-        User testUser;
-        Blog testBlog;
         BlogPost testEntry;
 
         public EntryCommentTest()
@@ -37,72 +35,55 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
         [SetUp]
         public void SetUp()
         {
-            using(this.Services.UnitOfWork.BeginTransaction())
+            this.testEntry = this.Services.BlogEntryService.GetByTitle(this.TestBlog, Constants.BlogEntry.TestTitle);
+
+            if(this.testEntry == null)
             {
-                testBlog = this.TestBlog;
-                testUser = this.TestUser;
-                testEntry = Services.BlogEntryService.Save(testBlog, "Test Blog Entry", "Testing a blog entry", 0, true, new string[] { "testTag1", "testTag2" });
-                this.Services.UnitOfWork.EndTransaction(true);
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    testEntry = Services.BlogEntryService.Save(this.TestBlog, Constants.BlogEntry.TestTitle, Constants.BlogEntry.TestText, 0, true, new string[] { "testTag1", "testTag2" });
+                    this.Services.UnitOfWork.EndTransaction(true);
+                }
             }
         }
 
-        [TearDown]
-        public void TearDown()
+        [Test]
+        public void EntryCommentService_AddComment()
         {
             using (this.Services.UnitOfWork.BeginTransaction())
             {
-                if (testEntry != null)
+                int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+                Comment newComment = Services.CommentService.AddComment(testEntry, "TestCommentAuthor", "testcommentauthor@test.com", "Test Comment", "www.test.com", this.TestUser);
+                Assert.NotNull(newComment);
+
+                int newCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+                Assert.IsTrue(newCommentCount == (initialCommentCount + 1));
+
+                Comment testComment = this.Services.CommentService.GetAll(this.TestBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
+                Assert.NotNull(testComment);
+
+                newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
+
+                if (newComment != null)
                 {
-                    Services.BlogEntryService.Delete(testEntry);
+                    newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
                 }
 
-                if (testBlog != null)
-                {
-                    Services.BlogService.Delete(testBlog.BlogId);
-                }
-
-                if (testUser != null)
-                {
-                    Services.UserService.Delete(testUser.UserId);
-                }
                 this.Services.UnitOfWork.EndTransaction(true);
             }
         }
 
-        [TestCase]
-        public void EntryCommentService_AddComment()
-        {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, "TestCommentAuthor", "testcommentauthor@test.com", "Test Comment", "www.test.com", testUser);
-            Assert.NotNull(newComment);
-
-            testBlog = Services.BlogService.GetById(testBlog.BlogId);
-            int newCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Assert.IsTrue(newCommentCount == (initialCommentCount + 1));
-
-            Comment testComment = this.Services.CommentService.GetAll(testBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
-            Assert.NotNull(testComment);
-
-            newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
-
-            if (newComment != null)
-            {
-                newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
-            }
-        }
-
-        [TestCase]
+        [Test]
         public void EntryCommentService_AddLoggedInComment()
         {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
 
-            testBlog = Services.BlogService.GetById(testBlog.BlogId);
-            int newCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
+            int newCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
             Assert.IsTrue(newCommentCount == (initialCommentCount + 1));
 
-            Comment testComment = this.Services.CommentService.GetAll(testBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
+            Comment testComment = this.Services.CommentService.GetAll(this.TestBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
             Assert.NotNull(testComment);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
@@ -113,20 +94,19 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_GetAllUnapprovedComments()
         {
-            int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count;
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Unapproved).Count;
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
 
-            testBlog = Services.BlogService.GetById(testBlog.BlogId);
-            int unapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count();
+            int unapprovedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Unapproved).Count();
             Assert.IsTrue(unapprovedCommentCount == (initialUnapprovedCommentCount + 1));
 
-            Comment testComment = this.Services.CommentService.GetAll(testBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
+            Comment testComment = this.Services.CommentService.GetAll(this.TestBlog).FirstOrDefault(c => c.CommentId == newComment.CommentId);
             Assert.NotNull(testComment);
-            Assert.IsTrue(testComment.AuthorEmail == testUser.Email);
+            Assert.IsTrue(testComment.AuthorEmail == this.TestUser.Email);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
 
@@ -136,11 +116,11 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_ApproveComment()
         {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Approved).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Approved);
@@ -154,24 +134,24 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_GetAllApprovedComments()
         {
-            int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count;
-            int initialApprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count;
-            
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
-            Assert.NotNull(newComment);
-            Assert.IsTrue(newComment.AuthorEmail == testUser.Email);
+            int initialUnapprovedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Unapproved).Count;
+            int initialApprovedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Approved).Count;
 
-            int unapprovedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Unapproved).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
+            Assert.NotNull(newComment);
+            Assert.IsTrue(newComment.AuthorEmail == this.TestUser.Email);
+
+            int unapprovedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Unapproved).Count();
             Assert.IsTrue(unapprovedCommentCount == (initialUnapprovedCommentCount + 1));
 
-            int approvedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count();
+            int approvedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Approved).Count();
             Assert.IsTrue(approvedCommentCount == initialApprovedCommentCount);
 
             Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Approved);
-            approvedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Approved).Count();
+            approvedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Approved).Count();
             Assert.IsTrue(approvedCommentCount == (initialApprovedCommentCount + 1));
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
@@ -182,13 +162,13 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_DeleteComment()
         {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
-            Assert.IsTrue(newComment.AuthorEmail == testUser.Email);
+            Assert.IsTrue(newComment.AuthorEmail == this.TestUser.Email);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
             Assert.IsTrue(newComment.Status == Comment.CommentStatus.Approved);
@@ -201,18 +181,18 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_GetAllDeletedComments()
         {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
-            Assert.IsTrue(newComment.AuthorEmail == testUser.Email);
+            Assert.IsTrue(newComment.AuthorEmail == this.TestUser.Email);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
             Assert.IsTrue(newComment.Status == Comment.CommentStatus.Deleted);
 
-            int deletedCommentCount = this.Services.CommentService.GetAll(testBlog, Comment.CommentStatus.Deleted).Count();
+            int deletedCommentCount = this.Services.CommentService.GetAll(this.TestBlog, Comment.CommentStatus.Deleted).Count();
             Assert.IsTrue(deletedCommentCount == (initialCommentCount + 1));
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
@@ -223,13 +203,13 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             }
         }
 
-        [TestCase]
+        [Test]
         public void EntryCommentService_FullDeleteComment()
         {
-            int initialCommentCount = this.Services.CommentService.GetAll(testBlog).Count();
-            Comment newComment = Services.CommentService.AddComment(testEntry, testUser.DisplayName, testUser.Email, "Test Comment2", "www.test2.com", testUser);
+            int initialCommentCount = this.Services.CommentService.GetAll(this.TestBlog).Count();
+            Comment newComment = Services.CommentService.AddComment(testEntry, this.TestUser.DisplayName, this.TestUser.Email, "Test Comment2", "www.test2.com", this.TestUser);
             Assert.NotNull(newComment);
-            Assert.IsTrue(newComment.AuthorEmail == testUser.Email);
+            Assert.IsTrue(newComment.AuthorEmail == this.TestUser.Email);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
             Assert.IsTrue(newComment.Status == Comment.CommentStatus.Deleted);

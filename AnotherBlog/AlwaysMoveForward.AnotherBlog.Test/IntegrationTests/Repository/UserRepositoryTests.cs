@@ -36,11 +36,20 @@ namespace AlwaysMoveForward.AnotherBlog.Test.IntegrationTests.Repository
         [Test]
         public void UserRepository_SaveTest()
         {
-            User newItem = new User();
+            User testItem = this.RepositoryManager.Users.GetByUserName("test");
 
-            User savedItem = this.RepositoryManager.Users.Save(newItem);
+            if (testItem == null)
+            {
+                testItem = new User();
+                testItem.UserName = "test";
+                testItem.Password = "test";
+                testItem.Email = "test";
 
-            Assert.IsNotNull(savedItem);
+                testItem = this.RepositoryManager.Users.Save(testItem);
+            }
+
+            Assert.IsNotNull(testItem);
+            Assert.IsTrue(testItem.UserId > 0);
         }
 
         [Test]

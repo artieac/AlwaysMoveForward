@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.IntegrationTests.Repository
             {
                 if(unitOfWork==null)
                 {
-                    unitOfWork = new UnitOfWork();
+                    unitOfWork = new UnitOfWork(true);
                 }
 
                 return unitOfWork;
