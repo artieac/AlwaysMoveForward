@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.IntegrationTests.Repository
         [Test]
         public void CommentRepository_GetAllDeletedTest()
         {
-            IList<Comment> foundItems = this.RepositoryManager.CommentRepository.GetAllDeleted(3);
+            IList<Comment> foundItems = this.RepositoryManager.CommentRepository.GetAllDeleted(5);
 
             Assert.IsNotNull(foundItems);
             Assert.IsTrue(foundItems.Count > 0);

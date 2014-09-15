@@ -171,14 +171,7 @@ namespace AlwaysMoveForward.AnotherBlog.Test.Services
             Assert.IsTrue(newComment.AuthorEmail == this.TestUser.Email);
 
             newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
-            Assert.IsTrue(newComment.Status == Comment.CommentStatus.Approved);
-
-            newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
-
-            if (newComment != null)
-            {
-                newComment = Services.CommentService.SetCommentStatus(newComment.CommentId, Comment.CommentStatus.Deleted);
-            }
+            Assert.IsTrue(newComment.Status == Comment.CommentStatus.Deleted);
         }
 
         [Test]
