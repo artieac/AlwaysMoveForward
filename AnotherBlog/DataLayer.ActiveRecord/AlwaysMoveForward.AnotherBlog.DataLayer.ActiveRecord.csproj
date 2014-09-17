@@ -40,48 +40,50 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
-      <HintPath>..\..\..\Lib\AutoMapper.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="Castle.ActiveRecord, Version=2.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\Castle.ActiveRecord.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\Castle.ActiveRecord.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\Castle.Components.Validator.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\Castle.Components.Validator.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\Castle.Core.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NHibernate, Version=2.1.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\NHibernate.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\NHibernate.ByteCode.Castle.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.ProxyGenerators.CastleDynamicProxy, Version=2.1.0.1001, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\NHibernate.ProxyGenerators.CastleDynamicProxy.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.ProxyGenerators.CastleDynamicProxy.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Search, Version=2.0.0.1001, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\DebugPartialTrustAllowed\NHibernate.Search.dll</HintPath>
+      <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.Search.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -132,7 +134,6 @@
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\BlogUserRepository.cs" />
     <Compile Include="Repositories\DbInfoRepository.cs" />
-    <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\PollRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs">
       <SubType>Code</SubType>
@@ -197,4 +198,5 @@
   <PropertyGroup>
     <PrepareForBuildDependsOn Condition="!Exists('$(StyleCopMSBuildTargetsFile)')">StyleCopMSBuildTargetsNotFound;$(PrepareForBuildDependsOn)</PrepareForBuildDependsOn>
   </PropertyGroup>
+  <Import Project="..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
 </Project>

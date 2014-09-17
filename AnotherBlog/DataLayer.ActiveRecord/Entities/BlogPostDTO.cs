@@ -58,5 +58,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 
         [HasAndBelongsToMany(typeof(TagDTO), ColumnRef = "TagId", ColumnKey = "BlogEntryId", Table = "BlogEntryTags", Cascade = ManyRelationCascadeEnum.SaveUpdate)]
         public IList<TagDTO> Tags { get; set; }
+
+        [HasMany(typeof(BlogListItemDTO), Inverse = true)]
+        public IList<EntryCommentsDTO> Comments { get; set; }
     }
 }

@@ -230,7 +230,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             if (targetEntry != null)
             {
-                model = this.Services.CommentService.GetAll(targetEntry, Comment.CommentStatus.Approved);
+                model = targetEntry.Comments.Where(comment => comment.Status == Comment.CommentStatus.Approved).ToList();
 
                 if (ViewData.ModelState.IsValid)
                 {

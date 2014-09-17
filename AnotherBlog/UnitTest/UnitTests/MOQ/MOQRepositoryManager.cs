@@ -16,14 +16,12 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
         Mock<IBlogRepository> blogRepository;
         Mock<IBlogUserRepository> blogUserRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
-        Mock<ICommentRepository> entryCommentRepository;
         Mock<IRoleRepository> roleRepository;
         Mock<ISiteInfoRepository> siteInfoRepository;
         Mock<ITagRepository> tagRepository;
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
         Mock<IBlogListItemRepository> blogListItems;
-        Mock<ICommentRepository> commentRepository;
         Mock<IPollRepository> pollRepository;
 
         public MOQRepositoryManager()
@@ -84,19 +82,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.dbInfoRepository.Object;
-            }
-        }
-
-        public ICommentRepository EntryComments
-        {
-            get
-            {
-                if (this.entryCommentRepository == null)
-                {
-                    this.entryCommentRepository = new Mock<ICommentRepository>();
-                }
-
-                return this.entryCommentRepository.Object;
             }
         }
 
@@ -179,19 +164,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.blogListItems.Object;
-            }
-        }
-
-        public ICommentRepository CommentRepository
-        {
-            get
-            {
-                if (this.commentRepository == null)
-                {
-                    this.commentRepository = new Mock<ICommentRepository>();
-                }
-
-                return this.commentRepository.Object;
             }
         }
 

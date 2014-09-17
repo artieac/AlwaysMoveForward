@@ -119,7 +119,6 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HomeTest.cs" />
-    <Compile Include="IntegrationTests\Repository\CommentRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Repository\PollRepositoryTest.cs" />
     <Compile Include="IntegrationTests\Repository\RepositoryTestBase.cs" />
     <Compile Include="IntegrationTests\Repository\UserRepositoryTests.cs" />
@@ -130,7 +129,6 @@
     </Compile>
     <Compile Include="Services\BlogTest.cs" />
     <Compile Include="Services\BlogUserTest.cs" />
-    <Compile Include="Services\EntryCommentTest.cs" />
     <Compile Include="Services\RoleTest.cs" />
     <Compile Include="Services\ServiceManagerBuilder.cs" />
     <Compile Include="Services\ServiceTestBase.cs" />

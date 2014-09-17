@@ -28,7 +28,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
         IBlogUserRepository BlogUsers { get; }
         ITagRepository Tags { get; }
         IBlogListRepository BlogLists { get; }
-        ICommentRepository CommentRepository { get; }
         IPollRepository PollRepository { get; }
     }
 }

@@ -168,20 +168,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             }
         }
 
-        private ICommentRepository commentRepository;
-        public ICommentRepository CommentRepository
-        {
-            get
-            {
-                if (this.commentRepository == null)
-                {
-                    this.commentRepository = new CommentRepository(this.UnitOfWork);
-                }
-
-                return this.commentRepository;
-            }
-        }
-
         private IPollRepository pollRepository;
         public IPollRepository PollRepository
         {

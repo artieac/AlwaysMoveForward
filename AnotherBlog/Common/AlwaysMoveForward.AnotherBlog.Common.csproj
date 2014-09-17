@@ -87,7 +87,6 @@
     <Compile Include="DataLayer\Repositories\IBlogListRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogUserRepository.cs" />
-    <Compile Include="DataLayer\Repositories\ICommentRepository.cs" />
     <Compile Include="DataLayer\Map\IPostTag.cs" />
     <Compile Include="DataLayer\Repositories\IAnotherBlogRepositoryManager.cs" />
     <Compile Include="DataLayer\Repositories\ITagRepository.cs">

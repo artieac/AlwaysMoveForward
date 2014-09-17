@@ -42,8 +42,34 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public DateTime DateCreated { get; set; }
         public int CommentCount { get; set; }
         public int TimesViewed { get; set; }
+        public IList<Comment> Comments { get; set; }
         public IList<Tag> Tags { get; set; }
-                
+        
+        public IList<Comment> FilteredComments(Comment.CommentStatus targetStatus)
+        {
+            return this.Comments.Where(comment => comment.Status == targetStatus).ToList();
+        }
+
+        public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, User currentUser)
+        {
+            Comment retVal = new Comment();
+            retVal.AuthorName = authorName;
+            retVal.AuthorEmail = authorEmail;
+            retVal.DatePosted = DateTime.Now;
+            retVal.Link = commentLink;
+            retVal.Status = Comment.CommentStatus.Unapproved;
+            retVal.Text = commentText;
+            retVal.Post = this;
+
+            if(currentUser != null && currentUser.ApprovedCommenter == true)
+            {
+                retVal.Status = Comment.CommentStatus.Approved;
+            }
+
+            this.Comments.Add(retVal);
+            return retVal;
+        }
+
         public string ShortEntryText
         {
             get

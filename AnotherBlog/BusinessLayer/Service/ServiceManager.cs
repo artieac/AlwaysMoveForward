@@ -127,20 +127,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private CommentService commentService;
-        public CommentService CommentService
-        {
-            get
-            {
-                if (this.commentService == null)
-                {
-                    this.commentService = new CommentService(this.UnitOfWork, this.RepositoryManager.CommentRepository);
-                }
-
-                return this.commentService;
-            }
-        }
-
         private CommonBusiness.PollService pollService;
         public CommonBusiness.PollService PollService
         {

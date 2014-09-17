@@ -69,7 +69,6 @@
     <Compile Include="Service\AnotherBlogService.cs" />
     <Compile Include="Service\AnotherBlogUserService.cs" />
     <Compile Include="Service\BlogListService.cs" />
-    <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\DatabaseManager.cs" />
     <Compile Include="Service\BlogEntryService.cs" />
     <Compile Include="Service\BlogService.cs" />

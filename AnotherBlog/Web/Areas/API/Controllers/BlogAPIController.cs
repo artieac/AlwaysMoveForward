@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
 
                 if (targetEntry != null)
                 {
-                    model = this.Services.CommentService.GetAll(targetEntry, Comment.CommentStatus.Approved);
+                    model = targetEntry.Comments.Where(comment => comment.Status == Comment.CommentStatus.Approved).ToList();
                 }
             }
 
