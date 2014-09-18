@@ -109,7 +109,7 @@
                 </div>
                 <input type="hidden" id="entryId" name="entryId" value="@Model.Post.EntryId.ToString()" ng-model="newComment.entryId"/>
                 <input type="hidden" id="blogName" name="blogName" value="@Model.BlogCommon.TargetBlog.Name" />                
-                <input type="button" id="submitCommentButton" value="Submit Comment" ng-click="submitComment('@ViewBag.BlogSubFolder', '@Model.Post.EntryId.ToString()');"  ng-disabled="submitCommentForm.$invalid"/>
+                <button type="button" class="btn btn-primary" id="submitCommentButton" ng-click="submitComment('@ViewBag.BlogSubFolder', '@Model.Post.EntryId.ToString()');"  ng-disabled="submitCommentForm.$invalid">Submit Comment</button>
             </form>
         </div>
     </div>
