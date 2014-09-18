@@ -70,6 +70,17 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             return retVal;
         }
 
+        public Comment UpdateCommentStatus(int commentId, Comment.CommentStatus commentStatus)
+        {
+            Comment targetComment = this.Comments.Where(comment => comment.CommentId == commentId).First();
+
+            if(targetComment!=null)
+            {
+                targetComment.Status = commentStatus;
+            }
+
+            return targetComment;
+        }
         public string ShortEntryText
         {
             get

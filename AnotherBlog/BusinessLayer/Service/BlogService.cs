@@ -136,5 +136,10 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             return this.BlogRepository.Save(itemToSave);
         }
+
+        public IList<Comment> GetComments(Blog targetBlog, Comment.CommentStatus commentStatus = Comment.CommentStatus.None)
+        {
+            return this.BlogRepository.GetAllComments(targetBlog.BlogId, commentStatus);
+        }
     }
 }

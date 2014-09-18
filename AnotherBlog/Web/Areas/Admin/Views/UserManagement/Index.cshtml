@@ -13,50 +13,32 @@
     <div class="contentPageTitle">
         <label>Manage Users</label>
     </div> 
-    <div class="editAreaContainer">
-        <div class="editAreaSubContainer">
-            <br />
-            <a href="/Admin/UserManagement/Edit">Add User</a>
-            <table class="tableBase">
-                <thead>
-                    <tr class="tableHeader">
-                        <td width="20%">User</td>
-                        <td width="20%">Display Name</td>
-                        <td width="20%">Email</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                </thead>
-                <tbody>
-                @{
-                        
-                    int rowCounter = 0;
-                        
-                    foreach (User blogUser in @Model.Users)
-                    {   
-                        if (rowCounter % 2 == 0)
-                        {
-                            <text><tr class='tableRow1'></text>
-                        }
-                        else
-                        {
-                            <text><tr class='tableRow2'></text>
-                        }
-
-                        rowCounter++;
-
-                        <td><a href="/Admin/UserManagement/Edit?userId=@blogUser.UserId.ToString()">@blogUser.UserName</a></td>
-                        <td>@blogUser.DisplayName</td>
-                        <td>@blogUser.Email</td>
-                        <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.UserId.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
-                        @Html.Raw("</tr>");
-                    }
-                }
-                </tbody>
-            </table>
-            <div class="pager">    
-                @Html.Pager(@Model.Users.PageSize, @Model.Users.PageNumber, @Model.Users.TotalItemCount, "Index", null)
-            </div>
-            <a href="/Admin/UserManagement/Edit">Add User</a>
-        </div>
+    <a href="/Admin/UserManagement/Edit">Add User</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="20%">User</th>
+                <th width="20%">Display Name</th>
+                <th width="20%">Email</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (User blogUser in @Model.Users)
+            {   
+                <tr>
+                    <td><a href="/Admin/UserManagement/Edit?userId=@blogUser.UserId.ToString()">@blogUser.UserName</a></td>
+                    <td>@blogUser.DisplayName</td>
+                    <td>@blogUser.Email</td>
+                    <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.UserId.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+    <div class="pager">    
+        @Html.Pager(@Model.Users.PageSize, @Model.Users.PageNumber, @Model.Users.TotalItemCount, "Index", null)
     </div>
+    <a href="/Admin/UserManagement/Edit">Add User</a>
 </div>

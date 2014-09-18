@@ -21,6 +21,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 {
                     voterAddressDestination = ((PollOptionDTO)source.Context.DestinationValue).VoterAddresses;
 
+                    if(voterAddressDestination == null)
+                    {
+                        voterAddressDestination = new List<VoterAddressDTO>();
+                    }
+
                     for (int i = 0; i < voterAddressDestination.Count; i++)
                     {
                         voterAddressDestination[i] = Mapper.Map(((PollOption)source.Value).VoterAddresses[i], voterAddressDestination[i]);
@@ -64,15 +69,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
                     PollQuestion sourceObject = (PollQuestion)source.Value;
 
-                    for (int i = 0; i < sourceObject.Options.Count; i++)
+                    if (sourceObject != null && sourceObject.Options != null)
                     {
-                        if (i >= optionsDestination.Count())
+                        for (int i = 0; i < sourceObject.Options.Count; i++)
                         {
-                            optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
-                        }
-                        else
-                        {
-                            optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
+                            if (i >= optionsDestination.Count())
+                            {
+                                optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
+                            }
+                            else
+                            {
+                                optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
+                            }
                         }
                     }
                 }

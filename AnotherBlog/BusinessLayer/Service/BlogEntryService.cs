@@ -59,6 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             
             return retVal;
         }
+
         /// <summary>
         /// Save a blog entry to the database.
         /// </summary>
@@ -91,9 +92,27 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.SetPublishState(isPublished);
             itemToSave = this.AddTags(itemToSave, tagNames);
 
-            itemToSave = this.BlogEntryRepository.Save(itemToSave);
+            return this.Save(itemToSave);
+        }
 
-            return itemToSave;
+        /// <summary>
+        /// Save a blog entry to the database.
+        /// </summary>
+        /// <param name="targetBlog"></param>
+        /// <param name="title"></param>
+        /// <param name="entryText"></param>
+        /// <param name="entryId"></param>
+        /// <param name="isPublished"></param>
+        /// <param name="_submitChanges"></param>
+        /// <returns></returns>
+        public BlogPost Save(BlogPost blogPost)
+        {
+            if(blogPost != null)
+            {
+                blogPost = this.BlogEntryRepository.Save(blogPost);
+            }
+
+            return blogPost;
         }
 
         private BlogPost AddTags(BlogPost targetPost, string[] names)

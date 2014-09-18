@@ -17,8 +17,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         internal static void ConfigureAutoMapper()
         {
-            BlogPostDataMap.ConfigureAutoMapper();
-
             if (AutoMapper.Mapper.FindTypeMapFor<Comment, EntryCommentsDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<Comment, EntryCommentsDTO>();

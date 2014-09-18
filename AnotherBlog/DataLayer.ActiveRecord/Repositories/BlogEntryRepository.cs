@@ -13,13 +13,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
@@ -362,6 +360,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<BlogPostDTO>();
             criteria.CreateCriteria("Comments").Add(Expression.Eq("CommentId", commentId));
             return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<BlogPostDTO>.FindOne(criteria));
-        }
+        }       
     }
 }

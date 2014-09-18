@@ -27,7 +27,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         {
             Unapproved = 0,
             Approved = 1,
-            Deleted = 2
+            Deleted = 2,
+            None = 99
         }
 
         public Comment()

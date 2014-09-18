@@ -126,12 +126,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 for (int i = 0; i < allBlogs.Count; i++)
                 {
-                    model.Comments[allBlogs[i]] = this.Services.CommentService.GetAll(allBlogs[i], Comment.CommentStatus.Approved);
+                    model.Comments[allBlogs[i]] = this.Services.BlogService.GetComments(allBlogs[i], Comment.CommentStatus.Approved);
                 }
             }
             else
             {
-                model.Comments[targetBlog] = this.Services.CommentService.GetAll(targetBlog);
+                model.Comments[targetBlog] = this.Services.BlogService.GetComments(targetBlog);
             }
 
             return this.View(model);

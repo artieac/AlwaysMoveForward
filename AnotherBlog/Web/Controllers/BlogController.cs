@@ -238,7 +238,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     {
                         try
                         {
-                            Comment newComment = Services.CommentService.AddComment(targetEntry, authorName, authorEmail, commentText, commentLink, this.CurrentPrincipal.CurrentUser);
+                            Comment newComment = targetEntry.AddComment(authorName, authorEmail, commentText, commentLink, this.CurrentPrincipal.CurrentUser);
+                            this.Services.BlogEntryService.Save(targetEntry);
                             model.Add(newComment);
                             this.Services.UnitOfWork.EndTransaction(true);
                         }

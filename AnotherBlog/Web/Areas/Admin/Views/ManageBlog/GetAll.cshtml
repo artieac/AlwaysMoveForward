@@ -16,7 +16,7 @@
         <label>Manage Blogs</label>
     </div> 
     <a href="/Admin/Blog/Edit">Add Blog</a>
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th width="20%">Name</th>
@@ -25,25 +25,12 @@
         </thead>
         <tbody>
         @{
-            int rowCounter = 0;
-                       
             foreach (Blog blogItem in ViewData.Model.Blogs)
             {
-                if (rowCounter % 2 == 0)
-                {
-                   <text><tr class='tableRow1'></text>
-                }
-                else
-                {
-                    <text><tr class='tableRow2'></text>
-                }
-
-                rowCounter++;
-       
-                <td><a href="/Admin/ManageBlog/EditBlog?blogId=@blogItem.BlogId.ToString()">@blogItem.Name</a></td>
-                <td>@blogItem.Description</td>
-                @Html.Raw("</tr>")
-        
+                <tr>
+                    <td><a href="/Admin/ManageBlog/EditBlog?blogId=@blogItem.BlogId.ToString()">@blogItem.Name</a></td>
+                    <td>@blogItem.Description</td>
+                </tr>        
             }
         }
         </tbody>

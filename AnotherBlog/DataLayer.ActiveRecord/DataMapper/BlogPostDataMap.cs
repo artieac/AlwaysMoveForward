@@ -20,6 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             UserDataMap.ConfigureAutoMapper();
             TagDataMap.ConfigureAutoMapper();
+            CommentDataMap.ConfigureAutoMapper();
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
             {

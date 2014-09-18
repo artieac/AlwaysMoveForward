@@ -16,7 +16,7 @@
                 <div>
                     <input type="hidden" id="Hidden1" name="loginAction" value="login" />
                     <span id="loginErrorMessage" style="display:none" class="field-validation-error">Invalid Login</span>
-                    <input type="button" id="submitLoginButton" value="log in" onclick="SiteLogin.SubmitLogin();"/>                    
+                    <button type="button" class="btn btn-sm btn-info" id="submitLoginButton" onclick="SiteLogin.SubmitLogin();">log in</button>                    
                 </div>
                 <div>
                     <a class='loginLabel' id="showForgotPasswordLink" onclick="SiteLogin.ShowForgotPassword();">forgot password?</a>
@@ -30,7 +30,7 @@
             <form id='loginForm' action="@Utils.GetSecureURL(ViewBag.BlogSubFolder, "/User/AjaxLogin", HttpContext.Current.Request.Url.Authority)" method='post'>   
                 <span class="loginLabel">Hello</span>&nbsp;<a href='@Utils.GetInSecureURL(ViewBag.BlogSubFolder, "User/Preferences", HttpContext.Current.Request.Url.Authority)'>@this.Context.User.Identity.Name</a>
                 <input type="hidden" id="loginAction" name="loginAction" value="logout" />
-                <input type="button" id="submitLogoutButton" value="log out" onclick="SiteLogin.SubmitLogin();"/>
+                <button type="button" class="btn btn-sm btn-info" id="submitLogoutButton"onclick="SiteLogin.SubmitLogin();">log out</button>
             </form>
         } 
     </div>

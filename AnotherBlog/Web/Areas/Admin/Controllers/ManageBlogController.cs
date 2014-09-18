@@ -347,12 +347,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 if (status == null || string.Compare(status, "All", true) == 0)
                 {
-                    model = this.Services.CommentService.GetAll(targetBlog);
+                    model = this.Services.BlogService.GetComments(targetBlog);
                 }
                 else
                 {
                     Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), status);
-                    model = this.Services.CommentService.GetAll(targetBlog, targetStatus);
+                    model = this.Services.BlogService.GetComments(targetBlog, targetStatus);
                 }
             }
 
@@ -360,7 +360,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
         
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult ApproveComment(string blogSubFolder, int id)
+        public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int commentId)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
@@ -371,7 +371,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 {
                     try
                     {
-                        Services.CommentService.SetCommentStatus(id, Comment.CommentStatus.Approved);
+                        BlogPost blogPost = this.Services.BlogEntryService.GetById(model.Common.TargetBlog, blogPostId);
+
+                        if(blogPost!=null)
+                        {
+                            blogPost.UpdateCommentStatus(commentId, Comment.CommentStatus.Approved);
+                            this.Services.BlogEntryService.Save(blogPost);
+                        }
+
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                     catch (Exception e)
@@ -386,7 +393,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult DeleteComment(string blogSubFolder, int id)
+        public ActionResult DeleteComment(string blogSubFolder, int blogPostId, int commentId)
         {
             using (this.Services.UnitOfWork.BeginTransaction())
             {
@@ -397,7 +404,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
                     if (model.Common.TargetBlog != null)
                     {
-                        Services.CommentService.SetCommentStatus(id, Comment.CommentStatus.Deleted);
+                        BlogPost blogPost = this.Services.BlogEntryService.GetById(model.Common.TargetBlog, blogPostId);
+
+                        if(blogPost != null)
+                        {
+                            blogPost.UpdateCommentStatus(commentId, Comment.CommentStatus.Deleted);
+                            this.Services.BlogEntryService.Save(blogPost);
+                        }
+
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }

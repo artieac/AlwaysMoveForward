@@ -46,10 +46,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [Property("AuthorName")]
         public string AuthorName { get; set; }
 
-        [Property("EntryId")]
-        public int PostId { get; set; }
-
         [Property("DatePosted")]
         public DateTime DatePosted { get; set; }
+
+        [BelongsTo("EntryId", Type = typeof(BlogPostDTO))]
+        public BlogPostDTO BlogPost { get; set; }
     }
 }

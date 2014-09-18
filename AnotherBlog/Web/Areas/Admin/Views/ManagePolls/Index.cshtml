@@ -23,8 +23,8 @@
         <label>Manage Polls</label>
     </div>
     <form id="addPollForm" action="/Admin/ManagePolls/AddList" method=post>
-        <table class="tableBase">
-            <thead class="tableHeader">
+        <table class="table table-striped">
+            <thead>
                 <tr>
                     <th width="10%">&nbsp;</th>
                     <th width="20%">Title</th>
@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody ng-init="getAllPolls();">
-                <tr ng-repeat="pollQuestion in pollItems" ng-class-even="tableRow1" ng-class-odd="tablerow2">
+                <tr ng-repeat="pollQuestion in pollItems">
                     <td><input type="radio" name="selectedPoll" value="{{pollQuestion.Id}}" ng-change="getPollQuestion('{{ pollQuestion.Id }}');" ng-model="pollElements.selectedPoll" /></td>
                     <td><input type="text" name="title" value="{{ pollQuestion.Title }}" ng-disabled="pollElements.selectedPoll!=pollQuestion.Id" /></td>
                     <td><input type="text" name="question" value="{{ pollQuestion.QuestionText }}" ng-disabled="pollElements.selectedPoll!=pollQuestion.Id" /></td>
@@ -57,16 +57,16 @@
     <div id="pollOptionsContainer">
         <div id="pollOptionsSection">
             <form id="addNewPollOptionForm" action="/Admin/ManagePolls/AddPollOption" method="post">
-                <table class="tableBase">
+                <table class="table table-striped">
                     <thead>
-                        <tr class="tableHeader">
+                        <tr>
                             <td width="1%">&nbsp;</td>
                             <td width="20%">Option</td>
                             <td width="5%">&nbsp;</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="pollOption in selectedPoll.Options" ng-class-even="tableRow1" ng-class-odd="tablerow2">
+                        <tr ng-repeat="pollOption in selectedPoll.Options">
                             <td><input type="radio" name="selectedPollOption" value="{{pollOption.Id}}" ng-model="pollOptionElements.selectedPollOption" /></td>
                             <td><input type="text" name="option" class="readonly" value="{{ pollOption.OptionText }}" ng-disabled="pollOptionElements.selectedPollOption!=pollOption.Id" /></td>
                             <td>

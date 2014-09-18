@@ -1,58 +1,29 @@
 ﻿@import "ThemeDefaults.less";
 
-.tabControl
-{
-    width: 100%;
-	background-color: @foreGroundColor;
-	color: @foreGroundTextColor;
-	padding:.5em 0 .5em 0;
+.navbar-inverse {
+    border-color: @foreGroundColor;
+    background-color: @foreGroundColor;
+    color: @foreGroundTextColor;
 
-	ul
-	{
-		.ulDefaults;
-		height:20px;
-		list-style: none;
-		list-style-type:none;
-		font-size: small;    
-	}
+    .navbar-nav {
+        > li {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundTextColor;
+            }
+        }
 
-	.tabItem
-	{
-		height:100%;
-		display:inline;
-		padding: 0 1em 0 1em;
-		color:@foreGroundTextColor;
-	
-		.unselectedLink
-		{
-			height:100%;
-			text-decoration:none;
-			color:@foreGroundTextColor;
-		}
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundColor;
+                background-color: @foreGroundTextColor;
+            }
+        }
 
-		a{	.unselectedLink } 
-		a:selected{	.unselectedLink } 
-		a:visited{	.unselectedLink } 
-	}
-
-	.selectedTabItem 
-	{
-		height:100%;
-		display:inline;
-		background-color:@mainBackgroundColor;
-		color: @foreGroundTextColor;
-		padding: 0 1em 0 1em;	
-		
-		.selectedLink
-		{
-			height:100%;
- 			text-decoration:none;
-			color: @foreGroundColor;
-		}
-
-		a{	.selectedLink } 
-		a:selected{	.selectedLink } 
-		a:visited{	.selectedLink } 
-	}
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundColor;
+                background-color: @foreGroundColor;
+            }
+        }
+    }
 }
-

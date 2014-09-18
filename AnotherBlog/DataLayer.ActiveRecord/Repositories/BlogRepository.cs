@@ -12,12 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NHibernate.Criterion;
 using NHibernate.Transform;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
@@ -88,6 +86,24 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             DetachedCriteria criteria = DetachedCriteria.For<BlogDTO>();
             criteria.CreateCriteria("Users").CreateCriteria("User").Add(Expression.Eq("UserId", userId));
             return this.GetDataMapper().Map(ActiveRecordMediator<BlogDTO>.FindAll(criteria));
+        }
+
+        public IList<Comment> GetAllComments(int blogId, Comment.CommentStatus commentStatus = Comment.CommentStatus.None)
+        {
+            DetachedCriteria blogPosts = DetachedCriteria.For<BlogPostDTO>();
+            blogPosts.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            blogPosts.Add(Expression.Eq("IsPublished", true));
+
+            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
+
+            if (commentStatus != Comment.CommentStatus.None)
+            {
+                criteria.Add(Expression.Eq("Status", commentStatus));
+            }
+            criteria.Add(Subqueries.Eq("BlogPost", blogPosts));
+
+            CommentDataMap dataMapper = new CommentDataMap();
+            return dataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }
     }
 }

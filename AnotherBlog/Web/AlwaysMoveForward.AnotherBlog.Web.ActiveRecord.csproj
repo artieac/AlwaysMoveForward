@@ -66,7 +66,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\DebugPartialTrustAllowed\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\DebugPartialTrustAllowed\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
@@ -215,12 +216,24 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Controllers\ManagePollsController.js" />
     <Content Include="Scripts\Controllers\ManageBlogController.js" />
     <Content Include="Scripts\Controllers\BlogController.js" />
     <Content Include="Scripts\Controllers\ManageListsController.js" />
     <Content Include="Scripts\Controllers\PollController.js" />
-    <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\Less\less-1.3.3.min.js" />
@@ -393,6 +406,7 @@
     <Content Include="Content\themes\default\TabControl.less" />
     <Content Include="Content\themes\default\Site.less" />
     <Content Include="Content\themes\default\ThemeDefaults.less" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Views\User\Register.cshtml" />
     <None Include="Views\User\RegisterComplete.cshtml" />
     <Content Include="Scripts\Modules\FactoryModule.js" />
