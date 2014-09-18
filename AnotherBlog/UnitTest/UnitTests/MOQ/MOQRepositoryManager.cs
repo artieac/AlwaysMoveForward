@@ -21,7 +21,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
         Mock<ITagRepository> tagRepository;
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
-        Mock<IBlogListItemRepository> blogListItems;
         Mock<IPollRepository> pollRepository;
 
         public MOQRepositoryManager()
@@ -151,19 +150,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.blogLists.Object;
-            }
-        }
-
-        public IBlogListItemRepository BlogListItems
-        {
-            get
-            {
-                if (this.blogListItems == null)
-                {
-                    this.blogListItems = new Mock<IBlogListItemRepository>();
-                }
-
-                return this.blogListItems.Object;
             }
         }
 

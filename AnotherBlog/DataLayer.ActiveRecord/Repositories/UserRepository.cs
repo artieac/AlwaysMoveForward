@@ -12,11 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NHibernate.Criterion;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Queries;
-
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.ActiveRecord;

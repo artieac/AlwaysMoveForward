@@ -83,7 +83,6 @@
     <Compile Include="DomainModel\TagCount.cs" />
     <Compile Include="DataLayer\Map\ITag.cs" />
     <Compile Include="DataLayer\Repositories\IBlogEntryRepository.cs" />
-    <Compile Include="DataLayer\Repositories\IBlogListItemRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogListRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogUserRepository.cs" />
