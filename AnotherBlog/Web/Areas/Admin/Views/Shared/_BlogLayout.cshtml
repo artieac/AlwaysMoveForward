@@ -22,15 +22,15 @@
         </select>
         @if (currentPrincipal.IsInRole(RoleType.Administrator) == true || currentPrincipal.IsInRole(RoleType.Blogger) == true)
         {
-            <text><a href='/Admin/ManageBlog/Preferences?blogSubFolder=@ViewBag.Common.TargetBlog.SubFolder'> Blog Settings</a> | </text>
-            <text><a href='/Admin/ManageLists/Index?blogSubFolder=@ViewBag.Common.TargetBlog.SubFolder'> Manage Lists</a> | </text>
+            <text><a href='/Admin/ManageBlog/Preferences/@ViewBag.Common.TargetBlog.SubFolder'> Blog Settings</a> | </text>
+            <text><a href='/Admin/ManageLists/Index/@ViewBag.Common.TargetBlog.SubFolder'> Manage Lists</a> | </text>
         } 
         @if (currentPrincipal.IsInRole(RoleType.Administrator) == true ||
             currentPrincipal.IsInRole(RoleType.Blogger) ||
             currentPrincipal.IsInRole(RoleType.SiteAdministrator) == true)
         { 
-            <text><a href='/Admin/ManageBlog/ManagePosts?blogSubFolder=@ViewBag.Common.TargetBlog.SubFolder'> Manage Posts</a> |  </text>
-            <text><a href='/Admin/ManageBlog/ManageComments?blogSubFolder=@ViewBag.Common.TargetBlog.SubFolder'> Administer Comments</a></text>
+            <text><a href='/Admin/ManageBlog/ManagePosts/@ViewBag.Common.TargetBlog.SubFolder'> Manage Posts</a> |  </text>
+            <text><a href='/Admin/ManageBlog/ManageComments/@ViewBag.Common.TargetBlog.SubFolder'> Administer Comments</a></text>
         }                
     </span>
 </div>

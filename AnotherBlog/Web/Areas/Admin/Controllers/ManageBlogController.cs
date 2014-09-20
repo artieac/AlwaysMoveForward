@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
-        public ActionResult EditBlog(string blogId, string blogName, string blogAbout, string blogDescription, string targetSubFolder, string blogWelcome, string savingBlog, string blogTheme)
+        public ActionResult EditBlog(int id, string blogName, string blogAbout, string blogDescription, string targetSubFolder, string blogWelcome, string savingBlog, string blogTheme)
         {
             ManageBlogModel model = new ManageBlogModel();
 
@@ -61,7 +61,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                     ViewData.ModelState.AddModelError("targetSubFolder", "Sub folder is required.");
                 }
 
-                int targetBlogId = int.Parse(blogId);
+                int targetBlogId = id;
 
                 if (ViewData.ModelState.IsValid)
                 {
@@ -103,11 +103,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
             else
             {
-                if (blogId != null)
-                {
-                    model.Common.TargetBlog = Services.BlogService.GetById(Convert.ToInt32(blogId));
-                }
-                else
+                model.Common.TargetBlog = Services.BlogService.GetById(id);
+
+                if(model.Common.TargetBlog == null)
                 {
                     model.Common.TargetBlog = Services.BlogService.Create();
                 }
@@ -161,10 +159,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult ManagePosts(string blogSubFolder, string filterType, string filterValue, int? page, string sortColumn, bool? sortAscending)
+        public ActionResult ManagePosts(string id, string filterType, string filterValue, int? page, string sortColumn, bool? sortAscending)
         {
             ManageBlogModel model = new ManageBlogModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
+            model.Common = this.InitializeCommonModel(id);
 
             if (sortAscending.HasValue)
             {
@@ -218,7 +216,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult EditPost(string blogSubFolder, bool? performSave, int? entryId, string title, string entryText, string tagInput, string isPublished)
+        public ActionResult EditPost(string blogSubFolder, bool? performSave, int? id, string title, string entryText, string tagInput, string isPublished)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
@@ -227,9 +225,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 int blogEntryId = 0;
 
-                if (entryId.HasValue)
+                if (id.HasValue)
                 {
-                    blogEntryId = entryId.Value;
+                    blogEntryId = id.Value;
                 }
 
                 BlogPostModel blogPost = new BlogPostModel();
@@ -360,7 +358,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
         
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int commentId)
+        public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int id)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
@@ -375,7 +373,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
                         if(blogPost!=null)
                         {
-                            blogPost.UpdateCommentStatus(commentId, Comment.CommentStatus.Approved);
+                            blogPost.UpdateCommentStatus(id, Comment.CommentStatus.Approved);
                             this.Services.BlogEntryService.Save(blogPost);
                         }
 
@@ -393,7 +391,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult DeleteComment(string blogSubFolder, int blogPostId, int commentId)
+        public ActionResult DeleteComment(string blogSubFolder, int blogPostId, int id)
         {
             using (this.Services.UnitOfWork.BeginTransaction())
             {
@@ -408,7 +406,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
                         if(blogPost != null)
                         {
-                            blogPost.UpdateCommentStatus(commentId, Comment.CommentStatus.Deleted);
+                            blogPost.UpdateCommentStatus(id, Comment.CommentStatus.Deleted);
                             this.Services.BlogEntryService.Save(blogPost);
                         }
 
@@ -426,10 +424,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public ActionResult ManageComments(string blogSubFolder, string commentFilter)
+        public ActionResult ManageComments(string id, string commentFilter)
         {
             ManageBlogModel model = new ManageBlogModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
+            model.Common = this.InitializeCommonModel(id);
             model.CommentFilter = commentFilter;
 
             return this.View(model);

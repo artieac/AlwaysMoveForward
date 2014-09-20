@@ -23,7 +23,7 @@
         <input type="button" value="refresh" ng-click="getComments();"/>
     </div>
     <div>
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th width="20%">comment</th>
@@ -34,14 +34,14 @@
                 </tr>
             </thead>
             <tbody ng-init="getComments();">
-                <tr ng-repeat="blogComment in blogComments" ng-class-even="tableRow1" ng-class-odd="tablerow2">
+                <tr ng-repeat="blogComment in blogComments">
                     <td width="20%">{{ blogComment.Text }}</td>
                     <td width="20%">{{ blogComment.AuthorName - blogComment.AuthorEmail  }}</td>
                     <td width="10%">{{ blogComment.DefaultDateStringFormat  }}</td>
                     <td width="15%">{{ blogComment.StatusText }}</td>
                     <td width="15%">
-                        <a href="/Admin/ManageBlog/ApproveComment?blogSubFolder=@Model.Common.TargetBlog.SubFolder&id={{ blogComment.CommentId }}"><img src="/Content/images/action_check.png" class="approveComment" alt="" /></a>
-                        <a href="/Admin/ManageBlog/DeleteComment?blogSubFolder=@Model.Common.TargetBlog.SubFolder&id={{ blogComment.CommentId }}"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a>
+                        <a href="/Admin/ManageBlog/ApproveComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.Post.EntryId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_check.png" class="approveComment" alt="" /></a>
+                        <a href="/Admin/ManageBlog/DeleteComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.Post.EntryId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a>
                     </td>
                 </tr>
             </tbody>

@@ -10,68 +10,67 @@
 
 @section headerPlugins
 {
-    <!-- TinyMCE -->
-    <script type="text/javascript" src="/Content/tiny_mce/tiny_mce.js"></script>
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: 'textarea' });</script>
     <script type="text/javascript">
-        tinyMCE.init({
-            // General options
-            mode: "textareas",
-            theme: "AnotherBlog"
+        $(document).ready(function () {
+            $("#saveButton").click(function () {
+                $("#saveForm").submit();
+            });
         });
     </script>
-    <!-- /TinyMCE -->
 }
 <div class="bodyContent">        
-    <div class="contentPageTitle">
-        <label>Edit User</label>
-    </div> 
-    <div class="editAreaContainer">
-        <div class="editAreaSubContainer">
+    <div class="panel panel-primary editAreaContainer">
+        <div class="panel-header">
+            Edit Blog
+        </div>
+        <div class="panel-body">
             <br />
-            <form action='/Admin/Blog/Edit' method="post">
+            <form id="saveForm" action='/Admin/ManageBlog/EditBlog/@Model.Common.TargetBlog.BlogId' method=" post">
                 <input type="hidden" id="savingBlog" name="savingBlog" value="savingBlog" />
-                <table>
-                    <tr>
-                        <th class="editItemLabel">name:</th>
-                        <td><input type="text" name="blogName" id="blogName" value="@Model.Common.TargetBlog.Name" /></td>
-                        <td>@Html.ValidationMessage("blogName")</td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">description:</th>
-                        <td><input type="text" name="blogDescription" id="blogDescription" value="@Model.Common.TargetBlog.Description" /></td>
-                        <td>@Html.ValidationMessage("blogDescription")</td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">subfolder:</th>
-                        <td><input type="text" name="targetSubFolder" id="targetSubFolder" value="@Model.Common.TargetBlog.SubFolder" /></td>
-                        <td>@Html.ValidationMessage("blogDescription")</td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">theme:</th>
-                        <td colspan="2">
-                            <select id="blogTheme" name="blogTheme">
-                                @foreach(string themeDirectory in Utils.GetThemeDirectories())
-                                {
-                                    <option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @if (themeDirectory == Model.Common.TargetBlog.Theme) {<text> selected </text>}>@themeDirectory</option>
-                                }
-                            </select> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">welcome:</th>
-                        <td><input type="text" name="blogWelcome" id="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" /></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel" valign="top">about:</th>
-                        <td colspan="2"><textarea class="textAreaInput" cols="2" rows="20" name="blogAbout" id="blogAbout">@Model.Common.TargetBlog.About</textarea></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="right"><input type="submit" value="save" /></td>
-                    </tr>
-                </table>
-                <input type="hidden" id="blogId" name="blogId" value="@Model.Common.TargetBlog.BlogId" />
+                @if (ViewData.ModelState.IsValid == false)
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationMessage("blogName")
+                        <br />
+                        @Html.ValidationMessage("blogDescription")
+                        <br />
+                        @Html.ValidationMessage("blogDescription")
+                        <br />
+                    </div>
+                }
+                <div>
+                    <span class="label">name:</span>
+                    <input type="text" name="blogName" id="blogName" value="@Model.Common.TargetBlog.Name" />
+                </div>
+                <div>
+                    <span class="label">description:</span>
+                    <input type="text" name="blogDescription" id="blogDescription" value="@Model.Common.TargetBlog.Description" />
+                </div>
+                <div>
+                    <span class="label">subfolder:</span>
+                    <input type="text" name="targetSubFolder" id="targetSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
+                </div>
+                <div>
+                    <span class="label">theme:</span>
+                    <select id="blogTheme" name="blogTheme">
+                        @foreach (string themeDirectory in Utils.GetThemeDirectories())
+                        {
+                            <option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @if (themeDirectory == Model.Common.TargetBlog.Theme) { <text> selected </text>  }>@themeDirectory</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <span class="label">welcome:</span>
+                    <input type="text" name="blogWelcome" id="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" />
+                </div>
+                <div>
+                    <span class="label" valign="top">about:</span>
+                    <textarea name="blogAbout" id="blogAbout">@Model.Common.TargetBlog.About</textarea>
+                </div>
                 <br />
+                <button type="button" id="saveButton" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>

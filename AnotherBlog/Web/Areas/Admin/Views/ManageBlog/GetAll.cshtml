@@ -5,17 +5,23 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 @{
     Layout  = "~/Areas/Admin/Views/Shared/_AdminToolLayout.cshtml";
- }
+}
 
- @section headerPlugins
- {
-
- }
+@section headerPlugins
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button[name=addBlogButton]").click(function () {
+                document.location.href = "/Admin/ManageBlog/EditBlog";
+            });
+        });
+    </script>
+}
  <div class="bodyContent">        
     <div class="contentPageTitle">
         <label>Manage Blogs</label>
     </div> 
-    <a href="/Admin/Blog/Edit">Add Blog</a>
+     <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -28,12 +34,12 @@
             foreach (Blog blogItem in ViewData.Model.Blogs)
             {
                 <tr>
-                    <td><a href="/Admin/ManageBlog/EditBlog?blogId=@blogItem.BlogId.ToString()">@blogItem.Name</a></td>
+                    <td><a href="/Admin/ManageBlog/EditBlog/@blogItem.BlogId.ToString()">@blogItem.Name</a></td>
                     <td>@blogItem.Description</td>
                 </tr>        
             }
         }
         </tbody>
     </table>
-    <a href="/Admin/Blog/Edit">Add Blog</a>
+     <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
 </div>        

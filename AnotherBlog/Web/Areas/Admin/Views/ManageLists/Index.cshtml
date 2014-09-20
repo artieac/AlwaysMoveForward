@@ -24,8 +24,8 @@
     </div> 
     <form id="addBlogList" action="/Admin/List/AddList" method=post>
         <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
-        <table class="tableBase">
-            <thead class="tableHeader">
+        <table class="table table-striped">
+            <thead>
                 <tr>
                     <th width="1%">&nbsp;</th>
                     <th width="20%">Name</th>
@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody ng-init="getAllBlogLists('@Model.Common.TargetBlog.SubFolder');">
-                <tr ng-repeat="blogList in blogLists" ng-class-even="tableRow1" ng-class-odd="tablerow2">
+                <tr ng-repeat="blogList in blogLists">
                     <td><input type="radio" name="selectedList" value="{{blogList.Id}}" ng-change="getBlogListItems('{{ blogList.Id }}');" ng-model="blogListElements.selectedList"/></td>
                     <td><input type="text" name="blogListName" value="{{ blogList.Name }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
                     <td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>

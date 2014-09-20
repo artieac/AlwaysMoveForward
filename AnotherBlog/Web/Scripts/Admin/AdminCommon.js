@@ -1,14 +1,14 @@
 ﻿var AdminCommon = new function () {
     this.HandleBlogSelectionChange = function () {
-        var adminForm = jQuery("#adminForm");
+        var saveForm = jQuery("#saveForm");
 
-        if (adminForm != null) {
+        if (saveForm != null) {
             var performSave = jQuery("#performSave");
             var blogSubFolder = jQuery("#targetBlog");
             jQuery("#blogSubFolder").val(blogSubFolder.val());
 
             performSave.val(false);
-            adminForm.submit();
+            saveForm.submit();
         }
     }
 }

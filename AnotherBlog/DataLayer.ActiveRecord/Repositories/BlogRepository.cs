@@ -90,18 +90,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList<Comment> GetAllComments(int blogId, Comment.CommentStatus commentStatus = Comment.CommentStatus.None)
         {
-            DetachedCriteria blogPosts = DetachedCriteria.For<BlogPostDTO>();
-            blogPosts.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            blogPosts.Add(Expression.Eq("IsPublished", true));
-
             DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
-
-            if (commentStatus != Comment.CommentStatus.None)
-            {
-                criteria.Add(Expression.Eq("Status", commentStatus));
-            }
-            criteria.Add(Subqueries.Eq("BlogPost", blogPosts));
-
+            criteria.CreateCriteria("BlogPost")
+                    .Add(Expression.Eq("IsPublished", true))
+                    .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+           
             CommentDataMap dataMapper = new CommentDataMap();
             return dataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
         }

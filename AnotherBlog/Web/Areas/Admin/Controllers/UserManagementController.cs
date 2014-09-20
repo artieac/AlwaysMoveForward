@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        public ActionResult Edit(bool? performSave, string userName, string password, string email, string userId, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
+        public ActionResult Edit(bool? performSave, string userName, string password, string email, string id, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
         {
             UserModel model = new UserModel();
             model.Roles = Services.RoleService.GetAll();
@@ -47,9 +47,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             int targetUserId = 0;
 
-            if (string.IsNullOrEmpty(userId))
+            if (!string.IsNullOrEmpty(id))
             {
-                targetUserId = int.Parse(userId);
+                targetUserId = int.Parse(id);
                 model.CurrentUser = Services.UserService.GetById(targetUserId);
             }
 
