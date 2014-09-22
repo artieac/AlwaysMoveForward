@@ -5,8 +5,8 @@
         if (saveForm != null) {
             var performSave = jQuery("#performSave");
             var blogSubFolder = jQuery("#targetBlog");
-            jQuery("#blogSubFolder").val(blogSubFolder.val());
 
+            saveForm.attr('action', saveForm.attr('action') + blogSubFolder.val());
             performSave.val(false);
             saveForm.submit();
         }

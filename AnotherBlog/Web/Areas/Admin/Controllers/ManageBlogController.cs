@@ -342,15 +342,27 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
+                IList<BlogPost> posts = this.Services.BlogEntryService.GetAllByBlog(targetBlog, true);
+                IList<Comment> comments = new List<Comment>();
+
                 if (id == null || string.Compare(id, "All", true) == 0)
                 {
-                    model = this.Services.BlogService.GetComments(targetBlog);
+                    foreach (BlogPost post in posts)
+                    {
+                        comments = comments.Concat(post.Comments).ToList();
+                    }
                 }
                 else
                 {
                     Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), id);
-                    model = this.Services.BlogService.GetComments(targetBlog, targetStatus);
+                    
+                    foreach (BlogPost post in posts)
+                    {
+                        comments = comments.Concat(post.FilteredComments(targetStatus)).ToList();
+                    }
                 }
+                    
+                model = comments;
             }
 
             return this.Json(model, JsonRequestBehavior.AllowGet);

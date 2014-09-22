@@ -36,8 +36,7 @@
                 </div>
             }
             <br />
-            <form id="saveForm" action="/Admin/ManageBlog/Preferences" method="post">
-                <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
+            <form id="saveForm" action="/Admin/ManageBlog/Preferences/" method="post">
                 <input type="hidden" id="performSave" name="performSave" value="true" />
                 <input type="hidden" id="defaultTheme" name="defaultTheme" value="<%= ViewData.Model.TargetBlog.Theme %>" />
                 <div>
