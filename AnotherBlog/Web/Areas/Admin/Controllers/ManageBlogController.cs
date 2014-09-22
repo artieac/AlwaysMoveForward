@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.IO;
-
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -335,7 +334,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         #region Comment Management
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
-        public JsonResult GetComments(string blogSubFolder, string status)
+        public JsonResult GetComments(string blogSubFolder, string id)
         {
             IList<Comment> model = new List<Comment>();
 
@@ -343,13 +342,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (targetBlog != null)
             {
-                if (status == null || string.Compare(status, "All", true) == 0)
+                if (id == null || string.Compare(id, "All", true) == 0)
                 {
                     model = this.Services.BlogService.GetComments(targetBlog);
                 }
                 else
                 {
-                    Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), status);
+                    Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), id);
                     model = this.Services.BlogService.GetComments(targetBlog, targetStatus);
                 }
             }

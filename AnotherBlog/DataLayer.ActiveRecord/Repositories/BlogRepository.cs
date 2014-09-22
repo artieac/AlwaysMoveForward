@@ -87,16 +87,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.CreateCriteria("Users").CreateCriteria("User").Add(Expression.Eq("UserId", userId));
             return this.GetDataMapper().Map(ActiveRecordMediator<BlogDTO>.FindAll(criteria));
         }
-
-        public IList<Comment> GetAllComments(int blogId, Comment.CommentStatus commentStatus = Comment.CommentStatus.None)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<EntryCommentsDTO>();
-            criteria.CreateCriteria("BlogPost")
-                    .Add(Expression.Eq("IsPublished", true))
-                    .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-           
-            CommentDataMap dataMapper = new CommentDataMap();
-            return dataMapper.Map(Castle.ActiveRecord.ActiveRecordMediator<EntryCommentsDTO>.FindAll(criteria));
-        }
     }
 }
