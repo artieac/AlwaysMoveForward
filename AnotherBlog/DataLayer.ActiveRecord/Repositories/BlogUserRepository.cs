@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<BlogUser, BlogUserDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().BlogUserDataMap;
+            return new BlogUserDataMap();
         }
 
         /// <summary>

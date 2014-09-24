@@ -24,6 +24,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 AutoMapper.Mapper.CreateMap<DbInfoDTO, DbInfo>();
             }
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override DbInfoDTO Map(DbInfo source, DbInfoDTO destination)

@@ -26,6 +26,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 AutoMapper.Mapper.CreateMap<BlogUserDTO, BlogUser>();
             }
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override BlogUser Map(BlogUserDTO source, BlogUser destination)

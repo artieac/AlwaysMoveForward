@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<DbInfo, DbInfoDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().DbInfoMapper; 
+            return new DbInfoMapper(); 
         }
 
         public DbInfo GetDbInfo()

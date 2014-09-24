@@ -22,6 +22,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 AutoMapper.Mapper.CreateMap<SiteInfoDTO, SiteInfo>();
             }
+
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override SiteInfo Map(SiteInfoDTO source, SiteInfo destination)

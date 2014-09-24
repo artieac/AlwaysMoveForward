@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<BlogList, BlogListDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().ListDataMap;
+            return new ListDataMap();
         }
 
         public BlogList GetByIdAndBlogId(int listId, int blogId)

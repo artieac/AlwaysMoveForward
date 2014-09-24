@@ -57,7 +57,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<Tag, TagDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().TagDataMap; 
+            return new TagDataMap(); 
         }
 
         public IList<Tag> GetAll(int blogId)

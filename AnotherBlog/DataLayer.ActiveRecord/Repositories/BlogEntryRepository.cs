@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<BlogPost, BlogPostDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().BlogPostDataMap; 
+            return new BlogPostDataMap(); 
         }
 
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)

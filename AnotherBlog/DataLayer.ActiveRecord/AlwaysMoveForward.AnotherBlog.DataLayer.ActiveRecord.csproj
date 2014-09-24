@@ -102,12 +102,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMapper\AutoMapperConfiguration.cs" />
     <Compile Include="DataMapper\BlogDataMap.cs" />
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
     <Compile Include="DataMapper\BlogUserDataMap.cs" />
-    <Compile Include="DataMapper\CommentDataMap.cs" />
-    <Compile Include="DataMapper\DataMapManager.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />

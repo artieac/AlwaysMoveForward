@@ -109,6 +109,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 AutoMapper.Mapper.CreateMap<PollOptionDTO, PollOption>();
                 AutoMapper.Mapper.CreateMap<PollQuestionDTO, PollQuestion>();
             }
+
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override PollQuestion Map(PollQuestionDTO source, PollQuestion destination)

@@ -20,7 +20,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             UserDataMap.ConfigureAutoMapper();
             TagDataMap.ConfigureAutoMapper();
-            CommentDataMap.ConfigureAutoMapper();
+
+            if (AutoMapper.Mapper.FindTypeMapFor<Comment, EntryCommentsDTO>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<Comment, EntryCommentsDTO>()
+                    .ForMember(dest => dest.BlogPost, opt => opt.MapFrom(src => src.Post));
+            }
+
+            if (AutoMapper.Mapper.FindTypeMapFor<EntryCommentsDTO, Comment>() == null)
+            {
+                AutoMapper.Mapper.CreateMap<EntryCommentsDTO, Comment>()
+                    .ForMember(dest => dest.Post, opt => opt.MapFrom(src => src.BlogPost));
+            }
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
             {
@@ -33,6 +44,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 AutoMapper.Mapper.CreateMap<BlogPostDTO, BlogPost>()
                    .ForMember(bp => bp.CommentCount, opt => opt.Ignore());
             }
+
+#if DEBUG
+            Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override BlogPost Map(BlogPostDTO source, BlogPost destination)

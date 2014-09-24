@@ -27,6 +27,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 AutoMapper.Mapper.CreateMap<RoleDTO, Role>();
             }
+
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override RoleDTO Map(Role source, RoleDTO destination)

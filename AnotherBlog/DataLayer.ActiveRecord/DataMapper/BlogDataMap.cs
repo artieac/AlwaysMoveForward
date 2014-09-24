@@ -19,13 +19,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             if (AutoMapper.Mapper.FindTypeMapFor<Blog, BlogDTO>() == null)
             {
-                AutoMapper.Mapper.CreateMap<Blog, BlogDTO>();
+                AutoMapper.Mapper.CreateMap<Blog, BlogDTO>()
+                    .ForMember(dest => dest.Posts, opt => opt.Ignore())
+                    .ForMember(dest => dest.Users, opt => opt.Ignore());
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogDTO, Blog>() == null)
             {
                 AutoMapper.Mapper.CreateMap<BlogDTO, Blog>();
             }
+
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override Blog Map(BlogDTO source, Blog destination)

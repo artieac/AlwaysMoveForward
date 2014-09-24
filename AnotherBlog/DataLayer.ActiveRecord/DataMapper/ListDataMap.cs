@@ -55,6 +55,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 AutoMapper.Mapper.CreateMap<BlogListDTO, BlogList>();
                 AutoMapper.Mapper.CreateMap<BlogListItemDTO, BlogListItem>();
             }
+#if DEBUG
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+#endif
         }
 
         public override BlogListDTO Map(BlogList source, BlogListDTO destination)

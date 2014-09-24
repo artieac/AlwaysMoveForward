@@ -57,7 +57,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<Role, RoleDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().RoleDataMap; 
+            return new RoleDataMap(); 
         }
     }
 }

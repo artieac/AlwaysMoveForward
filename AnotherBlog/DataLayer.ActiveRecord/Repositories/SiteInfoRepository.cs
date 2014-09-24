@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override DataMapBase<SiteInfo, SiteInfoDTO> GetDataMapper()
         {
-            return DataMapManager.Mappers().SiteInfoDataMap; 
+            return new SiteInfoDataMap(); 
         }
 
         /// <summary>

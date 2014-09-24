@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     {
         static UnitOfWork()
         {
-            DataMapper.AutoMapperConfiguration.Configure();
+
         }
 
         public UnitOfWork() : base(Assembly.GetExecutingAssembly()) { }
