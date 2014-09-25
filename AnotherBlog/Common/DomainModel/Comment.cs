@@ -42,7 +42,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string AuthorEmail { get; set; }
         public string Text { get; set; }
         public string AuthorName { get; set; }
-        public BlogPost Post { get; set; }
         public DateTime DatePosted { get; set; }
         
         public void CleanCommentText()

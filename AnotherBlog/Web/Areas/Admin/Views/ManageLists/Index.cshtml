@@ -22,8 +22,7 @@
     <div class="contentPageTitle">
         <label>Manage Lists</label>
     </div> 
-    <form id="addBlogList" action="/Admin/List/AddList" method=post>
-        <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
+    <form id="addBlogList" action="/Admin/ManageLists/AddList/@Model.Common.TargetBlog.SubFolder" method=post>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -42,14 +41,14 @@
                         <a class="readonly" ng-click="deleteBlogList('{{ blogList.Id }}', '@Model.Common.TargetBlog.SubFolder');">
                             <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
                         </a>
-                        <input type="button" value="Save" ng-click="saveBlogList();" ng-show="blogListElements.selectedList==blogList.Id"/>
+                        <button type="button" class="btn btn-primary" ng-click="saveBlogList();" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
                     </td>
                 </tr>
                 <tr ng-form="newListForm">
                     <td></td>
                     <td><input type="text" name="newListName" ng-model="newList.name" required/></td>
                     <td><input type="checkbox" name="newListShowOrdered" ng-model="newList.showOrdered" value="false" /></td>                            
-                    <td><input type="button" value="Add List" ng-disabled="newListForm.$invalid" ng-click="addBlogList('@Model.Common.TargetBlog.SubFolder');"/></td> 
+                    <td><button type="button" class="btn btn-primary" ng-disabled="newListForm.$invalid" ng-click="addBlogList('@Model.Common.TargetBlog.SubFolder');">Add List</button></td> 
                 </tr>
             </tbody>
         </table>
@@ -80,7 +79,7 @@
                                 <a class="readonly" ng-click="deleteBlogListItem('{{ blogListItem.Id }}', '@Model.Common.TargetBlog.SubFolder');">
                                     <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
                                 </a>
-                                <input type="button" value="Save" ng-click="saveBlogListItem();" ng-show="blogListItemElements.selectedListItem==blogListItem.Id"/>
+                                <button type="button" class="btn btn-primary" ng-click="saveBlogListItem();" ng-show="blogListItemElements.selectedListItem==blogListItem.Id">Save</button>
                             </td>
                         </tr>
                         <tr>
@@ -91,7 +90,7 @@
                             </td>
                             <td><input type="text" id="newListItemRelatedLink" name="newListItemRelatedLink" ng-model="newListItem.relatedLink" required/></td>
                             <td><input type="text" id="newListItemDisplayOrder" name="newListItemDisplayOrder" ng-model="newListItem.displayOrder"/></td>
-                            <td><input type="button" id="saveListItemButton" value="Add Item" ng-click="addBlogListItem();"/></td>
+                            <td><button type="button" class="btn btn-primary" id="saveListItemButton" ng-click="addBlogListItem();">Add Item</button></td>
                         </tr>
                     </tbody>
                 </table>

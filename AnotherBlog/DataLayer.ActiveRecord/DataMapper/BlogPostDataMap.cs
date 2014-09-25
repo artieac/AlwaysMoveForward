@@ -24,19 +24,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             if (AutoMapper.Mapper.FindTypeMapFor<Comment, EntryCommentsDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<Comment, EntryCommentsDTO>()
-                    .ForMember(dest => dest.BlogPost, opt => opt.MapFrom(src => src.Post));
+                    .ForMember(dest => dest.BlogPost, opt => opt.Ignore());
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<EntryCommentsDTO, Comment>() == null)
             {
-                AutoMapper.Mapper.CreateMap<EntryCommentsDTO, Comment>()
-                    .ForMember(dest => dest.Post, opt => opt.MapFrom(src => src.BlogPost));
+                AutoMapper.Mapper.CreateMap<EntryCommentsDTO, Comment>();
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<BlogPost, BlogPostDTO>()
-                    .ForMember(bp => bp.Tags, postTags => postTags.ResolveUsing<TagDTOListResolver>());
+                    .ForMember(dest => dest.Tags, src => src.ResolveUsing<TagDTOListResolver>())
+                    .ForMember(dest => dest.Comments, src => src.ResolveUsing<CommentDTOListResolver>());
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPostDTO, BlogPost>() == null)

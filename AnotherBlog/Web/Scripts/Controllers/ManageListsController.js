@@ -18,14 +18,14 @@
             });
      }
 
-     $scope.addBlogList = function (blogSubFolder) {
-         $scope.newList.blogSubFolder = blogSubFolder;
-
+    $scope.addBlogList = function (blogSubFolder) {
+        alert(blogSubFolder);
          if ($scope.newList.showOrdered == null) {
              $scope.newList.showOrdered = false;
          }
 
-         $http.put('/Admin/ManageLists/AddList', $scope.newList)
+         alert('here');
+         $http.put('/Admin/ManageLists/AddList/' + blogSubFolder, $scope.newList)
             .success(function (data) {
                 $scope.blogLists = data;
             });

@@ -3,7 +3,6 @@
         var blogSubFolder = jQuery("#targetBlog").val();
         var status = jQuery("#commentFilter").val();
         var getCommentsRequest = $resource('/admin/manageblog/getcomments/' + blogSubFolder + '/' + status);
-        alert('/admin/manageblog/getcomments/' + blogSubFolder + '/' + status)
         $scope.blogComments = getCommentsRequest.query();
     }
 

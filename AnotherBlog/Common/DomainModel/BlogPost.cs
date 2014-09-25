@@ -59,7 +59,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             retVal.Link = commentLink;
             retVal.Status = Comment.CommentStatus.Unapproved;
             retVal.Text = commentText;
-            retVal.Post = this;
 
             if(currentUser != null && currentUser.ApprovedCommenter == true)
             {

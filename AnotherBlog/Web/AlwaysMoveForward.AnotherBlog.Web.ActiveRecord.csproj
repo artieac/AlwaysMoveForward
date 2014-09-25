@@ -171,6 +171,7 @@
     <Compile Include="Areas\Admin\Models\AjaxBlogListModel.cs" />
     <Compile Include="Areas\Admin\Models\AjaxSaveModel.cs" />
     <Compile Include="Areas\Admin\Models\BlogListModel.cs" />
+    <Compile Include="Areas\Admin\Models\CommentItemModel.cs" />
     <Compile Include="Areas\Admin\Models\ManageBlogModel.cs" />
     <Compile Include="Areas\Admin\Models\ManagePollsModel.cs" />
     <Compile Include="Areas\Admin\Models\SiteModel.cs" />
