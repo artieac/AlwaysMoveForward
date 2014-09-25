@@ -29,11 +29,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     tagDestination[i].Blog = ((BlogPostDTO)source.Context.DestinationValue).Blog;
                 }
 
-                if (tagDestination == null)
-                {
-                    tagDestination = new List<TagDTO>();
-                }
-
                 BlogPost sourceObject = (BlogPost)source.Value;
 
                 for (int i = 0; i < sourceObject.Tags.Count; i++)

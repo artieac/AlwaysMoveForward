@@ -107,10 +107,18 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.ShowOrdered = showOrdered;
             itemToSave.Blog = targetBlog;
 
-            itemToSave = this.BlogListRepository.Save(itemToSave);
-            return itemToSave;
+            return this.Save(itemToSave);
         }
 
+        public BlogList Save(BlogList list)
+        {
+            if(list != null)
+            {
+                list = this.BlogListRepository.Save(list);
+            }
+
+            return list;
+        }
         public BlogList AddItem(BlogList blogList, string itemName, string relatedLink, int displayOrder)
         {
             return this.UpdateItem(blogList, -1, itemName, relatedLink, displayOrder);
@@ -140,26 +148,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             blogList.Items.Clear();
             return this.BlogListRepository.Delete(blogList);
-        }
-
-        public BlogList DeleteItem(int blogListId, int listItemId)
-        {
-            return this.DeleteItem(this.GetById(blogListId), listItemId);
-        }
-
-        public BlogList DeleteItem(BlogList blogList, int listItemId)
-        {
-            BlogList retVal = blogList;
-
-            if (retVal != null)
-            {
-                if (retVal.RemoveListItem(listItemId))
-                {
-                    retVal = this.BlogListRepository.Save(retVal);
-                }
-            }
-
-            return retVal;
-        }
+        }       
     }
 }

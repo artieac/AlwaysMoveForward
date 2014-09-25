@@ -17,10 +17,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
     public class ManageListsController : AdminBaseController
     {
-        public ActionResult Index(string blogSubFolder)
+        public ActionResult Index(string id)
         {
             BlogListModel model = new BlogListModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
+            model.Common = this.InitializeCommonModel(id);
 
             if (model.Common.TargetBlog != null)
             {
@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        public ActionResult DeleteList(string blogSubFolder, int listId)
+        public ActionResult Delete(string blogSubFolder, int listId)
         {
             BlogListModel model = new BlogListModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
         }
 
-        public JsonResult EditList(string blogSubFolder, int listId, string listName, bool showOrdered)
+        public JsonResult Edit(string blogSubFolder, int listId, string listName, bool showOrdered)
         {
             AjaxBlogListModel model = new AjaxBlogListModel();
             model.BlogSubFolder = blogSubFolder;
@@ -132,10 +132,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.Json(model);
         }
 
-        public ActionResult DeleteListItem(string blogSubFolder, int listItemId, int blogListId)
+        public ActionResult DeleteListItem(string id, int listItemId, int listId)
         {
             BlogListModel model = new BlogListModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
+            model.Common = this.InitializeCommonModel(id);
 
             if (model.Common.TargetBlog != null)
             {
@@ -143,7 +143,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 {
                     try
                     {
-                        Services.BlogListService.DeleteItem(blogListId, listItemId);
+                        BlogList targetList = this.Services.BlogListService.GetById(listId);
+
+                        if (targetList !=null)
+                        {
+                            targetList.RemoveListItem(listItemId);
+                        }
+
+                        this.Services.BlogListService.Save(targetList);
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                     catch (Exception e)
@@ -154,10 +161,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
+            return this.RedirectToAction("Index", new { blogSubFolder = id });
         }
 
-        public JsonResult GetAllListsByBlog(string blogSubFolder)
+        public JsonResult GetAll(string blogSubFolder)
         {
             IList<BlogList> retVal = new List<BlogList>();
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -166,10 +173,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddList(string blogSubFolder, string name, bool showOrdered)
+        public JsonResult Add(string id, string name, bool showOrdered)
         {
             IList<BlogList> retVal = new List<BlogList>();
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(id);
 
             if (targetBlog != null)
             {
@@ -196,13 +203,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }                
             }
 
-            return this.GetAllListsByBlog(blogSubFolder);
-        }
-
-        public JsonResult GetBlogListItems(int listId)
-        {
-            BlogList retVal = this.Services.BlogListService.GetById(listId);
-            return this.Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.GetAll(id);
         }
     }
 }

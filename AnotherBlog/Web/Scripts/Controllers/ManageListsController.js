@@ -2,32 +2,40 @@
     $scope.blogListElements = {selectedList: 0};
     $scope.blogListItemElements = { selectedListItem: 0 };
 
-    $scope.getAllBlogLists = function (blogSubFolder) {
-        var getBlogListsRequest = $resource('/admin/managelists/getAllListsByBlog?blogSubFolder=' + blogSubFolder);
+    $scope.getAll = function (blogSubFolder) {
+        var getBlogListsRequest = $resource('/admin/managelists/getall?blogSubFolder=' + blogSubFolder);
         $scope.blogLists = getBlogListsRequest.query();
     }
 
-    $scope.getBlogListItems = function (listId) {
-        var getBlogListItemsRequest = $resource('/admin/managelists/GetBlogListItems?listId=' + listId);
-        $scope.currentList = getBlogListItemsRequest.get();
+    $scope.getListItems = function (listId) {
+        jQuery.each($scope.blogLists, function (i, val) {
+            if (val.Id == listId)
+            {
+                $scope.currentList = val;
+            }
+        });
     }
 
-    $scope.deleteBlogList = function (listId, blogSubFolder) {
-         $http.put('/Admin/ManageList/DeleteList?listId=' + listId + '&blogSubFolder=' + blogSubFolder, $scope.newComment)
+    $scope.deleteList = function (listId, blogSubFolder) {
+         $http.put('/Admin/ManageLists/Delete?listId=' + listId + '&blogSubFolder=' + blogSubFolder, $scope.newComment)
             .success(function (data) {
             });
      }
 
-    $scope.addBlogList = function (blogSubFolder) {
-        alert(blogSubFolder);
+    $scope.addList = function (blogSubFolder) {
          if ($scope.newList.showOrdered == null) {
              $scope.newList.showOrdered = false;
          }
 
-         alert('here');
-         $http.put('/Admin/ManageLists/AddList/' + blogSubFolder, $scope.newList)
+         $http.put('/Admin/ManageLists/Add/' + blogSubFolder, $scope.newList)
             .success(function (data) {
                 $scope.blogLists = data;
             });
-     }
+    }
+
+    $scope.deleteListItem = function (blogSubFolder, listId, listItemId) {
+        $http.put('/Admin/ManageLists/DeleteListItem/' + blogSubFolder + '?listId=' + listId + '&listItemId=' + listItemId)
+           .success(function (data) {
+           });
+    }
 }

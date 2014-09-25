@@ -31,23 +31,33 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                         voterAddressDestination[i] = Mapper.Map(((PollOption)source.Value).VoterAddresses[i], voterAddressDestination[i]);
                     }
 
-                    if (voterAddressDestination == null)
-                    {
-                        voterAddressDestination = new List<VoterAddressDTO>();
-                    }
-
                     PollOption sourceObject = (PollOption)source.Value;
 
-                    for (int i = 0; i < sourceObject.VoterAddresses.Count; i++)
+                    if (sourceObject != null && sourceObject.VoterAddresses != null)
                     {
-                        if (i >= voterAddressDestination.Count())
+                        for (int i = 0; i < sourceObject.VoterAddresses.Count; i++)
                         {
-                            voterAddressDestination.Add(Mapper.Map<VoterAddress, VoterAddressDTO>(sourceObject.VoterAddresses[i]));
+                            VoterAddressDTO destinationOption = voterAddressDestination.Where(listItemDTO => listItemDTO.Id == sourceObject.VoterAddresses[i].Id).FirstOrDefault();
+
+                            if (destinationOption == null)
+                            {
+                                voterAddressDestination.Add(Mapper.Map<VoterAddress, VoterAddressDTO>(sourceObject.VoterAddresses[i]));
+                            }
+                            else
+                            {
+                                voterAddressDestination[i] = Mapper.Map(sourceObject.VoterAddresses[i], voterAddressDestination[i]);
+                            }
                         }
-                        else
+
+                        for (int i = voterAddressDestination.Count - 1; i > -1; i--)
                         {
-                            voterAddressDestination[i] = Mapper.Map(sourceObject.VoterAddresses[i], voterAddressDestination[i]);
-                        }
+                            VoterAddress destinationOption = sourceObject.VoterAddresses.Where(listItemDTO => listItemDTO.Id == voterAddressDestination[i].Id).FirstOrDefault();
+
+                            if (destinationOption == null)
+                            {
+                                voterAddressDestination.Remove(voterAddressDestination[i]);
+                            }
+                        } 
                     }
                 }
 
@@ -73,7 +83,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     {
                         for (int i = 0; i < sourceObject.Options.Count; i++)
                         {
-                            if (i >= optionsDestination.Count())
+                            PollOptionDTO destinationOption = optionsDestination.Where(listItemDTO => listItemDTO.Id == sourceObject.Options[i].Id).FirstOrDefault();
+
+                            if (destinationOption == null)
                             {
                                 optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
                             }
@@ -82,6 +94,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                                 optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
                             }
                         }
+
+                        for (int i = optionsDestination.Count - 1; i > -1; i--)
+                        {
+                            PollOption destinationOption = sourceObject.Options.Where(listItemDTO => listItemDTO.Id == optionsDestination[i].Id).FirstOrDefault();
+
+                            if (destinationOption == null)
+                            {
+                                optionsDestination.Remove(optionsDestination[i]);
+                            }
+                        } 
                     }
                 }
 

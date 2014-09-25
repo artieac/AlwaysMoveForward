@@ -9,7 +9,7 @@
 
 @section headerPlugins
 {
-    <script src="/Scripts/Admin/ManageBlogLists.js" type="text/javascript"></script>
+    <script src="/Scripts/Controllers/ManageListsController.js" type="text/javascript"></script>
 }
    
 @{
@@ -18,83 +18,82 @@
     readonlyAttributes.Add("disabled", "true");
     
 } 
+<form id="saveForm" action="/Admin/ManageLists/Index/">
+    <input type="hidden" id="performSave" name="performSave" value="true" />
+</form>
 <div class="bodyContent" ng-controller="ManageListsController">        
     <div class="contentPageTitle">
         <label>Manage Lists</label>
     </div> 
-    <form id="addBlogList" action="/Admin/ManageLists/AddList/@Model.Common.TargetBlog.SubFolder" method=post>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th width="1%">&nbsp;</th>
-                    <th width="20%">Name</th>
-                    <th width="5%">Show Ordered</th>
-                    <th width="10%">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody ng-init="getAllBlogLists('@Model.Common.TargetBlog.SubFolder');">
-                <tr ng-repeat="blogList in blogLists">
-                    <td><input type="radio" name="selectedList" value="{{blogList.Id}}" ng-change="getBlogListItems('{{ blogList.Id }}');" ng-model="blogListElements.selectedList"/></td>
-                    <td><input type="text" name="blogListName" value="{{ blogList.Name }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
-                    <td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
-                    <td>
-                        <a class="readonly" ng-click="deleteBlogList('{{ blogList.Id }}', '@Model.Common.TargetBlog.SubFolder');">
-                            <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
-                        </a>
-                        <button type="button" class="btn btn-primary" ng-click="saveBlogList();" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
-                    </td>
-                </tr>
-                <tr ng-form="newListForm">
-                    <td></td>
-                    <td><input type="text" name="newListName" ng-model="newList.name" required/></td>
-                    <td><input type="checkbox" name="newListShowOrdered" ng-model="newList.showOrdered" value="false" /></td>                            
-                    <td><button type="button" class="btn btn-primary" ng-disabled="newListForm.$invalid" ng-click="addBlogList('@Model.Common.TargetBlog.SubFolder');">Add List</button></td> 
-                </tr>
-            </tbody>
-        </table>
-    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="1%">&nbsp;</th>
+                <th width="20%">Name</th>
+                <th width="5%">Show Ordered</th>
+                <th width="10%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody ng-init="getAll('@Model.Common.TargetBlog.SubFolder');">
+            <tr ng-repeat="blogList in blogLists">
+                <td><input type="radio" name="selectedList" value="{{blogList.Id}}" ng-change="getListItems('{{ blogList.Id }}');" ng-model="blogListElements.selectedList"/></td>
+                <td><input type="text" name="blogListName" value="{{ blogList.Name }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
+                <td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
+                <td>
+                    <a ng-click="deleteList(blogList.Id, '@Model.Common.TargetBlog.SubFolder');">
+                        <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
+                    </a>
+                    <button class="btn btn-primary" ng-click="saveList();" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
+                </td>
+            </tr>
+            <tr ng-form="newListForm">
+                <td></td>
+                <td><input type="text" name="newListName" ng-model="newList.name" required/></td>
+                <td><input type="checkbox" name="newListShowOrdered" ng-model="newList.showOrdered" value="false" /></td>                            
+                <td><input type="button" class="btn btn-primary"  value="Add List" ng-click="addList('@Model.Common.TargetBlog.SubFolder');" /></td>
+            </tr>
+        </tbody>
+    </table>
     <br />
     <div id="listItemsContainer">
         <div id="listItemsSection" >
-            <form id="addNewListItemForm" action="/Admin/List/AddListItem" method="post">
-                <input type="hidden" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
-                <input type="hidden" name="blogListId" value="{{ currentList.Id }}" />
-                <table class="tableBase">
-                    <thead>
-                        <tr class="tableHeader">
-                            <td width="1%">&nbsp;</td>
-                            <td width="20%">Name</td>
-                            <td width="20%">Link</td>
-                            <td width="5%">Display Order</td>
-                            <td width="5%">&nbsp;</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="blogListItem in currentList.Items" ng-class-even="tableRow1" ng-class-odd="tablerow2">
-                            <td><input type="radio" name="selectedListItem" value="{{blogListItem.Id}}" ng-model="blogListItemElements.selectedListItem"/></td>
-                            <td><input type="text" name="listItemName" class="readonly" value="{{ blogListItem.Name }}" ng-disabled="blogListItemElements.selectedListItem!=blogListItem.Id"/></td>
-                            <td><input type="text" name="listItemRelatedLink" class="readonly" value="{{blogListItem.RelatedLink}}" ng-disabled="blogListItemElements.selectedListItem!=blogListItem.Id"/></td>
-                            <td><input type="text" name="listItemDisplayOrder" class="readonly" value="{{blogListItem.DisplayOrder}}" ng-disabled="blogListItemElements.selectedListItem!=blogListItem.Id"/></td>
-                            <td>
-                                <a class="readonly" ng-click="deleteBlogListItem('{{ blogListItem.Id }}', '@Model.Common.TargetBlog.SubFolder');">
-                                    <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
-                                </a>
-                                <button type="button" class="btn btn-primary" ng-click="saveBlogListItem();" ng-show="blogListItemElements.selectedListItem==blogListItem.Id">Save</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <input type="hidden" id="newListItemListId" name="newListItemListId" value="{{blogListElements.selectedList}}" ng-model="newListItem.listId"/>
-                                <input type="text" id="newListItemName" name="newListItemName" ng-model="newListItem.name" required/>
-                            </td>
-                            <td><input type="text" id="newListItemRelatedLink" name="newListItemRelatedLink" ng-model="newListItem.relatedLink" required/></td>
-                            <td><input type="text" id="newListItemDisplayOrder" name="newListItemDisplayOrder" ng-model="newListItem.displayOrder"/></td>
-                            <td><button type="button" class="btn btn-primary" id="saveListItemButton" ng-click="addBlogListItem();">Add Item</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
+            <input type="hidden" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
+            <input type="hidden" name="blogListId" value="{{ currentList.Id }}" />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td width="1%">&nbsp;</td>
+                        <td width="20%">Name</td>
+                        <td width="20%">Link</td>
+                        <td width="5%">Display Order</td>
+                        <td width="5%">&nbsp;</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="listItem in currentList.Items">
+                        <td><input type="radio" name="selectedListItem" value="{{listItem.Id}}" ng-model="blogListItemElements.selectedListItem" /></td>
+                        <td><input type="text" name="listItemName" class="readonly" value="{{ listItem.Name }}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+                        <td><input type="text" name="listItemRelatedLink" class="readonly" value="{{listItem.RelatedLink}}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+                        <td><input type="text" name="listItemDisplayOrder" class="readonly" value="{{listItem.DisplayOrder}}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+                        <td>
+                            <a ng-click="deleteListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id, listItem.Id);">
+                                <img src="/Content/images/action_delete.png" class="deleteList" alt="" />
+                            </a>
+                            <button type="button" class="btn btn-primary" ng-click="saveListItem();" ng-show="blogListItemElements.selectedListItem==listItem.Id">Save</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="hidden" id="newListItemListId" name="newListItemListId" value="{{blogListElements.selectedList}}" ng-model="newListItem.listId"/>
+                            <input type="text" id="newListItemName" name="newListItemName" ng-model="newListItem.name" required/>
+                        </td>
+                        <td><input type="text" id="newListItemRelatedLink" name="newListItemRelatedLink" ng-model="newListItem.relatedLink" required/></td>
+                        <td><input type="text" id="newListItemDisplayOrder" name="newListItemDisplayOrder" ng-model="newListItem.displayOrder"/></td>
+                        <td><button type="button" class="btn btn-primary" id="saveListItemButton" ng-click="addListItem();">Add Item</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>      
 </div>
