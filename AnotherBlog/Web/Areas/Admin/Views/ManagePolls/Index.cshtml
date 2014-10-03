@@ -70,7 +70,7 @@
                             <td><input type="radio" name="selectedPollOption" value="{{pollOption.Id}}" ng-model="pollOptionElements.selectedPollOption" /></td>
                             <td><input type="text" name="option" class="readonly" value="{{ pollOption.OptionText }}" ng-disabled="pollOptionElements.selectedPollOption!=pollOption.Id" /></td>
                             <td>
-                                <a class="readonly" ng-click="deletePollOption('{{ pollOption.Id }}');">
+                                <a ng-click="deletePollOption(selectedPoll.Id, pollOption.Id);">
                                     <img src="/Content/images/action_delete.png" class="deletePoll" alt="" />
                                 </a>
                                 <input type="button" value="Save" ng-click="saveBlogListItem();" ng-show="pollOptionElements.selectedPollOption==pollOption.Id" />

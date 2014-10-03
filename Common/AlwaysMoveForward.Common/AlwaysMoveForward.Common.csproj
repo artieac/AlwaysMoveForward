@@ -35,8 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\..\Lib\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\Lib\log4net.dll</HintPath>
@@ -66,6 +70,7 @@
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="DataLayer\DataMapBase.cs" />
+    <Compile Include="DataLayer\MappedListResolver.cs" />
     <Compile Include="DataLayer\Repositories\IPollRepository.cs" />
     <Compile Include="DomainModel\DbInfo.cs" />
     <Compile Include="DomainModel\DataMap\IDbInfo.cs" />
@@ -153,4 +158,5 @@
   <PropertyGroup>
     <PrepareForBuildDependsOn Condition="!Exists('$(StyleCopMSBuildTargetsFile)')">StyleCopMSBuildTargetsNotFound;$(PrepareForBuildDependsOn)</PrepareForBuildDependsOn>
   </PropertyGroup>
+  <Import Project="..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
 </Project>

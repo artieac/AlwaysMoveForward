@@ -8,9 +8,11 @@
     }
 
     $scope.getPollQuestion = function (pollQuestionId) {
-        alert(pollQuestionId);
-        var getPollQuestionByIdRequest = $resource('/admin/managepolls/GetById?pollQuestionId=' + pollQuestionId);
-        $scope.selectedPoll = getPollQuestionByIdRequest.get();
+        jQuery.each($scope.pollItems, function (i, val) {
+            if (val.Id == pollQuestionId) {
+                $scope.selectedPoll = val;
+            }
+        });
     }
 
     $scope.deletePoll = function (pollQuestionId) {
@@ -26,11 +28,9 @@
            });
     }
 
-    $scope.addPollOption = function (pollQuestionId) {
-        $scope.newPollOption.pollQuestionId = pollQuestionId;
-        $http.put('/Admin/ManagePolls/AddPollOption', $scope.newPollOption)
+    $scope.deletePollOption = function (pollQuestionId, optionId) {
+        $http.delete('/Admin/ManagePolls/deleteOption/' + pollQuestionId + "?optionId=" + optionId)
            .success(function (data) {
-               $scope.selectedPoll = data;
            });
     }
 }

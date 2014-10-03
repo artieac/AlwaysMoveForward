@@ -74,16 +74,7 @@ namespace AlwaysMoveForward.Common.Business
 
             if (targetQuestion != null)
             {
-                PollOption newOption = new PollOption();
-                newOption.OptionText = optionText;
-
-                if (targetQuestion.Options == null)
-                {
-                    targetQuestion.Options = new List<PollOption>();
-                }
-
-                targetQuestion.Options.Add(newOption);
-
+                targetQuestion.AddOption(optionText);
                 targetQuestion = this.PollRepository.Save(targetQuestion);
             }
 
@@ -112,26 +103,21 @@ namespace AlwaysMoveForward.Common.Business
 
             if (pollQuestion != null)
             {
-                PollOption previousVote = (from targetOption in pollQuestion.Options 
-                                                      where targetOption.VoterAddresses.Any(var => var.Address == address)
-                                                      select targetOption).Single();
-
-                if (previousVote != null)
-                {
-                    VoterAddress voterAddress = (from addressItem in previousVote.VoterAddresses where addressItem.Address == address select addressItem).Single();
-                    previousVote.VoterAddresses.Remove(voterAddress);
-                }
-
-                PollOption votedOption = (from targetOption in pollQuestion.Options where targetOption.Id == pollOptionId select targetOption).First();
-
-                if (votedOption != null)
-                {
-                    votedOption.VoterAddresses.Add(new VoterAddress(address));
-                    this.PollRepository.Save(pollQuestion);
-                }
+                pollQuestion.AddOptionVote(pollOptionId, address);
+                pollQuestion = this.PollRepository.Save(pollQuestion);
             }
 
             return pollQuestion;
+        }
+
+        public bool Delete(PollQuestion pollQuestion)
+        {
+            return this.PollRepository.Delete(pollQuestion);
+        }
+
+        public PollQuestion Save(PollQuestion pollQuestion)
+        {
+            return this.PollRepository.Save(pollQuestion);
         }
     }
 }

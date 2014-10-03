@@ -12,16 +12,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Castle.ActiveRecord;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     [ActiveRecord("BlogLists")]
-    public class BlogListDTO
+    public class BlogListDTO 
     {
         public BlogListDTO()
         {
@@ -40,7 +39,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [Property("ShowOrdered")]
         public bool ShowOrdered { get; set; }
 
-        [HasMany(typeof(BlogListItemDTO), Inverse = true)]
+        [HasMany(typeof(BlogListItemDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
         public IList<BlogListItemDTO> Items { get; set; }
     }
 }

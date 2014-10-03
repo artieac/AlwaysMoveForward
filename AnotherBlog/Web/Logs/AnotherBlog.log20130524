@@ -1,7 +1,0 @@
-2013-05-24 23:42:24,357 [243] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NullReferenceException:Object reference not set to an instance of an object. 
-2013-05-24 23:42:38,226 [243] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NullReferenceException:Object reference not set to an instance of an object. 
-2013-05-24 23:43:53,230 [257] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NullReferenceException:Object reference not set to an instance of an object. 
-2013-05-24 23:45:40,559 [299] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:NullReferenceException:Object reference not set to an instance of an object. 
-2013-05-24 23:48:23,744 [247] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ActiveRecordException:Could not perform Save for BlogListDTO:InnerException:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogListDTO][SQL: INSERT INTO BlogLists (Name, ShowOrdered, BlogId) VALUES (?, ?, ?); select SCOPE_IDENTITY()] 
-2013-05-24 23:48:23,757 [247] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
-NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.BlogListDTO entry (don't flush the Session after an exception occurs)

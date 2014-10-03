@@ -11,47 +11,33 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class ListDataMap : DataMapBase<BlogList, BlogListDTO>
     {
-        private class BlogListItemDTOResolver : IValueResolver
+        private class BlogListItemDTOResolver : MappedListResolver<BlogListItem, BlogListItemDTO> 
         {
-            public ResolutionResult Resolve(ResolutionResult source)
+            protected override IList<BlogListItemDTO> GetDestinationList(ResolutionResult source)
             {
-                IList<BlogListItemDTO> optionsDestination = ((BlogListDTO)source.Context.DestinationValue).Items;
+                return ((BlogListDTO)source.Context.DestinationValue).Items;
+            }
 
-                if (optionsDestination == null)
+            protected override IList<BlogListItem> GetSourceList(ResolutionResult source)
+            {
+                IList<BlogListItem> retVal = null;
+
+                if(source.Value != null)
                 {
-                    optionsDestination = new List<BlogListItemDTO>();
+                    retVal = ((BlogList)source.Value).Items;
                 }
 
-                BlogList sourceObject = (BlogList)source.Value;
+                return retVal;
+            }
 
-                if(sourceObject != null && sourceObject.Items != null)
-                {
-                    for (int i = 0; i < sourceObject.Items.Count; i++)
-                    {
-                        BlogListItemDTO destinationOption = optionsDestination.Where(listItemDTO => listItemDTO.Id == sourceObject.Items[i].Id).First();
+            protected override BlogListItemDTO FindItemInList(IList<BlogListItemDTO> destinationList, BlogListItem searchTarget)
+            {
+                return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
+            }
 
-                        if(destinationOption == null)
-                        {
-                            optionsDestination.Add(Mapper.Map<BlogListItem, BlogListItemDTO>(sourceObject.Items[i]));
-                        }
-                        else
-                        {
-                            optionsDestination[i] = Mapper.Map(sourceObject.Items[i], optionsDestination[i]);
-                        }
-                    }
-
-                    for (int i = optionsDestination.Count - 1; i > -1; i--)
-                    {
-                        BlogListItem destinationOption = sourceObject.Items.Where(listItemDTO => listItemDTO.Id == optionsDestination[i].Id).FirstOrDefault();
-
-                        if (destinationOption == null)
-                        {
-                            optionsDestination.Remove(optionsDestination[i]);
-                        }
-                    }
-                }
-
-                return source.New(optionsDestination, typeof(IList<PollOptionDTO>));
+            protected override BlogListItem FindItemInList(IList<BlogListItem> sourceList, BlogListItemDTO searchTarget)
+            {
+                return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
             }
         }
 

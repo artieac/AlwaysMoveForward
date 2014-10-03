@@ -1,3 +1,0 @@
-2013-04-18 10:14:04,907 [16] ERROR AlwaysMoveForward.Common.Utilities.DefaultLogger - acorrea:ActiveRecordException:Could not perform Save for TagDTO:InnerException:GenericADOException:could not insert: [AlwaysMoveForward.AnotherBlog.DataLayer.Entities.TagDTO][SQL: INSERT INTO Tags (name, BlogId) VALUES (?, ?); select SCOPE_IDENTITY()] 
-2013-04-18 10:14:04,929 [16] ERROR NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types. 
-NHibernate.AssertionFailure: null id in AlwaysMoveForward.AnotherBlog.DataLayer.Entities.TagDTO entry (don't flush the Session after an exception occurs)

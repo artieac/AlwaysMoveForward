@@ -28,32 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             return this.View(model);
-        }
-
-        public ActionResult Delete(string blogSubFolder, int listId)
-        {
-            BlogListModel model = new BlogListModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
-
-            if (model.Common.TargetBlog != null)
-            {
-                using (this.Services.UnitOfWork.BeginTransaction())
-                {
-                    try
-                    {
-                        Services.BlogListService.Delete(Services.BlogListService.GetById(listId));
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
-                }
-            }
-
-            return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
-        }
+        }    
 
         public JsonResult Edit(string blogSubFolder, int listId, string listName, bool showOrdered)
         {
@@ -130,6 +105,31 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             model.BlogListItemId = editListItemId;
 
             return this.Json(model);
+        }
+
+        public ActionResult Delete(string blogSubFolder, int listId)
+        {
+            BlogListModel model = new BlogListModel();
+            model.Common = this.InitializeCommonModel(blogSubFolder);
+
+            if (model.Common.TargetBlog != null)
+            {
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        Services.BlogListService.Delete(Services.BlogListService.GetById(listId));
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.Services.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return this.RedirectToAction("Index", new { blogSubFolder = blogSubFolder });
         }
 
         public ActionResult DeleteListItem(string id, int listItemId, int listId)

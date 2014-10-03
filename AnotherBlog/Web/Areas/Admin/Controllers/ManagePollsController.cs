@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
-        public JsonResult AddPoll(string title, string question)
+        public JsonResult Add(string title, string question)
         {
             IList<PollQuestion> retVal = new List<PollQuestion>();
 
@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
-        public JsonResult AddPollOption(int pollQuestionId, string optionText)
+        public JsonResult AddOption(int pollQuestionId, string optionText)
         {
             PollQuestion retVal = null;
 
@@ -122,6 +122,51 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(int id)
+        {            
+            using (this.Services.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    Services.PollService.Delete(Services.PollService.GetById(id));
+                    this.Services.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.Services.UnitOfWork.EndTransaction(false);
+                }
+            }
+
+            return this.RedirectToAction("Index");
+        }
+
+        public ActionResult DeleteOption(int id, int optionId)
+        {
+            using (this.Services.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    PollQuestion targetQuestion = this.Services.PollService.GetById(id);
+
+                    if(targetQuestion != null)
+                    {
+                        targetQuestion.RemoveOption(optionId);
+                    }
+
+                    targetQuestion = Services.PollService.Save(targetQuestion);
+                    this.Services.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.Services.UnitOfWork.EndTransaction(false);
+                }
+            }
+
+            return this.RedirectToAction("Index");
         }
     }
 }

@@ -80,6 +80,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
             return targetComment;
         }
+
         public string ShortEntryText
         {
             get

@@ -106,7 +106,6 @@
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
     <Compile Include="DataMapper\BlogUserDataMap.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
-    <Compile Include="DataMapper\CommentDTOListResolver.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />
     <Compile Include="DataMapper\RoleDataMap.cs" />

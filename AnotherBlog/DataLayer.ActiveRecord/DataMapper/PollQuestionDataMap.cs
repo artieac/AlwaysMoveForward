@@ -11,103 +11,63 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class PollQuestionDataMap : DataMapBase<PollQuestion, PollQuestionDTO>
     {
-        private class VoterAddressDtoListResolver : IValueResolver
+        private class VoterAddressDtoListResolver : MappedListResolver<VoterAddress, VoterAddressDTO> 
         {
-            public ResolutionResult Resolve(ResolutionResult source)
+            protected override IList<VoterAddressDTO> GetDestinationList(ResolutionResult source)
             {
-                IList<VoterAddressDTO> voterAddressDestination = null;
+                return ((PollOptionDTO)source.Context.DestinationValue).VoterAddresses;
+            }
 
-                if (source.Context.DestinationValue != null)
+            protected override IList<VoterAddress> GetSourceList(ResolutionResult source)
+            {
+                IList<VoterAddress> retVal = null;
+
+                if (source.Value != null)
                 {
-                    voterAddressDestination = ((PollOptionDTO)source.Context.DestinationValue).VoterAddresses;
-
-                    if(voterAddressDestination == null)
-                    {
-                        voterAddressDestination = new List<VoterAddressDTO>();
-                    }
-
-                    for (int i = 0; i < voterAddressDestination.Count; i++)
-                    {
-                        voterAddressDestination[i] = Mapper.Map(((PollOption)source.Value).VoterAddresses[i], voterAddressDestination[i]);
-                    }
-
-                    PollOption sourceObject = (PollOption)source.Value;
-
-                    if (sourceObject != null && sourceObject.VoterAddresses != null)
-                    {
-                        for (int i = 0; i < sourceObject.VoterAddresses.Count; i++)
-                        {
-                            VoterAddressDTO destinationOption = voterAddressDestination.Where(listItemDTO => listItemDTO.Id == sourceObject.VoterAddresses[i].Id).FirstOrDefault();
-
-                            if (destinationOption == null)
-                            {
-                                voterAddressDestination.Add(Mapper.Map<VoterAddress, VoterAddressDTO>(sourceObject.VoterAddresses[i]));
-                            }
-                            else
-                            {
-                                voterAddressDestination[i] = Mapper.Map(sourceObject.VoterAddresses[i], voterAddressDestination[i]);
-                            }
-                        }
-
-                        for (int i = voterAddressDestination.Count - 1; i > -1; i--)
-                        {
-                            VoterAddress destinationOption = sourceObject.VoterAddresses.Where(listItemDTO => listItemDTO.Id == voterAddressDestination[i].Id).FirstOrDefault();
-
-                            if (destinationOption == null)
-                            {
-                                voterAddressDestination.Remove(voterAddressDestination[i]);
-                            }
-                        } 
-                    }
+                    retVal = ((PollOption)source.Value).VoterAddresses;
                 }
 
-                return source.New(voterAddressDestination, typeof(IList<VoterAddressDTO>));
+                return retVal;
+            }
+
+            protected override VoterAddressDTO FindItemInList(IList<VoterAddressDTO> destinationList, VoterAddress searchTarget)
+            {
+                return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
+            }
+
+            protected override VoterAddress FindItemInList(IList<VoterAddress> sourceList, VoterAddressDTO searchTarget)
+            {
+                return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
             }
         }
 
-        private class PollOptionDtoListResolver : IValueResolver
+        private class PollOptionDtoListResolver : MappedListResolver<PollOption, PollOptionDTO> 
         {
-            public ResolutionResult Resolve(ResolutionResult source)
+            protected override IList<PollOptionDTO> GetDestinationList(ResolutionResult source)
             {
-                IList<PollOptionDTO> optionsDestination = new List<PollOptionDTO>();
+                return ((PollQuestionDTO)source.Context.DestinationValue).Options;
+            }
 
-                PollQuestionDTO pollQuestion = source.Context.DestinationValue as PollQuestionDTO;
+            protected override IList<PollOption> GetSourceList(ResolutionResult source)
+            {
+                IList<PollOption> retVal = null;
 
-                if (pollQuestion != null && pollQuestion.Options != null)
+                if (source.Value != null)
                 {
-                    optionsDestination = pollQuestion.Options;
-
-                    PollQuestion sourceObject = (PollQuestion)source.Value;
-
-                    if (sourceObject != null && sourceObject.Options != null)
-                    {
-                        for (int i = 0; i < sourceObject.Options.Count; i++)
-                        {
-                            PollOptionDTO destinationOption = optionsDestination.Where(listItemDTO => listItemDTO.Id == sourceObject.Options[i].Id).FirstOrDefault();
-
-                            if (destinationOption == null)
-                            {
-                                optionsDestination.Add(Mapper.Map<PollOption, PollOptionDTO>(sourceObject.Options[i]));
-                            }
-                            else
-                            {
-                                optionsDestination[i] = Mapper.Map(sourceObject.Options[i], optionsDestination[i]);
-                            }
-                        }
-
-                        for (int i = optionsDestination.Count - 1; i > -1; i--)
-                        {
-                            PollOption destinationOption = sourceObject.Options.Where(listItemDTO => listItemDTO.Id == optionsDestination[i].Id).FirstOrDefault();
-
-                            if (destinationOption == null)
-                            {
-                                optionsDestination.Remove(optionsDestination[i]);
-                            }
-                        } 
-                    }
+                    retVal = ((PollQuestion)source.Value).Options;
                 }
 
-                return source.New(optionsDestination, typeof(IList<PollOptionDTO>));
+                return retVal;
+            }
+
+            protected override PollOptionDTO FindItemInList(IList<PollOptionDTO> destinationList, PollOption searchTarget)
+            {
+                return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
+            }
+
+            protected override PollOption FindItemInList(IList<PollOption> sourceList, PollOptionDTO searchTarget)
+            {
+                return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
             }
         }
 

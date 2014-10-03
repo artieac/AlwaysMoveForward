@@ -12,9 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Castle.ActiveRecord;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
@@ -37,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [BelongsTo("PollQuestionId", Type = typeof(PollQuestionDTO))]
         public PollQuestionDTO Question { get; set; }
 
-        [HasMany(typeof(VoterAddressDTO), Inverse = true)]
+        [HasMany(typeof(VoterAddressDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
         public IList<VoterAddressDTO> VoterAddresses { get; set; }
     }
 }

@@ -12,16 +12,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Castle.ActiveRecord;
-
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     [ActiveRecord("PollQuestions")]
-    public class PollQuestionDTO
+    public class PollQuestionDTO 
     {
         public PollQuestionDTO()
         {
@@ -37,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         [Property("Title")]
         public string Title { get; set; }
 
-        [HasMany(typeof(PollOptionDTO), Inverse = true)]
+        [HasMany(typeof(PollOptionDTO), Cascade=ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
         public IList<PollOptionDTO> Options { get; set; }
     }
 }
