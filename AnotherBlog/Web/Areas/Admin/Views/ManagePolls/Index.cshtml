@@ -79,7 +79,7 @@
                         <tr ng-form="newPollOptionForm">
                             <td></td>
                             <td><input type="text" name="optionText" ng-model="newPollOption.optionText" required /></td>
-                            <td><input type="button" value="Add Poll Option" ng-disabled="newPollOption.$invalid" ng-click="addPollOption( selectedPoll.Id);" /></td>
+                            <td><input type="button" value="Add Poll Option" ng-disabled="newPollOption.$invalid" ng-click="putOption(selectedPoll.Id);" /></td>
                         </tr>
                     </tbody>
                 </table>

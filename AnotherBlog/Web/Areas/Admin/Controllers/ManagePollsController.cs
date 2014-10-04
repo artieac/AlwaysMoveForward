@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
-        public JsonResult AddOption(int pollQuestionId, string optionText)
+        public JsonResult PutOption(int pollQuestionId, string optionText)
         {
             PollQuestion retVal = null;
 
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return this.Json(retVal, JsonRequestBehavior.AllowGet);
+            return this.Json(retVal);
         }
 
         public ActionResult Delete(int id)
@@ -143,20 +143,22 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.RedirectToAction("Index");
         }
 
-        public ActionResult DeleteOption(int id, int optionId)
+        public JsonResult DeleteOption(int id, int optionId)
         {
+            PollQuestion retVal = null;
+
             using (this.Services.UnitOfWork.BeginTransaction())
             {
                 try
                 {
-                    PollQuestion targetQuestion = this.Services.PollService.GetById(id);
+                    retVal = this.Services.PollService.GetById(id);
 
-                    if(targetQuestion != null)
+                    if (retVal != null)
                     {
-                        targetQuestion.RemoveOption(optionId);
+                        retVal.RemoveOption(optionId);
                     }
 
-                    targetQuestion = Services.PollService.Save(targetQuestion);
+                    retVal = Services.PollService.Save(retVal);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)
@@ -166,7 +168,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 }
             }
 
-            return this.RedirectToAction("Index");
+            return this.Json(retVal);
         }
     }
 }

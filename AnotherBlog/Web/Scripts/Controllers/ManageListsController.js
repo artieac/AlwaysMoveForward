@@ -33,9 +33,20 @@
             });
     }
 
+    $scope.putItem = function (blogSubFolder, listId) {
+        $scope.newListItem.listItemId = 0;
+        $scope.newListItem.listId = listId;
+
+        $http.put('/Admin/ManageLists/putItem/' + blogSubFolder, $scope.newListItem)
+           .success(function (data) {
+               $scope.currentList = data;
+           });
+    }
+
     $scope.deleteListItem = function (blogSubFolder, listId, listItemId) {
         $http.put('/Admin/ManageLists/DeleteListItem/' + blogSubFolder + '?listId=' + listId + '&listItemId=' + listItemId)
            .success(function (data) {
+               $scope.currentList = data;
            });
     }
 }

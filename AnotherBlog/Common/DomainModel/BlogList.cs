@@ -20,7 +20,24 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public bool ShowOrdered { get; set; }
         public IList<BlogListItem> Items { get; set; }
 
-        public bool RemoveListItem(int listItemId)
+        public BlogListItem AddItem(int listItemId, string itemName, string relatedLink, int displayOrder)
+        {
+            BlogListItem targetItem = this.Items.FirstOrDefault(t => t.Id == listItemId);
+
+            if (targetItem == null)
+            {
+                targetItem = new BlogListItem();
+                this.Items.Add(targetItem);
+            }
+
+            targetItem.Name = itemName;
+            targetItem.RelatedLink = relatedLink;
+            targetItem.DisplayOrder = displayOrder;
+
+            return targetItem;
+        }
+
+        public bool RemoveItem(int listItemId)
         {
             bool retVal = false;
 
@@ -28,13 +45,13 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
             if (targetItem != null)
             {
-                retVal = this.RemoveListItem(targetItem);
+                retVal = this.RemoveItem(targetItem);
             }
 
             return retVal;
         }
 
-        public bool RemoveListItem(BlogListItem listItem)
+        public bool RemoveItem(BlogListItem listItem)
         {
             bool retVal = false;
 

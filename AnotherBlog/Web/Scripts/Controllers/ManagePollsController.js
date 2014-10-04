@@ -28,9 +28,18 @@
            });
     }
 
+    $scope.putOption = function (pollQuestionId) {
+        $scope.newPollOption.pollQuestionId = pollQuestionId;
+        $http.put('/Admin/ManagePolls/putOption', $scope.newPollOption)
+           .success(function (data) {
+               $scope.selectedPoll = data;
+           });
+    }
+
     $scope.deletePollOption = function (pollQuestionId, optionId) {
         $http.delete('/Admin/ManagePolls/deleteOption/' + pollQuestionId + "?optionId=" + optionId)
            .success(function (data) {
+               $scope.selectedPoll = data;
            });
     }
 }

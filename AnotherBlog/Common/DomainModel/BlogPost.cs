@@ -73,9 +73,16 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         {
             Comment targetComment = this.Comments.Where(comment => comment.CommentId == commentId).First();
 
-            if(targetComment!=null)
+            if(targetComment != null)
             {
-                targetComment.Status = commentStatus;
+                if(commentStatus == Comment.CommentStatus.Deleted && targetComment.Status == Comment.CommentStatus.Deleted)
+                {
+                    this.Comments.Remove(targetComment);
+                }
+                else
+                {
+                    targetComment.Status = commentStatus;
+                }
             }
 
             return targetComment;

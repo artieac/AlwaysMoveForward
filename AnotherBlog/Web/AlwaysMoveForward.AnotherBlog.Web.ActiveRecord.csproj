@@ -404,7 +404,6 @@
     <Content Include="Content\themes\Simple\ThemeDefaults.css" />
     <Content Include="Views\Shared\_PollControl.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePolls\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ManagePolls\Edit.cshtml" />
     <Content Include="Content\themes\default\TabControl.less" />
     <Content Include="Content\themes\default\Site.less" />
     <Content Include="Content\themes\default\ThemeDefaults.less" />

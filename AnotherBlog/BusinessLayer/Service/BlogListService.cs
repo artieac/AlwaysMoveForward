@@ -119,29 +119,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             return list;
         }
-        public BlogList AddItem(BlogList blogList, string itemName, string relatedLink, int displayOrder)
-        {
-            return this.UpdateItem(blogList, -1, itemName, relatedLink, displayOrder);
-        }
 
         public BlogList UpdateItem(BlogList blogList, int blogListItemId, string itemName, string relatedLink, int displayOrder)
         {
-            BlogList retVal = blogList;
-
-            BlogListItem targetItem = retVal.Items.FirstOrDefault(t => t.Id == blogListItemId);
-
-            if (targetItem == null)
+            if (blogList != null)
             {
-                targetItem = this.CreateListItem(blogList);
-                retVal.Items.Add(targetItem);
+                blogList.AddItem(blogListItemId, itemName, relatedLink, displayOrder);
+                blogList = this.BlogListRepository.Save(blogList);
             }
 
-            targetItem.Name = itemName;
-            targetItem.RelatedLink = relatedLink;
-            targetItem.DisplayOrder = displayOrder;
-
-            retVal = this.BlogListRepository.Save(retVal);
-            return retVal;
+            return blogList;
         }
 
         public bool Delete(BlogList blogList)

@@ -97,7 +97,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 destination = new BlogPostDTO();
             }
 
-            return AutoMapper.Mapper.Map(source, destination);
+            destination = AutoMapper.Mapper.Map(source, destination);
+
+            foreach (EntryCommentsDTO currentComment in destination.Comments)
+            {
+                currentComment.BlogPost = destination;
+            }
+
+            return destination;
         }
     }
 }
