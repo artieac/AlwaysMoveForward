@@ -12,17 +12,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE = AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
@@ -30,17 +30,37 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : NHibernateRepository<CE.Tag, CE.Tag>, ITagRepository
+    public class TagRepository : NHibernateRepositoryBase<Tag, TagDTO, int>, ITagRepository
     {
-        internal TagRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public TagRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public CE.Tag Create()
+        protected override TagDTO GetDTOById(Tag domainInstance)
         {
-            return new CE.Tag();
+            return this.GetDTOById(domainInstance.Id);
+        }
+
+        protected override TagDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            criteria.Add(Expression.Eq("Id", idSource));
+
+            return criteria.UniqueResult<TagDTO>();
+        }
+
+        protected override DataMapBase<Tag, TagDTO> GetDataMapper()
+        {
+            return new TagDataMap(); 
+        }
+
+        public IList<Tag> GetAll(int blogId)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(criteria.List<TagDTO>());
         }
 
         /// <summary>
@@ -59,7 +79,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 queryString += " AND (t.BlogId = :targetBlog)";
             }
 
-            queryString += " GROUP BY t.name";
+            queryString += " GROUP BY t.Name";
 
             ISQLQuery query = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateSQLQuery(queryString);
             query.AddScalar("Count", NHibernateUtil.Int32);
@@ -69,18 +89,22 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             {
                 query.SetParameter("targetBlog", blogId);
             }
-            query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(CE.TagCount)));
+            query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(TagCount)));
             return query.List();
         }
+        
         /// <summary>
         /// Get a specific tag.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.Tag GetByName(string name, int blogId)
+        public Tag GetByName(string name, int blogId)
         {
-            return this.GetByProperty("Name", name, blogId);
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            criteria.Add(Expression.Eq("Name", name));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return this.GetDataMapper().Map(criteria.UniqueResult<TagDTO>());
         }
         /// <summary>
         /// Get multiple tag records.
@@ -88,29 +112,24 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <param name="names"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.Tag> GetByNames(string[] names, int blogId)
+        public IList<Tag> GetByNames(string[] names, int blogId)
         {
-            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Tag>();
-            criteria.Add(Expression.In("Name", names));
-            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return criteria.List<CE.Tag>(); 
+            return this.GetDataMapper().Map(this.GetDTOByNames(names, blogId));
         }
 
-        public IList<CE.Tag> GetByBlogEntryId(int entryId)
+        public IList<TagDTO> GetDTOByNames(string[] names, int blogId)
         {
-            IList<CE.Tag> retVal = new List<CE.Tag>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            criteria.Add(Expression.In("Name", names));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            return criteria.List<TagDTO>();
+        }
 
-            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.BlogPost>();
-            criteria.Add(Expression.Eq("EntryId", entryId));
-
-            CE.BlogPost targetPost = criteria.UniqueResult<CE.BlogPost>();
-
-            if (targetPost != null)
-            {
-                retVal = targetPost.Tags;
-            }
-
-            return retVal;
+        public IList<Tag> GetByBlogEntryId(int blogEntryId)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("EntryId", blogEntryId));
+            return this.GetDataMapper().Map(criteria.List<TagDTO>());
         }
     }
 }

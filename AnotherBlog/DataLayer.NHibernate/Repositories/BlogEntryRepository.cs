@@ -13,40 +13,59 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using NH=NHibernate;
+using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryRepository : NHibernateRepository<BlogPost, BlogPost>, IBlogEntryRepository
+    public class BlogEntryRepository : NHibernateRepositoryBase<BlogPost, BlogPostDTO, int>, IBlogEntryRepository
     {
-        internal BlogEntryRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public BlogEntryRepository(UnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork)
         {
-
+            this.TagRepository = tagRepository as TagRepository;    
         }
 
-        public override string IdPropertyName
+        protected TagRepository TagRepository { get; set; }
+
+        protected override BlogPostDTO GetDTOById(BlogPost domainInstance)
         {
-            get { return "EntryId"; }
+            return this.GetDTOById(domainInstance.EntryId);
+        }
+
+        protected override BlogPostDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+            criteria.Add(Expression.Eq("EntryId", idSource));
+            return criteria.UniqueResult<BlogPostDTO>();
+        }
+
+        protected override DataMapBase<BlogPost, BlogPostDTO> GetDataMapper()
+        {
+            return new BlogPostDataMap(); 
         }
 
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
-            criteria.AddOrder(Order.Desc("DatePosted"));
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
 
             if (publishedOnly == true)
             {
                 criteria.Add(Expression.Eq("IsPublished", true));
+                criteria.AddOrder(Order.Desc("DatePosted"));
+            }
+            else
+            {
+                criteria.AddOrder(Order.Desc("DateCreated"));
             }
 
             if (maxResults > 0)
@@ -54,12 +73,41 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return criteria.List<BlogPost>(); 
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
+        }
+
+        public IList<BlogPost> GetMostRead(int maxResults)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+            criteria.Add(Expression.Eq("IsPublished", true));
+            criteria.AddOrder(Order.Desc("TimesViewed"));
+
+            if (maxResults > 0)
+            {
+                criteria.SetMaxResults(maxResults);
+            }
+
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
+        }
+
+        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+            criteria.Add(Expression.Eq("IsPublished", true));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            criteria.AddOrder(Order.Desc("TimesViewed"));
+
+            if (maxResults > 0)
+            {
+                criteria.SetMaxResults(maxResults);
+            }
+
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
         }
 
         public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
 
             if (publishedOnly == true)
@@ -81,34 +129,28 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.SetMaxResults(maxResults);
             }
 
-            return criteria.List<BlogPost>(); 
-        }
-
-        public IList<BlogPost> GetMostRead(int maxResults)
-        {
-            return new List<BlogPost>();
-        }
-
-        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
-        {
-            return new List<BlogPost>();
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)
         {
-            return this.GetByProperty("Title", blogTitle, blogId);
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+            criteria.Add(Expression.Eq("Title", blogTitle));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
         }
 
         public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.Add(Expression.Eq("Title", blogTitle));
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Year));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Month));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Day));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Year));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Month));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Day));
 
-            return criteria.UniqueResult<BlogPost>(); 
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
         }
 
         public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
@@ -118,33 +160,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
-            
-            if (blogId.HasValue)
-            {
-                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            }
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
 
-            if (publishedOnly == true)
-            {
-                criteria.Add(Expression.Eq("IsPublished", true));
-            }
-
-            criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", tagId));
-            criteria.AddOrder(Order.Desc("DatePosted"));
-
-            return criteria.List<BlogPost>(); 
-        }
-
-        public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
-        {
-            return this.GetByMonth(blogDate, null, publishedOnly);
-        }
-
-        public IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly)
-        {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
-            
             if (blogId.HasValue)
             {
                 criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
@@ -155,11 +172,64 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.Add(Expression.Eq("IsPublished", true));
             }
 
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Year));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
+            criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", tagId));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-            return criteria.List<BlogPost>(); 
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
+        }
+
+        public IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly)
+        {
+            IList<BlogPost> retVal = new List<BlogPost>();
+
+            ICriteria tagCriteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+            tagCriteria.Add(Expression.Eq("Name", tagText));
+            tagCriteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+
+            TagDTO targetTag = tagCriteria.UniqueResult<TagDTO>();
+
+            if (targetTag != null)
+            {
+                ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+
+                if (publishedOnly == true)
+                {
+                    criteria.Add(Expression.Eq("IsPublished", true));
+                }
+
+                criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", targetTag.Id));
+                criteria.AddOrder(Order.Desc("DatePosted"));
+                retVal = this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
+            }
+
+            return retVal;
+        }
+
+        public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
+        {
+            return this.GetByMonth(blogDate, null, publishedOnly);
+        }
+
+        public IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+
+            if (blogId.HasValue)
+            {
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
+            }
+        
+            if (publishedOnly == true)
+            {
+                criteria.Add(Expression.Eq("IsPublished", true));
+            }
+
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Year));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
+            criteria.AddOrder(Order.Desc("DatePosted"));
+
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
         }
 
         public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
@@ -169,11 +239,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList<BlogPost> GetByDate(DateTime blogDate, int? blogId, bool publishedOnly)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
-            
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+
             if (blogId.HasValue)
             {
-                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+                criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId.Value));
             }
 
             if (publishedOnly == true)
@@ -181,70 +251,69 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 criteria.Add(Expression.Eq("IsPublished", true));
             }
 
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Year));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
-            criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NH.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Day));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("year", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Year));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("month", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Month));
+            criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), blogDate.Date.Day));
             criteria.AddOrder(Order.Desc("DatePosted"));
 
-
-            return criteria.List<BlogPost>();
+            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
         }
 
         public BlogPost GetMostRecent(int blogId, bool published)
         {
-            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPost>();
+            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
             getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.SetProjection(Projections.Max("EntryId"));
 
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return criteria.UniqueResult<BlogPost>();
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
         }
 
         public BlogPost GetPreviousEntry(int blogId, int currentPostId)
         {
-            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPost>();
+            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
             getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.Add(Expression.Lt("EntryId", currentPostId));
             getMaxEntryId.SetProjection(Projections.Max("EntryId"));
 
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return criteria.UniqueResult<BlogPost>();
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
         }
 
         public BlogPost GetNextEntry(int blogId, int currentPostId)
         {
-            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPost>(); 
+            DetachedCriteria getMaxEntryId = DetachedCriteria.For<BlogPostDTO>();
             getMaxEntryId.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             getMaxEntryId.Add(Expression.Eq("IsPublished", true));
             getMaxEntryId.Add(Expression.Gt("EntryId", currentPostId));
             getMaxEntryId.SetProjection(Projections.Min("EntryId"));
 
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             criteria.Add(Expression.Eq("IsPublished", true));
             criteria.Add(Subqueries.PropertyEq("EntryId", getMaxEntryId));
 
-            return criteria.UniqueResult<BlogPost>();
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
         }
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<BlogPost>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             ProjectionList projections = Projections.ProjectionList();
             criteria.SetProjection(Projections.Distinct(Projections.Alias(Projections.Property("DatePosted"), "DatePosted")));
-            criteria.SetResultTransformer(new NH.Transform.AliasToBeanResultTransformer(typeof(BlogPost)));
+            criteria.SetResultTransformer(new NHibernate.Transform.AliasToBeanResultTransformer(typeof(BlogPostDTO)));
 
-            IList<BlogPost> foundDates = criteria.List<BlogPost>();
+            IList<BlogPostDTO> foundDates = criteria.List<BlogPostDTO>();
 
             IList<DateTime> retVal = new List<DateTime>();
 
@@ -269,11 +338,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             queryString += " GROUP BY YEAR(DatePosted), MONTH(DatePosted)" + " ORDER BY MaxDate";
 
-            NH.ISQLQuery query = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateSQLQuery(queryString);
+            ISQLQuery query = this.UnitOfWork.CurrentSession.CreateSQLQuery(queryString);
 
-            query.AddScalar("PostCount", NH.NHibernateUtil.Int32);
-            query.AddScalar("MaxDate", NH.NHibernateUtil.DateTime);
-            
+            query.AddScalar("PostCount", NHibernateUtil.Int32);
+            query.AddScalar("MaxDate", NHibernateUtil.DateTime);
+
             if (blogId.HasValue)
             {
                 query.SetParameter("targetBlog", blogId.Value);
@@ -281,5 +350,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             query.SetResultTransformer(new AliasToBeanResultTransformer(typeof(BlogPostCount)));
             return query.List();
         }
+
+        public BlogPost GetByCommentId(int commentId)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
+            criteria.CreateCriteria("Comments").Add(Expression.Eq("CommentId", commentId));
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
+        }       
     }
 }

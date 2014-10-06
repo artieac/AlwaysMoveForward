@@ -12,15 +12,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NHibernate;
 using NHibernate.Criterion;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE = AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
@@ -28,17 +31,29 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepository<CE.User, CE.User>, IUserRepository
+    public class UserRepository : NHibernateRepositoryBase<User, UserDTO, int>, IUserRepository
     {
-        internal UserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public UserRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override string IdPropertyName
+        protected override UserDTO GetDTOById(User domainInstance)
         {
-            get { return "UserId"; }
+            return this.GetDTOById(domainInstance.UserId);
+        }
+
+        protected override UserDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
+            criteria.Add(Expression.Eq("UserId", idSource));
+            return criteria.UniqueResult<UserDTO>();
+        }
+
+        protected override DataMapBase<User, UserDTO> GetDataMapper()
+        {
+            return new UserDataMap(); 
         }
 
         /// <summary>
@@ -46,7 +61,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public CE.User GetByUserName(string userName)
+        public User GetByUserName(string userName)
         {
             return this.GetByProperty("UserName", userName);
         }
@@ -56,34 +71,36 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public CE.User GetByUserNameAndPassword(string userName, string password)
+        public User GetByUserNameAndPassword(string userName, string password)
         {
-            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.User>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.Add(Expression.Eq("UserName", userName));
             criteria.Add(Expression.Eq("Password", password));
-            return criteria.UniqueResult<CE.User>();
 
+            return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
         }
+
         /// <summary>
         /// Get a specific user by email
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>
-        public CE.User GetByEmail(string userEmail)
+        public User GetByEmail(string userEmail)
         {
             return this.GetByProperty("Email", userEmail);
         }
+
         /// <summary>
         /// Get all users that have the Administrator or Blogger role for the specific blog.
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<CE.User> GetBlogWriters(int blogId)
+        public IList<User> GetBlogWriters(int blogId)
         {
-            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.User>();
-            criteria.CreateCriteria("UserBlogsDTO")
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
+            criteria.CreateCriteria("UserBlogs")
                 .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return criteria.List<CE.User>();
+            return this.GetDataMapper().Map(criteria.List<UserDTO>());
         }
     }
 }

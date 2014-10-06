@@ -15,234 +15,166 @@ using System.Text;
 using System.Reflection;
 using System.Configuration;
 using System.Data;
-
-using NH=NHibernate;
-using NHC=NHibernate.Cfg;
-
-using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
-    public class RepositoryManager : IRepositoryManager
+    public class RepositoryManager : IAnotherBlogRepositoryManager, IRepositoryManager
     {
-        IBlogEntryRepository blogEntryRepository;
-        IBlogEntryTagRepository blogEntryTagRepository;
-        IBlogExtensionRepository blogExtensionRepository;
-        IBlogRepository blogRepository;
-        IBlogUserRepository blogUserRepository;
-        IDbInfoRepository dbInfoRepository;
-        IEntryCommentRepository entryCommentRepository;
-        IExtensionConfigurationRepository extensionConfigurationRepository;
-        IRoleRepository roleRepository;
-        ISiteInfoRepository siteInfoRepository;
-        ITagRepository tagRepository;
-        IUserRepository userRepository;
-        IBlogListRepository blogLists;
-        IBlogListItemRepository blogListItems;
-
-        public RepositoryManager()
+        public RepositoryManager(UnitOfWork unitOfWork)
         {
+            this.UnitOfWork = unitOfWork;
         }
 
-        public IUnitOfWork UnitOfWork { get; set; }
+        public UnitOfWork UnitOfWork { get; private set; }
 
-        public IRepository<TargetType> GetRepository<TargetType>() where TargetType : class
-        {
-            IRepository<TargetType> retVal = null;
-
-            if(typeof(TargetType) == typeof(BlogEntryRepository))
-            {
-                retVal = (IRepository<TargetType>)this.BlogEntries;
-            }
-
-            return retVal;
-        }
-
+        private IBlogEntryRepository blogEntryRepository;
         public IBlogEntryRepository BlogEntries
         {
             get
             {
                 if (this.blogEntryRepository == null)
                 {
-                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this);
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this.Tags);
                 }
 
                 return this.blogEntryRepository;
             }
         }
 
-        public IBlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
-                }
-
-                return this.blogEntryTagRepository;
-            }
-        }
-
-        public IBlogExtensionRepository BlogExtensions
-        {
-            get
-            {
-                if (this.blogExtensionRepository == null)
-                {
-                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork, this);
-                }
-
-                return this.blogExtensionRepository;
-            }
-        }
-
+        private IBlogRepository blogRepository;
         public IBlogRepository Blogs
         {
             get
             {
                 if (this.blogRepository == null)
                 {
-                    this.blogRepository = new BlogRepository(this.UnitOfWork, this);
+                    this.blogRepository = new BlogRepository(this.UnitOfWork);
                 }
 
                 return this.blogRepository;
             }
         }
 
+        private IBlogUserRepository blogUserRepositry;
         public IBlogUserRepository BlogUsers
         {
             get
             {
-                if (this.blogUserRepository == null)
+                if (this.blogUserRepositry == null)
                 {
-                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork, this);
+                    this.blogUserRepositry = new BlogUserRepository(this.UnitOfWork);
                 }
 
-                return this.blogUserRepository;
+                return this.blogUserRepositry;
             }
         }
 
+        private IDbInfoRepository databaseInfoRepository;
         public IDbInfoRepository DbInfo
         {
             get
             {
-                if (this.dbInfoRepository == null)
+                if (this.databaseInfoRepository == null)
                 {
-                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork, this);
+                    this.databaseInfoRepository = new DbInfoRepository(this.UnitOfWork);
                 }
 
-                return this.dbInfoRepository;
+                return this.databaseInfoRepository;
             }
         }
 
-        public IEntryCommentRepository EntryComments
-        {
-            get
-            {
-                if (this.entryCommentRepository == null)
-                {
-                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork, this);
-                }
-
-                return this.entryCommentRepository;
-            }
-        }
-
-        public IExtensionConfigurationRepository ExtensionConfiguration
-        {
-            get
-            {
-                if (this.extensionConfigurationRepository == null)
-                {
-                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork, this);
-                }
-
-                return this.extensionConfigurationRepository;
-            }
-        }
-
+        private IRoleRepository roleRepository;
         public IRoleRepository Roles
         {
             get
             {
                 if (this.roleRepository == null)
                 {
-                    this.roleRepository = new RoleRepository(this.UnitOfWork, this);
+                    this.roleRepository = new RoleRepository(this.UnitOfWork);
                 }
 
                 return this.roleRepository;
             }
         }
 
+        private ISiteInfoRepository siteInfoRepository;
         public ISiteInfoRepository SiteInfo
         {
             get
             {
                 if (this.siteInfoRepository == null)
                 {
-                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork, this);
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
                 }
 
                 return this.siteInfoRepository;
             }
         }
 
+        private ITagRepository tagRepository;
         public ITagRepository Tags
         {
             get
             {
                 if (this.tagRepository == null)
                 {
-                    this.tagRepository = new TagRepository(this.UnitOfWork, this);
+                    this.tagRepository = new TagRepository(this.UnitOfWork);
                 }
 
                 return this.tagRepository;
             }
         }
 
+        private IUserRepository userRepository;
         public IUserRepository Users
         {
             get
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new UserRepository(this.UnitOfWork, this);
+                    this.userRepository = new UserRepository(this.UnitOfWork);
                 }
 
                 return this.userRepository;
             }
         }
 
+        private IBlogListRepository blogListRepository;
         public IBlogListRepository BlogLists
         {
             get
             {
-                if (this.blogLists == null)
+                if (this.blogListRepository == null)
                 {
-                    this.blogLists = new BlogListRepository(this.UnitOfWork, this);
+                    this.blogListRepository = new BlogListRepository(this.UnitOfWork);
                 }
 
-                return this.blogLists;
+                return this.blogListRepository;
             }
         }
 
-        public IBlogListItemRepository BlogListItems
+        private IPollRepository pollRepository;
+        public IPollRepository PollRepository
         {
             get
             {
-                if (this.blogListItems == null)
+                if (this.pollRepository == null)
                 {
-                    this.blogListItems = new BlogListItemRepository(this.UnitOfWork, this);
+                    this.pollRepository = new PollRepository(this.UnitOfWork);
                 }
 
-                return this.blogListItems;
+                return this.pollRepository;
             }
         }
-
     }
 }

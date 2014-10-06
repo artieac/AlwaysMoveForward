@@ -18,6 +18,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,39 +39,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\..\..\Lib\Antlr3.Runtime.dll</HintPath>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="LinFu.DynamicProxy, Version=1.0.3.14911, Culture=neutral, PublicKeyToken=62a6874124340d6e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\LinFu.DynamicProxy.dll</HintPath>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\log4net.dll</HintPath>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\NHibernate.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\NHibernate.ByteCode.Castle.dll</HintPath>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.LinFu, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\NHibernate.ByteCode.LinFu.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.ProxyGenerators.CastleDynamicProxy, Version=2.1.0.1001, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\NHibernate.ProxyGenerators.CastleDynamicProxy.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Search, Version=2.0.0.1001, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\NHibernate.Search.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\..\..\Lib\Ninject\Ninject.dll</HintPath>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -88,19 +74,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NHibernateNinjectModule.cs" />
+    <Compile Include="DataMapper\BlogDataMap.cs" />
+    <Compile Include="DataMapper\BlogPostDataMap.cs" />
+    <Compile Include="DataMapper\BlogUserDataMap.cs" />
+    <Compile Include="DataMapper\DbInfoMapper.cs" />
+    <Compile Include="DataMapper\ListDataMap.cs" />
+    <Compile Include="DataMapper\PollQuestionDataMap.cs" />
+    <Compile Include="DataMapper\RoleDataMap.cs" />
+    <Compile Include="DataMapper\SiteInfoDataMap.cs" />
+    <Compile Include="DataMapper\TagDataMap.cs" />
+    <Compile Include="DataMapper\TagDTOListResolver.cs" />
+    <Compile Include="DataMapper\UserDataMap.cs" />
+    <Compile Include="DTO\BlogDTO.cs" />
+    <Compile Include="DTO\BlogListDTO.cs" />
+    <Compile Include="DTO\BlogListItemDTO.cs" />
+    <Compile Include="DTO\BlogPostDTO.cs" />
+    <Compile Include="DTO\BlogUserDTO.cs" />
+    <Compile Include="DTO\DbInfoDTO.cs" />
+    <Compile Include="DTO\EntryCommentsDTO.cs" />
+    <Compile Include="DTO\PollOptionDTO.cs" />
+    <Compile Include="DTO\PollQuestionDTO.cs" />
+    <Compile Include="DTO\RoleDTO.cs" />
+    <Compile Include="DTO\SiteInfoDTO.cs" />
+    <Compile Include="DTO\TagDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\VoterAddressDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BlogEntryRepository.cs" />
-    <Compile Include="Repositories\BlogEntryTagRepository.cs" />
-    <Compile Include="Repositories\BlogExtensionRepository.cs" />
-    <Compile Include="Repositories\BlogListItemRepository.cs" />
     <Compile Include="Repositories\BlogListRepository.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\BlogUserRepository.cs" />
     <Compile Include="Repositories\DbInfoRepository.cs" />
-    <Compile Include="Repositories\EntryCommentRepository.cs" />
-    <Compile Include="Repositories\ExtensionConfigurationRepository.cs" />
-    <Compile Include="Repositories\NHibernateRepository.cs" />
+    <Compile Include="Repositories\PollRepository.cs" />
     <Compile Include="RepositoryManager.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SiteInfoRepository.cs" />
@@ -116,36 +121,23 @@
     <Compile Include="Utilities\PersistentDomainCollection.cs" />
     <Compile Include="Utilities\TransientDomainCollection.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Blog.hbm.xml" />
-    <EmbeddedResource Include="Mappings\PostTag.hbm.xml" />
-    <EmbeddedResource Include="Mappings\BlogExtension.hbm.xml" />
-    <EmbeddedResource Include="Mappings\BlogPost.hbm.xml" />
-    <EmbeddedResource Include="Mappings\BlogUser.hbm.xml" />
-    <EmbeddedResource Include="Mappings\DbInfo.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Comment.hbm.xml" />
-    <EmbeddedResource Include="Mappings\ExtensionConfiguration.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Role.hbm.xml" />
-    <EmbeddedResource Include="Mappings\SiteInfo.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Tag.hbm.xml" />
-    <EmbeddedResource Include="Mappings\User.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Mappings\BlogList.hbm.xml" />
-    <Content Include="Mappings\BlogListItem.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+    <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
       <Project>{600387A0-6903-47FD-AA6C-9ADF4CFE491E}</Project>
       <Name>AlwaysMoveForward.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\AlwaysMoveForward.AnotherBlog.Common\AlwaysMoveForward.AnotherBlog.Common.csproj">
-      <Project>{EE543152-B86A-43F0-974F-AA97DD094BFF}</Project>
+    <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
+      <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj">
+      <Project>{ee543152-b86a-43f0-974f-aa97dd094bff}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -156,14 +148,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.NHibernate.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.NHibernate.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)AnotherBlog.Data.NHibernate.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)NHibernate*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"
-copy "$(ProjectDir)$(OutDir)*LinFu*.dll" "$(SolutionDir)AnotherBlogMVC\bin"
-copy "$(ProjectDir)$(OutDir)*LinFu*.dll" "$(SolutionDir)AnotherBlogTest\bin\$(ConfigurationName)"
-copy "$(ProjectDir)$(OutDir)*LinFu*.dll" "$(SolutionDir)AnotherBlog.IntegrationService\Bin"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
 </Project>

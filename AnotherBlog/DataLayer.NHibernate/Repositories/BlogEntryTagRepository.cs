@@ -12,11 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NH = NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;

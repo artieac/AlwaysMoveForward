@@ -12,14 +12,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NHibernate;
 using NHibernate.Criterion;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE = AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
@@ -27,17 +31,30 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract Role data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class RoleRepository : NHibernateRepository<CE.Role, CE.Role>, IRoleRepository
+    public class RoleRepository : NHibernateRepositoryBase<Role, RoleDTO, int>, IRoleRepository
     {
-        internal RoleRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public RoleRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override string IdPropertyName
+        protected override RoleDTO GetDTOById(Role domainInstance)
         {
-            get { return "RoleId"; }
+            return this.GetDTOById(domainInstance.RoleId);
+        }
+
+        protected override RoleDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<RoleDTO>();
+            criteria.Add(Expression.Eq("RoleId", idSource));
+
+            return criteria.UniqueResult<RoleDTO>();
+        }
+
+        protected override DataMapBase<Role, RoleDTO> GetDataMapper()
+        {
+            return new RoleDataMap(); 
         }
     }
 }

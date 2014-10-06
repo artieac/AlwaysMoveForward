@@ -12,28 +12,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NHibernate;
 using NHibernate.Criterion;
-
+using NHibernate.Transform;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE=AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class DbInfoRepository : NHibernateRepository<CE.DbInfo, CE.DbInfo>, IDbInfoRepository
+    public class DbInfoRepository : NHibernateRepositoryBase<DbInfo, DbInfoDTO, int>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public DbInfoRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public CE.DbInfo GetDbInfo()
+        protected override DbInfoDTO GetDTOById(DbInfo domainInstance)
         {
-            return this.FindOne();
+            return this.GetDTOById(domainInstance.Version);
+        }
+
+        protected override DbInfoDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<DbInfoDTO>();
+            criteria.Add(Expression.Eq("Version", idSource));
+            return criteria.UniqueResult<DbInfoDTO>();
+        }
+
+        protected override DataMapBase<DbInfo, DbInfoDTO> GetDataMapper()
+        {
+            return new DbInfoMapper(); 
+        }
+
+        public DbInfo GetDbInfo()
+        {
+            return this.GetDataMapper().Map(this.UnitOfWork.CurrentSession.CreateCriteria<DbInfoDTO>().UniqueResult<DbInfoDTO>());
+        }
+
+        public override bool Delete(DbInfo itemToDelete)
+        {
+            throw new NotImplementedException();
         }
     }
 }

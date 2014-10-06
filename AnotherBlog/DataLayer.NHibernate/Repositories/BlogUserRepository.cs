@@ -12,53 +12,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using NH = NHibernate;
-using NHibernate.Transform;
+using NHibernate;
 using NHibernate.Criterion;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE = AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogUserRepository : NHibernateRepository<CE.BlogUser, CE.BlogUser>, IBlogUserRepository
+    public class BlogUserRepository : NHibernateRepositoryBase<BlogUser, BlogUserDTO, int>, IBlogUserRepository
     {
+
         /// <summary>
         /// This class contains all the code to extract BlogUser data from the repository using LINQ
         /// The BlogUser object maps users and their roles to specific blogs.
         /// </summary>
-        /// <param name="dataContext"></param>
-        internal BlogUserRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        /// <param name="unitOfWork"></param>
+        public BlogUserRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override string IdPropertyName
+        protected override BlogUserDTO GetDTOById(BlogUser domainInstance)
         {
-            get { return "BlogUserId"; }
+            return this.GetDTOById(domainInstance.BlogUserId);
         }
+
+        protected override BlogUserDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogUserDTO>();
+            criteria.Add(Expression.Eq("BlogUserId", idSource));
+
+            return criteria.UniqueResult<BlogUserDTO>();
+        }
+
+        protected override DataMapBase<BlogUser, BlogUserDTO> GetDataMapper()
+        {
+            return new BlogUserDataMap();
+        }
+
         /// <summary>
         /// Get all specified blog roles for a given user.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<CE.BlogUser> GetUserBlogs(int userId)
+        public IList<BlogUser> GetUserBlogs(int userId)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.BlogUser>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogUserDTO>();
             criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
-            return criteria.List<CE.BlogUser>();
+            return this.GetDataMapper().Map(criteria.List<BlogUserDTO>());
         }
 
-        public IList<CE.Blog> GetBlogsByUserId(int userId)
+        public IList<Blog> GetBlogsByUserId(int userId)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.Blog>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogDTO>();
             criteria.CreateCriteria("Users").Add(Expression.Eq("UserId", userId));
-            return criteria.List<CE.Blog>();
+
+            BlogDataMap blogDataMapper = new BlogDataMap();
+            return blogDataMapper.Map(criteria.List<BlogDTO>());
         }
         /// <summary>
         /// Load up a specific user/blog record to deterimine its specified role.
@@ -66,12 +84,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <param name="userId"></param>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public CE.BlogUser GetUserBlog(int userId, int blogId)
+        public BlogUser GetUserBlog(int userId, int blogId)
         {
-            NH.ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<CE.BlogUser>();
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogUserDTO>();
             criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
             criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return criteria.UniqueResult<CE.BlogUser>();
+            return this.GetDataMapper().Map(criteria.UniqueResult<BlogUserDTO>());
         }
         /// <summary>
         /// Delete the blog/user relationship.  As a result the user will be just a guest for that blog.
@@ -83,12 +101,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             bool retVal = false;
 
-            CE.BlogUser targetUserBlog = this.GetUserBlog(userId, blogId) as CE.BlogUser;
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogUserDTO>();
+            criteria.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            BlogUserDTO itemToDelete = criteria.UniqueResult<BlogUserDTO>();
 
-            if (targetUserBlog != null)
+            if (itemToDelete != null)
             {
-                ((UnitOfWork)this.UnitOfWork).CurrentSession.Delete(targetUserBlog);
-                this.UnitOfWork.Flush();
+                this.UnitOfWork.CurrentSession.Delete(itemToDelete);
                 retVal = true;
             }
 

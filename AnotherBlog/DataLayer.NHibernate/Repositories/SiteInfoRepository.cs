@@ -12,14 +12,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NHibernate;
 using NHibernate.Criterion;
-
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using CE = AlwaysMoveForward.Common.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
@@ -28,25 +32,44 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : NHibernateRepository<CE.SiteInfo, CE.SiteInfo>, ISiteInfoRepository
+    public class SiteInfoRepository : NHibernateRepositoryBase<SiteInfo, SiteInfoDTO, int>, ISiteInfoRepository
     {
-        internal SiteInfoRepository(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public SiteInfoRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override string IdPropertyName
+        protected override SiteInfoDTO GetDTOById(SiteInfo domainInstance)
         {
-            get { return "SiteId"; }
+            return this.GetDTOById(domainInstance.SiteId);
         }
+
+        protected override SiteInfoDTO GetDTOById(int idSource)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<SiteInfoDTO>();
+            criteria.Add(Expression.Eq("SiteId", idSource));
+
+            return criteria.UniqueResult<SiteInfoDTO>();
+        }
+
+        protected override DataMapBase<SiteInfo, SiteInfoDTO> GetDataMapper()
+        {
+            return new SiteInfoDataMap(); 
+        }
+
         /// <summary>
         /// Get stored web site settings.
         /// </summary>
         /// <returns></returns>
-        public CE.SiteInfo GetSiteInfo()
+        public SiteInfo GetSiteInfo()
         {
-            return this.FindOne();
+            return this.GetDataMapper().Map(this.UnitOfWork.CurrentSession.CreateCriteria<SiteInfoDTO>().UniqueResult<SiteInfoDTO>());
+        }
+
+        public override bool Delete(SiteInfo itemToDelete)
+        {
+            throw new NotImplementedException();
         }
     }
 }
