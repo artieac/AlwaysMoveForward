@@ -9,32 +9,32 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class LogManager
     {
-        private static LoggerBase _currentLogger;
+        private static LoggerBase currentLogger;
 
         public static LoggerBase GetLogger()
         {
-            _currentLogger = null;
+            LogManager.currentLogger = null;
 
-            //Get Logger configuration from Config file
-            LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.k_DefaultConfigurationSetting);
+            // Get Logger configuration from Config file
+            LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.DefaultConfigurationSetting);
 
             if (logConfig != null)
             {
-                if (!String.IsNullOrEmpty(logConfig.LoggingClass) &&
-                    !String.IsNullOrEmpty(logConfig.LoggingAssembly))
+                if (!string.IsNullOrEmpty(logConfig.LoggingClass) &&
+                    !string.IsNullOrEmpty(logConfig.LoggingAssembly))
                 {
-                    //Create Logger instance of specified Logger class
-                    _currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
+                    // Create Logger instance of specified Logger class
+                    LogManager.currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
                 }
             }
 
-            //If null create deafult logger
-            if (_currentLogger == null)
+            // If null create deafult logger
+            if (LogManager.currentLogger == null)
             {
-                _currentLogger = new DefaultLogger();
+                LogManager.currentLogger = new DefaultLogger();
             }
 
-            return _currentLogger;
+            return LogManager.currentLogger;
         }
     }
 }

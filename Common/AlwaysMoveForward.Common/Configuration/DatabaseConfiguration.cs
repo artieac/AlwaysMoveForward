@@ -18,44 +18,44 @@ namespace AlwaysMoveForward.Common.Configuration
 {
     public class DatabaseConfiguration : ConfigurationSection
     {
-        public const string k_ConnectionString = "ConnectionString";
-        public const string k_AdminConnectionString = "AdminConnectionString";
+        public const string ConnectionStringSetting = "ConnectionString";
+        public const string AdminConnectionStringSetting = "AdminConnectionString";
 
-        public const String k_DefaultSection = "AlwaysMoveForward/DatabaseConfiguration";
+        public const string DefaultSection = "AlwaysMoveForward/DatabaseConfiguration";
 
-        static DatabaseConfiguration configurationInstance;
+        private static DatabaseConfiguration configurationInstance;
 
         public static DatabaseConfiguration GetInstance()
         {
             if (configurationInstance == null)
             {
-                configurationInstance = (DatabaseConfiguration)System.Configuration.ConfigurationManager.GetSection(k_DefaultSection);
+                configurationInstance = (DatabaseConfiguration)System.Configuration.ConfigurationManager.GetSection(DatabaseConfiguration.DefaultSection);
             }
 
             return configurationInstance;
         }
 
-        public static String GetConnectionString()
+        public static string GetConnectionString()
         {
-            string retVal = "";
-            DatabaseConfiguration dbConfiguration = DatabaseConfiguration.GetInstance();
+            string retVal = string.Empty;
+            DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
 
-            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[dbConfiguration.ConnectionString] != null)
+            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.ConnectionString] != null)
             {
-                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[dbConfiguration.ConnectionString].ConnectionString;
+                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.ConnectionString].ConnectionString;
             }
 
             return retVal;
         }
 
-        public static String GetAdminConnectionString()
+        public static string GetAdminConnectionString()
         {
-            string retVal = "";
-            DatabaseConfiguration dbConfiguration = DatabaseConfiguration.GetInstance();
+            string retVal = string.Empty;
+            DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
 
-            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[dbConfiguration.AdminConnectionString] != null)
+            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.AdminConnectionString] != null)
             {
-                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[dbConfiguration.AdminConnectionString].ConnectionString;
+                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.AdminConnectionString].ConnectionString;
             }
 
             return retVal;
@@ -68,18 +68,18 @@ namespace AlwaysMoveForward.Common.Configuration
             return false;
         }
 
-        [ConfigurationProperty(k_ConnectionString, IsRequired = true)]
+        [ConfigurationProperty(DatabaseConfiguration.ConnectionStringSetting, IsRequired = true)]
         public string ConnectionString
         {
-            get { return (string)this[k_ConnectionString]; }
-            set { this[k_ConnectionString] = value; }
+            get { return (string)this[DatabaseConfiguration.ConnectionStringSetting]; }
+            set { this[DatabaseConfiguration.ConnectionStringSetting] = value; }
         }
 
-        [ConfigurationProperty(k_AdminConnectionString, IsRequired = true)]
+        [ConfigurationProperty(DatabaseConfiguration.AdminConnectionStringSetting, IsRequired = true)]
         public string AdminConnectionString
         {
-            get { return (string)this[k_AdminConnectionString]; }
-            set { this[k_AdminConnectionString] = value; }
+            get { return (string)this[DatabaseConfiguration.AdminConnectionStringSetting]; }
+            set { this[DatabaseConfiguration.AdminConnectionStringSetting] = value; }
         }
     }
 }

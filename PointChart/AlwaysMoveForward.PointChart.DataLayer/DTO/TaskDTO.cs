@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public int Id { get; set; }
 
         [Property("Name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [Property("Points")]
         public double Points { get; set; }
@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [Property("AdministratorId")]
         public int AdministratorId { get; set; }
 
-        [HasAndBelongsToMany(typeof(ChartDTO), ColumnRef = "ChartId", ColumnKey = "TaskId", Table = "ChartTasks", Lazy = true)]
+        [HasAndBelongsToMany(typeof(ChartDTO), ColumnRef = "ChartId", ColumnKey = "TaskId", Table = "ChartTasks")]
         public IList<ChartDTO> Charts { get; set; }
 
         [HasMany(typeof(CompletedTaskDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]

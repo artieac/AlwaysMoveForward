@@ -1,4 +1,4 @@
-﻿USE [AnotherBlogDb]
+﻿USE [AMForwardDb]
 GO
 
 INSERT INTO DbInfo(Version) VALUES (1);

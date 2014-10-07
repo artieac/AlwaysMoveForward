@@ -8,19 +8,19 @@ namespace AlwaysMoveForward.Common.Encryption
 {
     public class AESEncryptionConfiguration : ConfigurationSection
     {
-        public const string k_DefaultSection = "Vistaprint/Digital/AESEncryptionConfiguration";
+        public const string DefaultSection = "Vistaprint/Digital/AESEncryptionConfiguration";
 
-        public const string k_EncryptionKey = "EncryptionKey";
-        public const string k_Salt = "Salt";
+        public const string EncryptionKeySetting = "EncryptionKey";
+        public const string SaltSetting = "Salt";
 
-        static AESEncryptionConfiguration configurationInstance;
+        private static AESEncryptionConfiguration configurationInstance;
 
         public static AESEncryptionConfiguration GetInstance()
         {
-            return AESEncryptionConfiguration.GetInstance(k_DefaultSection);
+            return AESEncryptionConfiguration.GetInstance(DefaultSection);
         }
 
-        public static AESEncryptionConfiguration GetInstance(String configurationSection)
+        public static AESEncryptionConfiguration GetInstance(string configurationSection)
         {
             if (configurationInstance == null)
             {
@@ -34,20 +34,20 @@ namespace AlwaysMoveForward.Common.Encryption
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_EncryptionKey, IsRequired = false)]
+        [ConfigurationProperty(EncryptionKeySetting, IsRequired = false)]
         public string EncryptionKey
         {
-            get { return (string)this[k_EncryptionKey]; }
-            set { this[k_EncryptionKey] = value; }
+            get { return (string)this[EncryptionKeySetting]; }
+            set { this[EncryptionKeySetting] = value; }
         }
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_Salt, IsRequired = false)]
+        [ConfigurationProperty(SaltSetting, IsRequired = false)]
         public string Salt
         {
-            get { return (string)this[k_Salt]; }
-            set { this[k_Salt] = value; }
+            get { return (string)this[SaltSetting]; }
+            set { this[SaltSetting] = value; }
         }
     }
 }

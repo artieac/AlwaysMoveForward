@@ -17,7 +17,7 @@ using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
-    public interface ISiteInfoRepository : IRepository<SiteInfo>
+    public interface ISiteInfoRepository : IRepository<SiteInfo, int>
     {
         SiteInfo GetSiteInfo();
     }

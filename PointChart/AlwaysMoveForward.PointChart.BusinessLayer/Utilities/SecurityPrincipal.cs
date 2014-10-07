@@ -15,14 +15,14 @@ using System.Text;
 using System.Security.Principal;
 
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
     {
-        static IDictionary<int, Role> systemRoles = null;
+        private static IDictionary<int, Role> systemRoles = null;
 
         public static IDictionary<int, Role> Roles
         {
@@ -32,8 +32,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
                 {
                     systemRoles = new Dictionary<int, Role>();
 
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager();
-                    IList<Role> roles = serviceManager.Roles.GetAll();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    IList<Role> roles = serviceManager.RoleService.GetAll();
 
                     for (int i = 0; i < roles.Count; i++)
                     {
@@ -45,23 +45,18 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             }
         }
 
-        bool isAuthenticated = false;
-        User currentUser;
-        ServiceManager serviceManager = null;
-        static Dictionary<int, Role> userRoles;
+        private ServiceManager serviceManager = null;
+        private static Dictionary<int, Role> userRoles;
 
-        public SecurityPrincipal(User _currentUser) : this(_currentUser, false){}
+        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
 
-        public SecurityPrincipal(User _currentUser, bool _isAuthenticated)
+        public SecurityPrincipal(User currentUser, bool isAuthenticated)
         {
-            isAuthenticated = _isAuthenticated;
-            currentUser = _currentUser;
+            this.IsAuthenticated = isAuthenticated;
+            this.CurrentUser = currentUser;
         }
 
-        public User CurrentUser
-        {
-            get { return this.currentUser; }
-        }
+        public User CurrentUser { get; private set; }
 
         private ServiceManager ServiceManager
         {
@@ -69,7 +64,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             {
                 if (this.serviceManager == null)
                 {
-                    serviceManager = ServiceManager.BuildServiceManager();
+                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return this.serviceManager;
@@ -80,19 +75,19 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         {
             get
             {
-                if (userRoles == null)
+                if (SecurityPrincipal.userRoles == null)
                 {
-                    userRoles = new Dictionary<int, Role>();
+                    SecurityPrincipal.userRoles = new Dictionary<int, Role>();
 
-                    IList<Role> allRoles = this.ServiceManager.Roles.GetAll();
+                    IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
 
                     for (int i = 0; i < allRoles.Count; i++)
                     {
-                        userRoles.Add(allRoles[i].RoleId, allRoles[i]);
+                        SecurityPrincipal.userRoles.Add(allRoles[i].RoleId, allRoles[i]);
                     }
                 }
 
-                return userRoles;
+                return SecurityPrincipal.userRoles;
             }
         }
         /// <summary>
@@ -100,25 +95,23 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         /// </summary>
         #region IIdentity
 
-        public bool IsAuthenticated
-        {
-            get { return this.isAuthenticated; }
-            set { this.isAuthenticated = value; }
-        }
+        public bool IsAuthenticated { get; set; }
 
         public string AuthenticationType
         {
-            get { return ""; }
+            get { return string.Empty; }
         }
 
         public string Name
         {
             get 
             {
-                string retVal = "";
-                
-                if(this.currentUser!=null)
-                    retVal = this.currentUser.UserName;
+                string retVal = string.Empty;
+
+                if (this.CurrentUser != null)
+                {
+                    retVal = this.CurrentUser.UserName;
+                }
 
                 return retVal;
             }
@@ -145,7 +138,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         {
             bool retVal = false;
 
-            if (this.currentUser != null)
+            if (this.CurrentUser != null)
             {
             }
 
@@ -164,13 +157,13 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
         {
             bool retVal = false;
 
-            if (this.currentUser != null)
+            if (this.CurrentUser != null)
             {
                 if (targetRole != null)
                 {
-                    if (targetRole.Contains(RoleType.Administrator))
+                    if (targetRole.Contains(RoleType.Administrator.ToString()))
                     {
-                        if (this.currentUser.IsSiteAdministrator)
+                        if (this.CurrentUser.IsSiteAdministrator)
                         {
                             retVal = true;
                         }

@@ -14,7 +14,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer
         ChartRepository Charts { get; }
         CompletedTaskRepository CompletedTask { get; }
         TaskRepository Tasks { get; }
-        IDbInfoRepository DbInfo { get; }
         PointEarnerRepository PointEarner { get; }
         PointsSpentRepository PointsSpent { get; }
     }

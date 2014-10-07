@@ -32,22 +32,22 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
             HttpCookie authCookie = filterContext.RequestContext.HttpContext.Request.Cookies[cookieName];
             SecurityPrincipal currentPrincipal = new SecurityPrincipal(null, false);
 
-            ServiceManager serviceManager = ServiceManager.BuildServiceManager();
+            ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
 
             if (authCookie != null)
             {
-                if (authCookie.Value != "")
+                if (!string.IsNullOrEmpty(authCookie.Value))
                 {
                     // Get the authentication ticket 
                     // and rebuild the principal & identity
                     FormsAuthenticationTicket authTicket =
                     FormsAuthentication.Decrypt(authCookie.Value);
 
-                    AlwaysMoveForward.Common.DomainModel.User currentUser = serviceManager.Users.GetByUserName(authTicket.Name);
+                    AlwaysMoveForward.Common.DomainModel.User currentUser = serviceManager.UserService.GetByUserName(authTicket.Name);
 
                     if (currentUser == null)
                     {
-                        currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
+                        currentPrincipal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
                     }
                     else
                     {
@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
             }
             else
             {
-                currentPrincipal = new SecurityPrincipal(serviceManager.Users.GetDefaultUser(), false);
+                currentPrincipal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
             }
 
             System.Threading.Thread.CurrentPrincipal = filterContext.RequestContext.HttpContext.User = currentPrincipal;

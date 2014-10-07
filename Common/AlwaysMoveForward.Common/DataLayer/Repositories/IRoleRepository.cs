@@ -17,7 +17,7 @@ using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
-    public interface IRoleRepository : IRepository<Role>
+    public interface IRoleRepository : IRepository<Role, int>
     {
     }
 }

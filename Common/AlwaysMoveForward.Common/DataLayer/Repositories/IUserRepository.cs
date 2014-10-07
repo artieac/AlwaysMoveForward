@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<User, int>
     {
         User GetByUserName(string userName);
         User GetByUserNameAndPassword(string userName, string password);

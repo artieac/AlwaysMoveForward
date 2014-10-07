@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public int Id { get; set; }
 
         [Property("Description")]
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         [Property("Amount")]
         public double Amount { get; set; }

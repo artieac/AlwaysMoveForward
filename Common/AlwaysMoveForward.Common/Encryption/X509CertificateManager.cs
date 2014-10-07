@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.Common.Encryption
     {
         private class KeyStoreParameters
         {
-            public KeyStoreParameters(String storeName, String storeLocation, String certificateName)
+            public KeyStoreParameters(string storeName, string storeLocation, string certificateName)
             {
                 this.StoreName = (StoreName)Enum.Parse(typeof(StoreName), storeName);
                 this.StoreLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), storeLocation);
@@ -19,28 +19,28 @@ namespace AlwaysMoveForward.Common.Encryption
 
             public StoreName StoreName { get; private set; }
             public StoreLocation StoreLocation { get; private set; }
-            public String CertificateName { get; private set; }
+            public string CertificateName { get; private set; }
         }
 
         public class KeyFileParameters
         {
-            public KeyFileParameters(String keyFile, String keyFilePassword)
+            public KeyFileParameters(string keyFile, string keyFilePassword)
             {
                 this.KeyFile = keyFile;
                 this.KeyFilePassword = keyFilePassword;
             }
 
-            public String KeyFile { get; private set; }
-            public String KeyFilePassword { get; private set; }
+            public string KeyFile { get; private set; }
+            public string KeyFilePassword { get; private set; }
         }
 
 
-        public X509CertificateManager(String storeName, String storeLocation, String certificateName)
+        public X509CertificateManager(string storeName, string storeLocation, string certificateName)
         {
             this.KeyStoreInfo = new KeyStoreParameters(storeName, storeLocation, certificateName);
         }
 
-        public X509CertificateManager(String keyFile, String keyFilePassword)
+        public X509CertificateManager(string keyFile, string keyFilePassword)
         {
             this.KeyFileInfo = new KeyFileParameters(keyFile, keyFilePassword);
         }
@@ -53,22 +53,22 @@ namespace AlwaysMoveForward.Common.Encryption
         {
             get
             {
-                if (certificateFile == null)
+                if (this.certificateFile == null)
                 {
-                    certificateFile = this.LoadCertificateFile();
+                    this.certificateFile = this.LoadCertificateFile();
                 }
 
-                return certificateFile;
+                return this.certificateFile;
             }
         }
 
         public X509Certificate2 LoadCertificateFile()
         {
-            if (certificateFile == null)
+            if (this.certificateFile == null)
             {
-                if (KeyFileInfo != null)
+                if (this.KeyFileInfo != null)
                 {
-                    certificateFile = new X509Certificate2(this.KeyFileInfo.KeyFile, this.KeyFileInfo.KeyFilePassword, X509KeyStorageFlags.Exportable);
+                    this.certificateFile = new X509Certificate2(this.KeyFileInfo.KeyFile, this.KeyFileInfo.KeyFilePassword, X509KeyStorageFlags.Exportable);
                 }
                 else
                 {
@@ -81,13 +81,12 @@ namespace AlwaysMoveForward.Common.Encryption
                             store.Open(OpenFlags.ReadOnly);
 
                             X509Certificate2Collection certificateCollection =
-                                store.Certificates.Find(X509FindType.FindBySubjectName,
-                                                        this.KeyStoreInfo.CertificateName, false);
+                                store.Certificates.Find(X509FindType.FindBySubjectName, this.KeyStoreInfo.CertificateName, false);
 
                             if (certificateCollection.Count > 0)
                             {
-                                //  We ignore if there is more than one matching cert, 
-                                //  we just return the first one.
+                                // We ignore if there is more than one matching cert, 
+                                // we just return the first one.
                                 return certificateCollection[0];
                             }
                             else
@@ -103,12 +102,12 @@ namespace AlwaysMoveForward.Common.Encryption
                 }
             }
 
-            return certificateFile;
+            return this.certificateFile;
         }
 
-        public String Encrypt(String sourceData)
+        public string Encrypt(string sourceData)
         {
-            String retVal = "";
+            string retVal = string.Empty;
 
             if (this.CertificateFile != null)
             {
@@ -120,9 +119,9 @@ namespace AlwaysMoveForward.Common.Encryption
         }
 
 
-        public String Decrypt(String encryptedData)
+        public string Decrypt(string encryptedData)
         {
-            String retVal = "";
+            string retVal = string.Empty;
 
             if (this.CertificateFile != null)
             {

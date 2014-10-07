@@ -21,11 +21,11 @@ namespace AlwaysMoveForward.Common.Configuration
     /// </summary>
     public class EmailConfiguration : ConfigurationSection
     {
-        public const string k_FromAddress = "FromAddress";
-        public const string k_SmtpServer = "SmtpServer";
-        public const string k_SmtpPort = "SmtpPort";
+        public const string FromAddressSetting = "FromAddress";
+        public const string SmtpServerSetting = "SmtpServer";
+        public const string SmtpPortSetting = "SmtpPort";
 
-        public const String k_DefaultConfiguration = "AlwaysMoveForward/Email";
+        public const string DefaultConfiguration = "AlwaysMoveForward/Email";
 
         public EmailConfiguration() { }
         public EmailConfiguration(string fromAddress, string smtpServer)
@@ -36,29 +36,29 @@ namespace AlwaysMoveForward.Common.Configuration
         /// <summary>
         /// Define the email address outgoing emails are tagged with.
         /// </summary>
-        [ConfigurationProperty(k_FromAddress, IsRequired = true)]
+        [ConfigurationProperty(FromAddressSetting, IsRequired = true)]
         public string FromAddress
         {
-            get { return (string)this[k_FromAddress]; }
-            set { this[k_FromAddress] = value; }
+            get { return (string)this[FromAddressSetting]; }
+            set { this[FromAddressSetting] = value; }
         }
         /// <summary>
         /// Define the email server to use
         /// </summary>
-        [ConfigurationProperty(k_SmtpServer, IsRequired = true)]
+        [ConfigurationProperty(SmtpServerSetting, IsRequired = true)]
         public string SmtpServer
         {
-            get { return (string)this[k_SmtpServer]; }
-            set { this[k_SmtpServer] = value; }
+            get { return (string)this[SmtpServerSetting]; }
+            set { this[SmtpServerSetting] = value; }
         }
         /// <summary>
         /// Define the email port to use
         /// </summary>
-        [ConfigurationProperty(k_SmtpPort, IsRequired = true)]
+        [ConfigurationProperty(SmtpPortSetting, IsRequired = true)]
         public int SmtpPort
         {
-            get { return (int)this[k_SmtpPort]; }
-            set { this[k_SmtpPort] = value; }
+            get { return (int)this[SmtpPortSetting]; }
+            set { this[SmtpPortSetting] = value; }
         }
     }
 }

@@ -7,16 +7,21 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
 {
     public class DataMapManager
     {
-        private static DataMapManager _dataMapManager = null;
+        static DataMapManager()
+        {
+            AutoMapperConfiguration.Configure();
+        }
+
+        private static DataMapManager dataMapManager = null;
 
         public static DataMapManager Mappers()
         {
-            if(_dataMapManager==null)
+            if (DataMapManager.dataMapManager == null)
             {
-                _dataMapManager = new DataMapManager();
+                DataMapManager.dataMapManager = new DataMapManager();
             }
 
-            return _dataMapManager;
+            return DataMapManager.dataMapManager;
         }
 
         private ChartDataMap chartDataMap = null;
@@ -29,12 +34,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             get
             {
-                if(chartDataMap==null)
+                if (this.chartDataMap == null)
                 {
-                    chartDataMap = new ChartDataMap();
+                    this.chartDataMap = new ChartDataMap();
                 }
 
-                return chartDataMap;
+                return this.chartDataMap;
             }
         }
 
@@ -42,12 +47,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             get
             {
-                if (ctiDataMap == null)
+                if (this.ctiDataMap == null)
                 {
-                    ctiDataMap = new CompletedTaskDataMap();
+                    this.ctiDataMap = new CompletedTaskDataMap();
                 }
 
-                return ctiDataMap;
+                return this.ctiDataMap;
             }
         }
 
@@ -55,12 +60,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             get
             {
-                if (pointEarnerMap == null)
+                if (this.pointEarnerMap == null)
                 {
-                    pointEarnerMap = new PointEarnerDataMap();
+                    this.pointEarnerMap = new PointEarnerDataMap();
                 }
 
-                return pointEarnerMap;
+                return this.pointEarnerMap;
             }
         }
 
@@ -69,12 +74,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             get
             {
-                if (pointsSpentMap == null)
+                if (this.pointsSpentMap == null)
                 {
-                    pointsSpentMap = new PointsSpentDataMap();
+                    this.pointsSpentMap = new PointsSpentDataMap();
                 }
 
-                return pointsSpentMap;
+                return this.pointsSpentMap;
             }
         }
 
@@ -82,12 +87,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             get
             {
-                if (taskDataMap == null)
+                if (this.taskDataMap == null)
                 {
-                    taskDataMap = new TaskDataMap();
+                    this.taskDataMap = new TaskDataMap();
                 }
 
-                return taskDataMap;
+                return this.taskDataMap;
             }
         }
     }

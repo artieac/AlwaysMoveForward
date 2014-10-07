@@ -14,22 +14,9 @@ using System.Linq;
 
 namespace AlwaysMoveForward.Common.Utilities
 {
-    public interface IPagedList<T> : IList<T>
-    {
-        int PageCount { get; }
-        int TotalItemCount { get; }
-        int PageIndex { get; }
-        int PageNumber { get; }
-        int PageSize { get; }
-        bool HasPreviousPage { get; }
-        bool HasNextPage { get; }
-        bool IsFirstPage { get; }
-        bool IsLastPage { get; }
-    }
-
     public class PagedList<T> : List<T>, IPagedList<T>
     {
-        int totalItemCount;
+        private int totalItemCount;
 
         public PagedList()
             : this(null, 0, 1)
@@ -43,7 +30,7 @@ namespace AlwaysMoveForward.Common.Utilities
 
         public PagedList(IEnumerable<T> source, int index, int pageSize, int? totalCount)
         {
-            Initialize(source.AsQueryable(), index, pageSize, totalCount);
+            this.Initialize(source.AsQueryable(), index, pageSize, totalCount);
         }
 
         public PagedList(IQueryable<T> source, int index, int pageSize)
@@ -53,7 +40,7 @@ namespace AlwaysMoveForward.Common.Utilities
 
         public PagedList(IQueryable<T> source, int index, int pageSize, int? totalCount)
         {
-            Initialize(source, index, pageSize, totalCount);
+            this.Initialize(source, index, pageSize, totalCount);
         }
 
         #region IPagedList Members
@@ -61,11 +48,11 @@ namespace AlwaysMoveForward.Common.Utilities
         public int PageCount { get; private set; }
         public int TotalItemCount 
         {
-            get { return totalItemCount; }
-            set{ totalItemCount = value;}
+            get { return this.totalItemCount; }
+            set { this.totalItemCount = value; }
         }
         public int PageIndex { get; private set; }
-        public int PageNumber { get { return PageIndex + 1; } }
+        public int PageNumber { get { return this.PageIndex + 1; } }
         public int PageSize { get; private set; }
         public bool HasPreviousPage { get; private set; }
         public bool HasNextPage { get; private set; }
@@ -76,7 +63,7 @@ namespace AlwaysMoveForward.Common.Utilities
 
         protected void Initialize(IQueryable<T> source, int index, int pageSize, int? totalCount)
         {
-            //### argument checking
+            // ### argument checking
             if (index < 0)
             {
                 throw new ArgumentOutOfRangeException("PageIndex cannot be below 0.");
@@ -86,65 +73,43 @@ namespace AlwaysMoveForward.Common.Utilities
                 throw new ArgumentOutOfRangeException("PageSize cannot be less than 1.");
             }
 
-            //### set source to blank list if source is null to prevent exceptions
+            // ### set source to blank list if source is null to prevent exceptions
             if (source == null)
             {
                 source = new List<T>().AsQueryable();
             }
 
-            //### set properties
+            // ### set properties
             if (!totalCount.HasValue)
             {
-                TotalItemCount = source.Count();
+                this.TotalItemCount = source.Count();
             }
             else
             {
-                TotalItemCount = totalCount.Value;
+                this.TotalItemCount = totalCount.Value;
             }
 
-            PageSize = pageSize;
-            PageIndex = index;
-            if (TotalItemCount > 0)
+            this.PageSize = pageSize;
+            this.PageIndex = index;
+            if (this.TotalItemCount > 0)
             {
-                PageCount = (int)Math.Ceiling(TotalItemCount / (double)PageSize);
+                this.PageCount = (int)Math.Ceiling(this.TotalItemCount / (double)this.PageSize);
             }
             else
             {
-                PageCount = 0;
+                this.PageCount = 0;
             }
-            HasPreviousPage = (PageIndex > 0);
-            HasNextPage = (PageIndex < (PageCount - 1));
-            IsFirstPage = (PageIndex <= 0);
-            IsLastPage = (PageIndex >= (PageCount - 1));
 
-            //### add items to internal list
-            if (TotalItemCount > 0)
+            this.HasPreviousPage = (this.PageIndex > 0);
+            this.HasNextPage = (this.PageIndex < (this.PageCount - 1));
+            this.IsFirstPage = (this.PageIndex <= 0);
+            this.IsLastPage = (this.PageIndex >= (this.PageCount - 1));
+
+            // ### add items to internal list
+            if (this.TotalItemCount > 0)
             {
-                AddRange(source.Skip((index) * pageSize).Take(pageSize).ToList());
+                this.AddRange(source.Skip(index * pageSize).Take(pageSize).ToList());
             }
-        }
-    }
-
-    public static class Pagination
-    {
-        public static PagedList<T> ToPagedList<T>(this IList<T> source)
-        {
-            return new PagedList<T>(source, 0, AlwaysMoveForward.Common.Utilities.Constants.PageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source)
-        {
-            return new PagedList<T>(source, 0, AlwaysMoveForward.Common.Utilities.Constants.PageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index, int pageSize)
-        {
-            return new PagedList<T>(source, index, pageSize);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int index, int pageSize)
-        {
-            return new PagedList<T>(source, index, pageSize);
         }
     }
 }

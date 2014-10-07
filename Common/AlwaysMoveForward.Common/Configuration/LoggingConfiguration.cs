@@ -8,41 +8,41 @@ namespace AlwaysMoveForward.Common.Configuration
 {
     public class LoggingConfiguration : ConfigurationSection
     {
-        public const string k_DefaultConfigurationSetting = "AlwaysMoveForward/LoggingConfiguration";
+        public const string DefaultConfigurationSetting = "AlwaysMoveForward/LoggingConfiguration";
 
-        private const string k_Source = "Source";
-        private const string k_Level = "Level";
-        private const string k_LoggingClass = "LoggingClass";
-        private const string k_LoggingAssembly = "LoggingAssembly";
+        private const string SourceSetting = "Source";
+        private const string LevelSetting = "Level";
+        private const string LoggingClassSetting = "LoggingClass";
+        private const string LoggingAssemblySetting = "LoggingAssembly";
 
         public LoggingConfiguration() { }
 
-        [ConfigurationProperty(k_Source, IsRequired = true)]
-        public String Source
+        [ConfigurationProperty(LoggingConfiguration.SourceSetting, IsRequired = true)]
+        public string Source
         {
-            get { return (string)this[k_Source]; }
-            set { this[k_Source] = value; }
+            get { return (string)this[LoggingConfiguration.SourceSetting]; }
+            set { this[LoggingConfiguration.SourceSetting] = value; }
         }
 
-        [ConfigurationProperty(k_Level, IsRequired = true)]
-        public String Level
+        [ConfigurationProperty(LoggingConfiguration.LevelSetting, IsRequired = true)]
+        public string Level
         {
-            get { return (string)this[k_Level]; }
-            set { this[k_Level] = value; }
+            get { return (string)this[LoggingConfiguration.LevelSetting]; }
+            set { this[LoggingConfiguration.LevelSetting] = value; }
         }
 
-        [ConfigurationProperty(k_LoggingClass, IsRequired = false)]
-        public String LoggingClass
+        [ConfigurationProperty(LoggingConfiguration.LoggingClassSetting, IsRequired = false)]
+        public string LoggingClass
         {
-            get { return (string)this[k_LoggingClass]; }
-            set { this[k_LoggingClass] = value; }
+            get { return (string)this[LoggingConfiguration.LoggingClassSetting]; }
+            set { this[LoggingConfiguration.LoggingClassSetting] = value; }
         }
 
-        [ConfigurationProperty(k_LoggingAssembly, IsRequired = false)]
-        public String LoggingAssembly
+        [ConfigurationProperty(LoggingConfiguration.LoggingAssemblySetting, IsRequired = false)]
+        public string LoggingAssembly
         {
-            get { return (string)this[k_LoggingAssembly]; }
-            set { this[k_LoggingAssembly] = value; }
+            get { return (string)this[LoggingConfiguration.LoggingAssemblySetting]; }
+            set { this[LoggingConfiguration.LoggingAssemblySetting] = value; }
         }
     }
 }

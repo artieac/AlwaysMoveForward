@@ -8,70 +8,65 @@ using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.Business
 {
-    public class ServiceManager : ServiceRegisterBase
-    {
-        public static TService CreateService<TService>(ServiceContext serviceContext) where TService : class
-        {
-            return Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   serviceContext
-                                                               }) as TService;
-        }
-
-        public static TServiceInterface CreateService<TServiceInterface, TService>(ServiceContext serviceContext) where TService : class, TServiceInterface where TServiceInterface : class
-        {
-            return Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   serviceContext
-                                                               }) as TServiceInterface;
-        }
-        
+    public class ServiceManager
+    {        
         public ServiceManager(ServiceContext serviceContext)
         {
-            this.RepositoryManager = serviceContext.RepositoryManager;
-            this.UnitOfWork = serviceContext.UnitOfWork;
+            this.ServiceContext = serviceContext;
         }
 
-        public IRepositoryManager RepositoryManager{ get; private set;}
-        public IUnitOfWork UnitOfWork { get; private set;}
-
-        public TServiceInterface ResolveOrRegister<TServiceInterface, TService>()
-            where TServiceInterface : class
-            where TService : class, TServiceInterface
+        public ServiceContext ServiceContext { get; private set; }
+        
+        public IRepositoryManager RepositoryManager
         {
-            TServiceInterface retVal = this.Resolve<TServiceInterface>();
+            get { return this.ServiceContext.RepositoryManager; }
+        }
 
-            if (retVal == null)
+        public IUnitOfWork UnitOfWork 
+        {
+            get { return this.ServiceContext.UnitOfWork; }
+        }
+
+        private RoleService roleService;
+        public RoleService RoleService
+        {
+            get
             {
-                TServiceInterface newService = Activator.CreateInstance(typeof(TService),
-                                                               new object[]
-                                                               {
-                                                                   new ServiceContext(this.UnitOfWork, this.RepositoryManager)
-                                                               }) as TServiceInterface;
-
-                if (newService != null)
+                if (this.roleService == null)
                 {
-                    retVal = this.RegisterService<TServiceInterface>(newService);
+                    this.roleService = new RoleService(this.ServiceContext);
                 }
+
+                return this.roleService;
             }
-
-            return retVal;
         }
-        public RoleService Roles
+
+        private SiteInfoService siteInfo;
+        public SiteInfoService SiteInfoService
         {
-            get{ return this.ResolveOrRegister<RoleService, RoleService>();}
+            get
+            {
+                if (this.siteInfo == null)
+                {
+                    this.siteInfo = new SiteInfoService(this.ServiceContext);
+                }
+
+                return this.siteInfo;
+            }
         }
 
-        public SiteInfoService SiteInfo
-        {
-            get { return this.ResolveOrRegister<SiteInfoService, SiteInfoService>(); }
-        }
-
+        private UserService userService;
         public UserService UserService
         {
-            get { return this.ResolveOrRegister<UserService, UserService>(); }
+            get
+            {
+                if (this.userService == null)
+                {
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.Users);
+                }
+
+                return this.userService;
+            }
         }
     }
 }

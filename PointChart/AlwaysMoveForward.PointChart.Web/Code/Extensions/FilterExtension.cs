@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Extensions
         }
 
         #endregion
-        public static String GenerateFilterOption(string optionName, string selectedOption)
+        public static string GenerateFilterOption(string optionName, string selectedOption)
         {
             string retVal = "<option";
             retVal += " id='" + optionName + "'";
@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Extensions
             return retVal;
         }
 
-        public static String CommentStatusText(this HtmlHelper htmlHelper, int commentStatus)
+        public static string CommentStatusText(this HtmlHelper htmlHelper, int commentStatus)
         {
             string retVal = "Unapproved";
 

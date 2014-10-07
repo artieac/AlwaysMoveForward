@@ -9,33 +9,23 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 {
     public class CSVResult : ActionResult
     {
-        private IList<string> columnHeaders;
-        private string fileName;
-        private IList<Dictionary<string, string>> dataRows;
-
-        public string FileName
+        public CSVResult(IList<string> columnHeaders, IList<Dictionary<string, string>> dataRows, string fileName)
         {
-            get { return fileName; }
+            this.Rows = dataRows;
+            this.FileName = fileName;
+            this.ColumnHeaders = columnHeaders;
         }
 
-        public IList<Dictionary<string, string>> Rows
-        {
-            get { return dataRows; }
-        }
-
-        public CSVResult(IList<string> _columnHeaders, IList<Dictionary<string, string>> _dataRows, string _fileName)
-        {
-            dataRows = _dataRows;
-            fileName = _fileName;
-            columnHeaders = _columnHeaders;
-        }
+        public string FileName { get; private set; }
+        public IList<string> ColumnHeaders { get; private set; }
+        public IList<Dictionary<string, string>> Rows { get; private set; }
 
         public override void ExecuteResult(ControllerContext context)
         {
             // Create HtmlTextWriter  
             StringWriter sw = new StringWriter();
 
-            foreach (String header in columnHeaders)
+            foreach (string header in this.ColumnHeaders)
             {
                 sw.Write(header);
                 sw.Write(",");
@@ -43,15 +33,15 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 
             sw.WriteLine();
 
-            for (int i = 0; i < dataRows.Count; i++)
+            for (int i = 0; i < this.Rows.Count; i++)
             {
-                foreach (string header in columnHeaders)
+                foreach (string header in this.ColumnHeaders)
                 {
-                    string strValue = "";
+                    string strValue = string.Empty;
 
-                    if (dataRows[i].ContainsKey(header))
+                    if (this.Rows[i].ContainsKey(header))
                     {
-                        strValue = dataRows[i][header];
+                        strValue = this.Rows[i][header];
                     }
 
                     strValue = ReplaceSpecialCharacters(strValue);
@@ -63,7 +53,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
                 sw.WriteLine();
             }
 
-            WriteFile(fileName, "application/ms-excel", sw.ToString());
+            WriteFile(this.FileName, "application/ms-excel", sw.ToString());
         }
 
         private static string ReplaceSpecialCharacters(string value)
@@ -81,7 +71,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             HttpContext context = HttpContext.Current;
             context.Response.Clear();
             context.Response.AddHeader("content-disposition", "attachment;filename=" + fileName);
-            context.Response.Charset = "";
+            context.Response.Charset = string.Empty;
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             context.Response.ContentType = contentType;
             context.Response.Write(content);

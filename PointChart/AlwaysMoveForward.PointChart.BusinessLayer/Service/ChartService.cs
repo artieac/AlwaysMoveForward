@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if(pointEarner!=null)
+            if (pointEarner != null)
             {
                 retVal = this.Add(pointEarner, currentUser);
             }
@@ -60,10 +60,9 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 IList<Chart> earnerCharts = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarner.Id, currentUser.UserId);
 
-                if(earnerCharts==null || earnerCharts.Count==0)
+                if (earnerCharts == null || earnerCharts.Count == 0)
                 {
                     retVal = new Chart();
-                    retVal.PointEarner = pointEarner;
                     retVal.AdministratorId = currentUser.UserId;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
@@ -72,17 +71,16 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart Edit(int chartId, String chartName, int pointEarnerId, User currentUser)
+        public Chart Edit(int chartId, string chartName, int pointEarnerId, User currentUser)
         {
             Chart retVal = null;
 
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if (retVal != null && pointEarner!=null)
+            if (retVal != null && pointEarner != null)
             {
-                if (retVal.AdministratorId == currentUser.UserId &&
-                    retVal.PointEarner == pointEarner)
+                if (retVal.AdministratorId == currentUser.UserId) 
                 {
                     retVal.Name = chartName;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -99,11 +97,10 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
             PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
 
-            if(retVal!=null)
+            if (retVal != null)
             {
                 if (retVal.AdministratorId == currentUser.UserId)
                 {
-                    retVal.PointEarner = pointEarner;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
             }
@@ -118,7 +115,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         public PointEarner GetPointEarnerByChart(Chart chart)
         {
-            return this.PointChartRepositories.PointEarner.GetById(chart.PointEarner.Id);
+            return this.PointChartRepositories.PointEarner.GetById(0);
         }
 
         public Chart AddTask(int chartId, int taskId)
@@ -129,11 +126,11 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 Task targetTask = retVal.Tasks.FirstOrDefault(t => t.Id == taskId);
 
-                if(targetTask==null)
+                if (targetTask == null)
                 {
                     targetTask = this.PointChartRepositories.Tasks.GetById(taskId);
 
-                    if(targetTask!=null)
+                    if (targetTask != null)
                     {
                         retVal.Tasks.Add(targetTask);
                         retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -144,72 +141,79 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public void DeleteTask(int chartId, int taskId)
+        private Task GetChartTask(Chart chart, int taskId)
         {
-            Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
-
-            if (targetChart != null)
-            {
-                Task targetTask = targetChart.Tasks.FirstOrDefault(t => t.Id == taskId);
-
-                if (targetTask != null)
-                {
-                    targetChart.Tasks.Remove(targetTask);
-                    targetChart = this.PointChartRepositories.Charts.Save(targetChart);
-                }
-            }
-        }
-
-        public CompletedTask AddCompletedTask(Chart chart, Task task, DateTime dateCompleted, int numberOfTimesCompleted, User administrator)
-        {
-            CompletedTask retVal = null;
-
-            double pointsToAdd = 0;
-
-            if (task.MaxAllowedDaily > 0)
-            {
-                if (numberOfTimesCompleted > task.MaxAllowedDaily)
-                {
-                    numberOfTimesCompleted = task.MaxAllowedDaily;
-                }
-            }
+            Task retVal = null;
 
             if (chart != null)
             {
-                retVal = chart.CompletedTasks.FirstOrDefault(t => t.Task.Id == task.Id && t.DateCompleted.Date==dateCompleted.Date);
+                retVal = chart.Tasks.FirstOrDefault(t => t.Id == taskId);
+            }
+
+            return retVal;
+        }
+
+        public void DeleteTask(int chartId, int taskId)
+        {
+            Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
+            Task targetTask = this.GetChartTask(targetChart, taskId);
+
+            if (targetTask != null)
+            {
+                targetChart.Tasks.Remove(targetTask);
+                targetChart = this.PointChartRepositories.Charts.Save(targetChart);
+            }
+        }
+
+        public CompletedTask AddCompletedTask(int chartId, int taskId, DateTime dateCompleted, int numberOfTimesCompleted, User administrator)
+        {
+            CompletedTask retVal = null;
+
+            Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
+            Task targetTask = this.GetChartTask(targetChart, taskId);
+
+            if (targetChart != null && targetTask != null)
+            {
+                double pointsToAdd = 0;
+
+                if (targetTask.MaxAllowedDaily > 0)
+                {
+                    if (numberOfTimesCompleted > targetTask.MaxAllowedDaily)
+                    {
+                        numberOfTimesCompleted = targetTask.MaxAllowedDaily;
+                    }
+                }
+
+                retVal = targetChart.CompletedTasks.FirstOrDefault(t => t.Id == taskId && t.DateCompleted.Date == dateCompleted.Date);
 
                 if (retVal == null)
                 {
                     if (numberOfTimesCompleted > 0)
                     {
                         retVal = new CompletedTask();
-                        retVal.Chart = chart;
-                        retVal.Task = task;
                         retVal.DateCompleted = dateCompleted;
                         retVal.NumberOfTimesCompleted = numberOfTimesCompleted;
-                        pointsToAdd = numberOfTimesCompleted * task.Points;
-                        chart.CompletedTasks.Add(retVal);
+                        pointsToAdd = numberOfTimesCompleted * targetTask.Points;
+                        targetChart.CompletedTasks.Add(retVal);
                     }
-                }
-                else 
-                {
-                    pointsToAdd = (numberOfTimesCompleted * task.Points) -
-                                  (retVal.NumberOfTimesCompleted * task.Points);
-                    retVal.NumberOfTimesCompleted = numberOfTimesCompleted;
-                }
-            }
-
-            using (this.UnitOfWork.BeginTransaction())
-            {
-                chart.PointEarner.PointsEarned += pointsToAdd;
-                    
-                if(PointChartRepositories.Charts.Save(chart)!=null)
-                {
-                    this.UnitOfWork.EndTransaction(true);
                 }
                 else
                 {
-                    this.UnitOfWork.EndTransaction(false);
+                    pointsToAdd = (numberOfTimesCompleted * targetTask.Points) -
+                                  (retVal.NumberOfTimesCompleted * targetTask.Points);
+                    retVal.NumberOfTimesCompleted = numberOfTimesCompleted;
+                }
+
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    if (PointChartRepositories.Charts.Save(targetChart) != null)
+                    {
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    else
+                    {
+                        this.UnitOfWork.EndTransaction(false);
+                    }
                 }
             }
 
@@ -224,8 +228,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chartPointEarner != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId,
-                                                                                     currentUser.UserId);
+                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId, currentUser.UserId);
             }
 
             return retVal;

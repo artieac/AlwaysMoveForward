@@ -13,55 +13,55 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 {
     public class ExcelResult : ActionResult
     {
-        public string FileName{ get; set;}
-        public IList<IList<String>> HeaderPrefix { get; set; }
+        public string FileName { get; set; }
+        public IList<IList<string>> HeaderPrefix { get; set; }
         public IList<string> ColumnHeaders { get; set; }
         public IList<Dictionary<string, string>> DataRows { get; set; }
         public TableStyle TableStyle { get; set; }
         public TableItemStyle HeaderStyle { get; set; }
         public TableItemStyle ItemStyle { get; set; }
 
-        public ExcelResult(IList<IList<String>> headerPrefix, IList<string> columnHeaders, IList<Dictionary<string, string>> dataRows, string fileName)
+        public ExcelResult(IList<IList<string>> headerPrefix, IList<string> columnHeaders, IList<Dictionary<string, string>> dataRows, string fileName)
             : this(headerPrefix, columnHeaders, dataRows, fileName, null, null, null)
         { }
 
-        public ExcelResult(IList<IList<String>> headerPrefix, IList<string> columnHeaders, IList<Dictionary<string, string>> dataRows, string fileName, TableStyle tableStyle, TableItemStyle headerStyle, TableItemStyle itemStyle)
+        public ExcelResult(IList<IList<string>> headerPrefix, IList<string> columnHeaders, IList<Dictionary<string, string>> dataRows, string fileName, TableStyle tableStyle, TableItemStyle headerStyle, TableItemStyle itemStyle)
         {
-            HeaderPrefix = headerPrefix;
-            DataRows = dataRows;
-            FileName = fileName;
-            ColumnHeaders = columnHeaders;
-            TableStyle = tableStyle;
-            HeaderStyle = headerStyle;
-            ItemStyle = itemStyle;
+            this.HeaderPrefix = headerPrefix;
+            this.DataRows = dataRows;
+            this.FileName = fileName;
+            this.ColumnHeaders = columnHeaders;
+            this.TableStyle = tableStyle;
+            this.HeaderStyle = headerStyle;
+            this.ItemStyle = itemStyle;
 
             // provide defaults  
-            if (TableStyle == null)
+            if (this.TableStyle == null)
             {
-                TableStyle = new TableStyle();
-                TableStyle.BorderStyle = BorderStyle.Solid;
-                TableStyle.BorderColor = Color.Black;
-                TableStyle.BorderWidth = Unit.Pixel(1);
+                this.TableStyle = new TableStyle();
+                this.TableStyle.BorderStyle = BorderStyle.Solid;
+                this.TableStyle.BorderColor = Color.Black;
+                this.TableStyle.BorderWidth = Unit.Pixel(1);
             }
 
-            if (HeaderStyle == null)
+            if (this.HeaderStyle == null)
             {
-                HeaderStyle = new TableItemStyle();
-                HeaderStyle.BackColor = Color.LightGray;
+                this.HeaderStyle = new TableItemStyle();
+                this.HeaderStyle.BackColor = Color.LightGray;
             }
 
-            if (ItemStyle == null)
+            if (this.ItemStyle == null)
             {
-                ItemStyle = new TableItemStyle();
-                ItemStyle.BorderStyle = BorderStyle.Solid;
-                ItemStyle.BorderColor = Color.Black;
-                ItemStyle.BorderWidth = Unit.Pixel(1);
+                this.ItemStyle = new TableItemStyle();
+                this.ItemStyle.BorderStyle = BorderStyle.Solid;
+                this.ItemStyle.BorderColor = Color.Black;
+                this.ItemStyle.BorderWidth = Unit.Pixel(1);
             }
         }
 
         public override void ExecuteResult(ControllerContext context)
         {
-            String retVal = "<?xml version=\"1.0\"?>";
+            string retVal = "<?xml version=\"1.0\"?>";
             retVal += "<ss:Workbook xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\">";
             retVal += "<ss:Worksheet ss:Name=\"Sheet1\">";
             retVal += "<ss:Table>";
@@ -73,21 +73,21 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
                 retVal += "<ss:Column ss:Width=\"60\" />";
             }
 
-            for(int i = 0; i < HeaderPrefix.Count; i++)
+            for (int i = 0; i < this.HeaderPrefix.Count; i++)
             {
                 retVal += "<ss:Row>";
 
-                for (int j = 0; j < HeaderPrefix[i].Count; j++)
+                for (int j = 0; j < this.HeaderPrefix[i].Count; j++)
                 {
                     retVal += "<ss:Cell>";
 
                     if (j == 0)
                     {
-                        retVal += "<ss:Data ss:Type=\"String\"><B>" + HeaderPrefix[i][j] + "</B></ss:Data>";
+                        retVal += "<ss:Data ss:Type=\"String\"><B>" + this.HeaderPrefix[i][j] + "</B></ss:Data>";
                     }
                     else
                     {
-                        retVal += "<ss:Data ss:Type=\"String\">" + HeaderPrefix[i][j] + "</ss:Data>";
+                        retVal += "<ss:Data ss:Type=\"String\">" + this.HeaderPrefix[i][j] + "</ss:Data>";
                     }
                     retVal += "</ss:Cell>";
                 }
@@ -97,8 +97,8 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 
             retVal += "<ss:Row></ss:Row>";
             retVal += "<ss:Row>";
-            
-            foreach (String header in ColumnHeaders)
+
+            foreach (string header in this.ColumnHeaders)
             {
                 retVal += "<ss:Cell>";
                 retVal += "<ss:Data ss:Type=\"String\"><B>" + header + "</B></ss:Data>";
@@ -107,17 +107,17 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
 
             retVal += "</ss:Row>";
 
-            for (int i = 0; i < DataRows.Count; i++)
+            for (int i = 0; i < this.DataRows.Count; i++)
             {
                 retVal += "<ss:Row>";
 
-                foreach (string header in ColumnHeaders)
+                foreach (string header in this.ColumnHeaders)
                 {
-                    string strValue = "";
+                    string strValue = string.Empty;
 
-                    if (DataRows[i].ContainsKey(header))
+                    if (this.DataRows[i].ContainsKey(header))
                     {
-                        strValue = DataRows[i][header];
+                        strValue = this.DataRows[i][header];
                     }
 
                     strValue = ReplaceSpecialCharacters(strValue);
@@ -134,7 +134,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             retVal += "</ss:Worksheet>";
             retVal += "</ss:Workbook>";
 
-            WriteFile(FileName, "application/ms-excel", retVal);
+            WriteFile(this.FileName, "application/ms-excel", retVal);
         }
 
         private static string ReplaceSpecialCharacters(string value)
@@ -152,7 +152,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Responses
             HttpContext context = HttpContext.Current;
             context.Response.Clear();
             context.Response.AddHeader("content-disposition", "attachment;filename=" + fileName);
-            context.Response.Charset = "";
+            context.Response.Charset = string.Empty;
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             context.Response.ContentType = contentType;
             context.Response.Write(content);

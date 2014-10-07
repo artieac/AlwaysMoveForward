@@ -18,19 +18,28 @@ namespace AlwaysMoveForward.PointChart.Web
     public class MvcApplication : System.Web.HttpApplication
     {
         private static SiteInfo siteInfo;
-        public static EmailConfiguration emailConfig;
-        public static WebSiteConfiguration siteConfig;
-        public static DbInfo dbInfo;
+        private static EmailConfiguration emailConfig;
+        private static WebSiteConfiguration siteConfig;
 
         static MvcApplication()
         {
-            MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection(EmailConfiguration.k_DefaultConfiguration);
-            MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection(WebSiteConfiguration.k_DefaultConfiguration);
+            MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection(EmailConfiguration.DefaultConfiguration);
+            MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection(WebSiteConfiguration.DefaultConfiguration);
         }
 
-        public static String Version
+        public static string Version
         {
             get { return "1.2.0"; }
+        }
+
+        public static EmailConfiguration EmailConfiguration
+        {
+            get { return MvcApplication.emailConfig; }
+        }
+
+        public static WebSiteConfiguration WebSiteConfiguration
+        {
+            get { return MvcApplication.siteConfig; }
         }
 
         public static SiteInfo SiteInfo
@@ -39,11 +48,11 @@ namespace AlwaysMoveForward.PointChart.Web
             {
                 if (MvcApplication.siteInfo == null)
                 {
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
 
                     if (serviceManager != null)
                     {
-                        MvcApplication.siteInfo = serviceManager.SiteInfo.GetSiteInfo();
+                        MvcApplication.siteInfo = serviceManager.SiteInfoService.GetSiteInfo();
 
                         if (MvcApplication.siteInfo == null)
                         {
@@ -82,14 +91,14 @@ namespace AlwaysMoveForward.PointChart.Web
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
-            routes.MapRoute("DeleteSpentPoints", // Route name
-                            "{controller}/{action}/{pointEarnerId}/{spentPointsId}", // URL with parameters
+            routes.MapRoute("PointEarnerObject", // Route name
+                            "{controller}/{action}/{pointEarnerId}/{id}", // URL with parameters
                             new
                             {
                                 controller = "Home",
                                 action = "Index",
                                 pointEarnerId = UrlParameter.Optional,
-                                spentPointsId = UrlParameter.Optional
+                                id = UrlParameter.Optional
                             } // Parameter defaults
                 );
 

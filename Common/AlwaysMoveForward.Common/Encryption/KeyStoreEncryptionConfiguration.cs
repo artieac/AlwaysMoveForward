@@ -8,20 +8,20 @@ namespace AlwaysMoveForward.Common.Encryption
 {
     public class KeyStoreEncryptionConfiguration : ConfigurationSection
     {
-        public const string k_DefaultSection = "Vistaprint/Digital/KeyStoreEncryptionConfiguration";
+        public const string DefaultSection = "Vistaprint/Digital/KeyStoreEncryptionConfiguration";
 
-        public const string k_StoreName = "StoreName";
-        public const string k_StoreLocation = "StoreLocation";
-        public const string k_CertificateName = "CertificateName";
+        public const string StoreNameSetting = "StoreName";
+        public const string StoreLocationSetting = "StoreLocation";
+        public const string CertificateNameSetting = "CertificateName";
 
-        static KeyStoreEncryptionConfiguration configurationInstance;
+        private static KeyStoreEncryptionConfiguration configurationInstance;
 
         public static KeyStoreEncryptionConfiguration GetInstance()
         {
-            return KeyStoreEncryptionConfiguration.GetInstance(k_DefaultSection);
+            return KeyStoreEncryptionConfiguration.GetInstance(DefaultSection);
         }
 
-        public static KeyStoreEncryptionConfiguration GetInstance(String configurationSection)
+        public static KeyStoreEncryptionConfiguration GetInstance(string configurationSection)
         {
             if (configurationInstance == null)
             {
@@ -35,29 +35,29 @@ namespace AlwaysMoveForward.Common.Encryption
         /// <summary>
         /// Define password to use to encrypt the data
         /// </summary>
-        [ConfigurationProperty(k_StoreName, IsRequired = false)]
+        [ConfigurationProperty(StoreNameSetting, IsRequired = false)]
         public string StoreName
         {
-            get { return (string)this[k_StoreName]; }
-            set { this[k_StoreName] = value; }
+            get { return (string)this[StoreNameSetting]; }
+            set { this[StoreNameSetting] = value; }
         }
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_StoreLocation, IsRequired = false)]
+        [ConfigurationProperty(StoreLocationSetting, IsRequired = false)]
         public string StoreLocation
         {
-            get { return (string)this[k_StoreLocation]; }
-            set { this[k_StoreLocation] = value; }
+            get { return (string)this[StoreLocationSetting]; }
+            set { this[StoreLocationSetting] = value; }
         }
         /// <summary>
         /// Define the salt used to modify the password.
         /// </summary>
-        [ConfigurationProperty(k_CertificateName, IsRequired = false)]
+        [ConfigurationProperty(CertificateNameSetting, IsRequired = false)]
         public string CertificateName
         {
-            get { return (string)this[k_CertificateName]; }
-            set { this[k_CertificateName] = value; }
+            get { return (string)this[CertificateNameSetting]; }
+            set { this[CertificateNameSetting] = value; }
         }
     }
 }

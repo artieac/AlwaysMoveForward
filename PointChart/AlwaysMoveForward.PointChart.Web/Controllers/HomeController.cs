@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
 using AlwaysMoveForward.PointChart.Web.Models;
 
@@ -12,7 +12,6 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        //
         // GET: /Home/
         [RequestAuthorizationFilter]
         public ActionResult Index()
@@ -28,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 model.PointEarners = new List<PointEarner>();
             }
 
-            return View(model);
+            return this.View(model);
         }
     }
 }

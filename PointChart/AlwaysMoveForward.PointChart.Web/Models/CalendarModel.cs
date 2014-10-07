@@ -30,18 +30,18 @@ namespace AlwaysMoveForward.PointChart.Web.Models
             this.TargetMonth = DateTime.Now;
         }
 
-        public String GenerateUrlForDay(DateTime startDate)
+        public string GenerateUrlForDay(DateTime startDate)
         {
-            return RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(startDate);
+            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(startDate);
         }
 
-        public String GenerateUrlForMonth(int offset)
+        public string GenerateUrlForMonth(int offset)
         {
-            return RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(this.TargetMonth.AddMonths(offset));
+            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(this.TargetMonth.AddMonths(offset));
         }
 
         // Not sure I like this......Not sure how else to do it though
-        public String RouteInformation { get; set; }
+        public string RouteInformation { get; set; }
         public DateTime ViewDate { get; set; }
         public DateTime WeekStartDate { get; set; }
         public DateTime TargetMonth { get; set; }

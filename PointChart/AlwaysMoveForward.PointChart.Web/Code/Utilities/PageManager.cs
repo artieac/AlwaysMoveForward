@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 
@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 {
     public class PageManager
     {
-        static IDictionary<int, Role> systemRoles = null;
+        private static IDictionary<int, Role> systemRoles = null;
 
         public static IDictionary<int, Role> Roles
         {
@@ -22,8 +22,8 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
                 {
                     systemRoles = new Dictionary<int, Role>();
 
-                    ServiceManager serviceManager = ServiceManager.BuildServiceManager() as ServiceManager;
-                    IList<Role> roles = serviceManager.Roles.GetAll();
+                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    IList<Role> roles = serviceManager.RoleService.GetAll();
 
                     for (int i = 0; i < roles.Count; i++)
                     {
@@ -35,30 +35,30 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             }
         }
 
-        public static Boolean IsSiteAdministrator()
+        public static bool IsSiteAdministrator()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
-                retVal = currentPrincipal.IsInRole(RoleType.SiteAdministrator);
+                retVal = currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString());
             }
 
             return retVal;
         }
 
-        public static Boolean CanAccessAdminTool()
+        public static bool CanAccessAdminTool()
         {
-            Boolean retVal = false;
+            bool retVal = false;
 
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
-                if(currentPrincipal.IsInRole(RoleType.SiteAdministrator) ||
-                   currentPrincipal.IsInRole(RoleType.Administrator))
+                if (currentPrincipal.IsInRole(RoleType.SiteAdministrator.ToString()) ||
+                    currentPrincipal.IsInRole(RoleType.Administrator.ToString()))
                 {
                     retVal = true;
                 }

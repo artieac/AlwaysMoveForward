@@ -26,12 +26,12 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
         public AdminAuthorizationFilter()
             : base()
         {
-            this.RequiredRoles = "";
+            this.RequiredRoles = string.Empty;
             this.IsBlogSpecific = true;
         }
 
-        public String RequiredRoles { get; set; }
-        public Boolean IsBlogSpecific { get; set; }
+        public string RequiredRoles { get; set; }
+        public bool IsBlogSpecific { get; set; }
 
         #region IAuthorizationFilter Members
 
@@ -45,14 +45,14 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
                 {
                     SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
 
-                    if (this.RequiredRoles == null || this.RequiredRoles == "")
+                    if (string.IsNullOrEmpty(this.RequiredRoles))
                     {
                         // Admin section needs at least one role specified.
                         isAuthorized = false;
                     }
                     else
                     {
-                        String[] roleList = this.RequiredRoles.Split(',');
+                        string[] roleList = this.RequiredRoles.Split(',');
 
                         for (int i = 0; i < roleList.Count(); i++)
                         {

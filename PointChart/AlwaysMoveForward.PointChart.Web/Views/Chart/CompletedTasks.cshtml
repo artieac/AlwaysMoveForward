@@ -1,0 +1,117 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.ChartTaskModel
+@using AlwaysMoveForward.PointChart.Common.DomainModel;
+@{
+    ViewBag.Title = "CompletedTasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+    <script src="@Url.Content("~/Scripts/Charts/Chart.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/Themes/Calendar.css")" rel="stylesheet" type="text/css" />
+}
+<form id="completeTaskForm" action="/Chart/CompleteTask" method="post">
+    <input type="hidden" id="chartId" name="chartId" value="@Model.Chart.Id" />
+    <input type="hidden" id="taskId" name="taskId" value="" />
+    <input type="hidden" id="weekStartDate" name="weekStartDate" value="@Model.Calendar.WeekStartDate.ToShortDateString()" />
+    <input type="hidden" id="sundayInput" name="sundayInput" value="" />
+    <input type="hidden" id="mondayInput" name="mondayInput" value="" />
+    <input type="hidden" id="tuesdayInput" name="tuesdayInput" value="" />
+    <input type="hidden" id="wednesdayInput" name="wednesdayInput" value="" />
+    <input type="hidden" id="thursdayInput" name="thursdayInput" value="" />
+    <input type="hidden" id="fridayInput" name="fridayInput" value="" />
+    <input type="hidden" id="saturdayInput" name="saturdayInput" value="" />
+</form>
+<div>
+    <div style="width:75%;float:left;">
+        <div>
+            <div>
+                <label>PointEarner: </label>
+                <label>@Model.PointEarner.FirstName</label>&nbsp;
+                <label>@Model.PointEarner.LastName</label>&nbsp;
+            </div>
+            <div>
+                <label>Chart Name: </label>
+                <label>@Model.Chart.Name</label>&nbsp;
+                <a href="/Chart/ExportEmpty/@Model.Chart.Id?fileType=excel"><img src="@Url.Content("~/Content/images/paper_white.png")" alt="Export Empty" /></a>&nbsp;
+                <a href="/Chart/Export/@Model.Chart.Id?fileType=excel&@AlwaysMoveForward.PointChart.Web.Models.CalendarModel.GenerateDateFilter(@Model.Calendar.WeekStartDate)"><img src="@Url.Content("~/Content/images/download.png")" alt="Download" /></a>
+            </div>
+        </div>
+        <br />
+        <table>
+            <tr>
+                <th>Points Earned</th>
+                <th>Points Spent</th>
+                <th>Available Points</th>
+            </tr>
+            <tr>
+                <td width="30%" align="center">@Model.PointEarner.PointsEarned</td>
+                <td width="30%" align="center">@Model.PointEarner.TotalPointsSpent</td>
+                <td align="center">@Model.PointEarner.PointsAvailable</td>
+            </tr>
+        </table>
+    </div>
+    <div style="width:24%;float:right;">
+        @Html.Partial("_CalendarControl", @Model.Calendar)
+    </div>
+</div>
+<div>
+    <table class="tableBase taskInputTable">
+        <thead>
+            <tr class="tableHeader">
+                <td>Task</td>
+                <td>@Model.Calendar.WeekStartDate.ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(1).ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(2).ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(3).ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(4).ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(5).ToShortDateString()</td>
+                <td>@Model.Calendar.WeekStartDate.AddDays(6).ToShortDateString()</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowCounter = 0;
+                foreach (Task chartTaskItem in @Model.ChartTasks)
+                {
+                    if (rowCounter % 2 == 0)
+                    {
+                        <text>
+                            <tr class='tableRow1'>
+                        </text>
+                    }
+                    else
+                    {
+                        <text>
+                        <tr class='tableRow2'>
+                        </text>
+                    }
+
+                    <td>@chartTaskItem.Name (@chartTaskItem.Points) </td>
+
+                    if (Model.CompletedTasks.ContainsKey(chartTaskItem.Id))
+                    {
+                        <td><input type="text" name="sundayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate)){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate].NumberOfTimesCompleted } else { <text>0</text>}" /></td>
+                        <td><input type="text" name="mondayinput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(1))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(1)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="tuesdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(2))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(2)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="wednesdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(3))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(3)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="thursdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(4))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(4)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="fridayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(5))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(5)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                        <td><input type="text" name="saturdayInput" value="@if(Model.CompletedTasks[chartTaskItem.Id].ContainsKey(Model.Calendar.WeekStartDate.AddDays(6))){ @Model.CompletedTasks[chartTaskItem.Id][Model.Calendar.WeekStartDate.AddDays(6)].NumberOfTimesCompleted } else { <text>0</text>}"/></td>
+                    }
+                    else
+                    {
+                        <td><input type="text" name="sundayInput" value="0" /></td>
+                        <td><input type="text" name="mondayinput" value="0" /></td>
+                        <td><input type="text" name="tuesdayInput" value="0" /></td>
+                        <td><input type="text" name="wednesdayInput" value="0" /></td>
+                        <td><input type="text" name="thursdayInput" value="0" /></td>
+                        <td><input type="text" name="fridayInput" value="0" /></td>
+                        <td><input type="text" name="saturdayInput" value="0" /></td>
+                    }
+                    @Html.Raw("</tr>")
+                }
+            }
+    </tbody>
+</table>
+</div>

@@ -15,6 +15,7 @@ using System.Text;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 using NHibernate.Criterion;
@@ -30,75 +31,39 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : ActiveRecordRepository<SiteInfo, SiteInfoDTO>, ISiteInfoRepository
+    public class SiteInfoRepository : ActiveRecordRepositoryBase<SiteInfo, SiteInfoDTO, int>, ISiteInfoRepository
     {
-        public SiteInfoRepository(IUnitOfWork unitOfWork)
-            : base(unitOfWork, null)
+        public SiteInfoRepository(UnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
         }
 
-        public override SiteInfoDTO Map(SiteInfo source)
+        protected override SiteInfoDTO GetDTOById(SiteInfo domainInstance)
         {
-            SiteInfoDTO retVal = new SiteInfoDTO();
-            retVal.About = source.About;
-            retVal.ContactEmail = source.ContactEmail;
-            retVal.DefaultTheme = source.DefaultTheme;
-            retVal.Name = source.Name;
-            retVal.SiteAnalyticsId = source.SiteAnalyticsId;
-            retVal.SiteId = source.SiteId;
-            return retVal;
+            return this.GetDTOById(domainInstance.SiteId);
         }
 
-        public override SiteInfo Map(SiteInfoDTO source)
+        protected override SiteInfoDTO GetDTOById(int idSource)
         {
-            SiteInfo retVal = new SiteInfo();
-            retVal.About = source.About;
-            retVal.ContactEmail = source.ContactEmail;
-            retVal.DefaultTheme = source.DefaultTheme;
-            retVal.Name = source.Name;
-            retVal.SiteAnalyticsId = source.SiteAnalyticsId;
-            retVal.SiteId = source.SiteId;
-            return retVal;
+            DetachedCriteria criteria = DetachedCriteria.For<SiteInfoDTO>();
+            criteria.Add(Expression.Eq("SiteId", idSource));
+
+            return Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindOne(criteria);
         }
 
-        public override string IdPropertyName
+        protected override DataMapBase<SiteInfo, SiteInfoDTO> GetDataMapper()
         {
-            get { return "SiteId"; }
+            throw new NotImplementedException();
         }
+
         /// <summary>
         /// Get stored web site settings.
         /// </summary>
         /// <returns></returns>
         public SiteInfo GetSiteInfo()
         {
-            return this.Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
-        }
-
-        public override SiteInfo Save(SiteInfo source)
-        {
-            SiteInfo retVal = null;
-
-            SiteInfoDTO dtoItem = Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst();
-
-            if (dtoItem != null)
-            {
-                dtoItem.About = source.About;
-                dtoItem.ContactEmail = source.ContactEmail;
-                dtoItem.DefaultTheme = source.DefaultTheme;
-                dtoItem.Name = source.Name;
-                dtoItem.SiteAnalyticsId = source.SiteAnalyticsId;
-                dtoItem.SiteId = source.SiteId;
-
-                dtoItem = this.Save(dtoItem);
-
-                if (dtoItem != null)
-                {
-                    retVal = this.Map(dtoItem);
-                }
-            }
-
-            return retVal;
+            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<SiteInfoDTO>.FindFirst());
         }
 
         public override bool Delete(SiteInfo itemToDelete)

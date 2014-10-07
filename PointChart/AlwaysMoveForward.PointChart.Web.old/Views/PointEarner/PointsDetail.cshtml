@@ -1,0 +1,69 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.PointEarnerModel
+@using AMF = AlwaysMoveForward.PointChart.Common.DomainModel;           
+@{
+    ViewBag.Title = "Points Spent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+    <script src="@Url.Content("~/Scripts/Charts/Chart.js")" type="text/javascript"></script>
+}
+<div>
+    <label>Point Earner</label>: @Model.PointEarner.FirstName @Model.PointEarner.LastName<br/>
+    <label>Points Earned</label>: @Model.PointEarner.PointsEarned<br/>
+    <label>Points Spent</label>: @Model.PointEarner.TotalPointsSpent<br/>
+</div>
+<br/>
+<form id="spendPointsForm" action="/PointEarner/SpendPoints" method="post">
+    <input type="hidden" id="pointEarnerId" name="pointEarnerId" value="@Model.PointEarner.Id" />
+    @Model.PointEarner.FirstName 
+    <label>spent</label> 
+    <input type="text" id="pointsToSpend" name="pointsToSpend" value="" /> 
+    <label> points on </label>
+    <input type="text" id="dateSpent" name="dateSpent" value="@DateTime.Now.ToShortDateString()" />
+    <label> for </label>
+    <input type="text" id="description" name="description" value=""/>    
+    <input type="Submit" value="Save"/>
+</form>
+<br/>
+<table class="tableBase">
+    <thead>
+        <tr class="tableHeader">
+            <td width="1%">&nbsp;</td>
+            <td>Date Spent</td>
+            <td>Amount</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        int rowCounter = 0;
+
+        foreach (AMF.PointsSpent pointsSpentItem in Model.PointEarner.PointsSpent)
+        {
+            if (rowCounter % 2 == 0)
+            {
+                <text><tr class='tableRow1'></text>
+            }
+            else
+            {
+                <text><tr class='tableRow2'></text>
+            }
+
+            rowCounter++;
+            String inputRoot = "pointsSpentInput" + @pointsSpentItem.Id + "Element";
+            String nameInput = inputRoot + "ChartName";
+            String saveButton = inputRoot + "SaveButton";
+            <td>@pointsSpentItem.DateSpent</td>
+            <td>@pointsSpentItem.Amount</td>
+            <td>@pointsSpentItem.Description</td>
+            <td>
+                <a class="readonly" href="/PointEarner/DeletePointsSpent/@pointsSpentItem.PointEarner.Id/@pointsSpentItem.Id"><img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteList" alt=""/></a>
+            </td>
+            @Html.Raw("</tr>")
+        }
+    }
+    </tbody>
+</table> 
+

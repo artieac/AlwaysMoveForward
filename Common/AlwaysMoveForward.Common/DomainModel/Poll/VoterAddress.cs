@@ -8,11 +8,19 @@ namespace AlwaysMoveForward.Common.DomainModel.Poll
 {
     public class VoterAddress
     {
-        public VoterAddress(IPAddress ipAddress)
+        public VoterAddress() 
         {
-            this.Address = ipAddress;
+            this.Id = -1;
+            this.Address = IPAddress.None;
         }
 
+        public VoterAddress(IPAddress address)
+        {
+            this.Id = -1;
+            this.Address = address;
+        }
+
+        public int Id { get; set; }
         public IPAddress Address { get; private set; }
     }
 }

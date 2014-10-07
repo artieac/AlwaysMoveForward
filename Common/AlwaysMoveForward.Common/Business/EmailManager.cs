@@ -11,9 +11,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net.Mail;
-
+using System.Text;
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.Utilities;
 
@@ -25,6 +24,7 @@ namespace AlwaysMoveForward.Common.Business
     public class EmailManager
     {
         private EmailConfiguration emailConfig = null;
+
         /// <summary>
         /// The constructor forces the caller to define the email configuration options necessary to
         /// connect to the smtp server.
@@ -44,14 +44,14 @@ namespace AlwaysMoveForward.Common.Business
         public void SendEmail(string fromAddress, string toAddress, string emailSubject, string emailBody)
         {
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(emailConfig.FromAddress);
+            mail.From = new MailAddress(this.emailConfig.FromAddress);
             mail.To.Add(toAddress);
             mail.Subject = emailSubject;
             mail.Body = emailBody;
 
             try
             {
-                SmtpClient smtpClient = new SmtpClient(emailConfig.SmtpServer, emailConfig.SmtpPort);
+                SmtpClient smtpClient = new SmtpClient(this.emailConfig.SmtpServer, this.emailConfig.SmtpPort);
                 smtpClient.Send(mail);
             }
             catch (Exception e)

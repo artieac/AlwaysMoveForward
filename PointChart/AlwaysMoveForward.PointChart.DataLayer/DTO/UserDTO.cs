@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         }
 
         [PrimaryKey(PrimaryKeyType.Identity, "UserId", UnsavedValue = "-1")]
-        public int UserId{ get; set;}
+        public int UserId { get; set; }
 
         [Property("UserName")]
         public string UserName { get; set; }
@@ -48,9 +48,9 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public bool IsSiteAdministrator { get; set; }
 
         [Property("About", ColumnType = "StringClob")]
-        public String About{ get; set;}
+        public string About { get; set; }
 
         [Property("DisplayName")]
-        public string DisplayName{ get; set;}
+        public string DisplayName { get; set; }
     }
 }

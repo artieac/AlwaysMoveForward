@@ -19,7 +19,7 @@ using System.Web.Security;
 
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
 using AlwaysMoveForward.PointChart.Web.Models;
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return retVal;
         }
 
-        public UserModel InitializeUserModel(String blogSubFolder)
+        public UserModel InitializeUserModel(string blogSubFolder)
         {
             UserModel retVal = new UserModel();
             return retVal;
@@ -42,16 +42,16 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
         private void EstablishCurrentUserCookie(SecurityPrincipal currentPrincipal)
         {
-            if (currentPrincipal != null && currentPrincipal.CurrentUser!=null)
+            if (currentPrincipal != null && currentPrincipal.CurrentUser != null)
             {
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, "");
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
-                HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
-                this.HttpContext.Response.Cookies.Add(faCookie);
+                HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                this.HttpContext.Response.Cookies.Add(authenticationCookie);
 
                 this.CurrentPrincipal = currentPrincipal;
             }
@@ -81,12 +81,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             if (loginAction == "login")
             {
-                model.CurrentUser = Services.Users.Login(userName, password);
+                model.CurrentUser = Services.UserService.Login(userName, password);
 
                 if (model.CurrentUser == null)
                 {
                     this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     model.CurrentUser = this.CurrentPrincipal.CurrentUser;
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             else
             {
                 this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                 model.CurrentUser = this.CurrentPrincipal.CurrentUser;
             }
 
@@ -108,7 +108,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 currentPage = "/Home/Index";
             }
 
-            return View("UserLogin");
+            return this.View("UserLogin");
         }
 
         public JsonResult AjaxLogin(string blogSubFolder, string userName, string password, string loginAction)
@@ -119,12 +119,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             {
                 retVal.ProcessedLogin = true;
 
-                User currentUser = Services.Users.Login(userName, password);
+                User currentUser = Services.UserService.Login(userName, password);
 
                 if (currentUser == null)
                 {
                     this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
                 else
@@ -137,10 +137,10 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             else
             {
                 this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.Users.GetDefaultUser());
+                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
             }
 
-            return Json(retVal);
+            return this.Json(retVal);
         }
 
         [RequestAuthorizationAttribute]
@@ -148,7 +148,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         {
             UserModel model = new UserModel();
             model.CurrentUser = this.CurrentPrincipal.CurrentUser;
-            return View(model);
+            return this.View(model);
         }
 
         [RequestAuthorizationAttribute]
@@ -161,9 +161,9 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             userToSave.Password = password;
             userToSave.Email = email;
 
-            model.CurrentUser = Services.Users.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
+            model.CurrentUser = Services.UserService.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
 
-            return View("Preferences", model);
+            return this.View("Preferences", model);
         }
 
         public ActionResult Register(string registerAction, string userName, string password, string email, string userAbout, string displayName)
@@ -172,40 +172,40 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             if (registerAction == "save")
             {
-                if (userName == "")
+                if (string.IsNullOrEmpty(userName))
                 {
                     ModelState.AddModelError("userName", "Please enter a user name.");
                 }
 
-                if (password == "")
+                if (string.IsNullOrEmpty(password))
                 {
                     ModelState.AddModelError("password", "Please enter a password.");
                 }
 
-                if (email == "")
+                if (string.IsNullOrEmpty(email))
                 {
                     ModelState.AddModelError("email", "Please enter an email address.");
                 }
 
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    model.CurrentUser = Services.Users.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
+                    model.CurrentUser = Services.UserService.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
 
                     this.CurrentPrincipal = new SecurityPrincipal(model.CurrentUser, true);
 
                     this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-                    return RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Home");
                 }
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public ActionResult ForgotPassword(string userEmail)
         {
             UserModel model = new UserModel();
-            Services.Users.SendPassword(userEmail, MvcApplication.emailConfig);
-            return View("UserLogin", model);
+            Services.UserService.SendPassword(userEmail, MvcApplication.EmailConfiguration);
+            return this.View("UserLogin", model);
         }
     }
 }

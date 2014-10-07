@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
-using AlwaysMoveForward.PointChart.DataLayer.Entities;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Task Add(String taskName, double points, int maxAllowedDaily, User currentUser)
+        public Task Add(string taskName, double points, int maxAllowedDaily, User currentUser)
         {
             Task retVal = null;
 
@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Task Edit(int taskId, String taskName, double points, int maxAllowedDaily, User currentUser)
+        public Task Edit(int taskId, string taskName, double points, int maxAllowedDaily, User currentUser)
         {
             Task retVal = this.PointChartRepositories.Tasks.GetById(taskId);
 

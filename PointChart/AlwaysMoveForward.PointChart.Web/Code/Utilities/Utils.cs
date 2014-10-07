@@ -24,22 +24,22 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 {
     public class Utils
     {
-        public static string GetSecureURL(string blogSubFolder, string targetUrl, String siteAuthority)
+        public static string GetSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
         {
-            string retVal = "";
+            string retVal = string.Empty;
 
-            if (MvcApplication.siteConfig.EnableSSL == true)
+            if (MvcApplication.WebSiteConfiguration.EnableSSL == true)
             {
                 retVal = "http://" + siteAuthority;
 
-                if (!String.IsNullOrEmpty(blogSubFolder))
+                if (!string.IsNullOrEmpty(blogSubFolder))
                 {
                     retVal += "/" + blogSubFolder;
                 }
             }
             else
             {
-                if (!String.IsNullOrEmpty(blogSubFolder))
+                if (!string.IsNullOrEmpty(blogSubFolder))
                 {
                     retVal = "/" + blogSubFolder;
                 }
@@ -53,11 +53,11 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             return retVal + targetUrl;
         }
 
-        public static string GetInSecureURL(string blogSubFolder, string targetUrl, String siteAuthority)
+        public static string GetInSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
         {
             string retVal = "http://" + siteAuthority;
 
-            if (blogSubFolder != "")
+            if (!string.IsNullOrEmpty(blogSubFolder))
             {
                 retVal += "/" + blogSubFolder;
             }

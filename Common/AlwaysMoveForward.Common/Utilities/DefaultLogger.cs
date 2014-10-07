@@ -10,18 +10,18 @@ namespace AlwaysMoveForward.Common.Utilities
             log4net.Config.XmlConfigurator.Configure();
         }
 
-        private ILog _logger = null;
+        private ILog logger = null;
 
         public ILog Logger
         {
             get
             {
-                if (_logger == null)
+                if (this.logger == null)
                 {
-                    _logger = log4net.LogManager.GetLogger(this.GetType());
+                    this.logger = log4net.LogManager.GetLogger(this.GetType());
                 }
 
-                return _logger;
+                return this.logger;
             }
         }
 

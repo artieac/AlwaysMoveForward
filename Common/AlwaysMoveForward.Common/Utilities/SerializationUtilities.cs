@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class SerializationUtilities
     {
-        static public XmlElement SerializeObjectToXml(object sourceData)
+        public static XmlElement SerializeObjectToXml(object sourceData)
         {
             XmlElement retVal = null;
 
@@ -37,13 +37,13 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-
+                LogManager.GetLogger().Error("SerializationUtilities", "SerializeObjectToXml", e);
             }
 
             return retVal;
         }
 
-        static public object DeserializeXmlToObject(XmlElement sourceData, Type targetType)
+        public static object DeserializeXmlToObject(XmlElement sourceData, Type targetType)
         {
             object retVal = null;
 
@@ -55,13 +55,13 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-
+                LogManager.GetLogger().Error("SerializationUtilities", "DeserializeXmlToObject", e);
             }
 
             return retVal;
         }
 
-        static public object DeserializeXmlToObject(XmlElement sourceData, Type targetType, string defaultNamespace)
+        public static object DeserializeXmlToObject(XmlElement sourceData, Type targetType, string defaultNamespace)
         {
             object retVal = null;
 
@@ -73,11 +73,10 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-
+                LogManager.GetLogger().Error("SerializationUtilities", "DeserializeXmlToObject", e);
             }
 
             return retVal;
         }
-
     }
 }
