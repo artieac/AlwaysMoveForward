@@ -647,17 +647,9 @@
       <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
       <Name>AlwaysMoveForward.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AlwaysMoveForward.PointChart.BusinessLayer\AlwaysMoveForward.PointChart.BusinessLayer.csproj">
-      <Project>{0e3719ec-bce0-4ac9-a881-7dad7e8f63b1}</Project>
-      <Name>AlwaysMoveForward.PointChart.BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AlwaysMoveForward.PointChart.Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>
       <Name>AlwaysMoveForward.PointChart.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AlwaysMoveForward.PointChart.DataLayer\AlwaysMoveForward.PointChart.DataLayer.csproj">
-      <Project>{0a24fa2f-be5c-4fab-b16f-768d3fcb7143}</Project>
-      <Name>AlwaysMoveForward.PointChart.DataLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
