@@ -26,42 +26,42 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.BlogId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "BlogId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="BlogId", Type = "Int32", Column = "BlogId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int BlogId { get; set; }
+        public virtual int BlogId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string SubFolder { get; set; }
+        public virtual string SubFolder { get; set; }
 
         [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string About { get; set; }
+        public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string WelcomeMessage { get; set; }
+        public virtual string WelcomeMessage { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string ContactEmail { get; set; }
+        public virtual string ContactEmail { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Theme { get; set; }
+        public virtual string Theme { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public int CurrentPollId { get; set; }
+        public virtual int CurrentPollId { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntries", Cascade="SaveUpdate")]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntries", Cascade="Save-Update")]
         [NHibernate.Mapping.Attributes.Key(1, Column = "EntryId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogListDTO))]
-        public IList<BlogPostDTO> Posts { get; set; }
+        public virtual IList<BlogPostDTO> Posts { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogUser", Cascade="Delete", Inverse=true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "BlogUserId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogUserDTO))]
-        public IList<BlogUserDTO> Users { get; set; }
+        public virtual IList<BlogUserDTO> Users { get; set; }
     }
 }

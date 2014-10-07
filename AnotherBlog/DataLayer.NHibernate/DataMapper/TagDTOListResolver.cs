@@ -26,7 +26,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 for (int i = 0; i < tagDestination.Count; i++)
                 {
                     tagDestination[i] = Mapper.Map(((BlogPost)source.Value).Tags[i], tagDestination[i]);
-                    tagDestination[i].Blog = ((BlogPostDTO)source.Context.DestinationValue).Blog;
                 }
 
                 BlogPost sourceObject = (BlogPost)source.Value;
@@ -36,12 +35,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     if (i >= tagDestination.Count())
                     {
                         tagDestination.Add(Mapper.Map<Tag, TagDTO>(sourceObject.Tags[i]));
-                        tagDestination[i].Blog = ((BlogPostDTO)source.Context.DestinationValue).Blog;
                     }
                     else
                     {
                         tagDestination[i] = Mapper.Map(sourceObject.Tags[i], tagDestination[i]);
-                        tagDestination[i].Blog = ((BlogPostDTO)source.Context.DestinationValue).Blog;
                     }
                 }
             }

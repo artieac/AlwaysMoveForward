@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
 
         }
 
-        [NHibernate.Mapping.Attributes.Id(Column = "Version", UnsavedValue = "-1")]
-        public int Version { get; set; }
+        [NHibernate.Mapping.Attributes.Id(Type = "Int32", Column = "Version", UnsavedValue = "-1")]
+        public virtual int Version { get; set; }
     }
 }

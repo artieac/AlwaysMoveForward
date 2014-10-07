@@ -26,11 +26,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.RoleId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "RoleId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="RoleId", Type = "Int32", Column = "RoleId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int RoleId { get; set; }
+        public virtual int RoleId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }

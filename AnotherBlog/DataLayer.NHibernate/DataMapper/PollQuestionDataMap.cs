@@ -76,7 +76,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             if (AutoMapper.Mapper.FindTypeMapFor<PollQuestion, PollQuestionDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<VoterAddress, VoterAddressDTO>()
-                    .ForMember(dest => dest.AddressString, opt => opt.Ignore())
+                    .ForMember(dest => dest.IPAddress, opt => opt.MapFrom( src => src.Address))
                     .ForMember(dest => dest.Option, opt => opt.Ignore());
                 AutoMapper.Mapper.CreateMap<PollOption, PollOptionDTO>()
                     .ForMember(dest => dest.Question, opt => opt.Ignore())
@@ -87,7 +87,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
             if (AutoMapper.Mapper.FindTypeMapFor<PollQuestionDTO, PollQuestion>() == null)
             {
-                AutoMapper.Mapper.CreateMap<VoterAddressDTO, VoterAddress>();
+                AutoMapper.Mapper.CreateMap<VoterAddressDTO, VoterAddress>()
+                    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.IPAddress));
                 AutoMapper.Mapper.CreateMap<PollOptionDTO, PollOption>();
                 AutoMapper.Mapper.CreateMap<PollQuestionDTO, PollQuestion>();
             }

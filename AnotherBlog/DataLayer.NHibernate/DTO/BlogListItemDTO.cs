@@ -26,20 +26,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "BlogList", Class = "BlogListDTO", ClassType = typeof(BlogListDTO), Column = "BlogListId")]
-        public BlogListDTO BlogList { get; set; }
+        public virtual BlogListDTO BlogList { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string RelatedLink { get; set; }
+        public virtual string RelatedLink { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public int DisplayOrder { get; set; }
+        public virtual int DisplayOrder { get; set; }
     }
 }

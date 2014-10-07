@@ -26,19 +26,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "PollOptionId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="Id", Type = "Int32", Column = "PollOptionId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string OptionText { get; set; }
+        public virtual string OptionText { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "Question", Class = "PollQuestionDTO", ClassType = typeof(PollQuestionDTO), Column = "PollQuestionId")]
-        public PollQuestionDTO Question { get; set; }
+        public virtual PollQuestionDTO Question { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "VoterAddresses", Cascade = "AllDeleteOrphan", Inverse = true)]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "Id")]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "VoterAddresses", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "PollOptionId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(VoterAddressDTO))]
-        public IList<VoterAddressDTO> VoterAddresses { get; set; }
+        public virtual IList<VoterAddressDTO> VoterAddresses { get; set; }
     }
 }

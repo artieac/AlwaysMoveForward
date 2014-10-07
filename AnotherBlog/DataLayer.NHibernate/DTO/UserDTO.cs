@@ -27,32 +27,32 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.UserId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Type = "Int32", Column = "UserId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int UserId { get; set; }
+        public virtual int UserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string UserName { get; set; }
+        public virtual string UserName { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public bool ApprovedCommenter { get; set; }
+        public virtual bool ApprovedCommenter { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public bool IsActive { get; set; }
+        public virtual bool IsActive { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public bool IsSiteAdministrator { get; set; }
+        public virtual bool IsSiteAdministrator { get; set; }
 
         [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string About { get; set; }
+        public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string DisplayName { get; set; }
+        public virtual string DisplayName { get; set; }
     }
 }

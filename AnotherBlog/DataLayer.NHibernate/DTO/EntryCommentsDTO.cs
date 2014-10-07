@@ -25,29 +25,29 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.CommentId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "CommentId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="CommentId", Type = "Int32", Column = "CommentId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int CommentId { get; set; }
+        public virtual int CommentId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public int Status { get; set; }
+        public virtual int Status { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Link { get; set; }
+        public virtual string Link { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string AuthorEmail { get; set; }
+        public virtual string AuthorEmail { get; set; }
 
-        [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string Text { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public string AuthorName { get; set; }
+        [NHibernate.Mapping.Attributes.Property(Column="Comment", Type="StringClob")]
+        public virtual string Text { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public DateTime DatePosted { get; set; }
+        public virtual string AuthorName { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Post", Class = "BlogPostDTO", ClassType = typeof(BlogPostDTO), Column = "EntryId")]
-        public BlogPostDTO BlogPost { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual DateTime DatePosted { get; set; }
+
+        [NHibernate.Mapping.Attributes.ManyToOne(Name = "BlogPost", Class = "BlogPostDTO", ClassType = typeof(BlogPostDTO), Column = "EntryId")]
+        public virtual BlogPostDTO BlogPost { get; set; }
     }
 }

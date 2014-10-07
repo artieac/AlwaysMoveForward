@@ -26,17 +26,17 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.BlogUserId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "BlogUserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="BlogUserId", Type = "Int32", Column = "BlogUserId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int BlogUserId { get; set; }
+        public virtual int BlogUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "Blog", Class = "BlogDTO", ClassType = typeof(BlogDTO), Column = "BlogId")]
-        public BlogDTO Blog { get; set; }
+        public virtual BlogDTO Blog { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "User", Class = "UserDTO", ClassType = typeof(UserDTO), Column = "UserId")]
-        public UserDTO User { get; set; }
+        public virtual UserDTO User { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "Role", Class = "RoleDTO", ClassType = typeof(RoleDTO), Column = "RoleId")]
-        public RoleDTO Role { get; set; }
+        public virtual RoleDTO Role { get; set; }
     }
 }

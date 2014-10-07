@@ -26,22 +26,22 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
-
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Blog", Class = "BlogDTO", ClassType = typeof(BlogDTO), Column = "BlogId")]
-        public BlogDTO Blog { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual int BlogId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public bool ShowOrdered { get; set; }
+        public virtual string Name { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogListItems", Cascade="AllDeleteOrphan", Inverse=true)]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "Id")]
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual bool ShowOrdered { get; set; }
+
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogListItems", Cascade="All-Delete-Orphan", Inverse=true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "BlogListId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogListItemDTO))]
-        public IList<BlogListItemDTO> Items { get; set; }
+        public virtual IList<BlogListItemDTO> Items { get; set; }
     }
 }

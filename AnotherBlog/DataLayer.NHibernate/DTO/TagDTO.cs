@@ -25,19 +25,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="Id", Type = "Int32", Column = "id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "Blog", Class = "BlogDTO", ClassType = typeof(BlogDTO), Column = "BlogId")]
-        public BlogDTO Blog { get; set; }
+        public virtual BlogDTO Blog { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntryTags", Cascade = "SaveUpdate")]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntryTags", Cascade = "Save-Update")]
         [NHibernate.Mapping.Attributes.Key(1, Column = "TagID")]
         [NHibernate.Mapping.Attributes.ManyToMany(2, Column = "BlogEntryId", ClassType = typeof(BlogPostDTO))]
-        public IList<BlogPostDTO> BlogEntries { get; set; }
+        public virtual IList<BlogPostDTO> BlogEntries { get; set; }
     }
 }

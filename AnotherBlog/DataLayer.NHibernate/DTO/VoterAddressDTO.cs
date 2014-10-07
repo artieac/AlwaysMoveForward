@@ -26,20 +26,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "VoterAddressId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Type = "Int32", Column = "VoterAddressId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
+
+        public virtual IPAddress IPAddress { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string AddressString
+        public virtual string Address
         {
-            get { return this.Address.ToString(); }
-            set { this.Address = IPAddress.Parse(value); }
+            get { return this.IPAddress.ToString(); }
+            set { this.IPAddress = IPAddress.Parse(value); }
         }
 
-        public IPAddress Address { get; private set; }
-
         [NHibernate.Mapping.Attributes.ManyToOne(Name="Option", Class="PollOptionDTO", ClassType=typeof(PollOptionDTO), Column="PollOptionId")]
-        public PollOptionDTO Option { get; set; }
+        public virtual PollOptionDTO Option { get; set; }
     }
 }

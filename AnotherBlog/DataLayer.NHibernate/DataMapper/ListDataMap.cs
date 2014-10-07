@@ -43,6 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         static ListDataMap()
         {
+
             if (AutoMapper.Mapper.FindTypeMapFor<BlogList, DbInfoDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<BlogList, BlogListDTO>()

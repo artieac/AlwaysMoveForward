@@ -108,6 +108,10 @@
     <Compile Include="Areas\Admin\Models\ManagePollsModel.cs" />
     <Compile Include="Areas\Admin\Models\SiteModel.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
+    <Compile Include="Areas\API\APIAreaRegistration.cs" />
+    <Compile Include="Areas\API\Controllers\BlogAPIController.cs" />
+    <Compile Include="Areas\API\Controllers\DisplayListAPIController.cs" />
+    <Compile Include="Areas\API\Models\ListControlModel.cs" />
     <Compile Include="Code\Extensions\FilterExtension.cs" />
     <Compile Include="Code\Extensions\Pager.cs" />
     <Compile Include="Code\Extensions\PagerExtensions.cs" />
@@ -290,20 +294,34 @@
     <Content Include="Scripts\Admin\ManageBlogLists.js" />
     <Content Include="Scripts\Admin\ManageBlogPosts.js" />
     <Content Include="Scripts\Admin\ManageUsers.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Blog\BlogPost.js" />
+    <Content Include="Scripts\bootstrap-wysiwyg.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Common\SiteCommon.js" />
     <Content Include="Scripts\Common\SiteLogin.js" />
-    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.5.1.js" />
-    <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\Controllers\BlogController.js" />
+    <Content Include="Scripts\Controllers\ListController.js" />
+    <Content Include="Scripts\Controllers\ManageBlogController.js" />
+    <Content Include="Scripts\Controllers\ManageListsController.js" />
+    <Content Include="Scripts\Controllers\ManagePollsController.js" />
+    <Content Include="Scripts\Controllers\PollController.js" />
+    <Content Include="Areas\API\Views\Web.config" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\Less\less-1.3.3.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\Modules\FactoryModule.js" />
+    <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -344,6 +362,7 @@
     <Content Include="Views\RSS\Atom.cshtml" />
     <Content Include="Views\RSS\Comments.cshtml" />
     <Content Include="Views\RSS\Posts.cshtml" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_TabControl.cshtml" />
@@ -398,6 +417,7 @@
     <Content Include="Areas\Admin\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\API\Views\Shared\" />
     <Folder Include="Content\tiny_mce\plugins\advlink\css\" />
     <Folder Include="Content\tiny_mce\plugins\advlink\js\" />
     <Folder Include="Content\tiny_mce\plugins\advlink\langs\" />

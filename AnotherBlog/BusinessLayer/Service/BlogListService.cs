@@ -31,7 +31,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public BlogList Create(Blog targetBlog)
         {
             BlogList retVal = new BlogList();
-            retVal.Blog = targetBlog;
+            retVal.BlogId = targetBlog.BlogId;
 
             return retVal;
         }
@@ -105,7 +105,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             itemToSave.Name = name;
             itemToSave.ShowOrdered = showOrdered;
-            itemToSave.Blog = targetBlog;
+            itemToSave.BlogId = targetBlog.BlogId;
 
             return this.Save(itemToSave);
         }

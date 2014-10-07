@@ -26,23 +26,23 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.SiteId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Column = "SiteId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="SiteId", Type = "Int32", Column = "SiteId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int SiteId { get; set; }
+        public virtual int SiteId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property(Type="StringClob")]
-        public string About { get; set; }
+        public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string ContactEmail { get; set; }
+        public virtual string ContactEmail { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string DefaultTheme { get; set; }
+        public virtual string DefaultTheme { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string SiteAnalyticsId { get; set; }
+        public virtual string SiteAnalyticsId { get; set; }
     }
 }
