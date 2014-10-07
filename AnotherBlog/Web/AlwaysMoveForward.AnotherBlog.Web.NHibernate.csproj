@@ -288,18 +288,16 @@
     <Content Include="Content\tiny_mce\utils\form_utils.js" />
     <Content Include="Content\tiny_mce\utils\mctabs.js" />
     <Content Include="Content\tiny_mce\utils\validate.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Admin\AdminCommon.js" />
-    <Content Include="Scripts\Admin\ManageBlogLists.js" />
     <Content Include="Scripts\Admin\ManageBlogPosts.js" />
     <Content Include="Scripts\Admin\ManageUsers.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\Blog\BlogPost.js" />
     <Content Include="Scripts\bootstrap-wysiwyg.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Common\SiteCommon.js" />
     <Content Include="Scripts\Common\SiteLogin.js" />
     <Content Include="Scripts\Controllers\BlogController.js" />
     <Content Include="Scripts\Controllers\ListController.js" />
@@ -308,6 +306,9 @@
     <Content Include="Scripts\Controllers\ManagePollsController.js" />
     <Content Include="Scripts\Controllers\PollController.js" />
     <Content Include="Areas\API\Views\Web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -360,9 +361,11 @@
     <Content Include="Views\Blog\_BLogListsControl.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\RSS\Atom.cshtml" />
-    <Content Include="Views\RSS\Comments.cshtml" />
     <Content Include="Views\RSS\Posts.cshtml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\Shared\_BlogSelectionControl.cshtml" />
+    <Content Include="Views\Shared\_ContentNavigationPanel.cshtml" />
+    <Content Include="Views\Shared\_PollControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_TabControl.cshtml" />

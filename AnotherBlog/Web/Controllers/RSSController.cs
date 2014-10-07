@@ -112,45 +112,5 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
             return this.View(model);
         }
-
-        public ActionResult Comments(string blogSubFolder)
-        {
-            RSSModel model = this.InitializeRSSModel(blogSubFolder);
-            model.Comments = new Dictionary<Blog, IList<Comment>>();
-
-            Blog targetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog == null)
-            {
-                IList<Blog> allBlogs = this.Services.BlogService.GetAll();
-
-                for (int i = 0; i < allBlogs.Count; i++)
-                {
-                    IList<BlogPost> posts = this.Services.BlogEntryService.GetAllByBlog(allBlogs[i], true);
-                    IList<Comment> comments = new List<Comment>();
-
-                    foreach(BlogPost post in posts)
-                    {
-                        comments.Concat(post.FilteredComments(Comment.CommentStatus.Approved));
-                    }
-
-                    model.Comments[allBlogs[i]] = comments;
-                }
-            }
-            else
-            {
-                IList<BlogPost> posts = this.Services.BlogEntryService.GetAllByBlog(targetBlog, true);
-                IList<Comment> comments = new List<Comment>();
-
-                foreach(BlogPost post in posts)
-                {
-                    comments.Concat(post.FilteredComments(Comment.CommentStatus.Approved));
-                }
-
-                model.Comments[targetBlog] = comments;
-            }
-
-            return this.View(model);
-        }
     }
 }
