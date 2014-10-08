@@ -335,9 +335,6 @@
     <Content Include="Views\Shared\_UserLoginControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Blog\BlogSelectionControl.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_ListControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
