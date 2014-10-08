@@ -57,20 +57,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private BlogUserService blogUserService;
-        public BlogUserService BlogUserService
-        {
-            get
-            {
-                if (this.blogUserService == null)
-                {
-                    this.blogUserService = new BlogUserService(this.UnitOfWork, this.BlogService, this.UserService,  this.RepositoryManager.BlogUsers);
-                }
-
-                return this.blogUserService;
-            }
-        }
-
         private TagService tagService;
         public TagService TagService
         {

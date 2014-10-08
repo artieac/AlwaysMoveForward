@@ -104,17 +104,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
-
-                    if (userBlogs != null)
+                    foreach(int blogId in this.CurrentUser.Roles.Keys)
                     {
-                        for (int i = 0; i < userBlogs.Count; i++)
+                        if (this.CurrentUser.Roles[blogId].ToString() == targetRole)
                         {
-                            if (RoleType.Roles[userBlogs[i].Role] == targetRole)
-                            {
-                                retVal = true;
-                                break;
-                            }
+                            retVal = true;
+                            break;
                         }
                     }
                 }
@@ -147,19 +142,15 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
+                    Blog targetBlog = this.ServiceManager.BlogService.GetBySubFolder(blogSubFolder);
 
-                    if (userBlogs != null)
+                    if(targetBlog != null)
                     {
-                        for (int i = 0; i < userBlogs.Count; i++)
+                        if(this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
                         {
-                            if (userBlogs[i].Blog.SubFolder == blogSubFolder)
+                            if (this.CurrentUser.Roles[targetBlog.BlogId].ToString() == targetRole)
                             {
-                                if (RoleType.Roles[userBlogs[i].Role] == targetRole)
-                                {
-                                    retVal = true;
-                                    break;
-                                }
+                                retVal = true;
                             }
                         }
                     }
@@ -196,22 +187,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 {
                     if (targetBlog != null)
                     {
-                        IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
-
-                        if (userBlogs != null)
+                        if (this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
                         {
-                            for (int i = 0; i < userBlogs.Count; i++)
+                            if (targetRole.Contains(this.CurrentUser.Roles[targetBlog.BlogId].ToString()))
                             {
-                                if (userBlogs[i].Blog.BlogId == targetBlog.BlogId)
-                                {
-                                    if (targetRole.Contains(RoleType.Roles[userBlogs[i].Role]))
-                                    {
-                                        retVal = true;
-                                        break;
-                                    }
-                                }
+                                retVal = true;
                             }
                         }
+                     
                     }
                 }
             }

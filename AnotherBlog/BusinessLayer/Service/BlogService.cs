@@ -136,5 +136,24 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             return this.BlogRepository.Save(itemToSave);
         }
+
+        public IList<Blog> GetUserBlogs(AnotherBlogUser user)
+        {
+            IList<Blog> retVal = new List<Blog>();
+
+            if(user != null)
+            {
+                IList<int> userBlogs = new List<int>();
+
+                foreach(int blogId in user.Roles.Keys)
+                {
+                    userBlogs.Add(blogId);
+                }
+
+//                retVal = this.BlogRepository.GetBlogs(userBlogs);
+            }
+
+            return retVal;
+        }
     }
 }

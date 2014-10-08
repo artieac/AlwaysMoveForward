@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="DataMapper\BlogDataMap.cs" />
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
-    <Compile Include="DataMapper\BlogUserDataMap.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Repositories\BlogEntryRepository.cs" />
     <Compile Include="Repositories\BlogListRepository.cs" />
     <Compile Include="Repositories\BlogRepository.cs" />
-    <Compile Include="Repositories\BlogUserRepository.cs" />
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\PollRepository.cs" />
     <Compile Include="RepositoryManager.cs" />

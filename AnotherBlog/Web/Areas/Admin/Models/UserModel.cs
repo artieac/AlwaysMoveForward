@@ -14,6 +14,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
         public IDictionary<RoleType.Id, string> Roles { get; set; }
         public IDictionary<int, Blog> Blogs { get; set; }
         public AnotherBlogUser CurrentUser { get; set; }
-        public IList<BlogUser> BlogsUserCanAccess { get; set; }
+        public IList<Blog> BlogsUserCanAccess { get; set; }
     }
 }

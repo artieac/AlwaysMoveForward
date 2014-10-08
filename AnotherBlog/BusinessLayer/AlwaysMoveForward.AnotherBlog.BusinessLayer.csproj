@@ -68,7 +68,6 @@
     <Compile Include="Service\DatabaseManager.cs" />
     <Compile Include="Service\BlogEntryService.cs" />
     <Compile Include="Service\BlogService.cs" />
-    <Compile Include="Service\BlogUserService.cs" />
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="Service\ServiceManagerBuilder.cs" />
     <Compile Include="Service\UploadedFileManager.cs" />

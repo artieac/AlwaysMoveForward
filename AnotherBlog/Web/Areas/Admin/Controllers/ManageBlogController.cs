@@ -47,13 +47,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             ManageBlogModel model = new ManageBlogModel();
 
-            model.Common.UserBlogs = new List<Blog>();
-            IList<BlogUser> userBlogs = Services.BlogUserService.GetUserBlogs(this.CurrentPrincipal.CurrentUser.UserId);
-
-            for (int i = 0; i < userBlogs.Count; i++)
-            {
-                model.Common.UserBlogs.Add((Blog)userBlogs[i].Blog);
-            }
+            model.Common.UserBlogs = this.Services.BlogService.GetUserBlogs(this.CurrentPrincipal.CurrentUser);
 
             if (savingBlog != null)
             {

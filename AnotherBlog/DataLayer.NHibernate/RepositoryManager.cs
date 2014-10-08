@@ -63,21 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
                 return this.blogRepository;
             }
-        }
-
-        private IBlogUserRepository blogUserRepositry;
-        public IBlogUserRepository BlogUsers
-        {
-            get
-            {
-                if (this.blogUserRepositry == null)
-                {
-                    this.blogUserRepositry = new BlogUserRepository(this.UnitOfWork);
-                }
-
-                return this.blogUserRepositry;
-            }
-        }
+        }        
 
         private IDbInfoRepository databaseInfoRepository;
         public IDbInfoRepository DbInfo

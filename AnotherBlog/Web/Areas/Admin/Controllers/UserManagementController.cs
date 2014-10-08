@@ -144,16 +144,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             model.CurrentUser = Services.UserService.GetById(targetUser);
-
-            if (model.CurrentUser != null)
-            {
-                model.BlogsUserCanAccess = Services.BlogUserService.GetUserBlogs(model.CurrentUser.UserId);
-            }
-            else
-            {
-                model.BlogsUserCanAccess = new List<BlogUser>();
-            }
-
+            model.BlogsUserCanAccess = this.Services.BlogService.GetUserBlogs(this.CurrentPrincipal.CurrentUser);
             model.Roles = RoleType.Roles;
 
             return this.View(model);
@@ -171,7 +162,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 try
                 {
-                    Services.BlogUserService.Save(targetUser, blogId, roleId);
+                    AnotherBlogUser targetUser = this.Services.UserService.GetById(targetUser);
+
+                    if(targetUser != null)
+                    {
+                        targetUser.AddRole(blogId, roleId);
+                    }
+
+                    Services.UserService.Save(targetUser, blogId, roleId);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)
