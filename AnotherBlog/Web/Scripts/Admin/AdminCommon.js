@@ -1,16 +1,20 @@
 ﻿var AdminCommon = new function () {
     this.HandleBlogSelectionChange = function () {
-        var saveForm = jQuery("#saveForm");
+        var changeBlogForm = jQuery("#changeBlogForm");
 
         if (saveForm != null) {
-            var performSave = jQuery("#performSave");
             var blogSubFolder = jQuery("#targetBlog");
 
-            saveForm.attr('action', saveForm.attr('action') + blogSubFolder.val());
+            changeBlogForm.attr('action', changeBlogForm.attr('action') + "/" + blogSubFolder.val());
 
-            alert(saveForm.attr('action'));
-            performSave.val(false);
-            saveForm.submit();
+            var additonalUrlElements = jQuery("#addtionalUrlElements");
+
+            if (additonalUrlElements != undefined)
+            {
+                changeBlogForm.attr('action', changeBlogForm.attr('action') + "/" + additonalUrlElements);
+            }
+
+            changeBlogForm.submit();
         }
     }
 }

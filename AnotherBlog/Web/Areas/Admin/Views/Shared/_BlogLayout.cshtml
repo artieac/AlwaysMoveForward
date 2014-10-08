@@ -8,6 +8,11 @@
 {
     @RenderSection("headerPlugins", false)
 }
+<form id="changeBlogForm" action="/Admin/ManageBlog/@ViewBag.CurrentAction/">
+    <input type="hidden" id="performSave" name="performSave" value="true" />
+    <input type="hidden" id="targetBlog" name="targetBlog" value="@ViewBag.Common.TargetBlog.SubFolder"/>
+    <input type="hidden" id="additionalUrlElements" name="additionalUrlElements" value="@ViewBag.AdditonalUrlElements"/>
+</form>
 <div class='adminLinkSection'>
     <span>
         <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">

@@ -150,7 +150,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\ManageBlog\EditBlog.cshtml" />
     <None Include="Areas\Admin\Views\ManageBlog\EditPost.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\GetAll.cshtml" />
     <None Include="Areas\Admin\Views\ManageBlog\_FileUploadControl.cshtml" />
     <None Include="Areas\Admin\Views\ManageBlog\Index.cshtml" />
     <None Include="Areas\Admin\Views\ManageBlog\ManageComments.cshtml" />

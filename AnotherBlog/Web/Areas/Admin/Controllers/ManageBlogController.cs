@@ -23,6 +23,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel();
+
+            if(model.Common.TargetBlog == null)
+            {
+                // in this case just default to the first one
+                model.Common.TargetBlog = this.Services.BlogService.GetAll()[0];
+            }
+
             return this.View(model);
         }
 

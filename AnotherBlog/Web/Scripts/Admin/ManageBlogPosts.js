@@ -1,9 +1,7 @@
 ﻿var ManageBlogPosts = new function () {
     this.ExecuteBlogEntryAutoSave = function () {
         var blogEntryAjaxForm = jQuery("#blogEntryAjaxForm");
-
-        tinyMCE.triggerSave();
-
+        
         if (blogEntryAjaxForm != null) {
             jQuery("#ajaxIsPublished").val(jq("#isPublished").attr('checked'));
             jQuery("#ajaxEntryId").val(jq("#entryId").val());

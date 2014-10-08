@@ -2,12 +2,12 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
     ViewBag.Common = Model.Common;
+    ViewBag.CurrentAction = "EditPost";
+    ViewBag.AdditionalUrlElements = Model.EntryList[0].Post.EntryId.ToString();
 }
 @section headerPlugins
 {
     <script src="/Scripts/Admin/ManageBlogPosts.js" type="text/javascript"></script>
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: 'textarea' });</script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#saveButton").click(function () {

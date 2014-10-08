@@ -5,6 +5,8 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
     ViewBag.Common = Model.Common;
+    ViewBag.CurrentAction = "ManagePosts";
+
  }
  @section headerPlugins
  {
@@ -17,9 +19,6 @@
         });
      </script>
  }
-    <form id="saveForm" action="/Admin/ManageBlog/ManagePosts/">
-        <input type="hidden" id="performSave" name="performSave" value="true" />
-    </form>
     <div class="bodyContent">
         <div class="panel panel-default">
             <div class="panel-header">Manage Blog Posts</div>
