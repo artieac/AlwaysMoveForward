@@ -1,59 +1,29 @@
 ﻿@import "ThemeDefaults.less";
 
-.tabControl
-{
-    width: 100%;
-    display:inline;
+.navbar-inverse {
+    border-color: @foreGroundColor;
+    background-color: @foreGroundColor;
+    color: @foreGroundTextColor;
 
-	ul
-	{
-		list-style: none;
-		list-style-type:none;
-		font-size: medium;    
-		border-bottom:1px solid @foreGroundColor;
-		display:inline;
-	}
+    .navbar-nav {
+        > li {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundTextColor;
+            }
+        }
 
-	.tabItem
-	{
-		height:100%;
-		display:inline;
-		color:@foreGroundColor;
-		border: 1px solid @foreGroundColor;
-		padding: 10px 10px 0 10px;
-		background-color:@alternateBackgroundColor;
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundColor;
+                background-color: @foreGroundTextColor;
+            }
+        }
 
-		.unselectedLink
-		{
-			text-decoration:none;
-			color:@foreGroundTextColor;
-		}
-
-		a{	.unselectedLink } 
-		a:selected{	.unselectedLink } 
-		a:visited{	.unselectedLink } 
-	}
-
-	.selectedTabItem 
-	{
-		height:100%;
-		display:inline;
-		color:@foreGroundColor;
-		border-top: 5px solid @foreGroundColor;
-		border-right: 1px solid @foreGroundColor;
-		border-left: 1px solid @foreGroundColor;
-		border-bottom: 5px solid White;
-		padding: 10px 10px 0 10px;
-		background-color:White;
-
-		.selectedLink 
-		{
-			text-decoration:none;
-			color:@foreGroundColor;
-		}
-
-		a{	.selectedLink } 
-		a:selected{	.selectedLink } 
-		a:visited{	.selectedLink } 
-	}
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: @foreGroundColor;
+                background-color: @foreGroundColor;
+            }
+        }
+    }
 }

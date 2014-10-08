@@ -96,10 +96,6 @@
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>
       <Name>AlwaysMoveForward.PointChart.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AlwaysMoveForward.PointChart.DataLayer\AlwaysMoveForward.PointChart.DataLayer.csproj">
-      <Project>{0A24FA2F-BE5C-4FAB-B16F-768D3FCB7143}</Project>
-      <Name>AlwaysMoveForward.PointChart.DataLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
