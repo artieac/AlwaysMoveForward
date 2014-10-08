@@ -18,8 +18,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public static void ConfigureAutoMapper()
         {
-            RoleDataMap.ConfigureAutoMapper();
-
             if (AutoMapper.Mapper.FindTypeMapFor<User, UserDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<User, UserDTO>();

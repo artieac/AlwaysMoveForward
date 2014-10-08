@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "User", Class = "UserDTO", ClassType = typeof(UserDTO), Column = "UserId")]
         public virtual UserDTO User { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Role", Class = "RoleDTO", ClassType = typeof(RoleDTO), Column = "RoleId")]
-        public virtual RoleDTO Role { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual RoleType.Id Role { get; set; }
     }
 }

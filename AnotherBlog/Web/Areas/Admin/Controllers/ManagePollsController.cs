@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     {
         private const int PollPageSize = 25;
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public ActionResult Index(int? page)
         {
             int currentPageIndex = 0;
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public JsonResult GetAll(int? page)
         {
             int currentPageIndex = 0;
@@ -52,14 +52,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
          }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public JsonResult GetById(int pollQuestionId)
         {
             PollQuestion retVal = this.Services.PollService.GetById(pollQuestionId);
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public JsonResult Add(string title, string question)
         {
             IList<PollQuestion> retVal = new List<PollQuestion>();
@@ -94,7 +94,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.Json(this.Services.PollService.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public JsonResult PutOption(int pollQuestionId, string optionText)
         {
             PollQuestion retVal = null;

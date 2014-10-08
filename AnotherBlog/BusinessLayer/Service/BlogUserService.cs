@@ -25,11 +25,10 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class BlogUserService : AnotherBlogService
     {
-        public BlogUserService(IUnitOfWork unitOfWork, BlogService blogService, AnotherBlogUserService userService, RoleService roleService, IBlogUserRepository blogUserRepository) : base(unitOfWork) 
+        public BlogUserService(IUnitOfWork unitOfWork, BlogService blogService, AnotherBlogUserService userService, IBlogUserRepository blogUserRepository) : base(unitOfWork) 
         {
             this.BlogService = blogService;
             this.UserService = userService;
-            this.RoleService = roleService;
             this.BlogUserRepository = blogUserRepository;
         }
 
@@ -37,22 +36,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         private BlogService BlogService { get; set; }
         private AnotherBlogUserService UserService { get; set; }
-        private RoleService RoleService { get; set; }
 
         public BlogUser Create()
         {
             return new BlogUser();
         }
 
-        public BlogUser Save(int userId, int blogId, int roleId)
+        public BlogUser Save(int userId, int blogId, RoleType.Id roleId)
         {            
             BlogUser retVal = null;
 
             Blog validBlog = this.BlogService.GetById(blogId);
             User validUser = this.UserService.GetById(userId);
-            Role validRole = this.RoleService.GetById(roleId);
-
-            if (validBlog != null && validUser != null && validRole != null)
+            
+            if (validBlog != null && validUser != null)
             {
                 retVal = this.BlogUserRepository.GetUserBlog(validUser.UserId, validBlog.BlogId);
 
@@ -63,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 retVal.User = validUser;
                 retVal.Blog = validBlog;
-                retVal.Role = validRole;
+                retVal.Role = roleId;
 
                 retVal = this.BlogUserRepository.Save(retVal);
             }

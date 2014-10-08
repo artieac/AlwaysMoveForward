@@ -22,32 +22,8 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
     {
-        private static IDictionary<int, Role> systemRoles = null;
-
-        public static IDictionary<int, Role> Roles
-        {
-            get
-            {
-                if (systemRoles == null)
-                {
-                    systemRoles = new Dictionary<int, Role>();
-
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    IList<Role> roles = serviceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < roles.Count; i++)
-                    {
-                        systemRoles.Add(roles[i].RoleId, roles[i]);
-                    }
-                }
-
-                return systemRoles;
-            }
-        }
-
         private ServiceManager serviceManager = null;
-        private static Dictionary<int, Role> userRoles;
-
+     
         public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
 
         public SecurityPrincipal(User currentUser, bool isAuthenticated)
@@ -71,25 +47,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             }
         }
 
-        private Dictionary<int, Role> UserRoles
-        {
-            get
-            {
-                if (userRoles == null)
-                {
-                    userRoles = new Dictionary<int, Role>();
-
-                    IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < allRoles.Count; i++)
-                    {
-                        userRoles.Add(allRoles[i].RoleId, allRoles[i]);
-                    }
-                }
-
-                return userRoles;
-            }
-        }
         /// <summary>
         /// Implement the IIDentity interface so that it can be used with built in .Net security methods
         /// </summary>
@@ -140,7 +97,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
             if (this.CurrentUser != null)
             {
-                if (targetRole == RoleType.SiteAdministrator)
+                if (targetRole == RoleType.Names.SiteAdministrator)
                 {
                     retVal = this.CurrentUser.IsSiteAdministrator;
                 }
@@ -153,7 +110,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                     {
                         for (int i = 0; i < userBlogs.Count; i++)
                         {
-                            if (Roles[userBlogs[i].Role.RoleId].Name == targetRole)
+                            if (RoleType.Roles[userBlogs[i].Role] == targetRole)
                             {
                                 retVal = true;
                                 break;
@@ -180,7 +137,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
             if (this.CurrentUser != null)
             {
-                if (targetRole.Contains(RoleType.SiteAdministrator))
+                if (targetRole.Contains(RoleType.Names.SiteAdministrator))
                 {
                     if (this.CurrentUser.IsSiteAdministrator)
                     {
@@ -198,7 +155,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                         {
                             if (userBlogs[i].Blog.SubFolder == blogSubFolder)
                             {
-                                if (Roles[userBlogs[i].Role.RoleId].Name == targetRole)
+                                if (RoleType.Roles[userBlogs[i].Role] == targetRole)
                                 {
                                     retVal = true;
                                     break;
@@ -226,7 +183,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             {
                 if (targetRole != null)
                 {
-                    if (targetRole.Contains(RoleType.SiteAdministrator))
+                    if (targetRole.Contains(RoleType.Names.SiteAdministrator))
                     {
                         if (this.CurrentUser.IsSiteAdministrator)
                         {
@@ -247,7 +204,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                             {
                                 if (userBlogs[i].Blog.BlogId == targetBlog.BlogId)
                                 {
-                                    if (targetRole.Contains(Roles[userBlogs[i].Role.RoleId].Name))
+                                    if (targetRole.Contains(RoleType.Roles[userBlogs[i].Role]))
                                     {
                                         retVal = true;
                                         break;

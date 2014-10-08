@@ -13,7 +13,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
+    [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
     public class UserManagementController : AdminBaseController
     {
         private const int UserPageSize = 25;
@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public ActionResult Edit(bool? performSave, string userName, string password, string email, string id, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
         {
             UserModel model = new UserModel();
-            model.Roles = Services.RoleService.GetAll();
+            model.Roles = RoleType.Roles;
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
 
@@ -116,7 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             Services.UserService.Delete(targetUserId);
 
             UserModel model = new UserModel();
-            model.Roles = Services.RoleService.GetAll();
+            model.Roles = RoleType.Roles;
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
 
@@ -163,7 +163,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             int targetUser = int.Parse(userId);
             int blogId = int.Parse(targetBlog);
-            int roleId = int.Parse(blogRole);
+            RoleType.Id roleId = (RoleType.Id)Enum.Parse(typeof(RoleType.Id), blogRole);
 
             using (this.Services.UnitOfWork.BeginTransaction())
             {

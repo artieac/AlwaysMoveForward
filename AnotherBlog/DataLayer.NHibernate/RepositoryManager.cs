@@ -93,20 +93,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             }
         }
 
-        private IRoleRepository roleRepository;
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (this.roleRepository == null)
-                {
-                    this.roleRepository = new RoleRepository(this.UnitOfWork);
-                }
-
-                return this.roleRepository;
-            }
-        }
-
         private ISiteInfoRepository siteInfoRepository;
         public ISiteInfoRepository SiteInfo
         {

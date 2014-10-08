@@ -18,7 +18,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     [RequestAuthenticationFilter]
     public class ManageBlogController : AdminBaseController
     {
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public ActionResult Index()
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
+        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult GetAll()
         {
             SiteModel model = new SiteModel();
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
+        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult EditBlog(int id, string blogName, string blogAbout, string blogDescription, string targetSubFolder, string blogWelcome, string savingBlog, string blogTheme)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -113,7 +113,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator, IsBlogSpecific = true)]
         public ActionResult Preferences(string id, string description, string about, string blogWelcome, bool? performSave, string blogTheme)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -157,7 +157,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult ManagePosts(string id, string filterType, string filterValue, int? page, string sortColumn, bool? sortAscending)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -214,7 +214,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult EditPost(string blogSubFolder, bool? performSave, int? id, string title, string entryText, string tagInput, string isPublished)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -281,7 +281,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public JsonResult AjaxPostSave(string blogSubFolder, string ajaxTitle, string ajaxEntryText, string ajaxEntryId, string ajaxTagInput, string ajaxIsPublished)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -333,7 +333,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
         #region Comment Management
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public JsonResult GetComments(string blogSubFolder, string id)
         {
             IList<CommentItemModel> model = new List<CommentItemModel>();
@@ -374,8 +374,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             return this.Json(model, JsonRequestBehavior.AllowGet);
         }
-        
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int filter)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -408,7 +408,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult DeleteComment(string blogSubFolder, int blogPostId, int filter)
         {
             using (this.Services.UnitOfWork.BeginTransaction())
@@ -441,7 +441,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult ManageComments(string id, string commentFilter)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -453,7 +453,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
         #endregion
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = true)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult FileUpload(string blogSubFolder)
         {
             AdminCommon model = this.InitializeCommonModel(blogSubFolder);

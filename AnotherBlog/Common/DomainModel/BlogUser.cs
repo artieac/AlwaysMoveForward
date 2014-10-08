@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public int BlogUserId { get; set; }
         public Blog Blog { get; set; }
-        public Role Role { get; set; }
+        public RoleType.Id Role { get; set; }
         public User User { get; set; }
     }
 }

@@ -17,7 +17,7 @@ using AlwaysMoveForward.Common.DomainModel.DataMap;
 
 namespace AlwaysMoveForward.Common.DomainModel
 {
-    public class User : IUser
+    public class User
     {
         public User()
         {

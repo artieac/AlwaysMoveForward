@@ -27,20 +27,6 @@ namespace AlwaysMoveForward.Common.Business
             get { return this.ServiceContext.UnitOfWork; }
         }
 
-        private RoleService roleService;
-        public RoleService RoleService
-        {
-            get
-            {
-                if (this.roleService == null)
-                {
-                    this.roleService = new RoleService(this.ServiceContext);
-                }
-
-                return this.roleService;
-            }
-        }
-
         private SiteInfoService siteInfo;
         public SiteInfoService SiteInfoService
         {

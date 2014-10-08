@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogUserService == null)
                 {
-                    this.blogUserService = new BlogUserService(this.UnitOfWork, this.BlogService, this.UserService, this.RoleService,  this.RepositoryManager.BlogUsers);
+                    this.blogUserService = new BlogUserService(this.UnitOfWork, this.BlogService, this.UserService,  this.RepositoryManager.BlogUsers);
                 }
 
                 return this.blogUserService;

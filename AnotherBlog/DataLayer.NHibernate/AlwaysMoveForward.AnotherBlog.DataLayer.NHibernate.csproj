@@ -80,7 +80,6 @@
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />
-    <Compile Include="DataMapper\RoleDataMap.cs" />
     <Compile Include="DataMapper\SiteInfoDataMap.cs" />
     <Compile Include="DataMapper\TagDataMap.cs" />
     <Compile Include="DataMapper\TagDTOListResolver.cs" />
@@ -94,7 +93,6 @@
     <Compile Include="DTO\EntryCommentsDTO.cs" />
     <Compile Include="DTO\PollOptionDTO.cs" />
     <Compile Include="DTO\PollQuestionDTO.cs" />
-    <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SiteInfoDTO.cs" />
     <Compile Include="DTO\TagDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
@@ -107,7 +105,6 @@
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\PollRepository.cs" />
     <Compile Include="RepositoryManager.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SiteInfoRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
