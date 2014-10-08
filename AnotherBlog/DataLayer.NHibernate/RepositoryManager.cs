@@ -122,7 +122,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         }
 
         private IUserRepository userRepository;
-        public IUserRepository Users
+        public IUserRepository UserRepository
         {
             get
             {

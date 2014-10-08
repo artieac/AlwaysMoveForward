@@ -9,26 +9,19 @@
  *    Arthur Correa – initial contribution
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data;
-
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IAnotherBlogRepositoryManager : IRepositoryManager
+    public interface IUserRepository : IRepository<AnotherBlogUser, int>
     {
-        IBlogEntryRepository BlogEntries { get; }
-        IBlogRepository Blogs { get; }
-        IBlogUserRepository BlogUsers { get; }
-        ITagRepository Tags { get; }
-        IBlogListRepository BlogLists { get; }
-        IPollRepository PollRepository { get; }
-        IUserRepository UserRepository { get; }
+        AnotherBlogUser GetByUserName(string userName);
+        AnotherBlogUser GetByUserNameAndPassword(string userName, string password);
+        AnotherBlogUser GetByEmail(string userEmail);
+        IList<AnotherBlogUser> GetBlogWriters(int blogId);
     }
 }

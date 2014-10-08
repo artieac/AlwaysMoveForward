@@ -15,6 +15,10 @@
             $("#saveButton").click(function () {
                 $("#saveForm").submit();
             });
+        
+            $("#submitAddNewBlog").click(function () {
+                $("#userAddBlogForm").submit();
+            });
         });
     </script>
  }
@@ -98,7 +102,7 @@
                         <select id="blogRole" name="blogRole">
                             @foreach (RoleType.Id roleId in Model.Roles.Keys)
                             {
-                                <option id="@Model.Roles[roleId]" name="@Model.Roles[roleId]" value="@roleId">@Model.Roles[roleId]</option>
+                                <option id="@Model.Roles[roleId]" name="@Model.Roles[roleId]" value="@((System.Int32)roleId)">@Model.Roles[roleId]</option>
                             }
                         </select>
                     </div>

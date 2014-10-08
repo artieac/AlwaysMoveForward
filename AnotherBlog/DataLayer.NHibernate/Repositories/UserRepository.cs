@@ -17,21 +17,19 @@ using NHibernate.Criterion;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
 using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     /// <summary>
-    /// This class contains all the code to extract User data from the repository using LINQ
+    /// This class contains all the code to extract AnotherBlogUser data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepositoryBase<User, UserDTO, int>, IUserRepository
+    public class UserRepository : NHibernateRepositoryBase<AnotherBlogUser, UserDTO, int>, IUserRepository
     {
         public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -39,7 +37,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         }
 
-        protected override UserDTO GetDTOById(User domainInstance)
+        protected override UserDTO GetDTOById(AnotherBlogUser domainInstance)
         {
             return this.GetDTOById(domainInstance.UserId);
         }
@@ -51,7 +49,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return criteria.UniqueResult<UserDTO>();
         }
 
-        protected override DataMapBase<User, UserDTO> GetDataMapper()
+        protected override DataMapBase<AnotherBlogUser, UserDTO> GetDataMapper()
         {
             return new UserDataMap(); 
         }
@@ -61,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public User GetByUserName(string userName)
+        public AnotherBlogUser GetByUserName(string userName)
         {
             return this.GetByProperty("UserName", userName);
         }
@@ -71,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User GetByUserNameAndPassword(string userName, string password)
+        public AnotherBlogUser GetByUserNameAndPassword(string userName, string password)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.Add(Expression.Eq("UserName", userName));
@@ -85,7 +83,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>
-        public User GetByEmail(string userEmail)
+        public AnotherBlogUser GetByEmail(string userEmail)
         {
             return this.GetByProperty("Email", userEmail);
         }
@@ -95,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// </summary>
         /// <param name="blogId"></param>
         /// <returns></returns>
-        public IList<User> GetBlogWriters(int blogId)
+        public IList<AnotherBlogUser> GetBlogWriters(int blogId)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.CreateCriteria("UserBlogs")

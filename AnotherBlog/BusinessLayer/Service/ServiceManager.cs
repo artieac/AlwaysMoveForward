@@ -113,14 +113,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private AnotherBlogUserService userService;
-        public new AnotherBlogUserService UserService
+        private UserService userService;
+        public UserService UserService
         {
             get
             {
                 if (this.userService == null)
                 {
-                    this.userService = new AnotherBlogUserService(this.UnitOfWork, this.RepositoryManager.Users);
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository);
                 }
 
                 return this.userService;

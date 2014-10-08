@@ -68,7 +68,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             }
             else
             {
-                model.BlogWriters = new List<User>();
+                model.BlogWriters = new List<AnotherBlogUser>();
             }
 
             return this.View(model);

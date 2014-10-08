@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class BlogUserService : AnotherBlogService
     {
-        public BlogUserService(IUnitOfWork unitOfWork, BlogService blogService, AnotherBlogUserService userService, IBlogUserRepository blogUserRepository) : base(unitOfWork) 
+        public BlogUserService(IUnitOfWork unitOfWork, BlogService blogService, UserService userService, IBlogUserRepository blogUserRepository) : base(unitOfWork) 
         {
             this.BlogService = blogService;
             this.UserService = userService;
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         protected IBlogUserRepository BlogUserRepository { get; private set; }
 
         private BlogService BlogService { get; set; }
-        private AnotherBlogUserService UserService { get; set; }
+        private UserService UserService { get; set; }
 
         public BlogUser Create()
         {

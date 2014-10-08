@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (model.CurrentUser == null)
             {
-                model.CurrentUser = Services.UserService.Create();
+                model.CurrentUser = new AnotherBlogUser();
             }
 
             if (performSave.HasValue)
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
                         if (model.CurrentUser == null)
                         {
-                            model.CurrentUser = Services.UserService.Create();
+                            model.CurrentUser = new AnotherBlogUser();
                             model.CurrentUser.UserName = userName;
                             model.CurrentUser.Email = email;
                         }
@@ -154,16 +154,18 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.BlogsUserCanAccess = new List<BlogUser>();
             }
 
+            model.Roles = RoleType.Roles;
+
             return this.View(model);
         }
 
-        public ActionResult AddBlog(string blogSubFolder, string userId, string targetBlog, string blogRole)
+        public ActionResult AddBlog(string userId, string targetBlog, int blogRole)
         {
             UserModel model = new UserModel();
 
             int targetUser = int.Parse(userId);
             int blogId = int.Parse(targetBlog);
-            RoleType.Id roleId = (RoleType.Id)Enum.Parse(typeof(RoleType.Id), blogRole);
+            RoleType.Id roleId = (RoleType.Id)blogRole;
 
             using (this.Services.UnitOfWork.BeginTransaction())
             {

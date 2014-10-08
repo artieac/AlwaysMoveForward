@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             return this.Comments.Where(comment => comment.Status == targetStatus).ToList();
         }
 
-        public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, User currentUser)
+        public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, AnotherBlogUser currentUser)
         {
             Comment retVal = new Comment();
             retVal.AuthorName = authorName;

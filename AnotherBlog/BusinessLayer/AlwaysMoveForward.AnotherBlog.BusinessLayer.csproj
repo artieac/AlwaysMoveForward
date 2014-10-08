@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Events\BlogEntry\BlogEntryEvents.cs" />
     <Compile Include="Service\AnotherBlogService.cs" />
-    <Compile Include="Service\AnotherBlogUserService.cs" />
     <Compile Include="Service\BlogListService.cs" />
     <Compile Include="Service\DatabaseManager.cs" />
     <Compile Include="Service\BlogEntryService.cs" />
@@ -80,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Service\TagService.cs" />
+    <Compile Include="Service\UserService.cs" />
     <Compile Include="Utilities\SecurityPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>

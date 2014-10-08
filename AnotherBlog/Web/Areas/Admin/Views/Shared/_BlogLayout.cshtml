@@ -16,15 +16,15 @@
 <div class='adminLinkSection'>
     <span>
         <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
-        @{
-            SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
-        }
         @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
         { 
             <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
                                                                                             {<text> selected </text>}>@blogItem.Name</option>
         }            
         </select>
+        @{
+            SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
+        }
         @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true || currentPrincipal.IsInRole(RoleType.Names.Blogger) == true)
         {
             <text><a href='/Admin/ManageBlog/Preferences'> Blog Settings</a> | </text>

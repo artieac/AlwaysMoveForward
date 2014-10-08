@@ -13,7 +13,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         {
             RoleType.Roles = new Dictionary<RoleType.Id, string>();
             RoleType.Roles.Add(RoleType.Id.Reader, RoleType.Id.Reader.ToString());
-            RoleType.Roles.Add(RoleType.Id.SiteAdministrator, RoleType.Id.SiteAdministrator.ToString());
             RoleType.Roles.Add(RoleType.Id.Administrator, RoleType.Id.Administrator.ToString());
             RoleType.Roles.Add(RoleType.Id.Blogger, RoleType.Id.Blogger.ToString());
         }
@@ -22,8 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         {
             Administrator = 1,
             Blogger = 2,
-            Reader = 3,
-            SiteAdministrator = 4
+            Reader = 3
         }
 
         public class Names

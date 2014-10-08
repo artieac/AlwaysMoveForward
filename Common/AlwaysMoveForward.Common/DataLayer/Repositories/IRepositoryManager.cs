@@ -22,6 +22,5 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
     {
         IDbInfoRepository DbInfo { get; }
         ISiteInfoRepository SiteInfo { get; }
-        IUserRepository Users { get; }
     }
 }

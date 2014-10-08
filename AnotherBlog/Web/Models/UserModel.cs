@@ -12,9 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Models
@@ -28,8 +26,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         }
 
         public Blog TargetBlog { get; set; }
-        public User CurrentUser { get; set; }
-        public PagedList<User> UserList { get; set; }
+        public AnotherBlogUser CurrentUser { get; set; }
+        public PagedList<AnotherBlogUser> UserList { get; set; }
         public IList<RoleType> RoleList { get; set; }
     }
 }

@@ -23,16 +23,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
     public class SecurityPrincipal : IPrincipal, IIdentity
     {
         private ServiceManager serviceManager = null;
-     
-        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
 
-        public SecurityPrincipal(User currentUser, bool isAuthenticated)
+        public SecurityPrincipal(AnotherBlogUser currentUser) : this(currentUser, false) { }
+
+        public SecurityPrincipal(AnotherBlogUser currentUser, bool isAuthenticated)
         {
             this.IsAuthenticated = isAuthenticated;
             this.CurrentUser = currentUser;
         }
 
-        public User CurrentUser { get; private set; }
+        public AnotherBlogUser CurrentUser { get; private set; }
 
         private ServiceManager ServiceManager
         {

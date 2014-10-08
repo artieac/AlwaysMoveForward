@@ -40,19 +40,5 @@ namespace AlwaysMoveForward.Common.Business
                 return this.siteInfo;
             }
         }
-
-        private UserService userService;
-        public UserService UserService
-        {
-            get
-            {
-                if (this.userService == null)
-                {
-                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.Users);
-                }
-
-                return this.userService;
-            }
-        }
     }
 }

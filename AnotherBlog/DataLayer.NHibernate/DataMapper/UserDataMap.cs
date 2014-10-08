@@ -9,7 +9,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
-    public class UserDataMap : DataMapBase<User, UserDTO>
+    public class UserDataMap : DataMapBase<AnotherBlogUser, UserDTO>
     {
         static UserDataMap()
         {
@@ -18,14 +18,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         public static void ConfigureAutoMapper()
         {
-            if (AutoMapper.Mapper.FindTypeMapFor<User, UserDTO>() == null)
+            if (AutoMapper.Mapper.FindTypeMapFor<AnotherBlogUser, UserDTO>() == null)
             {
-                AutoMapper.Mapper.CreateMap<User, UserDTO>();
+                AutoMapper.Mapper.CreateMap<AnotherBlogUser, UserDTO>();
             }
 
-            if (AutoMapper.Mapper.FindTypeMapFor<UserDTO, User>() == null)
+            if (AutoMapper.Mapper.FindTypeMapFor<UserDTO, AnotherBlogUser>() == null)
             {
-                AutoMapper.Mapper.CreateMap<UserDTO, User>();
+                AutoMapper.Mapper.CreateMap<UserDTO, AnotherBlogUser>();
             }
 
 #if DEBUG
@@ -33,12 +33,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 #endif
         }
 
-        public override User Map(UserDTO source, User destination)
+        public override AnotherBlogUser Map(UserDTO source, AnotherBlogUser destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override UserDTO Map(User source, UserDTO destination)
+        public override UserDTO Map(AnotherBlogUser source, UserDTO destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }

@@ -65,7 +65,6 @@
     <Compile Include="Business\ServiceContext.cs" />
     <Compile Include="Business\ServiceManagerBase.cs" />
     <Compile Include="Business\SiteInfoService.cs" />
-    <Compile Include="Business\UserService.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="DataLayer\DataMapBase.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="DataLayer\Repositories\ISiteInfoRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
     <Compile Include="DataLayer\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Constants.cs" />

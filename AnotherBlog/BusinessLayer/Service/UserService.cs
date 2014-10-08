@@ -15,21 +15,22 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-
 using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.Common.Business
+namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class UserService
     {
         private const string GuestUserName = "guest";
-        private static User guestUser = null;
+        private static AnotherBlogUser guestUser = null;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base()
         {
             this.UnitOfWork = unitOfWork;
             this.UserRepository = userRepository;
@@ -39,48 +40,14 @@ namespace AlwaysMoveForward.Common.Business
 
         protected IUserRepository UserRepository { get; private set; }
 
-        private string GenerateNewPassword()
-        {
-            string retVal = string.Empty;
-            Random random = new Random();
-            string legalChars = "abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890";
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < 10; i++)
-            {
-                sb.Append(legalChars.Substring(random.Next(0, legalChars.Length - 1), 1));
-            }
-           
-            retVal = sb.ToString();
-
-            return retVal;
-        }
-
-        public User Create()
-        {
-            User retVal = new User();
-            retVal.IsActive = true;
-            return retVal;
-        }
-
         public bool IsValidEmail(string emailString)
         {
             return Regex.IsMatch(emailString, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
-        public User GetDefaultUser()
+        public AnotherBlogUser Login(string userName, string password)
         {
-            if (UserService.guestUser == null)
-            {
-                UserService.guestUser = this.UserRepository.GetByUserName(UserService.GuestUserName);
-            }
-
-            return UserService.guestUser;
-        }
-
-        public User Login(string userName, string password)
-        {
-            User retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
+            AnotherBlogUser retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
 
             if (retVal != null)
             {
@@ -93,9 +60,9 @@ namespace AlwaysMoveForward.Common.Business
             return retVal;
         }
 
-        public User Save(string userName, string password, string email, int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout, string displayName)
+        public AnotherBlogUser Save(string userName, string password, string email, int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout, string displayName)
         {
-            User userToSave = null;
+            AnotherBlogUser userToSave = null;
 
             if (userId != 0)
             {
@@ -104,7 +71,7 @@ namespace AlwaysMoveForward.Common.Business
 
             if (userToSave == null)
             {
-                userToSave = this.Create();
+                userToSave = new AnotherBlogUser();
             }
 
             userToSave.UserName = userName;
@@ -132,25 +99,9 @@ namespace AlwaysMoveForward.Common.Business
             return this.UserRepository.Save(userToSave);
         }
 
-
-        public IList<User> GetAll()
-        {
-            return this.UserRepository.GetAll();
-        }
-
-        public User GetByUserName(string userName)
-        {
-            return this.UserRepository.GetByUserName(userName);
-        }
-
-        public User GetById(int userId)
-        {
-            return this.UserRepository.GetById(userId);
-        }
-
         public void Delete(int userId)
         {
-            User targetUser = this.UserRepository.GetById(userId);
+            AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
 
             using (this.UnitOfWork.BeginTransaction())
             {
@@ -164,13 +115,13 @@ namespace AlwaysMoveForward.Common.Business
 
         public void SendPassword(string userEmail, EmailConfiguration emailConfig)
         {
-            User changePasswordUser = this.UserRepository.GetByEmail(userEmail);
+            AnotherBlogUser changePasswordUser = this.UserRepository.GetByEmail(userEmail);
 
             string emailBody = "A user was not found with that email address.  Please try again.";
 
             if (changePasswordUser != null)
             {
-                string newPassword = this.GenerateNewPassword();
+                string newPassword = AnotherBlogUser.GenerateNewPassword();
 
                 emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
                 changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(newPassword);
@@ -182,9 +133,39 @@ namespace AlwaysMoveForward.Common.Business
             emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
         }
 
-        public User GetByEmail(string userEmail)
+        public AnotherBlogUser GetByEmail(string userEmail)
         {
             return this.UserRepository.GetByEmail(userEmail);
+        }
+
+        public AnotherBlogUser GetDefaultUser()
+        {
+            if (UserService.guestUser == null)
+            {
+                UserService.guestUser = this.UserRepository.GetByUserName(UserService.GuestUserName);
+            }
+
+            return UserService.guestUser;
+        }
+
+        public IList<AnotherBlogUser> GetAll()
+        {
+            return this.UserRepository.GetAll();
+        }
+
+        public AnotherBlogUser GetByUserName(string userName)
+        {
+            return this.UserRepository.GetByUserName(userName);
+        }
+
+        public AnotherBlogUser GetById(int userId)
+        {
+            return this.UserRepository.GetById(userId);
+        }      
+
+        public IList<AnotherBlogUser> GetBlogWriters(Blog targetBlog)
+        {
+            return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
     }
 }
