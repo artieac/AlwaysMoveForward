@@ -96,9 +96,9 @@
                     <div>
                         <span class="label">role:</span>
                         <select id="blogRole" name="blogRole">
-                            @foreach (Role roleItem in ViewData.Model.Roles)
+                            @foreach (RoleType.Id roleId in Model.Roles.Keys)
                             {
-                                <option id="@roleItem.Name" name="@roleItem.Name" value="@roleItem.RoleId.ToString()">@roleItem.Name</option>
+                                <option id="@Model.Roles[roleId]" name="@Model.Roles[roleId]" value="@roleId">@Model.Roles[roleId]</option>
                             }
                         </select>
                     </div>

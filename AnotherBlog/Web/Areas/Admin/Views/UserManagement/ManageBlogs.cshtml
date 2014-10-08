@@ -22,7 +22,7 @@
                     <tr>
                         <td>@Model.Blogs[userBlog.Blog.BlogId].Name</td>
                         <td>@Model.Blogs[userBlog.Blog.BlogId].Description</td>
-                        <td>@PageManager.Roles[userBlog.Role.RoleId].Name</td>
+                        <td>@Model.Roles[userBlog.Role]</td>
                         <td><a href="/Admin/UserManagement/DeleteRole?blogId=@userBlog.Blog.BlogId&userId=@userBlog.User.UserId"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
                     </tr>
                 }
