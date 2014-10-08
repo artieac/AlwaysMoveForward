@@ -20,14 +20,14 @@
                                                                                             {<text> selected </text>}>@blogItem.Name</option>
         }            
         </select>
-        @if (currentPrincipal.IsInRole(RoleType.Administrator) == true || currentPrincipal.IsInRole(RoleType.Blogger) == true)
+        @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true || currentPrincipal.IsInRole(RoleType.Names.Blogger) == true)
         {
             <text><a href='/Admin/ManageBlog/Preferences'> Blog Settings</a> | </text>
             <text><a href='/Admin/ManageLists/Index'> Manage Lists</a> | </text>
         } 
-        @if (currentPrincipal.IsInRole(RoleType.Administrator) == true ||
-            currentPrincipal.IsInRole(RoleType.Blogger) ||
-            currentPrincipal.IsInRole(RoleType.SiteAdministrator) == true)
+        @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true ||
+            currentPrincipal.IsInRole(RoleType.Names.Blogger) ||
+            currentPrincipal.IsInRole(RoleType.Names.SiteAdministrator) == true)
         { 
             <text><a href='/Admin/ManageBlog/ManagePosts'> Manage Posts</a> |  </text>
             <text><a href='/Admin/ManageBlog/ManageComments'> Administer Comments</a></text>

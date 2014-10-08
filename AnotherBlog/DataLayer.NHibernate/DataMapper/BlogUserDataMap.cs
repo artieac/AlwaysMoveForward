@@ -16,15 +16,17 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         }
 
         internal static void ConfigureAutoMapper()
-        {
+        {           
             if (AutoMapper.Mapper.FindTypeMapFor<BlogUser, BlogUserDTO>() == null)
             {
-                AutoMapper.Mapper.CreateMap<BlogUser, BlogUserDTO>();
+                AutoMapper.Mapper.CreateMap<BlogUser, BlogUserDTO>()
+                    .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.Role));
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<BlogUserDTO, BlogUser>() == null)
             {
-                AutoMapper.Mapper.CreateMap<BlogUserDTO, BlogUser>();
+                AutoMapper.Mapper.CreateMap<BlogUserDTO, BlogUser>()
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.RoleId));
             }
 #if DEBUG
             AutoMapper.Mapper.AssertConfigurationIsValid();

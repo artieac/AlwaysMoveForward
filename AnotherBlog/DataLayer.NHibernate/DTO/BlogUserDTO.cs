@@ -37,6 +37,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual UserDTO User { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual RoleType.Id Role { get; set; }
+        public virtual int RoleId { get; set; }
     }
 }
