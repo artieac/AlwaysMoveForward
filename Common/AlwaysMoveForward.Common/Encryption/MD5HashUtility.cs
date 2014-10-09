@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace AlwaysMoveForward.Common.Encryption
 {
-    public class MD5HashHelper
+    /// <summary>
+    /// A utility class for performing an MD5 hash on a string.
+    /// </summary>
+    public class MD5HashUtility
     {
+        /// <summary>
+        /// Compute an MD5 Hash
+        /// </summary>
+        /// <param name="inVal">Value to be hashed</param>
+        /// <returns>MD5 Hashed string</returns>
         public static string HashString(string inVal)
         {
             string retVal = string.Empty;
@@ -22,6 +30,7 @@ namespace AlwaysMoveForward.Common.Encryption
             {
                 sb.Append(hash[i].ToString("X2"));
             }
+
             retVal = sb.ToString();
 
             return retVal;
