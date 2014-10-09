@@ -10,18 +10,27 @@
 }
 <form id="changeBlogForm" action="/Admin/ManageBlog/@ViewBag.CurrentAction/">
     <input type="hidden" id="performSave" name="performSave" value="true" />
-    <input type="hidden" id="targetBlog" name="targetBlog" value="@ViewBag.Common.TargetBlog.SubFolder"/>
-    <input type="hidden" id="additionalUrlElements" name="additionalUrlElements" value="@ViewBag.AdditonalUrlElements"/>
+    @if(!string.IsNullOrEmpty(@ViewBag.AdditionalUrlElements))
+    {
+        <input type="hidden" id="additionalUrlElements" name="additionalUrlElements" value="@ViewBag.AdditionalUrlElements"/>        
+    }
 </form>
 <div class='adminLinkSection'>
     <span>
-        <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
-        @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
-        { 
-            <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
+        @if(ViewBag.AllowBlogChange == false)
+        {
+            <label>@ViewBag.Common.TargetBlog.SubFolder</label>
+        }
+        else
+        {
+            <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
+            @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
+            { 
+                <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
                                                                                             {<text> selected </text>}>@blogItem.Name</option>
-        }            
-        </select>
+            }            
+            </select>
+        }
         @{
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
         }

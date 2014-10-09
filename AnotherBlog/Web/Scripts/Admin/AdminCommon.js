@@ -2,18 +2,19 @@
     this.HandleBlogSelectionChange = function () {
         var changeBlogForm = jQuery("#changeBlogForm");
 
-        if (saveForm != null) {
+        if (changeBlogForm != null) {
             var blogSubFolder = jQuery("#targetBlog");
 
-            changeBlogForm.attr('action', changeBlogForm.attr('action') + "/" + blogSubFolder.val());
+            changeBlogForm.attr('action', changeBlogForm.attr('action') + blogSubFolder.val());
 
-            var additonalUrlElements = jQuery("#addtionalUrlElements");
+            var additionalUrlElements = jQuery("#additionalUrlElements");
 
-            if (additonalUrlElements != undefined)
+            if (additionalUrlElements.length)
             {
-                changeBlogForm.attr('action', changeBlogForm.attr('action') + "/" + additonalUrlElements);
+                changeBlogForm.attr('action', changeBlogForm.attr('action') + "/" + additionalUrlElements.val());
             }
 
+            alert(changeBlogForm.attr('action'));
             changeBlogForm.submit();
         }
     }

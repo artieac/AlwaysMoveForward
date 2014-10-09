@@ -3,13 +3,11 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 @if (Model.CurrentUser != null)
 {
-    <input type="hidden" id="userId" name="userId" value="@Model.CurrentUser.UserId" />
-
-    if (Model.BlogsUserCanAccess.Count > 0)
+    if (Model.CurrentUser.Roles.Keys.Count > 0)
     {       
-        <table class="tableBase">
+        <table class="table table-bordered">
             <thead>
-                <tr class="tableHeader">
+                <tr>
                     <td width="20%">Blog</td>
                     <td width="40%">Description</td>
                     <td width="20%">Role</td>
@@ -17,13 +15,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (BlogUser userBlog in Model.BlogsUserCanAccess)
+                @foreach (int blogId in Model.CurrentUser.Roles.Keys)
                 { 
                     <tr>
-                        <td>@Model.Blogs[userBlog.Blog.BlogId].Name</td>
-                        <td>@Model.Blogs[userBlog.Blog.BlogId].Description</td>
-                        <td>@Model.Roles[userBlog.Role]</td>
-                        <td><a href="/Admin/UserManagement/DeleteRole?blogId=@userBlog.Blog.BlogId&userId=@userBlog.User.UserId"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
+                        <td>@Model.Blogs[blogId].Name</td>
+                        <td>@Model.Blogs[blogId].Description</td>
+                        <td>@Model.Roles[Model.CurrentUser.Roles[blogId]]</td>
+                        <td><a href="/Admin/UserManagement/DeleteRole?blogId=@blogId&userId=@Model.CurrentUser.UserId"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
                     </tr>
                 }
             </tbody>                    

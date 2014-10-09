@@ -167,5 +167,62 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
+
+        public AnotherBlogUser AddBlogRole(int userId, int blogId, RoleType.Id roleId)
+        {
+            AnotherBlogUser retVal = null;
+
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    retVal = this.UserRepository.GetById(userId);
+
+                    if (retVal != null)
+                    {
+                        retVal.AddRole(blogId, roleId);
+                    }
+
+                    retVal = this.UserRepository.Save(retVal);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.UnitOfWork.EndTransaction(false);
+                }
+            }
+
+            return retVal;
+        }
+
+        public AnotherBlogUser RemoveBlogRole(int userId, int blogId)
+        {
+            AnotherBlogUser retVal = null;
+
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    retVal = this.UserRepository.GetById(userId);
+
+                    if (retVal != null)
+                    {
+                        retVal.RemoveRole(blogId);
+                    }
+
+                    retVal = this.UserRepository.Save(retVal);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.UnitOfWork.EndTransaction(false);
+                }
+            }
+
+            return retVal;
+        }
+
     }
 }

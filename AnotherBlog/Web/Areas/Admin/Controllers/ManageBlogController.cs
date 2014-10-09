@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             ManageBlogModel model = new ManageBlogModel();
 
-            model.Common.UserBlogs = this.Services.BlogService.GetUserBlogs(this.CurrentPrincipal.CurrentUser);
+            model.Common.UserBlogs = this.Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.UserId);
 
             if (savingBlog != null)
             {

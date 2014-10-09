@@ -4,6 +4,11 @@
     ViewBag.Common = Model.Common;
     ViewBag.CurrentAction = "EditPost";
     ViewBag.AdditionalUrlElements = Model.EntryList[0].Post.EntryId.ToString();
+    
+    if(Model.EntryList[0].Post.EntryId > 0)
+    {
+        ViewBag.AllowBlogChange = false;        
+    }
 }
 @section headerPlugins
 {

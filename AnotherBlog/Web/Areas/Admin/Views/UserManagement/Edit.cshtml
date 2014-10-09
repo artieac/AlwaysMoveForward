@@ -87,6 +87,7 @@
                     </script>
                 </div>
                 <form id="userAddBlogForm" action="/Admin/UserManagement/AddBlog" method="post">
+                    <input type="hidden" name="userId" value="@Model.CurrentUser.UserId"/>
                     <label>Grant Access</label>
                     <div>
                         <span class="label">blog:</span>
