@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public AnotherBlogUser Login(string userName, string password)
         {
-            AnotherBlogUser retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
+            AnotherBlogUser retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(password));
 
             if (retVal != null)
             {
@@ -91,7 +91,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (password != string.Empty)
             {
-                userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password);
+                userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(password);
             }
 
             userToSave.Email = email;
@@ -124,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 string newPassword = AnotherBlogUser.GenerateNewPassword();
 
                 emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(newPassword);
+                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(newPassword);
 
                 this.UserRepository.Save(changePasswordUser);
             }
