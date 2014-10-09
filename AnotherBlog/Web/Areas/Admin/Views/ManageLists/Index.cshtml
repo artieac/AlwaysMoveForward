@@ -5,7 +5,6 @@
 @{
 	Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
 	ViewBag.Common = Model.Common;
-    ViewBag.CurrentAction = "Index";
  }
 
 @section headerPlugins
@@ -19,6 +18,8 @@
 	readonlyAttributes.Add("disabled", "true");
 	
 } 
+<form id="changeBlogForm" action="/Admin/ManageLists/Index/">
+</form>
 <form id="saveForm" action="/Admin/ManageLists/Index/">
 	<input type="hidden" id="performSave" name="performSave" value="true" />
 </form>

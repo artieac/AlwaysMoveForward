@@ -8,13 +8,6 @@
 {
     @RenderSection("headerPlugins", false)
 }
-<form id="changeBlogForm" action="/Admin/ManageBlog/@ViewBag.CurrentAction/">
-    <input type="hidden" id="performSave" name="performSave" value="true" />
-    @if(!string.IsNullOrEmpty(@ViewBag.AdditionalUrlElements))
-    {
-        <input type="hidden" id="additionalUrlElements" name="additionalUrlElements" value="@ViewBag.AdditionalUrlElements"/>        
-    }
-</form>
 <div class='adminLinkSection'>
     <span>
         @if(ViewBag.AllowBlogChange == false)

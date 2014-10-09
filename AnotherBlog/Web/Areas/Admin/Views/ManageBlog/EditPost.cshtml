@@ -2,13 +2,7 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
     ViewBag.Common = Model.Common;
-    ViewBag.CurrentAction = "EditPost";
-    ViewBag.AdditionalUrlElements = Model.EntryList[0].Post.EntryId.ToString();
-    
-    if(Model.EntryList[0].Post.EntryId > 0)
-    {
-        ViewBag.AllowBlogChange = false;        
-    }
+    ViewBag.AllowBlogChange = false;        
 }
 @section headerPlugins
 {
@@ -23,6 +17,10 @@
         setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 300000);
     </script>
 }
+<form id="changeBlogForm" action="/Admin/ManageBlog/EditPost/@Model.EntryList[0].Post.EntryId.ToString()">
+    <input type="hidden" id="performSave" name="performSave" value="true" />
+</form>
+
 <div class="bodyContent">
     <div class="panel panel-primary editAreaContainer">
         <div class="panel-header">
