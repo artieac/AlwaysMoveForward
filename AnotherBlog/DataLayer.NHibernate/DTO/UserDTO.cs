@@ -54,5 +54,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string DisplayName { get; set; }
+
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogUsers", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "UserId")]
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogUserDTO))]
+        public virtual IList<BlogUserDTO> Roles { get; set; }
     }
 }

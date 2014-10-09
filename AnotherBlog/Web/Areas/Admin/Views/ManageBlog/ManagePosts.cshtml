@@ -5,6 +5,8 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
     ViewBag.Common = Model.Common;
+    ViewBag.CurrentAction = "ManagePosts";
+
  }
  @section headerPlugins
  {
@@ -12,14 +14,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("button[name=addButton]").click(function () {
-                document.location.href = "/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder";
+                document.location.href = "/Admin/ManageBlog/EditPost?blogSubFolder=@Model.Common.TargetBlog.SubFolder";
             });
         });
      </script>
  }
-    <form id="saveForm" action="/Admin/ManageBlog/ManagePosts/">
-        <input type="hidden" id="performSave" name="performSave" value="true" />
-    </form>
+<form id="changeBlogForm" action="/Admin/ManageBlog/ManagePosts/">
+</form>
     <div class="bodyContent">
         <div class="panel panel-default">
             <div class="panel-header">Manage Blog Posts</div>

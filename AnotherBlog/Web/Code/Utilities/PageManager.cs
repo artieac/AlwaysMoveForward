@@ -12,29 +12,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 {
     public class PageManager
     {
-        private static IDictionary<int, Role> systemRoles = null;
-
-        public static IDictionary<int, Role> Roles
-        {
-            get
-            {
-                if (systemRoles == null)
-                {
-                    systemRoles = new Dictionary<int, Role>();
-
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    IList<Role> roles = serviceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < roles.Count; i++)
-                    {
-                        systemRoles.Add(roles[i].RoleId, roles[i]);
-                    }
-                }
-
-                return systemRoles;
-            }
-        }
-
         public static bool IsSiteAdministrator()
         {
             bool retVal = false;
@@ -43,7 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (currentPrincipal != null)
             {
-                retVal = currentPrincipal.IsInRole(RoleType.SiteAdministrator);
+                retVal = currentPrincipal.IsInRole(RoleType.Names.SiteAdministrator);
             }
 
             return retVal;
@@ -57,8 +34,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (currentPrincipal != null)
             {
-                if (currentPrincipal.IsInRole(RoleType.SiteAdministrator) ||
-                    currentPrincipal.IsInRole(RoleType.Administrator))
+                if (currentPrincipal.IsInRole(RoleType.Names.SiteAdministrator) ||
+                    currentPrincipal.IsInRole(RoleType.Names.Administrator))
                 {
                     retVal = true;
                 }

@@ -10,24 +10,31 @@
 }
 <div class='adminLinkSection'>
     <span>
-        <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
+        @if(ViewBag.AllowBlogChange == false)
+        {
+            <label>@ViewBag.Common.TargetBlog.SubFolder</label>
+        }
+        else
+        {
+            <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
+            @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
+            { 
+                <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
+                                                                                            {<text> selected </text>}>@blogItem.Name</option>
+            }            
+            </select>
+        }
         @{
             SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
         }
-        @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
-        { 
-            <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
-                                                                                            {<text> selected </text>}>@blogItem.Name</option>
-        }            
-        </select>
-        @if (currentPrincipal.IsInRole(RoleType.Administrator) == true || currentPrincipal.IsInRole(RoleType.Blogger) == true)
+        @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true || currentPrincipal.IsInRole(RoleType.Names.Blogger) == true)
         {
             <text><a href='/Admin/ManageBlog/Preferences'> Blog Settings</a> | </text>
             <text><a href='/Admin/ManageLists/Index'> Manage Lists</a> | </text>
         } 
-        @if (currentPrincipal.IsInRole(RoleType.Administrator) == true ||
-            currentPrincipal.IsInRole(RoleType.Blogger) ||
-            currentPrincipal.IsInRole(RoleType.SiteAdministrator) == true)
+        @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true ||
+            currentPrincipal.IsInRole(RoleType.Names.Blogger) ||
+            currentPrincipal.IsInRole(RoleType.Names.SiteAdministrator) == true)
         { 
             <text><a href='/Admin/ManageBlog/ManagePosts'> Manage Posts</a> |  </text>
             <text><a href='/Admin/ManageBlog/ManageComments'> Administer Comments</a></text>

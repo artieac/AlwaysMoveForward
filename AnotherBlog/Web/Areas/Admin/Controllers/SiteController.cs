@@ -17,14 +17,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
     [RequestAuthenticationFilter]
     public class SiteController : AdminBaseController
     {
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator + "," + RoleType.Blogger, IsBlogSpecific = false)]
+        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
         public ActionResult Landing()
         {
             SiteModel model = new SiteModel();
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
+        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult Index()
         {
             SiteModel model = new SiteModel();
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator)]
+        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
         {
             if (string.IsNullOrEmpty(siteName))

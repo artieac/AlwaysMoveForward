@@ -21,15 +21,15 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin
             );
 
             context.MapRoute(
-                "EditPost",
+                "AdminBlogSubFolder",
                 "Admin/{controller}/{action}/{blogSubFolder}/{id}",
-                new { controller = "ManageBlog", action = "EditPost", id = UrlParameter.Optional }
+                new { id = UrlParameter.Optional }
             );
 
             context.MapRoute(
                 "PostSpecific",
                 "Admin/{controller}/{action}/{blogSubFolder}/{blogPostId}/{filter}",
-                new { controller = "ManageBlog", action = "EditPost", filter = UrlParameter.Optional }
+                new { filter = UrlParameter.Optional }
 );
 
         }

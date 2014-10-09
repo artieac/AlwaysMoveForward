@@ -13,7 +13,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
+    [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
     public class UserManagementController : AdminBaseController
     {
         private const int UserPageSize = 25;
@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         public ActionResult Edit(bool? performSave, string userName, string password, string email, string id, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
         {
             UserModel model = new UserModel();
-            model.Roles = Services.RoleService.GetAll();
+            model.Roles = RoleType.Roles;
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
 
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (model.CurrentUser == null)
             {
-                model.CurrentUser = Services.UserService.Create();
+                model.CurrentUser = new AnotherBlogUser();
             }
 
             if (performSave.HasValue)
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
                         if (model.CurrentUser == null)
                         {
-                            model.CurrentUser = Services.UserService.Create();
+                            model.CurrentUser = new AnotherBlogUser();
                             model.CurrentUser.UserName = userName;
                             model.CurrentUser.Email = email;
                         }
@@ -116,7 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             Services.UserService.Delete(targetUserId);
 
             UserModel model = new UserModel();
-            model.Roles = Services.RoleService.GetAll();
+            model.Roles = RoleType.Roles;
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
 
@@ -144,40 +144,21 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             model.CurrentUser = Services.UserService.GetById(targetUser);
-
-            if (model.CurrentUser != null)
-            {
-                model.BlogsUserCanAccess = Services.BlogUserService.GetUserBlogs(model.CurrentUser.UserId);
-            }
-            else
-            {
-                model.BlogsUserCanAccess = new List<BlogUser>();
-            }
+            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.UserId);
+            model.Roles = RoleType.Roles;
 
             return this.View(model);
         }
 
-        public ActionResult AddBlog(string blogSubFolder, string userId, string targetBlog, string blogRole)
+        public ActionResult AddBlog(string userId, string targetBlog, int blogRole)
         {
             UserModel model = new UserModel();
 
-            int targetUser = int.Parse(userId);
+            int targetUserId = int.Parse(userId);
             int blogId = int.Parse(targetBlog);
-            int roleId = int.Parse(blogRole);
+            RoleType.Id roleId = (RoleType.Id)blogRole;
 
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    Services.BlogUserService.Save(targetUser, blogId, roleId);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            model.CurrentUser = this.Services.UserService.AddBlogRole(targetUserId, blogId, roleId);
 
             IList<Blog> blogs = Services.BlogService.GetAll();
             model.Blogs = new Dictionary<int, Blog>();
@@ -187,28 +168,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.Blogs.Add(blogs[i].BlogId, blogs[i]);
             }
 
-            model.CurrentUser = Services.UserService.GetById(targetUser);
-            model.BlogsUserCanAccess = Services.BlogUserService.GetUserBlogs(model.CurrentUser.UserId);
+            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(model.CurrentUser.UserId);
 
             return this.RedirectToAction("ManageBlogs", new { userId = userId });
         }
 
-        public ActionResult DeleteRole(string blogSubFolder, int blogId, int userId)
+        public ActionResult DeleteRole(int blogId, int userId)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    Services.BlogUserService.DeleteUserBlog(blogId, userId);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
-
+            this.Services.UserService.RemoveBlogRole(userId, blogId);
             return this.Redirect("/Admin/UserManagement/Edit?userId=" + userId.ToString());
         }
     }

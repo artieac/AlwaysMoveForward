@@ -58,10 +58,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Key(1, Column = "EntryId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogListDTO))]
         public virtual IList<BlogPostDTO> Posts { get; set; }
-
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogUser", Cascade="Delete", Inverse=true)]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "BlogUserId")]
-        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogUserDTO))]
-        public virtual IList<BlogUserDTO> Users { get; set; }
     }
 }

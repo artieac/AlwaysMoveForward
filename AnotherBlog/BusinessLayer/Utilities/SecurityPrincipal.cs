@@ -22,41 +22,17 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
     {
-        private static IDictionary<int, Role> systemRoles = null;
-
-        public static IDictionary<int, Role> Roles
-        {
-            get
-            {
-                if (systemRoles == null)
-                {
-                    systemRoles = new Dictionary<int, Role>();
-
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    IList<Role> roles = serviceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < roles.Count; i++)
-                    {
-                        systemRoles.Add(roles[i].RoleId, roles[i]);
-                    }
-                }
-
-                return systemRoles;
-            }
-        }
-
         private ServiceManager serviceManager = null;
-        private static Dictionary<int, Role> userRoles;
 
-        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
+        public SecurityPrincipal(AnotherBlogUser currentUser) : this(currentUser, false) { }
 
-        public SecurityPrincipal(User currentUser, bool isAuthenticated)
+        public SecurityPrincipal(AnotherBlogUser currentUser, bool isAuthenticated)
         {
             this.IsAuthenticated = isAuthenticated;
             this.CurrentUser = currentUser;
         }
 
-        public User CurrentUser { get; private set; }
+        public AnotherBlogUser CurrentUser { get; private set; }
 
         private ServiceManager ServiceManager
         {
@@ -71,25 +47,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             }
         }
 
-        private Dictionary<int, Role> UserRoles
-        {
-            get
-            {
-                if (userRoles == null)
-                {
-                    userRoles = new Dictionary<int, Role>();
-
-                    IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < allRoles.Count; i++)
-                    {
-                        userRoles.Add(allRoles[i].RoleId, allRoles[i]);
-                    }
-                }
-
-                return userRoles;
-            }
-        }
         /// <summary>
         /// Implement the IIDentity interface so that it can be used with built in .Net security methods
         /// </summary>
@@ -140,24 +97,19 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
             if (this.CurrentUser != null)
             {
-                if (targetRole == RoleType.SiteAdministrator)
+                if (targetRole == RoleType.Names.SiteAdministrator)
                 {
                     retVal = this.CurrentUser.IsSiteAdministrator;
                 }
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
-
-                    if (userBlogs != null)
+                    foreach(int blogId in this.CurrentUser.Roles.Keys)
                     {
-                        for (int i = 0; i < userBlogs.Count; i++)
+                        if (this.CurrentUser.Roles[blogId].ToString() == targetRole)
                         {
-                            if (Roles[userBlogs[i].Role.RoleId].Name == targetRole)
-                            {
-                                retVal = true;
-                                break;
-                            }
+                            retVal = true;
+                            break;
                         }
                     }
                 }
@@ -180,7 +132,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
             if (this.CurrentUser != null)
             {
-                if (targetRole.Contains(RoleType.SiteAdministrator))
+                if (targetRole.Contains(RoleType.Names.SiteAdministrator))
                 {
                     if (this.CurrentUser.IsSiteAdministrator)
                     {
@@ -190,19 +142,15 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
+                    Blog targetBlog = this.ServiceManager.BlogService.GetBySubFolder(blogSubFolder);
 
-                    if (userBlogs != null)
+                    if(targetBlog != null)
                     {
-                        for (int i = 0; i < userBlogs.Count; i++)
+                        if(this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
                         {
-                            if (userBlogs[i].Blog.SubFolder == blogSubFolder)
+                            if (this.CurrentUser.Roles[targetBlog.BlogId].ToString() == targetRole)
                             {
-                                if (Roles[userBlogs[i].Role.RoleId].Name == targetRole)
-                                {
-                                    retVal = true;
-                                    break;
-                                }
+                                retVal = true;
                             }
                         }
                     }
@@ -226,7 +174,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             {
                 if (targetRole != null)
                 {
-                    if (targetRole.Contains(RoleType.SiteAdministrator))
+                    if (targetRole.Contains(RoleType.Names.SiteAdministrator))
                     {
                         if (this.CurrentUser.IsSiteAdministrator)
                         {
@@ -239,22 +187,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 {
                     if (targetBlog != null)
                     {
-                        IList<BlogUser> userBlogs = this.ServiceManager.BlogUserService.GetUserBlogs(this.CurrentUser.UserId);
-
-                        if (userBlogs != null)
+                        if (this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
                         {
-                            for (int i = 0; i < userBlogs.Count; i++)
+                            if (targetRole.Contains(this.CurrentUser.Roles[targetBlog.BlogId].ToString()))
                             {
-                                if (userBlogs[i].Blog.BlogId == targetBlog.BlogId)
-                                {
-                                    if (targetRole.Contains(Roles[userBlogs[i].Role.RoleId].Name))
-                                    {
-                                        retVal = true;
-                                        break;
-                                    }
-                                }
+                                retVal = true;
                             }
                         }
+                     
                     }
                 }
             }

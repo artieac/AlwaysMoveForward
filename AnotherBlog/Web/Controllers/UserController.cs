@@ -124,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 retVal.ProcessedLogin = true;
 
-                User currentUser = Services.UserService.Login(userName, password);
+                AnotherBlogUser currentUser = Services.UserService.Login(userName, password);
 
                 if (currentUser == null)
                 {
@@ -163,7 +163,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             UserModel model = this.InitializeUserModel(blogSubFolder);
             model.Common.ContentTitle = "My Account";
 
-            User userToSave = this.CurrentPrincipal.CurrentUser;
+            AnotherBlogUser userToSave = this.CurrentPrincipal.CurrentUser;
 
             userToSave.Password = password;
             userToSave.Email = email;
@@ -231,7 +231,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("UserLogin", model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.SiteAdministrator + "," + RoleType.Administrator)]
+        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
         public ActionResult ViewUserSocial(string blogSubFolder, string userId)
         {
             UserModel model = this.InitializeUserModel(blogSubFolder);

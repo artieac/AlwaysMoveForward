@@ -82,8 +82,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <returns></returns>
         public IList<Blog> GetByUserId(int userId)
         {
+            DetachedCriteria blogRoles = DetachedCriteria.For<BlogUserDTO>();
+            blogRoles.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            blogRoles.SetProjection(Projections.Distinct(Projections.Property("BlogId")));
+
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogDTO>();
-            criteria.CreateCriteria("Users").CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            criteria.Add(Subqueries.PropertyIn("BlogId", blogRoles));
             return this.GetDataMapper().Map(criteria.List<BlogDTO>());
         }
     }

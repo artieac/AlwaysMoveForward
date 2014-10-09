@@ -1,16 +1,11 @@
 ﻿var AdminCommon = new function () {
     this.HandleBlogSelectionChange = function () {
-        var saveForm = jQuery("#saveForm");
+        var changeBlogForm = jQuery("#changeBlogForm");
 
-        if (saveForm != null) {
-            var performSave = jQuery("#performSave");
+        if (changeBlogForm != null) {
             var blogSubFolder = jQuery("#targetBlog");
-
-            saveForm.attr('action', saveForm.attr('action') + blogSubFolder.val());
-
-            alert(saveForm.attr('action'));
-            performSave.val(false);
-            saveForm.submit();
+            changeBlogForm.attr('action', changeBlogForm.attr('action') + blogSubFolder.val());
+            changeBlogForm.submit();
         }
     }
 }

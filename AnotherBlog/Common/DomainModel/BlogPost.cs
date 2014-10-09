@@ -12,9 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 
@@ -35,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public int EntryId { get; set; }
         public bool IsPublished { get; set; }
         public Blog Blog { get; set; }
-        public User Author { get; set; }
+        public AnotherBlogUser Author { get; set; }
         public string EntryText { get; set; }
         public string Title { get; set; }
         public DateTime DatePosted { get; set; }
@@ -50,7 +48,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             return this.Comments.Where(comment => comment.Status == targetStatus).ToList();
         }
 
-        public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, User currentUser)
+        public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, AnotherBlogUser currentUser)
         {
             Comment retVal = new Comment();
             retVal.AuthorName = authorName;

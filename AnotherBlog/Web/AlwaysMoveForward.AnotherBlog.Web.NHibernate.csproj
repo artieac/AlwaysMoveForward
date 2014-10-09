@@ -150,16 +150,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\Admin\Views\ManageBlog\EditPost.cshtml" />
-    <None Include="Areas\Admin\Views\ManageBlog\_FileUploadControl.cshtml" />
-    <None Include="Areas\Admin\Views\ManageBlog\Index.cshtml" />
-    <None Include="Areas\Admin\Views\ManageBlog\ManageComments.cshtml" />
-    <None Include="Areas\Admin\Views\ManageBlog\ManagePosts.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\EditBlog.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\EditPost.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\GetAll.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\_FileUploadControl.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\ManageComments.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageBlog\ManagePosts.cshtml" />
     <None Include="Areas\Admin\Views\ManageBlog\Preferences.cshtml" />
     <Content Include="Areas\Admin\Views\ManageLists\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePolls\Index.cshtml" />
-    <None Include="Areas\Admin\Views\Site\Index.cshtml" />
-    <None Include="Areas\Admin\Views\Site\Landing.cshtml" />
+    <Content Include="Areas\Admin\Views\Site\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Site\Landing.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -245,12 +247,14 @@
     <Content Include="Content\themes\Box\Site.less" />
     <Content Include="Content\themes\Box\TabControl.less" />
     <Content Include="Content\themes\Box\ThemeDefaults.less" />
+    <None Include="Properties\PublishProfiles\Blog.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -356,8 +360,8 @@
     <Folder Include="Areas\API\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Shared\_AdminToolLayout.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\_BlogLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminToolLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_BlogLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

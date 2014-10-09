@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
+    <Compile Include="DomainModel\AnotherBlogUser.cs" />
     <Compile Include="DomainModel\BlogList.cs" />
     <Compile Include="DomainModel\BlogListItem.cs" />
     <Compile Include="DomainModel\RoleType.cs" />
@@ -75,10 +77,8 @@
     <Compile Include="DataLayer\Map\IBlogList.cs" />
     <Compile Include="DataLayer\Map\IBlogListItem.cs" />
     <Compile Include="DataLayer\Map\IBlogPost.cs" />
-    <Compile Include="DataLayer\Map\IBlogUser.cs" />
     <Compile Include="DataLayer\Map\IComment.cs" />
     <Compile Include="DataLayer\Map\IExtensionConfiguration.cs" />
-    <Compile Include="DomainModel\BlogUser.cs" />
     <Compile Include="DomainModel\Comment.cs" />
     <Compile Include="DomainModel\Tag.cs" />
     <Compile Include="DomainModel\TagCount.cs" />
@@ -86,7 +86,6 @@
     <Compile Include="DataLayer\Repositories\IBlogEntryRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogListRepository.cs" />
     <Compile Include="DataLayer\Repositories\IBlogRepository.cs" />
-    <Compile Include="DataLayer\Repositories\IBlogUserRepository.cs" />
     <Compile Include="DataLayer\Map\IPostTag.cs" />
     <Compile Include="DataLayer\Repositories\IAnotherBlogRepositoryManager.cs" />
     <Compile Include="DataLayer\Repositories\ITagRepository.cs">
