@@ -10,6 +10,15 @@
 
 @section headerPlugins
 {
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            plugins: "link",
+            selector: 'textarea',
+            menubar: "format insert edit",
+            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link"
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#saveButton").click(function () {

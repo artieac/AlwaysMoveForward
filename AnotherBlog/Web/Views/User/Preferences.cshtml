@@ -6,12 +6,13 @@
 }
 @section headerPlugins
 {
-    <script type="text/javascript" src="../../Content/tiny_mce/tiny_mce.js"></script>
-    <script type="text/javascript">
-        tinyMCE.init({
-            // General options
-            mode: "textareas",
-            theme: "AnotherBlog"
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            plugins: "link",
+            selector: 'textarea',
+            menubar: "format insert edit",
+            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link"
         });
     </script>
     <!-- /TinyMCE -->
