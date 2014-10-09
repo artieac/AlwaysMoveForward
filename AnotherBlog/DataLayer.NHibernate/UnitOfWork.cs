@@ -25,9 +25,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         }
 
         /// <summary>
-        /// A constructor that takes database connection strings to vistaprint.  These need to go away long term.
+        /// A constructor that takes database connection strings.  
         /// </summary>
-        /// <param name="vistaprintConnectionString">The connection string for the vistaprint database</param>
+        /// <param name="connectionString">The connection string for the database</param>
         public UnitOfWork(string connectionString)
             : base(connectionString)
         {
