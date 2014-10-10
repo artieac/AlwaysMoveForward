@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public IList<Tag> GetAll(int blogId)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
-            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            criteria.Add(Expression.Eq("BlogId", blogId));
             return this.GetDataMapper().Map(criteria.List<TagDTO>());
         }
 
@@ -103,7 +103,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
             criteria.Add(Expression.Eq("Name", name));
-            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            criteria.Add(Expression.Eq("BlogId", blogId));
             return this.GetDataMapper().Map(criteria.UniqueResult<TagDTO>());
         }
         /// <summary>
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
             criteria.Add(Expression.In("Name", names));
-            criteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            criteria.Add(Expression.Eq("BlogId", blogId));
             return criteria.List<TagDTO>();
         }
 

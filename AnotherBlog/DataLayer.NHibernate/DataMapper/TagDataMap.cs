@@ -20,7 +20,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             if (AutoMapper.Mapper.FindTypeMapFor<Tag, TagDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<Tag, TagDTO>()
-                    .ForMember(dest => dest.Blog, opt => opt.Ignore())
                     .ForMember(dest => dest.BlogEntries, opt => opt.Ignore());
             }
 

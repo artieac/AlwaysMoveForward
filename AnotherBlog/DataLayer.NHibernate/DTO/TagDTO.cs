@@ -32,8 +32,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public virtual string Name { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Blog", Class = "BlogDTO", ClassType = typeof(BlogDTO), Column = "BlogId")]
-        public virtual BlogDTO Blog { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual int BlogId { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntryTags", Cascade = "Save-Update")]
         [NHibernate.Mapping.Attributes.Key(1, Column = "TagID")]
