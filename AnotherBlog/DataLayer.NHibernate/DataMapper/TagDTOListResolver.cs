@@ -3,47 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
-    public class TagDTOListResolver : IValueResolver
+    public class TagDTOListResolver : MappedListResolver<Tag, TagDTO>
     {
-        public ResolutionResult Resolve(ResolutionResult source)
+        protected override IList<TagDTO> GetDestinationList(ResolutionResult source)
         {
-            IList<TagDTO> tagDestination = null;
+            return ((BlogPostDTO)source.Context.DestinationValue).Tags;
+        }
 
-            if (source.Context.DestinationValue != null)
+        protected override IList<Tag> GetSourceList(ResolutionResult source)
+        {
+            IList<Tag> retVal = null;
+
+            if (source.Value != null)
             {
-                tagDestination = ((BlogPostDTO)source.Context.DestinationValue).Tags;
-
-                if(tagDestination == null)
-                {
-                    tagDestination = new List<TagDTO>();
-                }
-
-                for (int i = 0; i < tagDestination.Count; i++)
-                {
-                    tagDestination[i] = Mapper.Map(((BlogPost)source.Value).Tags[i], tagDestination[i]);
-                }
-
-                BlogPost sourceObject = (BlogPost)source.Value;
-
-                for (int i = 0; i < sourceObject.Tags.Count; i++)
-                {
-                    if (i >= tagDestination.Count())
-                    {
-                        tagDestination.Add(Mapper.Map<Tag, TagDTO>(sourceObject.Tags[i]));
-                    }
-                    else
-                    {
-                        tagDestination[i] = Mapper.Map(sourceObject.Tags[i], tagDestination[i]);
-                    }
-                }
+                retVal = ((BlogPost)source.Value).Tags;
             }
 
-            return source.New(tagDestination, typeof(IList<TagDTO>));
+            return retVal;
+        }
+
+        protected override TagDTO FindItemInList(IList<TagDTO> destinationList, Tag searchTarget)
+        {
+            return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
+        }
+
+        protected override Tag FindItemInList(IList<Tag> sourceList, TagDTO searchTarget)
+        {
+            return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
         }
     }
 }

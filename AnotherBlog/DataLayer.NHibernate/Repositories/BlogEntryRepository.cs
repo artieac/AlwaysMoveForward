@@ -356,6 +356,34 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
             criteria.CreateCriteria("Comments").Add(Expression.Eq("CommentId", commentId));
             return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
-        }       
+        }
+
+        public override BlogPost Save(BlogPost itemToSave)
+        {
+            if (itemToSave != null && itemToSave.Tags != null)
+            {
+                BlogPostDTO dtoPost = this.GetDTOById(itemToSave.EntryId);
+
+                if (dtoPost != null)
+                {
+                    foreach (Tag domainTag in itemToSave.Tags)
+                    {
+                        if (dtoPost.Tags.FirstOrDefault(t => t.Id == domainTag.Id) == null)
+                        {
+                            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
+                            criteria.Add(Expression.Eq("Id", domainTag.Id));
+                            TagDTO existsTest = criteria.UniqueResult<TagDTO>();
+
+                            if (existsTest != null)
+                            {
+                                dtoPost.Tags.Add(existsTest);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return base.Save(itemToSave);
+        }
     }
 }
