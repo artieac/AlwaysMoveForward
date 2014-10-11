@@ -184,7 +184,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             ICriteria tagCriteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
             tagCriteria.Add(Expression.Eq("Name", tagText));
-            tagCriteria.CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+            tagCriteria.Add(Expression.Eq("BlogId", blogId));
 
             TagDTO targetTag = tagCriteria.UniqueResult<TagDTO>();
 
