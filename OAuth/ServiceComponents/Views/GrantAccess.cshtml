@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section Head
+{
+
+}
+<form action="/Authorization/ApproveAccess" method="post">
+    <input type="hidden" name="OAuthToken" value="@Model.OAuthToken" />
+    <input type="submit" value="Approve" />
+</form>
+
+<form action="/Authorization/DenyAccess" method="post">
+    <input type="hidden" name="OAuthToken" value="@Model.OAuthToken" />
+    <input type="submit" value="Deny" />
+</form>

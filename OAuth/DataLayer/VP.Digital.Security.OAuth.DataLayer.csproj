@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VP.Digital.Security.OAuth.DataLayer</RootNamespace>
+    <AssemblyName>VP.Digital.Security.OAuth.DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\nuget-packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\ThirdParty\DevDefined.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\..\nuget-packages\Iesi.Collections.3.2.0.1001\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\nuget-packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\..\..\nuget-packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VP.Digital.Common">
+      <HintPath>..\..\..\lib\VP.Digital.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VP.Digital.Common.DataLayer.NHibernate">
+      <HintPath>..\..\..\lib\VP.Digital.Common.DataLayer.NHibernate.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataMapper\ConsumerDataMapper.cs" />
+    <Compile Include="DataMapper\ConsumerNonceDataMapper.cs" />
+    <Compile Include="DataMapper\DigitalUserDataMapper.cs" />
+    <Compile Include="DataMapper\LoginAttemptDataMapper.cs" />
+    <Compile Include="DataMapper\RequestTokenDataMapper.cs" />
+    <Compile Include="DTO\AccessToken.cs" />
+    <Compile Include="DTO\ConsumerNonce.cs" />
+    <Compile Include="DTO\Consumer.cs" />
+    <Compile Include="DTO\DigitalUser.cs" />
+    <Compile Include="DTO\LoginAttempt.cs" />
+    <Compile Include="DTO\RequestTokenAuthorization.cs" />
+    <Compile Include="DTO\RequestToken.cs" />
+    <Compile Include="Repositories\ILoginAttemptRepository.cs" />
+    <Compile Include="Repositories\LoginAttemptRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ConsumerNonceRepository.cs" />
+    <Compile Include="Repositories\ConsumerRepository.cs" />
+    <Compile Include="Repositories\DigitalUserRepository.cs" />
+    <Compile Include="Repositories\IConsumerNonceRepository.cs" />
+    <Compile Include="Repositories\IConsumerRepository.cs" />
+    <Compile Include="Repositories\IDigitalUserRepository.cs" />
+    <Compile Include="Repositories\IRepositoryManager.cs" />
+    <Compile Include="Repositories\IRequestTokenRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\RepositoryManager.cs" />
+    <Compile Include="Repositories\RequestTokenRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
+      <Name>VP.Digital.Security.OAuth.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{460C70C3-30A5-4F79-8F5E-9ED96123AE12}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VP.Digital.Security.OAuth.ServiceComponents</RootNamespace>
+    <AssemblyName>VP.Digital.Security.OAuth.ServiceComponents</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevDefined.OAuth">
+      <HintPath>..\..\..\lib\ThirdParty\DevDefined.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\..\lib\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VP.Digital.Common">
+      <HintPath>..\..\..\lib\VP.Digital.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Contracts\ApproveAccessRequest.cs" />
+    <Compile Include="Contracts\ApproveAccessResponse.cs" />
+    <Compile Include="Contracts\AuthorizeConsumerRequest.cs" />
+    <Compile Include="Contracts\IndexRequest.cs" />
+    <Compile Include="Contracts\IndexResponse.cs" />
+    <Compile Include="Contracts\LoginRequest.cs" />
+    <Compile Include="Contracts\LoginResponse.cs" />
+    <Compile Include="Contracts\RequestProxyRequest.cs" />
+    <Compile Include="Controllers\ApproveAccessController.cs" />
+    <Compile Include="Controllers\AuthorizeConsumerController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ExchangeRequestTokenForAccessTokenController.cs" />
+    <Compile Include="Controllers\ConsumerController.cs" />
+    <Compile Include="Contracts\ExchangeRequestTokenForAccessTokenRequest.cs" />
+    <Compile Include="Contracts\PostConsumerRequest.cs" />
+    <Compile Include="Controllers\GetRequestTokenController.cs" />
+    <Compile Include="Contracts\GetRequestTokenRequest.cs" />
+    <Compile Include="Controllers\ServiceStackOAuthContextBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\VP.Digital.Security.OAuth.BusinessLayer.csproj">
+      <Project>{121fb691-35d7-4ad4-980d-0d7d823a6c07}</Project>
+      <Name>VP.Digital.Security.OAuth.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
+      <Name>VP.Digital.Security.OAuth.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLayer\VP.Digital.Security.OAuth.BusinessLayer.csproj">
+      <Project>{121fb691-35d7-4ad4-980d-0d7d823a6c07}</Project>
+      <Name>VP.Digital.Security.OAuth.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLayer\VP.Digital.Security.OAuth.DataLayer.csproj">
+      <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>
+      <Name>VP.Digital.Security.OAuth.DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AccessStatus.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\GrantAccess.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\NotFound.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

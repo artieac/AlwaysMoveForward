@@ -95,6 +95,9 @@
     <Compile Include="Encryption\RSAXmlKeyFileManager.cs" />
     <Compile Include="Encryption\SHA1HashUtility.cs" />
     <Compile Include="Encryption\X509CertificateManager.cs" />
+    <Compile Include="Security\DefaultSecurityPrincipal.cs" />
+    <Compile Include="Security\SecurityPrincipalBase.cs" />
+    <Compile Include="Security\IRequestValidator.cs" />
     <Compile Include="Utilities\DateCompare.cs" />
     <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="Business\EmailManager.cs" />

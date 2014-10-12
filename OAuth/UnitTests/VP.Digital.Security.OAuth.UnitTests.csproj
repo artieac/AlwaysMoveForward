@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VP.Digital.Security.OAuth.UnitTests</RootNamespace>
+    <AssemblyName>VP.Digital.Security.OAuth.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevDefined.OAuth">
+      <HintPath>..\..\..\lib\ThirdParty\DevDefined.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\nuget-packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\nuget-packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\..\lib\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VP.Digital.Common">
+      <HintPath>..\..\..\lib\VP.Digital.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VP.Digital.Common.DataLayer.NHibernate">
+      <HintPath>..\..\..\lib\VP.Digital.Common.DataLayer.NHibernate.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLayer\UserServiceTests.cs" />
+    <Compile Include="BusinessLayer\ConsumerServiceTests.cs" />
+    <Compile Include="BusinessLayer\TokenServiceTests.cs" />
+    <Compile Include="BusinessLayer\WhitelistServiceTests.cs" />
+    <Compile Include="CommonTests\UserTransferManagerTests.cs" />
+    <Compile Include="Constants\AccountConstants.cs" />
+    <Compile Include="Constants\ConsumerConstants.cs" />
+    <Compile Include="CommonTests\ConfigurationTests.cs" />
+    <Compile Include="CommonTests\RealmTests.cs" />
+    <Compile Include="Constants\TokenConstants.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\ConsumerNonceRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\ConsumerRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\DigitalUserRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\LoginAttemptRepositoryTest.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\RepositoryTestBase.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\RequestTokenRepositoryTests.cs" />
+    <Compile Include="Mock\Controllers\MockServiceStackRequestContext.cs" />
+    <Compile Include="Mock\MockDevDefinedConsumer.cs" />
+    <Compile Include="Mock\MockServiceManagerBuilder.cs" />
+    <Compile Include="Mock\Repositories\MockConsumerNonceRepositoryHelper.cs" />
+    <Compile Include="Mock\Repositories\MockConsumerRepositoryHelper.cs" />
+    <Compile Include="Mock\Repositories\MockDigitalUserRepositoryHelper.cs" />
+    <Compile Include="Mock\Repositories\MockLoginAttemptRepository.cs" />
+    <Compile Include="Mock\Repositories\MockRepositoryManager.cs" />
+    <Compile Include="Mock\Repositories\MockRequestTokenRepositoryHelper.cs" />
+    <Compile Include="OAuth\RequestTokenTests.cs" />
+    <Compile Include="PresentationLayer\ServiceControllers\ControllerTestBase.cs" />
+    <Compile Include="PresentationLayer\ServiceControllers\CreateConsumerControllerTest.cs" />
+    <Compile Include="PresentationLayer\ServiceControllers\GetRequestTokenControllerTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\VP.Digital.Security.OAuth.BusinessLayer.csproj">
+      <Project>{121fb691-35d7-4ad4-980d-0d7d823a6c07}</Project>
+      <Name>VP.Digital.Security.OAuth.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
+      <Name>VP.Digital.Security.OAuth.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLayer\VP.Digital.Security.OAuth.DataLayer.csproj">
+      <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>
+      <Name>VP.Digital.Security.OAuth.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceComponents\VP.Digital.Security.OAuth.ServiceComponents.csproj">
+      <Project>{460c70c3-30a5-4f79-8f5e-9ed96123ae12}</Project>
+      <Name>VP.Digital.Security.OAuth.ServiceComponents</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

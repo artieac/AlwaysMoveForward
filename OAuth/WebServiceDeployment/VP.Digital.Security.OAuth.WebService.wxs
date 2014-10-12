@@ -1,0 +1,75 @@
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
+    <!-- 
+       The Name attribute is VERY important. It needs to match up with:
+          1) Your module name in your ivy.xml (explained in the next section)
+          2) The package name defined in your puppet package element (explained further down)
+ 
+       The version property is unimportant, since the wix task in devkit will overwrite it with the "real" version number.
+    -->
+    <Product Id="*" Language="1033" Manufacturer="Vistaprint" Name="VP.Digital.Security.OAuth.WebService" UpgradeCode="{BA40F296-72AD-4E9B-8C19-7CC5FC0A64D3}" Version="$(env.BUILD_VERSION)">
+        <Package Compressed="yes" InstallerVersion="200" />
+
+        <!-- 
+          This next section allows our MSI to automatically uninstall any previously installed versions. It helps facilitate local development.
+        -->
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+        <Upgrade Id="{BA40F296-72AD-4E9B-8C19-7CC5FC0A64D3}">
+          <UpgradeVersion
+              Minimum="1.0.0.0" Maximum="99.0.0.0"
+              Property="PREVIOUSVERSIONINSTALLED"
+              IncludeMinimum="yes" IncludeMaximum="no" />
+        </Upgrade>
+        <Directory Id="TARGETDIR" Name="SourceDir" >
+			<Directory Id="ProductData" Name="ProductData">
+				<Directory Id="Keys" Name="Keys">
+					<Component Id="ProductKeyComponents" Guid="{8EDC79AB-0EE2-4FC4-8A7C-89EE414860E4}">
+						<File Id="PrivateKey.xml" Name="PrivateKey.xml" Source=".\data\Keys\PrivateKey.xml"/>
+					</Component>
+				</Directory>
+			</Directory>			
+			<!-- Dump your application files in here -->
+			<Directory Id="INSTALLLOCATION" Name="VP.Digital.Security.OAuth.WebService">                    
+				<Component Id="DigitalSecurityOAuthWebServiceComponent" Guid="{E8A51EF5-2E48-4256-B44A-BDAF7C6EBE8E}">
+			<!-- ... file contents ... -->
+					<File Id="VP.Digital.Security.OAuth.WebService.exe"
+						KeyPath="yes"
+						Source="SourceDir\VP.Digital.Security.OAuth.WebService.exe" />
+
+			<!-- The next element installs the service. The "Name" attribute is very important. It needs to match up with the name used in the puppet service element (explained further below). -->
+
+					<ServiceInstall
+					  Id="VP.Digital.Security.OAuth.WebService" 
+					  Type="ownProcess"
+					  Vital="yes"
+					  Name="VP.Digital.Security.OAuth.WebService"
+					  DisplayName="VP.Digital.Security.OAuth.WebService"
+					  Description="End point for the Digital OAuth WebService"
+					  Start="auto"
+					  Account="LocalSystem"
+					  ErrorControl="ignore"
+					  Interactive="no"/>
+		<!-- 
+				Note that our service does NOT start itself immediately after installation.
+			We rely on puppet to do that. It gives us the opportunity to make other changes (e.g. config files) between installing the service and starting it.
+		-->
+					<ServiceControl 
+					  Id="ServiceController"
+					  Stop="both"
+					  Remove="uninstall"
+					  Name="VP.Digital.Security.OAuth.WebService"
+					  Wait="yes"/>						
+				</Component>
+			</Directory>
+        </Directory>
+        <Feature Id="ProductFeature" Level="1" Title="Core Service">
+           <!-- component refs in here -->
+            <ComponentGroupRef Id="VP.Digital.Security.OAuth.WebService_files" />
+            <ComponentRef Id="DigitalSecurityOAuthWebServiceComponent"/>
+			<ComponentRef Id="ProductKeyComponents"/>
+		</Feature>
+        <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="CostInitialize" />
+        </InstallExecuteSequence>
+    </Product>
+</Wix>

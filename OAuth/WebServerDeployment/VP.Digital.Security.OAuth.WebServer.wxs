@@ -1,0 +1,45 @@
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
+    <!-- 
+       The Name attribute is VERY important. It needs to match up with:
+          1) Your module name in your ivy.xml (explained in the next section)
+          2) The package name defined in your puppet package element (explained further down)
+ 
+       The version property is unimportant, since the wix task in devkit will overwrite it with the "real" version number.
+    -->
+    <Product Id="*" Language="1033" Manufacturer="Vistaprint" Name="VP.Digital.Security.OAuth.WebServer" UpgradeCode="{17140025-AC59-4398-AB42-DAD03D449EF9}" Version="$(env.BUILD_VERSION)">
+        <Package Compressed="yes" InstallerVersion="200" />
+
+        <!-- 
+          This next section allows our MSI to automatically uninstall any previously installed versions. It helps facilitate local development.
+        -->
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+        <Upgrade Id="{17140025-AC59-4398-AB42-DAD03D449EF9}">
+          <UpgradeVersion
+              Minimum="1.0.0.0" Maximum="99.0.0.0"
+              Property="PREVIOUSVERSIONINSTALLED"
+              IncludeMinimum="yes" IncludeMaximum="no" />
+        </Upgrade>
+        <Directory Id="TARGETDIR" Name="SourceDir" >	
+			<Directory Id="ProductData" Name="ProductData">
+				<Directory Id="Keys" Name="Keys">
+					<Component Id="ProductKeyComponents" Guid="{642F3E37-FA35-48DB-B4C2-55A63971BB3C}">
+						<File Id="PrivateKey.xml" Name="PrivateKey.xml" Source=".\data\Keys\PrivateKey.xml"/>
+					</Component>
+				</Directory>
+			</Directory>			
+			<Directory Id="INSTALLLOCATION" Name="VP.Digital.Security.OAuth.WebServer">
+				<Component Id="DigitalSecurityOAuthWebServerComponent" Guid="{C1FF74CA-BB4C-4AAD-B7B9-42FF11A7F2CE}"></Component>
+			</Directory>
+        </Directory>
+        <Feature Id="ProductFeature" Level="1" Title="Core Service">
+           <!-- component refs in here -->		   
+            <ComponentGroupRef Id="VP.Digital.Security.OAuth.WebServer_Files" />
+            <ComponentRef Id="DigitalSecurityOAuthWebServerComponent"/>
+			<ComponentRef Id="ProductKeyComponents"/>
+        </Feature>
+        <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="CostInitialize" />
+        </InstallExecuteSequence>
+    </Product>
+</Wix>
