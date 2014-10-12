@@ -41,15 +41,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VP.Digital.Common">
-      <HintPath>..\..\..\..\lib\VP.Digital.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OAuthClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\AlwaysMoveForward.OAuth.Common.csproj">
       <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
       <Name>AlwaysMoveForward.OAuth.Common</Name>

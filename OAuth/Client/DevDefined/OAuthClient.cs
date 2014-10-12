@@ -9,6 +9,7 @@ using DevDefined.OAuth.Consumer;
 using DevDefined.OAuth.Framework;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.Client.DevDefined
 {

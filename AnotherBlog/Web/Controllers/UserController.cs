@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.UserName, DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.AMFUser.Email, DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
@@ -80,7 +80,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             }
         }
 
-        public JsonResult AjaxLogin(string blogSubFolder, string userName, string password, string loginAction)
+        public JsonResult AjaxLogin(string blogSubFolder, string loginAction)
         {
             AjaxLoginModel retVal = new AjaxLoginModel();
 
@@ -122,77 +122,22 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         }
 
         [CustomAuthorization]
-        public ActionResult SavePreferences(string blogSubFolder, string password, string email, string userAbout, string displayName)
+        public ActionResult SavePreferences(string blogSubFolder, string userAbout)
         {
             UserModel model = this.InitializeUserModel(blogSubFolder);
             model.Common.ContentTitle = "My Account";
 
             AnotherBlogUser userToSave = this.CurrentPrincipal.CurrentUser;
 
-            userToSave.Password = password;
-            userToSave.Email = email;
-
-            model.CurrentUser = Services.UserService.Save(userToSave.UserName, password, email, userToSave.UserId, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userToSave.IsActive, userAbout, displayName);
+            model.CurrentUser = Services.UserService.Save(userToSave.Id, userToSave.IsSiteAdministrator, userToSave.ApprovedCommenter, userAbout);
 
             return this.View("Preferences", model);
-        }
-
-        public ActionResult Register(string blogSubFolder, string registerAction, string userName, string password, string email, string userAbout, string displayName)
-        {
-            UserModel model = this.InitializeUserModel(blogSubFolder);
-            model.TargetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (registerAction == "save")
-            {
-                if (string.IsNullOrEmpty(userName))
-                {
-                    ModelState.AddModelError("userName", "Please enter a user name.");
-                }
-
-                if (string.IsNullOrEmpty(password))
-                {
-                    ModelState.AddModelError("password", "Please enter a password.");
-                }
-
-                if (string.IsNullOrEmpty(email))
-                {
-                    ModelState.AddModelError("email", "Please enter an email address.");
-                }
-
-                if (ModelState.IsValid)
-                {
-                    model.CurrentUser = Services.UserService.Save(userName, password, email, 0, false, false, true, userAbout, displayName);
-
-                    this.CurrentPrincipal = new SecurityPrincipal(model.CurrentUser, true);
-
-                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-
-                    // Using redirect because redirec to action loses the preceeding blogSubFolder
-                    if (blogSubFolder == null)
-                    {
-                        return this.RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        return this.RedirectToAction("Index", "Blog", new { blogSubFolder = blogSubFolder });
-                    }
-                }
-            }
-
-            return this.View(model);
         }
 
         public ActionResult BlogNavMenu()
         {
             UserModel model = this.InitializeUserModel();
             return this.View(model);
-        }
-
-        public ActionResult ForgotPassword(string blogSubFolder, string userEmail)
-        {
-            UserModel model = this.InitializeUserModel(blogSubFolder);
-            Services.UserService.SendPassword(userEmail, MvcApplication.EmailConfiguration);
-            return this.View("UserLogin", model);
         }
 
         [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]

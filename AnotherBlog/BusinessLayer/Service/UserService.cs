@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return Regex.IsMatch(emailString, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
-        public AnotherBlogUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout)
+        public AnotherBlogUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
             AnotherBlogUser userToSave = null;
 

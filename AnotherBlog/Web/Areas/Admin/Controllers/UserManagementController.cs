@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        public ActionResult Edit(bool? performSave, string userName, string password, string email, string id, bool? isSiteAdmin, bool? approvedCommenter, bool? isActive, string userAbout, string displayName, string twitterId)
+        public ActionResult Edit(bool? performSave, string id, bool? isSiteAdmin, bool? approvedCommenter, string userAbout, string twitterId)
         {
             UserModel model = new UserModel();
             model.Roles = RoleType.Roles;
@@ -62,28 +62,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             {
                 if (performSave.Value == true)
                 {
-                    if (string.IsNullOrEmpty(userName))
-                    {
-                        ViewData.ModelState.AddModelError("userName", "User name required.");
-                    }
-
-                    if (string.IsNullOrEmpty(email))
-                    {
-                        ViewData.ModelState.AddModelError("email", "Email required.");
-                    }
-
-                    if (string.IsNullOrEmpty(displayName))
-                    {
-                        ViewData.ModelState.AddModelError("displayName", "Display Name required.");
-                    }
-
                     if (ViewData.ModelState.IsValid)
                     {
                         using (this.Services.UnitOfWork.BeginTransaction())
                         {
                             try
                             {
-                                model.CurrentUser = Services.UserService.Save(userName, password, email, targetUserId, isSiteAdmin.Value, approvedCommenter.Value, isActive.Value, userAbout, displayName);
+                                model.CurrentUser = Services.UserService.Save(targetUserId, isSiteAdmin.Value, approvedCommenter.Value, userAbout);
                                 this.Services.UnitOfWork.EndTransaction(true);
                             }
                             catch (Exception e)
@@ -100,8 +85,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                         if (model.CurrentUser == null)
                         {
                             model.CurrentUser = new AnotherBlogUser();
-                            model.CurrentUser.UserName = userName;
-                            model.CurrentUser.Email = email;
                         }
                     }
                 }
@@ -144,7 +127,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             model.CurrentUser = Services.UserService.GetById(targetUser);
-            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.UserId);
+            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.Id);
             model.Roles = RoleType.Roles;
 
             return this.View(model);
@@ -168,7 +151,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 model.Blogs.Add(blogs[i].BlogId, blogs[i]);
             }
 
-            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(model.CurrentUser.UserId);
+            model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(model.CurrentUser.Id);
 
             return this.RedirectToAction("ManageBlogs", new { userId = userId });
         }
