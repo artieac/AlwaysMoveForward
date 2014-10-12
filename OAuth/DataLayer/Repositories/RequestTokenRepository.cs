@@ -5,10 +5,10 @@ using System.Text;
 using DevDefined.OAuth.Framework;
 using NHibernate;
 using NHibernate.Criterion;
-using VP.Digital.Common.DataLayer.NHibernate;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// The implementation of the Request Token repository
@@ -25,9 +25,9 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override Digital.Common.DataLayer.DataMapperBase<RequestToken, DTO.RequestToken> DataMapper
+        protected override AlwaysMoveForward.Common.DataLayer.DataMapBase<RequestToken, DTO.RequestToken> GetDataMapper()
         {
-            get { return new DataMapper.RequestTokenDataMapper(); }
+            return new DataMapper.RequestTokenDataMapper(); 
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
             criteria.Add(Expression.Eq(DTO.RequestToken.ConsumerKeyFieldName, consumerKey));
             criteria.Add(Expression.Between(DTO.RequestToken.DateCreatedFieldName, startDate, endDate));
             criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName));
-            return this.DataMapper.Map(criteria.List<DTO.RequestToken>());
+            return this.GetDataMapper().Map(criteria.List<DTO.RequestToken>());
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.Add(Expression.Eq(DTO.RequestToken.TokenFieldName, token));
-            return this.DataMapper.Map(criteria.UniqueResult<DTO.RequestToken>());
+            return this.GetDataMapper().Map(criteria.UniqueResult<DTO.RequestToken>());
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.Add(Expression.Eq(DTO.RequestToken.TokenFieldName, token));
             criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Expression.Eq(DTO.RequestTokenAuthorization.VerifierCodeFieldName, verifierCode));
-            return this.DataMapper.Map(criteria.UniqueResult<DTO.RequestToken>());
+            return this.GetDataMapper().Map(criteria.UniqueResult<DTO.RequestToken>());
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
 
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.CreateCriteria(DTO.RequestToken.AccessTokenFieldName).Add(Expression.Eq(DTO.AccessToken.TokenFieldName, token));
-            
-            RequestToken mappedToken = this.DataMapper.Map(criteria.UniqueResult<DTO.RequestToken>());
+
+            RequestToken mappedToken = this.GetDataMapper().Map(criteria.UniqueResult<DTO.RequestToken>());
 
             if (mappedToken != null)
             {
@@ -149,8 +149,8 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Restrictions.Eq(DTO.RequestTokenAuthorization.UserIdFieldName, userId));
             criteria.Add(Expression.Between(DTO.RequestToken.DateCreatedFieldName, startDate, endDate)); 
-            criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName)); 
-            return this.DataMapper.Map(criteria.List<DTO.RequestToken>());
+            criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName));
+            return this.GetDataMapper().Map(criteria.List<DTO.RequestToken>());
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Restrictions.Eq(DTO.RequestTokenAuthorization.UserNameFieldName, userName));
             criteria.Add(Expression.Between(DTO.RequestToken.DateCreatedFieldName, startDate, endDate)); 
-            criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName)); 
-            return this.DataMapper.Map(criteria.List<DTO.RequestToken>());
+            criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName));
+            return this.GetDataMapper().Map(criteria.List<DTO.RequestToken>());
         }
     }
 }

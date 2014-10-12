@@ -19,34 +19,19 @@ namespace AlwaysMoveForward.Common.DomainModel
 {
     public class User
     {
-        public static string GenerateNewPassword()
-        {
-            string retVal = string.Empty;
-            Random random = new Random();
-            string legalChars = "abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890";
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < 10; i++)
-            {
-                sb.Append(legalChars.Substring(random.Next(0, legalChars.Length - 1), 1));
-            }
-
-            retVal = sb.ToString();
-
-            return retVal;
-        }
-
         public User() 
         {
-            this.UserId = -1;
+            this.Id = -1;
         }
 
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
-        public bool IsActive { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string GetDisplayName()
+        {
+            return this.FirstName + " " + this.LastName;
+        }
     }
 }

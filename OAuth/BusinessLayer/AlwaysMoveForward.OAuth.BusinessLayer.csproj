@@ -7,8 +7,8 @@
     <ProjectGuid>{121FB691-35D7-4AD4-980D-0D7D823A6C07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VP.Digital.Security.OAuth.BusinessLayer</RootNamespace>
-    <AssemblyName>VP.Digital.Security.OAuth.BusinessLayer</AssemblyName>
+    <RootNamespace>AlwaysMoveForward.Security.OAuth.BusinessLayer</RootNamespace>
+    <AssemblyName>AlwaysMoveForward.Security.OAuth.BusinessLayer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\ThirdParty\DevDefined.OAuth.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -46,12 +42,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VP.Digital.Common">
-      <HintPath>..\..\..\lib\VP.Digital.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VP.Digital.Common.DataLayer.NHibernate">
-      <HintPath>..\..\..\lib\VP.Digital.Common.DataLayer.NHibernate.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DigitalOAuthContextBuilder.cs" />
@@ -70,17 +60,29 @@
     <Compile Include="Services\WhitelistService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+    <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
+      <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
       <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
-      <Name>VP.Digital.Security.OAuth.Common</Name>
+      <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+    <ProjectReference Include="..\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
       <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayer\VP.Digital.Security.OAuth.DataLayer.csproj">
+    <ProjectReference Include="..\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj">
       <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>
-      <Name>VP.Digital.Security.OAuth.DataLayer</Name>
+      <Name>AlwaysMoveForward.OAuth.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj">
+      <Project>{61b700b6-3911-4cef-8751-7f42ca765068}</Project>
+      <Name>DevDefined.OAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

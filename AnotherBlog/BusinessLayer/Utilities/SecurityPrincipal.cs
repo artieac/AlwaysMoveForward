@@ -67,7 +67,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 
                 if (this.CurrentUser != null)
                 {
-                    retVal = this.CurrentUser.UserName;
+                    retVal = this.CurrentUser.AMFUser.GetDisplayName();
                 }
 
                 return retVal;

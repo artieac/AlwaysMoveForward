@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// The common interface for the repository manager.  This makes mocking easier

@@ -8,11 +8,11 @@ using DevDefined.OAuth.Consumer;
 using DevDefined.OAuth.Framework;
 using RestSharp;
 using RestSharp.Authenticators;
-using VP.Digital.Security.OAuth.Common;
-using VP.Digital.Security.OAuth.Client.RestSharp;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common;
+using AlwaysMoveForward.OAuth.Client.RestSharp;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 using TestSite.Models;
 
 namespace TestSite.Controllers
@@ -52,7 +52,7 @@ namespace TestSite.Controllers
             endpointModel.AccessTokenUri = accessTokenUri;
             model.EndpointModel = endpointModel;
 
-            VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient oauthClient = new VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient("", model.ConsumerKey, model.ConsumerSecret, endpointModel);
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", model.ConsumerKey, model.ConsumerSecret, endpointModel);
 
             if (oauthClient != null)
             {
@@ -79,7 +79,7 @@ namespace TestSite.Controllers
 
             OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
 
-            VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient oauthClient = new VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient("", storedRequestTokenModel.ConsumerKey, storedRequestTokenModel.ConsumerSecret, storedRequestTokenModel.EndpointModel);
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", storedRequestTokenModel.ConsumerKey, storedRequestTokenModel.ConsumerSecret, storedRequestTokenModel.EndpointModel);
 
             if (string.IsNullOrEmpty(verifier))
             {
@@ -116,7 +116,7 @@ namespace TestSite.Controllers
             endpointModel.AccessTokenUri = accessTokenUri;
             model.EndpointModel = endpointModel;
 
-            VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient oauthClient = new VP.Digital.Security.OAuth.Client.RestSharp.OAuthClient("", model.ConsumerKey, model.ConsumerSecret, model.EndpointModel);
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", model.ConsumerKey, model.ConsumerSecret, model.EndpointModel);
 
             try
             {

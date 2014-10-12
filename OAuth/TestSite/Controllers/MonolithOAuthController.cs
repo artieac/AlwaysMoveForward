@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
-using VP.Digital.Security.OAuth.Client.OpenAuth;
+using AlwaysMoveForward.OAuth.Client.OpenAuth;
 
 namespace TestSite.Controllers
 {

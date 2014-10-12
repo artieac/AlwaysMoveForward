@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using DevDefined.OAuth.Framework;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer
+namespace AlwaysMoveForward.OAuth.BusinessLayer
 {
     /// <summary>
     /// This class servers as a factory for the DevDefiend OAuth context builder so we can adjust the url when the server is running behind a load balancer

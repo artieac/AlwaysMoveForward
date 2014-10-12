@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     public class WhiteListService : IWhiteListService
     {

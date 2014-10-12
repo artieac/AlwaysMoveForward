@@ -7,14 +7,14 @@ using System.Text;
 using System.Transactions;
 using NHibernate;
 using NHC = NHibernate.Cfg;
-using VP.Digital.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer;
 
-namespace VP.Digital.Security.OAuth.DataLayer
+namespace AlwaysMoveForward.OAuth.DataLayer
 {
     /// <summary>
     /// A unit of work implementation to co locate the NHibernate configuration with the DTOs
     /// </summary>
-    public class UnitOfWork : VP.Digital.Common.DataLayer.NHibernate.UnitOfWork, IUnitOfWork, IDisposable
+    public class UnitOfWork : AlwaysMoveForward.Common.DataLayer.NHibernate.UnitOfWork, IUnitOfWork, IDisposable
     {
          /// <summary>
         /// The default constructor

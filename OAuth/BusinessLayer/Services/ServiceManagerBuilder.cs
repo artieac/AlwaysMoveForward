@@ -1,9 +1,9 @@
-﻿using VP.Digital.Common.DataLayer;
-using VP.Digital.Common.DataLayer.Configuration;
-using VP.Digital.Security.OAuth.DataLayer;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+﻿using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.OAuth.DataLayer;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// Builds domain data service manager with default repository

@@ -7,7 +7,7 @@ using DotNetOpenAuth.OAuth.ChannelElements;
 using DotNetOpenAuth.OAuth.Messages;
 using DotNetOpenAuth.OpenId.Extensions.OAuth;
 
-namespace VP.Digital.Security.OAuth.Client.OpenAuth
+namespace AlwaysMoveForward.OAuth.Client.OpenAuth
 {
 	/// <summary>
 	/// A token manager that only retains tokens in memory. 

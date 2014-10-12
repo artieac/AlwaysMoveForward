@@ -45,22 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return Regex.IsMatch(emailString, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
-        public AnotherBlogUser Login(string userName, string password)
-        {
-            AnotherBlogUser retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(password));
-
-            if (retVal != null)
-            {
-                if (retVal.IsActive == false)
-                {
-                    retVal = null;
-                }
-            }
-
-            return retVal;
-        }
-
-        public AnotherBlogUser Save(string userName, string password, string email, int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout, string displayName)
+        public AnotherBlogUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout)
         {
             AnotherBlogUser userToSave = null;
 
@@ -74,11 +59,8 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 userToSave = new AnotherBlogUser();
             }
 
-            userToSave.UserName = userName;
             userToSave.IsSiteAdministrator = isSiteAdmin;
             userToSave.ApprovedCommenter = isApprovedCommenter;
-            userToSave.IsActive = isActive;
-            userToSave.DisplayName = displayName;
 
             if (userAbout != null)
             {
@@ -88,13 +70,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 userToSave.About = string.Empty;
             }
-
-            if (password != string.Empty)
-            {
-                userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(password);
-            }
-
-            userToSave.Email = email;
 
             return this.UserRepository.Save(userToSave);
         }
@@ -111,26 +86,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                     this.UnitOfWork.EndTransaction(true);
                 }
             }
-        }
-
-        public void SendPassword(string userEmail, EmailConfiguration emailConfig)
-        {
-            AnotherBlogUser changePasswordUser = this.UserRepository.GetByEmail(userEmail);
-
-            string emailBody = "A user was not found with that email address.  Please try again.";
-
-            if (changePasswordUser != null)
-            {
-                string newPassword = AnotherBlogUser.GenerateNewPassword();
-
-                emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashUtility.HashString(newPassword);
-
-                this.UserRepository.Save(changePasswordUser);
-            }
-
-            EmailManager emailManager = new EmailManager(emailConfig);
-            emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
         }
 
         public AnotherBlogUser GetByEmail(string userEmail)

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using VP.Digital.Common.DataLayer;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.DataMapper
+namespace AlwaysMoveForward.OAuth.DataLayer.DataMapper
 {
     /// <summary>
     /// A data mapper going to/from the domain model and the dto
     /// </summary>
-    internal class DigitalUserDataMapper : DataMapperBase<DigitalUserLogin, DTO.DigitalUser>
+    internal class DigitalUserDataMapper : DataMapBase<AMFUserLogin, DTO.DigitalUser>
     {        
         /// <summary>
         /// The static constructor sets up automapper
@@ -30,17 +30,17 @@ namespace VP.Digital.Security.OAuth.DataLayer.DataMapper
                 AutoMapper.Mapper.CreateMap<DTO.LoginAttempt, LoginAttempt>();
             }
 
-            existingMap = Mapper.FindTypeMapFor<DigitalUserLogin, DTO.DigitalUser>();
+            existingMap = Mapper.FindTypeMapFor<AMFUserLogin, DTO.DigitalUser>();
             if (existingMap == null)
             {
-                AutoMapper.Mapper.CreateMap<DigitalUserLogin, DTO.DigitalUser>();
+                AutoMapper.Mapper.CreateMap<AMFUserLogin, DTO.DigitalUser>();
 
             }
 
-            existingMap = Mapper.FindTypeMapFor<DTO.DigitalUser, DigitalUserLogin>();
+            existingMap = Mapper.FindTypeMapFor<DTO.DigitalUser, AMFUserLogin>();
             if (existingMap == null)
             {
-                AutoMapper.Mapper.CreateMap<DTO.DigitalUser, DigitalUserLogin>();
+                AutoMapper.Mapper.CreateMap<DTO.DigitalUser, AMFUserLogin>();
             }
 
         }
@@ -51,7 +51,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override DigitalUserLogin Map(DTO.DigitalUser source, DigitalUserLogin destination)
+        public override AMFUserLogin Map(DTO.DigitalUser source, AMFUserLogin destination)
         {
             return Mapper.Map(source, destination);
         }
@@ -62,7 +62,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override DTO.DigitalUser Map(DigitalUserLogin source, DTO.DigitalUser destination)
+        public override DTO.DigitalUser Map(AMFUserLogin source, DTO.DigitalUser destination)
         {
             return Mapper.Map(source, destination);
         }

@@ -4,13 +4,13 @@ using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Framework.Signing;
 using DevDefined.OAuth.Storage;
 using DevDefined.OAuth.Utility;
-using VP.Digital.Common.Entities;
-using VP.Digital.Common.Security;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// This services does the primary business rules for working with Request/Access tokens
@@ -415,7 +415,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// <param name="requestToken">The request token</param>
         /// <param name="currentUser">The current user to use as authorization info</param>
         /// <returns>The updated request token</returns>
-        public RequestToken CreateVerifierAndAssociateUserInfo(string requestToken, DigitalUserLogin currentUser)
+        public RequestToken CreateVerifierAndAssociateUserInfo(string requestToken, AMFUserLogin currentUser)
         {
             RequestToken retVal = null;
 
@@ -512,7 +512,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
                     // use context.ConsumerKey to fetch information required for signature validation for this consumer.
                     if (signer.ValidateSignature(requestContext, signingContext))
                     {
-                        retVal.User = new DigitalUser();
+                        retVal.User = new User();
                         retVal.User.Email = targetToken.UserName;
                         retVal.User.Id = targetToken.UserId;
                         retVal.OAuthToken = targetToken;
@@ -529,7 +529,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="user">The digital user</param>
         /// <returns>A list of request tokens</returns>
-        public IList<RequestToken> GetByUser(DigitalUserLogin user, DateTime startDate, DateTime endDate)
+        public IList<RequestToken> GetByUser(AMFUserLogin user, DateTime startDate, DateTime endDate)
         {
             IList<RequestToken> retVal = new List<RequestToken>();
 

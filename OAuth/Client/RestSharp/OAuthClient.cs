@@ -2,11 +2,11 @@
 using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.Client.RestSharp
+namespace AlwaysMoveForward.OAuth.Client.RestSharp
 {
     /// <summary>
     /// Puts together endpoints and parameters to make REST calls to service URIs provided.

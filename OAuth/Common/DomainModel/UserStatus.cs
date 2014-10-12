@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.OAuth.Common.DomainModel
 {
-    public enum DigitalUserStatus
+    public enum UserStatus
     {
         Active = 0,
         Locked = 1,

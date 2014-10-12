@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Common.DataLayer.NHibernate;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.DataMapper;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// A repository for retrieving Digital Users
     /// </summary>
-    public interface IDigitalUserRepository : INHibernateRepository<DigitalUserLogin, int>
+    public interface IDigitalUserRepository : INHibernateRepository<AMFUserLogin, int>
     {
         /// <summary>
         /// Get a DigitalUserLogin by the email address.
         /// </summary>
         /// <param name="emailAddress">The users email address</param>
         /// <returns>The found domain object instance</returns>
-        DigitalUserLogin GetByEmail(string emailAddress);
+        AMFUserLogin GetByEmail(string emailAddress);
     }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using TestSite.Models;
 
 namespace TestSite.Controllers

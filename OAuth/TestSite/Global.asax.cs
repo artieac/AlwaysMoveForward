@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using VP.Digital.Security.OAuth.Client.OpenAuth;
+using AlwaysMoveForward.OAuth.Client.OpenAuth;
 using TestSite.Code;
 
 namespace TestSite

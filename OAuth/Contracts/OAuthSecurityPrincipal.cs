@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
                 {
                     if(this.Realm != null)
                     {
-                        realmUser = new User() { Email = this.Realm.DataName, UserId = int.Parse(this.Realm.DataId) };
+                        realmUser = new User() { Email = this.Realm.DataName, Id = int.Parse(this.Realm.DataId) };
                     }
                 }
 

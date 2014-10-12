@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using VP.Digital.Common.DataLayer;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.DataMapper
+namespace AlwaysMoveForward.OAuth.DataLayer.DataMapper
 {
     /// <summary>
     /// A data mapper going to/from the domain model and the dto
     /// </summary>
-    class ConsumerNonceDataMapper : DataMapperBase<ConsumerNonce, DTO.ConsumerNonce>
+    class ConsumerNonceDataMapper : DataMapBase<ConsumerNonce, DTO.ConsumerNonce>
     {
         /// <summary>
         /// The static constructor sets up automapper

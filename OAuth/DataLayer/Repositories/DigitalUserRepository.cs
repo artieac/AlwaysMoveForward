@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.DataMapper;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// A repository that retrieves a DigitalUserLogin
     /// </summary>
-    public class DigitalUserRepository : RepositoryBase<DigitalUserLogin, DTO.DigitalUser, int>, IDigitalUserRepository
+    public class DigitalUserRepository : RepositoryBase<AMFUserLogin, DTO.DigitalUser, int>, IDigitalUserRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work
@@ -27,9 +27,9 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override Digital.Common.DataLayer.DataMapperBase<DigitalUserLogin, DTO.DigitalUser> DataMapper
+        protected override AlwaysMoveForward.Common.DataLayer.DataMapBase<AMFUserLogin, DTO.DigitalUser> GetDataMapper()
         {
-            get { return new DataMapper.DigitalUserDataMapper(); }
+            return new DataMapper.DigitalUserDataMapper(); 
         }
         
         /// <summary>
@@ -37,7 +37,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// </summary>
         /// <param name="idSource">The domain object to pull the id from</param>
         /// <returns>An instance of the DTO</returns>
-        protected override DTO.DigitalUser GetDTOById(DigitalUserLogin idSource)
+        protected override DTO.DigitalUser GetDTOById(AMFUserLogin idSource)
         {
             return this.GetDTOById(idSource.Id);
         }
@@ -59,11 +59,11 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// </summary>
         /// <param name="emailAddress">The users email address</param>
         /// <returns>The found domain object instance</returns>
-        public DigitalUserLogin GetByEmail(string emailAddress)
+        public AMFUserLogin GetByEmail(string emailAddress)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.DigitalUser>();
             criteria.Add(Expression.Eq(DTO.DigitalUser.EmailFieldName, emailAddress));
-            return this.DataMapper.Map(criteria.UniqueResult<DTO.DigitalUser>());
+            return this.GetDataMapper().Map(criteria.UniqueResult<DTO.DigitalUser>());
         }
     }
 }

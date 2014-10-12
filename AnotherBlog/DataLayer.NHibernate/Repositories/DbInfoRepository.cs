@@ -28,7 +28,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class DbInfoRepository : NHibernateRepositoryBase<DbInfo, DbInfoDTO, int>, IDbInfoRepository
+    public class DbInfoRepository : NHibernateRepository<DbInfo, DbInfoDTO, int>, IDbInfoRepository
     {
         public DbInfoRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

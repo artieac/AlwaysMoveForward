@@ -1,85 +1,88 @@
-﻿/**
- * Copyright (c) 2009 Arthur Correa.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Common Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.opensource.org/licenses/cpl1.0.php
- *
- * Contributors:
- *    Arthur Correa – initial contribution
- */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace AlwaysMoveForward.Common.Configuration
 {
-    public class DatabaseConfiguration : ConfigurationSection
+    /// <summary>
+    /// A class to simplify getting the configuration settings for a database
+    /// </summary>
+    public class DatabaseConfiguration : AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection
     {
-        public const string ConnectionStringSetting = "ConnectionString";
-        public const string AdminConnectionStringSetting = "AdminConnectionString";
+        /// <summary>
+        /// The value for the connnection string setting
+        /// </summary>
+        private const string ConnectionStringSetting = "ConnectionString";
 
-        public const string DefaultSection = "AlwaysMoveForward/DatabaseConfiguration";
+        /// <summary>
+        /// The value for the databae name setting
+        /// </summary>
+        private const string DatabaseNameSetting = "DatabaseName";
 
-        private static DatabaseConfiguration configurationInstance;
+        /// <summary>
+        /// The default app.config configuration section
+        /// </summary>
+        public const string DEFAULT_SECTION = "AlwaysMoveForward/DatabaseConfiguration";
 
+        /// <summary>
+        /// Get the DatabaseConfiguration from the app.config using the default configuration section
+        /// </summary>
+        /// <returns>Database configuration instance</returns>
         public static DatabaseConfiguration GetInstance()
         {
-            if (configurationInstance == null)
-            {
-                configurationInstance = (DatabaseConfiguration)System.Configuration.ConfigurationManager.GetSection(DatabaseConfiguration.DefaultSection);
-            }
-
-            return configurationInstance;
+            return DatabaseConfiguration.GetInstance(DEFAULT_SECTION);
         }
 
-        public static string GetConnectionString()
+        /// <summary>
+        /// Get the DatabaseConfiguration from the app.config using a specified default configuration section
+        /// </summary>
+        /// <param name="configurationSection">Configuration string</param>
+        /// <returns>Database configuration instance</returns>
+        public new static DatabaseConfiguration GetInstance(string configurationSection)
         {
-            string retVal = string.Empty;
-            DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
-
-            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.ConnectionString] != null)
-            {
-                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.ConnectionString].ConnectionString;
-            }
-
-            return retVal;
+            return (DatabaseConfiguration)System.Configuration.ConfigurationManager.GetSection(configurationSection);
         }
 
-        public static string GetAdminConnectionString()
-        {
-            string retVal = string.Empty;
-            DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public DatabaseConfiguration()
+        { }
 
-            if (global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.AdminConnectionString] != null)
-            {
-                retVal = global::System.Configuration.ConfigurationManager.ConnectionStrings[databaseConfiguration.AdminConnectionString].ConnectionString;
-            }
-
-            return retVal;
-        }
-
-        public DatabaseConfiguration() { }
-
-        public override bool IsReadOnly()
-        {
-            return false;
-        }
-
-        [ConfigurationProperty(DatabaseConfiguration.ConnectionStringSetting, IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the connection string found in the config file.
+        /// </summary>
+        [ConfigurationProperty(ConnectionStringSetting, IsRequired = true)]
         public string ConnectionString
         {
-            get { return (string)this[DatabaseConfiguration.ConnectionStringSetting]; }
-            set { this[DatabaseConfiguration.ConnectionStringSetting] = value; }
+            get { return (string)this[ConnectionStringSetting]; }
+            set { this[ConnectionStringSetting] = value; }
         }
 
-        [ConfigurationProperty(DatabaseConfiguration.AdminConnectionStringSetting, IsRequired = true)]
-        public string AdminConnectionString
+        /// <summary>
+        /// Gets or sets database name found in the config file
+        /// </summary>
+        [ConfigurationProperty(DatabaseNameSetting, IsRequired = true)]
+        public string DatabaseName
         {
-            get { return (string)this[DatabaseConfiguration.AdminConnectionStringSetting]; }
-            set { this[DatabaseConfiguration.AdminConnectionStringSetting] = value; }
+            get { return (string)this[DatabaseNameSetting]; }
+            set { this[DatabaseNameSetting] = value; }
+        }
+
+        /// <summary>
+        /// Get the connection string decrypted
+        /// </summary>
+        /// <returns>The decrypted connection string</returns>
+        public string GetDecryptedConnectionString()
+        {
+            return this.DecryptString(this.ConnectionString);
+        }
+
+        /// <summary>
+        /// Gets the database name decrytped
+        /// </summary>
+        /// <returns>The decrytped database name</returns>
+        public string GetDecryptedDatabaseName()
+        {
+            return this.DecryptString(this.DatabaseName);
         }
     }
 }

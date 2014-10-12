@@ -5,10 +5,10 @@ using System.Text;
 using DevDefined.OAuth.Framework;
 using NHibernate;
 using NHibernate.Criterion;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.DataMapper;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// The consumer repository implementation
@@ -28,9 +28,9 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override Digital.Common.DataLayer.DataMapperBase<Consumer, DTO.Consumer> DataMapper
+        protected override AlwaysMoveForward.Common.DataLayer.DataMapBase<Consumer, DTO.Consumer> GetDataMapper()
         {
-            get { return new DataMapper.ConsumerDataMapper(); }
+            return new DataMapper.ConsumerDataMapper(); 
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// <returns>An instance of a consumer</returns>
         public Consumer GetByConsumerKey(string consumerKey)
         {
-            return this.DataMapper.Map(this.GetDTOById(consumerKey));
+            return this.GetDataMapper().Map(this.GetDTOById(consumerKey));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.Consumer>();
             criteria.Add(Expression.Eq(DTO.Consumer.EmailFieldName, contactEmail));
-            return this.DataMapper.Map(criteria.List<DTO.Consumer>());
+            return this.GetDataMapper().Map(criteria.List<DTO.Consumer>());
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
             {
                 ICriteria consumerCriteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.Consumer>();
                 consumerCriteria.Add(Expression.Eq(DTO.Consumer.ConsumerKeyFieldName, token.ConsumerKey));
-                retVal = this.DataMapper.Map(consumerCriteria.UniqueResult<DTO.Consumer>());
+                retVal = this.GetDataMapper().Map(consumerCriteria.UniqueResult<DTO.Consumer>());
             }
 
             return retVal;

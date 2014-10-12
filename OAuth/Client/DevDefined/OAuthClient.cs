@@ -7,12 +7,10 @@ using System.Security.Cryptography;
 using System.Web;
 using DevDefined.OAuth.Consumer;
 using DevDefined.OAuth.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.Client.DevDefined
+namespace AlwaysMoveForward.OAuth.Client.DevDefined
 {
  /// <summary>
     /// OAuth implementation for Request validate contract.

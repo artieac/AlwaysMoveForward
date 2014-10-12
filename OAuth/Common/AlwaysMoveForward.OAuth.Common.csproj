@@ -47,12 +47,12 @@
     <Compile Include="DomainModel\OAuthRoles.cs" />
     <Compile Include="DomainModel\LoginAttempt.cs" />
     <Compile Include="DomainModel\RequestToken.cs" />
-    <Compile Include="DomainModel\DigitalUserLogin.cs" />
+    <Compile Include="DomainModel\AMFUserLogin.cs" />
     <Compile Include="DomainModel\RequestTokenAuthorization.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DomainModel\TokenState.cs" />
-    <Compile Include="DomainModel\DigitalUserStatus.cs" />
+    <Compile Include="DomainModel\UserStatus.cs" />
     <Compile Include="DomainModel\ValidatedToken.cs" />
     <Compile Include="DomainModel\OAuthServerSecurityPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

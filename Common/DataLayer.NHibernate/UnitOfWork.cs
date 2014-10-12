@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Reflection;
-
 using NHibernate;
 using NHC = NHibernate.Cfg;
-
-using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
@@ -54,7 +52,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
                         this.nhibernateConfig.SetProperties(properties);
                     }
 
-                    this.nhibernateConfig.Configure();
+                    this.nhibernateConfig.Configure();                   
                 }
 
                 return this.nhibernateConfig;
@@ -125,7 +123,6 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
             if (this.currentSession != null)
             {
                 this.currentSession.Dispose();
-                this.currentSession = null;
             }
         }
 

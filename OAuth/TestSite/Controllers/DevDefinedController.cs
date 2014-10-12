@@ -9,10 +9,10 @@ using DevDefined.OAuth.Consumer;
 using DevDefined.OAuth.Framework;
 using RestSharp;
 using RestSharp.Authenticators;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.Client.DevDefined;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Client.DevDefined;
 using TestSite.Models;
 
 namespace TestSite.Controllers

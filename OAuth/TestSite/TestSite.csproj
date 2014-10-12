@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -193,12 +195,6 @@
       <Private>True</Private>
       <HintPath>..\..\..\nuget-packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="VP.Digital.Common">
-      <HintPath>..\..\..\..\social\lib\VP.Digital.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VP.Digital.Social.Client">
-      <HintPath>..\..\..\lib\VP.Digital.Social.Client.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\AuthorizationConfig.cs" />
@@ -267,25 +263,13 @@
     <Content Include="Views\_LayoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\DevDefined\VP.Digital.Security.OAuth.Client.DevDefined.csproj">
-      <Project>{9015e5ba-e12c-4393-9f97-88febbb7dd48}</Project>
-      <Name>VP.Digital.Security.OAuth.Client.DevDefined</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Client\OpenAuth\VP.Digital.Security.OAuth.Client.OpenAuth.csproj">
-      <Project>{f8c6356e-6d68-4003-a601-831266a610f2}</Project>
-      <Name>VP.Digital.Security.OAuth.Client.OpenAuth</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Client\RestSharp\VP.Digital.Security.OAuth.Client.RestSharp.csproj">
-      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
-      <Name>VP.Digital.Security.OAuth.Client.RestSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
       <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
-      <Name>VP.Digital.Security.OAuth.Common</Name>
+      <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+    <ProjectReference Include="..\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
       <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +342,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

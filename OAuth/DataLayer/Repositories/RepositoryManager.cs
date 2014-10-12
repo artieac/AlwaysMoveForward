@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Framework;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// Wraps up instances of the repositories so they can all participate in the same unit of work

@@ -97,7 +97,7 @@ namespace AlwaysMoveForward.Common.Security
         /// </summary>
         /// <param name="role">Role name to check</param>
         /// <returns>Whether or not it's in a particular role</returns>
-        public bool IsInRole(string role)
+        public virtual bool IsInRole(string role)
         {
             return true;
         }

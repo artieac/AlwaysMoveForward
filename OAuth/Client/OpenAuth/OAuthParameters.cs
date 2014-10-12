@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VP.Digital.Security.OAuth.Client.OpenAuth
+namespace AlwaysMoveForward.OAuth.Client.OpenAuth
 {
     /// <summary>
     /// A class to contain constant strings defining OAuth paraemters

@@ -9,11 +9,11 @@ using DotNetOpenAuth.OAuth;
 using Microsoft.Web.WebPages.OAuth;
 using VP.Digital.Common.Security;
 using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Security.OAuth.Client.OpenAuth;
-using VP.Digital.Security.OAuth.Common;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Client.OpenAuth;
+using AlwaysMoveForward.OAuth.Common;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 using TestSite.Models;
 using TestSite.Code;
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Common.DataLayer;
-using VP.Digital.Common.DataLayer.NHibernate;
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// This override defines the base class for the repositories.  The core feature it provides is the

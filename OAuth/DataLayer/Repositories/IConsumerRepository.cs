@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Storage;
-using VP.Digital.Common.DataLayer.NHibernate;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// The Consumer Repository interface

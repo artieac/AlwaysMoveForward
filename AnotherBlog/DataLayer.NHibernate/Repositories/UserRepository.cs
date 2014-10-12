@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract AnotherBlogUser data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepositoryBase<AnotherBlogUser, UserDTO, int>, IUserRepository
+    public class UserRepository : NHibernateRepository<AnotherBlogUser, UserDTO, int>, IUserRepository
     {
         public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -39,13 +39,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override UserDTO GetDTOById(AnotherBlogUser domainInstance)
         {
-            return this.GetDTOById(domainInstance.UserId);
+            return this.GetDTOById(domainInstance.Id);
         }
 
         protected override UserDTO GetDTOById(int idSource)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
-            criteria.Add(Expression.Eq("UserId", idSource));
+            criteria.Add(Expression.Eq("Id", idSource));
             return criteria.UniqueResult<UserDTO>();
         }
 

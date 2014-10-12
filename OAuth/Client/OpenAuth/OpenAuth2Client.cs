@@ -5,7 +5,7 @@ using System.Text;
 using DotNetOpenAuth.OAuth2;
 using DotNetOpenAuth.Messaging;
 
-namespace VP.Digital.Security.OAuth.Client.OpenAuth
+namespace AlwaysMoveForward.OAuth.Client.OpenAuth
 {
     public class OpenAuth2Client
     {

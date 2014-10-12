@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Contracts;
 
 namespace AlwaysMoveForward.OAuth.Common.DomainModel
@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the current user
         /// </summary>
-        public DigitalUser User { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Gets or sets the Realm associated with the token

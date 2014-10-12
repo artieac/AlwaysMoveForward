@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VP.Digital.Security.OAuth.Client.RestSharp")]
+[assembly: AssemblyTitle("AlwaysMoveForward.OAuth.Client.RestSharp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VP.Digital.Security.OAuth.Client.RestSharp")]
+[assembly: AssemblyProduct("AlwaysMoveForward.OAuth.Client.RestSharp")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

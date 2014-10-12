@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VP.Digital.Security.OAuth.DataLayer.DTO
+namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "RequestToken")]
     public class RequestToken

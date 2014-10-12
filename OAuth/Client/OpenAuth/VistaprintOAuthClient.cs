@@ -10,9 +10,9 @@ using DotNetOpenAuth.AspNet;
 using DotNetOpenAuth.AspNet.Clients;
 using DotNetOpenAuth.Messaging;
 using VP.Digital.Common.Security;
-using VP.Digital.Security.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.Client.OpenAuth
+namespace AlwaysMoveForward.OAuth.Client.OpenAuth
 {
     // we may want to move this in to the account/identity service at a future time and make it more widely usable.
     public class VistaprintOAuthClient : OAuth2Client

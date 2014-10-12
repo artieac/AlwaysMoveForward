@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.DTO
+namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "DigitalUser")]
     public class DigitalUser

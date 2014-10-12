@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Security.OAuth.DataLayer;
+using AlwaysMoveForward.OAuth.DataLayer;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// Contains the current instances of the business services

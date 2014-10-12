@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Common.DataLayer.NHibernate;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.DataMapper;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     public interface ILoginAttemptRepository : INHibernateRepository<LoginAttempt, long>
     {

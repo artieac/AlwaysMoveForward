@@ -6,9 +6,9 @@ using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
 using DotNetOpenAuth.OAuth.Messages;
 using DotNetOpenAuth.OpenId.Extensions.OAuth;
-using VP.Digital.Security.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.Client.OpenAuth
+namespace AlwaysMoveForward.OAuth.Client.OpenAuth
 {
     public class OAuthClient
     {

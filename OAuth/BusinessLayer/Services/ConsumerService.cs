@@ -6,10 +6,10 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Storage;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// The primary business rules of the consumer and consumer nonce

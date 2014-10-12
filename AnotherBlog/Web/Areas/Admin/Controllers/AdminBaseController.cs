@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         {
             AdminCommon retVal = new AdminCommon();
 
-            retVal.UserBlogs = Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.UserId);
+            retVal.UserBlogs = Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.Id);
 
             if (targetBlog != null)
             {

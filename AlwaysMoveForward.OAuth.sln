@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{600387A0-6903-47FD-AA6C-9ADF4CFE491E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common.DataLayer.NHibernate", "Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj", "{F9803443-3ED7-4FB4-B758-5D3419983163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.DataLayer", "OAuth\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj", "{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.BusinessLayer", "OAuth\BusinessLayer\AlwaysMoveForward.OAuth.BusinessLayer.csproj", "{121FB691-35D7-4AD4-980D-0D7D823A6C07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

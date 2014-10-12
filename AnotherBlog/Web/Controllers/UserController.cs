@@ -80,42 +80,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             }
         }
 
-        public ActionResult Login(string blogSubFolder, string userName, string password, string loginAction, string currentPage)
-        {
-            UserModel model = this.InitializeUserModel(blogSubFolder);
-
-            if (loginAction == "login")
-            {
-                model.CurrentUser = Services.UserService.Login(userName, password);
-
-                if (model.CurrentUser == null)
-                {
-                    this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
-                    model.CurrentUser = this.CurrentPrincipal.CurrentUser;
-                    ViewData.ModelState.AddModelError("loginError", "Invalid login.");
-                }
-                else
-                {
-                    this.CurrentPrincipal = new SecurityPrincipal(model.CurrentUser, true);
-                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-                }
-            }
-            else
-            {
-                this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
-                model.CurrentUser = this.CurrentPrincipal.CurrentUser;
-            }
-
-            if (currentPage == null)
-            {
-                currentPage = "/" + blogSubFolder + "/Home/Index";
-            }
-
-            return this.View("UserLogin", blogSubFolder);
-        }
-
         public JsonResult AjaxLogin(string blogSubFolder, string userName, string password, string loginAction)
         {
             AjaxLoginModel retVal = new AjaxLoginModel();

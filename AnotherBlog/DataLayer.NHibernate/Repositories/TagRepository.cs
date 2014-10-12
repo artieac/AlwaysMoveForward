@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract Tag data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class TagRepository : NHibernateRepositoryBase<Tag, TagDTO, int>, ITagRepository
+    public class TagRepository : NHibernateRepository<Tag, TagDTO, int>, ITagRepository
     {
         public TagRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

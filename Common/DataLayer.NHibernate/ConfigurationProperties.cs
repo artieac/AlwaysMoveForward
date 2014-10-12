@@ -19,16 +19,15 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// The configuration setting for the connection provider
         /// </summary>
         public const string ConnectionProvider = "connection.provider";
-
+        
         /// <summary>
         /// The configuration setting for the dialect 
         /// </summary>
         public const string Dialect = "dialect";
-
+        
         /// <summary>
         /// The configuraiton setting for the driver type.
         /// </summary>
         public const string Driver = "connection.driver_class";
     }
 }
-

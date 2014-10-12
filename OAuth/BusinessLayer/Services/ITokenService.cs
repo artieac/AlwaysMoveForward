@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Storage;
 using DevDefined.OAuth.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Common.Security;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// THe interface for the token service
@@ -51,7 +51,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// <param name="requestToken">The request token</param>
         /// <param name="currentUser">The current user to use as authorization info</param>
         /// <returns>The updated request token</returns>
-        RequestToken CreateVerifierAndAssociateUserInfo(string requestToken, DigitalUserLogin currentUser);
+        RequestToken CreateVerifierAndAssociateUserInfo(string requestToken, AMFUserLogin currentUser);
 
         /// <summary>
         /// Take a reqeust token, establish a verifier, and store its authorization information
@@ -76,7 +76,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="user">The digital user</param>
         /// <returns>A list of request tokens</returns>
-        IList<RequestToken> GetByUser(DigitalUserLogin user, DateTime startDate, DateTime endDate);
+        IList<RequestToken> GetByUser(AMFUserLogin user, DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// Gets the requst tokens associated with a consumer key.

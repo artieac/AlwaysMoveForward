@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Storage;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     public interface IConsumerService : IConsumerStore, INonceStore
     {

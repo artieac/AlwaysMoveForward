@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
     /// The consumer nonce repository implementation
@@ -26,9 +26,9 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override Digital.Common.DataLayer.DataMapperBase<ConsumerNonce, DTO.ConsumerNonce> DataMapper 
+        protected override AlwaysMoveForward.Common.DataLayer.DataMapBase<ConsumerNonce, DTO.ConsumerNonce> GetDataMapper()
         {
-            get { return new DataMapper.ConsumerNonceDataMapper(); }
+            return new DataMapper.ConsumerNonceDataMapper(); 
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace VP.Digital.Security.OAuth.DataLayer.Repositories
         /// <returns>A consumernonce instance if it is found</returns>
         public ConsumerNonce GetByNonce(string nonce)
         {
-            return this.DataMapper.Map(this.GetDTOById(nonce));
+            return this.GetDataMapper().Map(this.GetDTOById(nonce));
         }
     }
 }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VP.Digital.Common.DataLayer;
-using VP.Digital.Common.Security;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Security.OAuth.DataLayer;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.OAuth.DataLayer;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// The service manager for the OAuth services

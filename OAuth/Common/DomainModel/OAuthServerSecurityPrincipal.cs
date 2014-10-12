@@ -6,9 +6,9 @@ using AlwaysMoveForward.Common.Security;
 
 namespace AlwaysMoveForward.OAuth.Common.DomainModel
 {
-    public class OAuthServerSecurityPrincipal : DigitalSecurityPrincipal<DigitalUserLogin>
+    public class OAuthServerSecurityPrincipal : SecurityPrincipalBase<AMFUserLogin>
     {
-        public OAuthServerSecurityPrincipal(DigitalUserLogin user) : base(user, ImplementedAuthenticationType.OAuth)
+        public OAuthServerSecurityPrincipal(AMFUserLogin user) : base(user, ImplementedAuthenticationType.OAuth)
         {
         }
 

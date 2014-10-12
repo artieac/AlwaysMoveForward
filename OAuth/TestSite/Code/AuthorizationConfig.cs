@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using Microsoft.Web.WebPages.OAuth;
 using VP.Digital.Common.Security;
-using VP.Digital.Security.OAuth.Client.OpenAuth;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client.OpenAuth;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 
 namespace TestSite.Code
 {

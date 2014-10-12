@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.BusinessLayer.Services
+namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
     /// <summary>
     /// The functions provided by the User service
@@ -16,14 +16,14 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// Get all of the users.
         /// </summary>
         /// <returns>A list of digital users</returns>
-        IList<DigitalUserLogin> GetAll();
+        IList<AMFUserLogin> GetAll();
 
         /// <summary>
         /// Update the editable fields for a User
         /// </summary>
         /// <param name="digitalUserLogin">The source user</param>
         /// <returns>The updated user</returns>
-        DigitalUserLogin Update(DigitalUserLogin digitalUserLogin);
+        AMFUserLogin Update(AMFUserLogin digitalUserLogin);
 
         /// <summary>
         /// Register a user with the system
@@ -33,7 +33,7 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// <param name="firstName">The users first name</param>
         /// <param name="lastName">The users last name</param>
         /// <returns>An instance of a user</returns>
-        DigitalUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName);
+        AMFUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName);
 
         /// <summary>
         /// Logon a user by the username and password
@@ -41,27 +41,27 @@ namespace VP.Digital.Security.OAuth.BusinessLayer.Services
         /// <param name="userName">The username</param>
         /// <param name="password">The unencrypted password</param>
         /// <returns>The user if one is found to match</returns>
-        DigitalUserLogin LogonUser(string userName, string password, string loginSource);
+        AMFUserLogin LogonUser(string userName, string password, string loginSource);
 
         /// <summary>
         /// Find a user by its id
         /// </summary>
         /// <param name="userId">The id of the user to look for</param>
         /// <returns>The user if one is found</returns>
-        DigitalUserLogin GetUserById(int userId);
+        AMFUserLogin GetUserById(int userId);
 
         /// <summary>
         /// Find a user by its email
         /// </summary>
         /// <param name="email">The email of the user to look for</param>
         /// <returns>The user if one is found</returns>
-        DigitalUserLogin GetByEmail(string email);
+        AMFUserLogin GetByEmail(string email);
 
         /// <summary>
         /// Update the login attempt tracking information based upon the last login status
         /// </summary>
         /// <param name="didLoginSucceed">Did the last login attempt succeed</param>
-        DigitalUserStatus AddLoginAttempt(bool didLoginSucceed, string source, string userName, DigitalUserLogin relatedUser);
+        UserStatus AddLoginAttempt(bool didLoginSucceed, string source, string userName, AMFUserLogin relatedUser);
 
         /// <summary>
         /// Find out how many times the user has failed to login in the past N tries (default to MaxAllowedLoginFailures)

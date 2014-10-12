@@ -19,6 +19,17 @@ namespace AlwaysMoveForward.Common.Utilities
 {
     public class SerializationUtilities
     {
+        /// <summary>
+        /// Serialize an object to an xml string
+        /// </summary>
+        /// <param name="sourceData">The object to serialize</param>
+        /// <returns>A string of xml</returns>
+        public static string SerializeObjectToXmlString(object sourceData)
+        {
+            XmlElement xmlData = SerializationUtilities.SerializeObjectToXml(sourceData);
+            return xmlData.OuterXml;
+        }
+
         public static XmlElement SerializeObjectToXml(object sourceData)
         {
             XmlElement retVal = null;
@@ -74,6 +85,85 @@ namespace AlwaysMoveForward.Common.Utilities
             catch (Exception e)
             {
                 LogManager.GetLogger().Error("SerializationUtilities", "DeserializeXmlToObject", e);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Take xml and deserialize it into a specific object instance
+        /// </summary>
+        /// <typeparam name="TTargetType">The type to return</typeparam>
+        /// <param name="sourceData">The xml to serialize</param>
+        /// <returns>An instance of TTargetType</returns>
+        public static TTargetType DeserializeXmlToObject<TTargetType>(string sourceData) where TTargetType : class
+        {
+            TTargetType retVal = null;
+
+            if (!string.IsNullOrEmpty(sourceData))
+            {
+                XmlDocument xmlData = new XmlDocument();
+                xmlData.LoadXml(sourceData);
+
+                retVal = SerializationUtilities.DeserializeXmlToObject<TTargetType>(xmlData.DocumentElement);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Take xml and deserialize it into a specific object instance
+        /// </summary>
+        /// <typeparam name="TTargetType">The type to return</typeparam>
+        /// <param name="sourceData">The xml to serialize</param>
+        /// <returns>An instance of TTargetType</returns>
+        public static TTargetType DeserializeXmlToObject<TTargetType>(XmlNode sourceData) where TTargetType : class
+        {
+            TTargetType retVal = null;
+
+            if (sourceData != null)
+            {
+                try
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(TTargetType));
+
+                    using (StringReader reader = new StringReader(sourceData.OuterXml))
+                    {
+                        retVal = serializer.Deserialize(reader) as TTargetType;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                }
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Take xml and deserialize it into a specific object instance
+        /// </summary>
+        /// <typeparam name="TTargetType">The type to return</typeparam>
+        /// <param name="sourceData">The xml to serialize</param>
+        /// <param name="defaultNamespace">The namespace to find the object xml in</param>
+        /// <returns>An instance of TTargetType</returns>
+        public static TTargetType DeserializeXmlToObject<TTargetType>(XmlElement sourceData, string defaultNamespace) where TTargetType : class
+        {
+            TTargetType retVal = null;
+
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(TTargetType), defaultNamespace);
+
+                using (StringReader reader = new StringReader(sourceData.OuterXml))
+                {
+                    retVal = serializer.Deserialize(reader) as TTargetType;
+                }
+            }
+            catch (Exception e)
+            {
+                LogManager.GetLogger().Error(e);
             }
 
             return retVal;
