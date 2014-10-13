@@ -126,6 +126,41 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.Json(retVal);
         }
 
+        public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
+        {
+            RequestTokenModel model = new RequestTokenModel();
+
+            string requestTokenString = Request[Parameters.OAuth_Token];
+            string verifier = Request[Parameters.OAuth_Verifier];
+
+            RequestTokenModel storedRequestTokenModel = (RequestTokenModel)Session[requestTokenString];
+
+            OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
+
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", storedRequestTokenModel.ConsumerKey, storedRequestTokenModel.ConsumerSecret, storedRequestTokenModel.EndpointModel);
+
+            if (string.IsNullOrEmpty(verifier))
+            {
+                throw new Exception("Expected a non-empty verifier value");
+            }
+
+            IOAuthToken accessToken;
+
+            try
+            {
+                accessToken = oauthClient.ExchangeRequestTokenForAccessToken(storedRequestTokenModel, verifier);
+                model.Token = accessToken.Token;
+                model.Secret = accessToken.Secret;
+            }
+            catch (OAuthException authEx)
+            {
+                Session["problem"] = authEx.Report;
+                Response.Redirect("AccessDenied.aspx");
+            }
+
+            return View(model);
+        }
+
         [CustomAuthorization]
         public ActionResult Preferences(string blogSubFolder)
         {
