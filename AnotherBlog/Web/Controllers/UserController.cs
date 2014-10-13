@@ -16,9 +16,10 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Principal;
 using System.Web.Security;
-
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
@@ -88,7 +89,20 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 retVal.ProcessedLogin = true;
 
-                AnotherBlogUser currentUser = Services.UserService.Login(userName, password);
+                EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
+                OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
+
+                AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
+                IOAuthToken requestToken = oauthClient.GetRequestToken(null, "");
+
+                if(requestToken != null)
+                {
+                    Session[requestToken.Token] = requestToken;
+
+                    string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
+
+                    this.Response.Redirect(authorizationUrl, false);
+                }
 
                 if (currentUser == null)
                 {

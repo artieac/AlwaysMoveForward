@@ -3,8 +3,6 @@ using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
 using AlwaysMoveForward.OAuth.Contracts;
-using AlwaysMoveForward.OAuth.Common;
-using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.Client.RestSharp
 {
