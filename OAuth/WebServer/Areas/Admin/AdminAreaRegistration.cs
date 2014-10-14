@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin
 {
     public class AdminAreaRegistration : AreaRegistration 
     {

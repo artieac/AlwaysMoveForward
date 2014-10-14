@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace VP.Digital.Security.OAuth.WebServer.Models
+namespace AlwaysMoveForward.OAuth.WebServer.Models
 {
     /// <summary>
     /// The class defines the inputs for the Register all

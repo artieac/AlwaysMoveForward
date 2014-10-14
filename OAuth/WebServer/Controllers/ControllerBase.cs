@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Common.Security;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Code;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     /// <summary>
     /// A common base class for controllers
@@ -56,7 +56,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
                     }
                     catch (Exception e)
                     {
-                        LogManager.GetLogger(this.GetType().Name).Error(e);
+                        LogManager.GetLogger().Error(e);
                     }
                 }
 

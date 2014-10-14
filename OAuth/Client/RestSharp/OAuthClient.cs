@@ -177,5 +177,46 @@ namespace AlwaysMoveForward.OAuth.Client.RestSharp
 
             return retVal;
         }
+
+        public string ExecuteAuthorizedRequest(string targetEndpoint, string targetAction, IOAuthToken oauthToken)
+        {
+            string retVal = string.Empty;
+
+            RestClient restClient = new RestClient(targetEndpoint);
+            restClient.Authenticator = OAuth1Authenticator.ForProtectedResource(this.ConsumerKey, this.ConsumerSecret, oauthToken.Token, oauthToken.Secret);
+            
+            string[] parameterItems = null;
+
+            if (targetAction.Contains("?"))
+            {
+                string[] actionElements = targetAction.Split('?');
+
+                parameterItems = actionElements[1].Split('&');
+
+                targetAction = actionElements[0];
+            }
+
+            RestRequest request = new RestRequest(targetAction, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            if (parameterItems != null)
+            {
+                for (int i = 0; i < parameterItems.Length; i++)
+                {
+                    string[] parameterElements = parameterItems[i].Split('=');
+
+                    request.AddParameter(parameterElements[0], parameterElements[1]);
+                }
+            }
+
+            IRestResponse response = restClient.Execute(request);
+
+            if (response != null)
+            {
+                retVal = response.Content;
+            }
+
+            return retVal;
+        }
     }
 }

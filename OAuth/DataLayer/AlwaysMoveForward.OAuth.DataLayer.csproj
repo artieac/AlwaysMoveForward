@@ -63,13 +63,13 @@
   <ItemGroup>
     <Compile Include="DataMapper\ConsumerDataMapper.cs" />
     <Compile Include="DataMapper\ConsumerNonceDataMapper.cs" />
-    <Compile Include="DataMapper\DigitalUserDataMapper.cs" />
+    <Compile Include="DataMapper\AMFUserLoginDataMapper.cs" />
     <Compile Include="DataMapper\LoginAttemptDataMapper.cs" />
     <Compile Include="DataMapper\RequestTokenDataMapper.cs" />
     <Compile Include="DTO\AccessToken.cs" />
     <Compile Include="DTO\ConsumerNonce.cs" />
     <Compile Include="DTO\Consumer.cs" />
-    <Compile Include="DTO\DigitalUser.cs" />
+    <Compile Include="DTO\AMFUser.cs" />
     <Compile Include="DTO\LoginAttempt.cs" />
     <Compile Include="DTO\RequestTokenAuthorization.cs" />
     <Compile Include="DTO\RequestToken.cs" />
@@ -79,10 +79,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ConsumerNonceRepository.cs" />
     <Compile Include="Repositories\ConsumerRepository.cs" />
-    <Compile Include="Repositories\DigitalUserRepository.cs" />
+    <Compile Include="Repositories\AMFUserRepository.cs" />
     <Compile Include="Repositories\IConsumerNonceRepository.cs" />
     <Compile Include="Repositories\IConsumerRepository.cs" />
-    <Compile Include="Repositories\IDigitalUserRepository.cs" />
+    <Compile Include="Repositories\IAMFUserRepository.cs" />
     <Compile Include="Repositories\IRepositoryManager.cs" />
     <Compile Include="Repositories\IRequestTokenRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />

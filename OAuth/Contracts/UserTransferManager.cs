@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
         private string Salt { get; set; }
 
         /// <summary>
-        /// Encrypt a Digital User
+        /// Encrypt a AlwaysMoveForward User
         /// </summary>
         /// <param name="user">The current user</param>
         /// <returns>An encrypted string</returns>
@@ -68,10 +68,10 @@ namespace AlwaysMoveForward.OAuth.Contracts
         }
 
         /// <summary>
-        /// Decrypt to a Digital User
+        /// Decrypt to a AlwaysMoveForward User
         /// </summary>
         /// <param name="encryptedString">The encrypted string</param>
-        /// <returns>A digital user instance</returns>
+        /// <returns>A AlwaysMoveForward user instance</returns>
         public AlwaysMoveForward.Common.DomainModel.User Decrypt(string encryptedString)
         {
             AlwaysMoveForward.Common.DomainModel.User retVal = null;

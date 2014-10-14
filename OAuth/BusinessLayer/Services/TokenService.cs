@@ -527,7 +527,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <summary>
         /// Gets the requst tokens associated with a user.
         /// </summary>
-        /// <param name="user">The digital user</param>
+        /// <param name="user">The user</param>
         /// <returns>A list of request tokens</returns>
         public IList<RequestToken> GetByUser(AMFUserLogin user, DateTime startDate, DateTime endDate)
         {

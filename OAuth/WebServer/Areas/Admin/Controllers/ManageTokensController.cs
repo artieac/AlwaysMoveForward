@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Code;
-using VP.Digital.Security.OAuth.WebServer.Areas.Admin.Models;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Code;
+using AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Models;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Controllers
 {
     /// <summary>
     /// Allow the admin tool to manage tokens
     /// </summary>
     [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
-    public class ManageTokensController : VP.Digital.Security.OAuth.WebServer.Controllers.ControllerBase
+    public class ManageTokensController : AlwaysMoveForward.OAuth.WebServer.Controllers.ControllerBase
     {
         /// <summary>
         /// Display a list of the tokens with applied filters
@@ -46,7 +46,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
 
             if (!string.IsNullOrEmpty(model.UserName))
             {
-                DigitalUserLogin tempUser = new DigitalUserLogin();
+                AMFUserLogin tempUser = new AMFUserLogin();
                 tempUser.Email = model.UserName;
                 retVal.Tokens = this.ServiceManager.TokenService.GetByUser(tempUser, model.StartDate, model.EndDate);
             }

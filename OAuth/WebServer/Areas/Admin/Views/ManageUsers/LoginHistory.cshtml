@@ -1,4 +1,4 @@
-﻿@model VP.Digital.Security.OAuth.WebServer.Areas.Admin.Models.LoginHistoryModel
+﻿@model AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Models.LoginHistoryModel
 @{
     ViewBag.Title = "Index";
     ViewBag.SelectedTab = 3;
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (VP.Digital.Security.OAuth.Common.DomainModel.LoginAttempt loginAttempt in @Model.LoginHistory)
+                        foreach (AlwaysMoveForward.OAuth.Common.DomainModel.LoginAttempt loginAttempt in @Model.LoginHistory)
                         {
                             <tr>
                                 <td>@loginAttempt.AttemptDate</td>

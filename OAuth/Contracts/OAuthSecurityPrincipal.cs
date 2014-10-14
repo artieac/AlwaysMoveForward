@@ -48,12 +48,12 @@ namespace AlwaysMoveForward.OAuth.Contracts
         }
 
         /// <summary>
-        /// The digital user generated from the Realm;
+        /// The AlwaysMoveForward user generated from the Realm;
         /// </summary>
         private User realmUser;
 
         /// <summary>
-        /// Gets the digital user generated from the realm;
+        /// Gets the AMF user generated from the realm;
         /// </summary>
         public User RealmUser
         {

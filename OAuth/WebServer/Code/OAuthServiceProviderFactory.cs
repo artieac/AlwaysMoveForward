@@ -6,9 +6,9 @@ using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Provider;
 using DevDefined.OAuth.Provider.Inspectors;
 using DevDefined.OAuth.Framework.Signing;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 
-namespace VP.Digital.Security.OAuth.WebServer.Code
+namespace AlwaysMoveForward.OAuth.WebServer.Code
 {
     /// <summary>
     /// A factory for creating the DevDefined OAuth provider

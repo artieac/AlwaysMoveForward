@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.Web;
 using System.Web.Mvc;
 
-namespace VP.Digital.Security.OAuth.WebServer.Code
+namespace AlwaysMoveForward.OAuth.WebServer.Code
 {
     /// <summary>
     /// Simplifies the return of an object from a web method as xml
@@ -44,7 +44,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Code
             if (this.ObjectToSerialize != null)
             {
                 context.HttpContext.Response.Clear();
-                context.HttpContext.Response.Output.Write(VP.Digital.Common.Utilities.SerializationUtilities.SerializeObjectToXmlString(this.ObjectToSerialize));
+                context.HttpContext.Response.Output.Write(AlwaysMoveForward.Common.Utilities.SerializationUtilities.SerializeObjectToXmlString(this.ObjectToSerialize));
             }
         }
     }

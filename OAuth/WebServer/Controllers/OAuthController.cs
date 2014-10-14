@@ -7,15 +7,15 @@ using System.Web;
 using System.Web.Mvc;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Provider;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Models;
-using VP.Digital.Security.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Models;
+using AlwaysMoveForward.OAuth.WebServer.Code;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     /// <summary>
     /// The main interface for the OAuth clients
@@ -50,7 +50,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
         /// <returns>An OAuth context instance</returns>
         private IOAuthContext GetContextBuilder()
         {
-            string loadBalancerEndpointsValue = System.Configuration.ConfigurationManager.AppSettings[DigitalOAuthContextBuilder.LoadBalancerEndpointsSetting];
+            string loadBalancerEndpointsValue = System.Configuration.ConfigurationManager.AppSettings[AMFOAuthContextBuilder.LoadBalancerEndpointsSetting];
             string[] loadBalancerEndpoints = null;
 
             if (!string.IsNullOrEmpty(loadBalancerEndpointsValue))
@@ -58,7 +58,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
                 loadBalancerEndpoints = loadBalancerEndpointsValue.Split(',');
             }
 
-            return DigitalOAuthContextBuilder.FromHttpRequest(this.Request, loadBalancerEndpoints);
+            return AMFOAuthContextBuilder.FromHttpRequest(this.Request, loadBalancerEndpoints);
         }
 
         /// <summary>
@@ -89,22 +89,22 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
 
             try
             {
-                LogManager.GetLogger(this.GetType()).Debug("GetRequestToken-Host=" + this.Request.Headers["Host"]);
-                LogManager.GetLogger(this.GetType()).Debug("GetRequestToken-Authorization=" + this.Request.Headers[VP.Digital.Security.OAuth.Contracts.Constants.AuthorizationHeader]);
+                LogManager.GetLogger().Debug("GetRequestToken-Host=" + this.Request.Headers["Host"]);
+                LogManager.GetLogger().Debug("GetRequestToken-Authorization=" + this.Request.Headers[AlwaysMoveForward.OAuth.Contracts.Constants.AuthorizationHeader]);
 
                 IOAuthContext context = this.GetContextBuilder();
                 string requestTokenContext = "GetRequestToken for " + context.ConsumerKey + ":RequestUrl=" + this.Request.Url + ":Realm=" + context.Realm + ":CallbackUrl=" + context.CallbackUrl + ":SignatureBase=" + context.GenerateSignatureBase();
-                LogManager.GetLogger(this.GetType()).Debug(requestTokenContext);
+                LogManager.GetLogger().Debug(requestTokenContext);
                 IToken requestToken = this.OAuthProvider.GrantRequestToken(context);
 
                 model.Token = requestToken.Token;
                 model.Secret = requestToken.TokenSecret;
 
-                LogManager.GetLogger(this.GetType()).Debug(requestTokenContext + ":Token=" + model.Token);
+                LogManager.GetLogger().Debug(requestTokenContext + ":Token=" + model.Token);
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
 
             return this.View(model);
@@ -128,7 +128,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
 
             if (string.IsNullOrEmpty(model.Token))
@@ -163,7 +163,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
 
             return this.View(model);
@@ -182,7 +182,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             try
             {
                 string logMessageBase = "AuthorizeConsumer for:" + oauth_token;
-                LogManager.GetLogger(this.GetType()).Debug(logMessageBase);
+                LogManager.GetLogger().Debug(logMessageBase);
 
                 Consumer relatedConsumer = this.ServiceManager.ConsumerService.GetByRequestToken(oauth_token);
 
@@ -190,23 +190,23 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
                 {
                     if (relatedConsumer.AutoGrant == true)
                     {
-                        LogManager.GetLogger(this.GetType()).Debug(logMessageBase + ":Autogrant=true");
+                        LogManager.GetLogger().Debug(logMessageBase + ":Autogrant=true");
                         RequestToken authorizedRequestToken = this.ServiceManager.TokenService.AutoGrantRequestToken(oauth_token, relatedConsumer);
 
                         if (authorizedRequestToken != null)
                         {
-                            LogManager.GetLogger(this.GetType()).Debug(logMessageBase + ":AuthorizedToken:VerifierCode=" + authorizedRequestToken.RequestTokenAuthorization.VerifierCode);
+                            LogManager.GetLogger().Debug(logMessageBase + ":AuthorizedToken:VerifierCode=" + authorizedRequestToken.RequestTokenAuthorization.VerifierCode);
 
                             string callbackUrl = authorizedRequestToken.GenerateCallBackUrl();
 
-                            if (!string.IsNullOrEmpty(callbackUrl) && !callbackUrl.StartsWith(VP.Digital.Security.OAuth.Contracts.Constants.InlineCallback))
+                            if (!string.IsNullOrEmpty(callbackUrl) && !callbackUrl.StartsWith(AlwaysMoveForward.OAuth.Contracts.Constants.InlineCallback))
                             {
-                                LogManager.GetLogger(this.GetType()).Debug(logMessageBase + ":RedirectingTo=" + callbackUrl);
+                                LogManager.GetLogger().Debug(logMessageBase + ":RedirectingTo=" + callbackUrl);
                                 return this.Redirect(callbackUrl);
                             }
                             else
                             {
-                                LogManager.GetLogger(this.GetType()).Debug(logMessageBase + ":ReturnToCaller");
+                                LogManager.GetLogger().Debug(logMessageBase + ":ReturnToCaller");
                                 model.VerifierCode = authorizedRequestToken.RequestTokenAuthorization.VerifierCode;
                                 model.Granted = true;
                                 return this.View(model);
@@ -217,7 +217,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
 
             return new HttpUnauthorizedResult();

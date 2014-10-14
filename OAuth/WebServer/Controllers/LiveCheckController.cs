@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     /// <summary>
     /// Handles requests to ensure the website is active.

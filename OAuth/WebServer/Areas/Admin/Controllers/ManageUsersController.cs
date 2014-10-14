@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Code;
-using VP.Digital.Security.OAuth.WebServer.Areas.Admin.Models;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Code;
+using AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Models;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Controllers
 {
     /// <summary>
     /// Manage the users int he system
     /// </summary>
     [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
-    public class ManageUsersController : VP.Digital.Security.OAuth.WebServer.Controllers.ControllerBase
+    public class ManageUsersController : AlwaysMoveForward.OAuth.WebServer.Controllers.ControllerBase
     {
         /// <summary>
         /// Displays a list of users
@@ -23,7 +23,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
         /// <returns>A view</returns>
         public ActionResult Index()
         {
-            IList<DigitalUserLogin> users = this.ServiceManager.UserService.GetAll();
+            IList<AMFUserLogin> users = this.ServiceManager.UserService.GetAll();
             return this.View(users);
         }
 
@@ -34,7 +34,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
         /// <returns>A view</returns>
         public ActionResult Edit(int id)
         {
-            DigitalUserLogin retVal = this.ServiceManager.UserService.GetUserById(id);
+            AMFUserLogin retVal = this.ServiceManager.UserService.GetUserById(id);
             return this.View(retVal);
         }
 
@@ -43,7 +43,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
         /// </summary>
         /// <param name="user">The user to save</param>
         /// <returns>A view</returns>
-        public ActionResult Save(DigitalUserLogin user)
+        public ActionResult Save(AMFUserLogin user)
         {
             if (user != null)
             {

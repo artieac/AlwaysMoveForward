@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -26,7 +27,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             IUnitOfWork unitOfWork = this.CreateUnitOfWork();
             IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
-            return new ServiceManager(unitOfWork, repositoryManager);
+            return new ServiceManager(unitOfWork, repositoryManager, OAuthKeyConfiguration.GetInstance(), EndpointConfiguration.GetInstance());
         }
 
         protected virtual IUnitOfWork CreateUnitOfWork()

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Models
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Models
 {
     /// <summary>
     /// This is a model with the user details

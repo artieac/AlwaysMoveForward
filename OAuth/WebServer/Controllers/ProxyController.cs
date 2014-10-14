@@ -10,14 +10,14 @@ using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Provider;
 using DevDefined.OAuth.Provider.Inspectors;
 using DevDefined.OAuth.Framework.Signing;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Common.Utilities.Encryption;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.WebServer.Models;
-using VP.Digital.Security.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.Encryption;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.WebServer.Models;
+using AlwaysMoveForward.OAuth.WebServer.Code;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     public class ProxyController : ControllerBase
     {        
@@ -56,7 +56,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
 
             string retVal = string.Empty;
@@ -84,25 +84,25 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             string targetUrl = proxyTargetHost + request.Path + request.Url.Query;
             Uri targetUri = new Uri(targetUrl);
 
-            LogManager.GetLogger(this.GetType()).Debug("ProxyRequest:" + logIdentifier + ":TargetUrl:" + targetUrl);
+            LogManager.GetLogger().Debug("ProxyRequest:" + logIdentifier + ":TargetUrl:" + targetUrl);
 
             // Create a request for the URL. 		
             HttpWebRequest newRequest = (HttpWebRequest)WebRequest.Create(targetUri);
             newRequest.AllowAutoRedirect = false;
             newRequest.ContentLength = request.ContentLength;
 
-            LogManager.GetLogger(this.GetType()).Debug("ProxyRequest:" + logIdentifier + ":ContentLength:" + request.ContentLength);
+            LogManager.GetLogger().Debug("ProxyRequest:" + logIdentifier + ":ContentLength:" + request.ContentLength);
 
             newRequest.ContentType = request.ContentType;
 
-            LogManager.GetLogger(this.GetType()).Debug("ProxyRequest:" + logIdentifier + ":ContentLength:" + request.ContentType);
+            LogManager.GetLogger().Debug("ProxyRequest:" + logIdentifier + ":ContentLength:" + request.ContentType);
             
             newRequest.UseDefaultCredentials = true;
             newRequest.UserAgent = ".NET Web Proxy";
             newRequest.Referer = proxyTargetHost + request.Path;
             newRequest.Method = request.RequestType;
 
-            LogManager.GetLogger(this.GetType()).Debug("ProxyRequest:" + logIdentifier + ":RequestType:" + request.RequestType);
+            LogManager.GetLogger().Debug("ProxyRequest:" + logIdentifier + ":RequestType:" + request.RequestType);
 
             newRequest.Headers.Add("X-Forwarded-For", this.Request.UserHostAddress + "," + this.Request.Url.Host);
 
@@ -112,7 +112,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
 
             UserTransferManager userTransferManager = new UserTransferManager();
-            Cookie encryptedCookie = new Cookie(VP.Digital.Security.OAuth.Contracts.Constants.ProxyUserCookieName, userTransferManager.Encrypt(this.CurrentPrincipal.User));
+            Cookie encryptedCookie = new Cookie(AlwaysMoveForward.OAuth.Contracts.Constants.ProxyUserCookieName, userTransferManager.Encrypt(this.CurrentPrincipal.User));
             encryptedCookie.Domain = targetUri.Host;
 
             if (newRequest.CookieContainer == null)
@@ -131,7 +131,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             // No need to copy input stream for GET (actually it would throw an exception)
             if (this.Request.ContentLength > 0 || Request.Headers.Get("Transfer-Encoding") != null)
             {
-                LogManager.GetLogger(this.GetType()).Debug("ProxyRequest:" + logIdentifier + ":Copying inputStream");
+                LogManager.GetLogger().Debug("ProxyRequest:" + logIdentifier + ":Copying inputStream");
 
                 Request.InputStream.Position = 0;  //***** THIS IS REALLY IMPORTANT GOTCHA
 
@@ -179,8 +179,8 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (WebException we)
             {
-                LogManager.GetLogger(this.GetType()).Error(we);
-                LogManager.GetLogger(this.GetType()).Error("ProxyRequest:" + logIdentifier + "RequestUrl:" + targetUrl);
+                LogManager.GetLogger().Error(we);
+                LogManager.GetLogger().Error("ProxyRequest:" + logIdentifier + "RequestUrl:" + targetUrl);
                 retVal = we.Message;
 
                 var response = we.Response as HttpWebResponse;
@@ -205,7 +205,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
                     catch(Exception e)
                     {
                         // try to read the body, but be prepared if we can't.
-                        LogManager.GetLogger(this.GetType()).Error(e);
+                        LogManager.GetLogger().Error(e);
                     }
                 }
                 else

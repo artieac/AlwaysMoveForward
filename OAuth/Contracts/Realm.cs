@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
     public class Realm
     {
         /// <summary>
-        /// Defines which element in the urn defines the area (Digital)
+        /// Defines which element in the urn defines the area (AlwaysMoveForward)
         /// </summary>
         private const int AreaElement = 0;
 
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
         /// <summary>
         /// The default realm string
         /// </summary>
-        private const string DefaultRealm = UrnPrefix + "Digital/Unknown/0/Unknown";
+        private const string DefaultRealm = UrnPrefix + "AlwaysMoveForward/Unknown/0/Unknown";
 
         /// <summary>
         /// Get a default instance of the realm
@@ -107,17 +107,17 @@ namespace AlwaysMoveForward.OAuth.Contracts
         }
 
         /// <summary>
-        /// Gets or sets the business area (such as Digital)
+        /// Gets or sets the business area (such as AlwaysMoveForward)
         /// </summary>
         public string Area { get; set; }
 
         /// <summary>
-        /// Gets or sets the service target (such as Social)
+        /// Gets or sets the service target (such as Blog)
         /// </summary>
         public string Service { get; set; }
 
         /// <summary>
-        /// Gets or sets the Data Identifer (such as shopper Key)
+        /// Gets or sets the Data Identifer (such as User Id)
         /// </summary>
         public string DataId { get; set; }
 

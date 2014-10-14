@@ -1,5 +1,5 @@
 ﻿
-@model VP.Digital.Security.OAuth.Common.DomainModel.Consumer
+@model AlwaysMoveForward.OAuth.Common.DomainModel.Consumer
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -31,14 +31,7 @@
             <div>
                 <span class="label">Contact Email:</span>
                 <input type="text" readonly id='contactEmail' name="contactEmail" value="@Model.ContactEmail" />
-            </div>
-            <div>
-                <span class="label">Is Vistaprint:</span>
-                <select name="isVistaprintConsumer" id="isVistaprintConsumer">
-                    <option value="true" @if (@Model.IsVistaPrintConsumer == true) { <text> selected </text> }>Yes</option>
-                    <option value="false" @if (@Model.IsVistaPrintConsumer == false) { <text> selected </text> }>No</option>
-                </select>
-            </div>
+            </div>            
             <div>
                 <span class="label">Allow AutoGrant:</span>
                 <select name="autoGrant" id="autoGrant">

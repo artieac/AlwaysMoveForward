@@ -8,17 +8,17 @@ using System.Web.Routing;
 using System.Web.Security;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Provider;
-using VP.Digital.Common.Entities;
-using VP.Digital.Common.Security;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Security.OAuth.BusinessLayer;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.Common;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.OAuth.BusinessLayer;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 
-namespace VP.Digital.Security.OAuth.WebServer.Code
+namespace AlwaysMoveForward.OAuth.WebServer.Code
 {
     /// <summary>
     /// This attribute can be put on a web method to test the signature of an oauth signed request
@@ -43,7 +43,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Code
             {
                 HttpRequestBase request = context.Request;
 
-                string loadBalancerEndpointsValue = System.Configuration.ConfigurationManager.AppSettings[DigitalOAuthContextBuilder.LoadBalancerEndpointsSetting];
+                string loadBalancerEndpointsValue = System.Configuration.ConfigurationManager.AppSettings[AMFOAuthContextBuilder.LoadBalancerEndpointsSetting];
                 string[] loadBalancerEndpoints = null;
 
                 if (!string.IsNullOrEmpty(loadBalancerEndpointsValue))
@@ -51,9 +51,9 @@ namespace VP.Digital.Security.OAuth.WebServer.Code
                     loadBalancerEndpoints = loadBalancerEndpointsValue.Split(',');
                 }
 
-                IOAuthContext oauthContext = DigitalOAuthContextBuilder.FromHttpRequest(request, loadBalancerEndpoints);
+                IOAuthContext oauthContext = AMFOAuthContextBuilder.FromHttpRequest(request, loadBalancerEndpoints);
 
-                ValidatedToken validatedToken = serviceManager.TokenService.ValidateSignature(oauthContext, oauthContext.Token, VP.Digital.Security.OAuth.Contracts.Constants.HmacSha1SignatureMethod, oauthContext.GenerateSignatureBase());
+                ValidatedToken validatedToken = serviceManager.TokenService.ValidateSignature(oauthContext, oauthContext.Token, AlwaysMoveForward.OAuth.Contracts.Constants.HmacSha1SignatureMethod, oauthContext.GenerateSignatureBase());
 
                 if (validatedToken != null && validatedToken.User != null && validatedToken.OAuthToken != null)
                 {
@@ -64,7 +64,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Code
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
                 principal = null;
             }
 

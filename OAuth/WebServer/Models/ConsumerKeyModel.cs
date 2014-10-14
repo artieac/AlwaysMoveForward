@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VP.Digital.Security.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.WebServer.Models
+namespace AlwaysMoveForward.OAuth.WebServer.Models
 {
     /// <summary>
     /// A model for returning the consumer information

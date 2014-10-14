@@ -5,9 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using NLog.Config;
 
-namespace VP.Digital.Security.OAuth.WebServer
+namespace AlwaysMoveForward.OAuth.WebServer
 {
 
     /// <summary>
@@ -22,8 +21,6 @@ namespace VP.Digital.Security.OAuth.WebServer
         /// </summary>
         protected void Application_Start()
         {
-            ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("json", typeof(VP.Digital.Common.Utilities.Logging.NLogJSonLayout));
-
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

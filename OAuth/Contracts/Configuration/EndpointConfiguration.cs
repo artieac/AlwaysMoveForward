@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.OAuth.Contracts.Configuration
         /// <summary>
         /// The default app.config configuration section
         /// </summary>
-        private static readonly string DefaultSection = "Vistaprint/Digital/OAuthEndpoints";
+        private static readonly string DefaultSection = "AlwaysMoveForward/OAuthEndpoints";
 
         /// <summary>
         /// Gets the instance of the configuration, based on a default section

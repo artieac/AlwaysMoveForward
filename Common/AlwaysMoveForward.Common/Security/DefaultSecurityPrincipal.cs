@@ -7,14 +7,14 @@ using AlwaysMoveForward.Common.DomainModel;
 namespace AlwaysMoveForward.Common.Security
 {
     /// <summary>
-    /// A default DigitalSecurityPrincipal that works with a User
+    /// A default DefaultSecurityPrincipal that works with a User
     /// </summary>
     public class DefaultSecurityPrincipal : SecurityPrincipalBase<User>
     {
         /// <summary>
         /// The base class constructor override.
         /// </summary>
-        /// <param name="user">A DigitalUser instance</param>
+        /// <param name="user">A AlwaysMoveForwardUser instance</param>
         public DefaultSecurityPrincipal(User user) : base(user) { }
 
         /// <summary>

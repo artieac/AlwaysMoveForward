@@ -1,4 +1,4 @@
-﻿@model VP.Digital.Security.OAuth.WebServer.Models.TokenModel
+﻿@model AlwaysMoveForward.OAuth.WebServer.Models.TokenModel
 @{
     ViewBag.Title = "Sign In";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,19 +15,16 @@
     </script>
 }
 <div class="messaging-container">
-    <div class="logo-container">
-        <img class="pngfix" alt="Vistaprint. Make an impression." src="/Sales/Utility/ResponsiveImage.caspx?s=%2fvp%2fimages%2fvp-site%2fcommon%2flogo%2fvistaprint-site-blue-209-42-2014-2x.png&amp;w=209&amp;h=42&amp;cl=0&amp;ct=0&amp;cw=0&amp;ch=0&amp;langid=1&amp;q=0&amp;c=255&amp;hc=004b40c0&amp;ie6=0&amp;render_tech=HybridGdipWpf" style="width:209px;height:42px;" />
-    </div>
     <div id="ctlx2" class="panel panel-primary loginPanel">
         <div class="panel-heading">
             <h3 class="panel-title">
             @if(!string.IsNullOrEmpty(Model.ConsumerName))
             {
-                <text>Sign in to @Model.ConsumerName with your Digital account</text>  
+                <text>Sign in to @Model.ConsumerName with your AlwaysMoveForward account</text>  
             }
             else
             {
-                <text>Sign in with your Digital account</text>
+                <text>Sign in with your AlwaysMoveForward account</text>
             }
             </h3>
         </div>

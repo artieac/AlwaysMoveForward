@@ -75,7 +75,6 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 newConsumer.Name = consumerName;
                 newConsumer.ContactEmail = contactEmail;
                 newConsumer.PublicKey = string.Empty;
-                newConsumer.IsVistaPrintConsumer = false;
             }
 
             return this.ConsumerRepository.Save(newConsumer);

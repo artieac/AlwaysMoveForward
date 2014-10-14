@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Code;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Controllers
 {
     [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
-    public class ManagementController : VP.Digital.Security.OAuth.WebServer.Controllers.ControllerBase
+    public class ManagementController : AlwaysMoveForward.OAuth.WebServer.Controllers.ControllerBase
     {
         // GET: Admin/Management
         [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]

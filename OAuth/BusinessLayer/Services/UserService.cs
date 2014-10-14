@@ -19,16 +19,16 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <summary>
         /// The default constructor
         /// </summary>
-        public UserService(IDigitalUserRepository digitalUserRepository, ILoginAttemptRepository loginAttemptRepository)
+        public UserService(IAMFUserRepository userRepository, ILoginAttemptRepository loginAttemptRepository)
         {
-            this.DigitalUserRepository = digitalUserRepository;
+            this.UserRepository = userRepository;
             this.LoginAttemptRepository = loginAttemptRepository;
         }
 
         /// <summary>
-        /// Gets and sets the contained digital user repository
+        /// Gets and sets the contained user repository
         /// </summary>
-        protected IDigitalUserRepository DigitalUserRepository { get; private set; }
+        protected IAMFUserRepository UserRepository { get; private set; }
 
         /// <summary>
         /// Gets and sets the contained login Attempt repository
@@ -38,32 +38,32 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <summary>
         /// Get all of the users.
         /// </summary>
-        /// <returns>A list of digital users</returns>
+        /// <returns>A list of users</returns>
         public IList<AMFUserLogin> GetAll()
         {
-            return this.DigitalUserRepository.GetAll();
+            return this.UserRepository.GetAll();
         }
 
         /// <summary>
         /// Update the editable fields for a User
         /// </summary>
-        /// <param name="digitalUserLogin">The source user</param>
+        /// <param name="userLogin">The source user</param>
         /// <returns>The updated user</returns>
-        public AMFUserLogin Update(AMFUserLogin digitalUserLogin)
+        public AMFUserLogin Update(AMFUserLogin userLogin)
         {
-            AMFUserLogin targetUser = this.DigitalUserRepository.GetById(digitalUserLogin.Id);
+            AMFUserLogin targetUser = this.UserRepository.GetById(userLogin.Id);
 
             if(targetUser != null)
             {
-                targetUser.FirstName = digitalUserLogin.FirstName;
-                targetUser.LastName = digitalUserLogin.LastName;
-                targetUser.UserStatus = digitalUserLogin.UserStatus;
-                targetUser.Role = digitalUserLogin.Role;
+                targetUser.FirstName = userLogin.FirstName;
+                targetUser.LastName = userLogin.LastName;
+                targetUser.UserStatus = userLogin.UserStatus;
+                targetUser.Role = userLogin.Role;
 
-                digitalUserLogin = this.DigitalUserRepository.Save(targetUser);
+                userLogin = this.UserRepository.Save(targetUser);
             }
 
-            return digitalUserLogin;
+            return userLogin;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             userLogin.PasswordHash = passwordHashUtility.HashPassword(password);
             userLogin.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
 
-            retVal = this.DigitalUserRepository.Save(userLogin);
+            retVal = this.UserRepository.Save(userLogin);
 
             return retVal;
         }
@@ -104,7 +104,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         {
             AMFUserLogin retVal = null;
 
-            AMFUserLogin targetUser = this.DigitalUserRepository.GetByEmail(userName);
+            AMFUserLogin targetUser = this.UserRepository.GetByEmail(userName);
 
             if (targetUser != null && targetUser.UserStatus == UserStatus.Active)
             {
@@ -130,7 +130,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
         public void SendPassword(string userEmail, EmailConfiguration emailConfig)
         {
-            AMFUserLogin changePasswordUser = this.DigitalUserRepository.GetByEmail(userEmail);
+            AMFUserLogin changePasswordUser = this.UserRepository.GetByEmail(userEmail);
 
             string emailBody = "A user was not found with that email address.  Please try again.";
 
@@ -143,7 +143,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 changePasswordUser.PasswordHash = passwordHashUtility.HashPassword(newPassword);
                 changePasswordUser.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
 
-                this.DigitalUserRepository.Save(changePasswordUser);
+                this.UserRepository.Save(changePasswordUser);
             }
 
             EmailManager emailManager = new EmailManager(emailConfig);
@@ -157,7 +157,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <returns>The user if one is found</returns>
         public AMFUserLogin GetUserById(int userId)
         {
-            return this.DigitalUserRepository.GetById(userId);
+            return this.UserRepository.GetById(userId);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <returns>The user if one is found</returns>
         public AMFUserLogin GetByEmail(string email)
         {
-            return this.DigitalUserRepository.GetByEmail(email);
+            return this.UserRepository.GetByEmail(email);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             if (relatedUser != null)
             {
                 relatedUser.UserStatus = retVal;
-                relatedUser = this.DigitalUserRepository.Save(relatedUser);
+                relatedUser = this.UserRepository.Save(relatedUser);
             }
 
             return retVal;

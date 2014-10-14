@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
     public interface ILoginAttemptRepository : INHibernateRepository<LoginAttempt, long>
     {
         /// <summary>
-        /// Get a DigitalUserLogin by the attempted login name
+        /// Get a AMFUserLogin by the attempted login name
         /// </summary>
         /// <param name="userName">The users email address used to attempt to login</param>
         /// <returns>The found domain object instance</returns>

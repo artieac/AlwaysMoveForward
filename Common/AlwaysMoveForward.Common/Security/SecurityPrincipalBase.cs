@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.Common.Security
     public abstract class SecurityPrincipalBase<TUser> : IPrincipal, IIdentity where TUser : class
     {
         /// <summary>
-        ///  An enumeration that defines what Authentication Types Digital supports
+        ///  An enumeration that defines what Authentication Types AlwaysMoveForward supports
         /// </summary>
         public enum ImplementedAuthenticationType
         {
@@ -18,11 +18,6 @@ namespace AlwaysMoveForward.Common.Security
             /// The user was authenticated with OAuth
             /// </summary>
             OAuth,
-
-            /// <summary>
-            /// The user was authenticated via the VistaprintMainSite
-            /// </summary>
-            VistaprintMainSite
         }
 
         /// <summary>
@@ -93,7 +88,7 @@ namespace AlwaysMoveForward.Common.Security
         /// <summary>
         /// Determines if this user in a specific role.  For now just return true.  In general the contained user will have a list of roles
         /// the user is in that you look through for the specific role.  Since we aren't quite sure how that will pan out just yet here
-        /// in Digital I'm holding off on a specific role container.
+        /// in AlwaysMoveForward I'm holding off on a specific role container.
         /// </summary>
         /// <param name="role">Role name to check</param>
         /// <returns>Whether or not it's in a particular role</returns>

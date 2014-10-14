@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.WebServer.Code
+namespace AlwaysMoveForward.OAuth.WebServer.Code
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class AdminAuthorizeAttribute : FilterAttribute, IAuthorizationFilter
@@ -35,7 +35,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Code
 
                 if (serviceManager != null)
                 {
-                    DigitalUserLogin currentUser = serviceManager.UserService.GetUserById(int.Parse(ticket.Name));
+                    AMFUserLogin currentUser = serviceManager.UserService.GetUserById(int.Parse(ticket.Name));
                     securityPrincipal = new OAuthServerSecurityPrincipal(currentUser);
                     System.Threading.Thread.CurrentPrincipal = securityPrincipal;
                     HttpContext.Current.User = securityPrincipal;

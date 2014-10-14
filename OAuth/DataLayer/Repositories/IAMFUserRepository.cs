@@ -9,12 +9,12 @@ using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
 namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {
     /// <summary>
-    /// A repository for retrieving Digital Users
+    /// A repository for retrieving AlwaysMoveForward Users
     /// </summary>
-    public interface IDigitalUserRepository : INHibernateRepository<AMFUserLogin, int>
+    public interface IAMFUserRepository : INHibernateRepository<AMFUserLogin, int>
     {
         /// <summary>
-        /// Get a DigitalUserLogin by the email address.
+        /// Get a AMFUserLogin by the email address.
         /// </summary>
         /// <param name="emailAddress">The users email address</param>
         /// <returns>The found domain object instance</returns>

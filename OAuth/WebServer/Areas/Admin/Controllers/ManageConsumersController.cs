@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.WebServer.Code;
-using VP.Digital.Common.DataLayer;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.DataLayer;
 
-namespace VP.Digital.Security.OAuth.WebServer.Areas.Admin.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Controllers
 {
     /// <summary>
     /// This class provides the UI elemetns to manage the consumers 
     /// </summary>
     [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
-    public class ManageConsumersController : VP.Digital.Security.OAuth.WebServer.Controllers.ControllerBase
+    public class ManageConsumersController : AlwaysMoveForward.OAuth.WebServer.Controllers.ControllerBase
     {
         /// <summary>
         /// Lists all the consumers

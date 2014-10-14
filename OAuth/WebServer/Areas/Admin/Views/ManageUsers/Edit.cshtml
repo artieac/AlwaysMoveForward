@@ -1,6 +1,6 @@
 ﻿
-@model VP.Digital.Security.OAuth.Common.DomainModel.DigitalUserLogin
-@using VP.Digital.Security.OAuth.Common.DomainModel;
+@model AlwaysMoveForward.OAuth.Common.DomainModel.AMFUserLogin
+@using AlwaysMoveForward.OAuth.Common.DomainModel;
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -35,9 +35,12 @@
             <div>
                 <span class="label">Status:</span>
                 <select name="userStatus" id="userStatus">
-                    <option value="@DigitalUserStatus.Blocked" @if (@Model.UserStatus == DigitalUserStatus.Blocked) { <text> selected </text> }>Blocked</option>
-                    <option value="@DigitalUserStatus.Active" @if (@Model.UserStatus == DigitalUserStatus.Active) { <text> selected </text>  }>Active</option>
-                    <option value="@DigitalUserStatus.Locked" @if (@Model.UserStatus == DigitalUserStatus.Locked) { <text> selected </text>  }>Locked</option>
+                    <option value="@UserStatus.Blocked" @if (@Model.UserStatus == UserStatus.Blocked)
+                                                               { <text> selected </text> }>Blocked</option>
+                    <option value="@UserStatus.Active" @if (@Model.UserStatus == UserStatus.Active)
+                                                       { <text> selected </text>  }>Active</option>
+                    <option value="@UserStatus.Locked" @if (@Model.UserStatus == UserStatus.Locked)
+                                                              { <text> selected </text>  }>Locked</option>
                 </select>
             </div>
             <div>

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace VP.Digital.Security.OAuth.WebServer
+namespace AlwaysMoveForward.OAuth.WebServer
 {
     /// <summary>
     /// Registers any routs

@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer
     /// <summary>
     /// This class servers as a factory for the DevDefiend OAuth context builder so we can adjust the url when the server is running behind a load balancer
     /// </summary>
-    public class DigitalOAuthContextBuilder
+    public class AMFOAuthContextBuilder
     {
         /// <summary>
         /// This defines the setting in the .config file where the load balancer endpoints are defined
@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer
             {
                 if (loadBalancerEndpoints.Contains(request.Url.Host))
                 {
-                    return new OAuthContextBuilder(DigitalOAuthContextBuilder.RemovePort).FromHttpRequest(request);
+                    return new OAuthContextBuilder(AMFOAuthContextBuilder.RemovePort).FromHttpRequest(request);
                 }
             }
 

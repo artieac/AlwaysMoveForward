@@ -60,11 +60,5 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
         public virtual int AccessTokenLifetime { get; set; }
-
-        /// <summary>
-        /// Gets or sets if the consumer is a Vistaprint consumer
-        /// </summary>
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual bool IsVistaPrintConsumer { get; set; }
     }
 }

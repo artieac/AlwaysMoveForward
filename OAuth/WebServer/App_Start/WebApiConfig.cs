@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace VP.Digital.Security.OAuth.WebServer
+namespace AlwaysMoveForward.OAuth.WebServer
 {
     /// <summary>
     /// Register the web api routes

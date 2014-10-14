@@ -57,10 +57,5 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// Gets or sets how many hours before an access token expires for this consumer
         /// </summary>
         public int AccessTokenLifetime { get; set; }
-
-        /// <summary>
-        /// Gets or sets if the consumer is a Vistaprint consumer
-        /// </summary>
-        public bool IsVistaPrintConsumer { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using AlwaysMoveForward.OAuth.Common.DomainModel;
 namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "DigitalUser")]
-    public class DigitalUser
+    public class AMFUser
     {
         /// <summary>
         /// Defines the Id field name for creating queries
@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// <summary>
         /// Default constructor for the class
         /// </summary>
-        public DigitalUser()
+        public AMFUser()
         {
             this.Id = 0;
         }

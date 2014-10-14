@@ -15,15 +15,15 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <summary>
         /// Get all of the users.
         /// </summary>
-        /// <returns>A list of digital users</returns>
+        /// <returns>A list of users</returns>
         IList<AMFUserLogin> GetAll();
 
         /// <summary>
         /// Update the editable fields for a User
         /// </summary>
-        /// <param name="digitalUserLogin">The source user</param>
+        /// <param name="userLogin">The source user</param>
         /// <returns>The updated user</returns>
-        AMFUserLogin Update(AMFUserLogin digitalUserLogin);
+        AMFUserLogin Update(AMFUserLogin userLogin);
 
         /// <summary>
         /// Register a user with the system

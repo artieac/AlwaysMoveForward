@@ -12,9 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
@@ -27,7 +27,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public new IAnotherBlogRepositoryManager RepositoryManager { get { return base.RepositoryManager as IAnotherBlogRepositoryManager; } }
 
-        public ServiceManager(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) { }
+        public ServiceManager(
+            IUnitOfWork unitOfWork, 
+            IAnotherBlogRepositoryManager repositoryManager, 
+            OAuthKeyConfiguration oauthKeyConfiguration,
+            EndpointConfiguration oauthEndpoints)
+            : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) 
+        {
+            this.OAuthKeyConfiguration = oauthKeyConfiguration;
+            this.OAuthEndpoints = oauthEndpoints;
+        }
+
+        public OAuthKeyConfiguration OAuthKeyConfiguration { get; private set; }
+
+        public EndpointConfiguration OAuthEndpoints { get; private set; }
 
         private BlogEntryService blogEntryService;
         public BlogEntryService BlogEntryService
@@ -106,7 +119,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository);
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository, new OAuthRepository(this.OAuthKeyConfiguration, this.OAuthEndpoints));
                 }
 
                 return this.userService;

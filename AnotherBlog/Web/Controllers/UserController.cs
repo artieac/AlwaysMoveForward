@@ -16,6 +16,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Principal;
 using System.Web.Security;
+using DevDefined.OAuth.Framework;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Contracts;
@@ -102,20 +103,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
 
                     this.Response.Redirect(authorizationUrl, false);
-                }
-
-                if (currentUser == null)
-                {
-                    this.EliminateUserCookie();
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
-                    ViewData.ModelState.AddModelError("loginError", "Invalid login.");
-                }
-                else
-                {
-                    retVal.IsAuthorized = true;
-                    this.CurrentPrincipal = new SecurityPrincipal(currentUser, true);
-                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-                }
+                }               
             }
             else
             {
@@ -124,41 +112,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             }
 
             return this.Json(retVal);
-        }
-
-        public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
-        {
-            RequestTokenModel model = new RequestTokenModel();
-
-            string requestTokenString = Request[Parameters.OAuth_Token];
-            string verifier = Request[Parameters.OAuth_Verifier];
-
-            RequestTokenModel storedRequestTokenModel = (RequestTokenModel)Session[requestTokenString];
-
-            OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
-
-            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", storedRequestTokenModel.ConsumerKey, storedRequestTokenModel.ConsumerSecret, storedRequestTokenModel.EndpointModel);
-
-            if (string.IsNullOrEmpty(verifier))
-            {
-                throw new Exception("Expected a non-empty verifier value");
-            }
-
-            IOAuthToken accessToken;
-
-            try
-            {
-                accessToken = oauthClient.ExchangeRequestTokenForAccessToken(storedRequestTokenModel, verifier);
-                model.Token = accessToken.Token;
-                model.Secret = accessToken.Secret;
-            }
-            catch (OAuthException authEx)
-            {
-                Session["problem"] = authEx.Report;
-                Response.Redirect("AccessDenied.aspx");
-            }
-
-            return View(model);
         }
 
         [CustomAuthorization]
@@ -198,6 +151,53 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             model.CurrentUser = Services.UserService.GetById(targetUser);
 
             return this.View(model);
+        }
+
+        public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
+        {
+            string requestTokenString = Request[Parameters.OAuth_Token];
+            string verifier = Request[Parameters.OAuth_Verifier];
+
+            IOAuthToken storedRequestToken = (IOAuthToken)Session[requestTokenString];
+
+            OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
+            EndpointConfiguration endpointConfiguration = EndpointConfiguration.GetInstance();
+
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", oauthConfiguration.ConsumerKey, oauthConfiguration.ConsumerSecret, endpointConfiguration);
+
+            if (string.IsNullOrEmpty(verifier))
+            {
+                throw new Exception("Expected a non-empty verifier value");
+            }
+
+            IOAuthToken accessToken;
+
+            try
+            {
+                accessToken = oauthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
+
+                AlwaysMoveForward.Common.DomainModel.User amfUser = this.Services.UserService.GetAMFUserInfo(accessToken);
+
+                if (amfUser == null)
+                {
+                    this.EliminateUserCookie();
+                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
+                    ViewData.ModelState.AddModelError("loginError", "Invalid login.");
+                }
+                else
+                {
+                    AnotherBlogUser blogUser = new AnotherBlogUser(amfUser);
+                    this.CurrentPrincipal = new SecurityPrincipal(blogUser, true);
+                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
+                }
+            }
+            catch (OAuthException authEx)
+            {
+                LogManager.GetLogger().Error(authEx);
+                Response.Redirect("AccessDenied.aspx");
+            }
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.OAuth.Contracts.Configuration
         /// <summary>
         /// The default app.config configuration section
         /// </summary>
-        private static readonly string DefaultSection = "Vistaprint/Digital/WhiteList";
+        private static readonly string DefaultSection = "AlwaysMoveForward/WhiteList";
 
         /// <summary>
         /// Gets the instance of the configuration, based on a default section

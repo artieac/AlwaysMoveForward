@@ -44,6 +44,10 @@
       <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -63,7 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLayer\Repositories\IOAuthRepository.cs" />
     <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
+    <Compile Include="DataLayer\Repositories\OAuthRepository.cs" />
     <Compile Include="DomainModel\AnotherBlogUser.cs" />
     <Compile Include="DomainModel\BlogList.cs" />
     <Compile Include="DomainModel\BlogListItem.cs" />
@@ -116,6 +122,14 @@
     <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
       <Project>{600387A0-6903-47FD-AA6C-9ADF4CFE491E}</Project>
       <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

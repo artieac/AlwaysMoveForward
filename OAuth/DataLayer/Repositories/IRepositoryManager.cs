@@ -26,9 +26,9 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         IConsumerNonceRepository ConsumerNonceRepository { get; }
 
         /// <summary>
-        /// Gets the current instance of the DigitalUserRepository
+        /// Gets the current instance of the AMFUserRepository
         /// </summary>
-        IDigitalUserRepository DigitalUserRepository { get; }
+        IAMFUserRepository UserRepository { get; }
 
         /// <summary>
         /// Gets the current instance of the loginAttemptRepository

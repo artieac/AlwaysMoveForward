@@ -89,23 +89,23 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         }
 
         /// <summary>
-        /// The current instance of the DigitalUserRepository
+        /// The current instance of the UserRepository
         /// </summary>
-        private IDigitalUserRepository digitalUserRepository;
+        private IAMFUserRepository userRepository;
 
         /// <summary>
         /// Gets the current instance of the ConsumerNonceRepository
         /// </summary>
-        public IDigitalUserRepository DigitalUserRepository
+        public IAMFUserRepository UserRepository
         {
             get
             {
-                if (this.digitalUserRepository == null)
+                if (this.userRepository == null)
                 {
-                    this.digitalUserRepository = new DigitalUserRepository(this.UnitOfWork);
+                    this.userRepository = new AMFUserRepository(this.UnitOfWork);
                 }
 
-                return this.digitalUserRepository;
+                return this.userRepository;
             }
         }
 

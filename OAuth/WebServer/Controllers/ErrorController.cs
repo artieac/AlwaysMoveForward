@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     /// <summary>
     /// A controller for handling error conditions.

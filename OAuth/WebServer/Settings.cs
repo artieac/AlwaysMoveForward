@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace VP.Digital.Security.OAuth.WebServer
+namespace AlwaysMoveForward.OAuth.WebServer
 {
     /// <summary>
     /// The Settings class for this assembly

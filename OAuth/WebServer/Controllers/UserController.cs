@@ -5,15 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DevDefined.OAuth.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Common.Security;
-using VP.Digital.Common.Utilities.Logging;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.WebServer.Models;
-using VP.Digital.Security.OAuth.WebServer.Code;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Security;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.WebServer.Models;
+using AlwaysMoveForward.OAuth.WebServer.Code;
 
-namespace VP.Digital.Security.OAuth.WebServer.Controllers
+namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 {
     /// <summary>
     /// This controller allows a user to sign in and authorize an OAuth token
@@ -52,11 +52,11 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
         /// <summary>
         /// Setup the logged in user on the current thread and setup an auth cookie.
         /// </summary>
-        /// <param name="digitalUser"></param>
-        private void SetCurrentUser(DigitalUserLogin digitalUser)
+        /// <param name="user"></param>
+        private void SetCurrentUser(AMFUserLogin user)
         {
-            this.CurrentPrincipal = new OAuthServerSecurityPrincipal(digitalUser);
-            FormsAuthentication.SetAuthCookie(digitalUser.Id.ToString(), false);
+            this.CurrentPrincipal = new OAuthServerSecurityPrincipal(user);
+            FormsAuthentication.SetAuthCookie(user.Id.ToString(), false);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
         /// <returns>The Registered user view</returns>
         public ActionResult Register(RegisterModel registerModel)
         {
-            DigitalUserLogin registeredUser = null;
+            AMFUserLogin registeredUser = null;
 
             if (registerModel != null)
             {
@@ -108,11 +108,11 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
             {
                 // yes actually look up the user, but for now
-                DigitalUserLogin digitalUser = this.ServiceManager.UserService.LogonUser(userName, password, this.Request.UserHostAddress);
+                AMFUserLogin user = this.ServiceManager.UserService.LogonUser(userName, password, this.Request.UserHostAddress);
 
-                if (digitalUser != null)
+                if (user != null)
                 {
-                    this.SetCurrentUser(digitalUser);
+                    this.SetCurrentUser(user);
 
                     if (!string.IsNullOrEmpty(oauthToken))
                     {
@@ -159,7 +159,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
                 HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
 
-                DigitalUserLogin currentUser = this.ServiceManager.UserService.GetUserById(int.Parse(ticket.Name));
+                AMFUserLogin currentUser = this.ServiceManager.UserService.GetUserById(int.Parse(ticket.Name));
 
                 if (currentUser != null)
                 {
@@ -169,7 +169,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger(this.GetType()).Error(e);
+                LogManager.GetLogger().Error(e);
             }
         }
 
@@ -239,7 +239,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
         {
             PasswordHintModel retVal = new PasswordHintModel();
 
-            DigitalUserLogin targetUser = this.ServiceManager.UserService.GetByEmail(emailAddress);
+            AMFUserLogin targetUser = this.ServiceManager.UserService.GetByEmail(emailAddress);
 
             if (targetUser != null)
             {
@@ -256,7 +256,7 @@ namespace VP.Digital.Security.OAuth.WebServer.Controllers
         [OAuthSignatureValidation]
         public JsonResult Details()
         {
-            DigitalUser retVal = new DigitalUser();
+            User retVal = new User();
 
             if (this.CurrentPrincipal.User != null)
             {

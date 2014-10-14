@@ -1,4 +1,4 @@
-﻿@model VP.Digital.Security.OAuth.WebServer.Areas.Admin.Models.OAuthTokensModel
+﻿@model AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Models.OAuthTokensModel
 @{
     ViewBag.Title = "OAuth Tokens";
     ViewBag.SelectedTab = 4;
@@ -62,7 +62,7 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (VP.Digital.Security.OAuth.Common.DomainModel.RequestToken requestToken in @Model.Tokens)
+                        foreach (AlwaysMoveForward.OAuth.Common.DomainModel.RequestToken requestToken in @Model.Tokens)
                         {
                             <tr>
                                 <td>@requestToken.ConsumerKey</td>

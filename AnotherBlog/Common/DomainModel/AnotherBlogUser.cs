@@ -8,6 +8,16 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
     public class AnotherBlogUser
     {
+        public AnotherBlogUser()
+        {
+            this.AMFUser = null;
+        }
+
+        public AnotherBlogUser(User amfUser)
+        {
+            this.AMFUser = amfUser;
+        }
+
         public int Id { get; set; }
         public User AMFUser { get; set; }
         public bool ApprovedCommenter { get; set; }

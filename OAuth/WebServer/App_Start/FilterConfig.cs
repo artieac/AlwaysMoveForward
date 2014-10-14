@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace VP.Digital.Security.OAuth.WebServer
+namespace AlwaysMoveForward.OAuth.WebServer
 {
     /// <summary>
     /// Configure any filters upon startup

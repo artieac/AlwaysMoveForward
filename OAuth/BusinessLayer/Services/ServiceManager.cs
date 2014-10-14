@@ -92,7 +92,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.RepositoryManager.DigitalUserRepository, this.RepositoryManager.LoginAttemptRepository);
+                    this.userService = new UserService(this.RepositoryManager.UserRepository, this.RepositoryManager.LoginAttemptRepository);
                 }
 
                 return this.userService;
