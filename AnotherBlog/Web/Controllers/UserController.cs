@@ -94,7 +94,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
 
                 AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
-                IOAuthToken requestToken = oauthClient.GetRequestToken(null, "");
+                IOAuthToken requestToken = oauthClient.GetRequestToken(null, "/User/OAuthCallback");
 
                 if(requestToken != null)
                 {
