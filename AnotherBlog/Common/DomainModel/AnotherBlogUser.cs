@@ -6,8 +6,10 @@ using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
-    public class AnotherBlogUser : User
+    public class AnotherBlogUser
     {
+        public int Id { get; set; }
+        public User AMFUser { get; set; }
         public bool ApprovedCommenter { get; set; }
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }

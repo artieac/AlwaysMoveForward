@@ -351,6 +351,14 @@
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj">
       <Project>{378a5d90-9d1e-4317-8722-3549a4b85507}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.BusinessLayer</Name>

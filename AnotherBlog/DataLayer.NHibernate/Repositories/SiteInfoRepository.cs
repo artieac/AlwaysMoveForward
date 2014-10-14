@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// The SiteOnfo object is used for web site specific settings rather than blog specific settings.
     /// </summary>
     /// <param name="dataContext"></param>
-    public class SiteInfoRepository : NHibernateRepositoryBase<SiteInfo, SiteInfoDTO, int>, ISiteInfoRepository
+    public class SiteInfoRepository : NHibernateRepository<SiteInfo, SiteInfoDTO, int>, ISiteInfoRepository
     {
         public SiteInfoRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

@@ -28,7 +28,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryRepository : NHibernateRepositoryBase<BlogPost, BlogPostDTO, int>, IBlogEntryRepository
+    public class BlogEntryRepository : NHibernateRepository<BlogPost, BlogPostDTO, int>, IBlogEntryRepository
     {
         public BlogEntryRepository(UnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork)
         {
