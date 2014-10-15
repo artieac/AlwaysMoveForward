@@ -20,6 +20,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public int Id { get; set; }
         public User AMFUser { get; set; }
+        public string AccessToken { get; set; }
+        public string AccessTokenSecret { get; set; }
         public bool ApprovedCommenter { get; set; }
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }

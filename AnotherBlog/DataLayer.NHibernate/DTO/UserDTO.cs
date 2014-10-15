@@ -44,10 +44,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual int AMFUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string AccessToken { get; set; }
+        public virtual string AccessToken { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string AccessTokenSecret { get; set; }
+        public virtual string AccessTokenSecret { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogUsers", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "UserId")]

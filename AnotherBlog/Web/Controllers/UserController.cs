@@ -179,7 +179,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 AlwaysMoveForward.Common.DomainModel.User amfUser = this.Services.UserService.GetAMFUserInfo(accessToken);
 
                 if (amfUser == null)
-                {
+                {               
                     this.EliminateUserCookie();
                     this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
@@ -187,6 +187,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 else
                 {
                     AnotherBlogUser blogUser = new AnotherBlogUser(amfUser);
+                    blogUser.AccessToken = accessToken.Token;
+                    blogUser.AccessTokenSecret = accessToken.Secret;
+                    blogUser = this.Services.UserService.Save(blogUser);
                     this.CurrentPrincipal = new SecurityPrincipal(blogUser, true);
                     this.EstablishCurrentUserCookie(this.CurrentPrincipal);
                 }

@@ -81,6 +81,15 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.Save(userToSave);
         }
 
+        public AnotherBlogUser Save(AnotherBlogUser user)
+        {
+            if(user != null)
+            {
+                user = this.UserRepository.Save(user);
+            }
+
+            return user;
+        }
         public void Delete(int userId)
         {
             AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
