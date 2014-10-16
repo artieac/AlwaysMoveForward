@@ -44,6 +44,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual int AMFUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
+        public virtual string FirstName { get; set; }
+        
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string LastName { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
         public virtual string AccessToken { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]

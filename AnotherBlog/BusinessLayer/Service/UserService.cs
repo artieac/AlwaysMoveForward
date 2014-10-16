@@ -104,16 +104,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        public AnotherBlogUser GetByEmail(string userEmail)
-        {
-            return this.UserRepository.GetByEmail(userEmail);
-        }
-
         public AnotherBlogUser GetDefaultUser()
         {
             if (UserService.guestUser == null)
             {
-                UserService.guestUser = this.UserRepository.GetByUserName(UserService.GuestUserName);
+                UserService.guestUser = new AnotherBlogUser();
+                guestUser.ApprovedCommenter = false;
+                guestUser.IsSiteAdministrator = false;
+                guestUser.Roles = new Dictionary<int, RoleType.Id>();
             }
 
             return UserService.guestUser;
@@ -122,11 +120,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public IList<AnotherBlogUser> GetAll()
         {
             return this.UserRepository.GetAll();
-        }
-
-        public AnotherBlogUser GetByUserName(string userName)
-        {
-            return this.UserRepository.GetByUserName(userName);
         }
 
         public AnotherBlogUser GetById(int userId)

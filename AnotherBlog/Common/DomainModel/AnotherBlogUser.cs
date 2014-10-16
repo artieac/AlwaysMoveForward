@@ -10,16 +10,13 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
     {
         public AnotherBlogUser()
         {
-            this.AMFUser = null;
-        }
-
-        public AnotherBlogUser(User amfUser)
-        {
-            this.AMFUser = amfUser;
+            this.AMFUserId = 0;
         }
 
         public int Id { get; set; }
-        public User AMFUser { get; set; }
+        public int AMFUserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string AccessToken { get; set; }
         public string AccessTokenSecret { get; set; }
         public bool ApprovedCommenter { get; set; }
@@ -27,6 +24,11 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string About { get; set; }
 
         public IDictionary<int, RoleType.Id> Roles { get; set; }
+
+        public string GetDisplayName()
+        {
+            return this.FirstName + " " + this.LastName;
+        }
 
         public void AddRole(int blogId, RoleType.Id roleId)
         {
