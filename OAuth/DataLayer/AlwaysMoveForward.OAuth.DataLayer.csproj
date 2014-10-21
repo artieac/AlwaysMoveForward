@@ -7,8 +7,8 @@
     <ProjectGuid>{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlwaysMoveForward.Security.OAuth.DataLayer</RootNamespace>
-    <AssemblyName>AlwaysMoveForward.Security.OAuth.DataLayer</AssemblyName>
+    <RootNamespace>AlwaysMoveForward.OAuth.DataLayer</RootNamespace>
+    <AssemblyName>AlwaysMoveForward.OAuth.DataLayer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>

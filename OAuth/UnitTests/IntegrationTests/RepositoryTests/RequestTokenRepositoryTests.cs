@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Contracts;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
+namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
 {
     [TestFixture]
     public class RequestTokenRepositoryTests : RepositoryTestBase

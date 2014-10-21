@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
+namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
 {
     [TestFixture]
-    public class DigitalUserRepositoryTests : RepositoryTestBase
+    public class UserRepositoryTests : RepositoryTestBase
     {
         private const string TestHashedPassword = "lfcTgtQr7OlaNF1YmrazuYTS5fCyASGT";
         private const string TestPasswordSalt = "t8Oipwx4MnV9A+oVlXG1wKXeirWqzuBv";
@@ -21,53 +21,52 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
             return string.Format("artie{0}@test.com", uniqueAddIn);
         }
 
-        private DigitalUserLogin CreateTestUser(string emailAddress)
+        private AMFUserLogin CreateTestUser(string emailAddress)
         {
-            DigitalUserLogin retVal = new DigitalUserLogin();
+            AMFUserLogin retVal = new AMFUserLogin();
             retVal.Email = emailAddress;
             retVal.FirstName = "Artie";
             retVal.LastName = "Test";
             retVal.PasswordHash = TestHashedPassword;
             retVal.PasswordSalt = TestPasswordSalt;
-            retVal.SaltIterations = TestPasswordIterations;
 
             return retVal;
         }
         [Test]
-        public void DigitalUserRepositoryTestGetAll()
+        public void UserRepositoryTestGetAll()
         {
-            IList<DigitalUserLogin> foundItems = this.RepositoryManager.DigitalUserRepository.GetAll();
+            IList<AMFUserLogin> foundItems = this.RepositoryManager.UserRepository.GetAll();
 
             Assert.IsNotNull(foundItems);
         }
 
         [Test]
-        public void DigitalUserRepositoryTestGetByEmail()
+        public void UserRepositoryTestGetByEmail()
         {
             string testEmail = this.GenerateEmail(Guid.NewGuid().ToString("N"));
 
-            DigitalUserLogin foundItem = this.RepositoryManager.DigitalUserRepository.GetByEmail(testEmail);
+            AMFUserLogin foundItem = this.RepositoryManager.UserRepository.GetByEmail(testEmail);
 
             if (foundItem == null)
             {
-                this.RepositoryManager.DigitalUserRepository.Save(this.CreateTestUser(testEmail));
+                this.RepositoryManager.UserRepository.Save(this.CreateTestUser(testEmail));
             }
 
-            foundItem = this.RepositoryManager.DigitalUserRepository.GetByEmail(testEmail);
+            foundItem = this.RepositoryManager.UserRepository.GetByEmail(testEmail);
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Email == testEmail);
         }
 
         [Test]
-        public void DigitalUserRepositoryTestGetByid()
+        public void UserRepositoryTestGetByid()
         {
-            int testLoginId = 1;
-            DigitalUserLogin foundItem = this.RepositoryManager.DigitalUserRepository.GetById(1);
+            long testLoginId = 1;
+            AMFUserLogin foundItem = this.RepositoryManager.UserRepository.GetById(1);
 
             if (foundItem == null)
             {
                 string testEmail = this.GenerateEmail(Guid.NewGuid().ToString("N"));
-                DigitalUserLogin newUser = this.RepositoryManager.DigitalUserRepository.Save(this.CreateTestUser(testEmail));
+                AMFUserLogin newUser = this.RepositoryManager.UserRepository.Save(this.CreateTestUser(testEmail));
 
                 if (newUser != null)
                 {
@@ -75,16 +74,16 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
                 }
             }
 
-            foundItem = this.RepositoryManager.DigitalUserRepository.GetById(testLoginId);
+            foundItem = this.RepositoryManager.UserRepository.GetById(testLoginId);
             Assert.IsNotNull(foundItem);
         }
 
         [Test]
-        public void DigitalUserRepositoryTestSave()
+        public void UserRepositoryTestSave()
         {
             string testEmail = this.GenerateEmail(Guid.NewGuid().ToString("N"));
-            DigitalUserLogin testUser = this.RepositoryManager.DigitalUserRepository.GetByEmail(testEmail);
-            DigitalUserLogin foundItem = null;
+            AMFUserLogin testUser = this.RepositoryManager.UserRepository.GetByEmail(testEmail);
+            AMFUserLogin foundItem = null;
             string uniqueTest = Guid.NewGuid().ToString("N").Substring(0, 30);
 
             if (testUser == null)
@@ -92,14 +91,14 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
                 testUser = this.CreateTestUser(testEmail);
                 testUser.Email = testEmail;
                 testUser.LastName = uniqueTest;
-                foundItem = this.RepositoryManager.DigitalUserRepository.Save(testUser);
+                foundItem = this.RepositoryManager.UserRepository.Save(testUser);
             }
             else
             {
                 testUser.LastName = uniqueTest;
             }
 
-            foundItem = this.RepositoryManager.DigitalUserRepository.GetByEmail(testUser.Email);
+            foundItem = this.RepositoryManager.UserRepository.GetByEmail(testUser.Email);
 
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Email == testUser.Email);

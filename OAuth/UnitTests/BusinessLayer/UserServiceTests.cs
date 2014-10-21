@@ -5,12 +5,12 @@ using System.Text;
 using NUnit;
 using NUnit.Framework;
 using DD = DevDefined.OAuth.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
+namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
 {
     /// <summary>
     /// Test class for User Service
@@ -25,7 +25,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
         [Ignore]
         public void UserServiceTestGetUserById()
         {
-            DigitalUser foundItem = this.ServiceManager.UserService.GetUserById(UserConstants.TestUserId);
+            User foundItem = this.ServiceManager.UserService.GetUserById(UserConstants.TestUserId);
 
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Id == UserConstants.TestUserId);
@@ -37,7 +37,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
         [Test]
         public void UserServiceTestLogonUser()
         {
-            DigitalUser foundItem = this.ServiceManager.UserService.LogonUser(UserConstants.TestUserName, UserConstants.TestPassword, string.Empty);
+            User foundItem = this.ServiceManager.UserService.LogonUser(UserConstants.TestUserName, UserConstants.TestPassword, string.Empty);
 
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Email == UserConstants.TestUserName);
@@ -49,7 +49,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
         [Test]
         public void UserServiceTestRegisterUser()
         {
-            DigitalUser foundItem = this.ServiceManager.UserService.Register(UserConstants.TestUserName, UserConstants.TestPassword, UserConstants.TestPasswordHint, string.Empty, string.Empty);
+            User foundItem = this.ServiceManager.UserService.Register(UserConstants.TestUserName, UserConstants.TestPassword, UserConstants.TestPasswordHint, string.Empty, string.Empty);
 
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Email == UserConstants.TestUserName);
@@ -61,8 +61,8 @@ namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
         [Test]
         public void UserServiceTestAddLoginAttempt()
         {           
-            DigitalUserStatus testItem = this.ServiceManager.UserService.AddLoginAttempt(true, "", UserConstants.TestUserName, null);
-            Assert.IsTrue(testItem == DigitalUserStatus.Active);
+            UserStatus testItem = this.ServiceManager.UserService.AddLoginAttempt(true, "", UserConstants.TestUserName, null);
+            Assert.IsTrue(testItem == UserStatus.Active);
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
         public void UserServiceTestAddLoginAttemptToLockAccount()
         {
             string testUserName = Guid.NewGuid().ToString("N");
-            DigitalUserStatus testItem = this.ServiceManager.UserService.AddLoginAttempt(false, "", testUserName, null);
-            Assert.IsTrue(testItem == DigitalUserStatus.Locked);
+            UserStatus testItem = this.ServiceManager.UserService.AddLoginAttempt(false, "", testUserName, null);
+            Assert.IsTrue(testItem == UserStatus.Locked);
         }
 
         /// <summary>

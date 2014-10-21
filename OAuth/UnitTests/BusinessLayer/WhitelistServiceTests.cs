@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
+namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
 {
     [TestFixture]
     public class WhitelistServiceTests : UnitTestBase

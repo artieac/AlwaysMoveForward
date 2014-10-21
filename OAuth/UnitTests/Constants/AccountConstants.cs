@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VP.Digital.Security.OAuth.UnitTests.Constants
+namespace AlwaysMoveForward.OAuth.UnitTests.Constants
 {
     /// <summary>
     /// Constant values used in unit tests

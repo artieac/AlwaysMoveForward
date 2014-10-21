@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Common.Entities;
-using VP.Digital.Common.Utilities.Encryption;
-using VP.Digital.Security.OAuth.Contracts;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Encryption;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
+namespace AlwaysMoveForward.OAuth.UnitTests.CommonTests
 {
     [TestFixture]
     public class UserTransferManagerTests
     {
         private const string testEmail = "test@test.com";
-        private const string encryptedTestString = "gHcgCFsiq9Qo+/zePqfXibKrxhs1qLOOn6TgoyDeIrPei7WITYiucfbY1mWhoPACe8BTBsg43CRGPmCb4/JAxo5g6gjdgDDATqS9HKAfBKePtF8AIJ4Q98/f0THumqXUBIVSL3suZ8dYXe7KQSUwnW0PB6GmkD6kc2MDM/hwUPDu8PqagesS6DRmKsVsTrJqT9RyJRG3FQUYoAXjd7RX0uxY53m4mh/n5GzV4rzmXv8/7AChQWVF+ZLBPbbG5p0oj4wRdQFZGAVSbT3flePXVu+nHhj17QSvozo2V/hQfqQ=";
+        private const string encryptedTestString = "jAs6UGcdZy+U4K+O6sOdKpFaZNi4AK5+RJ7u8y4PeyHU4l/z0/cES48sGFog2Vyw/lTSreUxZq14gWFWnWlorrAubz9MRasf2vpc3DlhEQ2Y98z/8dk0UqOptsYgwvMFrYvERLkahxwuhxU6GqZLCMfAu+SR8O84/LrlmV2pnTaoJh9A9hL02uf8j7+YiGs9hn5cjqerpQH8jqfScSKfhTknfOGMHzsuWosyuQUmJzZxckoBh3oTMijvk5qRdXiB+j5uLeJZN9T/+fI68stPyg==";
 
-        private DigitalUser GenerateDigitalUser()
+        private User GenerateUser()
         {
-            DigitalUser retVal = new DigitalUser();
+            User retVal = new User();
             retVal.Email = testEmail;
             retVal.FirstName = "Unit";
             retVal.LastName = "Test";
@@ -31,7 +31,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         public void UserTransferManagerTestEncryptionDefaultConstructor()
         {
             UserTransferManager userTransferManager = new UserTransferManager();
-            string testItem = userTransferManager.Encrypt(this.GenerateDigitalUser());
+            string testItem = userTransferManager.Encrypt(this.GenerateUser());
 
             Assert.IsTrue(testItem == UserTransferManagerTests.encryptedTestString);
         }
@@ -41,7 +41,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         {
             AESConfiguration aesConfiguration = AESConfiguration.GetInstance();
             UserTransferManager userTransferManager = new UserTransferManager(aesConfiguration);
-            string testItem = userTransferManager.Encrypt(this.GenerateDigitalUser());
+            string testItem = userTransferManager.Encrypt(this.GenerateUser());
 
             Assert.IsTrue(testItem == UserTransferManagerTests.encryptedTestString);
         }
@@ -51,7 +51,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         {
             AESConfiguration aesConfiguration = AESConfiguration.GetInstance();
             UserTransferManager userTransferManager = new UserTransferManager(aesConfiguration.EncryptionKey, aesConfiguration.Salt);
-            string testItem = userTransferManager.Encrypt(this.GenerateDigitalUser());
+            string testItem = userTransferManager.Encrypt(this.GenerateUser());
 
             Assert.IsTrue(testItem == UserTransferManagerTests.encryptedTestString);
         }
@@ -60,7 +60,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         public void UserTransferManagerTestDecryptionDefaultConstructor()
         {
             UserTransferManager userTransferManager = new UserTransferManager();
-            VP.Digital.Common.Entities.DigitalUser testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
+            AlwaysMoveForward.Common.DomainModel.User testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
 
             Assert.IsNotNull(testItem);
             Assert.IsTrue(testItem.Email == UserTransferManagerTests.testEmail);
@@ -71,7 +71,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         {
             AESConfiguration aesConfiguration = AESConfiguration.GetInstance();
             UserTransferManager userTransferManager = new UserTransferManager(aesConfiguration);
-            VP.Digital.Common.Entities.DigitalUser testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
+            AlwaysMoveForward.Common.DomainModel.User testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
 
             Assert.IsNotNull(testItem);
             Assert.IsTrue(testItem.Email == UserTransferManagerTests.testEmail);
@@ -82,7 +82,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
         {
             AESConfiguration aesConfiguration = AESConfiguration.GetInstance();
             UserTransferManager userTransferManager = new UserTransferManager(aesConfiguration.EncryptionKey, aesConfiguration.Salt);
-            VP.Digital.Common.Entities.DigitalUser testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
+            AlwaysMoveForward.Common.DomainModel.User testItem = userTransferManager.Decrypt(UserTransferManagerTests.encryptedTestString);
 
             Assert.IsNotNull(testItem);
             Assert.IsTrue(testItem.Email == UserTransferManagerTests.testEmail);

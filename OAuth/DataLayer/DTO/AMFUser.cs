@@ -6,7 +6,7 @@ using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
-    [NHibernate.Mapping.Attributes.Class(Table = "DigitalUser")]
+    [NHibernate.Mapping.Attributes.Class(Table = "User")]
     public class AMFUser
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// </summary>
         [NHibernate.Mapping.Attributes.Id(0, Name = IdFieldName, UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")] 
-        public virtual int Id { get; set; }
+        public virtual long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the users email address

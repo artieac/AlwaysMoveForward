@@ -5,9 +5,9 @@ using System.Net;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 
-namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
+namespace AlwaysMoveForward.OAuth.UnitTests.CommonTests
 {
     [TestFixture]
     public class ConfigurationTests

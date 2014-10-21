@@ -6,12 +6,12 @@ using NUnit;
 using NUnit.Framework;
 using DD = DevDefined.OAuth.Framework;
 using DDS = DevDefined.OAuth.Storage;
-using VP.Digital.Common.Entities;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.UnitTests.BusinessLayer
+namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
 {
     [TestFixture]
     public class TokenServiceTests : UnitTestBase

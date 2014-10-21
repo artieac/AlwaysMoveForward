@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.UnitTests.OAuth
+namespace AlwaysMoveForward.OAuth.UnitTests.OAuth
 {
     [TestFixture]
     public class RequestTokenTests
@@ -21,7 +21,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.OAuth
             retVal.Secret = TokenConstants.TestRequestTokenSecret;
             retVal.CallbackUrl = "http://localhost/oauth/callback";
             retVal.UsedUp = usedUp;
-            retVal.RequestTokenAuthorization = new VP.Digital.Security.OAuth.Common.DomainModel.RequestTokenAuthorization();
+            retVal.RequestTokenAuthorization = new AlwaysMoveForward.OAuth.Common.DomainModel.RequestTokenAuthorization();
             retVal.RequestTokenAuthorization.GenerateVerifierCode();
             retVal.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using VP.Digital.Common.DataLayer;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
-using VP.Digital.Security.OAuth.UnitTests.Mock.Repositories;
+using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories;
 
-namespace VP.Digital.Security.OAuth.UnitTests.Mock
+namespace AlwaysMoveForward.OAuth.UnitTests.Mock
 {
     public class MockServiceManagerBuilder : ServiceManagerBuilder
     {

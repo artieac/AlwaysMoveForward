@@ -24,12 +24,12 @@ namespace AlwaysMoveForward.Common.DomainModel
             this.Id = -1;
         }
 
-        public User(int userId)
+        public User(long userId)
         {
             this.Id = userId;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

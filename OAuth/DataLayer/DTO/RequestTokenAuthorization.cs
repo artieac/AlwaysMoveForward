@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// Gets or sets the user id that authorized the request
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
-        public virtual int UserId { get; set; }
+        public virtual long UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the username that authorized the request.

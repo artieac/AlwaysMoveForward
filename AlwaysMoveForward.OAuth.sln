@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Bus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.WebServer", "OAuth\WebServer\AlwaysMoveForward.OAuth.WebServer.csproj", "{5F112EE1-91D3-420F-B698-9FD1A2E9CF6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.UnitTests", "OAuth\UnitTests\AlwaysMoveForward.OAuth.UnitTests.csproj", "{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{5F112EE1-91D3-420F-B698-9FD1A2E9CF6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F112EE1-91D3-420F-B698-9FD1A2E9CF6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F112EE1-91D3-420F-B698-9FD1A2E9CF6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

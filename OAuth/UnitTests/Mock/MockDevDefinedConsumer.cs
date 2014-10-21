@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DD = DevDefined.OAuth;
 
-namespace VP.Digital.Security.OAuth.UnitTests.Mock
+namespace AlwaysMoveForward.OAuth.UnitTests.Mock
 {
     public class MockDevDefinedConsumer : DD.Framework.IConsumer
     {

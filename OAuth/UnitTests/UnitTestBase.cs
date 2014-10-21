@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VP.Digital.Security.OAuth.BusinessLayer.Services;
-using VP.Digital.Security.OAuth.UnitTests.Mock;
+using AlwaysMoveForward.OAuth.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth.UnitTests.Mock;
 
-namespace VP.Digital.Security.OAuth.UnitTests
+namespace AlwaysMoveForward.OAuth.UnitTests
 {
     public class UnitTestBase
     {

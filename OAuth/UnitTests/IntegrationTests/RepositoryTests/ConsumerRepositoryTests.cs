@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
-namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
+namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
 {
     [TestFixture]
     public class ConsumerRepositoryTests : RepositoryTestBase
@@ -24,7 +24,6 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
             retVal.ContactEmail = ConsumerConstants.TestEmail;
             retVal.Name = ConsumerConstants.TestName;
             retVal.PublicKey = string.Empty;
-            retVal.IsVistaPrintConsumer = true;
 
             return retVal;
         }
@@ -74,7 +73,6 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
             testConsumer.ContactEmail = "artie2" + Guid.NewGuid().ToString("N") + "@test.com";
             testConsumer.ConsumerKey = Guid.NewGuid().ToString();
             testConsumer.ConsumerSecret = Guid.NewGuid().ToString();
-            testConsumer.IsVistaPrintConsumer = false;
             testConsumer.AutoGrant = false;
        
             Consumer foundItem = this.RepositoryManager.ConsumerRepository.Save(testConsumer);

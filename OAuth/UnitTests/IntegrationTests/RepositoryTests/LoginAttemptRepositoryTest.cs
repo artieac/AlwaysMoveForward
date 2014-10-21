@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
 
-namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
+namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests
 {
     [TestFixture]
     public class LoginAttemptRepositoryTest : RepositoryTestBase
@@ -25,7 +25,7 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
         [Test]
         public void LoginAttemptRepositoryTestSave()
         {
-            LoginAttempt testItem = this.GenerateLoginAttempt(VP.Digital.Security.OAuth.UnitTests.Constants.UserConstants.TestUserName, true);
+            LoginAttempt testItem = this.GenerateLoginAttempt(AlwaysMoveForward.OAuth.UnitTests.Constants.UserConstants.TestUserName, true);
 
             testItem = this.RepositoryManager.LoginAttemptRepository.Save(testItem);
 
@@ -40,7 +40,7 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
 
             if(testItem == null)
             {
-                testItem = this.GenerateLoginAttempt(VP.Digital.Security.OAuth.UnitTests.Constants.UserConstants.TestUserName, true);
+                testItem = this.GenerateLoginAttempt(AlwaysMoveForward.OAuth.UnitTests.Constants.UserConstants.TestUserName, true);
                 testItem = this.RepositoryManager.LoginAttemptRepository.Save(testItem);
                 testItem = this.RepositoryManager.LoginAttemptRepository.GetById(testItem.Id);
             }
@@ -52,13 +52,13 @@ namespace VP.Digital.Security.OAuth.DevDefined.UnitTests.IntegrationTests.Reposi
         [Test]
         public void LoginAttemptRepositoryTestGetByUserName()
         {
-            IList<LoginAttempt> testItems = this.RepositoryManager.LoginAttemptRepository.GetByUserName(VP.Digital.Security.OAuth.UnitTests.Constants.UserConstants.TestUserName);
+            IList<LoginAttempt> testItems = this.RepositoryManager.LoginAttemptRepository.GetByUserName(AlwaysMoveForward.OAuth.UnitTests.Constants.UserConstants.TestUserName);
 
             if (testItems == null || testItems.Count == 0)
             {
-                LoginAttempt testItem = this.GenerateLoginAttempt(VP.Digital.Security.OAuth.UnitTests.Constants.UserConstants.TestUserName,true);
+                LoginAttempt testItem = this.GenerateLoginAttempt(AlwaysMoveForward.OAuth.UnitTests.Constants.UserConstants.TestUserName,true);
                 testItem = this.RepositoryManager.LoginAttemptRepository.Save(testItem);
-                testItems = this.RepositoryManager.LoginAttemptRepository.GetByUserName(VP.Digital.Security.OAuth.UnitTests.Constants.UserConstants.TestUserName);
+                testItems = this.RepositoryManager.LoginAttemptRepository.GetByUserName(AlwaysMoveForward.OAuth.UnitTests.Constants.UserConstants.TestUserName);
             }
 
             Assert.IsNotNull(testItems);

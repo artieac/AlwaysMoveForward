@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
     /// <summary>
     /// A repository for retrieving AlwaysMoveForward Users
     /// </summary>
-    public interface IAMFUserRepository : INHibernateRepository<AMFUserLogin, int>
+    public interface IAMFUserRepository : INHibernateRepository<AMFUserLogin, long>
     {
         /// <summary>
         /// Get a AMFUserLogin by the email address.

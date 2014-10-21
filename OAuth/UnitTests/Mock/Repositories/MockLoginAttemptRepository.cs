@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using VP.Digital.Common.Utilities.Encryption;
-using VP.Digital.Security.OAuth.Contracts.Configuration;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
-using VP.Digital.Security.OAuth.UnitTests.Constants;
+using AlwaysMoveForward.Common.Encryption;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
 
-namespace VP.Digital.Security.OAuth.UnitTests.Mock.Repositories
+namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
 {
     public class MockLoginAttemptRepository
     {
@@ -58,7 +58,7 @@ namespace VP.Digital.Security.OAuth.UnitTests.Mock.Repositories
 
             IList<LoginAttempt> retVal = new List<LoginAttempt>();
 
-            for (int i = 0; i < DigitalUserLogin.MaxAllowedLoginFailures + 1; i++ )
+            for (int i = 0; i < AMFUserLogin.MaxAllowedLoginFailures + 1; i++)
             {
                 retVal.Add(MockLoginAttemptRepository.GenerateNewLoginAttempt(i, userName, wasSuccessfull));
             }

@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
     /// <summary>
     /// A repository that retrieves a AMFUserLogin
     /// </summary>
-    public class AMFUserRepository : RepositoryBase<AMFUserLogin, DTO.AMFUser, int>, IAMFUserRepository
+    public class AMFUserRepository : RepositoryBase<AMFUserLogin, DTO.AMFUser, long>, IAMFUserRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work
@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         /// </summary>
         /// <param name="idSource">The domain object to pull the id from</param>
         /// <returns>An instance of the DTO</returns>
-        protected override DTO.AMFUser GetDTOById(int id)
+        protected override DTO.AMFUser GetDTOById(long id)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.AMFUser>();
             criteria.Add(Expression.Eq(DTO.AMFUser.IdFieldName, id));

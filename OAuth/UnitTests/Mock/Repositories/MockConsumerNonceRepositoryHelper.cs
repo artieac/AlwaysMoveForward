@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using VP.Digital.Security.OAuth.Common.DomainModel;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.UnitTests.Mock.Repositories
+namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
 {
     public class MockConsumerNonceRepositoryHelper
     {

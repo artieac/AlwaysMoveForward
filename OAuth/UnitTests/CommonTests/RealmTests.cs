@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using VP.Digital.Security.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Contracts;
 
-namespace VP.Digital.Security.OAuth.UnitTests.CommonTests
+namespace AlwaysMoveForward.OAuth.UnitTests.CommonTests
 {
     [TestFixture]
     public class RealmTests

@@ -7,10 +7,12 @@
     <ProjectGuid>{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VP.Digital.Security.OAuth.UnitTests</RootNamespace>
-    <AssemblyName>VP.Digital.Security.OAuth.UnitTests</AssemblyName>
+    <RootNamespace>AlwaysMoveForward.OAuth.UnitTests</RootNamespace>
+    <AssemblyName>AlwaysMoveForward.OAuth.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,26 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevDefined.OAuth">
-      <HintPath>..\..\..\lib\ThirdParty\DevDefined.OAuth.dll</HintPath>
-    </Reference>
     <Reference Include="Moq">
-      <HintPath>..\..\..\nuget-packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\..\..\lib\NLog.dll</HintPath>
+      <HintPath>..\..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\nuget-packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\..\..\lib\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\..\..\lib\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.ServiceInterface">
-      <HintPath>..\..\..\lib\ServiceStack.ServiceInterface.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -61,12 +48,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VP.Digital.Common">
-      <HintPath>..\..\..\lib\VP.Digital.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VP.Digital.Common.DataLayer.NHibernate">
-      <HintPath>..\..\..\lib\VP.Digital.Common.DataLayer.NHibernate.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLayer\UserServiceTests.cs" />
@@ -81,23 +62,19 @@
     <Compile Include="Constants\TokenConstants.cs" />
     <Compile Include="IntegrationTests\RepositoryTests\ConsumerNonceRepositoryTests.cs" />
     <Compile Include="IntegrationTests\RepositoryTests\ConsumerRepositoryTests.cs" />
-    <Compile Include="IntegrationTests\RepositoryTests\DigitalUserRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\RepositoryTests\UserRepositoryTests.cs" />
     <Compile Include="IntegrationTests\RepositoryTests\LoginAttemptRepositoryTest.cs" />
     <Compile Include="IntegrationTests\RepositoryTests\RepositoryTestBase.cs" />
     <Compile Include="IntegrationTests\RepositoryTests\RequestTokenRepositoryTests.cs" />
-    <Compile Include="Mock\Controllers\MockServiceStackRequestContext.cs" />
     <Compile Include="Mock\MockDevDefinedConsumer.cs" />
     <Compile Include="Mock\MockServiceManagerBuilder.cs" />
     <Compile Include="Mock\Repositories\MockConsumerNonceRepositoryHelper.cs" />
     <Compile Include="Mock\Repositories\MockConsumerRepositoryHelper.cs" />
-    <Compile Include="Mock\Repositories\MockDigitalUserRepositoryHelper.cs" />
+    <Compile Include="Mock\Repositories\MockUserRepositoryHelper.cs" />
     <Compile Include="Mock\Repositories\MockLoginAttemptRepository.cs" />
     <Compile Include="Mock\Repositories\MockRepositoryManager.cs" />
     <Compile Include="Mock\Repositories\MockRequestTokenRepositoryHelper.cs" />
     <Compile Include="OAuth\RequestTokenTests.cs" />
-    <Compile Include="PresentationLayer\ServiceControllers\ControllerTestBase.cs" />
-    <Compile Include="PresentationLayer\ServiceControllers\CreateConsumerControllerTest.cs" />
-    <Compile Include="PresentationLayer\ServiceControllers\GetRequestTokenControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
@@ -106,31 +83,43 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLayer\VP.Digital.Security.OAuth.BusinessLayer.csproj">
+    <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
+      <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.OAuth.BusinessLayer.csproj">
       <Project>{121fb691-35d7-4ad4-980d-0d7d823a6c07}</Project>
-      <Name>VP.Digital.Security.OAuth.BusinessLayer</Name>
+      <Name>AlwaysMoveForward.OAuth.BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\VP.Digital.Security.OAuth.Common.csproj">
+    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
       <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
-      <Name>VP.Digital.Security.OAuth.Common</Name>
+      <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\VP.Digital.Security.OAuth.Contracts.csproj">
+    <ProjectReference Include="..\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
       <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>VP.Digital.Security.OAuth.Contracts</Name>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayer\VP.Digital.Security.OAuth.DataLayer.csproj">
+    <ProjectReference Include="..\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj">
       <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>
-      <Name>VP.Digital.Security.OAuth.DataLayer</Name>
+      <Name>AlwaysMoveForward.OAuth.DataLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServiceComponents\VP.Digital.Security.OAuth.ServiceComponents.csproj">
-      <Project>{460c70c3-30a5-4f79-8f5e-9ed96123ae12}</Project>
-      <Name>VP.Digital.Security.OAuth.ServiceComponents</Name>
+    <ProjectReference Include="..\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj">
+      <Project>{61b700b6-3911-4cef-8751-7f42ca765068}</Project>
+      <Name>DevDefined.OAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mock\Controllers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

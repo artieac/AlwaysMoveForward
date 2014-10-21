@@ -1,9 +1,9 @@
 ﻿using Moq;
 using System.Collections;
 using System.Collections.Generic;
-using VP.Digital.Security.OAuth.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
-namespace VP.Digital.Security.OAuth.UnitTests.Mock.Repositories
+namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
 {
     public class MockRepositoryManager : IRepositoryManager
     {
@@ -55,19 +55,19 @@ namespace VP.Digital.Security.OAuth.UnitTests.Mock.Repositories
             }
         }
 
-        Mock<IDigitalUserRepository> mockDigitalUserRepository;
+        Mock<IAMFUserRepository> mockUserRepository;
 
-        public IDigitalUserRepository DigitalUserRepository
+        public IAMFUserRepository UserRepository
         {
             get
             {
-                if (this.mockDigitalUserRepository == null)
+                if (this.mockUserRepository == null)
                 {
-                    this.mockDigitalUserRepository = new Mock<IDigitalUserRepository>();
-                    MockDigitalUserRepositoryHelper.ConfigureAllMethods(this.mockDigitalUserRepository);
+                    this.mockUserRepository = new Mock<IAMFUserRepository>();
+                    MockUserRepositoryHelper.ConfigureAllMethods(this.mockUserRepository);
                 }
 
-                return this.mockDigitalUserRepository.Object;
+                return this.mockUserRepository.Object;
             }
         }
 

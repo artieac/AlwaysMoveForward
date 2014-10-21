@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         /// </summary>
         /// <param name="userId">The user id to check for</param>
         /// <returns>A list of request tokens</returns>
-        IList<RequestToken> GetByUserId(int userId, DateTime startDate, DateTime endDate);
+        IList<RequestToken> GetByUserId(long userId, DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// Get all of the requst tokens associated with a user name

@@ -144,7 +144,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         /// <param name="startDate">The start of a date range to search for</param>
         /// <param name="endDate">The end of a date range to search for</param>
         /// <returns>A list of request tokens</returns>
-        public IList<RequestToken> GetByUserId(int userId, DateTime startDate, DateTime endDate)
+        public IList<RequestToken> GetByUserId(long userId, DateTime startDate, DateTime endDate)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Restrictions.Eq(DTO.RequestTokenAuthorization.UserIdFieldName, userId));
