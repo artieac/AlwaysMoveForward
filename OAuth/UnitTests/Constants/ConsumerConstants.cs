@@ -23,7 +23,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Constants
         /// <summary>
         /// A default consumer key
         /// </summary>
-        public const string TestConsumerKey = "{9E1E6B09-62EA-40CC-A460-0085CB55C5E0}";
+        public const string TestConsumerKey = "{80a22bea-0bdd-4bee-ad7c-b10c0ae44a3c}";
 
         /// <summary>
         /// A default nonce

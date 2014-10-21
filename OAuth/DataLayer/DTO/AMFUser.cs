@@ -6,7 +6,7 @@ using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
-    [NHibernate.Mapping.Attributes.Class(Table = "User")]
+    [NHibernate.Mapping.Attributes.Class(Table = "AMFUser")]
     public class AMFUser
     {
         /// <summary>
@@ -57,12 +57,6 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
         public virtual string PasswordSalt { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of salt iterations.
-        /// </summary>
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual int SaltIterations { get; set; }
 
         /// <summary>
         /// Gets or sets the hashed password
