@@ -63,6 +63,7 @@
     <Compile Include="INHibernateRepository.cs" />
     <Compile Include="NHibernateRepositoryBase.cs" />
     <Compile Include="ConfigurationProperties.cs" />
+    <Compile Include="NHibernateSessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
