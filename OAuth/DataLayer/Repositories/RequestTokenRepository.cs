@@ -90,7 +90,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
             criteria.Add(Expression.Eq(DTO.RequestToken.TokenFieldName, token));
-            criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Expression.Eq(DTO.RequestTokenAuthorization.VerifierCodeFieldName, verifierCode));
+            criteria.Add(Expression.Eq(DTO.RequestToken.VerifierCodeFieldName, verifierCode));
             return this.GetDataMapper().Map(criteria.UniqueResult<DTO.RequestToken>());
         }
 
@@ -147,7 +147,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         public IList<RequestToken> GetByUserId(long userId, DateTime startDate, DateTime endDate)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
-            criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Restrictions.Eq(DTO.RequestTokenAuthorization.UserIdFieldName, userId));
+            criteria.Add(Restrictions.Eq(DTO.RequestToken.UserIdFieldName, userId));
             criteria.Add(Expression.Between(DTO.RequestToken.DateCreatedFieldName, startDate, endDate)); 
             criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName));
             return this.GetDataMapper().Map(criteria.List<DTO.RequestToken>());
@@ -163,7 +163,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         public IList<RequestToken> GetByUserName(string userName, DateTime startDate, DateTime endDate)
         {
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.RequestToken>();
-            criteria.CreateCriteria(DTO.RequestToken.RequestTokenAuthorizationFieldName).Add(Restrictions.Eq(DTO.RequestTokenAuthorization.UserNameFieldName, userName));
+            criteria.Add(Restrictions.Eq(DTO.RequestToken.UserNameFieldName, userName));
             criteria.Add(Expression.Between(DTO.RequestToken.DateCreatedFieldName, startDate, endDate)); 
             criteria.AddOrder(Order.Desc(DTO.RequestToken.IdFieldName));
             return this.GetDataMapper().Map(criteria.List<DTO.RequestToken>());

@@ -73,6 +73,12 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// The date and time that this access token was granted
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
+        public virtual DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// The date and time that this access token was granted
+        /// </summary>
+        [NHibernate.Mapping.Attributes.Property]
         public virtual DateTime DateGranted { get; set; }
 
         /// <summary>

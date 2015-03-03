@@ -25,7 +25,6 @@ namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
             retVal.Realm = TokenConstants.TestRealm;
             retVal.Token = TokenConstants.TestRequestToken;
             retVal.Secret = TokenConstants.TestRequestTokenSecret;
-            retVal.UsedUp = usedUp;
 
             return retVal;
         }

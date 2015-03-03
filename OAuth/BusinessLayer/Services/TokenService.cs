@@ -59,8 +59,6 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                         throw new OAuthException(requestContext, OAuthProblems.TokenRejected, "The request token has already be consumed.");
                     }
 
-                    foundToken.UsedUp = true;
-
                     this.RequestTokenRepository.Save(foundToken);
                 }
             }
@@ -230,7 +228,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                         retVal = RequestForAccessStatus.Denied;
                     }
 
-                    if (request.RequestTokenAuthorization != null)
+                    if (request.IsAuthorized() == true)
                     {
                         retVal = RequestForAccessStatus.Granted;
                     }
@@ -255,9 +253,9 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (requestToken != null)
                 {
-                    if (requestToken.RequestTokenAuthorization != null)
+                    if (requestToken.IsAuthorized() == true)
                     {
-                        retVal = requestToken.RequestTokenAuthorization.VerifierCode;
+                        retVal = requestToken.VerifierCode;
                     }
                 }
             }
@@ -291,7 +289,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             {
                 RequestToken authorizedRequestToken = this.RequestTokenRepository.GetByTokenAndVerifierCode(requestToken, verifier);
 
-                if (authorizedRequestToken != null && authorizedRequestToken.RequestTokenAuthorization != null && authorizedRequestToken.AccessToken == null)
+                if (authorizedRequestToken != null && authorizedRequestToken.IsAuthorized() == true && authorizedRequestToken.AccessToken == null)
                 {
                     Consumer tokenConsumer = this.ConsumerRepository.GetByConsumerKey(authorizedRequestToken.ConsumerKey);
 
@@ -303,8 +301,8 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                         Realm = authorizedRequestToken.Realm,
                         Token = Guid.NewGuid().ToString(),
                         Secret = Guid.NewGuid().ToString(),
-                        UserName = authorizedRequestToken.RequestTokenAuthorization.UserName,
-                        UserId = authorizedRequestToken.RequestTokenAuthorization.UserId
+                        UserName = authorizedRequestToken.UserName,
+                        UserId = authorizedRequestToken.UserId
                     };
 
                     authorizedRequestToken.AccessToken = newAccessToken;
@@ -423,13 +421,12 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             {
                 retVal = this.RequestTokenRepository.GetByToken(requestToken);
 
-                if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.RequestTokenAuthorization == null)
+                if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.RequestTokenAuthorization = new RequestTokenAuthorization();
-                    retVal.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
-                    retVal.RequestTokenAuthorization.UserName = currentUser.Email;
-                    retVal.RequestTokenAuthorization.UserId = currentUser.Id;
-                    retVal.RequestTokenAuthorization.GenerateVerifierCode();
+                    retVal.DateAuthorized = DateTime.UtcNow;
+                    retVal.UserName = currentUser.Email;
+                    retVal.UserId = currentUser.Id;
+                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
                     retVal.State = TokenState.AccessGranted;
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }
@@ -452,19 +449,18 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             {
                 retVal = this.RequestTokenRepository.GetByToken(requestToken);
 
-                if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.RequestTokenAuthorization == null)
+                if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.RequestTokenAuthorization = new RequestTokenAuthorization();
-                    retVal.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
+                    retVal.DateAuthorized = DateTime.UtcNow;
                     Realm parsedRealm = retVal.Realm;
 
                     if (parsedRealm != null)
                     {
-                        retVal.RequestTokenAuthorization.UserName = parsedRealm.DataName;
-                        retVal.RequestTokenAuthorization.UserId = int.Parse(parsedRealm.DataId);
+                        retVal.UserName = parsedRealm.DataName;
+                        retVal.UserId = int.Parse(parsedRealm.DataId);
                     }
 
-                    retVal.RequestTokenAuthorization.GenerateVerifierCode();
+                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
                     retVal.State = TokenState.AccessGranted;
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }

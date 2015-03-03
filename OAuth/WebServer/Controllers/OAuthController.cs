@@ -195,7 +195,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 
                         if (authorizedRequestToken != null)
                         {
-                            LogManager.GetLogger().Debug(logMessageBase + ":AuthorizedToken:VerifierCode=" + authorizedRequestToken.RequestTokenAuthorization.VerifierCode);
+                            LogManager.GetLogger().Debug(logMessageBase + ":AuthorizedToken:VerifierCode=" + authorizedRequestToken.VerifierCode);
 
                             string callbackUrl = authorizedRequestToken.GenerateCallBackUrl();
 
@@ -207,7 +207,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                             else
                             {
                                 LogManager.GetLogger().Debug(logMessageBase + ":ReturnToCaller");
-                                model.VerifierCode = authorizedRequestToken.RequestTokenAuthorization.VerifierCode;
+                                model.VerifierCode = authorizedRequestToken.VerifierCode;
                                 model.Granted = true;
                                 return this.View(model);
                             }

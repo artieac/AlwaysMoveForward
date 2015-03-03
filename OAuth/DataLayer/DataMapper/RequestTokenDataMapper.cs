@@ -34,19 +34,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DataMapper
                     .ForMember(dest => dest.SessionHandle, opt => opt.Ignore())
                     .ForMember(dest => dest.Secret, opt => opt.MapFrom(src => src.TokenSecret))
                     .ForMember(dest => dest.Realm, opt => opt.MapFrom(src => Realm.Parse(src.Realm)));
-            }
-
-            existingMap = Mapper.FindTypeMapFor<RequestTokenAuthorization, DTO.RequestTokenAuthorization>();
-            if (existingMap == null)
-            {
-                AutoMapper.Mapper.CreateMap<RequestTokenAuthorization, DTO.RequestTokenAuthorization>();
-            }
-
-            existingMap = Mapper.FindTypeMapFor<DTO.RequestTokenAuthorization, RequestTokenAuthorization>();
-            if (existingMap == null)
-            {
-                AutoMapper.Mapper.CreateMap<DTO.RequestTokenAuthorization, RequestTokenAuthorization>();
-            }
+            }            
 
             existingMap = Mapper.FindTypeMapFor<RequestToken, DTO.RequestToken>();
             if (existingMap == null)
@@ -62,7 +50,8 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DataMapper
                 AutoMapper.Mapper.CreateMap<DTO.RequestToken, RequestToken>()
                     .ForMember(dest => dest.SessionHandle, opt => opt.Ignore())
                     .ForMember(dest => dest.Secret, opt => opt.MapFrom(src => src.TokenSecret))
-                    .ForMember(dest => dest.Realm, opt => opt.MapFrom(src => Realm.Parse(src.Realm)));
+                    .ForMember(dest => dest.Realm, opt => opt.MapFrom(src => Realm.Parse(src.Realm)))
+                    .ForMember(dest => dest.UsedUp, opt => opt.Ignore());
             }
 #if DEBUG
             Mapper.AssertConfigurationIsValid();

@@ -20,10 +20,8 @@ namespace AlwaysMoveForward.OAuth.UnitTests.OAuth
             retVal.Token = TokenConstants.TestRequestToken;
             retVal.Secret = TokenConstants.TestRequestTokenSecret;
             retVal.CallbackUrl = "http://localhost/oauth/callback";
-            retVal.UsedUp = usedUp;
-            retVal.RequestTokenAuthorization = new AlwaysMoveForward.OAuth.Common.DomainModel.RequestTokenAuthorization();
-            retVal.RequestTokenAuthorization.GenerateVerifierCode();
-            retVal.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
+            retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
+            retVal.DateAuthorized = DateTime.UtcNow;
 
             return retVal;
         }
@@ -36,7 +34,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.OAuth
             string callbackUrl = testToken.GenerateCallBackUrl();
 
             Assert.IsTrue(callbackUrl.Contains(testToken.Token));
-            Assert.IsTrue(callbackUrl.Contains(testToken.RequestTokenAuthorization.VerifierCode));
+            Assert.IsTrue(callbackUrl.Contains(testToken.VerifierCode));
         }
     }
 }

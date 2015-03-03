@@ -6,7 +6,7 @@ using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
-    [NHibernate.Mapping.Attributes.Class(Table = "AMFUser")]
+    [NHibernate.Mapping.Attributes.Class(Table = "AMFUsers")]
     public class AMFUser
     {
         /// <summary>

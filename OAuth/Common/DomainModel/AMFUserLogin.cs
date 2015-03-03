@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public const int MaxAllowedLoginFailures = 10;
 
-        public const int SaltIterations = 1001;
+        public const int SaltIterations = 1000;
 
         /// <summary>
         /// Defines how long to lock the user out for after failed login attempts

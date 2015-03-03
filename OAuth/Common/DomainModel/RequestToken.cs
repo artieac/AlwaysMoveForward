@@ -39,11 +39,6 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         public String CallbackUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets if the token has been used yet
-        /// </summary>
-        public bool UsedUp { get; set; }
-
-        /// <summary>
         /// Gets or sets the current access state
         /// </summary>
         public TokenState State { get; set; }
@@ -111,16 +106,58 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public virtual DateTime DateCreated { get; set; }
 
+        public bool UsedUp
+        {
+            get
+            {
+                bool retVal = false;
+
+                if(this.IsAuthorized() == true ||
+                   this.ExpirationDate < DateTime.UtcNow)
+                {
+                    retVal = true;
+                }
+
+                return retVal;
+            }
+        }
         /// <summary>
-        /// Gets or sets the authorization information for this request
+        /// Gets or sets the verifier code established during authorization
         /// </summary>
-        public RequestTokenAuthorization RequestTokenAuthorization { get; set; }
+        public string VerifierCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user that authorized this token
+        /// </summary>
+        public long UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the username of the user that authorized this token
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// The date that the request token was authorized
+        /// </summary>
+        public DateTime DateAuthorized { get; set; }
 
         /// <summary>
         /// Gets or sets the Access token associated with this request
         /// </summary>
         public AccessToken AccessToken { get; set; }
 
+        public bool IsAuthorized()
+        {
+            bool retVal = false;
+
+            if(!string.IsNullOrEmpty(VerifierCode) &&
+                DateAuthorized != DateTime.MaxValue)
+            {
+                retVal = true;
+            }
+
+            return retVal;
+        }
         /// <summary>
         /// Generate the full callback url from the elements contained in the class
         /// </summary>
@@ -129,7 +166,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         {
             string retVal = string.Empty;
 
-            if (this.RequestTokenAuthorization != null)
+            if (this.IsAuthorized() == true)
             {
                 if (!string.IsNullOrEmpty(this.CallbackUrl))
                 {
@@ -145,7 +182,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
                     }
 
                     retVal += Constants.TokenParameter + "=" + UriUtility.UrlEncode(this.Token);
-                    retVal += "&" + Constants.VerifierCodeParameter + "=" + UriUtility.UrlEncode(this.RequestTokenAuthorization.VerifierCode);
+                    retVal += "&" + Constants.VerifierCodeParameter + "=" + UriUtility.UrlEncode(this.VerifierCode);
                 }
             }
 

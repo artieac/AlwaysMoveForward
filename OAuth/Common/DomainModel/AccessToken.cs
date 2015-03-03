@@ -18,6 +18,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         public AccessToken()
         {
             this.Id = 0;
+            this.DateCreated = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -59,6 +60,11 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// Gets or sets the access token secret
         /// </summary>
         public string Secret { get; set; }
+
+        /// <summary>
+        /// Gets or sets when this access token was created.
+        /// </summary>
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// Gets or sets the access token secret

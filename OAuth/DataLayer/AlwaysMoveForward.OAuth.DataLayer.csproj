@@ -71,7 +71,6 @@
     <Compile Include="DTO\Consumer.cs" />
     <Compile Include="DTO\AMFUser.cs" />
     <Compile Include="DTO\LoginAttempt.cs" />
-    <Compile Include="DTO\RequestTokenAuthorization.cs" />
     <Compile Include="DTO\RequestToken.cs" />
     <Compile Include="Repositories\ILoginAttemptRepository.cs" />
     <Compile Include="Repositories\LoginAttemptRepository.cs" />

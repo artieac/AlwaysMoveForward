@@ -80,14 +80,13 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                 if (foundItem != null)
                 {
-                    if (foundItem.RequestTokenAuthorization == null)
+                    if (foundItem.IsAuthorized() == false)
                     {
                         Realm targetRealm = foundItem.Realm;
-                        foundItem.RequestTokenAuthorization = new RequestTokenAuthorization();
-                        foundItem.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
-                        foundItem.RequestTokenAuthorization.UserName = targetRealm.DataName;
-                        foundItem.RequestTokenAuthorization.UserId = int.Parse(targetRealm.DataId);
-                        foundItem.RequestTokenAuthorization.VerifierCode = TokenConstants.TestVerifierCode;
+                        foundItem.DateAuthorized = DateTime.UtcNow;
+                        foundItem.UserName = targetRealm.DataName;
+                        foundItem.UserId = int.Parse(targetRealm.DataId);
+                        foundItem.VerifierCode = TokenConstants.TestVerifierCode;
 
                         using (this.UnitOfWork.BeginTransaction())
                         {
@@ -102,8 +101,8 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Token == TokenConstants.TestRequestToken);
-            Assert.IsNotNull(foundItem.RequestTokenAuthorization);
-            Assert.IsTrue(foundItem.RequestTokenAuthorization.VerifierCode == TokenConstants.TestVerifierCode);
+            Assert.IsTrue(foundItem.IsAuthorized());
+            Assert.IsTrue(foundItem.VerifierCode == TokenConstants.TestVerifierCode);
         }
 
         [Test]
@@ -141,11 +140,10 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                 requestToken = this.CreateTestRequestToken(TokenConstants.TestRequestToken, Guid.NewGuid().ToString("N"));
 
                 Realm targetRealm = requestToken.Realm;
-                requestToken.RequestTokenAuthorization = new RequestTokenAuthorization();
-                requestToken.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
-                requestToken.RequestTokenAuthorization.UserName = targetRealm.DataName;
-                requestToken.RequestTokenAuthorization.UserId = int.Parse(targetRealm.DataId);
-                requestToken.RequestTokenAuthorization.VerifierCode = TokenConstants.TestVerifierCode;
+                requestToken.DateAuthorized = DateTime.UtcNow;
+                requestToken.UserName = targetRealm.DataName;
+                requestToken.UserId = int.Parse(targetRealm.DataId);
+                requestToken.VerifierCode = TokenConstants.TestVerifierCode;
 
                 using (this.UnitOfWork.BeginTransaction())
                 {
@@ -170,8 +168,8 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                         Realm = requestToken.Realm,
                         Token = TokenConstants.TestAccessToken,
                         Secret = TokenConstants.TestAccessTokenSecret,
-                        UserName = requestToken.RequestTokenAuthorization.UserName,
-                        UserId = requestToken.RequestTokenAuthorization.UserId
+                        UserName = requestToken.UserName,
+                        UserId = requestToken.UserId
                     };
 
                     requestToken.AccessToken = newAccessToken;
@@ -205,11 +203,10 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                     requestToken = this.CreateTestRequestToken(TokenConstants.TestRequestToken, Guid.NewGuid().ToString("N"));
 
                     Realm targetRealm = requestToken.Realm;
-                    requestToken.RequestTokenAuthorization = new RequestTokenAuthorization();
-                    requestToken.RequestTokenAuthorization.DateAuthorized = DateTime.UtcNow;
-                    requestToken.RequestTokenAuthorization.UserName = targetRealm.DataName;
-                    requestToken.RequestTokenAuthorization.UserId = int.Parse(targetRealm.DataId);
-                    requestToken.RequestTokenAuthorization.VerifierCode = TokenConstants.TestVerifierCode;
+                    requestToken.DateAuthorized = DateTime.UtcNow;
+                    requestToken.UserName = targetRealm.DataName;
+                    requestToken.UserId = int.Parse(targetRealm.DataId);
+                    requestToken.VerifierCode = TokenConstants.TestVerifierCode;
 
                     using (this.UnitOfWork.BeginTransaction())
                     {
@@ -230,8 +227,8 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                         Realm = requestToken.Realm,
                         Token = TokenConstants.TestAccessToken,
                         Secret = TokenConstants.TestAccessTokenSecret,
-                        UserName = requestToken.RequestTokenAuthorization.UserName,
-                        UserId = requestToken.RequestTokenAuthorization.UserId
+                        UserName = requestToken.UserName,
+                        UserId = requestToken.UserId
                     };
 
                     requestToken.AccessToken = newAccessToken;

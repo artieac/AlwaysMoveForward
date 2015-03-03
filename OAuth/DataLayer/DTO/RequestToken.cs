@@ -26,17 +26,27 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// <summary>
         /// Defines the access token field name for creating queries
         /// </summary>
-        public const string AccessTokenFieldName = "AccessToken";
-
-        /// <summary>
-        /// Defines the request token field name for creating queries
-        /// </summary>
-        public const string RequestTokenAuthorizationFieldName = "RequestTokenAuthorization";
+        public const string AccessTokenFieldName = "AccessToken";      
 
         /// <summary>
         /// Defines the request token field name that defines the created date
         /// </summary>
         public const string DateCreatedFieldName = "DateCreated";
+
+        /// <summary>
+        /// A string to represent the verifier code field name for creating queries
+        /// </summary>
+        public const string VerifierCodeFieldName = "VerifierCode";
+
+        /// <summary>
+        /// A string to represent the verifier code field name for creating queries
+        /// </summary>
+        public const string UserIdFieldName = "UserId";
+
+        /// <summary>
+        /// A string to represent the verifier code field name for creating queries
+        /// </summary>
+        public const string UserNameFieldName = "UserName";
 
         /// <summary>
         /// A default constructor for the class
@@ -84,12 +94,6 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         public virtual string CallbackUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets if the token has been used yet
-        /// </summary>
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual bool UsedUp { get; set; }
-
-        /// <summary>
         /// Gets or sets the current access state
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
@@ -108,15 +112,33 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         public virtual DateTime DateCreated { get; set; }
 
         /// <summary>
+        /// Gets or sets the user id that authorized the request
+        /// </summary>
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual long UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the username that authorized the request.
+        /// </summary>
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string UserName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the generated verifier code when authorized.
+        /// </summary>
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string VerifierCode { get; set; }
+
+        /// <summary>
+        /// The date the token was authorized.
+        /// </summary>
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual DateTime DateAuthorized { get; set; }
+
+        /// <summary>
         /// Gets or sets the Access token associated with this request
         /// </summary>
         [NHibernate.Mapping.Attributes.ManyToOne(Cascade = "all", Column = "AccessTokenId", ClassType = typeof(AccessToken), Unique = true)]
         public virtual AccessToken AccessToken { get; set; }
-
-        /// <summary>
-        /// Gets or sets the authorization information for this request
-        /// </summary>
-        [NHibernate.Mapping.Attributes.ManyToOne(Cascade="all", Column = "RequestTokenAuthorizationId", ClassType = typeof(RequestTokenAuthorization), Unique = true)]
-        public virtual RequestTokenAuthorization RequestTokenAuthorization { get; set; }
     }
 }

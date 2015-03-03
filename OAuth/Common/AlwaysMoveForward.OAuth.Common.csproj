@@ -48,7 +48,7 @@
     <Compile Include="DomainModel\LoginAttempt.cs" />
     <Compile Include="DomainModel\RequestToken.cs" />
     <Compile Include="DomainModel\AMFUserLogin.cs" />
-    <Compile Include="DomainModel\RequestTokenAuthorization.cs">
+    <Compile Include="DomainModel\RequestTokenAuthorizer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DomainModel\TokenState.cs" />

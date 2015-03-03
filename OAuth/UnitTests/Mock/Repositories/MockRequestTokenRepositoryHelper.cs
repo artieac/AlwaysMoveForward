@@ -30,9 +30,9 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
             return retVal;
         }
 
-        public static RequestTokenAuthorization GenerateTokenAuthorization(string verifierCode)
+        public static RequestToken AuthorizeRequestToken(RequestToken originalToken, string verifierCode)
         {
-            RequestTokenAuthorization retVal = new RequestTokenAuthorization();
+            RequestToken retVal = originalToken;
             retVal.DateAuthorized = DateTime.Now;
             retVal.UserId = UserConstants.TestUserId;
             retVal.UserName = UserConstants.TestUserName;
@@ -71,14 +71,12 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAuthorization)
                 {
-                    retVal.UsedUp = true;
-                    retVal.RequestTokenAuthorization = MockRequestTokenRepositoryHelper.GenerateTokenAuthorization(verifierCode);
+                    retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
                 }
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAccessToken)
                 {
-                    retVal.UsedUp = true;
-                    retVal.RequestTokenAuthorization = MockRequestTokenRepositoryHelper.GenerateTokenAuthorization(verifierCode);
+                    retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
                     retVal.AccessToken = MockRequestTokenRepositoryHelper.GenerateAccessToken(accessToken);
                 }
             }
@@ -91,10 +89,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
                 retVal.Secret = requestTokenSecret;
                 retVal.CallbackUrl = TokenConstants.TestCallbackUrl;
                 retVal.ExpirationDate = DateTime.UtcNow.AddDays(1);
-                retVal.UsedUp = true;
-                retVal.RequestTokenAuthorization = MockRequestTokenRepositoryHelper.GenerateTokenAuthorization(verifierCode);
-                retVal.UsedUp = true;
-                retVal.RequestTokenAuthorization = MockRequestTokenRepositoryHelper.GenerateTokenAuthorization(verifierCode);
+                retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
                 retVal.AccessToken = MockRequestTokenRepositoryHelper.GenerateAccessToken(tokenValue);
             }
 

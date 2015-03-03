@@ -200,9 +200,9 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                 consumerKey = requestToken.ConsumerKey;
                 oauthToken = requestToken.Token;
 
-                if (requestToken.RequestTokenAuthorization != null)
+                if (requestToken.IsAuthorized() == true)
                 {
-                    verifier = requestToken.RequestTokenAuthorization.VerifierCode;
+                    verifier = requestToken.VerifierCode;
                     callBackUrl = requestToken.GenerateCallBackUrl();
                 }
             }
