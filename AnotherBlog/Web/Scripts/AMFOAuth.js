@@ -3,7 +3,7 @@
     this.isLoggedIn = false;
 
     this.Initialize = function (htmlLoginForm, loggedIn) {
-        this.loginForm = controlTag;
+        this.loginForm = htmlLoginForm;
         this.isLoggedIn = loggedIn;
     };
 
