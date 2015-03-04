@@ -247,6 +247,7 @@
     <Content Include="Scripts\Admin\AdminCommon.js" />
     <Content Include="Scripts\Admin\ManageBlogPosts.js" />
     <Content Include="Scripts\Admin\ManageUsers.js" />
+    <Content Include="Scripts\AMFOAuth.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-wysiwyg.js" />
     <Content Include="Scripts\bootstrap.js" />
