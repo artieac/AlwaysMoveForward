@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.DTO
 {
-    [NHibernate.Mapping.Attributes.Class(Table = "LoginAttempt")]
+    [NHibernate.Mapping.Attributes.Class(Table = "LoginAttempts")]
     public class LoginAttempt
     {
         /// <summary>

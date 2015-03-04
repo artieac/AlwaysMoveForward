@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                 if (this.unitOfWork == null)
                 {
                     DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
-                    this.unitOfWork = new UnitOfWork(databaseConfiguration.ConnectionString);
+                    this.unitOfWork = new UnitOfWork(databaseConfiguration.GetDecryptedConnectionString());
                 }
 
                 return this.unitOfWork;

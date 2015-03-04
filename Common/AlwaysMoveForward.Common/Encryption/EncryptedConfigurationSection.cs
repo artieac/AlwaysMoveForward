@@ -45,7 +45,12 @@ namespace AlwaysMoveForward.Common.Encryption
             /// <summary>
             /// The values were encrytped using RSA with the key valies in an xml file
             /// </summary>
-            RSAXmlKeyFile
+            RSAXmlKeyFile,
+
+            /// <summary>
+            /// Uses internal settings for encryption
+            /// </summary>
+            Internal
         }
 
         /// <summary>
@@ -119,6 +124,10 @@ namespace AlwaysMoveForward.Common.Encryption
                         RSAXmlKeyFileConfiguration rsaxmlKeyFileConfiguration = RSAXmlKeyFileConfiguration.GetInstance();
                         RSAXmlKeyFileManager rsaxmlKeyFileEncryption = new RSAXmlKeyFileManager(rsaxmlKeyFileConfiguration.PublicKeyFile, rsaxmlKeyFileConfiguration.PrivateKeyFile);
                         retVal = rsaxmlKeyFileEncryption.Decrypt(encryptedString);
+                        break;
+                    case EncryptionMethodOptions.Internal:
+                        AESManager internalManager = new AESManager(AESManager.DefaultEncryptionKey, AESManager.DefaultSalt);
+                        retVal = internalManager.Decrypt(encryptedString);
                         break;
                 }
             }

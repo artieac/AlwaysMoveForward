@@ -119,7 +119,6 @@
     <Compile Include="Utilities\PagedList.cs" />
     <Compile Include="Utilities\Pagination.cs" />
     <Compile Include="Utilities\SerializationUtilities.cs" />
-    <Compile Include="Utilities\ServiceRegisterBase.cs" />
     <Compile Include="Utilities\ServiceResponse.cs" />
     <Compile Include="Utilities\Utils.cs" />
   </ItemGroup>

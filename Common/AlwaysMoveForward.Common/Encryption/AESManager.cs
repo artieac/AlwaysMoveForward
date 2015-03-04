@@ -11,20 +11,36 @@ namespace AlwaysMoveForward.Common.Encryption
     /// </summary>
     public class AESManager
     {
+
+        /// <summary>
+        /// The byte size of the salt
+        /// </summary>
+        public const int SaltByteSize = 24;
+
         /// <summary>
         /// Default value for number of times to iterate when generating a key.
         /// </summary>
-        private const int KEY_GENERATION_ITERATION_COUNT = 129;
+        public const int KEY_GENERATION_ITERATION_COUNT = 129;
 
         /// <summary>
         /// The number of bytes to use for the algorithm key
         /// </summary>
-        private const int AlgorithmKeyBytes = 32;
+        public const int AlgorithmKeyBytes = 32;
 
         /// <summary>
         /// The number of bytes to use for the Initialization Vector
         /// </summary>
         private const int AlgorithmInitializationVectorBytes = 16;
+
+        /// <summary>
+        /// A default encryption key value
+        /// </summary>
+        public const string DefaultEncryptionKey = "4ADDEBFF7C3D4F6FA455D1D1285387EC53D29CCDCFED4C56ADD65EB24F3D1C68D4C4D4683EA3436880DFBEF684F5DC51F26875A89AAD49DCB74B1DDFD6A7AF53";
+
+        /// <summary>
+        /// A default salt value
+        /// </summary>
+        public const string DefaultSalt = "36E336FABA034E47B6CEEF9BEF1E0D57";
 
         /// <summary>
         /// AES Encryption Manager constructor
