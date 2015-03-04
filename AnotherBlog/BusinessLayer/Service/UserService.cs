@@ -188,6 +188,32 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
+        public AnotherBlogUser GetAnotherBlogUserFromAMFUser(IOAuthToken accessToken)
+        {
+            AnotherBlogUser retVal = null;
+
+            AlwaysMoveForward.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
+
+            if (amfUser != null)
+            {
+                retVal = this.UserRepository.GetByAMFUserId(amfUser.Id);
+
+                if (retVal == null)
+                {
+                    retVal = new AnotherBlogUser();
+                    retVal.AMFUserId = amfUser.Id;
+                    retVal.FirstName = amfUser.FirstName;
+                    retVal.LastName = amfUser.LastName;
+                }
+
+                retVal.AccessToken = accessToken.Token;
+                retVal.AccessTokenSecret = accessToken.Secret;
+                retVal = this.UserRepository.Save(retVal);
+            }
+
+            return retVal;
+        }
+
         public User GetAMFUserInfo(IOAuthToken oauthToken)
         {
             return this.OAuthRepository.GetUserInfo(oauthToken);

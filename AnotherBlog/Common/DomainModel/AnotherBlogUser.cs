@@ -10,11 +10,12 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
     {
         public AnotherBlogUser()
         {
+            this.Id = -1;
             this.AMFUserId = 0;
         }
 
         public int Id { get; set; }
-        public int AMFUserId { get; set; }
+        public long AMFUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string AccessToken { get; set; }

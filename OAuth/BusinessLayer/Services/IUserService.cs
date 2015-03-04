@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="userId">The id of the user to look for</param>
         /// <returns>The user if one is found</returns>
-        AMFUserLogin GetUserById(int userId);
+        AMFUserLogin GetUserById(long userId);
 
         /// <summary>
         /// Find a user by its email

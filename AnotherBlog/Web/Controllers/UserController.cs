@@ -82,7 +82,15 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             }
         }
 
-        public JsonResult AjaxLogin(string blogSubFolder, string loginAction)
+        private Realm GenerateRealm()
+        {
+            Realm retVal = new Realm();
+            retVal.Area = "AlwaysMoveForward";
+            retVal.Service = "Blog";
+            return retVal;
+        }
+
+        public void AjaxLogin(string blogSubFolder, string loginAction)
         {
             AjaxLoginModel retVal = new AjaxLoginModel();
 
@@ -94,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
 
                 AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
-                IOAuthToken requestToken = oauthClient.GetRequestToken(null, "/User/OAuthCallback");
+                IOAuthToken requestToken = oauthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
 
                 if(requestToken != null)
                 {
@@ -103,15 +111,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
 
                     this.Response.Redirect(authorizationUrl, false);
-                }               
+                } 
             }
             else
             {
                 this.EliminateUserCookie();
                 this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
             }
-
-            return this.Json(retVal);
         }
 
         [CustomAuthorization]
@@ -176,7 +182,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 accessToken = oauthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
 
-                AlwaysMoveForward.Common.DomainModel.User amfUser = this.Services.UserService.GetAMFUserInfo(accessToken);
+                AnotherBlogUser amfUser = this.Services.UserService.GetAnotherBlogUserFromAMFUser(accessToken);
 
                 if (amfUser == null)
                 {               
@@ -186,14 +192,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 }
                 else
                 {
-                    AnotherBlogUser blogUser = new AnotherBlogUser();
-                    blogUser.AccessToken = accessToken.Token;
-                    blogUser.AccessTokenSecret = accessToken.Secret;
-                    blogUser.AMFUserId = amfUser.Id;
-                    blogUser.FirstName = amfUser.FirstName;
-                    blogUser.LastName = amfUser.LastName;
-                    blogUser = this.Services.UserService.Save(blogUser);
-                    this.CurrentPrincipal = new SecurityPrincipal(blogUser, true);
+                    this.CurrentPrincipal = new SecurityPrincipal(amfUser, true);
                     this.EstablishCurrentUserCookie(this.CurrentPrincipal);
                 }
             }

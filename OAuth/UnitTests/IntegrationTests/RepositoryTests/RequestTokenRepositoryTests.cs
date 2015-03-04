@@ -84,8 +84,6 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                     {
                         Realm targetRealm = foundItem.Realm;
                         foundItem.DateAuthorized = DateTime.UtcNow;
-                        foundItem.UserName = targetRealm.DataName;
-                        foundItem.UserId = int.Parse(targetRealm.DataId);
                         foundItem.VerifierCode = TokenConstants.TestVerifierCode;
 
                         using (this.UnitOfWork.BeginTransaction())
@@ -141,8 +139,8 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                 Realm targetRealm = requestToken.Realm;
                 requestToken.DateAuthorized = DateTime.UtcNow;
-                requestToken.UserName = targetRealm.DataName;
-                requestToken.UserId = int.Parse(targetRealm.DataId);
+                requestToken.UserName = UserConstants.TestUserName;
+                requestToken.UserId = UserConstants.TestUserId;
                 requestToken.VerifierCode = TokenConstants.TestVerifierCode;
 
                 using (this.UnitOfWork.BeginTransaction())
@@ -204,8 +202,8 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                     Realm targetRealm = requestToken.Realm;
                     requestToken.DateAuthorized = DateTime.UtcNow;
-                    requestToken.UserName = targetRealm.DataName;
-                    requestToken.UserId = int.Parse(targetRealm.DataId);
+                    requestToken.UserName = UserConstants.TestUserName;
+                    requestToken.UserId = UserConstants.TestUserId;
                     requestToken.VerifierCode = TokenConstants.TestVerifierCode;
 
                     using (this.UnitOfWork.BeginTransaction())

@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Code
         {
             // Get the authentication cookie
             IServiceManager serviceManager = ServiceManagerBuilder.CreateServiceManager();
-            OAuthSecurityPrincipal principal = null;
+            OAuthServerSecurityPrincipal principal = null;
 
             var context = new HttpContextWrapper(HttpContext.Current);
 
@@ -57,7 +57,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Code
 
                 if (validatedToken != null && validatedToken.User != null && validatedToken.OAuthToken != null)
                 {
-                    principal = new OAuthSecurityPrincipal(validatedToken.User, validatedToken.OAuthToken);
+                    principal = new OAuthServerSecurityPrincipal(serviceManager.UserService.GetUserById(validatedToken.User.Id));
                     System.Threading.Thread.CurrentPrincipal = principal;
                     HttpContext.Current.User = principal;
                 }

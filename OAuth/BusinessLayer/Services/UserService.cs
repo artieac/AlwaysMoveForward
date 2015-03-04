@@ -155,7 +155,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="userId">The id of the user to look for</param>
         /// <returns>The user if one is found</returns>
-        public AMFUserLogin GetUserById(int userId)
+        public AMFUserLogin GetUserById(long userId)
         {
             return this.UserRepository.GetById(userId);
         }

@@ -26,6 +26,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.Id = 0;
             this.DateCreated = DateTime.UtcNow;
             this.ExpirationDate = DateTime.UtcNow.AddMinutes(RequestToken.DefaultLifetimeInMinutes);
+            this.DateAuthorized = DateTime.MaxValue;
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             {
                 bool retVal = false;
 
-                if(this.IsAuthorized() == true ||
+                if((this.IsAuthorized() == true  && this.AccessToken != null) ||
                    this.ExpirationDate < DateTime.UtcNow)
                 {
                     retVal = true;
@@ -139,7 +140,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// The date that the request token was authorized
         /// </summary>
-        public DateTime DateAuthorized { get; set; }
+        public DateTime? DateAuthorized { get; set; }
 
         /// <summary>
         /// Gets or sets the Access token associated with this request

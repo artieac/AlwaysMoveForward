@@ -133,7 +133,7 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// The date the token was authorized.
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
-        public virtual DateTime DateAuthorized { get; set; }
+        public virtual DateTime? DateAuthorized { get; set; }
 
         /// <summary>
         /// Gets or sets the Access token associated with this request

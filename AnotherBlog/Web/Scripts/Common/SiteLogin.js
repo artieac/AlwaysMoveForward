@@ -11,7 +11,7 @@
 
     this.SubmitLogin = function () {
         var loginOptions = { success: SiteLogin.ProcessPostLogin };
-        jQuery('#loginForm').ajaxSubmit(loginOptions);
+        jQuery('#loginForm').submit(loginOptions);
     };
 
     this.ProcessPostLogin = function (responseText, statusText) {

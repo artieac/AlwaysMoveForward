@@ -457,7 +457,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                     if (parsedRealm != null)
                     {
                         retVal.UserName = parsedRealm.DataName;
-                        retVal.UserId = int.Parse(parsedRealm.DataId);
+                        retVal.UserId = long.Parse(parsedRealm.DataId);
                     }
 
                     retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
