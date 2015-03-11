@@ -68,7 +68,7 @@ namespace AlwaysMoveForward.Common.Encryption
         /// </summary>
         public EncryptedConfigurationSection()
         { }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether or not it's encrypted
         /// </summary>
@@ -125,11 +125,20 @@ namespace AlwaysMoveForward.Common.Encryption
                         RSAXmlKeyFileManager rsaxmlKeyFileEncryption = new RSAXmlKeyFileManager(rsaxmlKeyFileConfiguration.PublicKeyFile, rsaxmlKeyFileConfiguration.PrivateKeyFile);
                         retVal = rsaxmlKeyFileEncryption.Decrypt(encryptedString);
                         break;
-                    case EncryptionMethodOptions.Internal:
-                        AESManager internalManager = new AESManager(AESManager.DefaultEncryptionKey, AESManager.DefaultSalt);
-                        retVal = internalManager.Decrypt(encryptedString);
-                        break;
                 }
+            }
+
+            return retVal;
+        }
+
+        public string DecryptString(string encryptedString, string decryptionKey, string decryptionSalt)
+        {
+            string retVal = string.Empty;
+
+            if (!string.IsNullOrEmpty(encryptedString))
+            {
+                AESManager internalManager = new AESManager(decryptionKey, decryptionSalt);
+                retVal = internalManager.Decrypt(encryptedString);
             }
 
             return retVal;

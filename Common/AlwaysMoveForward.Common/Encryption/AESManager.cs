@@ -33,16 +33,6 @@ namespace AlwaysMoveForward.Common.Encryption
         private const int AlgorithmInitializationVectorBytes = 16;
 
         /// <summary>
-        /// A default encryption key value
-        /// </summary>
-        public const string DefaultEncryptionKey = "4ADDEBFF7C3D4F6FA455D1D1285387EC53D29CCDCFED4C56ADD65EB24F3D1C68D4C4D4683EA3436880DFBEF684F5DC51F26875A89AAD49DCB74B1DDFD6A7AF53";
-
-        /// <summary>
-        /// A default salt value
-        /// </summary>
-        public const string DefaultSalt = "36E336FABA034E47B6CEEF9BEF1E0D57";
-
-        /// <summary>
         /// AES Encryption Manager constructor
         /// </summary>
         /// <param name="key">the key used to encrypt/decrypt</param>

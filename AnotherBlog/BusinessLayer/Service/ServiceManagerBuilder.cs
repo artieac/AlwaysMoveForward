@@ -13,6 +13,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class ServiceManagerBuilder
     {
+        /// <summary>
+        /// A default encryption key value
+        /// </summary>
+        private const string DefaultEncryptionKey = "4ADDEBFF7C3D4F6FA455D1D1285387EC53D29CCDCFED4C56ADD65EB24F3D1C68D4C4D4683EA3436880DFBEF684F5DC51F26875A89AAD49DCB74B1DDFD6A7AF53";
+
+        /// <summary>
+        /// A default salt value
+        /// </summary>
+        private const string DefaultSalt = "36E336FABA034E47B6CEEF9BEF1E0D57";
+
         public static ServiceManager BuildServiceManager()
         {
             ServiceManagerBuilder serviceManagerBuilder = new ServiceManagerBuilder();
@@ -27,7 +37,18 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public ServiceManager CreateServiceManager()
         {
             DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
-            IUnitOfWork unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString());
+
+            IUnitOfWork unitOfWork = null;
+
+            if(databaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+            {
+                unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt));
+            }
+            else
+            {
+                unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString());
+            }
+
             IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
             return new ServiceManager(unitOfWork, repositoryManager, OAuthKeyConfiguration.GetInstance(), EndpointConfiguration.GetInstance());
         }
