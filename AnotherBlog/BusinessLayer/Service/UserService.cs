@@ -204,6 +204,8 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                     retVal.AMFUserId = amfUser.Id;
                     retVal.FirstName = amfUser.FirstName;
                     retVal.LastName = amfUser.LastName;
+                    retVal.IsSiteAdministrator = false;
+                    retVal.ApprovedCommenter = false;
                 }
 
                 retVal.AccessToken = accessToken.Token;

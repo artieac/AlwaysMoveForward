@@ -46,14 +46,16 @@
         @RenderSection("headerPlugins", false)
         <script src="@Url.Content("~/Scripts/AMFOAuth.js")"></script>
         <script>
-             @if (this.Context.User != null && this.Context.User.Identity.IsAuthenticated == false)
-             {
-                @Html.Raw("AMFOAuth.Initialize('newLoginForm', false)");
-             }
-             else
-             {
-                 @Html.Raw("AMFOAuth.Initialize('newLoginForm', true)");
-             }
+            $(document).ready(function () {
+                @if (this.Context.User != null && this.Context.User.Identity.IsAuthenticated == false)
+                 {
+                    @Html.Raw("AMFOAuth.Initialize('newLoginForm', false);");
+                 }
+                 else
+                 {
+                     @Html.Raw("AMFOAuth.Initialize('newLoginForm', true);");
+                 }
+            });
         </script>
     </head>
     <body>
