@@ -76,7 +76,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
             model.Token = newConsumer.ConsumerKey;
             model.Secret = newConsumer.ConsumerSecret;
 
-            return this.View(model);
+            return this.Content("consumer_key=" + model.Token + "consumer_secret=" + model.Secret);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
             }
             else
             {
-                return this.View(model);
+                return this.Content("oauth_token=" + model.Token + "&oauth_token_secret=" + model.Secret + "&oauth_callback_confirmed=true");
             }
         }
 
@@ -209,7 +209,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                                 LogManager.GetLogger().Debug(logMessageBase + ":ReturnToCaller");
                                 model.VerifierCode = authorizedRequestToken.VerifierCode;
                                 model.Granted = true;
-                                return this.View(model);
+                                return this.Content("oauth_verifier=" + model.VerifierCode  + "&grantedAccess=" + model.Granted);
                             }
                         }
                     }

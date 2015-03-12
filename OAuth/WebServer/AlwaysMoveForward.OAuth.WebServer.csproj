@@ -223,7 +223,6 @@
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\UI\Register.js" />
     <Content Include="Views\User\PasswordHint.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -301,28 +300,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\OAuth\Consumer.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\OAuth\GetRequestToken.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\User\Signin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\GrantAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\OAuth\ExchangeRequestTokenForAccessToken.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\OAuth\GetAccessToken.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\OAuth\OAuthCallback.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\OAuth\AuthorizeConsumer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Error\AccessDenied.cshtml" />
