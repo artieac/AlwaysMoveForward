@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 
@@ -19,13 +20,6 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         IList<AMFUserLogin> GetAll();
 
         /// <summary>
-        /// Update the editable fields for a User
-        /// </summary>
-        /// <param name="userLogin">The source user</param>
-        /// <returns>The updated user</returns>
-        AMFUserLogin Update(AMFUserLogin userLogin);
-
-        /// <summary>
         /// Register a user with the system
         /// </summary>
         /// <param name="userName">The username of the user</param>
@@ -34,6 +28,10 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <param name="lastName">The users last name</param>
         /// <returns>An instance of a user</returns>
         AMFUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName);
+
+        AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole);
+
+        AMFUserLogin Update(long userId, string firstName, string lastName, string password);
 
         /// <summary>
         /// Logon a user by the username and password
@@ -79,5 +77,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         int GetLoginFailureCount(string userName, int maxItemsToCheck);
 
         IList<LoginAttempt> GetLoginHistory(string userName);
+
+        void ResetPassword(string userEmail, EmailConfiguration emailConfig);
     }
 }

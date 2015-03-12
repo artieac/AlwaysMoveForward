@@ -53,14 +53,4 @@
     <div>
         @Html.Partial("_SyndicationControl", String.Empty)
     </div>            
-	<div id="googlePluginSection">
-		@{
-            IDictionary<string, string> googleAdParams= new Dictionary<string, string>();
-            googleAdParams.Add("adClient", "pub-3066200824463272");
-            googleAdParams.Add("adSlot", "5638996162");
-            googleAdParams.Add("adWidth", "120");
-            googleAdParams.Add("adHeight", "600");
-            Html.RenderPartial("../Plugins/GoogleAdControl", (IDictionary<string, string>)googleAdParams);    
-        } 
-	</div>   
 </div>

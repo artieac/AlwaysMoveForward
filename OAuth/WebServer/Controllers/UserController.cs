@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DevDefined.OAuth.Framework;
+using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 using AlwaysMoveForward.Common.Utilities;
@@ -126,7 +127,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                         }
                         else 
                         {
-                            return this.View();
+                            return this.View(user);
                         }
                     }
                 }               
@@ -267,6 +268,45 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
             }
 
             return this.Json(retVal, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ForgotPassword(string oauthToken)
+        {
+            TokenModel model = new TokenModel() { Token = oauthToken };
+            return this.View(model);
+        }
+
+        public ActionResult ResetPassword(string oauthToken, string userEmail, string resetToken)
+        {
+            TokenModel model = new TokenModel() { Token = oauthToken };
+            this.ServiceManager.UserService.ResetPassword(userEmail, EmailConfiguration.GetInstance());
+            return this.View("Signin", new { oauth_token = oauthToken });
+        }
+
+        /// <summary>
+        /// Register a new user with the site
+        /// </summary>
+        /// <param name="registerModel">The incoming parameters used to register the user</param>
+        /// <returns>The Registered user view</returns>
+        public ActionResult Edit(RegisterModel registerModel)
+        {
+            AMFUserLogin registeredUser = null;
+
+            if (registerModel != null)
+            {
+                registeredUser = this.ServiceManager.UserService.Update(registerModel.Id, registerModel.FirstName, registerModel.LastName, registerModel.Password);
+
+                if (registeredUser != null)
+                {
+                    this.SetCurrentUser(registeredUser);
+                }
+
+                return this.View("ProcessSignin", registeredUser);
+            }
+            else
+            {
+                return this.View("Signin");
+            }
         }
     }
 }

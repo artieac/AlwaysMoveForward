@@ -90,34 +90,28 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return retVal;
         }
 
-        public void AjaxLogin(string blogSubFolder, string loginAction)
+        public void Login(string blogSubFolder)
         {
-            AjaxLoginModel retVal = new AjaxLoginModel();
+            EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
+            OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
 
-            if (loginAction == "login")
+            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
+            IOAuthToken requestToken = oauthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
+
+            if(requestToken != null)
             {
-                retVal.ProcessedLogin = true;
+                Session[requestToken.Token] = requestToken;
 
-                EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
-                OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
+                string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
 
-                AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
-                IOAuthToken requestToken = oauthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
+                this.Response.Redirect(authorizationUrl, false);
+            } 
+        }
 
-                if(requestToken != null)
-                {
-                    Session[requestToken.Token] = requestToken;
-
-                    string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
-
-                    this.Response.Redirect(authorizationUrl, false);
-                } 
-            }
-            else
-            {
-                this.EliminateUserCookie();
-                this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
-            }
+        public void Logout()
+        {
+            this.EliminateUserCookie();
+            this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
         }
 
         [CustomAuthorization]

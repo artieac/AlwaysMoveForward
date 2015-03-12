@@ -22,12 +22,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web
     {
         private static SiteInfo siteInfo;
         private static WebSiteConfiguration siteConfig;
-        private static EmailConfiguration emailConfig;
 
         static MvcApplication()
         {
             MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/WebSiteConfiguration");
-            MvcApplication.emailConfig = (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/EmailConfiguration");
         }
 
         public static string Version
@@ -38,11 +36,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web
         public static WebSiteConfiguration WebSiteConfiguration
         {
             get { return MvcApplication.siteConfig; }
-        }
-
-        public static EmailConfiguration EmailConfiguration
-        {
-            get { return MvcApplication.emailConfig; }
         }
 
         public static SiteInfo SiteInfo

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Encryption;
 
 namespace AlwaysMoveForward.OAuth.Common.DomainModel
 {
@@ -49,6 +50,13 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.DateCreated = DateTime.UtcNow;
             this.UserStatus = UserStatus.Active;
             this.Role = OAuthRoles.User;
+        }
+
+        public void UpdatePassword(string unencryptedPassword)
+        {
+            SHA1HashUtility passwordHashUtility = new SHA1HashUtility();
+            this.PasswordHash = passwordHashUtility.HashPassword(unencryptedPassword);
+            this.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
         }
 
         /// <summary>

@@ -45,28 +45,6 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         }
 
         /// <summary>
-        /// Update the editable fields for a User
-        /// </summary>
-        /// <param name="userLogin">The source user</param>
-        /// <returns>The updated user</returns>
-        public AMFUserLogin Update(AMFUserLogin userLogin)
-        {
-            AMFUserLogin targetUser = this.UserRepository.GetById(userLogin.Id);
-
-            if(targetUser != null)
-            {
-                targetUser.FirstName = userLogin.FirstName;
-                targetUser.LastName = userLogin.LastName;
-                targetUser.UserStatus = userLogin.UserStatus;
-                targetUser.Role = userLogin.Role;
-
-                userLogin = this.UserRepository.Save(targetUser);
-            }
-
-            return userLogin;
-        }
-
-        /// <summary>
         /// Register a user with the system
         /// </summary>
         /// <param name="userName">The username of the user</param>
@@ -84,12 +62,52 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             userLogin.FirstName = firstName;
             userLogin.LastName = lastName;
             userLogin.PasswordHint = passwordHint;
-
-            SHA1HashUtility passwordHashUtility = new SHA1HashUtility();
-            userLogin.PasswordHash = passwordHashUtility.HashPassword(password);
-            userLogin.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
+            userLogin.UpdatePassword(password);
 
             retVal = this.UserRepository.Save(userLogin);
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Update the editable fields for a User
+        /// </summary>
+        /// <param name="userLogin">The source user</param>
+        /// <returns>The updated user</returns>       
+        public AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole)
+        {
+            AMFUserLogin retVal = this.UserRepository.GetById(userId);
+
+            if (retVal != null)
+            {
+                retVal.FirstName = firstName;
+                retVal.LastName = lastName;
+                retVal.UserStatus = userStatus;
+                retVal.Role = userRole;
+
+                retVal = this.UserRepository.Save(retVal);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Update the editable fields for a User
+        /// </summary>
+        /// <param name="userLogin">The source user</param>
+        /// <returns>The updated user</returns>       
+        public AMFUserLogin Update(long userId, string firstName, string lastName, string password)
+        {
+            AMFUserLogin retVal = this.UserRepository.GetById(userId);
+
+            if (retVal != null)
+            {
+                retVal.FirstName = firstName;
+                retVal.LastName = lastName;
+                retVal.UpdatePassword(password);
+                
+                retVal = this.UserRepository.Save(retVal);
+            }
 
             return retVal;
         }
@@ -126,28 +144,6 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             }
 
             return retVal;
-        }
-
-        public void SendPassword(string userEmail, EmailConfiguration emailConfig)
-        {
-            AMFUserLogin changePasswordUser = this.UserRepository.GetByEmail(userEmail);
-
-            string emailBody = "A user was not found with that email address.  Please try again.";
-
-            if (changePasswordUser != null)
-            {
-                string newPassword = AMFUserLogin.GenerateNewPassword();
-
-                emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-                SHA1HashUtility passwordHashUtility = new SHA1HashUtility();
-                changePasswordUser.PasswordHash = passwordHashUtility.HashPassword(newPassword);
-                changePasswordUser.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
-
-                this.UserRepository.Save(changePasswordUser);
-            }
-
-            EmailManager emailManager = new EmailManager(emailConfig);
-            emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
         }
 
         /// <summary>
@@ -259,6 +255,30 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         public IList<LoginAttempt> GetLoginHistory(string userName)
         {
             return this.LoginAttemptRepository.GetByUserName(userName);
+        }
+
+        public void ResetPassword(string userEmail, EmailConfiguration emailConfig)
+        {
+            AMFUserLogin targetUser = this.UserRepository.GetByEmail(userEmail);
+
+            string emailBody = "A user was not found with that email address.  Please try again.";
+
+            if (targetUser != null)
+            {
+                if (targetUser != null)
+                {
+                    string newPassword = AMFUserLogin.GenerateNewPassword();
+
+                    emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
+
+                    targetUser.UpdatePassword(newPassword);
+
+                    this.UserRepository.Save(targetUser);
+                }
+
+                EmailManager emailManager = new EmailManager(emailConfig);
+                emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
+            }
         }
     }
 }

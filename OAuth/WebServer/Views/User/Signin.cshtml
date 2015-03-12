@@ -50,17 +50,7 @@
             </form>
         </div>
         <div id="divForgotPassword" class="forgotPasswordSection">
-            <div>
-                <span class="forgotPasswordLabel" id="forgotPasswordLabel">Forgot your password?</span>
-            </div>
-            <div>
-                <form id="showPasswordHintForm" action="/User/PasswordHint" method="post">
-                    <input type="hidden" id="hintEmailAddress" name="emailAddress" />
-                    <button class="btn btn-primary" onclick="javascript:SignIn.ShowPasswordHint();">Show my password hint</button>
-                </form>
-                <div id="passwordHintSection"></div>
-            </div>
-            <a onclick="needToConfirm = false;document.getElementById(&#39;txtEmail&#39;).disabled=false;try {formInteraction(&#39;SignIn&#39;);}catch(e){};" id="btnResetPassword" tabindex="6" href="javascript:__doPostBack(&#39;btnResetPassword&#39;,&#39;&#39;)">Reset my password</a><br />
+            <a id="btnResetPassword" tabindex="6" href="/User/ForgotPassword?oauthToken=@Model.Token" >Forgot your password?</a><br />
         </div>
     </div>
 </div>

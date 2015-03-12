@@ -87,5 +87,8 @@ namespace AlwaysMoveForward.OAuth.DataLayer.DTO
         /// </summary>
         [NHibernate.Mapping.Attributes.Property]
         public virtual int Role { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string ResetToken { get; set; }
     }
 }

@@ -11,6 +11,11 @@ namespace AlwaysMoveForward.OAuth.WebServer.Models
     public class RegisterModel
     {
         /// <summary>
+        /// Gets or sets the user Id
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the user email that will be used for logging in
         /// </summary>
         public string UserEmail { get; set; }

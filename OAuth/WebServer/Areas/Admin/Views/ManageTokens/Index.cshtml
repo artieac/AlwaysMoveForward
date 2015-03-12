@@ -71,9 +71,9 @@
                                 <td>@requestToken.DateCreated</td>
                                 <td>@requestToken.State</td>
 
-                                @if(requestToken.RequestTokenAuthorization != null)
+                                @if(requestToken.DateAuthorized != null)
                                 {
-                                    <td>@requestToken.RequestTokenAuthorization.DateAuthorized</td>
+                                    <td>@requestToken.DateAuthorized</td>
                                 }
                                 else
                                 {

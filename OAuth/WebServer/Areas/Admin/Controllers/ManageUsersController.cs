@@ -49,7 +49,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Areas.Admin.Controllers
             {
                 using (this.ServiceManager.UnitOfWork.BeginTransaction())
                 {
-                    this.ServiceManager.UserService.Update(user);
+                    this.ServiceManager.UserService.Update(user.Id, user.FirstName, user.LastName, user.UserStatus, user.Role);
                     this.ServiceManager.UnitOfWork.EndTransaction(true);
                 }
             }

@@ -107,7 +107,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                 LogManager.GetLogger().Error(e);
             }
 
-            return this.View(model);
+            return this.Content("oauth_token=" + model.Token + "&oauth_token_secret=" + model.Secret + "&oauth_callback_confirmed=true");
         }
 
         /// <summary>
