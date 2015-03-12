@@ -29,8 +29,25 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <returns>An instance of a user</returns>
         AMFUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName);
 
+        /// <summary>
+        /// Update a user with values an admin can change
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="userStatus"></param>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
         AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole);
 
+        /// <summary>
+        /// Update a user with values a regular user can change.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         AMFUserLogin Update(long userId, string firstName, string lastName, string password);
 
         /// <summary>
