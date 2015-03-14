@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{600387A0-6903-47FD-AA6C-9ADF4CFE491E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Web", "AlwaysMoveForward.Web\AlwaysMoveForward.Web.csproj", "{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.Web.NHibernate", "AnotherBlog\Web\AlwaysMoveForward.AnotherBlog.Web.NHibernate.csproj", "{FFD66D18-F9AB-4156-A9D3-93F61120FC57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.BusinessLayer", "AnotherBlog\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj", "{378A5D90-9D1E-4317-8722-3549A4B85507}"
@@ -22,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client.RestSharp", "OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj", "{28E86E9B-61AE-4720-AE00-AEAE7F739971}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevDefined.OAuth", "OAuth\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj", "{61B700B6-3911-4CEF-8751-7F42CA765068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.MainSite", "MainSite\AlwaysMoveForward.MainSite.csproj", "{B3C04866-D9D2-4742-8A38-39404C22076C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +43,6 @@ Global
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|x86.ActiveCfg = Release|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{CFCBB03F-8EF5-4E5D-8B63-AD0A2EA3940D}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFD66D18-F9AB-4156-A9D3-93F61120FC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFD66D18-F9AB-4156-A9D3-93F61120FC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFD66D18-F9AB-4156-A9D3-93F61120FC57}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -133,6 +123,16 @@ Global
 		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B3C04866-D9D2-4742-8A38-39404C22076C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
