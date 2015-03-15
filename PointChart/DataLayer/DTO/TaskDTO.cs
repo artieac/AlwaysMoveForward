@@ -3,32 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Castle.ActiveRecord;
-
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [ActiveRecord("Tasks")]
+    [NHibernate.Mapping.Attributes.Class(Table = "Tasks")]
     public class TaskDTO
     {
-        [PrimaryKey(PrimaryKeyType.Identity, "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public int Id { get; set; }
 
-        [Property("Name")]
+        [NHibernate.Mapping.Attributes.Property]
         public string Name { get; set; }
 
-        [Property("Points")]
+        [NHibernate.Mapping.Attributes.Property]
         public double Points { get; set; }
 
-        [Property("MaxAllowedDaily")]
+        [NHibernate.Mapping.Attributes.Property]
         public int MaxAllowedDaily { get; set; }
 
-        [Property("AdministratorId")]
+        [NHibernate.Mapping.Attributes.Property]
         public int AdministratorId { get; set; }
 
-        [HasAndBelongsToMany(typeof(ChartDTO), ColumnRef = "ChartId", ColumnKey = "TaskId", Table = "ChartTasks")]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "ChartTasks", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "TaskId")]
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(TaskDTO))]
         public IList<ChartDTO> Charts { get; set; }
 
-        [HasMany(typeof(CompletedTaskDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "CompletedTasks", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "TaskId")]
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(CompletedTaskDTO))]
         public IList<CompletedTaskDTO> CompletedTasks { get; set; }
     }
 }

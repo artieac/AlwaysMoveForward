@@ -14,43 +14,43 @@ using System.Linq;
 using System.Web;
 using System.Security.Principal;
 
-using Castle.ActiveRecord;
-
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [ActiveRecord("Users")]
+    [NHibernate.Mapping.Attributes.Class(Table="Users")]
     public class UserDTO 
     {
-        public UserDTO() : base()
+        public UserDTO()
+            : base()
         {
-
+            this.UserId = -1;
         }
 
-        [PrimaryKey(PrimaryKeyType.Identity, "UserId", UnsavedValue = "-1")]
-        public int UserId { get; set; }
+        [NHibernate.Mapping.Attributes.Id(0, Name = "UserId", Type = "Int32", Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
+        public virtual int UserId { get; set; }
 
-        [Property("UserName")]
-        public string UserName { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual bool ApprovedCommenter { get; set; }
 
-        [Property("Password")]
-        public string Password { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual bool IsSiteAdministrator { get; set; }
 
-        [Property("Email")]
-        public string Email { get; set; }
+        [NHibernate.Mapping.Attributes.Property(Type = "StringClob")]
+        public virtual string About { get; set; }
 
-        [Property("ApprovedCommenter")]
-        public bool ApprovedCommenter { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual long AMFUserId { get; set; }
 
-        [Property("IsActive")]
-        public bool IsActive { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string FirstName { get; set; }
 
-        [Property("IsSiteAdministrator")]
-        public bool IsSiteAdministrator { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string LastName { get; set; }
 
-        [Property("About", ColumnType = "StringClob")]
-        public string About { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string AccessToken { get; set; }
 
-        [Property("DisplayName")]
-        public string DisplayName { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string AccessTokenSecret { get; set; }
     }
 }

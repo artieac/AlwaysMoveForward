@@ -12,14 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.DomainModel;
-
-using Castle.ActiveRecord;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [ActiveRecord("DbInfo")]
+    [NHibernate.Mapping.Attributes.Class(Table = "DbInfo")]
     public class DbInfoDTO 
     {
         public DbInfoDTO() : base()
@@ -27,7 +24,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 
         }
 
-        [PrimaryKey("Version", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public int Version { get; set; }
     }
 }

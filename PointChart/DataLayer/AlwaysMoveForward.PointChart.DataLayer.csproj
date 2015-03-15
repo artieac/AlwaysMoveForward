@@ -76,8 +76,6 @@
     <Compile Include="DTO\DbInfoDTO.cs" />
     <Compile Include="DTO\PointEarnerDTO.cs" />
     <Compile Include="DTO\PointsSpentDTO.cs" />
-    <Compile Include="DTO\RoleDTO.cs" />
-    <Compile Include="DTO\SiteInfoDTO.cs" />
     <Compile Include="DTO\TaskDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="IPointChartRepositoryManager.cs" />
@@ -87,8 +85,6 @@
     <Compile Include="Repositories\DbInfoRepository.cs" />
     <Compile Include="Repositories\PointEarnerRepository.cs" />
     <Compile Include="Repositories\PointsSpentRepository.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Repositories\SiteInfoRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="RepositoryManager.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />

@@ -3,41 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Castle.ActiveRecord;
-
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [ActiveRecord("PointEarners")]
+    [NHibernate.Mapping.Attributes.Class(Table = "PointEarners")]
     public class PointEarnerDTO
     {
-        [PrimaryKey(PrimaryKeyType.Identity, "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public int Id { get; set; }
 
-        [Property("AdministratorId")]
+        [NHibernate.Mapping.Attributes.Property]
         public int AdministratorId { get; set; }
 
-        [Property("UserName")]
+        [NHibernate.Mapping.Attributes.Property]
         public string UserName { get; set; }
 
-        [Property("Password")]
+        [NHibernate.Mapping.Attributes.Property]
         public string Password { get; set; }
 
-        [Property("Email")]
+        [NHibernate.Mapping.Attributes.Property]
         public string Email { get; set; }
 
-        [Property("FirstName")]
+        [NHibernate.Mapping.Attributes.Property]
         public string FirstName { get; set; }
 
-        [Property("LastName")]
+        [NHibernate.Mapping.Attributes.Property]
         public string LastName { get; set; }
 
-        [Property("PointsEarned")]
+        [NHibernate.Mapping.Attributes.Property]
         public double PointsEarned { get; set; }
 
-        [HasMany(typeof(ChartDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "Charts", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(ChartDTO))]
         public IList<ChartDTO> Charts { get; set; }
 
-        [HasMany(typeof(PointsSpentDTO), Cascade = ManyRelationCascadeEnum.AllDeleteOrphan, Inverse = true)]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "PointsSpent", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(PointsSpentDTO))]
         public IList<PointsSpentDTO> PointsSpent { get; set; }
     }
 }

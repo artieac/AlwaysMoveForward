@@ -18,7 +18,7 @@ using System.Data;
 
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
+using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
@@ -37,8 +37,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer
         private CompletedTaskRepository completedTaskRepository;
         private TaskRepository taskRepository;
         private IDbInfoRepository databaseInfoRepository;
-        private ISiteInfoRepository siteInfoRepository;
-        private IRoleRepository roleRepository;
         private IUserRepository userRepository;
         private PointEarnerRepository pointEarnerRepository;
         private PointsSpentRepository pointsSpentRepository;
@@ -92,32 +90,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer
                 }
 
                 return this.databaseInfoRepository;
-            }
-        }
-
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (this.roleRepository == null)
-                {
-                    this.roleRepository = new RoleRepository(this.UnitOfWork);
-                }
-
-                return this.roleRepository;
-            }
-        }
-
-        public ISiteInfoRepository SiteInfo
-        {
-            get
-            {
-                if (this.siteInfoRepository == null)
-                {
-                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
-                }
-
-                return this.siteInfoRepository;
             }
         }
 

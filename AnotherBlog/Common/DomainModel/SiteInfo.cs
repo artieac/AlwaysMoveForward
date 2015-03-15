@@ -13,24 +13,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DomainModel;
-
-using Castle.ActiveRecord;
-
-namespace AlwaysMoveForward.PointChart.DataLayer.DTO
+namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
-    [ActiveRecord("Roles")]
-    public class RoleDTO
+    public class SiteInfo 
     {
-        public RoleDTO() : base()
-        {
+        public int SiteId { get; set; }
 
-        }
-
-        [PrimaryKey(PrimaryKeyType.Identity, "RoleId", UnsavedValue = "-1")]
-        public int RoleId { get; set; }
-
-        [Property("Name")]
+        public string About { get; set; }
+ 
         public string Name { get; set; }
+        
+        public string ContactEmail { get; set; }
+        
+        public string DefaultTheme { get; set; }
+        
+        public string SiteAnalyticsId { get; set; }
     }
 }

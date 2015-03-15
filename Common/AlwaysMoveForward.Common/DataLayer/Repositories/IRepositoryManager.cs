@@ -21,6 +21,5 @@ namespace AlwaysMoveForward.Common.DataLayer.Repositories
     public interface IRepositoryManager
     {
         IDbInfoRepository DbInfo { get; }
-        ISiteInfoRepository SiteInfo { get; }
     }
 }

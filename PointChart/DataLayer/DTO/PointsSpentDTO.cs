@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Castle.ActiveRecord;
-
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [ActiveRecord("PointsSpent")]
+    [NHibernate.Mapping.Attributes.Class(Table="PointsSpent")]
     public class PointsSpentDTO
     {
-        [PrimaryKey(PrimaryKeyType.Identity, "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public int Id { get; set; }
 
-        [Property("Description")]
+        [NHibernate.Mapping.Attributes.Property]
         public string Description { get; set; }
 
-        [Property("Amount")]
+        [NHibernate.Mapping.Attributes.Property]
         public double Amount { get; set; }
 
-        [Property("DateSpent")]
+        [NHibernate.Mapping.Attributes.Property]
         public DateTime DateSpent { get; set; }
-
-        [BelongsTo("PointEarnerId", ForeignKey = "PointEarnerId")]
-        public PointEarnerDTO PointEarner { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             IAnotherBlogRepositoryManager repositoryManager, 
             OAuthKeyConfiguration oauthKeyConfiguration,
             EndpointConfiguration oauthEndpoints)
-            : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) 
+            : base(unitOfWork, repositoryManager) 
         {
             this.OAuthKeyConfiguration = oauthKeyConfiguration;
             this.OAuthEndpoints = oauthEndpoints;
@@ -41,6 +41,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public OAuthKeyConfiguration OAuthKeyConfiguration { get; private set; }
 
         public EndpointConfiguration OAuthEndpoints { get; private set; }
+
+        private SiteInfoService siteInfo;
+        public SiteInfoService SiteInfoService
+        {
+            get
+            {
+                if (this.siteInfo == null)
+                {
+                    this.siteInfo = new SiteInfoService(this.UnitOfWork, this.RepositoryManager.SiteInfo);
+                }
+
+                return this.siteInfo;
+            }
+        }
 
         private BlogEntryService blogEntryService;
         public BlogEntryService BlogEntryService

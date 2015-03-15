@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\Repositories\IOAuthRepository.cs" />
+    <Compile Include="DataLayer\Repositories\ISiteInfoRepository.cs" />
     <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
     <Compile Include="DataLayer\Repositories\OAuthRepository.cs" />
     <Compile Include="DomainModel\AnotherBlogUser.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="DataLayer\Map\IComment.cs" />
     <Compile Include="DataLayer\Map\IExtensionConfiguration.cs" />
     <Compile Include="DomainModel\Comment.cs" />
+    <Compile Include="DomainModel\SiteInfo.cs" />
     <Compile Include="DomainModel\Tag.cs" />
     <Compile Include="DomainModel\TagCount.cs" />
     <Compile Include="DataLayer\Map\ITag.cs" />

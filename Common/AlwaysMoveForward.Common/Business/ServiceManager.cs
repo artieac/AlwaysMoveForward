@@ -10,35 +10,14 @@ namespace AlwaysMoveForward.Common.Business
 {
     public class ServiceManager
     {        
-        public ServiceManager(ServiceContext serviceContext)
+        public ServiceManager(IUnitOfWork unitOfWork, IRepositoryManager repositoryManager)
         {
-            this.ServiceContext = serviceContext;
+            this.UnitOfWork = unitOfWork;
+            this.RepositoryManager = repositoryManager;
         }
-
-        public ServiceContext ServiceContext { get; private set; }
         
-        public IRepositoryManager RepositoryManager
-        {
-            get { return this.ServiceContext.RepositoryManager; }
-        }
+        public IRepositoryManager RepositoryManager { get; private set; }
 
-        public IUnitOfWork UnitOfWork 
-        {
-            get { return this.ServiceContext.UnitOfWork; }
-        }
-
-        private SiteInfoService siteInfo;
-        public SiteInfoService SiteInfoService
-        {
-            get
-            {
-                if (this.siteInfo == null)
-                {
-                    this.siteInfo = new SiteInfoService(this.ServiceContext);
-                }
-
-                return this.siteInfo;
-            }
-        }
+        public IUnitOfWork UnitOfWork  { get; private set; }
     }
 }

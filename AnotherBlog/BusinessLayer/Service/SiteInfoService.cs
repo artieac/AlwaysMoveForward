@@ -12,27 +12,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.Common.Business
+namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class SiteInfoService
     {
-        public SiteInfoService(ServiceContext serviceContext)
+        public SiteInfoService(IUnitOfWork unitOfWork, ISiteInfoRepository siteInfoRepository)
         {
-            this.UnitOfWork = serviceContext.UnitOfWork;
-            this.Repositories = serviceContext.RepositoryManager;
+            this.UnitOfWork = unitOfWork;
+            this.SiteInfoRepository = siteInfoRepository;
         }
 
         private IUnitOfWork UnitOfWork { get; set; }
-        protected IRepositoryManager Repositories { get; private set; }
+        protected ISiteInfoRepository SiteInfoRepository { get; private set; }
 
         public SiteInfo GetSiteInfo()
         {
-            return this.Repositories.SiteInfo.GetSiteInfo();
+            return this.SiteInfoRepository.GetSiteInfo();
         }
 
         public SiteInfo Save(string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.Common.Business
             newItem.DefaultTheme = defaultTheme;
             newItem.SiteAnalyticsId = siteAnalyticsId;
 
-            return this.Repositories.SiteInfo.Save(newItem);
+            return this.SiteInfoRepository.Save(newItem);
         }
     }
 }

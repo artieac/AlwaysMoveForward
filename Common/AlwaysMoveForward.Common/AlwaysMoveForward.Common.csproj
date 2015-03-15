@@ -62,9 +62,7 @@
     <Compile Include="Business\ServiceManager.cs" />
     <Compile Include="Business\IServiceManager.cs" />
     <Compile Include="Business\ServiceBase.cs" />
-    <Compile Include="Business\ServiceContext.cs" />
     <Compile Include="Business\ServiceManagerBase.cs" />
-    <Compile Include="Business\SiteInfoService.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="DataLayer\DataMapBase.cs" />
@@ -74,12 +72,10 @@
     <Compile Include="DomainModel\DbInfo.cs" />
     <Compile Include="DomainModel\DataMap\IDbInfo.cs" />
     <Compile Include="DomainModel\DataMap\IRole.cs" />
-    <Compile Include="DomainModel\DataMap\ISiteInfo.cs" />
     <Compile Include="DomainModel\DataMap\IUser.cs" />
     <Compile Include="DomainModel\Poll\PollOption.cs" />
     <Compile Include="DomainModel\Poll\PollQuestion.cs" />
     <Compile Include="DomainModel\Poll\VoterAddress.cs" />
-    <Compile Include="DomainModel\SiteInfo.cs" />
     <Compile Include="DomainModel\User.cs" />
     <Compile Include="Encryption\AESConfiguration.cs" />
     <Compile Include="Encryption\AESEncryptionHashNames.cs" />
@@ -106,9 +102,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataLayer\Repositories\IRepositoryManager.cs" />
-    <Compile Include="DataLayer\Repositories\ISiteInfoRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataLayer\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Constants.cs" />
