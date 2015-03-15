@@ -2,40 +2,49 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.CarouselModel = Model;
+    ViewBag.Page = 0;
 }
 <div class="bodyContent">
-    <div>
-        This is the personal site of Arthur Correa.  
+    <div class="introText">
+        My name is Arthur Correa. I've been a developer, architect, coach, and family man for the past 20 years.
+        I setup this site to share things that I've learned and built for my own use in the hope that someone else will find them interesting or useful.
     </div>
     <div class="spacedColumnContainer">
         <div class="spacedColumn">
-            <div class="textDetail">
-                A blurb about my blog
-            </div>
             <div>
-                <button class="btn btn-circle glyphicon glyphicon-plus">
-
-                </button>
+                <form action="http://blog.alwaysmoveforward.com">
+                    <button class="btn btn-circle glyphicon glyphicon-th-list"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>Blog</h3>
+                <span class="textDetail">Here I blog about anything from Software Architecture to trips to Walt Disney World.</span>
             </div>
         </div>
         <div class="spacedColumn">
-            <div class="textDetail">
-                A blurb about my blog
-            </div>
             <div>
-                <button class="btn btn-circle">
-                    blah
-                </button>
+                <form action="http://pointchart.alwaysmoveforward.com">
+                    <button class="btn btn-circle glyphicon glyphicon-tasks"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>Point Chart</h3>                
+                <span class="textDetail">
+                    A site for setting up Point Charts for children.
+                </span>
             </div>
         </div>
         <div class="spacedColumn">
-            <div class="textDetail">
-                A blurb about my blog
-            </div>
             <div>
-                <button class="btn btn-circle">
-                    blah
-                </button>
+                <form action="/Home/About">
+                    <button class="btn btn-circle glyphicon glyphicon-user"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>About</h3>
+                <span class="textDetail">
+                    Information about me.
+                </span>
             </div>
         </div>
         <span class="stretch"/>

@@ -39,14 +39,15 @@ body
 @metaContentTitleColor: @alternateTitleColor;
 @metaContentBorderColor: @alternateBorderColor;
 
-.stretch { width: 100%; display: inline-block; font-size: 0; line-height: 0;}
+.introText {
+    font-size:medium;
+    color:black;
+}
 
 .spacedColumnContainer {
     text-align: justify;
     -ms-text-justify: distribute-all-lines;
     text-justify: distribute-all-lines;
-    width:80%;
-	margin-left:10%;	
 	padding-top:10px;
 	padding-bottom:10px;
 
@@ -56,23 +57,42 @@ body
         display: inline-block;
         *display: inline;
         zoom: 1;
-        border-style:solid;
-        border-width:thin;
-        border-color:@foreGroundColor;
-        border-radius: 15px;
 	    text-align:center;
 
-        .textDetail
-	    {
-		    width:80%;
-		    font-size:medium;
+        .textSection
+        {
+	        padding-top:10px;
+	        padding-bottom:10px;
             text-align:center;	
-	    }
+            width:150px;
+
+            h3
+            {
+		        font-size:medium;
+                font-weight:bold;
+            }
+
+            .textDetail
+	        {
+		        font-size:small;
+                text-align:center;
+                color:black;	
+	        }
+        }
 
         .btn-circle
         {
-            height:75px;
-            width:75px;
+            font-size:medium;       
+            height:150px;
+            width:150px;
+            background-color:@alternateforeGroundColor;
+            color:@foreGroundColor;
+        }
+
+        .btn-circle:hover, .btn-circle:focus, .btn-circle:active, .btn-circle.active, .open>.dropdown-toggle.btn-circle {
+            color: @alternateforeGroundColor;
+            background-color: @foreGroundColor;
+            border-color: @alternateforeGroundColor; /*set the color you want here*/
         }
     }
     
@@ -128,6 +148,13 @@ body
 		width:30%;
 		text-align:right;
 	}
+}
+
+.aboutContent
+{
+    text-align:left;
+    font-size:small;
+    color:black;
 }
 
 .errorMessage

@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="Models\CarouselModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

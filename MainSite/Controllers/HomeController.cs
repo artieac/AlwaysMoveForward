@@ -10,22 +10,31 @@ namespace AlwaysMoveForward.MainSite.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
+        private const string CarouselImageFolder = "/content/images/Carousel";
 
-        public ActionResult Index()
+        public CarouselModel CreateCarouselModel()
         {
-            CarouselModel model = new CarouselModel();
-            model.CarouselItems = new List<string>();
+            CarouselModel retVal = new CarouselModel();
+            retVal.CarouselItems = new List<string>();
 
-            string[] fileNames = Directory.GetFiles(Server.MapPath("/content/images/Carousel"));
+            string[] fileNames = Directory.GetFiles(Server.MapPath(HomeController.CarouselImageFolder));
 
             for (int i = 0; i < fileNames.Count(); i++ )
             {
-                model.CarouselItems.Add("/content/images/Carousel/" + fileNames[i].Substring(fileNames[i].LastIndexOf("\\") + 1));
+                retVal.CarouselItems.Add(HomeController.CarouselImageFolder + "/" + fileNames[i].Substring(fileNames[i].LastIndexOf("\\") + 1));
             }
 
-            return View(model);
+            return retVal;
+        }
+
+        public ActionResult Index()
+        {
+            return View(this.CreateCarouselModel());
+        }
+
+        public ActionResult About()
+        {
+            return View(this.CreateCarouselModel());
         }
     }
 }
