@@ -25,10 +25,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         protected override PointEarnerDTO GetDTOById(int idSource)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
-            criteria.Add(Expression.Eq("Id", idSource));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<PointEarnerDTO>.FindOne(criteria);
+            return this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+               .Where(r => r.Id == idSource)
+               .OrderByDescending(r => r.Revision)
+               .FirstOrDefault();
         }
 
         protected override DataMapBase<PointEarner, PointEarnerDTO> GetDataMapper()

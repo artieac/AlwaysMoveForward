@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Criterion;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
@@ -26,10 +25,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         protected override CompletedTaskDTO GetDTOById(int idSource)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
-            criteria.Add(Expression.Eq("Id", idSource));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindOne(criteria);
+            return this.UnitOfWork.CurrentSession.Query<CompletedTaskDTO>()
+               .Where(r => r.Id == idSource)
+               .OrderByDescending(r => r.Revision)
+               .FirstOrDefault();
         }
 
         protected override DataMapBase<CompletedTask, CompletedTaskDTO> GetDataMapper()
@@ -39,32 +38,29 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, int administratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
-            criteria.CreateCriteria("Chart")
-                .Add(Expression.Eq("Id", chart.Id))
-                .Add(Expression.Eq("AdministratorId", administratorId));
-            criteria.Add(Expression.Between("DateCompleted", weekStartDate, weekEndDate));
+            IList<ChartDTO> retVal = this.UnitOfWork.CurrentSession.Query<CompletedTaskDTO>()
+                .Where(r => r.Chart.Id == chart.Id && r.AdministratorId == administratorId && r.DateCompleted > weekStartDate && r.DateCompleted < weekEndDate)
+                .ToList();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
 
         public IList<CompletedTask> GetByChart(Chart chart, int administratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
-            criteria.CreateCriteria("Chart").Add(Expression.Eq("Id", chart.Id));
+            IList<ChartDTO> retVal = this.UnitOfWork.CurrentSession.Query<CompletedTaskDTO>()
+                .Where(r => r.Chart.Id == chart.Id && r.AdministratorId == administratorId)
+                .ToList();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
         
         public CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted, int administratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<CompletedTaskDTO>();
-            criteria.CreateCriteria("Chart").Add(Expression.Eq("Id", chart.Id));
-            criteria.CreateCriteria("Task").Add(Expression.Eq("Id", task.Id));
-            criteria.Add(Expression.Eq("DateCompleted", dateCompleted));
-            criteria.Add(Expression.Eq("AdministratorId", administratorId));
+            ChartDTO retVal = this.UnitOfWork.CurrentSession.Query<CompletedTaskDTO>()
+                .Where(r => r.Chart.Id == chart.Id && r.AdministratorId == administratorId && r.Task.Id == task.Id && r.DateCompleted.Date == dateCompleted.Date)
+                .FirstOrDefault();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<CompletedTaskDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
     }
 }

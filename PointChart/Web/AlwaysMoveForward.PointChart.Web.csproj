@@ -651,7 +651,7 @@
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AlwaysMoveForward.PointChart.Common\AlwaysMoveForward.PointChart.Common.csproj">
+    <ProjectReference Include="..\Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>
       <Name>AlwaysMoveForward.PointChart.Common</Name>
     </ProjectReference>
