@@ -59,10 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\PollService.cs" />
-    <Compile Include="Business\ServiceManager.cs" />
-    <Compile Include="Business\IServiceManager.cs" />
-    <Compile Include="Business\ServiceBase.cs" />
-    <Compile Include="Business\ServiceManagerBase.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="DataLayer\DataMapBase.cs" />
@@ -76,6 +72,7 @@
     <Compile Include="DomainModel\Poll\PollOption.cs" />
     <Compile Include="DomainModel\Poll\PollQuestion.cs" />
     <Compile Include="DomainModel\Poll\VoterAddress.cs" />
+    <Compile Include="DomainModel\RemoteOAuthUser.cs" />
     <Compile Include="DomainModel\User.cs" />
     <Compile Include="Encryption\AESConfiguration.cs" />
     <Compile Include="Encryption\AESEncryptionHashNames.cs" />
@@ -101,7 +98,6 @@
     <Compile Include="DataLayer\Repositories\IDbInfoRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataLayer\Repositories\IRepositoryManager.cs" />
     <Compile Include="DataLayer\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Constants.cs" />

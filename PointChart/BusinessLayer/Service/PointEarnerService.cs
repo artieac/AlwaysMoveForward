@@ -14,34 +14,29 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class PointEarnerService : PointChartService
     {
-        public interface IDependencies
+        public PointEarnerService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
+
+        public IList<PointEarner> GetAll(PointChartUser currentUser)
         {
-            IUnitOfWork UnitOfWork { get; }
+            return this.PointChartRepositories.PointEarner.GetAllByAdministratorId(currentUser.Id);
         }
 
-        public PointEarnerService(IDependencies dependencies, IPointChartRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
-
-        public IList<PointEarner> GetAll(User currentUser)
-        {
-            return this.PointChartRepositories.PointEarner.GetAllByAdministratorId(currentUser.UserId);
-        }
-
-        public PointEarner GetById(int pointEarnerId)
+        public PointEarner GetById(long pointEarnerId)
         {
             return this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
         }
 
-        public PointEarner AddOrUpdate(string firstName, string lastName, string email, User currentUser)
+        public PointEarner AddOrUpdate(string firstName, string lastName, string email, PointChartUser currentUser)
         {
             PointEarner retVal = null;
             
             if (email == null)
             {
-                retVal = this.PointChartRepositories.PointEarner.GetByFirstNameLastName(firstName, lastName, currentUser.UserId);
+                retVal = this.PointChartRepositories.PointEarner.GetByFirstNameLastName(firstName, lastName, currentUser.Id);
             }
             else
             {
-                retVal = this.PointChartRepositories.PointEarner.GetByEmail(email, currentUser.UserId);
+                retVal = this.PointChartRepositories.PointEarner.GetByEmail(email, currentUser.Id);
             }
 
             if (retVal == null)
@@ -86,7 +81,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public PointEarner DeleteSpentPoints(int pointEarnerId, int spentPointsId)
+        public PointEarner DeleteSpentPoints(long pointEarnerId, int spentPointsId)
         {
             PointEarner retVal = this.GetById(pointEarnerId);
 

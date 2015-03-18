@@ -8,9 +8,9 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
     [NHibernate.Mapping.Attributes.Class(Table="PointsSpent")]
     public class PointsSpentDTO
     {
-        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public string Description { get; set; }
@@ -20,5 +20,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 
         [NHibernate.Mapping.Attributes.Property]
         public DateTime DateSpent { get; set; }
+
+        [NHibernate.Mapping.Attributes.ManyToOne(Name = "PointEarner", Class = "PointEarnerDTO", ClassType = typeof(PointEarnerDTO), Column = "PointEarnerId")]
+        public virtual PointEarnerDTO Chart { get; set; }
     }
 }

@@ -15,8 +15,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 
@@ -36,14 +36,14 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 
             if (authCookie != null)
             {
-                if (!string.IsNullOrEmpty(authCookie.Value))
+                if (authCookie.Value != string.Empty)
                 {
                     // Get the authentication ticket 
                     // and rebuild the principal & identity
                     FormsAuthenticationTicket authTicket =
                     FormsAuthentication.Decrypt(authCookie.Value);
 
-                    AlwaysMoveForward.Common.DomainModel.User currentUser = serviceManager.UserService.GetByUserName(authTicket.Name);
+                    PointChartUser currentUser = serviceManager.UserService.GetById(int.Parse(authTicket.Name));
 
                     if (currentUser == null)
                     {

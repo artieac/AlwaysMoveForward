@@ -8,12 +8,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
     [NHibernate.Mapping.Attributes.Class(Table = "PointEarners")]
     public class PointEarnerDTO
     {
-        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Type = "Int32", Column = "Id", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public int AdministratorId { get; set; }
+        public long AdministratorId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public string UserName { get; set; }

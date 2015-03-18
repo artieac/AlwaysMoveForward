@@ -131,7 +131,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {            
+        {
             StringBuilder realmStringBuilder = new StringBuilder();
 
             realmStringBuilder.Append(UrnPrefix);
@@ -157,7 +157,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
             }
 
             realmStringBuilder.Append(ElementSeparator);
-            
+
             if (string.IsNullOrEmpty(this.DataId))
             {
                 realmStringBuilder.Append(string.Empty);
@@ -168,7 +168,7 @@ namespace AlwaysMoveForward.OAuth.Contracts
             }
 
             realmStringBuilder.Append(ElementSeparator);
-            
+
             if (string.IsNullOrEmpty(this.DataName))
             {
                 realmStringBuilder.Append(string.Empty);

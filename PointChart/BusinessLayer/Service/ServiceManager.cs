@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
@@ -21,14 +20,30 @@ using CommonBusiness = AlwaysMoveForward.Common.Business;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
-    public class ServiceManager : CommonBusiness.ServiceManager, ChartService.IDependencies, PointEarnerService.IDependencies, TaskService.IDependencies
+    public class ServiceManager
     {
-        public ServiceManager(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager))
+        public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) 
         {
+            this.UnitOfWork = unitOfWork;
             this.PointChartRepositoryManager = repositoryManager;
         }
 
+        public UnitOfWork UnitOfWork { get; set; }
         public IPointChartRepositoryManager PointChartRepositoryManager { get; set; }
+
+        private UserService userService;
+        public UserService UserService
+        {
+            get
+            {
+                if (this.userService == null)
+                {
+                    this.userService = new UserService(this.UnitOfWork, this.PointChartRepositoryManager.UserRepository);
+                }
+
+                return this.userService;
+            }
+        }
 
         private ChartService chartService;
         public ChartService Charts
@@ -37,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (this.chartService == null)
                 {
-                    this.chartService = new ChartService(this, this.PointChartRepositoryManager);
+                    this.chartService = new ChartService(this.UnitOfWork, this.PointChartRepositoryManager);
                 }
 
                 return this.chartService;
@@ -51,7 +66,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (this.taskService == null)
                 {
-                    this.taskService = new TaskService(this, this.PointChartRepositoryManager);
+                    this.taskService = new TaskService(this.UnitOfWork, this.PointChartRepositoryManager);
                 }
 
                 return this.taskService;
@@ -65,7 +80,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (this.pointEarnerService == null)
                 {
-                    this.pointEarnerService = new PointEarnerService(this, this.PointChartRepositoryManager);
+                    this.pointEarnerService = new PointEarnerService(this.UnitOfWork, this.PointChartRepositoryManager);
                 }
 
                 return this.pointEarnerService;

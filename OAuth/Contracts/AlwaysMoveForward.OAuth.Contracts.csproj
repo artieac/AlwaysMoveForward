@@ -43,6 +43,8 @@
     <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\OAuthEndpoints.cs" />
     <Compile Include="Configuration\OAuthKeyConfiguration.cs" />
+    <Compile Include="Repositories\IOAuthRepository.cs" />
+    <Compile Include="TokenVerification.cs" />
     <Compile Include="Configuration\WhiteListConfiguration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DefaultOAuthToken.cs" />
@@ -53,7 +55,6 @@
     <Compile Include="OAuthSecurityPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realm.cs" />
-    <Compile Include="TokenVerification.cs" />
     <Compile Include="UserTransferManager.cs" />
   </ItemGroup>
   <ItemGroup>

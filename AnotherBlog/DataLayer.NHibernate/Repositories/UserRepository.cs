@@ -67,10 +67,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetDataMapper().Map(criteria.List<UserDTO>());
         }
 
-        public AnotherBlogUser GetByAMFUserId(long userId)
+        public AnotherBlogUser GetByOAuthServiceUserId(long userId)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
-            criteria.Add(Expression.Eq("AMFUserId", userId));
+            criteria.Add(Expression.Eq("OAuthServiceUserId", userId));
             return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
         }
     }

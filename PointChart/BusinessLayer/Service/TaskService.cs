@@ -14,12 +14,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class TaskService : PointChartService
     {
-        public interface IDependencies
-        {
-            IUnitOfWork UnitOfWork { get; }
-        }
-
-        public TaskService(IDependencies dependencies, IPointChartRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+        public TaskService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
 
         public IList<Task> GetByUser(User currentUser)
         {
@@ -27,7 +22,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (currentUser != null)
             {
-                retVal = this.PointChartRepositories.Tasks.GetByUserId(currentUser.UserId);
+                retVal = this.PointChartRepositories.Tasks.GetByUserId(currentUser.Id);
             }
 
             return retVal;
@@ -43,7 +38,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 retVal.Name = taskName;
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
-                retVal.AdministratorId = currentUser.UserId;
+                retVal.AdministratorId = currentUser.Id;
                 retVal = this.PointChartRepositories.Tasks.Save(retVal);
             }
 
@@ -59,7 +54,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 retVal.Name = taskName;
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
-                retVal.AdministratorId = currentUser.UserId;
+                retVal.AdministratorId = currentUser.Id;
                 retVal = this.PointChartRepositories.Tasks.Save(retVal);
             }
 
@@ -68,7 +63,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, User administrator)
         {
-            return this.PointChartRepositories.CompletedTask.GetCompletedByDateRangeAndChart(weekStartDate, weekEndDate, chart, administrator.UserId);
+            return this.PointChartRepositories.CompletedTask.GetCompletedByDateRangeAndChart(weekStartDate, weekEndDate, chart, administrator.Id);
         }
 
         public Task GetById(int id)

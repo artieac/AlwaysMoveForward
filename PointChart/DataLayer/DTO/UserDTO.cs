@@ -25,12 +25,9 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
             this.UserId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name = "UserId", Type = "Int32", Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int UserId { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual bool ApprovedCommenter { get; set; }
+        public virtual long UserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool IsSiteAdministrator { get; set; }
@@ -39,7 +36,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual long AMFUserId { get; set; }
+        public virtual long OAuthServiceUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string FirstName { get; set; }

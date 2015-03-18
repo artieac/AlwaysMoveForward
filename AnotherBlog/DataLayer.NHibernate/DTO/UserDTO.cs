@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual long AMFUserId { get; set; }
+        public virtual long OAuthServiceUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string FirstName { get; set; }

@@ -19,8 +19,9 @@ using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IAnotherBlogRepositoryManager : IRepositoryManager
+    public interface IAnotherBlogRepositoryManager
     {
+        IDbInfoRepository DbInfo { get; }
         ISiteInfoRepository SiteInfo { get; }
         IBlogEntryRepository BlogEntries { get; }
         IBlogRepository Blogs { get; }

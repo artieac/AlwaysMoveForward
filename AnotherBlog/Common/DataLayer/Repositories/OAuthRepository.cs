@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Contracts;
 using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Contracts.Repositories;
 
 namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {

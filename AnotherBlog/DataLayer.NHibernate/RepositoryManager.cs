@@ -28,7 +28,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
-    public class RepositoryManager : IAnotherBlogRepositoryManager, IRepositoryManager
+    public class RepositoryManager : IAnotherBlogRepositoryManager
     {
         public RepositoryManager(UnitOfWork unitOfWork)
         {

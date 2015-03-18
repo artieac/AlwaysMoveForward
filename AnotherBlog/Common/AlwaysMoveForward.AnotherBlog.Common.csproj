@@ -67,7 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\Repositories\IOAuthRepository.cs" />
     <Compile Include="DataLayer\Repositories\ISiteInfoRepository.cs" />
     <Compile Include="DataLayer\Repositories\IUserRepository.cs" />
     <Compile Include="DataLayer\Repositories\OAuthRepository.cs" />

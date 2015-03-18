@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
@@ -10,7 +10,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointEarnerRepository : NHibernateRepository<PointEarner, PointEarnerDTO, int>
+    public class PointEarnerRepository : NHibernateRepository<PointEarner, PointEarnerDTO, long>
     {
         public PointEarnerRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -23,44 +23,43 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override PointEarnerDTO GetDTOById(int idSource)
+        protected override PointEarnerDTO GetDTOById(long idSource)
         {
             return this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
                .Where(r => r.Id == idSource)
-               .OrderByDescending(r => r.Revision)
                .FirstOrDefault();
         }
 
         protected override DataMapBase<PointEarner, PointEarnerDTO> GetDataMapper()
         {
-            return DataMapper.DataMapManager.Mappers().PointEarner;
+            return new DataMapper.PointEarnerDataMap();
         }
 
-        public PointEarner GetByEmail(string email, int administratorId)
+        public PointEarner GetByEmail(string email, long administratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
-            criteria.Add(Expression.Eq("Email", email));
-            criteria.Add(Expression.Eq("AdministratorId", administratorId));
+            PointEarnerDTO retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+                .Where(r => r.Email == email && r.AdministratorId == administratorId)
+                .FirstOrDefault();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<PointEarnerDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
 
-        public PointEarner GetByFirstNameLastName(string firstName, string lastName, int administratorId)
+        public PointEarner GetByFirstNameLastName(string firstName, string lastName, long administratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
-            criteria.Add(Expression.Eq("FirstName", firstName));
-            criteria.Add(Expression.Eq("LastName", lastName));
-            criteria.Add(Expression.Eq("AdministratorId", administratorId));
+            PointEarnerDTO retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+                .Where(r => r.FirstName == firstName && r.LastName == lastName && r.AdministratorId == administratorId)
+                .FirstOrDefault();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<PointEarnerDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
 
-        public IList<PointEarner> GetAllByAdministratorId(int adminstratorId)
+        public IList<PointEarner> GetAllByAdministratorId(long adminstratorId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<PointEarnerDTO>();
-            criteria.Add(Expression.Eq("AdministratorId", adminstratorId));
+            IList<PointEarnerDTO> retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+                .Where(r => r.AdministratorId == adminstratorId)
+                .ToList();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<PointEarnerDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
     }
 }

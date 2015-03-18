@@ -27,12 +27,12 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets the identifier for the point earner
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets and sets the identifier for the administrator of the point earner
         /// </summary>
-        public int AdministratorId { get; set; }
+        public long AdministratorId { get; set; }
 
         /// <summary>
         /// Gets and sets the point earners user name

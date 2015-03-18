@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets the identifier for the instance
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets and sets the date the points were spent on

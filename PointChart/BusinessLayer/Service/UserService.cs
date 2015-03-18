@@ -24,18 +24,18 @@ using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Contracts;
 using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.OAuth.Contracts.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
+using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class UserService
     {
         private const string GuestUserName = "guest";
-        private static AnotherBlogUser guestUser = null;
+        private static PointChartUser guestUser = null;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IOAuthRepository oauthRepository) : base()
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IOAuthRepository oauthRepository)
+            : base()
         {
             this.UnitOfWork = unitOfWork;
             this.UserRepository = userRepository;
@@ -48,9 +48,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected IOAuthRepository OAuthRepository { get; private set; }
 
-        public AnotherBlogUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
+        public PointChartUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
-            AnotherBlogUser userToSave = null;
+            PointChartUser userToSave = null;
 
             if (userId != 0)
             {
@@ -59,11 +59,10 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (userToSave == null)
             {
-                userToSave = new AnotherBlogUser();
+                userToSave = new PointChartUser();
             }
 
             userToSave.IsSiteAdministrator = isSiteAdmin;
-            userToSave.ApprovedCommenter = isApprovedCommenter;
 
             if (userAbout != null)
             {
@@ -77,9 +76,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.Save(userToSave);
         }
 
-        public AnotherBlogUser Save(AnotherBlogUser user)
+        public PointChartUser Save(PointChartUser user)
         {
-            if(user != null)
+            if (user != null)
             {
                 user = this.UserRepository.Save(user);
             }
@@ -88,7 +87,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         }
         public void Delete(int userId)
         {
-            AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
+            PointChartUser targetUser = this.UserRepository.GetById(userId);
 
             using (this.UnitOfWork.BeginTransaction())
             {
@@ -100,12 +99,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        public AnotherBlogUser GetDefaultUser()
+        public PointChartUser GetDefaultUser()
         {
             if (UserService.guestUser == null)
             {
-                UserService.guestUser = new AnotherBlogUser();
-                guestUser.ApprovedCommenter = false;
+                UserService.guestUser = new PointChartUser();
                 guestUser.IsSiteAdministrator = false;
                 guestUser.Roles = new Dictionary<int, RoleType.Id>();
             }
@@ -113,80 +111,19 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return UserService.guestUser;
         }
 
-        public IList<AnotherBlogUser> GetAll()
+        public IList<PointChartUser> GetAll()
         {
             return this.UserRepository.GetAll();
         }
 
-        public AnotherBlogUser GetById(int userId)
+        public PointChartUser GetById(int userId)
         {
             return this.UserRepository.GetById(userId);
-        }      
-
-        public IList<AnotherBlogUser> GetBlogWriters(Blog targetBlog)
-        {
-            return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
 
-        public AnotherBlogUser AddBlogRole(int userId, int blogId, RoleType.Id roleId)
+        public PointChartUser GetAnotherBlogUserFromAMFUser(IOAuthToken accessToken)
         {
-            AnotherBlogUser retVal = null;
-
-            using (this.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = this.UserRepository.GetById(userId);
-
-                    if (retVal != null)
-                    {
-                        retVal.AddRole(blogId, roleId);
-                    }
-
-                    retVal = this.UserRepository.Save(retVal);
-                    this.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.UnitOfWork.EndTransaction(false);
-                }
-            }
-
-            return retVal;
-        }
-
-        public AnotherBlogUser RemoveBlogRole(int userId, int blogId)
-        {
-            AnotherBlogUser retVal = null;
-
-            using (this.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = this.UserRepository.GetById(userId);
-
-                    if (retVal != null)
-                    {
-                        retVal.RemoveRole(blogId);
-                    }
-
-                    retVal = this.UserRepository.Save(retVal);
-                    this.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.UnitOfWork.EndTransaction(false);
-                }
-            }
-
-            return retVal;
-        }
-
-        public AnotherBlogUser GetAnotherBlogUserFromAMFUser(IOAuthToken accessToken)
-        {
-            AnotherBlogUser retVal = null;
+            PointChartUser retVal = null;
 
             AlwaysMoveForward.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
 
@@ -196,12 +133,11 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 if (retVal == null)
                 {
-                    retVal = new AnotherBlogUser();
+                    retVal = new PointChartUser();
                     retVal.OAuthServiceUserId = amfUser.Id;
                     retVal.FirstName = amfUser.FirstName;
                     retVal.LastName = amfUser.LastName;
                     retVal.IsSiteAdministrator = false;
-                    retVal.ApprovedCommenter = false;
                 }
 
                 retVal.AccessToken = accessToken.Token;

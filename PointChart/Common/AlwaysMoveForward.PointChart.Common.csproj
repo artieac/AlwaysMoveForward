@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DomainModel\Chart.cs" />
     <Compile Include="DomainModel\CompletedTask.cs" />
+    <Compile Include="DomainModel\PointChartUser.cs" />
     <Compile Include="DomainModel\PointEarner.cs" />
     <Compile Include="DomainModel\PointsSpent.cs" />
     <Compile Include="DomainModel\RoleType.cs" />
@@ -52,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

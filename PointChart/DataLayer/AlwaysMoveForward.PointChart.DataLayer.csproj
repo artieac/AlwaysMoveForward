@@ -67,7 +67,7 @@
     <Compile Include="DataMapper\AutoMapperConfiguration.cs" />
     <Compile Include="DataMapper\ChartDataMap.cs" />
     <Compile Include="DataMapper\CompletedTaskDataMap.cs" />
-    <Compile Include="DataMapper\DataMapManager.cs" />
+    <Compile Include="DataMapper\PointChartUserDataMap.cs" />
     <Compile Include="DataMapper\PointEarnerDataMap.cs" />
     <Compile Include="DataMapper\PointsSpentDataMap.cs" />
     <Compile Include="DataMapper\TaskDataMap.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ChartRepository.cs" />
     <Compile Include="Repositories\CompletedTaskRepository.cs" />
+    <Compile Include="Repositories\IChartRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\PointEarnerRepository.cs" />
     <Compile Include="Repositories\PointsSpentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

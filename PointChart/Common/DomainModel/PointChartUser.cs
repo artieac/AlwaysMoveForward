@@ -4,24 +4,22 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
+namespace AlwaysMoveForward.PointChart.Common.DomainModel
 {
-    public class AnotherBlogUser : RemoteOAuthUser
+    public class PointChartUser : RemoteOAuthUser
     {
-        public AnotherBlogUser() : base()
+        public PointChartUser() : base()
         {
 
         }
 
-        public bool ApprovedCommenter { get; set; }
         public bool IsSiteAdministrator { get; set; }
-        public string About { get; set; }
 
         public IDictionary<int, RoleType.Id> Roles { get; set; }
 
         public void AddRole(int blogId, RoleType.Id roleId)
         {
-            if(this.Roles == null)
+            if (this.Roles == null)
             {
                 this.Roles = new Dictionary<int, RoleType.Id>();
             }

@@ -5,7 +5,7 @@ using System.Text;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Contracts;
 
-namespace AlwaysMoveForward.Common.DataLayer.Repositories
+namespace AlwaysMoveForward.OAuth.Contracts.Repositories
 {
     public interface IOAuthRepository
     {

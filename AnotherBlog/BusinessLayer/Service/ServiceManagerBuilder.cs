@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
 
-            IUnitOfWork unitOfWork = null;
+            UnitOfWork unitOfWork = null;
 
             if(databaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
             {
@@ -53,7 +53,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return new ServiceManager(unitOfWork, repositoryManager, OAuthKeyConfiguration.GetInstance(), EndpointConfiguration.GetInstance());
         }
 
-        protected virtual IUnitOfWork CreateUnitOfWork(string connectionString)
+        protected virtual UnitOfWork CreateUnitOfWork(string connectionString)
         {
             return new UnitOfWork(connectionString);
         }

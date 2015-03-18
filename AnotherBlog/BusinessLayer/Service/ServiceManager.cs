@@ -13,30 +13,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using CommonBusiness = AlwaysMoveForward.Common.Business;
+using AlwaysMoveForward.AnotherBlog.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
-    public class ServiceManager : CommonBusiness.ServiceManager
+    public class ServiceManager
     {
-        public new IAnotherBlogRepositoryManager RepositoryManager { get { return base.RepositoryManager as IAnotherBlogRepositoryManager; } }
-
         public ServiceManager(
-            IUnitOfWork unitOfWork, 
+            UnitOfWork unitOfWork, 
             IAnotherBlogRepositoryManager repositoryManager, 
             OAuthKeyConfiguration oauthKeyConfiguration,
             EndpointConfiguration oauthEndpoints)
-            : base(unitOfWork, repositoryManager) 
         {
+            this.UnitOfWork = unitOfWork;
+            this.RepositoryManager = repositoryManager;
             this.OAuthKeyConfiguration = oauthKeyConfiguration;
             this.OAuthEndpoints = oauthEndpoints;
         }
+
+        public UnitOfWork UnitOfWork { get; set; }
+
+        public IAnotherBlogRepositoryManager RepositoryManager { get; set; }
 
         public OAuthKeyConfiguration OAuthKeyConfiguration { get; private set; }
 
@@ -140,14 +143,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private CommonBusiness.PollService pollService;
-        public CommonBusiness.PollService PollService
+        private PollService pollService;
+        public PollService PollService
         {
             get
             {
                 if (this.pollService == null)
                 {
-                    this.pollService = new CommonBusiness.PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
+                    this.pollService = new PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
                 }
 
                 return this.pollService;

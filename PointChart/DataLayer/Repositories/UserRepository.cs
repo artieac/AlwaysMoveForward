@@ -12,12 +12,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Linq;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using NHibernate.Criterion;
 using AlwaysMoveForward.PointChart.DataLayer.DTO;
+using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
@@ -25,7 +26,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepository<User, UserDTO, int>, IUserRepository
+    public class UserRepository : NHibernateRepository<PointChartUser, UserDTO, long>, IUserRepository
     {
         public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -33,68 +34,30 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         }
 
-        protected override UserDTO GetDTOById(User domainInstance)
+        protected override UserDTO GetDTOById(PointChartUser domainInstance)
         {
-            return this.GetDTOById(domainInstance.UserId);
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override UserDTO GetDTOById(int idSource)
+        protected override UserDTO GetDTOById(long idSource)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.Add(Expression.Eq("UserId", idSource));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria);
+            return this.UnitOfWork.CurrentSession.Query<UserDTO>()
+               .Where(r => r.UserId == idSource)
+               .FirstOrDefault();
         }
 
-        protected override DataMapBase<User, UserDTO> GetDataMapper()
+        protected override DataMapBase<PointChartUser, UserDTO> GetDataMapper()
         {
-            throw new NotImplementedException();
+            return new DataMapper.PointChartUserDataMap();
         }
 
-        /// <summary>
-        /// Get a specific by their user name.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public User GetByUserName(string userName)
+        public PointChartUser GetByOAuthServiceUserId(long userId)
         {
-            return this.GetByProperty("UserName", userName);
-        }
+            UserDTO retVal = this.UnitOfWork.CurrentSession.Query<UserDTO>()
+                .Where(r => r.OAuthServiceUserId == userId)
+                .FirstOrDefault();
 
-        /// <summary>
-        /// This method is used by the login.  If no match is found then something doesn't jibe in the login attempt.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public User GetByUserNameAndPassword(string userName, string password)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.Add(Expression.Eq("UserName", userName));
-            criteria.Add(Expression.Eq("Password", password));
-
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindOne(criteria));
-        }
-        /// <summary>
-        /// Get a specific user by email
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns></returns>
-        public User GetByEmail(string userEmail)
-        {
-            return this.GetByProperty("Email", userEmail);
-        }
-        /// <summary>
-        /// Get all users that have the Administrator or Blogger role for the specific blog.
-        /// </summary>
-        /// <param name="blogId"></param>
-        /// <returns></returns>
-        public IList<User> GetBlogWriters(int blogId)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<UserDTO>();
-            criteria.CreateCriteria("UserBlogs")
-                .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<UserDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
     }
 }

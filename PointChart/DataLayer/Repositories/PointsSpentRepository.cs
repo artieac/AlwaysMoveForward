@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
@@ -11,7 +11,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointsSpentRepository : NHibernateRepository<PointsSpent, PointsSpentDTO, int>
+    public class PointsSpentRepository : NHibernateRepository<PointsSpent, PointsSpentDTO, long>
     {
         public PointsSpentRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -24,17 +24,16 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override PointsSpentDTO GetDTOById(int idSource)
+        protected override PointsSpentDTO GetDTOById(long idSource)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<PointsSpentDTO>();
-            criteria.Add(Expression.Eq("Id", idSource));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<PointsSpentDTO>.FindOne(criteria);
+            return this.UnitOfWork.CurrentSession.Query<PointsSpentDTO>()
+               .Where(r => r.Id == idSource)
+               .FirstOrDefault();
         }
 
         protected override DataMapBase<PointsSpent, PointsSpentDTO> GetDataMapper()
         {
-            throw new NotImplementedException();
+            return new DataMapper.PointsSpentDataMap();
         }
     }
 }

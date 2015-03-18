@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
@@ -11,7 +11,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class TaskRepository : NHibernateRepository<Task, TaskDTO, int>
+    public class TaskRepository : NHibernateRepository<Task, TaskDTO, long>
     {
         public TaskRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         protected override DataMapBase<Task, TaskDTO> GetDataMapper()
         {
-            return DataMapper.DataMapManager.Mappers().Task;
+            return new DataMapper.TaskDataMap();
         }
 
         protected override TaskDTO GetDTOById(Task domainInstance)
@@ -29,28 +29,29 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override TaskDTO GetDTOById(int idSource)
+        protected override TaskDTO GetDTOById(long idSource)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
-            criteria.Add(Expression.Eq("Id", idSource));
-
-            return Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria);
+            return this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+               .Where(r => r.Id == idSource)
+               .FirstOrDefault();
         }
 
         public Task GetByName(string taskName)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
-            criteria.Add(Expression.Eq("Name", taskName));
+            TaskDTO retVal = this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+                .Where(r => r.Name == taskName)
+                .FirstOrDefault();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindOne(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
 
-        public IList<Task> GetByUserId(int userId)
+        public IList<Task> GetByUserId(long userId)
         {
-            DetachedCriteria criteria = DetachedCriteria.For<TaskDTO>();
-            criteria.Add(Expression.Eq("AdministratorId", userId));
+            IList<TaskDTO> retVal = this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+                .Where(r => r.AdministratorId == userId)
+                .ToList();
 
-            return this.GetDataMapper().Map(Castle.ActiveRecord.ActiveRecordMediator<TaskDTO>.FindAll(criteria));
+            return this.GetDataMapper().Map(retVal);
         }
     }
 }

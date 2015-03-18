@@ -13,13 +13,8 @@ using AlwaysMoveForward.PointChart.Common.DomainModel;
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class ChartService : PointChartService
-    {
-        public interface IDependencies
-        {
-            IUnitOfWork UnitOfWork { get; }
-        }
-
-        public ChartService(IDependencies dependencies, IPointChartRepositoryManager repositoryManager) : base(dependencies.UnitOfWork, repositoryManager) { }
+    {      
+        public ChartService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
 
         public Chart GetById(int chartId)
         {
@@ -32,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chartAdministrator != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByUserId(chartAdministrator.UserId);
+                retVal = this.PointChartRepositories.Charts.GetByUserId(chartAdministrator.Id);
             }
 
             return retVal;
@@ -58,12 +53,12 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (pointEarner != null && currentUser != null)
             {
-                IList<Chart> earnerCharts = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarner.Id, currentUser.UserId);
+                IList<Chart> earnerCharts = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarner.Id, currentUser.Id);
 
                 if (earnerCharts == null || earnerCharts.Count == 0)
                 {
                     retVal = new Chart();
-                    retVal.AdministratorId = currentUser.UserId;
+                    retVal.AdministratorId = currentUser.Id;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
             }
@@ -80,7 +75,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (retVal != null && pointEarner != null)
             {
-                if (retVal.AdministratorId == currentUser.UserId) 
+                if (retVal.AdministratorId == currentUser.Id) 
                 {
                     retVal.Name = chartName;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -99,7 +94,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (retVal != null)
             {
-                if (retVal.AdministratorId == currentUser.UserId)
+                if (retVal.AdministratorId == currentUser.Id)
                 {
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
@@ -228,7 +223,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             if (chartPointEarner != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId, currentUser.UserId);
+                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId, currentUser.Id);
             }
 
             return retVal;

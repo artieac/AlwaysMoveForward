@@ -21,75 +21,17 @@ using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
-    {
-        private static IDictionary<int, Role> systemRoles = null;
+    {       
+        public SecurityPrincipal(PointChartUser currentUser) : this(currentUser, false) { }
 
-        public static IDictionary<int, Role> Roles
-        {
-            get
-            {
-                if (systemRoles == null)
-                {
-                    systemRoles = new Dictionary<int, Role>();
-
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    IList<Role> roles = serviceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < roles.Count; i++)
-                    {
-                        systemRoles.Add(roles[i].RoleId, roles[i]);
-                    }
-                }
-
-                return systemRoles;
-            }
-        }
-
-        private ServiceManager serviceManager = null;
-        private static Dictionary<int, Role> userRoles;
-
-        public SecurityPrincipal(User currentUser) : this(currentUser, false) { }
-
-        public SecurityPrincipal(User currentUser, bool isAuthenticated)
+        public SecurityPrincipal(PointChartUser currentUser, bool isAuthenticated)
         {
             this.IsAuthenticated = isAuthenticated;
             this.CurrentUser = currentUser;
         }
 
-        public User CurrentUser { get; private set; }
+        public PointChartUser CurrentUser { get; private set; }
 
-        private ServiceManager ServiceManager
-        {
-            get
-            {
-                if (this.serviceManager == null)
-                {
-                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                }
-
-                return this.serviceManager;
-            }
-        }
-
-        private Dictionary<int, Role> UserRoles
-        {
-            get
-            {
-                if (SecurityPrincipal.userRoles == null)
-                {
-                    SecurityPrincipal.userRoles = new Dictionary<int, Role>();
-
-                    IList<Role> allRoles = this.ServiceManager.RoleService.GetAll();
-
-                    for (int i = 0; i < allRoles.Count; i++)
-                    {
-                        SecurityPrincipal.userRoles.Add(allRoles[i].RoleId, allRoles[i]);
-                    }
-                }
-
-                return SecurityPrincipal.userRoles;
-            }
-        }
         /// <summary>
         /// Implement the IIDentity interface so that it can be used with built in .Net security methods
         /// </summary>
@@ -110,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
 
                 if (this.CurrentUser != null)
                 {
-                    retVal = this.CurrentUser.UserName;
+                    retVal = this.CurrentUser.GetDisplayName();
                 }
 
                 return retVal;
@@ -139,7 +81,24 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             bool retVal = false;
 
             if (this.CurrentUser != null)
-            {
+            {                           
+                if (targetRole.Contains(RoleType.Names.SiteAdministrator))
+                {
+                    if (this.CurrentUser.IsSiteAdministrator)
+                    {
+                        retVal = true;
+                    }
+                }
+
+                if (retVal == false)
+                {
+                    RoleType.Id targetRoleEnum = (RoleType.Id)Enum.Parse(typeof(RoleType.Id), targetRole);
+
+                    if(this.CurrentUser.Roles.ContainsKey((int)targetRoleEnum))
+                    {
+                        retVal = true;
+                    }
+                }
             }
 
             return retVal;
@@ -161,11 +120,11 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
             {
                 if (targetRole != null)
                 {
-                    if (targetRole.Contains(RoleType.Administrator.ToString()))
+                    for(int i = 0; i < targetRole.Count(); i++)
                     {
-                        if (this.CurrentUser.IsSiteAdministrator)
+                        if(retVal == false)
                         {
-                            retVal = true;
+                            retVal = this.IsInRole(targetRole[i]);
                         }
                     }
                 }

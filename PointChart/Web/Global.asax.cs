@@ -17,7 +17,6 @@ namespace AlwaysMoveForward.PointChart.Web
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static SiteInfo siteInfo;
         private static EmailConfiguration emailConfig;
         private static WebSiteConfiguration siteConfig;
 
@@ -40,40 +39,6 @@ namespace AlwaysMoveForward.PointChart.Web
         public static WebSiteConfiguration WebSiteConfiguration
         {
             get { return MvcApplication.siteConfig; }
-        }
-
-        public static SiteInfo SiteInfo
-        {
-            get
-            {
-                if (MvcApplication.siteInfo == null)
-                {
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-
-                    if (serviceManager != null)
-                    {
-                        MvcApplication.siteInfo = serviceManager.SiteInfoService.GetSiteInfo();
-
-                        if (MvcApplication.siteInfo == null)
-                        {
-                            MvcApplication.siteInfo = new SiteInfo();
-                            siteInfo.Name = "Default";
-                        }
-                    }
-                    else
-                    {
-
-                        MvcApplication.siteInfo = new SiteInfo();
-                        siteInfo.Name = "Default";
-                    }
-                }
-
-                return MvcApplication.siteInfo;
-            }
-            set
-            {
-                MvcApplication.siteInfo = value;
-            }
         }
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)

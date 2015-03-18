@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets the identifier of the instance
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets and sets the name of the chart
@@ -41,6 +41,6 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets the administrator id for this task.
         /// </summary>
-        public int AdministratorId { get; set; }
+        public long AdministratorId { get; set; }
     }
 }
