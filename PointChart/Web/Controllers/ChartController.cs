@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             retVal.Chart = this.Services.Charts.GetById(chartId);
             retVal.ChartTasks = retVal.Chart.Tasks;
-            retVal.CompletedTasks = new Dictionary<int, IDictionary<DateTime, CompletedTask>>();
+            retVal.CompletedTasks = new Dictionary<long, IDictionary<DateTime, CompletedTask>>();
 
             IEnumerable<CompletedTask> tasksCompletedDuringWeek = from tasks in retVal.Chart.CompletedTasks where tasks.DateCompleted > retVal.Calendar.WeekStartDate && tasks.DateCompleted < retVal.Calendar.WeekStartDate.AddDays(7) select tasks;
 

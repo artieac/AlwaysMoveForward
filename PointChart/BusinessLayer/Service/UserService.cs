@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return this.UserRepository.GetById(userId);
         }
 
-        public PointChartUser GetAnotherBlogUserFromAMFUser(IOAuthToken accessToken)
+        public PointChartUser GetFromAMFUser(IOAuthToken accessToken)
         {
             PointChartUser retVal = null;
 

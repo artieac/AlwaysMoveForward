@@ -44,8 +44,9 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\Lib\DebugPartialTrustAllowed\log4net.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
@@ -83,6 +84,7 @@
     <Compile Include="Repositories\CompletedTaskRepository.cs" />
     <Compile Include="Repositories\IChartRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\OAuthRepository.cs" />
     <Compile Include="Repositories\PointEarnerRepository.cs" />
     <Compile Include="Repositories\PointsSpentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -98,6 +100,14 @@
     <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
+      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
+      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>

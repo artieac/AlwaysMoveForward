@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}</ProjectGuid>
+    <ProjectGuid>{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlwaysMoveForward.OAuth.Common</RootNamespace>
-    <AssemblyName>AlwaysMoveForward.OAuth.Common</AssemblyName>
+    <RootNamespace>AlwaysMoveForward.OAuth.Client</RootNamespace>
+    <AssemblyName>AlwaysMoveForward.OAuth.Client</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,7 +33,6 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,38 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainModel\AccessToken.cs" />
-    <Compile Include="DomainModel\Consumer.cs" />
-    <Compile Include="DomainModel\ConsumerNonce.cs" />
-    <Compile Include="DomainModel\IOAuthEndpoints.cs" />
-    <Compile Include="DomainModel\OAuthRoles.cs" />
-    <Compile Include="DomainModel\LoginAttempt.cs" />
-    <Compile Include="DomainModel\RequestToken.cs" />
-    <Compile Include="DomainModel\AMFUserLogin.cs" />
-    <Compile Include="DomainModel\RequestTokenAuthorizer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DomainModel\TokenState.cs" />
-    <Compile Include="DomainModel\UserStatus.cs" />
-    <Compile Include="DomainModel\ValidatedToken.cs" />
-    <Compile Include="DomainModel\OAuthServerSecurityPrincipal.cs" />
+    <Compile Include="Configuration\EndpointConfiguration.cs" />
+    <Compile Include="Configuration\OAuthEndpoints.cs" />
+    <Compile Include="Configuration\OAuthKeyConfiguration.cs" />
+    <Compile Include="IOAuthEndpoints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
       <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
       <Name>AlwaysMoveForward.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
-      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj">
-      <Project>{61b700b6-3911-4cef-8751-7f42ca765068}</Project>
-      <Name>DevDefined.OAuth</Name>
+    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
+      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
+      <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

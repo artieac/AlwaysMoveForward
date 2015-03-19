@@ -88,6 +88,7 @@
     <Compile Include="Encryption\SHA1HashUtility.cs" />
     <Compile Include="Encryption\X509CertificateManager.cs" />
     <Compile Include="Security\DefaultSecurityPrincipal.cs" />
+    <Compile Include="Security\ISecurityRepository.cs" />
     <Compile Include="Security\SecurityPrincipalBase.cs" />
     <Compile Include="Security\IRequestValidator.cs" />
     <Compile Include="Utilities\DateCompare.cs" />

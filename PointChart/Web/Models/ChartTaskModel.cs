@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.PointChart.Web.Models
         public Chart Chart { get; set; }
         public IList<Task> ChartTasks { get; set; }
         public IList<Task> Tasks { get; set; }
-        public IDictionary<int, IDictionary<DateTime, CompletedTask>> CompletedTasks { get; set; }
+        public IDictionary<long, IDictionary<DateTime, CompletedTask>> CompletedTasks { get; set; }
         public CalendarModel Calendar { get; set; }
     }
 }

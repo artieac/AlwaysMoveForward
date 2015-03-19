@@ -22,14 +22,18 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class ServiceManager
     {
-        public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) 
+        public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager, OAuth.Contracts.Configuration.OAuthKeyConfiguration keyConfiguration, OAuth.Contracts.Configuration.EndpointConfiguration endpointConfiguration) 
         {
             this.UnitOfWork = unitOfWork;
             this.PointChartRepositoryManager = repositoryManager;
+            this.OAuthKeyConfiguration = keyConfiguration;
+            this.OAuthEndpoints = endpointConfiguration;
         }
 
-        public UnitOfWork UnitOfWork { get; set; }
-        public IPointChartRepositoryManager PointChartRepositoryManager { get; set; }
+        public UnitOfWork UnitOfWork { get; private set; }
+        public IPointChartRepositoryManager PointChartRepositoryManager { get; private set; }
+        public OAuth.Contracts.Configuration.OAuthKeyConfiguration OAuthKeyConfiguration { get; private set; }
+        public OAuth.Contracts.Configuration.EndpointConfiguration OAuthEndpoints { get; private set; }
 
         private UserService userService;
         public UserService UserService
@@ -38,7 +42,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.PointChartRepositoryManager.UserRepository);
+                    this.userService = new UserService(this.UnitOfWork, this.PointChartRepositoryManager.UserRepository, new OAuthRepository(this.OAuthKeyConfiguration, this.OAuthEndpoints));
                 }
 
                 return this.userService;

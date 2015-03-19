@@ -43,13 +43,13 @@
     <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\OAuthEndpoints.cs" />
     <Compile Include="Configuration\OAuthKeyConfiguration.cs" />
+    <Compile Include="IOAuthEndpoints.cs" />
     <Compile Include="Repositories\IOAuthRepository.cs" />
     <Compile Include="TokenVerification.cs" />
     <Compile Include="Configuration\WhiteListConfiguration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DefaultOAuthToken.cs" />
     <Compile Include="IAccessToken.cs" />
-    <Compile Include="IOAuthEndpoints.cs" />
     <Compile Include="IOAuthToken.cs" />
     <Compile Include="OAuthClientBase.cs" />
     <Compile Include="OAuthSecurityPrincipal.cs" />

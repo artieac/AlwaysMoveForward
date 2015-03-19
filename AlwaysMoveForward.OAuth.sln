@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Common", "OAuth\Common\AlwaysMoveForward.OAuth.Common.csproj", "{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.WebServer", "OAuth\WebServer\AlwaysMoveForward.OAuth.WebServer.csproj", "{5F112EE1-91D3-420F-B698-9FD1A2E9CF6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.UnitTests", "OAuth\UnitTests\AlwaysMoveForward.OAuth.UnitTests.csproj", "{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client.RestSharp", "OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj", "{28E86E9B-61AE-4720-AE00-AEAE7F739971}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client", "OAuth\DataLayer.OAuth\AlwaysMoveForward.OAuth.Client.csproj", "{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

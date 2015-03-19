@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.OAuth.Contracts.Configuration;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
@@ -26,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
         {
             UnitOfWork unitOfWork = this.CreateUnitOfWork() as UnitOfWork;
             IPointChartRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
-            return new ServiceManager(unitOfWork, repositoryManager);
+            return new ServiceManager(unitOfWork, repositoryManager, OAuthKeyConfiguration.GetInstance(), EndpointConfiguration.GetInstance());
         }
 
         protected virtual IUnitOfWork CreateUnitOfWork()

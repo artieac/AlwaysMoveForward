@@ -15,7 +15,6 @@ using System.Text;
 using System.Reflection;
 using System.Configuration;
 using System.Data;
-
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;

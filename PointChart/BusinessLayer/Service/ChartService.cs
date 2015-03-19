@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return this.PointChartRepositories.Charts.GetById(chartId);
         }
 
-        public IList<Chart> GetByUser(User chartAdministrator)
+        public IList<Chart> GetByUser(PointChartUser chartAdministrator)
         {
             IList<Chart> retVal = new List<Chart>();
 
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart Add(int pointEarnerId, User currentUser)
+        public Chart Add(int pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
 
@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart Add(PointEarner pointEarner, User currentUser)
+        public Chart Add(PointEarner pointEarner, PointChartUser currentUser)
         {
             Chart retVal = null;
 
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart Edit(int chartId, string chartName, int pointEarnerId, User currentUser)
+        public Chart Edit(int chartId, string chartName, int pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
 
@@ -85,7 +85,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart AssignChartToUser(int chartId, int pointEarnerId, User currentUser)
+        public Chart AssignChartToUser(int chartId, int pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
 
@@ -160,7 +160,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             }
         }
 
-        public CompletedTask AddCompletedTask(int chartId, int taskId, DateTime dateCompleted, int numberOfTimesCompleted, User administrator)
+        public CompletedTask AddCompletedTask(int chartId, int taskId, DateTime dateCompleted, int numberOfTimesCompleted, PointChartUser administrator)
         {
             CompletedTask retVal = null;
 
@@ -215,7 +215,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public IList<Chart> GetByPointEarner(int pointEarnerId, User currentUser)
+        public IList<Chart> GetByPointEarner(int pointEarnerId, PointChartUser currentUser)
         {
             IList<Chart> retVal = new List<Chart>();
 

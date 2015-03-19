@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
     {
         public TaskService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
 
-        public IList<Task> GetByUser(User currentUser)
+        public IList<Task> GetByUser(PointChartUser currentUser)
         {
             IList<Task> retVal = new List<Task>();
 
@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Task Add(string taskName, double points, int maxAllowedDaily, User currentUser)
+        public Task Add(string taskName, double points, int maxAllowedDaily, PointChartUser currentUser)
         {
             Task retVal = null;
 
@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Task Edit(int taskId, string taskName, double points, int maxAllowedDaily, User currentUser)
+        public Task Edit(int taskId, string taskName, double points, int maxAllowedDaily, PointChartUser currentUser)
         {
             Task retVal = this.PointChartRepositories.Tasks.GetById(taskId);
 
@@ -61,7 +61,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, User administrator)
+        public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, PointChartUser administrator)
         {
             return this.PointChartRepositories.CompletedTask.GetCompletedByDateRangeAndChart(weekStartDate, weekEndDate, chart, administrator.Id);
         }
