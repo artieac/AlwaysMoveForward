@@ -283,13 +283,13 @@
       <Project>{121fb691-35d7-4ad4-980d-0d7d823a6c07}</Project>
       <Name>AlwaysMoveForward.OAuth.BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
-      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
-      <Name>AlwaysMoveForward.OAuth.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Client\AlwaysMoveForward.OAuth.Client.csproj">
       <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
       <Name>AlwaysMoveForward.OAuth.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\AlwaysMoveForward.OAuth.Common.csproj">
+      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
+      <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj">
       <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>

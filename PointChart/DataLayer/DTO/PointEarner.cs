@@ -6,7 +6,7 @@ using System.Text;
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "PointEarners")]
-    public class PointEarnerDTO
+    public class PointEarner
     {
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
@@ -35,12 +35,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "Charts", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
-        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(ChartDTO))]
-        public IList<ChartDTO> Charts { get; set; }
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(DTO.Chart))]
+        public IList<DTO.Chart> Charts { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "PointsSpent", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
-        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(PointsSpentDTO))]
-        public IList<PointsSpentDTO> PointsSpent { get; set; }
+        [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(DTO.PointsSpent))]
+        public IList<DTO.PointsSpent> PointsSpent { get; set; }
     }
 }

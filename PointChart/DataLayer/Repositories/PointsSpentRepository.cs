@@ -7,11 +7,10 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointsSpentRepository : NHibernateRepository<PointsSpent, PointsSpentDTO, long>
+    public class PointsSpentRepository : NHibernateRepository<PointsSpent, DTO.PointsSpent, long>
     {
         public PointsSpentRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -19,19 +18,19 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         }
 
-        protected override PointsSpentDTO GetDTOById(PointsSpent domainInstance)
+        protected override DTO.PointsSpent GetDTOById(PointsSpent domainInstance)
         {
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override PointsSpentDTO GetDTOById(long idSource)
+        protected override DTO.PointsSpent GetDTOById(long idSource)
         {
-            return this.UnitOfWork.CurrentSession.Query<PointsSpentDTO>()
+            return this.UnitOfWork.CurrentSession.Query<DTO.PointsSpent>()
                .Where(r => r.Id == idSource)
                .FirstOrDefault();
         }
 
-        protected override DataMapBase<PointsSpent, PointsSpentDTO> GetDataMapper()
+        protected override DataMapBase<PointsSpent, DTO.PointsSpent> GetDataMapper()
         {
             return new DataMapper.PointsSpentDataMap();
         }

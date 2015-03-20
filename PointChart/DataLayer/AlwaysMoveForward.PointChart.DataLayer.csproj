@@ -73,12 +73,12 @@
     <Compile Include="DataMapper\PointEarnerDataMap.cs" />
     <Compile Include="DataMapper\PointsSpentDataMap.cs" />
     <Compile Include="DataMapper\TaskDataMap.cs" />
-    <Compile Include="DTO\ChartDTO.cs" />
-    <Compile Include="DTO\CompletedTaskDTO.cs" />
-    <Compile Include="DTO\PointEarnerDTO.cs" />
-    <Compile Include="DTO\PointsSpentDTO.cs" />
-    <Compile Include="DTO\TaskDTO.cs" />
-    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\Chart.cs" />
+    <Compile Include="DTO\CompletedTask.cs" />
+    <Compile Include="DTO\PointEarner.cs" />
+    <Compile Include="DTO\PointsSpent.cs" />
+    <Compile Include="DTO\Task.cs" />
+    <Compile Include="DTO\User.cs" />
     <Compile Include="IPointChartRepositoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ChartRepository.cs" />
@@ -100,10 +100,6 @@
     <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
-      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
-      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>

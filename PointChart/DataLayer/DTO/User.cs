@@ -17,9 +17,9 @@ using System.Security.Principal;
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table="Users")]
-    public class UserDTO 
+    public class User 
     {
-        public UserDTO()
+        public User()
             : base()
         {
             this.Id = -1;

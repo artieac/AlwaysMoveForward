@@ -17,7 +17,6 @@ using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.PointChart.DataLayer.DTO;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
@@ -26,7 +25,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
     /// This class contains all the code to extract User data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepository<PointChartUser, UserDTO, long>, IUserRepository
+    public class UserRepository : NHibernateRepository<PointChartUser, DTO.User, long>, IUserRepository
     {
         public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -34,26 +33,26 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         }
 
-        protected override UserDTO GetDTOById(PointChartUser domainInstance)
+        protected override DTO.User GetDTOById(PointChartUser domainInstance)
         {
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override UserDTO GetDTOById(long idSource)
+        protected override DTO.User GetDTOById(long idSource)
         {
-            return this.UnitOfWork.CurrentSession.Query<UserDTO>()
+            return this.UnitOfWork.CurrentSession.Query<DTO.User>()
                .Where(r => r.Id == idSource)
                .FirstOrDefault();
         }
 
-        protected override DataMapBase<PointChartUser, UserDTO> GetDataMapper()
+        protected override DataMapBase<PointChartUser, DTO.User> GetDataMapper()
         {
             return new DataMapper.PointChartUserDataMap();
         }
 
         public PointChartUser GetByOAuthServiceUserId(long userId)
         {
-            UserDTO retVal = this.UnitOfWork.CurrentSession.Query<UserDTO>()
+            DTO.User retVal = this.UnitOfWork.CurrentSession.Query<DTO.User>()
                 .Where(r => r.OAuthServiceUserId == userId)
                 .FirstOrDefault();
 

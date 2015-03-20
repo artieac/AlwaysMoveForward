@@ -6,7 +6,7 @@ using System.Text;
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table="PointsSpent")]
-    public class PointsSpentDTO
+    public class PointsSpent
     {
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public DateTime DateSpent { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "PointEarner", Class = "PointEarnerDTO", ClassType = typeof(PointEarnerDTO), Column = "PointEarnerId")]
-        public virtual PointEarnerDTO Chart { get; set; }
+        [NHibernate.Mapping.Attributes.ManyToOne(Name = "PointEarner", ClassType = typeof(DTO.PointEarner), Column = "PointEarnerId")]
+        public virtual DTO.PointEarner PointEarner { get; set; }
     }
 }

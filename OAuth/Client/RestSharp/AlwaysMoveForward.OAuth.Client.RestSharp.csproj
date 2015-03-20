@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RestSharp">
-      <HintPath>..\..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+      <HintPath>..\..\..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,12 +47,6 @@
   <ItemGroup>
     <Compile Include="OAuthClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Client\AlwaysMoveForward.OAuth.Client.csproj">
-      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
-      <Name>AlwaysMoveForward.OAuth.Client</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

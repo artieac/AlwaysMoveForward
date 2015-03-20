@@ -7,11 +7,10 @@ using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class TaskRepository : NHibernateRepository<Task, TaskDTO, long>
+    public class TaskRepository : NHibernateRepository<Task, DTO.Task, long>
     {
         public TaskRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -19,26 +18,26 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         }
 
-        protected override DataMapBase<Task, TaskDTO> GetDataMapper()
+        protected override DataMapBase<Task, DTO.Task> GetDataMapper()
         {
             return new DataMapper.TaskDataMap();
         }
 
-        protected override TaskDTO GetDTOById(Task domainInstance)
+        protected override DTO.Task GetDTOById(Task domainInstance)
         {
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override TaskDTO GetDTOById(long idSource)
+        protected override DTO.Task GetDTOById(long idSource)
         {
-            return this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+            return this.UnitOfWork.CurrentSession.Query<DTO.Task>()
                .Where(r => r.Id == idSource)
                .FirstOrDefault();
         }
 
         public Task GetByName(string taskName)
         {
-            TaskDTO retVal = this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+            DTO.Task retVal = this.UnitOfWork.CurrentSession.Query<DTO.Task>()
                 .Where(r => r.Name == taskName)
                 .FirstOrDefault();
 
@@ -47,7 +46,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         public IList<Task> GetByUserId(long userId)
         {
-            IList<TaskDTO> retVal = this.UnitOfWork.CurrentSession.Query<TaskDTO>()
+            IList<DTO.Task> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Task>()
                 .Where(r => r.AdministratorId == userId)
                 .ToList();
 

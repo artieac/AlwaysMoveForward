@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.PointChart.DataLayer.DTO;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
 {
-    public class PointChartUserDataMap : DataMapBase<PointChartUser, UserDTO>
+    public class PointChartUserDataMap : DataMapBase<PointChartUser, DTO.User>
     {
         static PointChartUserDataMap()
         {
@@ -18,17 +17,17 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
 
         public static void ConfigureAutoMapper()
         {
-            var existingMap = Mapper.FindTypeMapFor<PointChartUser, DTO.UserDTO>();
+            var existingMap = Mapper.FindTypeMapFor<PointChartUser, DTO.User>();
             if (existingMap == null)
             {
-                var newMap = Mapper.CreateMap<PointChartUser, DTO.UserDTO>();
+                var newMap = Mapper.CreateMap<PointChartUser, DTO.User>();
                 newMap.MaxDepth(2);
             }
 
-            existingMap = Mapper.FindTypeMapFor<DTO.UserDTO, PointChartUser>();
+            existingMap = Mapper.FindTypeMapFor<DTO.User, PointChartUser>();
             if (existingMap == null)
             {
-                var newMap = Mapper.CreateMap<DTO.UserDTO, PointChartUser>();
+                var newMap = Mapper.CreateMap<DTO.User, PointChartUser>();
                 newMap.MaxDepth(2);
             }
 #if DEBUG
@@ -38,12 +37,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
 
         #region PointChartUser Aggregate Root
 
-        public override UserDTO Map(PointChartUser source, UserDTO destination)
+        public override DTO.User Map(PointChartUser source, DTO.User destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }
 
-        public override PointChartUser Map(UserDTO source, PointChartUser destination)
+        public override PointChartUser Map(DTO.User source, PointChartUser destination)
         {
             return AutoMapper.Mapper.Map(source, destination);
         }

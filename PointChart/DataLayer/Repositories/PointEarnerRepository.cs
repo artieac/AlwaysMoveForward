@@ -6,11 +6,10 @@ using NHibernate.Linq;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.DataLayer.DTO;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointEarnerRepository : NHibernateRepository<PointEarner, PointEarnerDTO, long>
+    public class PointEarnerRepository : NHibernateRepository<PointEarner, DTO.PointEarner, long>
     {
         public PointEarnerRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -18,26 +17,26 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         }
 
-        protected override PointEarnerDTO GetDTOById(PointEarner domainInstance)
+        protected override DTO.PointEarner GetDTOById(PointEarner domainInstance)
         {
             return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override PointEarnerDTO GetDTOById(long idSource)
+        protected override DTO.PointEarner GetDTOById(long idSource)
         {
-            return this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+            return this.UnitOfWork.CurrentSession.Query<DTO.PointEarner>()
                .Where(r => r.Id == idSource)
                .FirstOrDefault();
         }
 
-        protected override DataMapBase<PointEarner, PointEarnerDTO> GetDataMapper()
+        protected override DataMapBase<PointEarner, DTO.PointEarner> GetDataMapper()
         {
             return new DataMapper.PointEarnerDataMap();
         }
 
         public PointEarner GetByEmail(string email, long administratorId)
         {
-            PointEarnerDTO retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+            DTO.PointEarner retVal = this.UnitOfWork.CurrentSession.Query<DTO.PointEarner>()
                 .Where(r => r.Email == email && r.AdministratorId == administratorId)
                 .FirstOrDefault();
 
@@ -46,7 +45,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         public PointEarner GetByFirstNameLastName(string firstName, string lastName, long administratorId)
         {
-            PointEarnerDTO retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+            DTO.PointEarner retVal = this.UnitOfWork.CurrentSession.Query<DTO.PointEarner>()
                 .Where(r => r.FirstName == firstName && r.LastName == lastName && r.AdministratorId == administratorId)
                 .FirstOrDefault();
 
@@ -55,7 +54,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
         public IList<PointEarner> GetAllByAdministratorId(long adminstratorId)
         {
-            IList<PointEarnerDTO> retVal = this.UnitOfWork.CurrentSession.Query<PointEarnerDTO>()
+            IList<DTO.PointEarner> retVal = this.UnitOfWork.CurrentSession.Query<DTO.PointEarner>()
                 .Where(r => r.AdministratorId == adminstratorId)
                 .ToList();
 
