@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth.Contracts.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.PointChart.DataLayer

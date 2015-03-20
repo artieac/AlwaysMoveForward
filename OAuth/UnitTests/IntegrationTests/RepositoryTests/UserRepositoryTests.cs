@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.RepositoryTests

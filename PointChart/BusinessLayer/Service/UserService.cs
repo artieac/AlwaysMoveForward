@@ -21,9 +21,7 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Contracts;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
-using AlwaysMoveForward.OAuth.Contracts.Repositories;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 

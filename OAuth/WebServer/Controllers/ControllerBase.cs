@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.Security;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth.WebServer.Code;

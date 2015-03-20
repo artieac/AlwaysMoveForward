@@ -6,7 +6,7 @@ using NUnit;
 using NUnit.Framework;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Encryption;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 
 namespace AlwaysMoveForward.OAuth.UnitTests.CommonTests
 {

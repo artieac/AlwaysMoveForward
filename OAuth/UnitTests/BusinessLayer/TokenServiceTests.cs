@@ -7,7 +7,7 @@ using NUnit.Framework;
 using DD = DevDefined.OAuth.Framework;
 using DDS = DevDefined.OAuth.Storage;
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.UnitTests.Constants;
 

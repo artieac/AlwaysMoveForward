@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using CommonBusiness = AlwaysMoveForward.Common.Business;
@@ -22,18 +23,16 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 {
     public class ServiceManager
     {
-        public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager, OAuth.Contracts.Configuration.OAuthKeyConfiguration keyConfiguration, OAuth.Contracts.Configuration.EndpointConfiguration endpointConfiguration) 
+        public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager, OAuthClientBase oauthClient) 
         {
             this.UnitOfWork = unitOfWork;
             this.PointChartRepositoryManager = repositoryManager;
-            this.OAuthKeyConfiguration = keyConfiguration;
-            this.OAuthEndpoints = endpointConfiguration;
+            this.OAuthClient = oauthClient;
         }
 
         public UnitOfWork UnitOfWork { get; private set; }
         public IPointChartRepositoryManager PointChartRepositoryManager { get; private set; }
-        public OAuth.Contracts.Configuration.OAuthKeyConfiguration OAuthKeyConfiguration { get; private set; }
-        public OAuth.Contracts.Configuration.EndpointConfiguration OAuthEndpoints { get; private set; }
+        public OAuthClientBase OAuthClient { get; private set; }
 
         private UserService userService;
         public UserService UserService
@@ -42,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.PointChartRepositoryManager.UserRepository, new OAuthRepository(this.OAuthKeyConfiguration, this.OAuthEndpoints));
+                    this.userService = new UserService(this.UnitOfWork, this.PointChartRepositoryManager.UserRepository, new OAuthRepository(this.OAuthClient));
                 }
 
                 return this.userService;

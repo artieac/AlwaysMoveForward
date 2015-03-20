@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -50,7 +51,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
 
             IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
-            return new ServiceManager(unitOfWork, repositoryManager, OAuthKeyConfiguration.GetInstance(), EndpointConfiguration.GetInstance());
+            return new ServiceManager(unitOfWork, repositoryManager, this.CreateOAuthClient());
         }
 
         protected virtual UnitOfWork CreateUnitOfWork(string connectionString)
@@ -61,6 +62,13 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         protected virtual IAnotherBlogRepositoryManager CreateRepositoryManager(IUnitOfWork unitOfWork)
         {
             return new RepositoryManager(unitOfWork as UnitOfWork);
+        }
+
+        protected virtual OAuthClientBase CreateOAuthClient()
+        {
+            OAuthKeyConfiguration keyConfiguration =  OAuthKeyConfiguration.GetInstance();
+            EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
+            return new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
         }
     }
 }

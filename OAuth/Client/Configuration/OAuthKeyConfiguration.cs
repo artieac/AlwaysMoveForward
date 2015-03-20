@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.OAuth.Contracts.Configuration
+namespace AlwaysMoveForward.OAuth.Client.Configuration
 {
     /// <summary>
     /// A class to simplify putting the consumer key and secret into a configuration file.

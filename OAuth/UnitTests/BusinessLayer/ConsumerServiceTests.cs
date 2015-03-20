@@ -5,7 +5,7 @@ using System.Text;
 using NUnit;
 using NUnit.Framework;
 using DD = DevDefined.OAuth.Framework;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.UnitTests.Constants;
 

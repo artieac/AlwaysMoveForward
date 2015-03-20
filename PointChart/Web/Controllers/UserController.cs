@@ -18,9 +18,7 @@ using System.Security.Principal;
 using System.Web.Security;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Contracts;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
-using AlwaysMoveForward.OAuth.Contracts.Repositories;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
@@ -81,17 +79,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
         public void Login(string blogSubFolder)
         {
-            EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
-            OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
-
-            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
-            IOAuthToken requestToken = oauthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
+            IOAuthToken requestToken = this.Services.OAuthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
 
             if (requestToken != null)
             {
                 Session[requestToken.Token] = requestToken;
 
-                string authorizationUrl = oauthClient.GetUserAuthorizationUrl(requestToken);
+                string authorizationUrl = this.Services.OAuthClient.GetUserAuthorizationUrl(requestToken);
 
                 this.Response.Redirect(authorizationUrl, false);
             }
@@ -105,15 +99,10 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
         public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
         {
-            string requestTokenString = Request[Parameters.OAuth_Token];
-            string verifier = Request[Parameters.OAuth_Verifier];
+            string requestTokenString = Request[OAuth.Client.Constants.TokenParameter];
+            string verifier = Request[OAuth.Client.Constants.VerifierCodeParameter];
 
             IOAuthToken storedRequestToken = (IOAuthToken)Session[requestTokenString];
-
-            OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
-            EndpointConfiguration endpointConfiguration = EndpointConfiguration.GetInstance();
-
-            AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient oauthClient = new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient("", oauthConfiguration.ConsumerKey, oauthConfiguration.ConsumerSecret, endpointConfiguration);
 
             if (string.IsNullOrEmpty(verifier))
             {
@@ -124,7 +113,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             try
             {
-                accessToken = oauthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
+                accessToken = this.Services.OAuthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
 
                 PointChartUser amfUser = this.Services.UserService.GetFromAMFUser(accessToken);
 
@@ -140,7 +129,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                     this.EstablishCurrentUserCookie(this.CurrentPrincipal);
                 }
             }
-            catch (OAuthException authEx)
+            catch (Exception authEx)
             {
                 LogManager.GetLogger().Error(authEx);
                 Response.Redirect("AccessDenied.aspx");

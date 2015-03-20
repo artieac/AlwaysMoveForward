@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using NUnit;
 using NUnit.Framework;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 
 namespace AlwaysMoveForward.OAuth.UnitTests.CommonTests
 {

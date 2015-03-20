@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Provider;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
@@ -90,7 +90,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
             try
             {
                 LogManager.GetLogger().Debug("GetRequestToken-Host=" + this.Request.Headers["Host"]);
-                LogManager.GetLogger().Debug("GetRequestToken-Authorization=" + this.Request.Headers[AlwaysMoveForward.OAuth.Contracts.Constants.AuthorizationHeader]);
+                LogManager.GetLogger().Debug("GetRequestToken-Authorization=" + this.Request.Headers[AlwaysMoveForward.OAuth.Client.Constants.AuthorizationHeader]);
 
                 IOAuthContext context = this.GetContextBuilder();
                 string requestTokenContext = "GetRequestToken for " + context.ConsumerKey + ":RequestUrl=" + this.Request.Url + ":Realm=" + context.Realm + ":CallbackUrl=" + context.CallbackUrl + ":SignatureBase=" + context.GenerateSignatureBase();
@@ -199,7 +199,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
 
                             string callbackUrl = authorizedRequestToken.GenerateCallBackUrl();
 
-                            if (!string.IsNullOrEmpty(callbackUrl) && !callbackUrl.StartsWith(AlwaysMoveForward.OAuth.Contracts.Constants.InlineCallback))
+                            if (!string.IsNullOrEmpty(callbackUrl) && !callbackUrl.StartsWith(AlwaysMoveForward.OAuth.Client.Constants.InlineCallback))
                             {
                                 LogManager.GetLogger().Debug(logMessageBase + ":RedirectingTo=" + callbackUrl);
                                 return this.Redirect(callbackUrl);

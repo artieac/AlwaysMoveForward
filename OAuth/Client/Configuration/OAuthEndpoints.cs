@@ -1,4 +1,4 @@
-﻿namespace AlwaysMoveForward.OAuth.Contracts.Configuration
+﻿namespace AlwaysMoveForward.OAuth.Client.Configuration
 {
     /// <summary>
     /// Immutable class to describe the OAuth functionality endpoints.

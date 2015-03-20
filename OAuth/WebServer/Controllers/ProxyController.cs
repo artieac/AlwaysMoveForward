@@ -12,7 +12,7 @@ using DevDefined.OAuth.Provider.Inspectors;
 using DevDefined.OAuth.Framework.Signing;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.Encryption;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.WebServer.Models;
 using AlwaysMoveForward.OAuth.WebServer.Code;
@@ -112,7 +112,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
             }
 
             UserTransferManager userTransferManager = new UserTransferManager();
-            Cookie encryptedCookie = new Cookie(AlwaysMoveForward.OAuth.Contracts.Constants.ProxyUserCookieName, userTransferManager.Encrypt(this.CurrentPrincipal.User));
+            Cookie encryptedCookie = new Cookie(AlwaysMoveForward.OAuth.Client.Constants.ProxyUserCookieName, userTransferManager.Encrypt(this.CurrentPrincipal.User));
             encryptedCookie.Domain = targetUri.Host;
 
             if (newRequest.CookieContainer == null)

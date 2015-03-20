@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.OAuth.Contracts
+namespace AlwaysMoveForward.OAuth.Client
 {
     /// <summary>
     /// This class groups together the verifier code and if the grant was successfull

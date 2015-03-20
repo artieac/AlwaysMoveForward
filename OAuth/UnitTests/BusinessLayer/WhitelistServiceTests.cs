@@ -5,7 +5,7 @@ using System.Text;
 using NUnit;
 using NUnit.Framework;
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.Configuration;
 using AlwaysMoveForward.OAuth.UnitTests.Constants;
 
 namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer

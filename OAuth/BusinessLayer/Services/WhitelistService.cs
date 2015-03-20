@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Common.Configuration;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {

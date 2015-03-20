@@ -2,7 +2,7 @@
 using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 
 namespace AlwaysMoveForward.OAuth.Client.RestSharp
 {
@@ -178,7 +178,7 @@ namespace AlwaysMoveForward.OAuth.Client.RestSharp
             return retVal;
         }
 
-        public string ExecuteAuthorizedRequest(string targetEndpoint, string targetAction, IOAuthToken oauthToken)
+        public override string ExecuteAuthorizedRequest(string targetEndpoint, string targetAction, IOAuthToken oauthToken)
         {
             string retVal = string.Empty;
 

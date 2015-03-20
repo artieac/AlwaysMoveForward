@@ -15,8 +15,8 @@ using AlwaysMoveForward.OAuth.BusinessLayer;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Common;
-using AlwaysMoveForward.OAuth.Contracts;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
+using AlwaysMoveForward.OAuth.Client;
+using AlwaysMoveForward.OAuth.Client.Configuration;
 
 namespace AlwaysMoveForward.OAuth.WebServer.Code
 {
@@ -53,7 +53,7 @@ namespace AlwaysMoveForward.OAuth.WebServer.Code
 
                 IOAuthContext oauthContext = AMFOAuthContextBuilder.FromHttpRequest(request, loadBalancerEndpoints);
 
-                ValidatedToken validatedToken = serviceManager.TokenService.ValidateSignature(oauthContext, oauthContext.Token, AlwaysMoveForward.OAuth.Contracts.Constants.HmacSha1SignatureMethod, oauthContext.GenerateSignatureBase());
+                ValidatedToken validatedToken = serviceManager.TokenService.ValidateSignature(oauthContext, oauthContext.Token, AlwaysMoveForward.OAuth.Client.Constants.HmacSha1SignatureMethod, oauthContext.GenerateSignatureBase());
 
                 if (validatedToken != null && validatedToken.User != null && validatedToken.OAuthToken != null)
                 {

@@ -9,7 +9,7 @@ using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.WebServer.Models;
 using AlwaysMoveForward.OAuth.WebServer.Code;

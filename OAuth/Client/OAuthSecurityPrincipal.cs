@@ -5,7 +5,7 @@ using System.Text;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 
-namespace AlwaysMoveForward.OAuth.Contracts
+namespace AlwaysMoveForward.OAuth.Client
 {
     /// <summary>
     /// This is a security principal to use with oauth that has the user associated with the token,

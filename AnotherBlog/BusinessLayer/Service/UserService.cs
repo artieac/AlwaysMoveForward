@@ -21,9 +21,7 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Contracts;
-using AlwaysMoveForward.OAuth.Contracts.Configuration;
-using AlwaysMoveForward.OAuth.Contracts.Repositories;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -184,7 +182,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public AnotherBlogUser GetAnotherBlogUserFromAMFUser(IOAuthToken accessToken)
+        public AnotherBlogUser GetFromAMFUser(IOAuthToken accessToken)
         {
             AnotherBlogUser retVal = null;
 

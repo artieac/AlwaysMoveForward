@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.PointChart.Web", "PointChart\Web\AlwaysMoveForward.PointChart.Web.csproj", "{DBEE9441-585A-421C-A3C1-1540A54C00A9}"
 EndProject
@@ -15,11 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common.DataLayer.NHibernate", "Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj", "{F9803443-3ED7-4FB4-B758-5D3419983163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Common", "OAuth\Common\AlwaysMoveForward.OAuth.Common.csproj", "{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client", "OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj", "{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Contracts", "OAuth\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj", "{9CDF027D-56BF-47E2-ACCC-83D5C7530099}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client.RestSharp", "OAuth\Client\RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj", "{28E86E9B-61AE-4720-AE00-AEAE7F739971}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client.RestSharp", "OAuth\Client.RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj", "{28E86E9B-61AE-4720-AE00-AEAE7F739971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +49,10 @@ Global
 		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CDF027D-56BF-47E2-ACCC-83D5C7530099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CDF027D-56BF-47E2-ACCC-83D5C7530099}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CDF027D-56BF-47E2-ACCC-83D5C7530099}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CDF027D-56BF-47E2-ACCC-83D5C7530099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Release|Any CPU.ActiveCfg = Release|Any CPU

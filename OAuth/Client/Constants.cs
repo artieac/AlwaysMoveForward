@@ -51,4 +51,5 @@ namespace AlwaysMoveForward.OAuth.Client
         /// </summary>
         public static readonly string AuthorizationHeader = "Authorization";
     }
+
 }

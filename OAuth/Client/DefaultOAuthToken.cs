@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.OAuth.Contracts
+namespace AlwaysMoveForward.OAuth.Client
 {
     /// <summary>
     /// A default implmentation of IOAuthToken, used mainly to pass a token and secret to/from classes.

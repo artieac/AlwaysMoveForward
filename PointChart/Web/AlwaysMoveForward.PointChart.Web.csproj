@@ -651,13 +651,9 @@
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\OAuth\Common\AlwaysMoveForward.OAuth.Common.csproj">
-      <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
-      <Name>AlwaysMoveForward.OAuth.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OAuth\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
-      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
+    <ProjectReference Include="..\..\OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\AlwaysMoveForward.PointChart.Common.csproj">
       <Project>{7b1c1c6e-c564-4b1d-9c1f-6317cbd3474a}</Project>

@@ -22,12 +22,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public UserDTO()
             : base()
         {
-            this.UserId = -1;
+            this.Id = -1;
         }
 
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual long UserId { get; set; }
+        public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool IsSiteAdministrator { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.DataMapper

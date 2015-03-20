@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace AlwaysMoveForward.OAuth.Contracts.Configuration
+namespace AlwaysMoveForward.OAuth.Client.Configuration
 {
     /// <summary>
     /// A class to simplify placing the OAuth URIs into a configuration file.

@@ -6,7 +6,7 @@ using DevDefined.OAuth.Storage;
 using DevDefined.OAuth.Utility;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
-using AlwaysMoveForward.OAuth.Contracts;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 

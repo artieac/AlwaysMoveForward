@@ -70,5 +70,7 @@
         /// <param name="verificationCode">The verification code</param>
         /// <returns>An acces token and its secret</returns>
         public abstract IOAuthToken ExchangeRequestTokenForAccessToken(IOAuthToken requestToken, string verificationCode);       
+
+        public abstract string ExecuteAuthorizedRequest(string targetEndpoint, string targetAction, IOAuthToken oauthToken);
     } 
 }

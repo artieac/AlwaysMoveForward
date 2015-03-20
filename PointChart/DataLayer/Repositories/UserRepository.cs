@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         protected override UserDTO GetDTOById(long idSource)
         {
             return this.UnitOfWork.CurrentSession.Query<UserDTO>()
-               .Where(r => r.UserId == idSource)
+               .Where(r => r.Id == idSource)
                .FirstOrDefault();
         }
 

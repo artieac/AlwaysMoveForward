@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AlwaysMoveForward.OAuth.WebServer</RootNamespace>
     <AssemblyName>AlwaysMoveForward.OAuth.WebServer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -44,10 +44,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DevDefined\DevDefined.OAuth\bin\Debug\DevDefined.OAuth.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -71,9 +67,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -291,13 +287,17 @@
       <Project>{e9c678ef-e731-41ad-8f3f-841f5e20b0f4}</Project>
       <Name>AlwaysMoveForward.OAuth.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\AlwaysMoveForward.OAuth.Contracts.csproj">
-      <Project>{9cdf027d-56bf-47e2-accc-83d5c7530099}</Project>
-      <Name>AlwaysMoveForward.OAuth.Contracts</Name>
+    <ProjectReference Include="..\Client\AlwaysMoveForward.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj">
       <Project>{9df9e6ba-fe69-4bd8-8f7b-8b1f36aeeb55}</Project>
       <Name>AlwaysMoveForward.OAuth.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj">
+      <Project>{61b700b6-3911-4cef-8751-7f42ca765068}</Project>
+      <Name>DevDefined.OAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

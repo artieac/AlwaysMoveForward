@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.Encryption;
 
-namespace AlwaysMoveForward.OAuth.Contracts
+namespace AlwaysMoveForward.OAuth.Common
 {
     /// <summary>
     /// A class to facilitate encrypting and decrypting the user we will pass from the proxy to the endpoint

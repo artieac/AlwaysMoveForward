@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.OAuth.Contracts.Configuration
+namespace AlwaysMoveForward.OAuth.Common.Configuration
 {
     public class WhiteListConfiguration : ConfigurationSection
     {
