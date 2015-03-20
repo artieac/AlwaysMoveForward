@@ -10,13 +10,13 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
     {
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public DateTime DateCompleted { get; set; }
+        public virtual DateTime DateCompleted { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public int NumberOfTimesCompleted { get; set; }
+        public virtual int NumberOfTimesCompleted { get; set; }
 
         [NHibernate.Mapping.Attributes.ManyToOne(Name = "Chart", ClassType = typeof(DTO.Chart), Column = "ChartId")]
         public virtual DTO.Chart Chart { get; set; }

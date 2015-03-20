@@ -17,7 +17,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IUserRepository : IRepository<AnotherBlogUser, int>
+    public interface IUserRepository : IRepository<AnotherBlogUser, long>
     {
         IList<AnotherBlogUser> GetBlogWriters(int blogId);
 

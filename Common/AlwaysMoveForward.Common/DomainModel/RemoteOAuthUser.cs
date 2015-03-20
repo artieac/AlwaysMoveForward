@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.Common.DomainModel
             this.OAuthServiceUserId = 0;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public long OAuthServiceUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

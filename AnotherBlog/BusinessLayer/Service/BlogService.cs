@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<Blog> GetByUserId(int userId)
+        public IList<Blog> GetByUserId(long userId)
         {
             return this.BlogRepository.GetByUserId(userId);
         }

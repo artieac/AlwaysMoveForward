@@ -80,7 +80,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IList<Blog> GetByUserId(int userId)
+        public IList<Blog> GetByUserId(long userId)
         {
             DetachedCriteria blogRoles = DetachedCriteria.For<BlogUserDTO>();
             blogRoles.CreateCriteria("User").Add(Expression.Eq("UserId", userId));

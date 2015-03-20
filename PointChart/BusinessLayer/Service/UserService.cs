@@ -103,7 +103,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             {
                 UserService.guestUser = new PointChartUser();
                 guestUser.IsSiteAdministrator = false;
-                guestUser.Roles = new Dictionary<int, RoleType.Id>();
             }
 
             return UserService.guestUser;

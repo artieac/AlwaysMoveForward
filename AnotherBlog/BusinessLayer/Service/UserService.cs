@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected IOAuthRepository OAuthRepository { get; private set; }
 
-        public AnotherBlogUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
+        public AnotherBlogUser Save(long userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
             AnotherBlogUser userToSave = null;
 
@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             return user;
         }
-        public void Delete(int userId)
+        public void Delete(long userId)
         {
             AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
 
@@ -116,7 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.GetAll();
         }
 
-        public AnotherBlogUser GetById(int userId)
+        public AnotherBlogUser GetById(long userId)
         {
             return this.UserRepository.GetById(userId);
         }      
@@ -126,7 +126,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
 
-        public AnotherBlogUser AddBlogRole(int userId, int blogId, RoleType.Id roleId)
+        public AnotherBlogUser AddBlogRole(long userId, int blogId, RoleType.Id roleId)
         {
             AnotherBlogUser retVal = null;
 
@@ -154,7 +154,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public AnotherBlogUser RemoveBlogRole(int userId, int blogId)
+        public AnotherBlogUser RemoveBlogRole(long userId, int blogId)
         {
             AnotherBlogUser retVal = null;
 

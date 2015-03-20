@@ -90,15 +90,15 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
                     }
                 }
 
-                if (retVal == false)
-                {
-                    RoleType.Id targetRoleEnum = (RoleType.Id)Enum.Parse(typeof(RoleType.Id), targetRole);
+                //if (retVal == false)
+                //{
+                //    RoleType.Id targetRoleEnum = (RoleType.Id)Enum.Parse(typeof(RoleType.Id), targetRole);
 
-                    if(this.CurrentUser.Roles.ContainsKey((int)targetRoleEnum))
-                    {
-                        retVal = true;
-                    }
-                }
+                //    if(this.CurrentUser.Roles.ContainsKey((int)targetRoleEnum))
+                //    {
+                //        retVal = true;
+                //    }
+                //}
             }
 
             return retVal;

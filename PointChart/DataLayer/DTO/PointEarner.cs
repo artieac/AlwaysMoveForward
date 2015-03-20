@@ -10,37 +10,37 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
     {
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public long AdministratorId { get; set; }
+        public virtual long AdministratorId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string UserName { get; set; }
+        public virtual string UserName { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public string LastName { get; set; }
+        public virtual string LastName { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public double PointsEarned { get; set; }
+        public virtual double PointsEarned { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "Charts", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(DTO.Chart))]
-        public IList<DTO.Chart> Charts { get; set; }
+        public virtual IList<DTO.Chart> Charts { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "PointsSpent", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "PointEarnerId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(DTO.PointsSpent))]
-        public IList<DTO.PointsSpent> PointsSpent { get; set; }
+        public virtual IList<DTO.PointsSpent> PointsSpent { get; set; }
     }
 }
