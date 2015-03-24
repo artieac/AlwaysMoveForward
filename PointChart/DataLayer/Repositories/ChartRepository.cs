@@ -35,28 +35,19 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return new DataMapper.ChartDataMap();
         }
 
-        public IList<Chart> GetByUserId(long userId)
+        public IList<Chart> GetByCreator(long creatorId)
         {
             IList<DTO.Chart> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Chart>()
-                .Where(r => r.AdministratorId == userId)
+                .Where(r => r.CreatorId == creatorId)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);
         }
 
-        public IList<Chart> GetByPointEarnerAndAdministratorId(long pointEarnerId, long administratorId)
+        public IList<Chart> GetByPointEarner(long pointEarnerId)
         {
             IList<DTO.Chart> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Chart>()
-                .Where(r => r.PointEarnerId == pointEarnerId && r.AdministratorId == administratorId)
-                .ToList();
-
-            return this.GetDataMapper().Map(retVal);
-        }
-
-        public IList<Chart> GetByAdministratorId(string firstName, string lastName, long administratorId)
-        {
-            IList<DTO.Chart> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Chart>()
-                .Where(r => r.AdministratorId == administratorId)
+                .Where(r => r.PointEarnerId == pointEarnerId)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);

@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
         protected IOAuthRepository OAuthRepository { get; private set; }
 
-        public PointChartUser Save(int userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
+        public PointChartUser Save(long userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
             PointChartUser userToSave = null;
 
@@ -62,15 +62,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             userToSave.IsSiteAdministrator = isSiteAdmin;
 
-            if (userAbout != null)
-            {
-                userToSave.About = Utils.StripJavascript(userAbout);
-            }
-            else
-            {
-                userToSave.About = string.Empty;
-            }
-
             return this.UserRepository.Save(userToSave);
         }
 
@@ -83,7 +74,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
 
             return user;
         }
-        public void Delete(int userId)
+        public void Delete(long userId)
         {
             PointChartUser targetUser = this.UserRepository.GetById(userId);
 
@@ -113,7 +104,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return this.UserRepository.GetAll();
         }
 
-        public PointChartUser GetById(int userId)
+        public PointChartUser GetById(long userId)
         {
             return this.UserRepository.GetById(userId);
         }

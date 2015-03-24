@@ -77,7 +77,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return retVal;
         }
 
-        public void Login(string blogSubFolder)
+        public void Login()
         {
             IOAuthToken requestToken = this.Services.OAuthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
 

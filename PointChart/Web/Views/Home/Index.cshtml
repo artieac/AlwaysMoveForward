@@ -52,16 +52,26 @@
         }
         else
         {
+            <h2>Charts you created</h2>
             <table>
-            @foreach (AMF.PointEarner pointEarner in @Model.PointEarners)
+            @foreach (AMF.Chart createdChart in @Model.OwnedCharts)
             {
-                double pointsOutstanding = pointEarner.PointsEarned - pointEarner.TotalPointsSpent;
                 <tr>
-                    <td><a href="/PointEarner/Charts/@pointEarner.Id">@pointEarner.FirstName&nbsp;@pointEarner.LastName</a></td>
-                    <td>@pointsOutstanding&nbsp;Points Remaining</td>                    
+                    <td>createdChart.Name</td>                    
+                </tr>
+            }
+            </table>          
+    
+            <h2>Charts you are assigned to</h2>
+            <table>
+            @foreach (AMF.Chart assignedChart in @Model.AssignedCharts)
+            {
+                <tr>
+                    <td>assignedChart.Name</td>                    
                 </tr>
             }
             </table>              
+    
         }
     }
     else

@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, long administratorId)
         {
             IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
-                .Where(r => r.Chart.Id == chart.Id && r.Chart.AdministratorId == administratorId && r.DateCompleted > weekStartDate && r.DateCompleted < weekEndDate)
+                .Where(r => r.ChartId == chart.Id && r.DateCompleted > weekStartDate && r.DateCompleted < weekEndDate)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);
@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public IList<CompletedTask> GetByChart(Chart chart, long administratorId)
         {
             IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
-                .Where(r => r.Chart.Id == chart.Id && r.Chart.AdministratorId == administratorId)
+                .Where(r => r.ChartId == chart.Id)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);
@@ -56,7 +56,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted, long administratorId)
         {
             DTO.CompletedTask retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
-                .Where(r => r.Chart.Id == chart.Id && r.Chart.AdministratorId == administratorId && r.Task.Id == task.Id && r.DateCompleted.Date == dateCompleted.Date)
+                .Where(r => r.ChartId == chart.Id && r.TaskId == task.Id && r.DateCompleted.Date == dateCompleted.Date)
                 .FirstOrDefault();
 
             return this.GetDataMapper().Map(retVal);

@@ -75,19 +75,5 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 return this.taskService;
             }
         }
-
-        private PointEarnerService pointEarnerService;
-        public PointEarnerService PointEarner
-        {
-            get
-            {
-                if (this.pointEarnerService == null)
-                {
-                    this.pointEarnerService = new PointEarnerService(this.UnitOfWork, this.PointChartRepositoryManager);
-                }
-
-                return this.pointEarnerService;
-            }
-        }
     }
 }

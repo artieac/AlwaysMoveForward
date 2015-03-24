@@ -15,27 +15,25 @@ namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
     {
         // GET: /API/ChartAPI/
         [RequestAuthorizationAttribute]
-        public JsonResult GetCharts()
+        public JsonResult GetChartsByCreator()
         {
-            IList<Chart> userCharts = this.Services.Charts.GetByUser(this.CurrentPrincipal.CurrentUser);
+            IList<Chart> userCharts = this.Services.Charts.GetByCreator(this.CurrentPrincipal.CurrentUser);
+            return this.Json(userCharts, JsonRequestBehavior.AllowGet);
+        }
+
+        [RequestAuthorizationAttribute]
+        public JsonResult GetChartsByPointEarner()
+        {
+            IList<Chart> userCharts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.Json(userCharts, JsonRequestBehavior.AllowGet);
         }
 
         [RequestAuthorizationAttribute]
         public JsonResult GetAll()
         {
-            IList<PointEarner> pointEarnerCharts = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
+            IList<Chart> creatorCharts = this.Services.Charts.GetByCreator(this.CurrentPrincipal.CurrentUser);
+            IList<Chart> pointEarnerCharts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.Json(pointEarnerCharts, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: /API/ChartAPI/
-        [RequestAuthorizationAttribute]
-        public JsonResult GetByPointEarnerId(int id)
-        {
-            PointEarnerModel retVal = new PointEarnerModel();
-            retVal.PointEarner = this.Services.PointEarner.GetById(id);
-            retVal.Charts = retVal.PointEarner.Charts;
-            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         [RequestAuthorizationAttribute]

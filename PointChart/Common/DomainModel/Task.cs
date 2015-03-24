@@ -42,5 +42,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// Gets and sets the administrator id for this task.
         /// </summary>
         public long AdministratorId { get; set; }
+
+        public IList<CompletedTask> CompletedTasks { get; set; }
     }
 }

@@ -36,7 +36,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer
         private CompletedTaskRepository completedTaskRepository;
         private TaskRepository taskRepository;
         private IUserRepository userRepository;
-        private PointEarnerRepository pointEarnerRepository;
         private PointsSpentRepository pointsSpentRepository;
 
         public ChartRepository Charts
@@ -88,19 +87,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer
                 }
 
                 return this.userRepository;
-            }
-        }
-
-        public PointEarnerRepository PointEarner
-        {
-            get
-            {
-                if (this.pointEarnerRepository == null)
-                {
-                    this.pointEarnerRepository = new PointEarnerRepository(this.UnitOfWork);
-                }
-
-                return this.pointEarnerRepository;
             }
         }
 

@@ -45,7 +45,6 @@
     <Compile Include="DomainModel\Chart.cs" />
     <Compile Include="DomainModel\CompletedTask.cs" />
     <Compile Include="DomainModel\PointChartUser.cs" />
-    <Compile Include="DomainModel\PointEarner.cs" />
     <Compile Include="DomainModel\PointsSpent.cs" />
     <Compile Include="DomainModel\RoleType.cs" />
     <Compile Include="DomainModel\Task.cs" />

@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
     {
         private const String TaskColumnHeader = "Task";
 
-        private ChartTaskModel GenerateCompletedTasks(DateTime? targetDate, int chartId, PointEarner pointEarner)
+        private ChartTaskModel GenerateCompletedTasks(DateTime? targetDate, long chartId, PointChartUser pointEarner)
         {
             ChartTaskModel retVal = new ChartTaskModel();
 
@@ -40,28 +40,28 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             foreach (CompletedTask completedTask in tasksCompletedDuringWeek)
             {
-                if (!retVal.CompletedTasks.ContainsKey(completedTask.Task.Id))
+                if (!retVal.CompletedTasks.ContainsKey(completedTask.TaskId))
                 {
-                    retVal.CompletedTasks.Add(completedTask.Task.Id, new Dictionary<DateTime, CompletedTask>());
+                    retVal.CompletedTasks.Add(completedTask.TaskId, new Dictionary<DateTime, CompletedTask>());
                 }
 
-                retVal.CompletedTasks[completedTask.Task.Id].Add(completedTask.DateCompleted, completedTask);
+                retVal.CompletedTasks[completedTask.TaskId].Add(completedTask.DateCompleted, completedTask);
             }
 
             return retVal;
         }
 
         [RequestAuthorization]
-        public ActionResult CompletedTasks(DateTime? targetDate, int pointEarnerId, int id)
+        public ActionResult CompletedTasks(long pointEarnerId, DateTime? targetDate, long id)
         {
-            PointEarner pointEarner = this.Services.PointEarner.GetById(pointEarnerId);
+            PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);
             return View(this.GenerateCompletedTasks(targetDate, id, pointEarner));
         }
 
         [RequestAuthorization]
-        public ActionResult Export(int pointEarnerId, int id, String fileType, DateTime? targetDate)
+        public ActionResult Export(long pointEarnerId, long id, String fileType, DateTime? targetDate)
         {
-            PointEarner pointEarner = this.Services.PointEarner.GetById(pointEarnerId);
+            PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);
             ChartTaskModel model = this.GenerateCompletedTasks(targetDate, id, pointEarner);
 
             IList<String> reportHeaders = this.GenerateReportHeaders();
@@ -137,7 +137,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         [RequestAuthorization]
         public ActionResult ExportEmpty(int pointEarnerId, int id, String fileType, DateTime? targetDate)
         {
-            PointEarner pointEarner = this.Services.PointEarner.GetById(pointEarnerId);
+            PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);
             ChartTaskModel model = this.GenerateCompletedTasks(targetDate, id, pointEarner);
 
             IList<String> reportHeaders = this.GenerateReportHeaders();
@@ -177,17 +177,17 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 
             IList<String> pointsEarnedRow = new List<String>();
             pointsEarnedRow.Add("Points Earned");
-            pointsEarnedRow.Add(model.PointEarner.PointsEarned.ToString());
+            pointsEarnedRow.Add("0");
             retVal.Add(pointsEarnedRow);
 
             IList<String> pointsSpentRow = new List<String>();
             pointsSpentRow.Add("Points Spent");
-            pointsSpentRow.Add(model.PointEarner.PointsSpent.ToString());
+            pointsSpentRow.Add("0");
             retVal.Add(pointsSpentRow);
 
             IList<String> totalPointsRow = new List<String>();
             totalPointsRow.Add("Total Points");
-            totalPointsRow.Add(Convert.ToString(model.PointEarner.PointsAvailable.ToString()));
+            totalPointsRow.Add(Convert.ToString(0));
             retVal.Add(totalPointsRow);
 
             return retVal;

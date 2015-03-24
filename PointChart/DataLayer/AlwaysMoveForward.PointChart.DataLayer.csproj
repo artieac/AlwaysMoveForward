@@ -66,16 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMapper\AutoMapperConfiguration.cs" />
     <Compile Include="DataMapper\ChartDataMap.cs" />
     <Compile Include="DataMapper\CompletedTaskDataMap.cs" />
     <Compile Include="DataMapper\PointChartUserDataMap.cs" />
-    <Compile Include="DataMapper\PointEarnerDataMap.cs" />
     <Compile Include="DataMapper\PointsSpentDataMap.cs" />
     <Compile Include="DataMapper\TaskDataMap.cs" />
     <Compile Include="DTO\Chart.cs" />
     <Compile Include="DTO\CompletedTask.cs" />
-    <Compile Include="DTO\PointEarner.cs" />
     <Compile Include="DTO\PointsSpent.cs" />
     <Compile Include="DTO\Task.cs" />
     <Compile Include="DTO\User.cs" />
@@ -85,7 +82,6 @@
     <Compile Include="Repositories\CompletedTaskRepository.cs" />
     <Compile Include="Repositories\IChartRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
-    <Compile Include="Repositories\PointEarnerRepository.cs" />
     <Compile Include="Repositories\PointsSpentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="RepositoryManager.cs" />

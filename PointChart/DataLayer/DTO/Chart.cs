@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         public virtual string Name { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual long AdministratorId { get; set; }
+        public virtual long CreatorId { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "ChartTasks", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "ChartId")]

@@ -9,7 +9,7 @@ namespace AlwaysMoveForward.PointChart.Web.Models
 {
     public class ChartTaskModel
     {
-        public PointEarner PointEarner { get; set; }
+        public PointChartUser PointEarner { get; set; }
         public Chart Chart { get; set; }
         public IList<Task> ChartTasks { get; set; }
         public IList<Task> Tasks { get; set; }

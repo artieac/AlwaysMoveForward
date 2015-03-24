@@ -19,7 +19,6 @@ namespace AlwaysMoveForward.Common.DomainModel
         public string LastName { get; set; }
         public string AccessToken { get; set; }
         public string AccessTokenSecret { get; set; }
-        public string About { get; set; }
 
         public string GetDisplayName()
         {

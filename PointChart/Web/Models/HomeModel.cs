@@ -9,6 +9,7 @@ namespace AlwaysMoveForward.PointChart.Web.Models
 {
     public class HomeModel
     {
-        public IList<PointEarner> PointEarners { get; set; }
+        public IList<Chart> OwnedCharts { get; set; }
+        public IList<Chart> AssignedCharts { get; set; }
     }
 }

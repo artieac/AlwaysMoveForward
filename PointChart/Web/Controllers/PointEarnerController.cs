@@ -23,8 +23,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult Charts(int id)
         {
             PointEarnerModel model = new PointEarnerModel();
-            model.PointEarner = this.Services.PointEarner.GetById(id);
-            model.Charts = this.Services.Charts.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
+            model.Charts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.View(model);
         }
 
@@ -32,8 +31,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult PointsDetail(int id)
         {
             PointEarnerModel model = new PointEarnerModel();
-            model.PointEarner = this.Services.PointEarner.GetById(id);
-            model.Charts = this.Services.Charts.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
+            model.Charts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.View(model);
         }
 
@@ -41,8 +39,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult SpendPoints(int pointEarnerId, DateTime dateSpent, double pointsToSpend, string description)
         {
             PointEarnerModel model = new PointEarnerModel();
-            model.PointEarner = this.Services.PointEarner.SpendPoints(pointEarnerId, pointsToSpend, dateSpent, description);
-            model.Charts = this.Services.Charts.GetByPointEarner(pointEarnerId, this.CurrentPrincipal.CurrentUser);
+            model.Charts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.View("PointsDetail", model);
         }
 
@@ -50,9 +47,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult DeletePointsSpent(int pointEarnerId, int id)
         {
             PointEarnerModel model = new PointEarnerModel();
-            this.Services.PointEarner.DeleteSpentPoints(pointEarnerId, id);
-            model.PointEarner = this.Services.PointEarner.GetById(pointEarnerId);
-            model.Charts = this.Services.Charts.GetByPointEarner(pointEarnerId, this.CurrentPrincipal.CurrentUser);
+            model.Charts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
             return this.View("PointsDetail", model);
         }      
     }

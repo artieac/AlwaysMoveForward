@@ -16,66 +16,21 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
     {      
         public ChartService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
 
-        public Chart GetById(int chartId)
+        public Chart GetById(long chartId)
         {
             return this.PointChartRepositories.Charts.GetById(chartId);
         }
 
-        public IList<Chart> GetByUser(PointChartUser chartAdministrator)
-        {
-            IList<Chart> retVal = new List<Chart>();
-
-            if (chartAdministrator != null)
-            {
-                retVal = this.PointChartRepositories.Charts.GetByUserId(chartAdministrator.Id);
-            }
-
-            return retVal;
-        }
-
-        public Chart Add(int pointEarnerId, PointChartUser currentUser)
-        {
-            Chart retVal = null;
-
-            PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
-
-            if (pointEarner != null)
-            {
-                retVal = this.Add(pointEarner, currentUser);
-            }
-
-            return retVal;
-        }
-
-        public Chart Add(PointEarner pointEarner, PointChartUser currentUser)
-        {
-            Chart retVal = null;
-
-            if (pointEarner != null && currentUser != null)
-            {
-                IList<Chart> earnerCharts = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarner.Id, currentUser.Id);
-
-                if (earnerCharts == null || earnerCharts.Count == 0)
-                {
-                    retVal = new Chart();
-                    retVal.AdministratorId = currentUser.Id;
-                    retVal = this.PointChartRepositories.Charts.Save(retVal);
-                }
-            }
-
-            return retVal;
-        }
-
-        public Chart Edit(int chartId, string chartName, int pointEarnerId, PointChartUser currentUser)
+        public Chart Edit(long chartId, string chartName, long pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
 
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
-            PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
+            PointChartUser pointEarner = this.PointChartRepositories.UserRepository.GetById(pointEarnerId);
 
             if (retVal != null && pointEarner != null)
             {
-                if (retVal.AdministratorId == currentUser.Id) 
+                if (retVal.CreatorId == currentUser.Id) 
                 {
                     retVal.Name = chartName;
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
@@ -85,16 +40,16 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public Chart AssignChartToUser(int chartId, int pointEarnerId, PointChartUser currentUser)
+        public Chart AssignChartToUser(long chartId, long pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
 
             retVal = this.PointChartRepositories.Charts.GetById(chartId);
-            PointEarner pointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
+            PointChartUser pointEarner = this.PointChartRepositories.UserRepository.GetById(pointEarnerId);
 
             if (retVal != null)
             {
-                if (retVal.AdministratorId == currentUser.Id)
+                if (retVal.CreatorId == currentUser.Id)
                 {
                     retVal = this.PointChartRepositories.Charts.Save(retVal);
                 }
@@ -103,17 +58,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public PointEarner GetPointEarnerByChartId(int chartId)
-        {
-            return this.GetPointEarnerByChart(this.PointChartRepositories.Charts.GetById(chartId));
-        }
-
-        public PointEarner GetPointEarnerByChart(Chart chart)
-        {
-            return this.PointChartRepositories.PointEarner.GetById(0);
-        }
-
-        public Chart AddTask(int chartId, int taskId)
+        public Chart AddTask(long chartId, long taskId)
         {
             Chart retVal = this.GetById(chartId);
 
@@ -136,7 +81,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        private Task GetChartTask(Chart chart, int taskId)
+        private Task GetChartTask(Chart chart, long taskId)
         {
             Task retVal = null;
 
@@ -148,7 +93,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public void DeleteTask(int chartId, int taskId)
+        public void DeleteTask(long chartId, long taskId)
         {
             Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
             Task targetTask = this.GetChartTask(targetChart, taskId);
@@ -160,7 +105,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             }
         }
 
-        public CompletedTask AddCompletedTask(int chartId, int taskId, DateTime dateCompleted, int numberOfTimesCompleted, PointChartUser administrator)
+        public CompletedTask AddCompletedTask(long chartId, long taskId, DateTime dateCompleted, int numberOfTimesCompleted, PointChartUser administrator)
         {
             CompletedTask retVal = null;
 
@@ -215,15 +160,25 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
             return retVal;
         }
 
-        public IList<Chart> GetByPointEarner(int pointEarnerId, PointChartUser currentUser)
+        public IList<Chart> GetByCreator(PointChartUser currentUser)
         {
             IList<Chart> retVal = new List<Chart>();
 
-            PointEarner chartPointEarner = this.PointChartRepositories.PointEarner.GetById(pointEarnerId);
-
-            if (chartPointEarner != null)
+            if(currentUser != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByPointEarnerAndAdministratorId(pointEarnerId, currentUser.Id);
+                retVal = this.PointChartRepositories.Charts.GetByCreator(currentUser.Id);
+            }
+
+            return retVal;
+        }
+
+        public IList<Chart> GetByPointEarner(PointChartUser currentUser)
+        {
+            IList<Chart> retVal = new List<Chart>();
+
+            if (currentUser != null)
+            {
+                retVal = this.PointChartRepositories.Charts.GetByPointEarner(currentUser.Id);
             }
 
             return retVal;

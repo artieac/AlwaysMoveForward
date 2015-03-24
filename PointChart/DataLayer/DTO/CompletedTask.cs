@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
     [NHibernate.Mapping.Attributes.Class(Table = "ChartTaskInstances")]
     public class CompletedTask
     {
-        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public virtual long Id { get; set; }
 
@@ -18,10 +18,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public virtual int NumberOfTimesCompleted { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Chart", ClassType = typeof(DTO.Chart), Column = "ChartId")]
-        public virtual DTO.Chart Chart { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual long ChartId { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "Task", ClassType = typeof(DTO.Task), Column = "TaskId")]
-        public virtual DTO.Task Task { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual long TaskId { get; set; }
     }
 }

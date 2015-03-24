@@ -17,15 +17,8 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult Index()
         {
             HomeModel model = new HomeModel();
-       
-            if (this.CurrentPrincipal.IsAuthenticated == true)
-            {
-                model.PointEarners = this.Services.PointEarner.GetAll(this.CurrentPrincipal.CurrentUser);
-            }
-            else
-            {
-                model.PointEarners = new List<PointEarner>();
-            }
+            model.OwnedCharts = this.Services.Charts.GetByCreator(this.CurrentPrincipal.CurrentUser);
+            model.AssignedCharts = this.Services.Charts.GetByPointEarner(this.CurrentPrincipal.CurrentUser);
 
             return this.View(model);
         }

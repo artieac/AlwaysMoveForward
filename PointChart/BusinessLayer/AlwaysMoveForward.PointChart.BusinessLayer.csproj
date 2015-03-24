@@ -48,7 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ChartService.cs" />
     <Compile Include="Service\PointChartService.cs" />
-    <Compile Include="Service\PointEarnerService.cs" />
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="Service\ServiceManagerBuilder.cs" />
     <Compile Include="Service\TaskService.cs" />

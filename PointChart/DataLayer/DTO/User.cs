@@ -25,15 +25,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "0")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool IsSiteAdministrator { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property(Type = "StringClob")]
-        public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual long OAuthServiceUserId { get; set; }

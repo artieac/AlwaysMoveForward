@@ -24,9 +24,14 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         public long Id { get; set; }
 
         /// <summary>
+        /// Gets and sets the Chart that was completed.
+        /// </summary>
+        public long ChartId { get; set; }
+
+        /// <summary>
         /// Gets and sets the Task that was completed.
         /// </summary>
-        public Task Task { get; set; }
+        public long TaskId { get; set; }
 
         /// <summary>
         /// Gets and sets the date the task was completed
