@@ -41,21 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClearScript">
-      <HintPath>..\..\packages\JavaScriptEngineSwitcher.V8.1.2.4\lib\net40\ClearScript.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Core">
-      <HintPath>..\..\packages\JavaScriptEngineSwitcher.Core.1.2.4\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Msie">
-      <HintPath>..\..\packages\JavaScriptEngineSwitcher.Msie.1.2.4\lib\net40\JavaScriptEngineSwitcher.Msie.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.V8">
-      <HintPath>..\..\packages\JavaScriptEngineSwitcher.V8.1.2.4\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
-    </Reference>
-    <Reference Include="JSPool">
-      <HintPath>..\..\packages\JSPool.0.2.0\lib\net40-Client\JSPool.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MsieJavaScriptEngine">
       <HintPath>..\..\packages\MsieJavaScriptEngine.1.5.1\lib\net40\MsieJavaScriptEngine.dll</HintPath>
@@ -63,18 +48,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle">
-      <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="React">
-      <HintPath>..\..\packages\React.Core.1.4.0\lib\net40\React.dll</HintPath>
-    </Reference>
-    <Reference Include="React.Web">
-      <HintPath>..\..\packages\React.Web.1.4.0\lib\net40\React.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="React.Web.Mvc4">
-      <HintPath>..\..\packages\React.Web.Mvc4.1.4.0\lib\net40\React.Web.Mvc4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -148,7 +121,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="Areas\API\APIAreaRegistration.cs" />
     <Compile Include="Areas\API\Controllers\ChartAPIController.cs" />
     <Compile Include="Code\Extensions\FilterExtension.cs" />
@@ -188,18 +160,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-ia32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -664,14 +624,6 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\Modules\FactoryModule.js" />
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
-    <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\react\JSXTransformer-0.13.1.js" />
-    <Content Include="Scripts\react\react-0.13.1.js" />
-    <Content Include="Scripts\react\react-0.13.1.min.js" />
-    <Content Include="Scripts\react\react-with-addons-0.13.1.js" />
-    <Content Include="Scripts\react\react-with-addons-0.13.1.min.js" />
-    <Content Include="Scripts\require.js" />
-    <Content Include="Scripts\require_jquery.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

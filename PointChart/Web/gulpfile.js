@@ -6,7 +6,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
 var paths = {
-    scripts: ['../node_modules/less/dist/*.js'],
+    scripts: ['../node_modules/less/dist/*.js', '../node_modules/react/dist/*.js'],
 };
 
 // Not all tasks need to use streams 
