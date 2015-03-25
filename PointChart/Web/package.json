@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "PointChart",
   "author": "Arthur Correa",
-  "license": "MIT",
+  "license": "proprietary",
   "private": true,
   "devDependencies": {
     "browser-sync": "^1.9.1",
@@ -48,4 +48,24 @@
   "browser": {
     "postMessage": "./Content/Scripts/lib/jquery.postMessage.js"
   },
-  "browserify": {
+ "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        },
+        "browserify-shim"
+      ]
+    ],
+    "browserify-shim": {
+      "jquery": "$",
+      "bootstrap": {
+        "exports": "bootstrap",
+        "depends": [
+          "jquery:$"
+        ]
+      }
+    }
+  }
+}
