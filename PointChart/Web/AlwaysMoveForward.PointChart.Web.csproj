@@ -318,6 +318,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\appBundle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Charts\Chart.js" />
@@ -630,7 +631,7 @@
     <Content Include="Scripts\Modules\FactoryModule.js" />
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
     <Content Include="Scripts\reflux\actions\chartActions.js" />
-    <Content Include="Scripts\reflux\Components\ChartTable.js" />
+    <None Include="Scripts\reflux\Components\ChartTable.jsx" />
     <Content Include="Scripts\reflux\stores\chartStore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
