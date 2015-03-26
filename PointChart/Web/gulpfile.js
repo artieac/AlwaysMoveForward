@@ -1,12 +1,19 @@
-﻿var gulp = require('gulp');
-var less = require('less');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var del = require('del');
+﻿var gulp = require('./Scripts/gulp')([
+    'browserify',
+]);
+
+// Actions
+//var contactCollectionActions = require("../actions/contactCollectionActions");
+//var trackingActions = require("../actions/trackingActions");
+//var applicationActions = require("../actions/applicationActions");
+
+// Stores
+//var contactCollectionStore = require("../stores/contactCollectionStore");
+//var countryInfoStore = require("../stores/countryInfoStore");
+//var notificationStore = require("../stores/notificationStore");
 
 var paths = {
-    scripts: ['../node_modules/less/dist/*.js', '../node_modules/react/dist/*.js'],
+    scripts: ['./node_modules/less/dist/*.js', './node_modules/react/dist/*.js'],
 };
 
 // Not all tasks need to use streams 
@@ -22,7 +29,7 @@ gulp.task('scripts', ['clean'], function () {
     return gulp.src(paths.scripts)
       .pipe(sourcemaps.init())
         .pipe(uglify())
-//        .pipe(concat('all.min.js'))
+        .pipe(concat('gulpscripts.min.js'))
       .pipe(sourcemaps.write())
       .pipe(gulp.dest('Scripts/gulp'));
 });
@@ -34,3 +41,6 @@ gulp.task('watch', function () {
 
 // The default task (called when you run `gulp` from cli) 
 gulp.task('default', ['watch', 'scripts']);
+
+gulp.task('build', ['browserify']);
+gulp.task('default', ['build']);

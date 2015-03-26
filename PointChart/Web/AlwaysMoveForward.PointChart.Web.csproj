@@ -323,8 +323,6 @@
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\Charts\chartConfig.js" />
     <Content Include="Scripts\Charts\chartController.js" />
-    <Content Include="Scripts\Charts\ChartRow.js" />
-    <Content Include="Scripts\Charts\ChartTable.js" />
     <Content Include="Scripts\Charts\PointEarners.js" />
     <Content Include="Scripts\Charts\Task.js" />
     <Content Include="Scripts\Common\SiteCommon.js" />
@@ -353,6 +351,15 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\Controllers\PointEarnerController.js" />
+    <Content Include="Scripts\gulp\config.js" />
+    <Content Include="Scripts\gulp\gulpscripts.min.js" />
+    <Content Include="Scripts\gulp\index.js" />
+    <Content Include="Scripts\gulp\tasks\browserify.js" />
+    <Content Include="Scripts\gulp\tasks\uglify.js" />
+    <Content Include="Scripts\gulp\tasks\watch.js" />
+    <Content Include="Scripts\gulp\tasks\watchify.js" />
+    <Content Include="Scripts\gulp\util\bundleLogger.js" />
+    <Content Include="Scripts\gulp\util\handleErrors.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
@@ -611,8 +618,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\less-1.5.1.js" />
-    <Content Include="Scripts\less-1.5.1.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
@@ -624,6 +629,9 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\Modules\FactoryModule.js" />
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
+    <Content Include="Scripts\reflux\actions\chartActions.js" />
+    <Content Include="Scripts\reflux\Components\ChartTable.js" />
+    <Content Include="Scripts\reflux\stores\chartStore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
