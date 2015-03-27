@@ -1,15 +1,16 @@
 ﻿/** @jsx React.DOM */
+var jQuery = require('jquery');
 var React = require('react');
 var Route = require('react-router');
 var chartCollectionStore = require('../stores/chartCollectionStore');
 var chartCollectionActions = require('../actions/chartCollectionActions');
-var ChartTable = require('../Components/ChartTable.jsx');
+var ChartTable = require('../Components/ChartTable');
 
 var HomePageApp = React.createClass({
     getInitialState: function() {
-        return { 
-            chartCollectionActions.updateChartCollection();
-        }
+        alert('here');
+        chartCollectionActions.updateChartCollection();
+        return { };
     },
 
     onUpdate: function(postData) {
@@ -21,9 +22,6 @@ var HomePageApp = React.createClass({
     }
 });
 
-React.render(
-<HomePageApp />,
-document.getElementById("reactContent")
-);
+React.render(<HomePageApp />, jQuery("reactContent"));
 
 module.exports = HomePageApp;

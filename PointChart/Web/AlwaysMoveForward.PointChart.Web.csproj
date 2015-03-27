@@ -640,8 +640,8 @@
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
     <Content Include="Scripts\reflux\actions\chartActions.js" />
     <Content Include="Scripts\reflux\actions\chartCollectionActions.js" />
-    <None Include="Scripts\reflux\apps\HomePageApp.jsx" />
-    <None Include="Scripts\reflux\Components\ChartTable.jsx" />
+    <Content Include="Scripts\reflux\apps\HomePageApp.js" />
+    <Content Include="Scripts\reflux\Components\ChartTable.js" />
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
     <Content Include="Web.config" />
