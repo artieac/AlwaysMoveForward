@@ -1,6 +1,9 @@
 ﻿var React = require('react');
 var jQuery = require('jquery');
 
+// Actions
+var chartCollectionStore = require("../stores/chartCollectionStore");
+
 var ChartRow = React.createClass({
     render: function () {
         return (
@@ -28,7 +31,4 @@ var ChartTable = React.createClass({
     }
 });
 
-React.render(
-<ChartTable />,
-document.getElementById("reactContent")
-);
+module.exports = ChartTable;
