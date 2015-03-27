@@ -22,17 +22,23 @@ var chartCollectionStore = Reflux.createStore({
     chartCollection: {},
 
     init: function() {
-        this.chartCollection = defaultChartList;
+        this.chartCollection = this.getDefaultData();
     },
 
-    getData: function () {
+    updateChartCollection: function () {
+        jQuery.ajax({
+            url: '/api/Charts?chartRole=creator',
+            async: false,
+            dataType: 'json',
+            success: function(chartData) {
+                this.chartCollection = chartData;
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
         return this.chartCollection;
-    },
-
-    onChartCollectionUpdated: function (chartCollection) {
-        alert(chartCollection);
-    },
-    
+    },    
 });
 
 module.exports = chartCollectionStore;

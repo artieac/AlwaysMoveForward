@@ -41,9 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Less">
-      <HintPath>..\..\packages\Less.3.0\lib\Less.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MsieJavaScriptEngine">
       <HintPath>..\..\packages\MsieJavaScriptEngine.1.5.1\lib\net40\MsieJavaScriptEngine.dll</HintPath>
@@ -125,7 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\API\APIAreaRegistration.cs" />
+    <Compile Include="Areas\API\Controllers\BaseAPIController.cs" />
     <Compile Include="Areas\API\Controllers\ChartAPIController.cs" />
+    <Compile Include="Areas\API\Controllers\Charts.cs" />
     <Compile Include="Code\Extensions\FilterExtension.cs" />
     <Compile Include="Code\Extensions\Pager.cs" />
     <Compile Include="Code\Extensions\PagerExtensions.cs" />
@@ -626,6 +625,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\less-1.5.1.js" />
+    <Content Include="Scripts\less-1.5.1.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />

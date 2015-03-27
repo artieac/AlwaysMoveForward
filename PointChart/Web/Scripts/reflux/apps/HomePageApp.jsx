@@ -8,7 +8,7 @@ var ChartTable = require('../Components/ChartTable.jsx');
 var HomePageApp = React.createClass({
     getInitialState: function() {
         return { 
-//            chartCollectionStore.getData();
+            chartCollectionActions.updateChartCollection();
         }
     },
 
