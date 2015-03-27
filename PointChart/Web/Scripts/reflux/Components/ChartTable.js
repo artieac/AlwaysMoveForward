@@ -1,5 +1,5 @@
-﻿var jQuery = require('jquery');
-var React = require('react');
+﻿var React = require('react');
+var jQuery = require('jquery');
 
 var ChartRow = React.createClass({
     render: function () {
@@ -29,6 +29,6 @@ var ChartTable = React.createClass({
 });
 
 React.render(
-    <ChartTable />
-    jQuery("reactContent");
+<ChartTable />,
+document.getElementById("reactContent")
 );

@@ -36,8 +36,6 @@
     <link href="@Url.Content("~/Content/Themes/Site.less")" rel="stylesheet/less" type="text/css" />
     <link href="@Url.Content("~/Content/Themes/Pager.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Themes/TabControl.less")" rel="stylesheet/less" type="text/css" />
-    <script src="@Url.Content("~/Scripts/appbundle.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/appbundle.js")" type="text/javascript"></script>
     @RenderSection("headerPlugins", false)
 </head>
 <body>
@@ -68,8 +66,7 @@
             }
         }
         <div id="reactContent"></div>
-        <script type="text/jsx" src="Scripts/reflux/components/ChartTable.js">
-        </script>
+        <script src="@Url.Content("~/Scripts/dist/src/build.js")" type="text/javascript"></script>
         <div class="contentPanel">
             @RenderBody()
         </div>

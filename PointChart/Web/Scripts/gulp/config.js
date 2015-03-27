@@ -12,5 +12,9 @@ module.exports = {
             // list of externally available modules to exclude from the bundle
             external: ['jquery']
         }]
+    },
+    filePaths: {
+        appSource: ['./Scripts/reflux/actions/*.js', './Scripts/reflux/Components/*.js', './Scripts/reflux/stores/*.js'],
+        sourceDestination: '/Scripts/dist/src'
     }
 };

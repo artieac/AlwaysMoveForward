@@ -5,10 +5,14 @@
 
 var gulp = require('gulp');
 var config = require('../config');
+var react = require('gulp-react');
 
-gulp.task('watch', ['watchify', 'browserSync'], function () {
-    gulp.watch(config.sass.src, ['sass']);
-    gulp.watch(config.images.src, ['images']);
-    gulp.watch(config.markup.src, ['markup']);
-    // Watchify will watch and recompile our JS, so no need to gulp.watch it
+gulp.task('transform', function () {
+    gulp.src(config.filePaths.appSource)
+      .pipe(react())
+      .pipe(gulp.dest(config.filePaths.sourceDestination));
+});
+
+gulp.task('watch', ['transform'], function () {
+    gulp.watch(config.watch.appSource);
 });

@@ -25,6 +25,7 @@
         "gulp-util": "^3.0.2",
         "gulp-watch": "^0.6.10",
         "gulp-notify": "^2.2.0",
+		"gulp-react": "^3.0.1",
         "memory-streams": "0.0.3",
         "merge-stream": "^0.1.7",
         "reactify": "^1.0.0",
