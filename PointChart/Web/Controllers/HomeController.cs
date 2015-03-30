@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
     public class HomeController : BaseController
     {
         // GET: /Home/
-        [RequestAuthorizationFilter]
+        [MVCAuthorization]
         public ActionResult Index()
         {
             HomeModel model = new HomeModel();

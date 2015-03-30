@@ -22,9 +22,9 @@ using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class RequestAuthorizationAttribute : RequestAuthorizationFilter
+    public class MVCAuthorizationAttribute : System.Web.Mvc.AuthorizeAttribute
     {
-        public RequestAuthorizationAttribute()
+        public MVCAuthorizationAttribute()
             : base()
         {
             this.RequiredRoles = string.Empty;
@@ -36,16 +36,14 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            base.OnAuthorization(filterContext);
-
             bool isAuthorized = false;
+
+            SecurityPrincipal currentPrincipal = CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
 
             try
             {
-                if (System.Threading.Thread.CurrentPrincipal != null)
+                if (currentPrincipal != null)
                 {
-                    SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
-
                     if (string.IsNullOrEmpty(this.RequiredRoles))
                     {
                         // no required roles allow everyone.  But since this is being flagged at all

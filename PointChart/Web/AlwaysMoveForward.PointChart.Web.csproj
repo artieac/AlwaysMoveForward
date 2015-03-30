@@ -119,8 +119,9 @@
     <Compile Include="Code\Extensions\PagerExtensions.cs" />
     <Compile Include="Code\Extensions\TabElements.cs" />
     <Compile Include="Code\Filters\AdminAuthorizationFilter.cs" />
-    <Compile Include="Code\Filters\RequestAuthorizationAttribute.cs" />
-    <Compile Include="Code\Filters\RequestAuthorizationFilter.cs" />
+    <Compile Include="Code\Filters\CookieAuthenticationParser.cs" />
+    <Compile Include="Code\Filters\MVCAuthorizationAttribute.cs" />
+    <Compile Include="Code\Filters\WebAPIAuthorizationAttribute.cs" />
     <Compile Include="Code\Responses\CSVResult.cs" />
     <Compile Include="Code\Responses\ExcelResult.cs" />
     <Compile Include="Code\Responses\FileExtension.cs" />

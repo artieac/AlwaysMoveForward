@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
     public class ChartsController : BaseAPIController
     {
         // GET api/<controller>
-        [RequestAuthorizationAttribute]
+        [WebAPIAuthorization]
         public IList<Chart> Get()
         {
             IList<Chart> retVal = new List<Chart>();

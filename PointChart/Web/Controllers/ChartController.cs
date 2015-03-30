@@ -51,14 +51,14 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return retVal;
         }
 
-        [RequestAuthorization]
+        [MVCAuthorization]
         public ActionResult CompletedTasks(long pointEarnerId, DateTime? targetDate, long id)
         {
             PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);
             return View(this.GenerateCompletedTasks(targetDate, id, pointEarner));
         }
 
-        [RequestAuthorization]
+        [MVCAuthorization]
         public ActionResult Export(long pointEarnerId, long id, String fileType, DateTime? targetDate)
         {
             PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);
@@ -134,7 +134,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             }
         }
 
-        [RequestAuthorization]
+        [MVCAuthorization]
         public ActionResult ExportEmpty(int pointEarnerId, int id, String fileType, DateTime? targetDate)
         {
             PointChartUser pointEarner = this.Services.UserService.GetById(pointEarnerId);

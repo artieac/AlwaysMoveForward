@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.PointChart.Web", "PointChart\Web\AlwaysMoveForward.PointChart.Web.csproj", "{FB37619F-F9FB-49E8-AE86-A0EB8FB37863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.PointChart.WebOriginal", "PointChart\WebOriginal\AlwaysMoveForward.PointChart.WebOriginal.csproj", "{DBEE9441-585A-421C-A3C1-1540A54C00A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,10 +57,6 @@ Global
 		{FB37619F-F9FB-49E8-AE86-A0EB8FB37863}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB37619F-F9FB-49E8-AE86-A0EB8FB37863}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB37619F-F9FB-49E8-AE86-A0EB8FB37863}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBEE9441-585A-421C-A3C1-1540A54C00A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBEE9441-585A-421C-A3C1-1540A54C00A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBEE9441-585A-421C-A3C1-1540A54C00A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBEE9441-585A-421C-A3C1-1540A54C00A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,13 +13,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
     public class PointEarnerController : BaseController
     {
         // GET: /PointEarner/
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult Index()
         {
             return this.View();
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult Charts(int id)
         {
             PointEarnerModel model = new PointEarnerModel();
@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View(model);
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult PointsDetail(int id)
         {
             PointEarnerModel model = new PointEarnerModel();
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View(model);
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult SpendPoints(int pointEarnerId, DateTime dateSpent, double pointsToSpend, string description)
         {
             PointEarnerModel model = new PointEarnerModel();
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View("PointsDetail", model);
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult DeletePointsSpent(int pointEarnerId, int id)
         {
             PointEarnerModel model = new PointEarnerModel();

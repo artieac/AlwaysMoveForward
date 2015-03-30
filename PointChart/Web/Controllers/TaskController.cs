@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
     public class TaskController : BaseController
     {
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult Index()
         {
             TaskModel model = new TaskModel();
@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View(model);
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult Add(string addTaskName, double addTaskPoints, int addTaskMaxPerDay)
         {
             TaskModel model = new TaskModel();
@@ -37,7 +37,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View("Index", model);
         }
 
-        [RequestAuthorizationAttribute]
+        [MVCAuthorizationAttribute]
         public ActionResult Edit(int editTaskId, string editTaskName, double editTaskPoints, int editTaskMaxPerDay)
         {
             TaskModel model = new TaskModel();
