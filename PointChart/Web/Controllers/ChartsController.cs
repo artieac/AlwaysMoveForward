@@ -7,9 +7,9 @@ using System.Web.Http;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
 
-namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
+namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
-    public class Charts : BaseAPIController
+    public class ChartsController : BaseAPIController
     {
         // GET api/<controller>
         [RequestAuthorizationAttribute]

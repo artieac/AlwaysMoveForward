@@ -14,14 +14,18 @@ var HomePageApp = React.createClass({
     },
 
     onUpdate: function(postData) {
-        alert(postData);
+        alert('in on update');
     },
 
     render: function(){
-        return ( <ChartTable /> );
+        return ( 
+            <div>
+                <ChartTable /> 
+            </div>
+        );
     }
 });
 
-React.render(<HomePageApp />, jQuery("reactContent"));
+React.render(<HomePageApp />, jQuery("#reactContent"));
 
 module.exports = HomePageApp;

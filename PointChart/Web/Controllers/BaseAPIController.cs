@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 using AlwaysMoveForward.PointChart.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.PointChart.Web.Areas.API.Controllers
+namespace AlwaysMoveForward.PointChart.Web.Controllers
 {
     public class BaseAPIController : ApiController
     {

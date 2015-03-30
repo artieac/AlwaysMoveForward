@@ -62,6 +62,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
             }
 
             System.Threading.Thread.CurrentPrincipal = filterContext.RequestContext.HttpContext.User = currentPrincipal;
+            HttpContext.Current.User = currentPrincipal;
         }
     }
 }

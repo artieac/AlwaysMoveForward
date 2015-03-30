@@ -23,7 +23,6 @@ var chartCollectionStore = Reflux.createStore({
             async: false,
             dataType: 'json',
             success: function (chartData) {
-                alert(chartData);
                 this.chartCollection = chartData;
             }.bind(this),
             error: function(xhr, status, err) {

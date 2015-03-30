@@ -14,10 +14,21 @@ namespace AlwaysMoveForward.PointChart.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+
+            routes.MapRoute("PointEarnerObject", // Route name
+                            "{controller}/{action}/{pointEarnerId}/{id}", // URL with parameters
+                            new
+                            {
+                                controller = "Home",
+                                action = "Index",
+                                pointEarnerId = UrlParameter.Optional,
+                                id = UrlParameter.Optional
+                            } // Parameter defaults
+                );
         }
     }
 }
