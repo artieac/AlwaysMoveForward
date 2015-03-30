@@ -19,9 +19,9 @@ using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using CommonBusiness = AlwaysMoveForward.Common.Business;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
-    public class ServiceManager
+    public class ServiceManager : IServiceManager
     {
         public ServiceManager(UnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager, OAuthClientBase oauthClient) 
         {

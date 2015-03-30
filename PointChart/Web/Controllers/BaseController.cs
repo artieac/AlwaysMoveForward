@@ -19,7 +19,7 @@ using System.Security.Permissions;
 
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 
 namespace AlwaysMoveForward.PointChart.Web.Controllers
 {

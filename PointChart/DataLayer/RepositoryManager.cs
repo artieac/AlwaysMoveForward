@@ -32,13 +32,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer
 
         public UnitOfWork UnitOfWork { get; set; }
 
-        private ChartRepository chartRepository;
-        private CompletedTaskRepository completedTaskRepository;
-        private TaskRepository taskRepository;
-        private IUserRepository userRepository;
-        private PointsSpentRepository pointsSpentRepository;
-
-        public ChartRepository Charts
+        private IChartRepository chartRepository;
+        public IChartRepository Charts
         {
             get
             {
@@ -51,7 +46,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer
             }
         }
 
-        public CompletedTaskRepository CompletedTask
+        private ICompletedTaskRepository completedTaskRepository;
+        public ICompletedTaskRepository CompletedTask
         {
             get
             {
@@ -64,6 +60,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
             }
         }
 
+        private TaskRepository taskRepository;
         public TaskRepository Tasks
         {
             get
@@ -77,6 +74,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
             }
         }
 
+        private IUserRepository userRepository;
         public IUserRepository UserRepository
         {
             get
@@ -90,7 +88,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer
             }
         }
 
-        public PointsSpentRepository PointsSpent
+        private IPointsSpentRepository pointsSpentRepository;
+        public IPointsSpentRepository PointsSpent
         {
             get
             {

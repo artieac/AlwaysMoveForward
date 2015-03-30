@@ -6,7 +6,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 
 namespace AlwaysMoveForward.PointChart.Web.Code.Filters

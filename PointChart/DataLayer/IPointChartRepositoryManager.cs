@@ -11,9 +11,9 @@ namespace AlwaysMoveForward.PointChart.DataLayer
     public interface IPointChartRepositoryManager 
     {
         IUserRepository UserRepository { get; }
-        ChartRepository Charts { get; }
-        CompletedTaskRepository CompletedTask { get; }
+        IChartRepository Charts { get; }
+        ICompletedTaskRepository CompletedTask { get; }
         TaskRepository Tasks { get; }
-        PointsSpentRepository PointsSpent { get; }
+        IPointsSpentRepository PointsSpent { get; }
     }
 }

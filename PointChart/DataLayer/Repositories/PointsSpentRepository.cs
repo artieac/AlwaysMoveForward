@@ -10,7 +10,7 @@ using AlwaysMoveForward.PointChart.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class PointsSpentRepository : NHibernateRepository<PointsSpent, DTO.PointsSpent, long>
+    public class PointsSpentRepository : NHibernateRepository<PointsSpent, DTO.PointsSpent, long>, IPointsSpentRepository
     {
         public PointsSpentRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

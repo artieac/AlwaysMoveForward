@@ -16,7 +16,7 @@ using System.Security.Principal;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Utilities
 {

@@ -10,7 +10,7 @@ using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class ChartService : PointChartService
     {      

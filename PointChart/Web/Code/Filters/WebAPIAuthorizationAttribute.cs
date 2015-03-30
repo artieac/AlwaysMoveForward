@@ -5,7 +5,7 @@ using System.Web;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 
 namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 {

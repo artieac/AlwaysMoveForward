@@ -8,9 +8,9 @@ using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class ServiceManagerBuilder
     {

@@ -5,7 +5,7 @@ using System.Web;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 
 namespace AlwaysMoveForward.PointChart.Web.Code.Utilities

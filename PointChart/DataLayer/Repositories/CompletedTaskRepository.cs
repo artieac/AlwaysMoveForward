@@ -10,7 +10,7 @@ using AlwaysMoveForward.PointChart.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
-    public class CompletedTaskRepository : NHibernateRepository<CompletedTask, DTO.CompletedTask, long>
+    public class CompletedTaskRepository : NHibernateRepository<CompletedTask, DTO.CompletedTask, long>, ICompletedTaskRepository
     {
         public CompletedTaskRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

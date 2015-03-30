@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.PointChart.BusinessLayer.Service;
+using AlwaysMoveForward.PointChart.BusinessLayer.Services;
 using AlwaysMoveForward.PointChart.Web.Code.Utilities;
 
 namespace AlwaysMoveForward.PointChart.Web

@@ -25,7 +25,7 @@ using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class UserService
     {

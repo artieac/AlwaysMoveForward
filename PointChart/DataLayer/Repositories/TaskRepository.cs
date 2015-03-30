@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public IList<Task> GetByUserId(long userId)
         {
             IList<DTO.Task> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Task>()
-                .Where(r => r.AdministratorId == userId)
+                .Where(r => r.CreatorId == userId)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);

@@ -46,12 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ChartService.cs" />
-    <Compile Include="Service\PointChartService.cs" />
-    <Compile Include="Service\ServiceManager.cs" />
-    <Compile Include="Service\ServiceManagerBuilder.cs" />
-    <Compile Include="Service\TaskService.cs" />
-    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Services\ChartService.cs" />
+    <Compile Include="Services\IServiceManager.cs" />
+    <Compile Include="Services\PointChartService.cs" />
+    <Compile Include="Services\ServiceManager.cs" />
+    <Compile Include="Services\ServiceManagerBuilder.cs" />
+    <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Utilities\SecurityPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>

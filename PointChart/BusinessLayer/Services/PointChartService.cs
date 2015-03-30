@@ -8,7 +8,7 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class PointChartService
     {

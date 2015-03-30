@@ -10,7 +10,7 @@ using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 
-namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
+namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class TaskService : PointChartService
     {
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 retVal.Name = taskName;
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
-                retVal.AdministratorId = currentUser.Id;
+                retVal.CreatorId = currentUser.Id;
                 retVal = this.PointChartRepositories.Tasks.Save(retVal);
             }
 
@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Service
                 retVal.Name = taskName;
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
-                retVal.AdministratorId = currentUser.Id;
+                retVal.CreatorId = currentUser.Id;
                 retVal = this.PointChartRepositories.Tasks.Save(retVal);
             }
 
