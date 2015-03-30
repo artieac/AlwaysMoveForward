@@ -62,6 +62,7 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
         }
 
         [Test]
+        [Ignore]
         public void ChartRepositoryTestsSave()
         {
             Chart testItem = this.CreateTestChart();
