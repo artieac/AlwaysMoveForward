@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 {
-    [NHibernate.Mapping.Attributes.Class(Table = "ChartTaskInstances")]
+    [NHibernate.Mapping.Attributes.Class(Table = "CompletedTasks")]
     public class CompletedTask
     {
         [NHibernate.Mapping.Attributes.Id(0, Name = "Id", UnsavedValue = "-1")]

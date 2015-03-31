@@ -1,16 +1,17 @@
 ﻿/** @jsx React.DOM */
 var jQuery = require('jquery');
 var React = require('react');
+var Reflux = require('reflux');
 var Route = require('react-router');
 var chartCollectionStore = require('../stores/chartCollectionStore');
 var chartCollectionActions = require('../actions/chartCollectionActions');
 var ChartTable = require('../Components/ChartTable');
 
 var HomePageApp = React.createClass({
+    mixins: [Reflux.connect(chartCollectionStore, "chartCreatedCollection")],
+
     getInitialState: function() {
-        alert('here');
-        chartCollectionActions.updateChartCollection();
-        return { };
+        return { chartCreatedCollection: chartCollectionStore.onUpdateChartCreatedCollection()};
     },
 
     onUpdate: function(postData) {
@@ -20,12 +21,12 @@ var HomePageApp = React.createClass({
     render: function(){
         return ( 
             <div>
-                <ChartTable /> 
+                <ChartTable chartData = {this.state.chartCreatedCollection}/> 
             </div>
         );
     }
 });
 
-React.render(<HomePageApp />, jQuery("#reactContent"));
+React.render(<HomePageApp />, document.getElementById("reactContent"));
 
 module.exports = HomePageApp;

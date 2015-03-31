@@ -11,26 +11,42 @@ var chartCollectionActions = require("../actions/chartCollectionActions");
 var chartCollectionStore = Reflux.createStore({
     listenables: [chartCollectionActions],
 
-    chartCollection: {},
+    chartCreatedCollection: {},
+    chartEarnerCollection: {},
 
     init: function() {
-        this.chartCollection = this.onUpdateChartCollection();
+        this.chartCreatedCollection = this.onUpdateChartCreatorCollection();
+        this.chartEarnerCollection = this.onUpdateChartEarnerCollection();
     },
 
-    onUpdateChartCollection: function () {
+    onUpdateChartCollection: function (chartRole) {
+        var chartRoleParam = 'chartRole=' + chartRole;
+        var returnValue = {};
+
         jQuery.ajax({
-            url: '/api/Charts?chartRole=creator',
+            url: '/api/Charts?' + chartRoleParam,
             async: false,
             dataType: 'json',
             success: function (chartData) {
-                this.chartCollection = chartData;
+                console.log(chartData);
+                returnValue = chartData;
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
-        return this.chartCollection;
-    },    
+        return returnValue;
+    },
+
+    onUpdateChartCreatorCollection: function () {
+        this.trigger((this.chartCreatedCollection = this.onUpdateChartCollection('creator') || {}));
+        return this.chartCreatedCollection;
+    },
+
+    onUpdateChartEarnerCollection: function () {
+        this.trigger((this.chartEarnerCollection = this.onUpdateChartCollection('pointEarner') || {}));
+        return this.chartEarnerCollection;
+    }    
 });
 
 module.exports = chartCollectionStore;
