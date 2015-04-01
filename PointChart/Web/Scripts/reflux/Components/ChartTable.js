@@ -30,7 +30,7 @@ var ChartTable = React.createClass({
                         <thead> 
                             <th>Name</th>
                         </thead>                    
-                        <ChartRow Name="test" rowData={this.props.chartData}/>
+                        <ChartRow rowData={this.props.chartData}/>
                     </table>
                 </div>
             </div>

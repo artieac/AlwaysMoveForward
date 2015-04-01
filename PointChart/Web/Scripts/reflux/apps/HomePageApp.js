@@ -11,7 +11,7 @@ var HomePageApp = React.createClass({
     mixins: [Reflux.connect(chartCollectionStore, "chartCreatedCollection")],
 
     getInitialState: function() {
-        return { chartCreatedCollection: chartCollectionStore.onUpdateChartCreatedCollection()};
+        return { chartCreatedCollection: []};
     },
 
     onUpdate: function(postData) {
@@ -21,7 +21,7 @@ var HomePageApp = React.createClass({
     render: function(){
         return ( 
             <div>
-                <ChartTable chartData = {this.state.chartCreatedCollection}/> 
+                <ChartTable chartData={this.state.chartCreatedCollection}/> 
             </div>
         );
     }
