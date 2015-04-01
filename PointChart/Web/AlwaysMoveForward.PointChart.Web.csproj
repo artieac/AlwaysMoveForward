@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DBEE9441-585A-421C-A3C1-1540A54C00A9}</ProjectGuid>
+    <ProjectGuid>{FB37619F-F9FB-49E8-AE86-A0EB8FB37863}</ProjectGuid>
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -636,6 +636,21 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="Views\Chart\CompletedTasks.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\PointEarner\Charts.cshtml" />
+    <Content Include="Views\PointEarner\Index.cshtml" />
+    <Content Include="Views\PointEarner\PointsDetail.cshtml" />
+    <Content Include="Views\PointEarner\_ShowCharts.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_CalendarControl.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_TabControl.cshtml" />
+    <Content Include="Views\Shared\_UserLoginControl.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\RegisterComplete.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -52,26 +52,8 @@
         }
         else
         {
-            <h2>Charts you created</h2>
-            <table>
-            @foreach (AMF.Chart createdChart in @Model.OwnedCharts)
-            {
-                <tr>
-                    <td>createdChart.Name</td>                    
-                </tr>
-            }
-            </table>          
-    
-            <h2>Charts you are assigned to</h2>
-            <table>
-            @foreach (AMF.Chart assignedChart in @Model.AssignedCharts)
-            {
-                <tr>
-                    <td>assignedChart.Name</td>                    
-                </tr>
-            }
-            </table>              
-    
+            <div id="homePageReactContent"></div>
+            <script src="@Url.Content("~/Scripts/dist/src/build.js")" type="text/javascript"></script>                    
         }
     }
     else

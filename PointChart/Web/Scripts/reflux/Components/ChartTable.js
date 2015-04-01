@@ -5,15 +5,18 @@ var chartCollectionActions = require("../actions/chartCollectionActions");
 
 var ChartRow = React.createClass({
     render: function () {
+        var chartNodes = this.props.rowData.map(function (currentRow) {
+            return (
+                <tr>
+                    <td>{currentRow.Name}</td>
+                </tr>
+            );
+        });
         return (
             <tbody>
-                {this.props.rowData.map(function(currentRow) {
-                    <tr>
-                        <td>{currentRow.Name}</td>
-                    </tr>
-                })}
+                {chartNodes}
             </tbody>
-        )
+        );
     }    
 });
 
