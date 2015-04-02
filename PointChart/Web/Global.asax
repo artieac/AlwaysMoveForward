@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="AlwaysMoveForward.PointChart.Web.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="AlwaysMoveForward.PointChart.Web.Global" Language="C#" %>

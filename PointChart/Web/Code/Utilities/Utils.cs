@@ -28,7 +28,7 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
         {
             string retVal = string.Empty;
 
-            if (MvcApplication.WebSiteConfiguration.EnableSSL == true)
+            if (Global.WebSiteConfiguration.EnableSSL == true)
             {
                 retVal = "http://" + siteAuthority;
 

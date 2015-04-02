@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using AlwaysMoveForward.Common.DataLayer;
@@ -11,7 +12,8 @@ using AlwaysMoveForward.PointChart.BusinessLayer.Utilities;
 
 namespace AlwaysMoveForward.PointChart.Web.Code.Filters
 {
-    public class CookieAuthenticationParser
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+    public class CookieAuthenticationParser : FilterAttribute, IAuthorizationFilter
     {
         public static SecurityPrincipal ParseCookie(HttpCookieCollection cookies)
         {
@@ -26,21 +28,27 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
             {
                 if (authCookie.Value != string.Empty)
                 {
-                    // Get the authentication ticket 
-                    // and rebuild the principal & identity
-                    FormsAuthenticationTicket authTicket =
-                    FormsAuthentication.Decrypt(authCookie.Value);
+                    try
+                    {
+                        // Get the authentication ticket 
+                        // and rebuild the principal & identity
+                        FormsAuthenticationTicket authTicket =
+                        FormsAuthentication.Decrypt(authCookie.Value);
 
-                    PointChartUser currentUser = serviceManager.UserService.GetById(int.Parse(authTicket.Name));
+                        PointChartUser currentUser = serviceManager.UserService.GetById(int.Parse(authTicket.Name));
 
-                    if (currentUser == null)
+                        if (currentUser == null)
+                        {
+                            retVal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
+                        }
+                        else
+                        {
+                            retVal = new SecurityPrincipal(currentUser, true);
+                        }
+                    }
+                    catch(Exception e)
                     {
                         retVal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
-                    }
-                    else
-                    {
-
-                        retVal = new SecurityPrincipal(currentUser, true);
                     }
                 }
             }
@@ -53,6 +61,11 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Filters
             HttpContext.Current.User = retVal;
 
             return retVal;
+        }
+
+        public virtual void OnAuthorization(AuthorizationContext filterContext)
+        {
+            CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
         }
     }
 }
