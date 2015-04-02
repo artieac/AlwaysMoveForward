@@ -544,11 +544,12 @@
     <Content Include="Scripts\Modules\FactoryModule.js" />
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\reflux\actions\chartActions.js" />
-    <Content Include="Scripts\reflux\actions\chartCollectionActions.js" />
-    <Content Include="Scripts\reflux\actions\taskActions.js" />
-    <Content Include="Scripts\reflux\apps\HomePageApp.js" />
+    <None Include="Scripts\reflux\actions\chartActions.js" />
+    <None Include="Scripts\reflux\actions\chartCollectionActions.js" />
+    <None Include="Scripts\reflux\actions\taskActions.js" />
+    <None Include="Scripts\reflux\apps\HomePageApp.js" />
     <Content Include="Scripts\reflux\Components\ChartTable.js" />
+    <Content Include="Scripts\reflux\Components\TaskTable.js" />
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
     <Content Include="Scripts\reflux\stores\taskStore.js" />
@@ -610,6 +611,7 @@
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\reflux\apps\TaskPageApp.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

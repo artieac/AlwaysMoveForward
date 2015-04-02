@@ -62,7 +62,7 @@ var path = {
     DEST: './Scripts/dist',
     DEST_BUILD: './Scripts/dist/build',
     DEST_SRC: './Scripts/dist/src',
-    ENTRY_POINT: './Scripts/reflux/apps/HomePageApp.js'
+    ENTRY_POINT: ['./Scripts/reflux/apps/HomePageApp.js', './Scripts/reflux/apps/TaskPageApp.js']
 };
 
 gulp.task('copy', function () {

@@ -19,22 +19,24 @@ var taskStore = Reflux.createStore({
     },
 
     onGetAllTasks: function () {
-        var returnValue = {};
+        this.allTasks = {};
 
         jQuery.ajax({
-            url: '/api/Task',
+            url: '/api/Tasks',
             async: false,
             dataType: 'json',
             success: function (restData) {
                 console.log(restData);
-                returnValue = restData;
+                this.allTasks = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
-        return returnValue;
+
+        this.trigger((this.allTasks || {}));
+        return this.allTasks;
     },
 });
 
-module.exports = chartCollectionStore;
+module.exports = taskStore;
