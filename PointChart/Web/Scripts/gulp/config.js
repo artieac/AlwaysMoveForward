@@ -9,23 +9,30 @@ module.exports = {
         // bundle config in the list below
         bundleConfigs: [
             {
-                entries: ['./node_modules/react/dist/react.js'],
+                entries: [
+                    './node_modules/jquery/dist/jquery.js',
+                    './node_modules/react/dist/react.js',
+                    './node_modules/reflux/dist/reflux.js',
+                    './node_modules/react-router/dist/react-router.js'
+                ],
                 dest: dest,
-                outputName: 'vendorBundle.js',
-                // list of externally available modules to exclude from the bundle
-                external: ['jquery']
+                outputName: 'vendorBundle.js',                
             },
             {
                 entries: ['./Scripts/reflux/apps/HomePageApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'HomePageApp.js',
+                // list of externally available modules to exclude from the bundle
+                external: ['jquery', 'react', 'reflux', 'react-router']
             },
             {
                 entries: ['./Scripts/reflux/apps/TaskPageApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'TaskPageApp.js',
+                // list of externally available modules to exclude from the bundle
+                external: ['jquery', 'react', 'reflux', 'react-router']
             }
 ]
     },

@@ -257,8 +257,6 @@
     <Content Include="Scripts\Common\SiteCommon.js" />
     <Content Include="Scripts\Common\SiteLogin.js" />
     <Content Include="Scripts\Common\tableManager.js" />
-    <Content Include="Scripts\Controllers\ChartController.js" />
-    <Content Include="Scripts\Controllers\PointEarnerController.js" />
     <Content Include="Scripts\dist\HomePageApp.js" />
     <Content Include="Scripts\dist\TaskPageApp.js" />
     <Content Include="Scripts\dist\vendorBundle.js" />
@@ -548,7 +546,8 @@
     <None Include="Scripts\reflux\actions\taskActions.js" />
     <None Include="Scripts\reflux\apps\HomePageApp.js" />
     <Content Include="Scripts\reflux\Components\ChartTable.js" />
-    <Content Include="Scripts\reflux\Components\TaskTable.js" />
+    <Content Include="Scripts\reflux\Components\TaskTable\TaskInputRow.js" />
+    <Content Include="Scripts\reflux\Components\TaskTable\TaskTable.js" />
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
     <Content Include="Scripts\reflux\stores\taskStore.js" />
@@ -602,6 +601,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
+    <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartTaskModel.cs" />
@@ -610,6 +610,7 @@
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\reflux\Components\TaskTable\TaskRow.js" />
     <Content Include="Scripts\reflux\apps\TaskPageApp.js" />
   </ItemGroup>
   <ItemGroup>

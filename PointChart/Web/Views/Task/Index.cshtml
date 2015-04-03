@@ -9,9 +9,6 @@
 {
 
 }
-<div id="taskPageReactContent"></div>
-<script src="@Url.Content("~/Scripts/dist/TaskPageApp.js")" type="text/javascript"></script>  
-
 <form id="addTaskForm" action="/Task/Add" method="post">
     <input type="hidden" name="addTaskName" id="addTaskName" value="" />
     <input type="hidden" id="addTaskPoints" name="addTaskPoints" />
@@ -23,26 +20,8 @@
     <input type="hidden" id="editTaskPoints" name="editTaskPoints" />
     <input type="hidden" id="editTaskMaxPerDay" name="editTaskMaxPerDay" />
 </form>
-<table class="tableBase">
-    <thead>
-        <tr class="tableHeader">
-            <td width="1%">&nbsp;</td>
-            <td width="20%">Name</td>
-            <td width="20%">Points</td>
-            <td width="20%">Max Per Day</td>
-            <td>Action</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>&nbsp;</td>
-            <td><input type="text" id="newTaskName" name="newTaskName" /></td>
-            <td><input type="text" id="newTaskPoints" name="newTaskPoints" /></td>
-            <td><input type="text" id="newTaskMaxPerDay" name="newTaskMaxPerDay" /></td>
-            <td><input type="button" id="saveTask" value="Add Task" onclick="Task.Add();"/></td>
-        </tr>
-    </tbody>
-</table>
+<div id="taskPageReactContent"></div>
+<script src="@Url.Content("~/Scripts/dist/TaskPageApp.js")" type="text/javascript"></script>
 
 
 
