@@ -259,8 +259,9 @@
     <Content Include="Scripts\Common\tableManager.js" />
     <Content Include="Scripts\Controllers\ChartController.js" />
     <Content Include="Scripts\Controllers\PointEarnerController.js" />
-    <Content Include="Scripts\dist\build\build.min.js" />
-    <Content Include="Scripts\dist\src\build.js" />
+    <Content Include="Scripts\dist\HomePageApp.js" />
+    <Content Include="Scripts\dist\TaskPageApp.js" />
+    <Content Include="Scripts\dist\vendorBundle.js" />
     <Content Include="Scripts\gulp\config.js" />
     <Content Include="Scripts\gulp\index.js" />
     <Content Include="Scripts\gulp\tasks\browserify.js" />
@@ -541,8 +542,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Scripts\Modules\FactoryModule.js" />
-    <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
     <Content Include="Scripts\npm.js" />
     <None Include="Scripts\reflux\actions\chartActions.js" />
     <None Include="Scripts\reflux\actions\chartCollectionActions.js" />

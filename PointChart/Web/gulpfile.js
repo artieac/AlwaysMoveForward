@@ -1,6 +1,5 @@
 ﻿//var gulp = require('./Scripts/gulp')([
-//    'browserify',
-//    'watch'
+//    'vendor',
 //]);
 
 //// Actions
@@ -46,126 +45,9 @@
 //gulp.task('build', ['browserify']);
 
 var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var reactify = require('reactify');
-var streamify = require('gulp-streamify');
+var browserify = require('./Scripts/gulp/tasks/browserify');
+var watchify = require('./Scripts/gulp/tasks/watchify');
 var Less = require('gulp-less');
-var path = require('path');
-
-var path = {
-    HTML: 'src/index.html',
-    MINIFIED_OUT: 'build.min.js',
-    OUT: 'build.js',
-    DEST: './Content/Scripts/dist',
-    DEST_BUILD: './Scripts/dist/build',
-    DEST_SRC: './Scripts/dist/src',
-    ENTRY_POINT: ['./Scripts/reflux/apps/HomePageApp.js', './Scripts/reflux/apps/TaskPageApp.js']
-};
-
-var clientPaths = ['./Content/Scripts/Reflux/apps/HomePageApp.js', './Content/Scripts/Reflux/apps/TaskPageApp.js']
-var bundlesDestination = './Content/Scripts/dist';
-var watch = false;
-var debugging = false;
-
-gulp.task('copy', function () {
-    gulp.src(path.HTML)
-      .pipe(gulp.dest(path.DEST));
-});
-
-gulp.task('watch', function () {
-    gulp.watch(path.HTML, ['copy']);
-
-    var watcher = watchify(browserify({
-        entries: [path.ENTRY_POINT],
-        transform: [reactify],
-        debug: true,
-        cache: {}, packageCache: {}, fullPaths: true
-    }));
-
-    return watcher.on('update', function () {
-        watcher.bundle()
-          .pipe(source(path.OUT))
-          .pipe(gulp.dest(path.DEST_SRC))
-        console.log('Updated');
-    })
-      .bundle()
-      .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC));
-});
-
-gulp.task('build', function () {
-    browserify({
-        entries: [path.ENTRY_POINT],
-        transform: [reactify],
-    })
-      .bundle()
-      .pipe(source(path.MINIFIED_OUT))
-      .pipe(streamify(uglify(path.MINIFIED_OUT)))
-      .pipe(gulp.dest(path.DEST_BUILD));
-});
-
-var gulpClientBundle = function (cb) {
-     var opts = {
-        extensions: ['.jsx', '.js'],
-        hasExports: true,
-        debug: debugging
-    };
-
-    if (watch) {
-        opts.cache = {};
-        opts.packageCache = {};
-        opts.fullPaths = true;
-        opts.debug = true;
-        opts: watch = true;
-    }
-
-    var browserified = transform(function (filename) {
-        gutil.log(gutil.colors.cyan('Processing ' + filename));
-        var b = browserify(filename, opts);
-
-        if (watch) {
-            b = watchify(b);
-            b.on('update', function () {
-                var b2 = transform(function (filename) {
-                    b3 = browserify(filename, opts);
-                    b3.transform(reactify);
-                    return b3.bundle();;
-                });
-
-                gulp.src(clientPaths)
-                    .pipe(b2)
-                    .pipe(gulpif(!debugging, streamify(uglify())))
-                    .pipe(gulp.dest(bundlesDestination))
-                    .pipe(browserSync.reload({ stream: true }));
-                b2 = null;
-            });
-        }
-        _.forEach(clientPaths, function (clientPath) {
-            if (path.basename(clientPath) !== path.basename(filename)) {
-                gutil.log(gutil.colors.cyan('Excluding ' + clientPath));
-                b.exclude(clientPath);
-            }
-        });
-        b.transform(reactify);
-        return b.bundle();
-    });
-
-    gulp.src(clientPaths)
-        .pipe(browserified)
-        .pipe(footer(sharedData.exposedVariables))
-        .pipe(gulpif(!debugging, streamify(uglify())))
-        .pipe(gulp.dest(bundlesDestination))
-        .pipe(browserSync.reload({ stream: true }));
-
-    cb(null);
-};
-
-gulp.task('client-build', function (cb) {
-    return gulpClientBundle(cb);
-});
 
 gulp.task('less', function () {
     return gulp.src('./Content/Themes/*.less')
@@ -173,6 +55,5 @@ gulp.task('less', function () {
       .pipe(gulp.dest('./Content/css'));
 });
 
-gulp.task('production', ['less', 'build']);
-
-gulp.task('default', ['less', 'watch']);
+gulp.task('build', ['less', 'browserify']);
+gulp.task('default', ['build', 'watchify']);

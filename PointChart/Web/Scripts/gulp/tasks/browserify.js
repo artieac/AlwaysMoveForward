@@ -85,7 +85,6 @@ var browserifyTask = function (devMode) {
 
     // Start bundling with Browserify for each bundleConfig specified
     return mergeStream.apply(gulp, _.map(config.bundleConfigs, browserifyThis));
-
 };
 
 gulp.task('browserify', function () {

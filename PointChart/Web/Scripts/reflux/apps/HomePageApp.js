@@ -48,5 +48,7 @@ var HomePageApp = React.createClass({
     }
 });
 
+React.render(<HomePageApp />, document.getElementById("homePageReactContent"));
+
 module.exports = HomePageApp;
 
