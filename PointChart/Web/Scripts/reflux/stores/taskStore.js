@@ -12,14 +12,14 @@ var taskStore = Reflux.createStore({
     listenables: [taskActions],
 
     currentTask: {},
-    allTasks: {},
+    allTasks: [],
 
     init: function () {
-        this.chartEarnerCollection = this.onGetAllTasks();
+        this.allTasks = [];
     },
 
     onGetAllTasks: function () {
-        this.allTasks = {};
+        this.allTasks = [];
 
         jQuery.ajax({
             url: '/api/Tasks',
@@ -34,7 +34,7 @@ var taskStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.allTasks || {}));
+        this.trigger(this.allTasks);
         return this.allTasks;
     },
 

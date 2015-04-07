@@ -1,25 +1,31 @@
 ﻿/** @jsx React.DOM */
-var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
-var Route = require('react-router');
 var chartStore = require('../stores/chartStore');
+var taskStore = require('../stores/taskStore');
 var chartActions = require('../actions/chartActions');
-var ChartDetailTable = require('../Components/ChartDetailTable/ChartDetailTable.js');
+var taskActions = require('../actions/taskActions');
+var ChartPanelHeader = require('../Components/ChartPanelHeader');
+var TaskSelectionTable = require('../Components/TaskSelectionTable/TaskSelectionTable');
 
 var EditChartApp = React.createClass({
     mixins: [
         Reflux.connect(chartStore, "currentChart"),
+        Reflux.connect(taskStore, "allTasks")
     ],
 
     getInitialState: function() {
         return { 
-            currentChart: []
+            currentChart: {},
+            allTasks: []
         };
     },
 
     componentDidMount: function () {
         // Add event listeners in componentDidMount
+        this.listenTo(taskStore, this.handleGetAllTasks);
+        taskActions.getAllTasks();
+
         this.listenTo(chartStore, this.handleGetChart);
         chartActions.getChart(this.props.chartId);
     },
@@ -28,11 +34,16 @@ var EditChartApp = React.createClass({
         this.setState({currentChart: updateMessage.currentChart});
     },
 
+    handleGetAllTasks: function(updateMessage){        
+        this.setState({allTasks: updateMessage.allTasks});
+    },
+
     render: function(){
         return ( 
             <div>
                 <div>
-                    <ChartDetailTable tableData={this.state.currentChart}/> 
+                    <ChartPanelHeader currentChart={this.state.currentChart} />
+                    <TaskSelectionTable currentChart={this.state.currentChart} tableData={this.state.allTasks} />
                 </div>
             </div>
         );

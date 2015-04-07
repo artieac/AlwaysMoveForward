@@ -17,11 +17,11 @@ var chartStore = Reflux.createStore({
         this.currentChart = {};
     },
 
-    onGetChart: function () {
+    onGetChart: function (chartId) {
         this.currentChart = {};
 
         jQuery.ajax({
-            url: '/api/Chart/6',
+            url: '/api/Chart/' + chartId,
             async: false,
             dataType: 'json',
             success: function (restData) {
@@ -33,7 +33,7 @@ var chartStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.currentChart || {}));
+        this.trigger(this.currentChart);
         return this.currentChart;
     },
 
