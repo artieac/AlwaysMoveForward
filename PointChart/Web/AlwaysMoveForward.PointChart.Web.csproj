@@ -257,6 +257,7 @@
     <Content Include="Scripts\Common\SiteCommon.js" />
     <Content Include="Scripts\Common\SiteLogin.js" />
     <Content Include="Scripts\Common\tableManager.js" />
+    <Content Include="Scripts\dist\EditChartApp.js" />
     <Content Include="Scripts\dist\HomePageApp.js" />
     <Content Include="Scripts\dist\TaskPageApp.js" />
     <Content Include="Scripts\dist\vendorBundle.js" />
@@ -516,6 +517,9 @@
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="package.json" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
@@ -545,11 +549,16 @@
     <None Include="Scripts\reflux\actions\chartCollectionActions.js" />
     <None Include="Scripts\reflux\actions\taskActions.js" />
     <None Include="Scripts\reflux\apps\HomePageApp.js" />
-    <Content Include="Scripts\reflux\Components\ChartTable.js" />
+    <Content Include="Scripts\reflux\apps\EditChartApp.js" />
+    <Content Include="Scripts\reflux\Components\ChartDetailTable\ChartDetailRow.js" />
+    <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryRow.js" />
+    <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryTable.js" />
+    <Content Include="Scripts\reflux\Components\ChartDetailTable\ChartDetailTable.js" />
     <Content Include="Scripts\reflux\Components\TaskTable\TaskInputRow.js" />
     <Content Include="Scripts\reflux\Components\TaskTable\TaskTable.js" />
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
+    <Content Include="Scripts\reflux\stores\chartStore.js" />
     <Content Include="Scripts\reflux\stores\taskStore.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -622,6 +631,7 @@
     <Content Include="Content\less\TabControl.less" />
     <Content Include="Content\less\ThemeDefaults.less" />
     <Content Include="Scripts\errors.json" />
+    <Content Include="Views\Chart\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

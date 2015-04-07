@@ -51,6 +51,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.UI
             return retVal;
         }
 
+        [Route("Chart/{id}"), HttpGet()]
+        [MVCAuthorization]
+        public ActionResult Get(long id)
+        {
+            return View("Index", id);
+        }
+
         [MVCAuthorization]
         public ActionResult CompletedTasks(long pointEarnerId, DateTime? targetDate, long id)
         {

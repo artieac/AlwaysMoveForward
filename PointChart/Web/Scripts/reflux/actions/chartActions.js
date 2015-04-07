@@ -5,9 +5,8 @@ var Reflux = require('reflux');
 
 // Had to use object syntax vs array syntax due to https://github.com/spoike/refluxjs/issues/206
 
-var chartActions = []
-    'addChart',
-    'updateChart',
-];
+var chartActions = ({    
+    'getChart': {}
+    });
 
 module.exports = Reflux.createActions(chartActions);

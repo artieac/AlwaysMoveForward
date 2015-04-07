@@ -5,7 +5,7 @@ var Reflux = require('reflux');
 var Route = require('react-router');
 var chartCollectionStore = require('../stores/chartCollectionStore');
 var chartCollectionActions = require('../actions/chartCollectionActions');
-var ChartTable = require('../Components/ChartTable');
+var ChartSummaryTable = require('../Components/ChartSummaryTable/ChartSummaryTable');
 
 var HomePageApp = React.createClass({
     mixins: [
@@ -37,11 +37,11 @@ var HomePageApp = React.createClass({
             <div>
                 <div>
                     <h2>Charts you Created</h2>
-                    <ChartTable chartData={this.state.chartCreatedCollection}/> 
+                    <ChartSummaryTable tableData={this.state.chartCreatedCollection}/> 
                 </div>
                 <div>
                     <h2>Charts you are assigned to</h2>
-                    <ChartTable chartData={this.state.chartEarnerCollection}/> 
+                    <ChartSummaryTable tableData={this.state.chartEarnerCollection}/> 
                 </div>
             </div>
         );

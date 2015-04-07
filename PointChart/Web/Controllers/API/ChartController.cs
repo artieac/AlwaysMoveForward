@@ -38,9 +38,10 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [WebAPIAuthorization]
+        public Chart Get(long id)
         {
-            return "value";
+            return this.Services.Charts.GetById(id);
         }
 
         // POST api/<controller>

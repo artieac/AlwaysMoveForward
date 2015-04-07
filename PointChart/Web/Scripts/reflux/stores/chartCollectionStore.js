@@ -46,7 +46,7 @@ var chartCollectionStore = Reflux.createStore({
     onUpdateChartEarnerCollection: function () {
         this.trigger((this.chartEarnerCollection = this.onUpdateChartCollection('pointEarner') || {}));
         return this.chartEarnerCollection;
-    }    
+    }
 });
 
 module.exports = chartCollectionStore;

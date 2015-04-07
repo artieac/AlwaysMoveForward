@@ -8,14 +8,6 @@ var _ = require('lodash');
 // Actions
 var taskActions = require("../actions/taskActions");
 
-function TaskInput(taskName, taskPoints, taskMaxPerDay) {
-    var self = this;
-
-    this.name = taskName;
-    this.points = taskPoints;
-    this.maxPerDay = taskMaxPerDay;
-};
-
 var taskStore = Reflux.createStore({
     listenables: [taskActions],
 

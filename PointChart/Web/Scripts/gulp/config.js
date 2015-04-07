@@ -33,6 +33,14 @@ module.exports = {
                 outputName: 'TaskPageApp.js',
                 // list of externally available modules to exclude from the bundle
                 external: ['jquery', 'react', 'reflux', 'react-router']
+            },
+            {
+                entries: ['./Scripts/reflux/apps/EditChartApp.js'],
+                transform: [reactify],
+                dest: dest,
+                outputName: 'EditChartApp.js',
+                // list of externally available modules to exclude from the bundle
+                external: ['jquery', 'react', 'reflux', 'react-router']
             }
 ]
     },
