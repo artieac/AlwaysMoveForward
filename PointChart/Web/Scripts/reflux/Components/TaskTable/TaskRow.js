@@ -13,21 +13,28 @@ var TaskRow = React.createClass({
         this.setState({ showEditable: true });
     },
 
-    handleOnMouseLeave: function() {
-        this.setState({showEditable: false});
-    },
+    handleSaveClick: function() {        
+        this.setState({ showEditable: false });
 
-    handleSaveClick: function() {
-        taskActions.updateTask(
-            this.props.rowData.Id,             
-            React.findDOMNode(this.refs.editableName).value, 
-            React.findDOMNode(this.refs.editablePoints).value,
-            React.findDOMNode(this.refs.editableMaxPerDay).value);
+        var newName = React.findDOMNode(this.refs.editableName).value;
+        var newPoints = React.findDOMNode(this.refs.editablePoints).value;
+        var newMaxPerDay = React.findDOMNode(this.refs.editableMaxPerDay).value;
+
+        if(newName != this.props.rowData.Name ||
+           newPoints != this.props.rowData.Points ||
+           newMaxPerDay != this.props.rowData.MaxAllowedDaily)
+        {
+            taskActions.updateTask(
+                this.props.rowData.Id,             
+                newName, 
+                newPoints,
+                newMaxPerDay);
+        }
     },
 
     render: function () {
         return (
-            <tr onClick={this.handleOnClick} onMouseLeave={this.handleOnMouseLeave}>
+            <tr onClick={this.handleOnClick}>
                 <td>
                      { 
                          this.state.showEditable ? 

@@ -8,7 +8,7 @@ var TaskSelectionTableBody = React.createClass({
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {
-                        return <TaskRow  rowData={currentRow}/>
+                        return <tr><td>foo</td></tr>
                         })}               
                 </tbody>
             );        
