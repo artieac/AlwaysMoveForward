@@ -18,9 +18,21 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
             retVal.Name = ChartConstants.TestName;
             retVal.PointEarnerId = UserConstants.PointEarnerId;
             retVal.CreatorId = UserConstants.CreatorId;
+            retVal.Tasks = new List<Task>();
 
             return retVal;
         }
+
+        private Task CreateTestTask()
+        {
+            Task retVal = new Task();
+            retVal.CreatorId = UserConstants.CreatorId;
+            retVal.MaxAllowedDaily = TaskConstants.MaxAllowedDaily;
+            retVal.Name = TaskConstants.Name;
+            retVal.Points = TaskConstants.Points;
+            return retVal;
+        }
+
         [Test]
         public void ConsumerRepositoryTestsGetAll()
         {
@@ -73,6 +85,26 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
             Assert.IsNotNull(foundItem);
             Assert.IsTrue(foundItem.Id == testItem.Id);
             Assert.IsTrue(testItem.CreatorId == testItem.CreatorId);
+        }
+
+        [Test]
+        public void ChartRepositoryTestsSaveAddTask()
+        {
+            Chart testItem = this.RepositoryManager.Charts.GetById(ChartConstants.TestId);
+
+            if (testItem == null)
+            {
+                testItem = this.CreateTestChart();
+            }
+
+            int originalTaskCount = testItem.Tasks.Count;
+
+            testItem.Tasks.Add(this.CreateTestTask());
+
+            testItem = this.RepositoryManager.Charts.Save(testItem);
+
+            Assert.IsNotNull(testItem);
+            Assert.IsTrue(testItem.Tasks.Count > originalTaskCount);
         }
     }
 }

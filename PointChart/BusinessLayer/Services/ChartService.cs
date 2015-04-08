@@ -21,25 +21,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return this.PointChartRepositories.Charts.GetById(chartId);
         }
 
-        public Chart Edit(long chartId, string chartName, long pointEarnerId, PointChartUser currentUser)
-        {
-            Chart retVal = null;
-
-            retVal = this.PointChartRepositories.Charts.GetById(chartId);
-            PointChartUser pointEarner = this.PointChartRepositories.UserRepository.GetById(pointEarnerId);
-
-            if (retVal != null && pointEarner != null)
-            {
-                if (retVal.CreatorId == currentUser.Id) 
-                {
-                    retVal.Name = chartName;
-                    retVal = this.PointChartRepositories.Charts.Save(retVal);
-                }
-            }
-
-            return retVal;
-        }
-
         public Chart AssignChartToUser(long chartId, long pointEarnerId, PointChartUser currentUser)
         {
             Chart retVal = null;
@@ -58,29 +39,6 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return retVal;
         }
 
-        public Chart AddTask(long chartId, long taskId)
-        {
-            Chart retVal = this.GetById(chartId);
-
-            if (retVal != null)
-            {
-                Task targetTask = retVal.Tasks.FirstOrDefault(t => t.Id == taskId);
-
-                if (targetTask == null)
-                {
-                    targetTask = this.PointChartRepositories.Tasks.GetById(taskId);
-
-                    if (targetTask != null)
-                    {
-                        retVal.Tasks.Add(targetTask);
-                        retVal = this.PointChartRepositories.Charts.Save(retVal);
-                    }
-                }
-            }
-
-            return retVal;
-        }
-
         private Task GetChartTask(Chart chart, long taskId)
         {
             Task retVal = null;
@@ -93,16 +51,57 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return retVal;
         }
 
-        public void DeleteTask(long chartId, long taskId)
+        public Chart AddChart(string name, long pointEarnerId, IList<Task> tasks, PointChartUser currentUser)
         {
-            Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
-            Task targetTask = this.GetChartTask(targetChart, taskId);
+            Chart retVal = new Chart();
+            retVal.Name = name;
+            retVal.PointEarnerId = pointEarnerId;
+            retVal.CreatorId = currentUser.Id;
+            retVal.Tasks = tasks;
 
-            if (targetTask != null)
+            retVal = this.PointChartRepositories.Charts.Save(retVal);
+
+            return retVal;
+        }
+
+        public Chart UpdateChart(long chartId, string name, long pointEarnerId, IList<Task> tasks, PointChartUser currentUser)
+        {
+            Chart retVal = this.PointChartRepositories.Charts.GetById(chartId);
+
+            if(retVal == null)
             {
-                targetChart.Tasks.Remove(targetTask);
-                targetChart = this.PointChartRepositories.Charts.Save(targetChart);
+                retVal = this.AddChart(name, pointEarnerId, tasks, currentUser);
             }
+            else
+            {
+                if(retVal.CreatorId == currentUser.Id)
+                {
+                    retVal.Name = name;
+                    retVal.PointEarnerId = pointEarnerId;
+                    
+                    for(int i = retVal.Tasks.Count - 1; i >= 0; i--)
+                    {
+                        if(!tasks.Contains(retVal.Tasks[i]))
+                        {
+                            // mark as inactive? for now just remove
+                            retVal.Tasks.RemoveAt(i);
+                        }
+                    }
+
+                    for(int i = 0; i < tasks.Count; i++)
+                    {
+                        if(!retVal.Tasks.Contains(tasks[i]))
+                        {
+                            retVal.Tasks.Add(tasks[i]);
+                        }
+                    }
+
+                    retVal = this.PointChartRepositories.Charts.Save(retVal);
+                }
+
+            }
+
+            return retVal;
         }
 
         public CompletedTask AddCompletedTask(long chartId, long taskId, DateTime dateCompleted, int numberOfTimesCompleted, PointChartUser administrator)

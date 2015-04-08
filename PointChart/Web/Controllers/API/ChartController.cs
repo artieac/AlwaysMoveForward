@@ -47,18 +47,16 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 
         // POST api/<controller>
         [WebAPIAuthorization]
-        public void Post([FromBody]ChartInput taskInput)
+        public Chart Post([FromBody]ChartInput taskInput)
         {
+            return this.Services.Charts.AddChart(taskInput.Name, taskInput.PointEarnerId, taskInput.Tasks, this.CurrentPrincipal.CurrentUser);
         }
 
         // PUT api/<controller>/5
         [WebAPIAuthorization]
-        public void Put(int id, [FromBody]ChartInput taskInput)
+        public Chart Put(int id, [FromBody]ChartInput taskInput)
         {
-            for(int i = 0; i < taskInput.Tasks.Count; i++)
-            {
-                this.Services.Charts.AddTask(id, taskInput.Tasks[i].Id);
-            }
+            return this.Services.Charts.UpdateChart(id, taskInput.Name, taskInput.PointEarnerId, taskInput.Tasks, this.CurrentPrincipal.CurrentUser);
         }
 
         // DELETE api/<controller>/5

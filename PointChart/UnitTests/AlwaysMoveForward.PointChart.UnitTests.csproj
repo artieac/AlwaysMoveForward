@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ChartConstants.cs" />
+    <Compile Include="Constants\TaskConstants.cs" />
     <Compile Include="Constants\UserConstants.cs" />
     <Compile Include="IntegrationTests\Repositories\ChartRepositoryTests.cs" />
     <Compile Include="IntegrationTests\Repositories\RepositoryTestBase.cs" />

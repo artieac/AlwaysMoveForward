@@ -5,9 +5,10 @@ using System.Text;
 
 namespace AlwaysMoveForward.PointChart.UnitTests.Constants
 {
-    public class ChartConstants
+    public class TaskConstants
     {
-        public const long TestId = 6;
-        public const string TestName = "TestChart";
+        public const string Name = "TestTaskName";
+        public const int Points = 1;
+        public const int MaxAllowedDaily = 1;
     }
 }
