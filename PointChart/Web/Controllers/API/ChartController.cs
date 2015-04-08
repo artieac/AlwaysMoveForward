@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
+using AlwaysMoveForward.PointChart.Web.Models.API;
 
 namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 {
@@ -45,13 +46,19 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [WebAPIAuthorization]
+        public void Post([FromBody]ChartInput taskInput)
         {
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [WebAPIAuthorization]
+        public void Put(int id, [FromBody]ChartInput taskInput)
         {
+            for(int i = 0; i < taskInput.Tasks.Count; i++)
+            {
+                this.Services.Charts.AddTask(id, taskInput.Tasks[i].Id);
+            }
         }
 
         // DELETE api/<controller>/5

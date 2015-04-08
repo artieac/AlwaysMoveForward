@@ -1,5 +1,6 @@
 ﻿var React = require('react');
 var Panel = require('react-bootstrap').Panel;
+var Button = require('react-bootstrap').Button;
 
 var ChartPanelHeader = React.createClass({
     nameDivStyle: {width: '50%', display: 'block'},
@@ -9,11 +10,14 @@ var ChartPanelHeader = React.createClass({
         return (
             <div>
                 <Panel>
-                    <span style={this.nameDivStyle}>
-                        <input type="text" name="chartName" defaultValue={this.props.chartData.Name}/>
-                    </span>
-                    <span style={this.pointEarnerDivStyle}>
-                        <input type="text" name="pointEarnerId"/>
+                    <span>
+                        <div style={this.nameDivStyle}>                            
+                            <input type="text" name="chartName" defaultValue={this.props.chartData.Name}/>
+                        </div>
+                        <div style={this.pointEarnerDivStyle}>
+                            <input type="text" name="pointEarnerId"/>
+                        </div>
+                        <Button bsStyle='primary'>Save</Button>
                     </span>
                 </Panel>
             </div>

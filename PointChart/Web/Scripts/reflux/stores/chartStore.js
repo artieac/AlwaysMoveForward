@@ -37,8 +37,26 @@ var chartStore = Reflux.createStore({
         return this.currentChart;
     },
 
-    onUpdateChart: function () {
+    onUpdateChart: function (chartId, chartName, pointEarnerId, tasks) {
+        var chartData = {
+            Name: chartName,
+            PointEarnerId: pointEarnerId,
+            Tasks: tasks
+        };
 
+        jQuery.ajax({
+            method: "PUT",
+            url: "/api/Chart/" + chartId,
+            data: JSON.stringify(chartData),
+            contentType: "application/json; charset=utf-8",
+            success: function (restData) {
+                console.log(restData);
+                this.onGetAllTasks();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
     }
 });
 

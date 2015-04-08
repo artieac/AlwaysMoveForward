@@ -614,6 +614,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
+    <Compile Include="Models\API\ChartInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\ChartModel.cs" />

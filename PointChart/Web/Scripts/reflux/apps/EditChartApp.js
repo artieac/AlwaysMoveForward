@@ -43,7 +43,6 @@ var EditChartApp = React.createClass({
         return ( 
             <div>
                 <div>
-                    <ChartPanelHeader chartData={this.state.currentChart} />
                     <TaskSelectionTable chartData={this.state.currentChart} tableData={this.state.allTasks} />
                 </div>
             </div>
