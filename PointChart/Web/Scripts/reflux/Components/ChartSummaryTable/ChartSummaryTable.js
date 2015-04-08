@@ -8,7 +8,7 @@ var ChartSummaryTableBody = React.createClass({
         return (
             <tbody>
                 {this.props.tableBodyData.map(function (currentRow) {
-                    return <ChartSummaryRow rowData={currentRow}/>
+                    return <ChartSummaryRow key={currentRow.Id} rowData={currentRow}/>
                     })}
             </tbody>
         );

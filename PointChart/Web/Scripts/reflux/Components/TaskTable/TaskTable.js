@@ -8,7 +8,7 @@ var TaskTableBody = React.createClass({
         return (
             <tbody>
                 {this.props.tableBodyData.map(function (currentRow) {
-                    return <TaskRow rowData={currentRow}/>
+                    return <TaskRow key={currentRow.Id} rowData={currentRow}/>
                     })}
                 <TaskInputRow/>
             </tbody>

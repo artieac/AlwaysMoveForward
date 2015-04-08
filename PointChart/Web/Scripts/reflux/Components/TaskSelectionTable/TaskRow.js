@@ -9,7 +9,7 @@ var TaskRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={this.props.rowData.isInChart}/>
                 </td>
                 <td>{this.props.rowData.Name}</td>
                 <td>{this.props.rowData.Points}</td>

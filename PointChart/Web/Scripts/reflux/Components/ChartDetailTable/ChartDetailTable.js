@@ -7,7 +7,7 @@ var ChartDetailTableBody = React.createClass({
         return (
             <tbody>
                 {this.props.tableBodyData.map(function (currentRow) {
-                    return <ChartDetailRow rowData={currentRow}/>
+                    return <ChartDetailRow key={currentRow.Id} rowData={currentRow}/>
                     })}
             </tbody>
         );

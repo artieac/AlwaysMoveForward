@@ -15,6 +15,7 @@ var EditChartApp = React.createClass({
     ],
 
     getInitialState: function() {
+        console.log('get initial state');
         return { 
             currentChart: {},
             allTasks: []
@@ -31,19 +32,19 @@ var EditChartApp = React.createClass({
     },
 
     handleGetChart: function (updateMessage) {
-        this.setState({currentChart: updateMessage.currentChart});
+        this.setState({currentChart: updateMessage});
     },
 
     handleGetAllTasks: function(updateMessage){        
-        this.setState({allTasks: updateMessage.allTasks});
+        this.setState({allTasks: updateMessage});
     },
 
     render: function(){
         return ( 
             <div>
                 <div>
-                    <ChartPanelHeader currentChart={this.state.currentChart} />
-                    <TaskSelectionTable currentChart={this.state.currentChart} tableData={this.state.allTasks} />
+                    <ChartPanelHeader chartData={this.state.currentChart} />
+                    <TaskSelectionTable chartData={this.state.currentChart} tableData={this.state.allTasks} />
                 </div>
             </div>
         );

@@ -19,18 +19,6 @@ var _ = require('lodash');
 var transform = require('vinyl-transform');
 var uglify = require('gulp-uglify');
 
-var simpleBrowserifyTask = function() {
-    var browserified = transform(function (filename) {
-        var b = browserify(filename);
-        return b.bundle();
-    });
-
-    return gulp.src(['./node_modules/less/dist/*.js', './node_modules/react/dist/*.js'])
-      .pipe(browserified)
-      .pipe(uglify())
-      .pipe(gulp.dest('./Scripts/app/appBundle.js'));
-};
-
 var browserifyTask = function (devMode) {
 
     var browserifyThis = function (bundleConfig) {

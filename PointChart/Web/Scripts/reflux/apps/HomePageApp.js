@@ -22,14 +22,18 @@ var HomePageApp = React.createClass({
 
     componentDidMount: function () {
         // Add event listeners in componentDidMount
-        this.listenTo(chartCollectionStore, this.updateChartCollection);
+        this.listenTo(chartCollectionStore, this.updateChartCreatedCollection);
         chartCollectionActions.updateChartCreatorCollection();
-        this.listenTo(chartCollectionStore, this.updateChartCollection);
+        this.listenTo(chartCollectionStore, this.updateChartEarnerCollection);
         chartCollectionActions.updateChartEarnerCollection();
     },
 
-    updateChartCollection: function (updateMessage) {
-        this.setState({chartCreatedCollection: updateMessage.chartCreatedCollection, chartEarnerCollection: updateMessage.chartEarnerCollection});
+    updateChartCreatedCollection: function (updateMessage) {
+        this.setState({chartCreatedCollection: updateMessage.chartCreatedCollection});
+    },
+
+    updateChartEarnerCollection: function (updateMessage) {
+        this.setState({chartEarnerCollection: updateMessage.chartEarnerCollection});
     },
 
     render: function(){

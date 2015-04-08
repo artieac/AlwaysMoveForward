@@ -10,7 +10,7 @@ var ChartPanelHeader = React.createClass({
             <div>
                 <Panel>
                     <span style={this.nameDivStyle}>
-                        <input type="text" name="chartName" />
+                        <input type="text" name="chartName" defaultValue={this.props.chartData.Name}/>
                     </span>
                     <span style={this.pointEarnerDivStyle}>
                         <input type="text" name="pointEarnerId"/>
