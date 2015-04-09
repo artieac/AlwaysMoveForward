@@ -99,8 +99,15 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
 
             int originalTaskCount = testItem.Tasks.Count;
 
-            testItem.Tasks.Add(this.CreateTestTask());
+            Task testTask = this.RepositoryManager.Tasks.GetById(TaskConstants.TestId);
 
+            if(testTask == null)
+            {
+                testTask = this.CreateTestTask();
+                testTask = this.RepositoryManager.Tasks.Save(testTask);
+            }
+
+            testItem.Tasks.Add(testTask);
             testItem = this.RepositoryManager.Charts.Save(testItem);
 
             Assert.IsNotNull(testItem);

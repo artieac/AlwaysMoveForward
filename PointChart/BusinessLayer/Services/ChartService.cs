@@ -18,7 +18,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
         public Chart GetById(long chartId)
         {
-            return this.PointChartRepositories.Charts.GetById(chartId);
+            Chart retVal = this.PointChartRepositories.Charts.GetById(chartId);
+            return retVal;
         }
 
         public Chart AssignChartToUser(long chartId, long pointEarnerId, PointChartUser currentUser)

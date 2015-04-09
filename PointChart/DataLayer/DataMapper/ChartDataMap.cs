@@ -22,7 +22,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
             var existingMap = Mapper.FindTypeMapFor<Chart, DTO.Chart>();
             if (existingMap == null)
             {
-                var newMap = Mapper.CreateMap<Chart, DTO.Chart>();
+                var newMap = Mapper.CreateMap<Chart, DTO.Chart>()
+                    .ForMember(dest => dest.Tasks, src => src.ResolveUsing<TaskDTOListResolver>());
                 newMap.MaxDepth(2);
             }
 

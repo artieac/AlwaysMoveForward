@@ -23,7 +23,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
             if (existingMap == null)
             {
                 Mapper.CreateMap<Task, DTO.Task>()
-                    .ForMember(dest => dest.Charts, opt => opt.Ignore())
                     .MaxDepth(2);
             }
 

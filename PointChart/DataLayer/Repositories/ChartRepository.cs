@@ -52,5 +52,32 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
             return this.GetDataMapper().Map(retVal);
         }
+
+        public override Chart Save(Chart itemToSave)
+        {
+            if (itemToSave != null && itemToSave.Tasks != null)
+            {
+                DTO.Chart dtoItem = this.GetDTOById(itemToSave.Id);
+
+                if (dtoItem != null)
+                {
+                    foreach (Task domainTask in itemToSave.Tasks)
+                    {
+                        if (dtoItem.Tasks.FirstOrDefault(t => t.Id == domainTask.Id) == null)
+                        {
+                            DTO.Task existsTest = this.UnitOfWork.CurrentSession.Query<DTO.Task>()
+                                .Where(t => t.Id == domainTask.Id).FirstOrDefault();
+
+                            if (existsTest != null)
+                            {
+                                dtoItem.Tasks.Add(existsTest);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return base.Save(itemToSave);
+        }
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="DataMapper\PointChartUserDataMap.cs" />
     <Compile Include="DataMapper\PointsSpentDataMap.cs" />
     <Compile Include="DataMapper\TaskDataMap.cs" />
+    <Compile Include="DataMapper\TaskDTOListResolver.cs" />
     <Compile Include="DTO\Chart.cs" />
     <Compile Include="DTO\CompletedTask.cs" />
     <Compile Include="DTO\PointsSpent.cs" />
