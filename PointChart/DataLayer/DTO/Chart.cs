@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public virtual long CreatorId { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "ChartTasks", Cascade = "All-Delete-Orphan", Inverse = true)]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "ChartTasks", Cascade = "Save-Update")]
         [NHibernate.Mapping.Attributes.Key(1, Column = "ChartId")]
         [NHibernate.Mapping.Attributes.ManyToMany(2, Column="TaskId", ClassType = typeof(Task))]
         public virtual IList<Task> Tasks { get; set; }

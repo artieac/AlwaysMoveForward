@@ -5,34 +5,14 @@ var Panel = require('react-bootstrap').Panel;
 var TaskRow = require('./TaskRow');
 var chartActions = require('../../actions/chartActions');
 
-var TaskSelectionTableBody = React.createClass({
-    isInChart: function(currentRow){
-        var retVal = false;
-        
-        if(typeof this.props.chartData !== 'undefined' &&
-            typeof this.props.chartData.Tasks !== 'undefined'){
-            for(var i = 0; i < this.props.chartData.Tasks.length; i++){
-                if(this.props.chartData.Tasks[i].Id == currentRow.Id){
-                    retVal = true;
-                    break;
-                }
-            }
-        }
-
-        return retVal;
-    },
-
+var TaskSelectionTableBody = React.createClass({    
     render: function () {
-        if(typeof this.props.tableBodyData !== 'undefined'){
-            for(var i = 0; i < this.props.tableBodyData.length; i++){
-                this.props.tableBodyData[i].isInChart = this.isInChart(this.props.tableBodyData[i]);
-            }
-
+        if(typeof this.props.tableBodyData !== 'undefined'){            
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {
-                        return <TaskRow key={currentRow.Id} rowData={currentRow} />
-                        })}               
+                        return <TaskRow chartData={this.props.chartData} key={currentRow.Id} rowData={currentRow} />
+                        }.bind(this))}              
                 </tbody>
             );        
         }
