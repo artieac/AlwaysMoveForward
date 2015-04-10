@@ -13,7 +13,7 @@ var TaskRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <input ref="isInChartCheckbox" type="checkbox" defaultChecked={this.props.rowData.isInChart} onChange={this.handleIsInChartChecked}/>
+                    <input ref="isInChartCheckbox" type="checkbox" checked={this.props.rowData.isInChart} onChange={this.handleIsInChartChecked}/>
                 </td>
                 <td>{this.props.rowData.Name}</td>
                 <td>{this.props.rowData.Points}</td>

@@ -81,10 +81,10 @@ var TaskSelectionTable = React.createClass({
                 <Panel>
                     <span>
                         <div style={this.nameDivStyle}>                            
-                            <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange} />
+                            <input type="text" ref="chartName" value={this.props.chartData.Name} />
                         </div>
                         <div style={this.pointEarnerDivStyle}>
-                            <input type="text" ref="pointEarnerId" value={this.props.chartData.PointEarnerId} />
+                            <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />
                         </div>
                         <Button bsStyle='primary' onClick={this.handleSaveClick}>Save</Button>
                     </span>
