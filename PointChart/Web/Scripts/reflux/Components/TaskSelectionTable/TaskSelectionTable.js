@@ -5,9 +5,29 @@ var Panel = require('react-bootstrap').Panel;
 var TaskRow = require('./TaskRow');
 var chartActions = require('../../actions/chartActions');
 
-var TaskSelectionTableBody = React.createClass({    
+var TaskSelectionTableBody = React.createClass({   
+    isInChart: function(currentRow){
+        var retVal = false;
+        
+        if(typeof this.props.chartData !== 'undefined' &&
+            typeof this.props.chartData.Tasks !== 'undefined'){
+            for(var i = 0; i < this.props.chartData.Tasks.length; i++){
+                if(this.props.chartData.Tasks[i].Id == currentRow.Id){
+                    retVal = true;
+                    break;
+                }
+            }
+        }
+
+        return retVal;
+    },
+
     render: function () {
         if(typeof this.props.tableBodyData !== 'undefined'){            
+            for(var i = 0; i < this.props.tableBodyData.length; i++){
+                this.props.tableBodyData[i].isInChart = this.isInChart(this.props.tableBodyData[i]);
+            }
+            
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {
@@ -30,7 +50,7 @@ var TaskSelectionTable = React.createClass({
         
         if(typeof this.props.tableData !== 'undefined'){
             for(var i = 0; i < this.props.tableData.length; i++){
-                if(this.props.tableData[i].isInChart === 'on'){
+                if(this.props.tableData[i].isInChart === true){
                     retVal[retVal.length] = this.props.tableData[i];
                 }
             }
@@ -51,17 +71,18 @@ var TaskSelectionTable = React.createClass({
                     );
     },
 
-    handleNameChange: function(){
-        this.props.chartData.Name = React.findDOMNode(this.refs.chartName).value;  
+    handleNameChange: function(event){
+        this.props.chartData.Name = event.target.value;  
+        this.forceUpdate();
     },
-    
+   
     render: function() {
         return (
             <div>
                 <Panel>
                     <span>
                         <div style={this.nameDivStyle}>                            
-                            <input type="text" ref="chartName" value={this.props.chartData.Name} />
+                            <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
                         </div>
                         <div style={this.pointEarnerDivStyle}>
                             <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />

@@ -5,29 +5,12 @@ var Button = require('react-bootstrap').Button;
 var taskActions = require("../../actions/taskActions");
 
 var TaskRow = React.createClass({    
-    handleIsInChartChecked: function(){        
-        this.props.rowData.isInChart = React.findDOMNode(this.refs.isInChartCheckbox).value;   
-    },
-
-    isInChart: function(){
-        var retVal = false;
-        
-        if(typeof this.props.chartData !== 'undefined' &&
-            typeof this.props.chartData.Tasks !== 'undefined' &&
-            typeof this.props.rowData !== 'undefined'){
-            retVal = this.props.chartData.Tasks.some(function(task){
-                if(task.Id == this.props.rowData.Id){
-                    this.props.rowData.isInChart = 'on';
-                    return true;
-                }
-            }.bind(this));
-        }
-
-        return retVal;
+    handleIsInChartChecked: function(event){  
+        this.props.rowData.isInChart = event.target.checked;   
+        this.forceUpdate();
     },
 
     render: function () {
-        this.isInChart();
         return (
             <tr>
                 <td>

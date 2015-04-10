@@ -5,7 +5,6 @@ var chartStore = require('../stores/chartStore');
 var taskStore = require('../stores/taskStore');
 var chartActions = require('../actions/chartActions');
 var taskActions = require('../actions/taskActions');
-var ChartPanelHeader = require('../Components/ChartPanelHeader');
 var TaskSelectionTable = require('../Components/TaskSelectionTable/TaskSelectionTable');
 
 var EditChartApp = React.createClass({
