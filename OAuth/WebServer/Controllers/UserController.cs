@@ -308,5 +308,22 @@ namespace AlwaysMoveForward.OAuth.WebServer.Controllers
                 return this.View("Signin");
             }
         }
+
+        /// <summary>
+        /// this action returns the partial view to show the password hint
+        /// </summary>
+        /// <returns>An MVC view</returns>
+        [OAuthSignatureValidation]
+        public JsonResult GetByEmail(string emailAddress)
+        {
+            User retVal = new User();
+
+            if (this.CurrentPrincipal.User != null)
+            {
+                retVal = this.ServiceManager.UserService.GetByEmail(emailAddress);
+            }
+
+            return this.Json(retVal, JsonRequestBehavior.AllowGet);
+        }
     }
 }

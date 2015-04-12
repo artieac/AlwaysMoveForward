@@ -79,17 +79,17 @@ var TaskSelectionTable = React.createClass({
     render: function() {
         return (
             <div>
-                <Panel>
-                    <span>
-                        <div style={this.nameDivStyle}>                            
-                            <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
-                        </div>
-                        <div style={this.pointEarnerDivStyle}>
-                            <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />
-                        </div>
-                        <Button bsStyle='primary' onClick={this.handleSaveClick}>Save</Button>
-                    </span>
-                </Panel>
+                <div className="row">
+                    <div className="col-md-3">                            
+                        <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
+                    </div>
+                    <div className="col-md-3">
+                        <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />
+                    </div>
+                    <div className="col-md-3">
+                        <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>
+                    </div>
+                </div>
                 <div>
                     <Table striped bordered condensed hover>
                         <thead> 

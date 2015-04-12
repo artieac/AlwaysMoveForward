@@ -33,89 +33,11 @@ body {
   padding-right: 2px;
   color: #ffffff;
 }
-.metaContentPanel {
-  float: right;
-  width: 15%;
-  text-align: left;
-  background-color: #f4f4f4;
-  border-color: #cccccc;
-  border-style: solid;
-  border-width: 0 1px 0 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.metaContentPanel ul {
-  padding-left: 0px;
-  margin-left: 0px;
-  list-style-type: none;
-  list-style-position: outside;
-}
-.metaContentPanel .metaContentSectionsDefault {
-  width: 90%;
-  text-align: left;
-  border-bottom: solid 1px #cccccc;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 20px;
-  margin-bottom: 1%;
-}
-.metaContentPanel .navigationSection {
-  width: 90%;
-  text-align: left;
-  border-bottom: solid 1px #cccccc;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 20px;
-  margin-bottom: 1%;
-}
-.metaContentPanel .navigationSection .navigationSectionTitle {
-  width: 100%;
-  color: #000000;
-  font-size: medium;
-}
-.metaContentPanel .navigationSection .navigationSectionList {
-  list-style: none;
-  color: black;
-  padding-left: 5px;
-  margin-left: 5px;
-  list-style-position: outside;
-}
-.metaContentPanel .navigationSection .navigationSectionList .navigationSectionItem {
-  padding: 0 5px 0 5px;
-}
-.metaContentPanel .navigationSection .navigationSectionList .navigationSectionItem a {
-  text-decoration: none;
-}
-.metaContentPanel .contentSection {
-  width: 90%;
-  text-align: left;
-  border-bottom: solid 1px #cccccc;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 20px;
-  margin-bottom: 1%;
-}
-.metaContentPanel .contentSection .contentSectionTitle {
-  color: #000000;
-  font-size: medium;
-}
-.metaContentPanel .contentSection .contentSectionBody {
-  padding: 0 5px 0 5px;
-}
-.metaContentPanel .contentSection .contentSectionBody .contentSectionList {
-  padding-left: 5px;
-  margin-left: 5px;
-  list-style-type: disc;
-  list-style-position: outside;
-}
-.metaContentPanel .contentSection .contentSectionBody .contentSectionList .listItem {
-  font-size: small;
-}
 .mainContentPanel {
   text-align: left;
-  float: left;
   width: 80%;
   height: 100%;
+  margin-top: 10px;
 }
 .mainContentPanel .bodyContainer {
   text-align: left;
@@ -130,94 +52,20 @@ body {
   color: #5493e0;
   text-align: center;
 }
-.taskInputTable {
-  font-size: medium;
-}
-.taskInputTable td input {
-  width: 100px;
-}
 .linkSectionTitle {
   width: 100%;
   color: black;
   font-size: medium;
 }
-.tagClouldControl {
-  display: block;
-}
-.tagCloudTag {
-  text-decoration: none;
-}
 .editItemLabel {
   text-align: right;
   font-style: normal;
-}
-.editAreaContainer {
-  width: 100%;
-  text-align: center;
-  background-color: #E4F2FD;
-}
-.editAreaSubContainer {
-  width: 80%;
-  text-align: left;
 }
 .windowPanePanel {
   margin-right: 50px;
 }
 .windowPaneSection {
   margin-right: 50px;
-}
-.commentLabel {
-  width: 5%;
-  text-align: right;
-  font-weight: bold;
-}
-.commentPanelTitle {
-  background-color: #5493E0;
-  font-size: large;
-  font-weight: bold;
-  color: #FFFFFF;
-}
-.commentSection {
-  background-color: White;
-  padding-top: 10px;
-}
-.commentTitleSection {
-  padding: 5px 5px 5px 5px;
-  width: 100%;
-  border-style: solid;
-  border-width: thin;
-  border-color: #F4F4F4;
-}
-.commentTitle {
-  background-color: #5493E0;
-  font-size: large;
-  font-weight: bold;
-  color: #FFFFFF;
-  width: 100%;
-}
-.commentSubTitle {
-  font-size: small;
-  font-style: italic;
-}
-.commentTextSection {
-  width: 100%;
-  border-style: solid;
-  border-width: thin;
-  border-color: #F4F4F4;
-  padding: 5px 5px 10px 5px;
-}
-.tableBase {
-  border-collapse: collapse;
-  border-style: solid;
-  border-width: 1px;
-  margin: 0;
-  width: 99%;
-  background-color: #FFFFFF;
-}
-.tableHeader {
-  background-color: #1B7BBD;
-  color: #FFFFFF;
-  font-style: normal;
 }
 .controlTitle {
   color: #5493E0;
@@ -263,19 +111,6 @@ body {
 .aboutContent ul li {
   list-style-type: disc;
   list-style-position: inside;
-}
-.blogWritersTitle {
-  color: #CC6600;
-  text-decoration: underline;
-  font-size: large;
-}
-.blogWriterName {
-  color: #CC6600;
-  text-indent: 5px;
-}
-.blogWriterAbout {
-  color: Black;
-  text-indent: 5px;
 }
 .textAreaInput {
   width: 90%;

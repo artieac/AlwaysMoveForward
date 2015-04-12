@@ -50,5 +50,5 @@ var EditChartApp = React.createClass({
 });
 
 module.exports = EditChartApp;
-React.render(<EditChartApp chartId="6"/>, document.getElementById("editChartPageReactContent"));
+React.render(<EditChartApp chartId={chartIdentifer}/>, document.getElementById("editChartPageReactContent"));
 

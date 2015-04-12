@@ -47,13 +47,7 @@
 var gulp = require('gulp');
 var browserify = require('./Scripts/gulp/tasks/browserify');
 var watchify = require('./Scripts/gulp/tasks/watchify');
-var Less = require('gulp-less');
+var lessCompile = require('./Scripts/gulp/tasks/lessCompile');
 
-gulp.task('less', function () {
-    return gulp.src('./Content/Themes/*.less')
-      .pipe(Less())
-      .pipe(gulp.dest('./Content/css'));
-});
-
-gulp.task('build', ['less', 'browserify']);
+gulp.task('build', ['lessCompile', 'browserify']);
 gulp.task('default', ['build', 'watchify']);

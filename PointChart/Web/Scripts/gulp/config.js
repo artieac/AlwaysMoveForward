@@ -13,6 +13,7 @@ module.exports = {
                     './node_modules/jquery/dist/jquery.js',
                     './node_modules/react/dist/react.js',
                     './node_modules/reflux/dist/reflux.js',
+                    './node_modules/bootstrap/dist/js/bootstrap.min.js',
 //                    './node_modules/react-router/lib/index.js'
                 ],
                 dest: dest,
@@ -50,5 +51,9 @@ module.exports = {
         outputPath: './Scripts/dist',
         buildDestination: './Scripts/dist/build',
         vendorBundleFileName: 'vendor',
+    },
+    lessPaths: {
+        srcPath: './Content/less/*.less',
+        destPath: './Content/css'
     }
 };
