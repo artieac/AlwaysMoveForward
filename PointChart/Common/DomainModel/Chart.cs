@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets the identifier of the person that adminsters this chart/point earner
         /// </summary>
-        public long PointEarnerId { get; set; }
+        public PointChartUser PointEarner { get; set; }
 
         /// <summary>
         /// Gets and sets all the tasks on the chart

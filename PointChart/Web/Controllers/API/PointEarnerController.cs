@@ -19,6 +19,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return new List<PointChartUser>();
         }
 
+        [Route("api/PointEarner"), HttpGet()]
+        [WebAPIAuthorization]
+        public IList<PointChartUser> Search(string emailAddress)
+        {
+            return new List<PointChartUser>();
+        }
+
         // GET api/<controller>/5
         [WebAPIAuthorization]
         public string Get(int id)

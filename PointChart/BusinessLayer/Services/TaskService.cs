@@ -9,12 +9,21 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
+using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
-    public class TaskService : PointChartService
+    public class TaskService 
     {
-        public TaskService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
+        public TaskService(IUnitOfWork unitOfWork, ITaskRepository taskRepository)
+        {
+            this.UnitOfWork = unitOfWork;
+            this.TaskRepository = taskRepository;
+        }
+
+        protected IUnitOfWork UnitOfWork { get; private set; }
+
+        protected ITaskRepository TaskRepository { get; private set; }
 
         public IList<Task> GetByUser(PointChartUser currentUser)
         {
@@ -22,7 +31,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if (currentUser != null)
             {
-                retVal = this.PointChartRepositories.Tasks.GetByUserId(currentUser.Id);
+                retVal = this.TaskRepository.GetByUserId(currentUser.Id);
             }
 
             return retVal;
@@ -32,14 +41,14 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         {
             Task retVal = null;
 
-            if (this.PointChartRepositories.Tasks.GetByName(taskName) == null)
+            if (this.TaskRepository.GetByName(taskName) == null)
             {
                 retVal = new Task();
                 retVal.Name = taskName;
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
                 retVal.CreatorId = currentUser.Id;
-                retVal = this.PointChartRepositories.Tasks.Save(retVal);
+                retVal = this.TaskRepository.Save(retVal);
             }
 
             return retVal;
@@ -47,7 +56,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
         public Task Edit(int taskId, string taskName, double points, int maxAllowedDaily, PointChartUser currentUser)
         {
-            Task retVal = this.PointChartRepositories.Tasks.GetById(taskId);
+            Task retVal = this.TaskRepository.GetById(taskId);
 
             if (retVal != null)
             {
@@ -55,7 +64,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                 retVal.Points = points;
                 retVal.MaxAllowedDaily = maxAllowedDaily;
                 retVal.CreatorId = currentUser.Id;
-                retVal = this.PointChartRepositories.Tasks.Save(retVal);
+                retVal = this.TaskRepository.Save(retVal);
             }
 
             return retVal;
@@ -63,12 +72,12 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
         public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, PointChartUser administrator)
         {
-            return this.PointChartRepositories.CompletedTask.GetCompletedByDateRangeAndChart(weekStartDate, weekEndDate, chart, administrator.Id);
+            return null;
         }
 
         public Task GetById(int id)
         {
-            return this.PointChartRepositories.Tasks.GetById(id);
+            return this.TaskRepository.GetById(id);
         }
     }
 }

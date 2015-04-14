@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
         {
             Chart retVal = new Chart();
             retVal.Name = ChartConstants.TestName;
-            retVal.PointEarnerId = UserConstants.PointEarnerId;
+            retVal.PointEarner = null;
             retVal.CreatorId = UserConstants.CreatorId;
             retVal.Tasks = new List<Task>();
 
@@ -70,7 +70,8 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
             foundItems = this.RepositoryManager.Charts.GetByPointEarner(UserConstants.PointEarnerId);
             Assert.IsNotNull(foundItems);
             Assert.IsTrue(foundItems.Count > 0);
-            Assert.IsTrue(foundItems[0].PointEarnerId == UserConstants.PointEarnerId);
+            Assert.IsNotNull(foundItems[0].PointEarner);
+            Assert.IsTrue(foundItems[0].PointEarner.Id == UserConstants.PointEarnerId);
         }
 
         [Test]

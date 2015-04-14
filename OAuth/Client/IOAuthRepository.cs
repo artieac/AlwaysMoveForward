@@ -9,5 +9,7 @@ namespace AlwaysMoveForward.OAuth.Client
     public interface IOAuthRepository
     {
         User GetUserInfo(IOAuthToken oauthToken);
+
+        User GetByEmail(IOAuthToken oauthToken, string emailAddress);
     }
 }

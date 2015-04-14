@@ -38,13 +38,25 @@ var PointEarnerManagementApp = React.createClass({
             <div>
                 <div className="row">
                     <div className="col-md-6">
-                        <div className={this.nameDivStyle}>                            
+                        <div>                            
                             <label for="searchEmail">Email</label>
                             <input type="text" id="searchEmail" ref="searchEmail" defaultValue={this.state.emailSearch} />
                         </div>
-                        <button className="btn btn-primary" onClick={this.handleSaveClick}>Search</button>
+                        <button className="btn btn-primary" onClick={this.handleEmailSearchClick}>Search</button>
                     </div>
                 </div>
+                { this.state.currentPointEarner ?
+                    <div className="row">
+                        <div className="col-md-6">
+                            <span>{this.state.currentPointEarner.FirstName}</span>
+                        </div>
+                        <div className="col-md-6">
+                            <span>{this.state.currentPointEarner.LastName}</span>
+                        </div>
+                    </div>
+                        : null 
+                }
+                            
                 <div>
                     <PointEarnerTable tableData={this.state.allPointEarners}/> 
                 </div>

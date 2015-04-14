@@ -84,6 +84,7 @@
     <Compile Include="Repositories\IChartRepository.cs" />
     <Compile Include="Repositories\ICompletedTaskRepository.cs" />
     <Compile Include="Repositories\IPointsSpentRepository.cs" />
+    <Compile Include="Repositories\ITaskRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\PointsSpentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

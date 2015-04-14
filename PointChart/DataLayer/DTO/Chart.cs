@@ -12,8 +12,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public virtual long Id { get; set; }
 
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual long PointEarnerId { get; set; }
+        [NHibernate.Mapping.Attributes.ManyToOne(Cascade = "all", Column = "PointEarnerId", ClassType = typeof(DTO.User), Unique = true)]
+        public virtual DTO.User PointEarner { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string Name { get; set; }

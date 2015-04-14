@@ -9,16 +9,28 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.PointChart.DataLayer;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
+using AlwaysMoveForward.PointChart.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
-    public class ChartService : PointChartService
+    public class ChartService 
     {      
-        public ChartService(IUnitOfWork unitOfWork, IPointChartRepositoryManager repositoryManager) : base(unitOfWork, repositoryManager) { }
+        public ChartService(IUnitOfWork unitOfWork, IChartRepository chartRepository, IUserRepository userRepository) 
+        {
+            this.UnitOfWork = unitOfWork;
+            this.ChartRepository = chartRepository;
+            this.UserRepository = userRepository;
+        }
+
+        protected IUnitOfWork UnitOfWork { get; private set; }
+
+        protected IChartRepository ChartRepository { get; private set; }
+
+        protected IUserRepository UserRepository { get; private set; }
 
         public Chart GetById(long chartId)
         {
-            Chart retVal = this.PointChartRepositories.Charts.GetById(chartId);
+            Chart retVal = this.ChartRepository.GetById(chartId);
             return retVal;
         }
 
@@ -26,14 +38,14 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         {
             Chart retVal = null;
 
-            retVal = this.PointChartRepositories.Charts.GetById(chartId);
-            PointChartUser pointEarner = this.PointChartRepositories.UserRepository.GetById(pointEarnerId);
+            retVal = this.ChartRepository.GetById(chartId);
+            PointChartUser pointEarner = this.UserRepository.GetById(pointEarnerId);
 
             if (retVal != null)
             {
                 if (retVal.CreatorId == currentUser.Id)
                 {
-                    retVal = this.PointChartRepositories.Charts.Save(retVal);
+                    retVal = this.ChartRepository.Save(retVal);
                 }
             }
 
@@ -55,19 +67,25 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         public Chart AddChart(string name, long pointEarnerId, IList<Task> tasks, PointChartUser currentUser)
         {
             Chart retVal = new Chart();
-            retVal.Name = name;
-            retVal.PointEarnerId = pointEarnerId;
-            retVal.CreatorId = currentUser.Id;
-            retVal.Tasks = tasks;
 
-            retVal = this.PointChartRepositories.Charts.Save(retVal);
+            PointChartUser pointEarner = this.UserRepository.GetById(pointEarnerId);
 
+            if(pointEarner != null)
+            {
+                retVal.Name = name;
+                retVal.PointEarner = pointEarner;
+                retVal.CreatorId = currentUser.Id;
+                retVal.Tasks = tasks;
+
+                retVal = this.ChartRepository.Save(retVal);
+            }
+            
             return retVal;
         }
 
         public Chart UpdateChart(long chartId, string name, long pointEarnerId, IList<Task> tasks, PointChartUser currentUser)
         {
-            Chart retVal = this.PointChartRepositories.Charts.GetById(chartId);
+            Chart retVal = this.ChartRepository.GetById(chartId);
 
             if(retVal == null)
             {
@@ -77,29 +95,33 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             {
                 if(retVal.CreatorId == currentUser.Id)
                 {
-                    retVal.Name = name;
-                    retVal.PointEarnerId = pointEarnerId;
-                    
-                    for(int i = retVal.Tasks.Count - 1; i >= 0; i--)
-                    {
-                        if(!tasks.Contains(retVal.Tasks[i]))
-                        {
-                            // mark as inactive? for now just remove
-                            retVal.Tasks.RemoveAt(i);
-                        }
-                    }
+                    PointChartUser pointEarner = this.UserRepository.GetById(pointEarnerId);
 
-                    for(int i = 0; i < tasks.Count; i++)
+                    if (pointEarner != null)
                     {
-                        if(!retVal.Tasks.Contains(tasks[i]))
-                        {
-                            retVal.Tasks.Add(tasks[i]);
-                        }
-                    }
+                        retVal.Name = name;
+                        retVal.PointEarner = pointEarner;
 
-                    retVal = this.PointChartRepositories.Charts.Save(retVal);
+                        for (int i = retVal.Tasks.Count - 1; i >= 0; i--)
+                        {
+                            if (!tasks.Contains(retVal.Tasks[i]))
+                            {
+                                // mark as inactive? for now just remove
+                                retVal.Tasks.RemoveAt(i);
+                            }
+                        }
+
+                        for (int i = 0; i < tasks.Count; i++)
+                        {
+                            if (!retVal.Tasks.Contains(tasks[i]))
+                            {
+                                retVal.Tasks.Add(tasks[i]);
+                            }
+                        }
+
+                        retVal = this.ChartRepository.Save(retVal);
+                    }
                 }
-
             }
 
             return retVal;
@@ -109,7 +131,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         {
             CompletedTask retVal = null;
 
-            Chart targetChart = this.PointChartRepositories.Charts.GetById(chartId);
+            Chart targetChart = this.ChartRepository.GetById(chartId);
             Task targetTask = this.GetChartTask(targetChart, taskId);
 
             if (targetChart != null && targetTask != null)
@@ -146,7 +168,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
                 using (this.UnitOfWork.BeginTransaction())
                 {
-                    if (PointChartRepositories.Charts.Save(targetChart) != null)
+                    if (this.ChartRepository.Save(targetChart) != null)
                     {
                         this.UnitOfWork.EndTransaction(true);
                     }
@@ -166,7 +188,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if(currentUser != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByCreator(currentUser.Id);
+                retVal = this.ChartRepository.GetByCreator(currentUser.Id);
             }
 
             return retVal;
@@ -178,7 +200,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if (currentUser != null)
             {
-                retVal = this.PointChartRepositories.Charts.GetByPointEarner(currentUser.Id);
+                retVal = this.ChartRepository.GetByPointEarner(currentUser.Id);
             }
 
             return retVal;
