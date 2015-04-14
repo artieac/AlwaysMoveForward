@@ -13,7 +13,6 @@ module.exports = {
                     './node_modules/jquery/dist/jquery.js',
                     './node_modules/react/dist/react.js',
                     './node_modules/reflux/dist/reflux.js',
-                    './node_modules/bootstrap/dist/js/bootstrap.min.js',
 //                    './node_modules/react-router/lib/index.js'
                 ],
                 dest: dest,
@@ -40,6 +39,14 @@ module.exports = {
                 transform: [reactify],
                 dest: dest,
                 outputName: 'EditChartApp.js',
+                // list of externally available modules to exclude from the bundle
+                external: ['jquery', 'react', 'reflux', 'react-router']
+            },
+            {
+                entries: ['./Scripts/reflux/apps/PointEarnerManagementApp.js'],
+                transform: [reactify],
+                dest: dest,
+                outputName: 'PointEarnerManagementApp.js',
                 // list of externally available modules to exclude from the bundle
                 external: ['jquery', 'react', 'reflux', 'react-router']
             }

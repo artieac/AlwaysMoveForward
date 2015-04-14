@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddMinutes(180), false, string.Empty);
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddMinutes(18000), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);

@@ -1,6 +1,4 @@
 ﻿var React = require('react');
-var Table = require('react-bootstrap').Table;
-var Button = require('react-bootstrap').Button;
 var ChartSummaryRow = require('./ChartSummaryRow');
 
 var ChartSummaryTableBody = React.createClass({
@@ -27,7 +25,7 @@ var ChartSummaryTable = React.createClass({
                     <div>
                         
                     </div>
-                    <Table striped bordered condensed hover>
+                    <table className="table table-striped table-bordered">
                         <thead> 
                             <th>Name</th>
                             <th>Task Count</th>
@@ -36,7 +34,7 @@ var ChartSummaryTable = React.createClass({
                             <th></th>
                         </thead>                    
                         <ChartSummaryTableBody tableBodyData={this.props.tableData}/>
-                    </Table>
+                    </table>
                 </div>
             </div>
         );

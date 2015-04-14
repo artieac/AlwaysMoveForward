@@ -11,25 +11,25 @@
 
     this.SubmitLogin = function () {
         var loginOptions = { success: SiteLogin.ProcessPostLogin };
-        jQuery('#loginForm').ajaxSubmit(loginOptions);
+        jQuery('#loginForm').submit(loginOptions);
+    };
+
+    this.SubmitLogout = function () {
+        var logoutOptions = { success: SiteLogin.ProcessPostLogout };
+        jQuery('#logoutForm').ajaxSubmit(logoutOptions);
     };
 
     this.ProcessPostLogin = function (responseText, statusText) {
-        if (responseText.ProcessedLogin == true) 
-        {
-            if(responseText.IsAuthorized==true)
-            {
-                jQuery("#loginErrorMessage").hide();
-                location.reload(true);
-            }
-            else 
-            {
-                jQuery("#loginErrorMessage").show();
-            }
-        }
-        else
-        {
+        if (responseText.IsAuthorized == true) {
+            jQuery("#loginErrorMessage").hide();
             location.reload(true);
         }
+        else {
+            jQuery("#loginErrorMessage").show();
+        }
+    };
+
+    this.ProcessPostLogout = function (responseText, statusText) {
+        location.reload(true);
     };
 }

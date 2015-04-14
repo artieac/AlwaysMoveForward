@@ -1,5 +1,4 @@
 ﻿var React = require('react');
-var Table = require('react-bootstrap').Table;
 var ChartDetailRow = require('./ChartDetailRow');
 
 var ChartDetailTableBody = React.createClass({
@@ -19,7 +18,7 @@ var ChartDetailTable = React.createClass({
         return (
             <div>
                 <div>
-                    <Table striped bordered condensed hover>
+                    <Table className="table table-striped">
                         <thead> 
                             <th>Name</th>
                             <th>Task Count</th>

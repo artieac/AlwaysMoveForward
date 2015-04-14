@@ -1,5 +1,4 @@
 ﻿var React = require('react');
-var Table = require('react-bootstrap').Table;
 var TaskInputRow = require('./TaskInputRow');
 var TaskRow = require('./TaskRow');
 
@@ -21,7 +20,7 @@ var TaskTable = React.createClass({
         return (
             <div>
                 <div>
-                    <Table striped bordered condensed hover>
+                    <table className="table table-hover table-bordered">
                         <thead> 
                             <th width="20%">Name</th>
                             <th width="20%">Points</th>
@@ -29,7 +28,7 @@ var TaskTable = React.createClass({
                             <th>Action</th>
                         </thead>                    
                         <TaskTableBody tableBodyData={this.props.tableData}/>
-                    </Table>
+                    </table>
                 </div>
             </div>
         );

@@ -605,7 +605,8 @@
     <Compile Include="Code\Utilities\Utils.cs" />
     <Compile Include="Code\Utilities\WebConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
-    <Compile Include="Controllers\BaseAPIController.cs" />
+    <Compile Include="Controllers\API\PointEarnerController.cs" />
+    <Compile Include="Controllers\API\BaseAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\UI\ChartController.cs" />
     <Compile Include="Controllers\API\ChartController.cs" />

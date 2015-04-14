@@ -1,11 +1,10 @@
 ﻿/** @jsx React.DOM */
-var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
 var Route = require('react-router');
 var pointEarnerStore = require('../stores/pointEarnerStore');
 var pointEarnerActions = require('../actions/pointEarnerActions');
-var TaskTable = require('../Components/TaskTable/TaskTable.js');
+var PointEarnerTable = require('../Components/PointEarnerTable/PointEarnerTable.js');
 
 var PointEarnerManagementApp = React.createClass({
     mixins: [
@@ -14,6 +13,7 @@ var PointEarnerManagementApp = React.createClass({
 
     getInitialState: function() {
         return { 
+            emailSearch: '',
             currentPointEarner: {},
             allPointEarners: []
         };
@@ -29,19 +29,21 @@ var PointEarnerManagementApp = React.createClass({
         this.setState({allPointEarners: updateMessage.allPointEarners});
     },
 
+    handleEmailSearchClick: function(){
+        pointEarnerActions.findPointEarnerByEmail(this.state.searchEmail);
+    },
+
     render: function(){
         return ( 
             <div>
                 <div className="row">
-                    <Panel>
+                    <div className="col-md-6">
                         <div className={this.nameDivStyle}>                            
-                            <input type="text" ref="searchEmail" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
+                            <label for="searchEmail">Email</label>
+                            <input type="text" id="searchEmail" ref="searchEmail" defaultValue={this.state.emailSearch} />
                         </div>
-                        <div style={this.pointEarnerDivStyle}>
-                            <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />
-                        </div>
-                        <Button bsStyle='primary' onClick={this.handleSaveClick}>Save</Button>
-                    </span>
+                        <button className="btn btn-primary" onClick={this.handleSaveClick}>Search</button>
+                    </div>
                 </div>
                 <div>
                     <PointEarnerTable tableData={this.state.allPointEarners}/> 

@@ -1,9 +1,5 @@
 ﻿var React = require('react');
-var Button = require('react-bootstrap').Button;
-var Table = require('react-bootstrap').Table;
-var Panel = require('react-bootstrap').Panel;
-var TaskRow = require('./TaskRow');
-var chartActions = require('../../actions/chartActions');
+var PointEarnerRow = require('./PointEarnerRow');
 
 var PointEarnerTableBody = React.createClass({      
     render: function () {
@@ -28,7 +24,7 @@ var PointEarnerTable = React.createClass({
     render: function() {
         return (
             <div>
-                <Table striped bordered condensed hover>
+                <table className="table table-striped">
                     <thead> 
                         <th width="5%">First Name</th>
                         <th width="20%">Last Name</th>
@@ -37,10 +33,10 @@ var PointEarnerTable = React.createClass({
                         <td></td>
                     </thead>                    
                     <PointEarnerTableBody tableBodyData={this.props.tableData}/>
-                </Table>
+                </table>
             </div>
         );
     }
 });
 
-module.exports = TaskSelectionTable;
+module.exports = PointEarnerTable;

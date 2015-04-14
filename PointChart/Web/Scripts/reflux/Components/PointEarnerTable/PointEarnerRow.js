@@ -1,8 +1,4 @@
 ﻿var React = require('react');
-var Button = require('react-bootstrap').Button;
-
-// Actions
-var taskActions = require("../../actions/taskActions");
 
 var PointEarnerRow = React.createClass({    
     render: function () {
@@ -17,4 +13,4 @@ var PointEarnerRow = React.createClass({
     }    
 });
 
-module.exports = TaskRow;
+module.exports = PointEarnerRow;

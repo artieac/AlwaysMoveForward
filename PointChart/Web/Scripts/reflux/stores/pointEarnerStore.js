@@ -59,4 +59,4 @@ var pointEarnerStore = Reflux.createStore({
     }
 });
 
-module.exports = chartStore;
+module.exports = pointEarnerStore;

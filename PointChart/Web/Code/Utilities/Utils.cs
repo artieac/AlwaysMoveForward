@@ -24,25 +24,13 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
 {
     public class Utils
     {
-        public static string GetSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
+        public static string GetSecureURL(string targetUrl, string siteAuthority)
         {
             string retVal = string.Empty;
 
             if (Global.WebSiteConfiguration.EnableSSL == true)
             {
-                retVal = "http://" + siteAuthority;
-
-                if (!string.IsNullOrEmpty(blogSubFolder))
-                {
-                    retVal += "/" + blogSubFolder;
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(blogSubFolder))
-                {
-                    retVal = "/" + blogSubFolder;
-                }
+                retVal = "https://" + siteAuthority;
             }
 
             if (!targetUrl.StartsWith("/"))
@@ -53,14 +41,9 @@ namespace AlwaysMoveForward.PointChart.Web.Code.Utilities
             return retVal + targetUrl;
         }
 
-        public static string GetInSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)
+        public static string GetInSecureURL(string targetUrl, string siteAuthority)
         {
             string retVal = "http://" + siteAuthority;
-
-            if (!string.IsNullOrEmpty(blogSubFolder))
-            {
-                retVal += "/" + blogSubFolder;
-            }
 
             if (!targetUrl.StartsWith("/"))
             {

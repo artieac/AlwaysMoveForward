@@ -1,7 +1,4 @@
 ﻿var React = require('react');
-var Button = require('react-bootstrap').Button;
-var Table = require('react-bootstrap').Table;
-var Panel = require('react-bootstrap').Panel;
 var TaskRow = require('./TaskRow');
 var chartActions = require('../../actions/chartActions');
 
@@ -91,7 +88,7 @@ var TaskSelectionTable = React.createClass({
                     </div>
                 </div>
                 <div>
-                    <Table striped bordered condensed hover>
+                    <table className="table table-striped table-bordered">
                         <thead> 
                             <th width="5%">In Chart</th>
                             <th width="20%">Name</th>
@@ -99,7 +96,7 @@ var TaskSelectionTable = React.createClass({
                             <th width="20%">Max Per Day</th>
                         </thead>                    
                         <TaskSelectionTableBody chartData={this.props.chartData} tableBodyData={this.props.tableData}/>
-                    </Table>
+                    </table>
                 </div>
             </div>
         );
