@@ -3,7 +3,7 @@ var PointEarnerRow = require('./PointEarnerRow');
 
 var PointEarnerTableBody = React.createClass({      
     render: function () {
-        if(typeof this.props.tableBodyData !== 'undefined'){                        
+        if(typeof this.props.tableBodyData !== 'undefined' && this.props.tableBodyData.length > 0){                        
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {

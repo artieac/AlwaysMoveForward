@@ -16,7 +16,7 @@ var PointEarnerManagementApp = React.createClass({
         return { 
             emailSearch: '',
             currentPointEarner: {},
-            allPointEarners: {}
+            allPointEarners: []
         };
     },
 
