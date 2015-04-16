@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
     /// <summary>
     /// This class provides the UI elemetns to manage the consumers 
     /// </summary>
-    [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
+    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
     public class ManageConsumersController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         /// <summary>

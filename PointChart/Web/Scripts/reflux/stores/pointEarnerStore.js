@@ -12,7 +12,7 @@ var pointEarnerStore = Reflux.createStore({
     listenables: [pointEarnerActions],
 
     currentPointEarner: {},
-    allPointEarners: [],
+    allPointEarners: {},
 
     init: function() {
         this.currentPointEarner = {};
@@ -20,7 +20,7 @@ var pointEarnerStore = Reflux.createStore({
     },
 
     onGetAll: function () {
-        this.currentChart = {};
+        this.allPointEarners = {};
 
         jQuery.ajax({
             url: '/api/PointEarners',
@@ -35,11 +35,13 @@ var pointEarnerStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger(this.allPointEarners);
+        this.trigger((this.allPointEarners || {}));
         return this.allPointEarners;
     },
 
     onFindPointEarnerByEmail: function (emailAddress) {
+        this.currentPointEarner = {};
+
         jQuery.ajax({
             method: "GET",
             url: "/api/PointEarner?emailAddress=" + emailAddress,
@@ -47,14 +49,14 @@ var pointEarnerStore = Reflux.createStore({
             dataType: 'json',
             success: function (restData) {
                 console.log(restData);
-                this.currentPointEarner();
+                this.currentPointEarner = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
 
-        this.trigger(this.currentPointEarner);
+        this.trigger((this.currentPointEarner || {}));
         return this.currentPointEarner;
     }
 });

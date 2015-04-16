@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
     /// <summary>
     /// Allow the admin tool to manage tokens
     /// </summary>
-    [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
+    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
     public class ManageTokensController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         /// <summary>

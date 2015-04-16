@@ -9,6 +9,7 @@ var PointEarnerTable = require('../Components/PointEarnerTable/PointEarnerTable.
 var PointEarnerManagementApp = React.createClass({
     mixins: [
         Reflux.connect(pointEarnerStore, "allPointEarners"),
+        Reflux.connect(pointEarnerStore, "currentPointEarner")
     ],
 
     getInitialState: function() {
@@ -23,14 +24,24 @@ var PointEarnerManagementApp = React.createClass({
         // Add event listeners in componentDidMount
         this.listenTo(pointEarnerStore, this.updatePointEarners);
         pointEarnerActions.getAll();
+
+        this.listenTo(pointEarnerStore, this.updatePointEarner);
     },
 
     updatePointEarners: function (updateMessage) {
-        this.setState({allPointEarners: updateMessage.allPointEarners});
+        console.log('here2' + JSON.stringify(updateMessage));
+        this.setState({allPointEarners: updateMessage});
+    },
+
+    updateCurrentPointEarner: function(updateMessage) {
+        console.log('here' + JSON.stringify(updateMessage));
+        this.setState({currentPointEarner: updateMessage});
     },
 
     handleEmailSearchClick: function(){
-        pointEarnerActions.findPointEarnerByEmail(this.state.searchEmail);
+        var emailAddress = React.findDOMNode(this.refs.searchEmail).value;
+        this.setState({emailSearch: emailAddress});
+        pointEarnerActions.findPointEarnerByEmail(emailAddress);
     },
 
     render: function(){
@@ -40,7 +51,7 @@ var PointEarnerManagementApp = React.createClass({
                     <div className="col-md-6">
                         <div>                            
                             <label for="searchEmail">Email</label>
-                            <input type="text" id="searchEmail" ref="searchEmail" defaultValue={this.state.emailSearch} />
+                            <input type="text" id="searchEmail" ref="searchEmail" name="emailAddress" defaultValue={this.state.emailSearch} />
                         </div>
                         <button className="btn btn-primary" onClick={this.handleEmailSearchClick}>Search</button>
                     </div>

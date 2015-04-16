@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
 using AlwaysMoveForward.PointChart.Web.Models.API;
 
@@ -21,16 +22,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 
         [Route("api/PointEarner"), HttpGet()]
         [WebAPIAuthorization]
-        public IList<PointChartUser> Search(string emailAddress)
+        public PointChartUser Get(string emailAddress)
         {
-            return new List<PointChartUser>();
-        }
-
-        // GET api/<controller>/5
-        [WebAPIAuthorization]
-        public string Get(int id)
-        {
-            return "value";
+            DefaultOAuthToken accessToken = new DefaultOAuthToken();
+            accessToken.Token = this.CurrentPrincipal.CurrentUser.AccessToken;
+            accessToken.Secret = this.CurrentPrincipal.CurrentUser.AccessTokenSecret;
+            return this.Services.UserService.FindByEmail(emailAddress, accessToken);
         }
 
         // POST api/<controller>

@@ -10,9 +10,9 @@ using AlwaysMoveForward.OAuth.Common.DomainModel;
 namespace AlwaysMoveForward.OAuth.Web.Code
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class AdminAuthorizeAttribute : FilterAttribute, IAuthorizationFilter
+    public class CookieAuthorizationAttribute : FilterAttribute, IAuthorizationFilter
     {
-        public AdminAuthorizeAttribute()
+        public CookieAuthorizationAttribute()
             : base()
         {
             this.RequiredRoles = string.Empty;
@@ -42,14 +42,21 @@ namespace AlwaysMoveForward.OAuth.Web.Code
 
                     if (securityPrincipal.IsAuthenticated == true)
                     {
-                        string[] roleList = this.RequiredRoles.Split(',');
-
-                        foreach (string role in roleList)
+                        if (string.IsNullOrEmpty(this.RequiredRoles))
                         {
-                            if (securityPrincipal.IsInRole(role))
+                            isAuthorized = true;
+                        }
+                        else
+                        {
+                            string[] roleList = this.RequiredRoles.Split(',');
+
+                            foreach (string role in roleList)
                             {
-                                isAuthorized = true;
-                                break;
+                                if (securityPrincipal.IsInRole(role))
+                                {
+                                    isAuthorized = true;
+                                    break;
+                                }
                             }
                         }
                     }

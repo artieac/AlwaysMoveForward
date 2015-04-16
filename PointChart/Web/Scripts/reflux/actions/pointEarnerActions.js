@@ -7,7 +7,7 @@ var Reflux = require('reflux');
 
 var pointEarnerActions = ({
     'findPointEarnerByEmail': {},
-    'getAll': {},
+    'getAll': {}
 });
 
 module.exports = Reflux.createActions(pointEarnerActions);

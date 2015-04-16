@@ -10,7 +10,14 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
     {
         public PointChartUser() : base()
         {
+            this.IsSiteAdministrator = false;
+        }
 
+        public PointChartUser(User amfUser) : base()
+        {
+            this.OAuthServiceUserId = amfUser.Id;
+            this.FirstName = amfUser.FirstName;
+            this.LastName = amfUser.LastName;
         }
 
         public bool IsSiteAdministrator { get; set; }

@@ -141,7 +141,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
         /// </summary>
         /// <param name="oauthToken">The request token</param>
         /// <returns>The view that gives the user the option to grant or deny access</returns>
-        [Authorize]
+        [CookieAuthorization]
         public ActionResult GrantAccess(string oauthToken)
         {
             TokenModel model = new TokenModel() { Token = oauthToken };
@@ -152,7 +152,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
         /// Approves access for the request token
         /// </summary>
         /// <param name="oauthToken">The request token</param>
-        [Authorize]
+        [CookieAuthorization]
         public void ApproveAccess(string oauthToken)
         {
             try
@@ -178,7 +178,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
         /// Denies access to the request token
         /// </summary>
         /// <param name="oauthToken">the request token</param>
-        [Authorize]
+        [CookieAuthorization]
         public void DenyAccess(string oauthToken)
         {
             this.RedirectToClient(this.ServiceManager.TokenService.DenyRequestToken(oauthToken), false);
@@ -248,26 +248,6 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
             }
 
             return this.View(retVal);
-        }
-
-        /// <summary>
-        /// this action returns the partial view to show the password hint
-        /// </summary>
-        /// <returns>An MVC view</returns>
-        [MVCAuthorization]
-        public JsonResult Details()
-        {
-            User retVal = new User();
-
-            if (this.CurrentPrincipal.User != null)
-            {
-                retVal.Email = this.CurrentPrincipal.User.Email;
-                retVal.FirstName = this.CurrentPrincipal.User.FirstName;
-                retVal.LastName = this.CurrentPrincipal.User.LastName;
-                retVal.Id = this.CurrentPrincipal.User.Id;
-            }
-
-            return this.Json(retVal, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ForgotPassword(string oauthToken)

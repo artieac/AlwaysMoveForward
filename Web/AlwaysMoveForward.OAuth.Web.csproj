@@ -141,14 +141,14 @@
     <Compile Include="Areas\Admin\Models\LoginHistoryModel.cs" />
     <Compile Include="Areas\Admin\Models\OAuthTokensModel.cs" />
     <Compile Include="Code\AccessTokenAuthorizationFilter.cs" />
-    <Compile Include="Code\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Code\CookieAuthorizationAttribute.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\OAuthServiceProviderFactory.cs" />
     <Compile Include="Code\MVCAuthorizationAttribute.cs" />
     <Compile Include="Code\WebAPIAuthorizationAttribute.cs" />
     <Compile Include="Code\XmlResult.cs" />
     <Compile Include="Controllers\API\BaseAPIController.cs" />
-    <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\API\UsersController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\OAuthController.cs" />
@@ -231,7 +231,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56998</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56998/</IISUrl>
+          <IISUrl>http://localhost:60001/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

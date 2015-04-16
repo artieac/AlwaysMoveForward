@@ -121,11 +121,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
                 if (retVal == null)
                 {
-                    retVal = new PointChartUser();
-                    retVal.OAuthServiceUserId = amfUser.Id;
-                    retVal.FirstName = amfUser.FirstName;
-                    retVal.LastName = amfUser.LastName;
-                    retVal.IsSiteAdministrator = false;
+                    retVal = new PointChartUser(amfUser);
                 }
 
                 retVal.AccessToken = accessToken.Token;
@@ -139,6 +135,28 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         public User GetAMFUserInfo(IOAuthToken oauthToken)
         {
             return this.OAuthRepository.GetUserInfo(oauthToken);
+        }
+
+        public PointChartUser FindByEmail(string emailAddress, IOAuthToken oauthToken)
+        {
+            PointChartUser retVal = null;
+
+            if(!string.IsNullOrEmpty(emailAddress))
+            {
+                User amfUser = this.OAuthRepository.GetByEmail(oauthToken, emailAddress);
+
+                if(amfUser != null)
+                {
+                    retVal = this.UserRepository.GetByOAuthServiceUserId(amfUser.Id);
+
+                    if(retVal == null)
+                    {
+                        retVal = new PointChartUser(amfUser);
+                    }
+                }
+            }
+
+            return retVal;
         }
     }
 }

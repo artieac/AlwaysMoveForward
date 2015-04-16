@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
     /// <summary>
     /// Manage the users int he system
     /// </summary>
-    [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
+    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
     public class ManageUsersController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         /// <summary>

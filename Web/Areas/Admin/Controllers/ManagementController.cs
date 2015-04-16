@@ -10,11 +10,11 @@ using AlwaysMoveForward.OAuth.Web.Code;
 
 namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 {
-    [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
+    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
     public class ManagementController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         // GET: Admin/Management
-        [AdminAuthorizeAttribute(RequiredRoles = "Administrator")]
+        [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
         public ActionResult Index()
         {
             return View();

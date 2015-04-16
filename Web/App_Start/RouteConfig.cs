@@ -13,6 +13,8 @@ namespace AlwaysMoveForward.OAuth.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes(); 
+
             routes.MapRoute(
               name: "Error",
               url: "Error/{action}/{id}",
