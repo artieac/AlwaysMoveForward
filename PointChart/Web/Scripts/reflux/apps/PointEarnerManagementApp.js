@@ -16,7 +16,7 @@ var PointEarnerManagementApp = React.createClass({
         return { 
             emailSearch: '',
             currentPointEarner: {},
-            allPointEarners: []
+            allPointEarners: {}
         };
     },
 
@@ -25,7 +25,7 @@ var PointEarnerManagementApp = React.createClass({
         this.listenTo(pointEarnerStore, this.updatePointEarners);
         pointEarnerActions.getAll();
 
-        this.listenTo(pointEarnerStore, this.updatePointEarner);
+        this.listenTo(pointEarnerStore, this.updateCurrentPointEarner);
     },
 
     updatePointEarners: function (updateMessage) {

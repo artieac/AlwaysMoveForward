@@ -16,7 +16,7 @@ var pointEarnerStore = Reflux.createStore({
 
     init: function() {
         this.currentPointEarner = {};
-        this.allPointEarners = this.onGetAll();
+        this.allPointEarners = {};
     },
 
     onGetAll: function () {
