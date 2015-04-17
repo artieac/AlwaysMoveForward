@@ -11,6 +11,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         public PointChartUser() : base()
         {
             this.IsSiteAdministrator = false;
+            this.PointEarners = new List<PointChartUser>();
         }
 
         public PointChartUser(User amfUser) : base()
@@ -21,5 +22,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         }
 
         public bool IsSiteAdministrator { get; set; }
+
+        public IList<PointChartUser> PointEarners { get; set; }
     }
 }

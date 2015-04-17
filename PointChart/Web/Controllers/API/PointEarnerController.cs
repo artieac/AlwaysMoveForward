@@ -20,7 +20,6 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return new List<PointChartUser>();
         }
 
-        [Route("api/PointEarner"), HttpGet()]
         [WebAPIAuthorization]
         public PointChartUser Get(string emailAddress)
         {
@@ -32,14 +31,22 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 
         // POST api/<controller>
         [WebAPIAuthorization]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]PointEarnerInput pointEarnerData)
         {
+            if(pointEarnerData != null)
+            {
+                this.Services.UserService.AddPointEarner(pointEarnerData.PointEarnerId, this.CurrentPrincipal.CurrentUser);
+            }
         }
 
         // PUT api/<controller>/5
         [WebAPIAuthorization]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]PointEarnerInput pointEarnerData)
         {
+            if(pointEarnerData != null)
+            {
+
+            }
         }
 
         // DELETE api/<controller>/5

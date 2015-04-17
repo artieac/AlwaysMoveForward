@@ -158,5 +158,30 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             return retVal;
         }
+
+        public PointChartUser AddPointEarner(long pointEarnerId, PointChartUser currentUser)
+        {
+            PointChartUser retVal = currentUser;
+
+            if(currentUser != null)
+            {
+                PointChartUser pointEarner = this.UserRepository.GetById(pointEarnerId);
+
+                if(pointEarner!=null)
+                {
+                    PointChartUser alreadyInList = currentUser.PointEarners
+                        .Where(e => e.Id == pointEarnerId)
+                        .FirstOrDefault();
+                    
+                    if(alreadyInList==null)
+                    {
+                        retVal.PointEarners.Add(pointEarner);
+                        retVal = this.UserRepository.Save(retVal);
+                    }
+                }
+            }
+
+            return retVal;
+        }
     }
 }

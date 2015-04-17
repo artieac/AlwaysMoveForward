@@ -573,10 +573,7 @@
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Chart\CompletedTasks.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PointEarner\_ShowCharts.cshtml" />
-    <Content Include="Views\PointEarner\Charts.cshtml" />
-    <Content Include="Views\PointEarner\Index.cshtml" />
-    <Content Include="Views\PointEarner\PointsDetail.cshtml" />
+    <Content Include="Views\Home\PointEarners.cshtml" />
     <Content Include="Views\Shared\_CalendarControl.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_TabControl.cshtml" />
@@ -611,7 +608,6 @@
     <Compile Include="Controllers\UI\ChartController.cs" />
     <Compile Include="Controllers\API\ChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PointEarnerController.cs" />
     <Compile Include="Controllers\UI\TaskController.cs" />
     <Compile Include="Controllers\API\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -620,6 +616,7 @@
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
     <Compile Include="Models\API\ChartInput.cs" />
+    <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\ChartModel.cs" />

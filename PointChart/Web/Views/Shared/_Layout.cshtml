@@ -57,7 +57,7 @@
                     TabElements tabElements = new TabElements();
                     tabElements.Add("Home", "/Home/Index");
                     tabElements.Add("Tasks", "/Task/Index");
-                    tabElements.Add("Point Earners", "/PointEarner/Index");
+                    tabElements.Add("Point Earners", "/Home/PointEarners");
                     tabElements.SetSelectedTab(this.Request.Url);
                     Html.RenderPartial("_TabControl", tabElements);
                 }

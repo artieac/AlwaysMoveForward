@@ -29,12 +29,10 @@ var PointEarnerManagementApp = React.createClass({
     },
 
     updatePointEarners: function (updateMessage) {
-        console.log('here2' + JSON.stringify(updateMessage));
         this.setState({allPointEarners: updateMessage});
     },
 
     updateCurrentPointEarner: function(updateMessage) {
-        console.log('here' + JSON.stringify(updateMessage));
         this.setState({currentPointEarner: updateMessage});
     },
 
@@ -42,6 +40,10 @@ var PointEarnerManagementApp = React.createClass({
         var emailAddress = React.findDOMNode(this.refs.searchEmail).value;
         this.setState({emailSearch: emailAddress});
         pointEarnerActions.findPointEarnerByEmail(emailAddress);
+    },
+
+    handleAddPointEarnerClick: function(){
+        pointEarnerActions.addPointEarner(this.state.currentPointEarner.Id);
     },
 
     render: function(){
@@ -58,11 +60,14 @@ var PointEarnerManagementApp = React.createClass({
                 </div>
                 { this.state.currentPointEarner ?
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <span>{this.state.currentPointEarner.FirstName}</span>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <span>{this.state.currentPointEarner.LastName}</span>
+                        </div>
+                        <div className="col-md-3">
+                            <button className="btn btn-primary" onClick={this.handleAddPointEarnerClick}>Add</button>
                         </div>
                     </div>
                         : null 
