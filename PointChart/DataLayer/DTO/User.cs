@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public virtual string AccessTokenSecret { get; set; }
 
-        [NHibernate.Mapping.Attributes.Bag(0, Table = "PointEarners", Cascade = "Save-Update")]
+        [NHibernate.Mapping.Attributes.Bag(0, Table = "PointEarners", Cascade = "Save-Update", Inverse=true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "UserId")]
         [NHibernate.Mapping.Attributes.ManyToMany(2, Column = "PointEarnerId", ClassType = typeof(DTO.User))]
         public virtual IList<DTO.User> PointEarners { get; set; }

@@ -17,7 +17,7 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
             Chart retVal = new Chart();
             retVal.Name = ChartConstants.TestName;
             retVal.PointEarner = null;
-            retVal.CreatorId = UserConstants.CreatorId;
+            retVal.CreatorId = UserConstants.ChartCreator.Id;
             retVal.Tasks = new List<Task>();
 
             return retVal;
@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
         private Task CreateTestTask()
         {
             Task retVal = new Task();
-            retVal.CreatorId = UserConstants.CreatorId;
+            retVal.CreatorId = UserConstants.ChartCreator.Id;
             retVal.MaxAllowedDaily = TaskConstants.MaxAllowedDaily;
             retVal.Name = TaskConstants.Name;
             retVal.Points = TaskConstants.Points;
@@ -44,34 +44,34 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
         [Test]
         public void ChartRepositoryTestsGetByCreator()
         {
-            IList<Chart> foundItems = this.RepositoryManager.Charts.GetByCreator(UserConstants.CreatorId);
+            IList<Chart> foundItems = this.RepositoryManager.Charts.GetByCreator(UserConstants.ChartCreator.Id);
 
             if (foundItems == null || foundItems.Count == 0)
             {
                 this.RepositoryManager.Charts.Save(this.CreateTestChart());
             }
 
-            foundItems = this.RepositoryManager.Charts.GetByCreator(UserConstants.CreatorId);
+            foundItems = this.RepositoryManager.Charts.GetByCreator(UserConstants.ChartCreator.Id);
             Assert.IsNotNull(foundItems);
             Assert.IsTrue(foundItems.Count > 0);
-            Assert.IsTrue(foundItems[0].CreatorId == UserConstants.CreatorId);
+            Assert.IsTrue(foundItems[0].CreatorId == UserConstants.ChartCreator.Id);
         }
 
         [Test]
         public void ChartRepositoryTestsGetByPointEarner()
         {
-            IList<Chart> foundItems = this.RepositoryManager.Charts.GetByPointEarner(UserConstants.PointEarnerId);
+            IList<Chart> foundItems = this.RepositoryManager.Charts.GetByPointEarner(UserConstants.PointEarner.Id);
 
             if (foundItems == null || foundItems.Count == 0)
             {
                 this.RepositoryManager.Charts.Save(this.CreateTestChart());
             }
 
-            foundItems = this.RepositoryManager.Charts.GetByPointEarner(UserConstants.PointEarnerId);
+            foundItems = this.RepositoryManager.Charts.GetByPointEarner(UserConstants.PointEarner.Id);
             Assert.IsNotNull(foundItems);
             Assert.IsTrue(foundItems.Count > 0);
             Assert.IsNotNull(foundItems[0].PointEarner);
-            Assert.IsTrue(foundItems[0].PointEarner.Id == UserConstants.PointEarnerId);
+            Assert.IsTrue(foundItems[0].PointEarner.Id == UserConstants.PointEarner.Id);
         }
 
         [Test]

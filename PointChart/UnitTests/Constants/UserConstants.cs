@@ -8,23 +8,20 @@ namespace AlwaysMoveForward.PointChart.UnitTests.Constants
     public class UserConstants
     {
         /// <summary>
-        /// The default user id to use in unit tests
-        /// </summary>
-        public const long TestUserId = 1;
-
-        public const long CreatorId = 1;
-
-        public const long PointEarnerId = 1;
-
-        /// <summary>
         /// The default username to use in unit tests
         /// </summary>
         public const string TestUserName = "artie@test.com";
 
-        /// <summary>
-        /// The default password to use in unit tests
-        /// </summary>
-        public const long OAuthServiceId = 13;
+        public class ChartCreator
+        {
+            public const long Id = 1;
+            public const long OAuthServiceId = 6;   
+        }
 
+        public class PointEarner
+        {
+            public const long Id = 2;
+            public const long OAuthServiceId = 1;
+        }
     }
 }

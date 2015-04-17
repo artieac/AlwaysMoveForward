@@ -33,16 +33,44 @@ namespace AlwaysMoveForward.PointChart.UnitTests.IntegrationTests.Repositories
         [Test]
         public void UserRepositoryTestsGetByOAuthServiceId()
         {
-            PointChartUser foundItem = this.RepositoryManager.UserRepository.GetByOAuthServiceUserId(UserConstants.OAuthServiceId);
+            PointChartUser foundItem = this.RepositoryManager.UserRepository.GetByOAuthServiceUserId(UserConstants.ChartCreator.OAuthServiceId);
 
             if (foundItem == null)
             {
-                this.RepositoryManager.UserRepository.Save(this.CreatePointChartUser(UserConstants.OAuthServiceId));
+                this.RepositoryManager.UserRepository.Save(this.CreatePointChartUser(UserConstants.ChartCreator.OAuthServiceId));
             }
 
-            foundItem = this.RepositoryManager.UserRepository.GetByOAuthServiceUserId(UserConstants.OAuthServiceId);
+            foundItem = this.RepositoryManager.UserRepository.GetByOAuthServiceUserId(UserConstants.ChartCreator.OAuthServiceId);
             Assert.IsNotNull(foundItem);
-            Assert.IsTrue(foundItem.OAuthServiceUserId == UserConstants.OAuthServiceId);
+            Assert.IsTrue(foundItem.OAuthServiceUserId == UserConstants.ChartCreator.OAuthServiceId);
+        }
+
+        [Test] 
+        public void UserRepositoryTestsSaveUserWithPointEarners()
+        {
+            PointChartUser chartCreator = this.RepositoryManager.UserRepository.GetById(UserConstants.ChartCreator.Id);
+
+            if(chartCreator==null)
+            {
+                chartCreator = this.CreatePointChartUser(UserConstants.ChartCreator.OAuthServiceId);
+                chartCreator = this.RepositoryManager.UserRepository.Save(chartCreator);
+            }
+
+            PointChartUser pointEarner = this.RepositoryManager.UserRepository.GetById(UserConstants.PointEarner.Id);
+
+            if (pointEarner == null)
+            {
+                pointEarner = this.CreatePointChartUser(UserConstants.PointEarner.OAuthServiceId);
+                pointEarner = this.RepositoryManager.UserRepository.Save(pointEarner);
+            }
+
+            chartCreator.PointEarners.Add(pointEarner);
+            chartCreator = this.RepositoryManager.UserRepository.Save(chartCreator);
+
+            Assert.IsNotNull(chartCreator);
+            Assert.IsTrue(chartCreator.PointEarners
+                        .Where(e => e.Id == pointEarner.Id)
+                        .FirstOrDefault() != null);
         }
     }
 }

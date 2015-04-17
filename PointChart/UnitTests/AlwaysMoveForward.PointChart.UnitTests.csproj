@@ -54,7 +54,6 @@
     <Compile Include="IntegrationTests\Repositories\ChartRepositoryTests.cs" />
     <Compile Include="IntegrationTests\Repositories\RepositoryTestBase.cs" />
     <Compile Include="IntegrationTests\Repositories\UserRepositoryTests.cs" />
-    <Compile Include="IntegrationTests\RepositoryTests.cs" />
     <Compile Include="Mock\MockServiceManagerBuilder.cs" />
     <Compile Include="Mock\Repositories\MockRepositoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
