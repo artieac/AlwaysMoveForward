@@ -15,18 +15,31 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
     {
         [Route("api/PointEarners"), HttpGet()]
         [WebAPIAuthorization]
-        public IList<PointChartUser> Get()
+        public IList<PointChartUserModel> Get()
         {
-            return new List<PointChartUser>();
+            IList<PointChartUserModel> retVal = new List<PointChartUserModel>();
+
+            if(this.CurrentPrincipal!=null)
+            {
+                if(this.CurrentPrincipal.CurrentUser != null)
+                {
+                    for (int i = 0; i < this.CurrentPrincipal.CurrentUser.PointEarners.Count; i++)
+                    {
+                        retVal.Add(new PointChartUserModel(this.CurrentPrincipal.CurrentUser.PointEarners[i]));
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         [WebAPIAuthorization]
-        public PointChartUser Get(string emailAddress)
+        public PointChartUserModel Get(string emailAddress)
         {
             DefaultOAuthToken accessToken = new DefaultOAuthToken();
             accessToken.Token = this.CurrentPrincipal.CurrentUser.AccessToken;
             accessToken.Secret = this.CurrentPrincipal.CurrentUser.AccessTokenSecret;
-            return this.Services.UserService.FindByEmail(emailAddress, accessToken);
+            return new PointChartUserModel(this.Services.UserService.FindByEmail(emailAddress, accessToken));
         }
 
         // POST api/<controller>

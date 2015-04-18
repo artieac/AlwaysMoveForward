@@ -553,10 +553,8 @@
     <Content Include="Scripts\reflux\actions\pointEarnerActions.js" />
     <Content Include="Scripts\reflux\apps\EditChartApp.js" />
     <Content Include="Scripts\reflux\Components\AddTaskModal.js" />
-    <Content Include="Scripts\reflux\Components\ChartDetailTable\ChartDetailRow.js" />
     <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryRow.js" />
     <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryTable.js" />
-    <Content Include="Scripts\reflux\Components\ChartDetailTable\ChartDetailTable.js" />
     <Content Include="Scripts\reflux\Components\PointEarnerTable\PointEarnerRow.js" />
     <Content Include="Scripts\reflux\Components\PointEarnerTable\PointEarnerTable.js" />
     <Content Include="Scripts\reflux\Components\TaskSelectionTable\TaskRow.js" />
@@ -616,6 +614,7 @@
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
     <Compile Include="Models\API\ChartInput.cs" />
+    <Compile Include="Models\API\PointChartUserModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
@@ -626,6 +625,7 @@
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\reflux\Components\GenericDropDown.js" />
     <Content Include="Scripts\reflux\apps\PointEarnerManagementApp.js" />
     <Content Include="Scripts\reflux\Components\TaskTable\TaskRow.js" />
     <Content Include="Scripts\reflux\apps\TaskPageApp.js" />

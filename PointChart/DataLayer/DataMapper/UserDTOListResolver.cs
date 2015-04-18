@@ -36,5 +36,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
         {
             return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
         }
+
     }
 }

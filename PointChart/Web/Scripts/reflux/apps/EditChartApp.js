@@ -2,22 +2,26 @@
 var React = require('react');
 var Reflux = require('reflux');
 var chartStore = require('../stores/chartStore');
-var taskStore = require('../stores/taskStore');
 var chartActions = require('../actions/chartActions');
+var taskStore = require('../stores/taskStore');
 var taskActions = require('../actions/taskActions');
+var pointEarnerStore = require('../stores/pointEarnerStore');
+var pointEarnerActions = require('../actions/pointEarnerActions');
 var TaskSelectionTable = require('../Components/TaskSelectionTable/TaskSelectionTable');
 
 var EditChartApp = React.createClass({
     mixins: [
         Reflux.connect(chartStore, "currentChart"),
-        Reflux.connect(taskStore, "allTasks")
+        Reflux.connect(taskStore, "allTasks"),
+        Reflux.connect(pointEarnerStore, "allPointEarners")
     ],
 
     getInitialState: function() {
         console.log('get initial state');
         return { 
             currentChart: {},
-            allTasks: []
+            allTasks: [],
+            allPointEarners: []
         };
     },
 
@@ -28,8 +32,11 @@ var EditChartApp = React.createClass({
 
         this.listenTo(chartStore, this.handleGetChart);
         chartActions.getChart(this.props.chartId);
+        
+        this.listenTo(pointEarnerStore, this.handleGetAllPointEarners);
+        pointEarnerActions.getAll();
     },
-
+    
     handleGetChart: function (updateMessage) {
         this.setState({currentChart: updateMessage});
     },
@@ -38,11 +45,15 @@ var EditChartApp = React.createClass({
         this.setState({allTasks: updateMessage});
     },
 
+    handleGetAllPointEarners: function(updateMessage){
+        this.setState({allPointEarners: updateMessage});
+    },
+
     render: function(){
         return ( 
             <div>
                 <div>
-                    <TaskSelectionTable chartData={this.state.currentChart} tableData={this.state.allTasks} />
+                    <TaskSelectionTable chartData={this.state.currentChart} tableData={this.state.allTasks} pointEarners={this.state.allPointEarners}/>
                 </div>
             </div>
         );

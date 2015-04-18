@@ -1,5 +1,8 @@
-﻿var React = require('react');
+﻿var jQuery = require('jquery');
+var React = require('react');
+var Reflux = require('reflux');
 var TaskRow = require('./TaskRow');
+var GenericDropDown = require('../GenericDropDown');
 var chartActions = require('../../actions/chartActions');
 
 var TaskSelectionTableBody = React.createClass({   
@@ -35,9 +38,7 @@ var TaskSelectionTableBody = React.createClass({
         }
         else{
             return ( <tbody></tbody>);
-        }
-
-        
+        }        
     }
 });
 
@@ -58,7 +59,7 @@ var TaskSelectionTable = React.createClass({
 
     handleSaveClick: function() {
         var chartName = React.findDOMNode(this.refs.chartName).value;
-        var pointEarnerId = React.findDOMNode(this.refs.pointEarnerId).value;
+        var pointEarnerId = 1;
 
         var chart = chartActions.updateChart(
                         this.props.chartData.Id,             
@@ -81,7 +82,7 @@ var TaskSelectionTable = React.createClass({
                         <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
                     </div>
                     <div className="col-md-3">
-                        <input type="text" ref="pointEarnerId" defaultValue={this.props.chartData.PointEarnerId} />
+                        <GenericDropDown listData={this.props.pointEarners} selected={this.props.chartData.PointEarner}/>
                     </div>
                     <div className="col-md-3">
                         <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>

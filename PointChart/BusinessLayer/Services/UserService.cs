@@ -151,7 +151,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
                     if(retVal == null)
                     {
-                        retVal = new PointChartUser(amfUser);
+                        retVal = this.UserRepository.Save(new PointChartUser(amfUser));
                     }
                 }
             }

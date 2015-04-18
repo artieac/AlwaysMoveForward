@@ -50,31 +50,39 @@ var PointEarnerManagementApp = React.createClass({
         return ( 
             <div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <div>                            
-                            <label for="searchEmail">Email</label>
-                            <input type="text" id="searchEmail" ref="searchEmail" name="emailAddress" defaultValue={this.state.emailSearch} />
+                    <div className="col-md-4">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">
+                                <h3 className="panel-title">Search</h3>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row">
+                                    <div>                            
+                                        <label for="searchEmail">Email:</label>
+                                        <input type="text" id="searchEmail" ref="searchEmail" name="emailAddress" defaultValue={this.state.emailSearch} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <button className="btn btn-primary" onClick={this.handleEmailSearchClick}>Search</button>
+                                </div>  
+                                <br/>
+                                <div className="row">                            
+                                    <label for="firstName">First Name:</label>
+                                    <span id="firstName">{this.state.currentPointEarner.FirstName}</span>
+                                </div>
+                                <div className="row">     
+                                    <label for="lastName">Last Name:</label>
+                                    <span id="lastName">{this.state.currentPointEarner.LastName}</span>
+                                </div>
+                                <div className="row">     
+                                    <button className="btn btn-primary" onClick={this.handleAddPointEarnerClick}>Add</button>
+                                </div>
+                            </div>
                         </div>
-                        <button className="btn btn-primary" onClick={this.handleEmailSearchClick}>Search</button>
                     </div>
-                </div>
-                { this.state.currentPointEarner ?
-                    <div className="row">
-                        <div className="col-md-3">
-                            <span>{this.state.currentPointEarner.FirstName}</span>
-                        </div>
-                        <div className="col-md-3">
-                            <span>{this.state.currentPointEarner.LastName}</span>
-                        </div>
-                        <div className="col-md-3">
-                            <button className="btn btn-primary" onClick={this.handleAddPointEarnerClick}>Add</button>
-                        </div>
+                    <div className="col-md-8">
+                        <PointEarnerTable tableData={this.state.allPointEarners}/> 
                     </div>
-                        : null 
-                }
-                            
-                <div>
-                    <PointEarnerTable tableData={this.state.allPointEarners}/> 
                 </div>
             </div>
         );
