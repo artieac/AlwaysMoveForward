@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.Common.DomainModel
 {
-    public class RemoteOAuthUser
+    public class RemoteOAuthUser : IRemoteOAuthUser
     {
         public RemoteOAuthUser()
         {

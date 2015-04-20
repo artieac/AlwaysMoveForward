@@ -70,6 +70,7 @@
     <Compile Include="DomainModel\DataMap\IDbInfo.cs" />
     <Compile Include="DomainModel\DataMap\IRole.cs" />
     <Compile Include="DomainModel\DataMap\IUser.cs" />
+    <Compile Include="DomainModel\IRemoteOAuthUser.cs" />
     <Compile Include="DomainModel\Poll\PollOption.cs" />
     <Compile Include="DomainModel\Poll\PollQuestion.cs" />
     <Compile Include="DomainModel\Poll\VoterAddress.cs" />

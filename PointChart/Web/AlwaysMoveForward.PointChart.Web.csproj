@@ -614,7 +614,6 @@
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
     <Compile Include="Models\API\ChartInput.cs" />
-    <Compile Include="Models\API\PointChartUserModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />

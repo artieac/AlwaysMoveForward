@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.PointChart.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.PointChart.Web.Code.Filters;
@@ -15,18 +16,15 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
     {
         [Route("api/PointEarners"), HttpGet()]
         [WebAPIAuthorization]
-        public IList<PointChartUserModel> Get()
+        public IList<PointChartUser> Get()
         {
-            IList<PointChartUserModel> retVal = new List<PointChartUserModel>();
+            IList<PointChartUser> retVal = new List<PointChartUser>();
 
             if(this.CurrentPrincipal!=null)
             {
                 if(this.CurrentPrincipal.CurrentUser != null)
                 {
-                    for (int i = 0; i < this.CurrentPrincipal.CurrentUser.PointEarners.Count; i++)
-                    {
-                        retVal.Add(new PointChartUserModel(this.CurrentPrincipal.CurrentUser.PointEarners[i]));
-                    }
+                    retVal = this.CurrentPrincipal.CurrentUser.PointEarners;
                 }
             }
 
@@ -34,12 +32,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         }
 
         [WebAPIAuthorization]
-        public PointChartUserModel Get(string emailAddress)
+        public PointChartUser Get(string emailAddress)
         {
             DefaultOAuthToken accessToken = new DefaultOAuthToken();
-            accessToken.Token = this.CurrentPrincipal.CurrentUser.AccessToken;
-            accessToken.Secret = this.CurrentPrincipal.CurrentUser.AccessTokenSecret;
-            return new PointChartUserModel(this.Services.UserService.FindByEmail(emailAddress, accessToken));
+            accessToken.Token = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessToken;
+            accessToken.Secret = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessTokenSecret;
+            return this.Services.UserService.FindByEmail(emailAddress, accessToken);
         }
 
         // POST api/<controller>

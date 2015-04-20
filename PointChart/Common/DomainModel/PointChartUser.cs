@@ -6,7 +6,7 @@ using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.PointChart.Common.DomainModel
 {
-    public class PointChartUser : RemoteOAuthUser
+    public class PointChartUser : IPointChartUser
     {
         public PointChartUser() : base()
         {
@@ -19,6 +19,22 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
             this.OAuthServiceUserId = amfUser.Id;
             this.FirstName = amfUser.FirstName;
             this.LastName = amfUser.LastName;
+        }
+
+        #region IRemoteOAuthUser 
+
+        public long Id { get; set; }
+        public long OAuthServiceUserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        string IRemoteOAuthUser.AccessToken { get; set; }
+        string IRemoteOAuthUser.AccessTokenSecret { get; set; }
+
+        #endregion
+
+        public string GetDisplayName()
+        {
+            return this.FirstName + " " + this.LastName;
         }
 
         public bool IsSiteAdministrator { get; set; }

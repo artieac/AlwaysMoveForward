@@ -124,8 +124,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                     retVal = new PointChartUser(amfUser);
                 }
 
-                retVal.AccessToken = accessToken.Token;
-                retVal.AccessTokenSecret = accessToken.Secret;
+                ((IRemoteOAuthUser)retVal).AccessToken = accessToken.Token;
+                ((IRemoteOAuthUser)retVal).AccessTokenSecret = accessToken.Secret;
                 retVal = this.UserRepository.Save(retVal);
             }
 
