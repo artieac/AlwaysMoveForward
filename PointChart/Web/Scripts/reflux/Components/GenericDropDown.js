@@ -25,7 +25,7 @@ var GenericDropDown = React.createClass({
         return (
             <div>
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span refName="currentSelection"></span>
+                    <span refName="currentSelection">{this.props.selected.FirstName}</span>
                     <span className="caret"></span>
                 </a>
                 <ul className="dropdown-menu" id="dropdown">
