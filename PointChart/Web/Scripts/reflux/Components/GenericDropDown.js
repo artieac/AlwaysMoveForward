@@ -9,6 +9,7 @@ var GenericDropDown = React.createClass({
 	
     select: function(item) {
         this.props.selected = item;
+        this.props.onSelectedChange(item);
     },
 				
     show: function() {
@@ -22,10 +23,16 @@ var GenericDropDown = React.createClass({
     },
 			
     render: function() {
+        var selectionText = "";
+
+        if(typeof this.props.selected !== 'undefined'){
+            selectionText = this.props.selected.Name;
+        }
+
         return (
             <div>
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span refName="currentSelection">{this.props.selected.FirstName}</span>
+                    <span refName="currentSelection">{selectionText}</span>
                     <span className="caret"></span>
                 </a>
                 <ul className="dropdown-menu" id="dropdown">

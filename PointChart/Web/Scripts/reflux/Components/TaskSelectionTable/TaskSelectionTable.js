@@ -59,12 +59,11 @@ var TaskSelectionTable = React.createClass({
 
     handleSaveClick: function() {
         var chartName = React.findDOMNode(this.refs.chartName).value;
-        var pointEarnerId = 1;
 
         var chart = chartActions.updateChart(
                         this.props.chartData.Id,             
                         chartName, 
-                        pointEarnerId,
+                        this.props.chartData.PointEarner.Id,
                         this.getSelectedTasks()
                     );
     },
@@ -74,7 +73,20 @@ var TaskSelectionTable = React.createClass({
         this.forceUpdate();
     },
    
+    handleSelectedChange: function(selectedPointEarner){
+        this.props.chartData.PointEarner = selectedPointEarner;
+        this.forceUpdate();
+    },
+
     render: function() {
+        for(var i = 0; i < this.props.pointEarners.length; i++){
+            this.props.pointEarners[i].Name = this.props.pointEarners[i].FirstName + ' ' + this.props.pointEarners[i].LastName;
+        }
+
+        if(typeof this.props.chartData !== 'undefined' && typeof this.props.chartData.PointEarner !== 'undefined'){
+            this.props.chartData.PointEarner.Name = this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName;
+        }
+
         return (
             <div>
                 <div className="row">
@@ -82,7 +94,7 @@ var TaskSelectionTable = React.createClass({
                         <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
                     </div>
                     <div className="col-md-3">
-                        <GenericDropDown listData={this.props.pointEarners} selected={this.props.chartData.PointEarner}/>
+                        <GenericDropDown ref="selectedPointEarner" listData={this.props.pointEarners} selected={this.props.chartData.PointEarner} onSelectedChange={this.handleSelectedChange} />
                     </div>
                     <div className="col-md-3">
                         <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>
