@@ -167,6 +167,16 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         }
 
         /// <summary>
+        /// Search for a user by its email
+        /// </summary>
+        /// <param name="email">Search the email field for similar strings</param>
+        /// <returns>The user if one is found</returns>
+        public IList<AMFUserLogin> SearchByEmail(string email)
+        {
+            return this.UserRepository.SearchByEmail(email);
+        }
+
+        /// <summary>
         /// Update the login attempt tracking information based upon the last login status
         /// </summary>
         /// <param name="didLoginSucceed">Did the last login attempt succeed</param>

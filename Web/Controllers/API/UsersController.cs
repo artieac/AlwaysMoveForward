@@ -31,13 +31,33 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
         [WebAPIAuthorization]
         public User Get(long id)
         {
-            return this.Services.UserService.GetUserById(id);
+            AlwaysMoveForward.OAuth.Common.DomainModel.AMFUserLogin foundUser = this.Services.UserService.GetUserById(id);
+            User retVal = new User();
+            retVal.Email = this.CurrentPrincipal.User.Email;
+            retVal.FirstName = this.CurrentPrincipal.User.FirstName;
+            retVal.LastName = this.CurrentPrincipal.User.LastName;
+            retVal.Id = this.CurrentPrincipal.User.Id;
+
+            return retVal;
         }
 
-        [WebAPIAuthorization]
-        public User Get(string emailAddress)
+        public IList<User> Get(string emailAddress)
         {
-            return this.Services.UserService.GetByEmail(emailAddress);
+            IList<User> retVal = new List<User>();
+            
+            IList<AlwaysMoveForward.OAuth.Common.DomainModel.AMFUserLogin> foundUsers = this.Services.UserService.SearchByEmail(emailAddress);
+
+            for (int i = 0; i < foundUsers.Count; i++)
+            {
+                User mappedUser = new User();
+                mappedUser.Email = foundUsers[i].Email;
+                mappedUser.FirstName = foundUsers[i].FirstName;
+                mappedUser.LastName = foundUsers[i].LastName;
+                mappedUser.Id = foundUsers[i].Id;
+                retVal.Add(mappedUser);
+            }
+
+            return retVal;
         }
     }
 }

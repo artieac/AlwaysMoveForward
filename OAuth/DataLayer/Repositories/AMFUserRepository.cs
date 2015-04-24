@@ -66,5 +66,18 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
             criteria.Add(Expression.Eq(DTO.AMFUser.EmailFieldName, emailAddress));
             return this.GetDataMapper().Map(criteria.UniqueResult<DTO.AMFUser>());
         }
+
+        /// <summary>
+        /// Search for a user by its email
+        /// </summary>
+        /// <param name="email">Search the email field for similar strings</param>
+        /// <returns>The user if one is found</returns>
+        public IList<AMFUserLogin> SearchByEmail(string emailAddress)
+        {
+            /// tbd just do a contains for now, implement full text search later
+            ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.AMFUser>();
+            criteria.Add(Expression.Like(DTO.AMFUser.EmailFieldName, emailAddress, MatchMode.Anywhere));
+            return this.GetDataMapper().Map(criteria.List<DTO.AMFUser>());
+        }
     }
 }

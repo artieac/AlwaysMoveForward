@@ -61,6 +61,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 
                 if (dtoItem != null)
                 {
+                    if(dtoItem.PointEarner.Id != itemToSave.PointEarner.Id)
+                    {
+                        dtoItem.PointEarner = this.UnitOfWork.CurrentSession.Query<DTO.User>()
+                            .Where(p => p.Id == itemToSave.PointEarner.Id).FirstOrDefault();
+                    }
+
                     foreach (Task domainTask in itemToSave.Tasks)
                     {
                         if (dtoItem.Tasks.FirstOrDefault(t => t.Id == domainTask.Id) == null)

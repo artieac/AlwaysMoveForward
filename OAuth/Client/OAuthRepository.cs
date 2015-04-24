@@ -21,6 +21,23 @@ namespace AlwaysMoveForward.OAuth.Client
 
         public OAuthClientBase OAuthClient { get; private set; }
 
+        private IList<User> DeserializeUserList(string serializedJSon)
+        {
+            IList<User> retVal = new List<User>();
+
+            if (!string.IsNullOrEmpty(serializedJSon))
+            {
+                using (var stringReader = new StringReader(serializedJSon))
+                using (var jsonReader = new JsonTextReader(stringReader))
+                {
+                    var jsonSerializer = new JsonSerializer();
+                    retVal = jsonSerializer.Deserialize<IList<User>>(jsonReader);
+                }
+            }
+
+            return retVal;
+        }
+
         private User DeserializeUser(string serializedJSon)
         {
             User retVal = null;
@@ -51,14 +68,14 @@ namespace AlwaysMoveForward.OAuth.Client
             return retVal;            
         }
 
-        public User GetByEmail(IOAuthToken oauthToken, string emailAddress)
+        public IList<User> GetByEmail(IOAuthToken oauthToken, string emailAddress)
         {
-            User retVal = null;
+            IList<User> retVal = new List<User>();
 
             if (this.OAuthClient != null)
             {
                 string response = this.OAuthClient.ExecuteAuthorizedRequest(this.OAuthClient.OAuthEndpoints.ServiceUri, OAuthRepository.GetByEmailAction + "?emailAddress=" + emailAddress, oauthToken);
-                retVal = this.DeserializeUser(response);
+                retVal = this.DeserializeUserList(response);
             }
 
             return retVal;

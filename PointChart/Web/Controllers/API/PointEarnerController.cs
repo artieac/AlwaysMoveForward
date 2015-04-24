@@ -32,12 +32,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         }
 
         [WebAPIAuthorization]
-        public PointChartUser Get(string emailAddress)
+        public IList<PointChartUser> Get(string emailAddress)
         {
             DefaultOAuthToken accessToken = new DefaultOAuthToken();
             accessToken.Token = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessToken;
             accessToken.Secret = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessTokenSecret;
-            return this.Services.UserService.FindByEmail(emailAddress, accessToken);
+            return this.Services.UserService.SearchByEmail(emailAddress, accessToken);
         }
 
         // POST api/<controller>

@@ -143,16 +143,33 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if(!string.IsNullOrEmpty(emailAddress))
             {
-                User amfUser = this.OAuthRepository.GetByEmail(oauthToken, emailAddress);
+                IList<User> foundUsers = this.OAuthRepository.GetByEmail(oauthToken, emailAddress);
 
-                if(amfUser != null)
+                if(foundUsers != null && foundUsers.Count == 1)
                 {
-                    retVal = this.UserRepository.GetByOAuthServiceUserId(amfUser.Id);
+                    retVal = this.UserRepository.GetByOAuthServiceUserId(foundUsers[0].Id);
 
                     if(retVal == null)
                     {
-                        retVal = this.UserRepository.Save(new PointChartUser(amfUser));
+                        retVal = this.UserRepository.Save(new PointChartUser(foundUsers[0]));
                     }
+                }
+            }
+
+            return retVal;
+        }
+
+        public IList<PointChartUser> SearchByEmail(string emailAddress, IOAuthToken oauthToken)
+        {
+            IList<PointChartUser> retVal = new List<PointChartUser>();
+
+            if (!string.IsNullOrEmpty(emailAddress))
+            {
+                IList<User> foundUsers = this.OAuthRepository.GetByEmail(oauthToken, emailAddress);
+
+                for(int i = 0; i < foundUsers.Count; i++)
+                {
+                    retVal.Add(new PointChartUser(foundUsers[i]));
                 }
             }
 

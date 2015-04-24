@@ -19,5 +19,12 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         /// <param name="emailAddress">The users email address</param>
         /// <returns>The found domain object instance</returns>
         AMFUserLogin GetByEmail(string emailAddress);
+
+        /// <summary>
+        /// Search for a user by its email
+        /// </summary>
+        /// <param name="email">Search the email field for similar strings</param>
+        /// <returns>The user if one is found</returns>
+        IList<AMFUserLogin> SearchByEmail(string email);
     }
 }

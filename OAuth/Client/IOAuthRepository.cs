@@ -10,6 +10,6 @@ namespace AlwaysMoveForward.OAuth.Client
     {
         User GetUserInfo(IOAuthToken oauthToken);
 
-        User GetByEmail(IOAuthToken oauthToken, string emailAddress);
+        IList<User> GetByEmail(IOAuthToken oauthToken, string emailAddress);
     }
 }
