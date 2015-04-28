@@ -7,7 +7,7 @@ var PointEarnerTableBody = React.createClass({
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {
-                        return <PointEarnerRow key={currentRow.Id} rowData={currentRow} />
+                        return <PointEarnerRow key={currentRow.Id} rowData={currentRow} handleRemovePointEarner={this.props.handleRemovePointEarner}/>
                         }.bind(this))}              
                 </tbody>
             );        
@@ -32,7 +32,7 @@ var PointEarnerTable = React.createClass({
                         <th width="20%">Points Spent</th>
                         <td></td>
                     </thead>                    
-                    <PointEarnerTableBody tableBodyData={this.props.tableData}/>
+                    <PointEarnerTableBody tableBodyData={this.props.tableData} handleRemovePointEarner={this.props.handleRemovePointEarner}/>
                 </table>
             </div>
         );

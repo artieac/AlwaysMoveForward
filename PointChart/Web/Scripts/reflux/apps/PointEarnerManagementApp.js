@@ -32,22 +32,11 @@ var PointEarnerManagementApp = React.createClass({
 
     onHandlePointEarnerSelection: function(pointEarner, isAdding){
         pointEarnerActions.addPointEarner(pointEarner);
+        this.forceUpdate();
+    },
 
-        if(isAdding){
-            var foundPointEarner = $.grep(this.selectedPointEarners, function(e){ return e.OAuthServiceUserId == pointEarner.OAuthServiceUserId; });         
-
-            if(foundPointEarner != null){
-                this.selectedPointEarners[this.selectedPointEarners.length] = pointEarner;
-            }
-        }
-        else{
-            for(var i = 0; i < this.selectedPointEarners.length; i++){
-                if (this.selectedPointEarners[i].OAuthServiceUserId === pointEarner.OAuthServiceUserId) { 
-                    this.selectedPointEarners.splice(i, 1);
-                    break;
-                }
-            }
-        }
+    onHandleRemovePointEarner: function(pointEarner){
+        pointEarnerActions.removePointEarner(pointEarner);
     },
 
     render: function(){
@@ -58,7 +47,7 @@ var PointEarnerManagementApp = React.createClass({
                         <PointEarnerSearch handlePointEarnerSelection={this.onHandlePointEarnerSelection}/>
                     </div>
                     <div className="col-md-8">
-                        <PointEarnerTable tableData={this.state.allPointEarners}/> 
+                        <PointEarnerTable tableData={this.state.allPointEarners} handleRemovePointEarner={this.onHandleRemovePointEarner}/> 
                     </div>
                 </div>
             </div>

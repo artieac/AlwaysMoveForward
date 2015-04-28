@@ -225,5 +225,30 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             return retVal;
         }
+
+        public bool RemovePointEarner(long id, PointChartUser currentUser)
+        {
+            bool retVal = false;
+
+            if(currentUser != null)
+            {
+                for(int i = 0; i < currentUser.PointEarners.Count; i++)
+                {
+                    if(currentUser.PointEarners[i].Id == id)
+                    {
+                        currentUser.PointEarners.RemoveAt(i);
+                        retVal = true;
+                        break;
+                    }
+                }
+            }
+
+            if(retVal == true)
+            {
+                this.UserRepository.Save(currentUser);
+            }
+
+            return retVal;
+        }
     }
 }

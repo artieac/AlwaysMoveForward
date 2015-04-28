@@ -72,8 +72,9 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 
         // DELETE api/<controller>/5
         [WebAPIAuthorization]
-        public void Delete(int id)
+        public void Delete(long id)
         {
+            this.Services.UserService.RemovePointEarner(id, this.CurrentPrincipal.CurrentUser);
         }
     }
 }

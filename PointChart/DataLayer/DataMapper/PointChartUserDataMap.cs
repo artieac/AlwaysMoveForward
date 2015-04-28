@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
             {
                 var newMap = Mapper.CreateMap<DTO.User, PointChartUser>()
                     .ForMember(dest => ((IRemoteOAuthUser)dest).AccessToken, opt => opt.MapFrom(src => src.AccessToken))
-                    .ForMember(dest => ((IRemoteOAuthUser)dest).AccessToken, opt => opt.MapFrom(src =>src.AccessTokenSecret));
+                    .ForMember(dest => ((IRemoteOAuthUser)dest).AccessTokenSecret, opt => opt.MapFrom(src =>src.AccessTokenSecret));
                 newMap.MaxDepth(2);
             }
 #if DEBUG

@@ -157,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\API\UsetDetailModel.cs" />
     <Compile Include="Models\AuthorizeConsumerModel.cs" />
     <Compile Include="Models\ConsumerKeyModel.cs" />
     <Compile Include="Models\PasswordHintModel.cs" />

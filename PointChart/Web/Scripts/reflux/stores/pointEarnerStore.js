@@ -66,12 +66,25 @@ var pointEarnerStore = Reflux.createStore({
             OAuthServiceUserId: pointEarner.OAuthServiceUserId
         };
 
-        console.log(pointEarnerData);
-
         jQuery.ajax({
             method: "POST",
             url: "/api/PointEarner",
             data: JSON.stringify(pointEarnerData),
+            contentType: "application/json; charset=utf-8",
+            success: function (restData) {
+                console.log(restData);
+                this.onGetAll();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    onRemovePointEarner: function (pointEarner) {
+        jQuery.ajax({
+            method: "DELETE",
+            url: "/api/PointEarner/" + pointEarner.Id,
             contentType: "application/json; charset=utf-8",
             success: function (restData) {
                 console.log(restData);

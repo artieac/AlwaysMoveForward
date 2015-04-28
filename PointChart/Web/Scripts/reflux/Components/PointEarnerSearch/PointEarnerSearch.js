@@ -6,19 +6,18 @@ var pointEarnerStore = require('../../stores/pointEarnerStore');
 var pointEarnerActions = require('../../actions/pointEarnerActions');
 
 var PointEarnerSearchRow = React.createClass({    
-    handleCheckboxSelection: function(event){
-        var isAdding = event.target.checked;   
-        this.props.handlePointEarnerSelection(this.props.rowData, isAdding);
+    handleCheckboxSelection: function(){
+        this.props.handlePointEarnerSelection(this.props.rowData);
     },
 
     render: function () {
         return (
             <tr>
-                <td>
-                    <input ref="isPointEarnerSelected" type="checkbox" onChange={this.handleCheckboxSelection}/>
-                </td>
                 <td>{this.props.rowData.FirstName}</td>
                 <td>{this.props.rowData.LastName}</td>
+                <td>
+                    <button type="button" className="btn-small btn-primary" onClick={this.handleCheckboxSelection}>Add</button>
+                </td>
             </tr>
         );
     }    
@@ -84,9 +83,9 @@ var PointEarnerSearch = React.createClass({
                     <div className="row">
                         <table className="table table-hover table-bordered">
                             <thead> 
-                                <th width="5%"/>
                                 <th width="10%">First Name</th>
                                 <th width="10%">Last Name</th>
+                                <th width="5%"/>
                             </thead>                    
                             <PointEarnerSearchTableBody tableBodyData={this.state.foundPointEarners} handlePointEarnerSelection={this.props.handlePointEarnerSelection}/>
                         </table>
