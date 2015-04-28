@@ -46,7 +46,17 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         {
             if(pointEarnerData != null)
             {
-                this.Services.UserService.AddPointEarner(pointEarnerData.PointEarnerId, this.CurrentPrincipal.CurrentUser);
+                if(pointEarnerData.PointEarnerId > 0)
+                {
+                    this.Services.UserService.AddExistingPointEarner(pointEarnerData.PointEarnerId, this.CurrentPrincipal.CurrentUser);
+                }
+                else
+                {
+                    DefaultOAuthToken accessToken = new DefaultOAuthToken();
+                    accessToken.Token = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessToken;
+                    accessToken.Secret = ((IRemoteOAuthUser)this.CurrentPrincipal.CurrentUser).AccessTokenSecret;
+                    this.Services.UserService.AddNewPointEarner(pointEarnerData.OAuthServiceUserId, accessToken, this.CurrentPrincipal.CurrentUser);
+                }
             }
         }
 

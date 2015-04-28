@@ -6,7 +6,7 @@ var Reflux = require('reflux');
 // Had to use object syntax vs array syntax due to https://github.com/spoike/refluxjs/issues/206
 
 var pointEarnerActions = ({
-    'findPointEarnerByEmail': {},
+    'findPointEarnersByEmail': {},
     'getAll': {},
     'addPointEarner': {}
 });

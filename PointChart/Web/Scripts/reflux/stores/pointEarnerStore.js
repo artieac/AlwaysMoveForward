@@ -11,12 +11,12 @@ var pointEarnerActions = require("../actions/pointEarnerActions");
 var pointEarnerStore = Reflux.createStore({
     listenables: [pointEarnerActions],
 
-    currentPointEarner: {},
     allPointEarners: [],
+    foundPointEarners: [],
 
     init: function() {
-        this.currentPointEarner = {};
         this.allPointEarners = [];
+        this.foundPointEarners = [];
     },
 
     onGetAll: function () {
@@ -35,12 +35,12 @@ var pointEarnerStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.allPointEarners || []));
+        this.trigger({allPointEarners: this.allPointEarners, foundPointEarners: this.foundPointEarners});
         return this.allPointEarners;
     },
 
-    onFindPointEarnerByEmail: function (emailAddress) {
-        this.currentPointEarner = {};
+    onFindPointEarnersByEmail: function (emailAddress) {
+        this.foundPointEarners = [];
 
         jQuery.ajax({
             method: "GET",
@@ -49,21 +49,24 @@ var pointEarnerStore = Reflux.createStore({
             dataType: 'json',
             success: function (restData) {
                 console.log(restData);
-                this.currentPointEarner = restData;
+                this.foundPointEarners = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
 
-        this.trigger((this.currentPointEarner || {}));
-        return this.currentPointEarner;
+        this.trigger({ allPointEarners: this.allPointEarners, foundPointEarners: this.foundPointEarners });
+        return this.foundPointEarners;
     },
 
-    onAddPointEarner: function (pointEarnerId) {
+    onAddPointEarner: function (pointEarner) {
         var pointEarnerData = {
-            PointEarnerId: pointEarnerId
+            PointEarnerId: pointEarner.Id,
+            OAuthServiceUserId: pointEarner.OAuthServiceUserId
         };
+
+        console.log(pointEarnerData);
 
         jQuery.ajax({
             method: "POST",

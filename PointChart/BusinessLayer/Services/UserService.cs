@@ -176,7 +176,32 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return retVal;
         }
 
-        public PointChartUser AddPointEarner(long pointEarnerId, PointChartUser currentUser)
+        public PointChartUser AddNewPointEarner(long oauthServiceId, IOAuthToken oauthToken, PointChartUser currentUser)
+        {
+            PointChartUser retVal = currentUser;
+
+            if(currentUser != null)
+            {
+                PointChartUser pointEarner = new PointChartUser(this.OAuthRepository.GetById(oauthToken, oauthServiceId));
+                
+                if(pointEarner!=null)
+                {
+                    PointChartUser alreadyInList = currentUser.PointEarners
+                        .Where(e => e.OAuthServiceUserId == oauthServiceId)
+                        .FirstOrDefault();
+                    
+                    if(alreadyInList==null)
+                    {
+                        retVal.PointEarners.Add(pointEarner);
+                        retVal = this.UserRepository.Save(retVal);
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
+        public PointChartUser AddExistingPointEarner(long pointEarnerId, PointChartUser currentUser)
         {
             PointChartUser retVal = currentUser;
 

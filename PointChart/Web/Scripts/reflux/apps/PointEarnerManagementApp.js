@@ -5,17 +5,17 @@ var Route = require('react-router');
 var pointEarnerStore = require('../stores/pointEarnerStore');
 var pointEarnerActions = require('../actions/pointEarnerActions');
 var PointEarnerTable = require('../Components/PointEarnerTable/PointEarnerTable.js');
+var PointEarnerSearch = require('../Components/PointEarnerSearch/PointEarnerSearch.js');
 
 var PointEarnerManagementApp = React.createClass({
+    selectedPointEarners: [],
+
     mixins: [
-        Reflux.connect(pointEarnerStore, "allPointEarners"),
-        Reflux.connect(pointEarnerStore, "currentPointEarner")
+        Reflux.connect(pointEarnerStore, "allPointEarners")
     ],
 
     getInitialState: function() {
         return { 
-            emailSearch: '',
-            currentPointEarner: {},
             allPointEarners: []
         };
     },
@@ -24,26 +24,30 @@ var PointEarnerManagementApp = React.createClass({
         // Add event listeners in componentDidMount
         this.listenTo(pointEarnerStore, this.updatePointEarners);
         pointEarnerActions.getAll();
-
-        this.listenTo(pointEarnerStore, this.updateCurrentPointEarner);
     },
 
     updatePointEarners: function (updateMessage) {
-        this.setState({allPointEarners: updateMessage});
+        this.setState({allPointEarners: updateMessage.allPointEarners});
     },
 
-    updateCurrentPointEarner: function(updateMessage) {
-        this.setState({currentPointEarner: updateMessage});
-    },
+    onHandlePointEarnerSelection: function(pointEarner, isAdding){
+        pointEarnerActions.addPointEarner(pointEarner);
 
-    handleEmailSearchClick: function(){
-        var emailAddress = React.findDOMNode(this.refs.searchEmail).value;
-        this.setState({emailSearch: emailAddress});
-        pointEarnerActions.findPointEarnerByEmail(emailAddress);
-    },
+        if(isAdding){
+            var foundPointEarner = $.grep(this.selectedPointEarners, function(e){ return e.OAuthServiceUserId == pointEarner.OAuthServiceUserId; });         
 
-    handleAddPointEarnerClick: function(){
-        pointEarnerActions.addPointEarner(this.state.currentPointEarner.Id);
+            if(foundPointEarner != null){
+                this.selectedPointEarners[this.selectedPointEarners.length] = pointEarner;
+            }
+        }
+        else{
+            for(var i = 0; i < this.selectedPointEarners.length; i++){
+                if (this.selectedPointEarners[i].OAuthServiceUserId === pointEarner.OAuthServiceUserId) { 
+                    this.selectedPointEarners.splice(i, 1);
+                    break;
+                }
+            }
+        }
     },
 
     render: function(){
@@ -51,34 +55,7 @@ var PointEarnerManagementApp = React.createClass({
             <div>
                 <div className="row">
                     <div className="col-md-4">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">Search</h3>
-                            </div>
-                            <div className="panel-body">
-                                <div className="row">
-                                    <div>                            
-                                        <label for="searchEmail">Email:</label>
-                                        <input type="text" id="searchEmail" ref="searchEmail" name="emailAddress" defaultValue={this.state.emailSearch} />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <button className="btn btn-primary" onClick={this.handleEmailSearchClick}>Search</button>
-                                </div>  
-                                <br/>
-                                <div className="row">                            
-                                    <label for="firstName">First Name:</label>
-                                    <span id="firstName">{this.state.currentPointEarner.FirstName}</span>
-                                </div>
-                                <div className="row">     
-                                    <label for="lastName">Last Name:</label>
-                                    <span id="lastName">{this.state.currentPointEarner.LastName}</span>
-                                </div>
-                                <div className="row">     
-                                    <button className="btn btn-primary" onClick={this.handleAddPointEarnerClick}>Add</button>
-                                </div>
-                            </div>
-                        </div>
+                        <PointEarnerSearch handlePointEarnerSelection={this.onHandlePointEarnerSelection}/>
                     </div>
                     <div className="col-md-8">
                         <PointEarnerTable tableData={this.state.allPointEarners}/> 
