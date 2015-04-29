@@ -7,7 +7,7 @@ var taskStore = require('../stores/taskStore');
 var taskActions = require('../actions/taskActions');
 var pointEarnerStore = require('../stores/pointEarnerStore');
 var pointEarnerActions = require('../actions/pointEarnerActions');
-var TaskSelectionTable = require('../Components/TaskSelectionTable/TaskSelectionTable');
+var TaskSelectionTable = require('../Components/ChartComponents/TaskSelectionTable');
 
 var EditChartApp = React.createClass({
     mixins: [

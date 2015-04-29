@@ -1,5 +1,30 @@
-﻿var React = require('react');
-var ChartSummaryRow = require('./ChartSummaryRow');
+﻿/// <reference path="../ChartSummaryTable/ChartSummaryRow.js" />
+var React = require('react');
+
+var ChartSummaryRow = React.createClass({
+    handleEditClick: function() {
+        window.location.href="/Chart/" + this.props.rowData.Id;
+    },
+
+    handleAddPointsClick: function() {
+        window.location.href="/Home/CollectPoints/" + this.props.rowData.Id;
+    },
+
+    render: function () {
+        return (
+            <tr>
+                <td>{this.props.rowData.Name}</td>
+                <td>{this.props.rowData.Tasks.length}</td>
+                <td>{this.props.rowData.PointEarner.FirstName + ' ' + this.props.rowData.PointEarner.LastName}</td>
+                <td>0</td>
+                <td>
+                    <img src="/Content/images/paper_pencil.png" class="deleteList" alt="addTasks" onClick={this.handleEditClick} />
+                    <img src="/Content/images/action_add.png" class="deleteList" alt="addPoints" onClick={this.handleAddPointsClick} />
+                </td>
+            </tr>
+        );
+}
+});
 
 var ChartSummaryTableBody = React.createClass({
     render: function () {

@@ -1,9 +1,28 @@
 ﻿var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
-var TaskRow = require('./TaskRow');
 var GenericDropDown = require('../GenericDropDown');
 var chartActions = require('../../actions/chartActions');
+
+var TaskRow = React.createClass({    
+    handleIsInChartChecked: function(event){  
+        this.props.rowData.isInChart = event.target.checked;   
+        this.forceUpdate();
+    },
+
+    render: function () {
+        return (
+            <tr>
+                <td>
+                    <input ref="isInChartCheckbox" type="checkbox" checked={this.props.rowData.isInChart} onChange={this.handleIsInChartChecked}/>
+                </td>
+                <td>{this.props.rowData.Name}</td>
+                <td>{this.props.rowData.Points}</td>
+                <td>{this.props.rowData.MaxAllowedDaily}</td>
+            </tr>
+        );
+    }    
+});
 
 var TaskSelectionTableBody = React.createClass({   
     isInChart: function(currentRow){

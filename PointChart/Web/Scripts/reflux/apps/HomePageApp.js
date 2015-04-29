@@ -5,7 +5,7 @@ var Reflux = require('reflux');
 var Route = require('react-router');
 var chartCollectionStore = require('../stores/chartCollectionStore');
 var chartCollectionActions = require('../actions/chartCollectionActions');
-var ChartSummaryTable = require('../Components/ChartSummaryTable/ChartSummaryTable');
+var ChartSummaryTable = require('../Components/ChartComponents/ChartSummaryTable');
 
 var HomePageApp = React.createClass({
     mixins: [

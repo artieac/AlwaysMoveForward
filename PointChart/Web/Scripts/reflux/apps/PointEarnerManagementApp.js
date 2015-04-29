@@ -4,8 +4,8 @@ var Reflux = require('reflux');
 var Route = require('react-router');
 var pointEarnerStore = require('../stores/pointEarnerStore');
 var pointEarnerActions = require('../actions/pointEarnerActions');
-var PointEarnerTable = require('../Components/PointEarnerTable/PointEarnerTable.js');
-var PointEarnerSearch = require('../Components/PointEarnerSearch/PointEarnerSearch.js');
+var PointEarnerTable = require('../Components/PointEarnerComponents/PointEarnerTable.js');
+var PointEarnerSearch = require('../Components/PointEarnerComponents/PointEarnerSearch.js');
 
 var PointEarnerManagementApp = React.createClass({
     selectedPointEarners: [],

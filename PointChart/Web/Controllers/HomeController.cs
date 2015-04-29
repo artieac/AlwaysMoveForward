@@ -28,5 +28,12 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         {
             return this.View();
         }
+
+        [CookieAuthenticationParser]
+        public ActionResult CollectPoints(long id)
+        {
+            return this.View(id);
+        }
+
     }
 }

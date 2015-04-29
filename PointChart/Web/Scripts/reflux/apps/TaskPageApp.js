@@ -5,7 +5,7 @@ var Reflux = require('reflux');
 var Route = require('react-router');
 var taskStore = require('../stores/taskStore');
 var taskActions = require('../actions/taskActions');
-var TaskTable = require('../Components/TaskTable/TaskTable.js');
+var TaskTable = require('../Components/TaskComponents/TaskTable.js');
 
 var TaskPageApp = React.createClass({
     mixins: [
@@ -32,7 +32,7 @@ var TaskPageApp = React.createClass({
         return ( 
             <div>
                 <div>
-                    <TaskTable tableData={this.state.allTasks}/> 
+                    <TaskTable tableData={this.state.allTasks} /> 
                 </div>
             </div>
         );

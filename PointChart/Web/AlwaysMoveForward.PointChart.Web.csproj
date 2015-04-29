@@ -257,8 +257,10 @@
     <Content Include="Scripts\Common\SiteCommon.js" />
     <Content Include="Scripts\Common\SiteLogin.js" />
     <Content Include="Scripts\Common\tableManager.js" />
+    <Content Include="Scripts\dist\CollectPointsApp.js" />
     <Content Include="Scripts\dist\EditChartApp.js" />
     <Content Include="Scripts\dist\HomePageApp.js" />
+    <Content Include="Scripts\dist\PointEarnerManagementApp.js" />
     <Content Include="Scripts\dist\TaskPageApp.js" />
     <Content Include="Scripts\dist\vendorBundle.js" />
     <Content Include="Scripts\gulp\config.js" />
@@ -551,17 +553,15 @@
     <None Include="Scripts\reflux\actions\taskActions.js" />
     <None Include="Scripts\reflux\apps\HomePageApp.js" />
     <Content Include="Scripts\reflux\actions\pointEarnerActions.js" />
+    <Content Include="Scripts\reflux\apps\CollectPointsApp.js" />
     <Content Include="Scripts\reflux\apps\EditChartApp.js" />
-    <Content Include="Scripts\reflux\Components\AddTaskModal.js" />
-    <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryRow.js" />
-    <Content Include="Scripts\reflux\Components\ChartSummaryTable\ChartSummaryTable.js" />
-    <Content Include="Scripts\reflux\Components\PointEarnerSearch\PointEarnerSearch.js" />
-    <Content Include="Scripts\reflux\Components\PointEarnerTable\PointEarnerRow.js" />
-    <Content Include="Scripts\reflux\Components\PointEarnerTable\PointEarnerTable.js" />
-    <Content Include="Scripts\reflux\Components\TaskSelectionTable\TaskRow.js" />
-    <Content Include="Scripts\reflux\Components\TaskSelectionTable\TaskSelectionTable.js" />
-    <Content Include="Scripts\reflux\Components\TaskTable\TaskInputRow.js" />
-    <Content Include="Scripts\reflux\Components\TaskTable\TaskTable.js" />
+    <Content Include="Scripts\reflux\Components\ChartComponents\ChartSummaryTable.js" />
+    <Content Include="Scripts\reflux\Components\ChartComponents\TaskSelectionTable.js" />
+    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointEarnerSearch.js" />
+    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointEarnerTable.js" />
+    <Content Include="Scripts\reflux\Components\ChartComponents\CollectPointsTable.js" />
+    <Content Include="Scripts\reflux\Components\TaskComponents\TaskInputRow.js" />
+    <Content Include="Scripts\reflux\Components\TaskComponents\TaskTable.js" />
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
     <Content Include="Scripts\reflux\stores\chartStore.js" />
@@ -627,7 +627,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Scripts\reflux\Components\GenericDropDown.js" />
     <Content Include="Scripts\reflux\apps\PointEarnerManagementApp.js" />
-    <Content Include="Scripts\reflux\Components\TaskTable\TaskRow.js" />
+    <Content Include="Scripts\reflux\Components\TaskComponents\TaskRow.js" />
     <Content Include="Scripts\reflux\apps\TaskPageApp.js" />
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +640,7 @@
     <Content Include="Content\less\ThemeDefaults.less" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Views\Chart\Index.cshtml" />
+    <Content Include="Views\Home\CollectPoints.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -688,7 +689,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56327</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

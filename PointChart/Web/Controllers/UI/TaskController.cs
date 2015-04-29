@@ -19,39 +19,6 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.UI
             model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
             return this.View(model);
         }
-
-        [MVCAuthorizationAttribute]
-        public ActionResult Add(string addTaskName, double addTaskPoints, int addTaskMaxPerDay)
-        {
-            TaskModel model = new TaskModel();
-
-            Task newTask = this.Services.Tasks.Add(addTaskName, addTaskPoints, addTaskMaxPerDay, this.CurrentPrincipal.CurrentUser);
-
-            if (newTask == null)
-            {
-                // tbd handle creation error.
-            }
-
-            model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
-
-            return this.View("Index", model);
-        }
-
-        [MVCAuthorizationAttribute]
-        public ActionResult Edit(int editTaskId, string editTaskName, double editTaskPoints, int editTaskMaxPerDay)
-        {
-            TaskModel model = new TaskModel();
-
-            Task editedTask = this.Services.Tasks.Edit(editTaskId, editTaskName, editTaskPoints, editTaskMaxPerDay, this.CurrentPrincipal.CurrentUser);
-
-            if (editedTask == null)
-            {
-                // tbd handle creation error.
-            }
-
-            model.Tasks = this.Services.Tasks.GetByUser(this.CurrentPrincipal.CurrentUser);
-
-            return this.View("Index", model);
-        }
+      
     }
 }
