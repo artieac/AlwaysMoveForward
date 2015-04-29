@@ -3,7 +3,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var chartActions = require('../../actions/chartActions');
 
-var CollectPointsRow = React.CreateClass({
+var CollectPointsRow = React.createClass({
     render: function () {
         return (
             <tr>
@@ -46,7 +46,9 @@ var CollectPointsTable = React.createClass({
                         <label>{this.props.chartData.Name}</label>
                     </div>
                     <div className="col-md-3">
-                        <label>{this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName}</label>
+                        { if(typeof this.props.chartData !== 'undefined')
+                            <label>{this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName}</label>
+                        }
                     </div>
                     <div className="col-md-3">
                         <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>
@@ -68,4 +70,4 @@ var CollectPointsTable = React.createClass({
     }
 });
 
-module.exports = TaskSelectionTable;
+module.exports = CollectPointsTable;

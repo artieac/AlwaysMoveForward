@@ -14,7 +14,7 @@ var TaskRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <input ref="isInChartCheckbox" type="checkbox" checked={this.props.rowData.isInChart} onChange={this.handleIsInChartChecked}/>
+                    <input ref="isInChartCheckbox" type="checkbox" checked={this.props.isInChartMethod(this.props.rowData.Id)} onChange={this.handleIsInChartChecked}/>
                 </td>
                 <td>{this.props.rowData.Name}</td>
                 <td>{this.props.rowData.Points}</td>
@@ -25,13 +25,13 @@ var TaskRow = React.createClass({
 });
 
 var TaskSelectionTableBody = React.createClass({   
-    isInChart: function(currentRow){
+    isInChart: function(taskId){
         var retVal = false;
         
         if(typeof this.props.chartData !== 'undefined' &&
             typeof this.props.chartData.Tasks !== 'undefined'){
             for(var i = 0; i < this.props.chartData.Tasks.length; i++){
-                if(this.props.chartData.Tasks[i].Id == currentRow.Id){
+                if(this.props.chartData.Tasks[i].Id == taskId){
                     retVal = true;
                     break;
                 }
@@ -42,15 +42,11 @@ var TaskSelectionTableBody = React.createClass({
     },
 
     render: function () {
-        if(typeof this.props.tableBodyData !== 'undefined'){            
-            for(var i = 0; i < this.props.tableBodyData.length; i++){
-                this.props.tableBodyData[i].isInChart = this.isInChart(this.props.tableBodyData[i]);
-            }
-            
+        if(typeof this.props.tableBodyData !== 'undefined'){                        
             return (
                 <tbody>
                     {this.props.tableBodyData.map(function (currentRow) {
-                        return <TaskRow chartData={this.props.chartData} key={currentRow.Id} rowData={currentRow} />
+                        return <TaskRow chartData={this.props.chartData} key={currentRow.Id} rowData={currentRow} isInChartMethod={this.isInChart}/>
                         }.bind(this))}              
                 </tbody>
             );        

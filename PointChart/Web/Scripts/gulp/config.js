@@ -54,9 +54,7 @@ module.exports = {
                 entries: ['./Scripts/reflux/apps/CollectPointsApp.js'],
                 transform: [reactify],
                 dest: dest,
-                outputName: 'CollectPointsApp.js',
-                // list of externally available modules to exclude from the bundle
-                external: ['jquery', 'react', 'reflux', 'react-router']
+                outputName: 'CollectPointsApp.js'
             }
 ]
     },
