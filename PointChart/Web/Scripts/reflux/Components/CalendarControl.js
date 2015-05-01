@@ -1,42 +1,37 @@
 ﻿var React = require('react');
+var Moment = require('moment');
 
-var DayNames = React.CreateClass({
-    render: function(){
+//var WeekDates = React.CreateClass({
+//    render: function() {
+//        var days = [],
+//			date = this.props.date,
+//			month = this.props.month;
 
-    }
-});
+//        for (var i = 0; i < 7; i++) {
+//            var day = {
+//                name: date.format("dd").substring(0, 1),
+//                number: date.date(),
+//                isCurrentMonth: date.month() === month.month(),
+//                isToday: date.isSame(new Date(), "day"),
+//                date: date
+//            };
+//            days.push(<span key={day.date.toString()} className={"day" + (day.isToday ? " today" : "") + (day.isCurrentMonth ? "" : " different-month") + (day.date.isSame(this.props.selected) ? " selected" : "")} onClick={this.props.select.bind(null, day)}>{day.number}</span>);
+//            date = date.clone();
+//            date.add(1, "d");
 
-var WeekDates = React.CreateClass({
-    render: function() {
-        var days = [],
-			date = this.props.date,
-			month = this.props.month;
+//        }
 
-        for (var i = 0; i < 7; i++) {
-            var day = {
-                name: date.format("dd").substring(0, 1),
-                number: date.date(),
-                isCurrentMonth: date.month() === month.month(),
-                isToday: date.isSame(new Date(), "day"),
-                date: date
-            };
-            days.push(<span key={day.date.toString()} className={"day" + (day.isToday ? " today" : "") + (day.isCurrentMonth ? "" : " different-month") + (day.date.isSame(this.props.selected) ? " selected" : "")} onClick={this.props.select.bind(null, day)}>{day.number}</span>);
-            date = date.clone();
-            date.add(1, "d");
-
-        }
-
-		return( 
-            <div className="week" key={days[0].toString()}>
-			    {days}
-		    </div>);
-    }
-});
+//		return( 
+//            <div className="week" key={days[0].toString()}>
+//			    {days}
+//		    </div>);
+//    }
+//});
 
 var CalendarControl = React.createClass({
     getInitialState: function() {
         return {
-            month: this.props.selected.clone()
+            month: new Date(this.props.selected.getTime())
         };
     },
 
@@ -61,34 +56,33 @@ var CalendarControl = React.createClass({
         return ( 
             <div>
 			    <div className="header">
-				    <i className="fa fa-angle-left" onClick={this.previous}></i>
-                        {this.renderMonthLabel()}
-                        <i className="fa fa-angle-right" onClick={this.next}></i>
-                    </div>
-                {this.renderWeeks()}
+				    <span className="glyphicon glyphicon-chevron-left" onClick={this.previous}></span>
+                    {this.renderMonthLabel()}
+                    <span className="glyphicon glyphicon-chevron-right" onClick={this.next}></span>
+                </div>
             </div>);
     },
 
-    renderWeeks: function() {
-        var weeks = [],
-			done = false,
-			date = this.state.month.clone().startOf("month").add("w" -1).day("Sunday"),
-			monthIndex = date.month(),
-			count = 0;
+    //renderWeeks: function() {
+    //    var weeks = [],
+	//		done = false,
+	//		date = this.state.month.clone().startOf("month").add("w" -1).day("Sunday"),
+	//		monthIndex = date.month(),
+	//		count = 0;
 
-        while (!done) {
-            weeks.push(<Week key={date.toString()} date={date.clone()} month={this.state.month} select=    {this.select} selected={this.props.selected} />);
-            date.add(1, "w");
-            done = count++ > 2 && monthIndex !== date.month();
-            monthIndex = date.month();
-        }
+    //    while (!done) {
+    //        weeks.push(<Week key={date.toString()} date={date.clone()} month={this.state.month} select=    {this.select} selected={this.props.selected} />);
+    //        date.add(1, "w");
+    //        done = count++ > 2 && monthIndex !== date.month();
+    //        monthIndex = date.month();
+    //    }
 
-		return weeks;
-    },
+	//	return weeks;
+    //},
 
     renderMonthLabel: function() {
         return <span>{this.state.month.format("MMMM, YYYY")}</span>;
     }
 });
 			
-module.exports = GenericDropDown;
+module.exports = CalendarControl;

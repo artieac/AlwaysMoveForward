@@ -45,35 +45,9 @@ var CollectPointsTable = React.createClass({
         };
     },
 
-    handleSaveClick: function(){
-
-    },
-
-    getPointEarnerName: function(){
-        var retVal = "";
-
-        if(typeof this.props.chartData !== 'undefined' &&
-            typeof this.props.chartData.PointEarner !== 'undefined'){
-            retVal = this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName;
-        }
-
-        return retVal;
-    },
-
     render: function() {
         return (
             <div>
-                <div className="row">
-                    <div className="col-md-3">   
-                        <label>{this.props.chartData.Name}</label>
-                    </div>
-                    <div className="col-md-3">
-                        <label>{this.getPointEarnerName()}</label>
-                    </div>
-                    <div className="col-md-3">
-                        <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>
-                    </div>
-                </div>
                 <div>
                     <table className="table table-striped table-bordered">
                         <thead> 

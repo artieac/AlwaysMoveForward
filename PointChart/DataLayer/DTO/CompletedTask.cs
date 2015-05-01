@@ -23,5 +23,8 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual long TaskId { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual double PointValue { get; set; }
     }
 }

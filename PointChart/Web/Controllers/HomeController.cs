@@ -32,8 +32,8 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         [CookieAuthenticationParser]
         public ActionResult CollectPoints(long id)
         {
-            DateTime selectedDate = DateTime.Now;
-            return this.View(id);
+            DateTime today = DateTime.Now;
+            return this.CollectPoints(id, today.Month, today.Day, today.Year);
         }
 
         [Route("Home/CollectPoints/{id}/{month}/{day}/{year}"), HttpGet()]

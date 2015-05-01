@@ -36,7 +36,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// <summary>
         /// Gets and sets how many points the task was worth at the time of completion
         /// </summary>
-        public double Points { get; set; }
+        public double PointValue { get; set; }
 
         /// <summary>
         /// Gets and sets the date the task was completed

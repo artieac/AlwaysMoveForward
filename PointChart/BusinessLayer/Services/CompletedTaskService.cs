@@ -85,7 +85,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                 newTask.ChartId = targetChart.Id;
                 newTask.NumberOfTimesCompleted = timesCompleted;
                 newTask.TaskId = targetTask.Id;
-                newTask.Points = targetTask.Points;
+                newTask.PointValue = targetTask.Points;
 
                 retVal = this.CompletedTaskRepository.Save(newTask);
             }

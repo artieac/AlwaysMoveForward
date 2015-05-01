@@ -29,11 +29,34 @@ var CollectPointsApp = React.createClass({
         this.setState({currentChart: updateMessage});
     },
 
+    getPointEarnerName: function(){
+        var retVal = "";
+
+        if(typeof this.state.currentChart !== 'undefined' &&
+            typeof this.state.currentChart.PointEarner !== 'undefined'){
+            retVal = this.state.currentChart.PointEarner.FirstName + ' ' + this.state.currentChart.PointEarner.LastName;
+        }
+
+        return retVal;
+    },
+
     render: function(){
         return ( 
             <div>
-                <div>
-                    <CalendarControl selected={this.props.selectedDate}/>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div>
+                            <label>Chart Name: </label>
+                            <label>{this.state.currentChart.Name}</label>
+                        </div>
+                        <div>
+                            <label>Point Earner: </label>
+                            <label>{this.getPointEarnerName()}</label>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <CalendarControl selected={this.props.selectedDate} monthNames={this.props.monthNames}/>
+                    </div>
                 </div>
                 <div>
                     <CollectPointsTable chartData={this.state.currentChart} />
@@ -44,5 +67,5 @@ var CollectPointsApp = React.createClass({
 });
 
 module.exports = CollectPointsApp;
-React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={selectedDate}/>, document.getElementById("collectPointsReactContent"));
+React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={targetDate} monthNames={monthNames}/>, document.getElementById("collectPointsReactContent"));
 
