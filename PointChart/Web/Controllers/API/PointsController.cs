@@ -17,11 +17,40 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         /// <param name="id"></param>
         /// <param name="chartId"></param>
         /// <returns></returns>
-        [Route("api/CompleteTask"), HttpGet()]
+        [Route("api/CompleteTasks"), HttpGet()]
         [WebAPIAuthorization]
         public IList<CompletedTask> Get()
         {
-            IList<CompletedTask> retVal = new List<CompletedTask>():
+            IList<CompletedTask> retVal = new List<CompletedTask>();
+
+            return retVal;
+        }
+
+        [Route("api/Chart/{id}/CompleteTask/{month}/{day}/{year}"), HttpGet()]
+        [WebAPIAuthorization]
+        public CompletedTasksModel GetCompletedTasksForWeek(long id, int month, int day, int year)
+        {
+            CompletedTasksModel retVal = new CompletedTasksModel();
+
+            DateTime targetDate = DateTime.Parse(month + "/" + day + "/" + year);
+
+            retVal.Calendar = new AlwaysMoveForward.PointChart.Web.Models.CalendarModel(id, targetDate);
+            retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(targetDate);
+
+            Chart targetChart = this.Services.Charts.GetById(id);
+            retVal.CompletedTasks = new Dictionary<long, IDictionary<DateTime, CompletedTask>>();
+
+            IList<CompletedTask> completedTasks = this.Services.CompletedTaskService.GetAllByChart(id, retVal.Calendar.WeekStartDate, retVal.Calendar.WeekStartDate.AddDays(7), this.CurrentPrincipal.CurrentUser);
+
+            foreach (CompletedTask completedTask in completedTasks)
+            {
+                if (!retVal.CompletedTasks.ContainsKey(completedTask.TaskId))
+                {
+                    retVal.CompletedTasks.Add(completedTask.TaskId, new Dictionary<DateTime, CompletedTask>());
+                }
+
+                retVal.CompletedTasks[completedTask.TaskId].Add(completedTask.DateCompleted, completedTask);
+            }
 
             return retVal;
         }

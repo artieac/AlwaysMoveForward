@@ -1,7 +1,8 @@
 ﻿var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
-var chartActions = require('../../actions/chartActions');
+var completedTaskActions = require('../../actions/completedTaskActions');
+var completedTaskStore = require('../../stores/completedTaskStore');
 
 var CollectPointsRow = React.createClass({
     render: function () {
@@ -34,6 +35,16 @@ var CollectPointsTableBody = React.createClass({
 });
 
 var CollectPointsTable = React.createClass({
+    mixins: [
+        Reflux.connect(completedTaskStore, "allTasks")
+    ],
+
+    getInitialState: function() {
+        return { 
+            allTasks: {}
+        };
+    },
+
     handleSaveClick: function(){
 
     },

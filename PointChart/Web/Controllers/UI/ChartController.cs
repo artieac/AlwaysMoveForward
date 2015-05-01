@@ -25,10 +25,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.UI
                 _targetDate = targetDate.Value.Date;
             }
 
-            retVal.Calendar = new CalendarModel();
-            retVal.Calendar.TargetMonth = _targetDate;
-            retVal.Calendar.ViewDate = _targetDate;
-            retVal.Calendar.RouteInformation = "/Chart/ViewChart/" + chartId;
+            retVal.Calendar = new CalendarModel(1);
             retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(_targetDate);
             retVal.PointEarner = pointEarner;
 

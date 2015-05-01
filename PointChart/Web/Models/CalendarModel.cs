@@ -21,29 +21,38 @@ namespace AlwaysMoveForward.PointChart.Web.Models
     {
         public static string GenerateDateFilter(DateTime targetDate)
         {
-            return targetDate.ToString("MM") + "-" + targetDate.ToString("dd") + "-" + targetDate.ToString("yyyy");
+            return targetDate.ToString("MM") + "/" + targetDate.ToString("dd") + "/" + targetDate.ToString("yyyy");
         }
 
-        public CalendarModel()
+        private DateTime viewDate;
+
+        public CalendarModel(long chartId) : this(chartId, DateTime.Now){ }
+
+        public CalendarModel(long chartId, DateTime viewDate)
         {
-            this.TargetMonth = DateTime.Now;
+            this.ChartId = chartId;
+            this.ViewDate = viewDate;
         }
 
-        public string GenerateUrlForDay(DateTime startDate)
-        {
-            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(startDate);
-        }
-
-        public string GenerateUrlForMonth(int offset)
-        {
-            return this.RouteInformation + "?targetDate=" + CalendarModel.GenerateDateFilter(this.TargetMonth.AddMonths(offset));
-        }
+        public long ChartId { get; set; }
 
         // Not sure I like this......Not sure how else to do it though
-        public string RouteInformation { get; set; }
-        public DateTime ViewDate { get; set; }
+        public DateTime ViewDate 
+        {
+            get { return this.viewDate; }
+            set
+            {
+                this.viewDate = value;
+                this.CurrentMonth = CalendarMonthInfo.Create(this.ViewDate, this.ChartId);
+                this.PreviousMonth = CalendarMonthInfo.Create(this.ViewDate.AddMonths(-1), this.ChartId);
+                this.NextMonth = CalendarMonthInfo.Create(this.ViewDate.AddMonths(1), this.ChartId);
+            }
+        }
+        
         public DateTime WeekStartDate { get; set; }
-        public DateTime TargetMonth { get; set; }
+        public CalendarMonthInfo CurrentMonth { get; set; }
+        public CalendarMonthInfo PreviousMonth { get; set; }
+        public CalendarMonthInfo NextMonth { get; set; }
     }
 }
 

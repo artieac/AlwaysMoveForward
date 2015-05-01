@@ -5,6 +5,7 @@ var chartStore = require('../stores/chartStore');
 var chartActions = require('../actions/chartActions');
 var pointEarnerStore = require('../stores/chartStore');
 var CollectPointsTable = require('../Components/ChartComponents/CollectPointsTable');
+var CalendarControl = require('../Components/CalendarControl');
 
 var CollectPointsApp = React.createClass({
     mixins: [
@@ -32,6 +33,9 @@ var CollectPointsApp = React.createClass({
         return ( 
             <div>
                 <div>
+                    <CalendarControl selected={this.props.selectedDate}/>
+                </div>
+                <div>
                     <CollectPointsTable chartData={this.state.currentChart} />
                 </div>
             </div>
@@ -40,5 +44,5 @@ var CollectPointsApp = React.createClass({
 });
 
 module.exports = CollectPointsApp;
-React.render(<CollectPointsApp chartId={chartIdentifer}/>, document.getElementById("collectPointsReactContent"));
+React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={selectedDate}/>, document.getElementById("collectPointsReactContent"));
 

@@ -552,9 +552,11 @@
     <None Include="Scripts\reflux\actions\chartCollectionActions.js" />
     <None Include="Scripts\reflux\actions\taskActions.js" />
     <None Include="Scripts\reflux\apps\HomePageApp.js" />
+    <Content Include="Scripts\reflux\actions\completedTaskActions.js" />
     <Content Include="Scripts\reflux\actions\pointEarnerActions.js" />
     <Content Include="Scripts\reflux\apps\CollectPointsApp.js" />
     <Content Include="Scripts\reflux\apps\EditChartApp.js" />
+    <Content Include="Scripts\reflux\Components\CalendarControl.js" />
     <Content Include="Scripts\reflux\Components\ChartComponents\ChartSummaryTable.js" />
     <Content Include="Scripts\reflux\Components\ChartComponents\TaskSelectionTable.js" />
     <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointEarnerSearch.js" />
@@ -565,6 +567,7 @@
     <Content Include="Scripts\reflux\mixins\pluralize.js" />
     <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
     <Content Include="Scripts\reflux\stores\chartStore.js" />
+    <Content Include="Scripts\reflux\stores\completedTaskStore.js" />
     <Content Include="Scripts\reflux\stores\pointEarnerStore.js" />
     <Content Include="Scripts\reflux\stores\taskStore.js" />
     <Content Include="Web.config" />
@@ -616,14 +619,17 @@
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
     <Compile Include="Models\API\ChartInput.cs" />
+    <Compile Include="Models\API\CompletedTasksModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
+    <Compile Include="Models\CalendarMonthInfo.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartTaskModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\PointEarnerModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\UI\CollectPointsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Scripts\reflux\Components\GenericDropDown.js" />
