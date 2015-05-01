@@ -9,6 +9,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
     {
         UserService UserService { get; }
         ChartService Charts { get; }
-        TaskService Tasks { get;  }
+        TaskService Tasks { get; }
+        CompletedTaskService CompletedTaskService { get; }
     }
 }

@@ -47,5 +47,40 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// Gets and sets all the completed instances of the tasks.
         /// </summary>
         public IList<CompletedTask> CompletedTasks { get; set; } 
+
+        public Task GetTask(long taskId)
+        {
+            return this.Tasks.FirstOrDefault(t => t.Id == taskId);
+        }
+
+        public bool IsCreator(PointChartUser user)
+        {
+            bool retVal = false;
+
+            if(user != null)
+            {
+                if(this.CreatorId == user.Id)
+                {
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        }
+
+        public bool IsPointEarner(PointChartUser user)
+        {
+            bool retVal = false;
+
+            if (user != null)
+            {
+                if (this.PointEarner.Id == user.Id)
+                {
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        }
     }
 }

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChartService.cs" />
+    <Compile Include="Services\CompletedTaskService.cs" />
     <Compile Include="Services\IServiceManager.cs" />
     <Compile Include="Services\PointChartService.cs" />
     <Compile Include="Services\ServiceManager.cs" />

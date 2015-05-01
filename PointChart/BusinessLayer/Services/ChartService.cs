@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if (chart != null)
             {
-                retVal = chart.Tasks.FirstOrDefault(t => t.Id == taskId);
+                retVal = chart.GetTask(taskId);
             }
 
             return retVal;

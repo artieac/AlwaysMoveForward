@@ -35,16 +35,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return new DataMapper.CompletedTaskDataMap();
         }
 
-        public IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, long administratorId)
-        {
-            IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
-                .Where(r => r.ChartId == chart.Id && r.DateCompleted > weekStartDate && r.DateCompleted < weekEndDate)
-                .ToList();
-
-            return this.GetDataMapper().Map(retVal);
-        }
-
-        public IList<CompletedTask> GetByChart(Chart chart, long administratorId)
+        public IList<CompletedTask> GetByChart(Chart chart)
         {
             IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
                 .Where(r => r.ChartId == chart.Id)
@@ -53,7 +44,25 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return this.GetDataMapper().Map(retVal);
         }
 
-        public CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted, long administratorId)
+        public IList<CompletedTask> GetByChart(Chart chart, DateTime dateCompleted)
+        {
+            IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
+                .Where(r => r.ChartId == chart.Id && r.DateCompleted.Date == dateCompleted.Date)
+                .ToList();
+
+            return this.GetDataMapper().Map(retVal);
+        }
+
+        public IList<CompletedTask> GetByChart(Chart chart, DateTime startDate, DateTime endDate)
+        {
+            IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
+                .Where(r => r.ChartId == chart.Id && r.DateCompleted.Date > startDate.Date && r.DateCompleted.Date < endDate.Date)
+                .ToList();
+
+            return this.GetDataMapper().Map(retVal);
+        }
+
+        public CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted)
         {
             DTO.CompletedTask retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
                 .Where(r => r.ChartId == chart.Id && r.TaskId == task.Id && r.DateCompleted.Date == dateCompleted.Date)

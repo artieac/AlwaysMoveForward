@@ -75,5 +75,19 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                 return this.taskService;
             }
         }
+
+        private CompletedTaskService completedTaskService;
+        public CompletedTaskService CompletedTaskService
+        {
+            get
+            {
+                if (this.completedTaskService == null)
+                {
+                    this.completedTaskService = new CompletedTaskService(this.UnitOfWork, this.PointChartRepositoryManager.Charts, this.PointChartRepositoryManager.CompletedTaskRepository);
+                }
+
+                return this.completedTaskService;
+            }
+        }
     }
 }

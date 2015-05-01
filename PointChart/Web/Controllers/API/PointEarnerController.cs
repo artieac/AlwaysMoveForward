@@ -40,6 +40,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return this.Services.UserService.SearchByEmail(emailAddress, accessToken);
         }
 
+        [Route("api/PointEarner/{id}/Points"), HttpGet()]
+        [WebAPIAuthorization]
+        public long GetPointsByPointEarner(long id)
+        {
+            return 0;
+        }
+
         // POST api/<controller>
         [WebAPIAuthorization]
         public void Post([FromBody]PointEarnerInput pointEarnerData)

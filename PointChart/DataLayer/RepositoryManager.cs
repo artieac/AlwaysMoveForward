@@ -47,7 +47,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
         }
 
         private ICompletedTaskRepository completedTaskRepository;
-        public ICompletedTaskRepository CompletedTask
+        public ICompletedTaskRepository CompletedTaskRepository
         {
             get
             {

@@ -38,6 +38,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return retVal;
         }
 
+        [Route("api/PointEarner/{id}/Charts"), HttpGet()]
+        [WebAPIAuthorization]
+        public long GetPointsForCharts(long id)
+        {
+            return 0;
+        }
+        
         // GET api/<controller>/5
         [WebAPIAuthorization]
         public Chart Get(long id)

@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.PointChart.UnitTests.Mock.Repositories
             }
         }
 
-        public ICompletedTaskRepository CompletedTask
+        public ICompletedTaskRepository CompletedTaskRepository
         {
             get
             {

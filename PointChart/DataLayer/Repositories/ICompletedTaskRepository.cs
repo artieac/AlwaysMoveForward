@@ -10,10 +10,12 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
     public interface ICompletedTaskRepository : INHibernateRepository<CompletedTask, long>
     {
-        IList<CompletedTask> GetCompletedByDateRangeAndChart(DateTime weekStartDate, DateTime weekEndDate, Chart chart, long administratorId);
+        IList<CompletedTask> GetByChart(Chart chart);
 
-        IList<CompletedTask> GetByChart(Chart chart, long administratorId);
+        IList<CompletedTask> GetByChart(Chart chart, DateTime dateCompleted);
 
-        CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted, long administratorId);
+        IList<CompletedTask> GetByChart(Chart chart, DateTime startDate, DateTime endDate);
+
+        CompletedTask GetByChartTaskAndDate(Chart chart, Task task, DateTime dateCompleted);
     }
 }

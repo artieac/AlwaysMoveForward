@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer
     {
         IUserRepository UserRepository { get; }
         IChartRepository Charts { get; }
-        ICompletedTaskRepository CompletedTask { get; }
+        ICompletedTaskRepository CompletedTaskRepository { get; }
         TaskRepository Tasks { get; }
         IPointsSpentRepository PointsSpent { get; }
     }
