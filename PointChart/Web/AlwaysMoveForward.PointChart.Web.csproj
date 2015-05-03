@@ -623,7 +623,6 @@
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\CalendarModel.cs" />
-    <Compile Include="Models\CalendarMonthInfo.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartTaskModel.cs" />
     <Compile Include="Models\HomeModel.cs" />

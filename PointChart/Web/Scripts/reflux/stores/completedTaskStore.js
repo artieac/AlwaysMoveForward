@@ -14,14 +14,14 @@ var completedTaskStore = Reflux.createStore({
     completedTasks: {},
 
     init: function () {
-        this.completedTasks = [];
+        this.completedTasks = {};
     },
 
     onGetByChartId: function (chartId, month, day, year) {
-        this.completedTasks = [];
-
+        this.completedTasks = {};
+    
         jQuery.ajax({
-            url: '/api/Chart/' + chartId + "/CompleteTask/" + month + "/" + day + "/" + year,
+            url: '/api/Chart/' + chartId + "/CompleteTask/" + year + "/" + month + "/" + day,
             async: false,
             dataType: 'json',
             success: function (restData) {

@@ -19,11 +19,6 @@ namespace AlwaysMoveForward.PointChart.Web.Models
 {
     public class CalendarModel
     {
-        public static string GenerateDateFilter(DateTime targetDate)
-        {
-            return targetDate.ToString("MM") + "/" + targetDate.ToString("dd") + "/" + targetDate.ToString("yyyy");
-        }
-
         private DateTime viewDate;
 
         public CalendarModel(long chartId) : this(chartId, DateTime.Now){ }
@@ -43,16 +38,11 @@ namespace AlwaysMoveForward.PointChart.Web.Models
             set
             {
                 this.viewDate = value;
-                this.CurrentMonth = CalendarMonthInfo.Create(this.ViewDate, this.ChartId);
-                this.PreviousMonth = CalendarMonthInfo.Create(this.ViewDate.AddMonths(-1), this.ChartId);
-                this.NextMonth = CalendarMonthInfo.Create(this.ViewDate.AddMonths(1), this.ChartId);
+                this.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(this.viewDate);
             }
         }
         
         public DateTime WeekStartDate { get; set; }
-        public CalendarMonthInfo CurrentMonth { get; set; }
-        public CalendarMonthInfo PreviousMonth { get; set; }
-        public CalendarMonthInfo NextMonth { get; set; }
     }
 }
 

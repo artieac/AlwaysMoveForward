@@ -1,6 +1,7 @@
 ﻿/** @jsx React.DOM */
 var React = require('react');
 var Reflux = require('reflux');
+var moment = require('moment');
 var chartStore = require('../stores/chartStore');
 var chartActions = require('../actions/chartActions');
 var pointEarnerStore = require('../stores/chartStore');
@@ -40,6 +41,16 @@ var CollectPointsApp = React.createClass({
         return retVal;
     },
 
+    getMomentDate: function() {
+        var retVal = null;
+
+        if(typeof this.props.selectedDate !== 'undefined'){
+            retVal = moment(this.props.selectedDate.getFullYear() + "-" + (this.props.selectedDate.getMonth() + 1) + "-" + this.props.selectedDate.getDate(), "YYYY-MM-DD");
+        }
+
+        return retVal;
+    },
+
     render: function(){
         return ( 
             <div>
@@ -55,11 +66,11 @@ var CollectPointsApp = React.createClass({
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <CalendarControl selected={this.props.selectedDate} monthNames={this.props.monthNames}/>
+                        <CalendarControl selected={this.getMomentDate()} chartId={this.props.chartId}/>
                     </div>
                 </div>
                 <div>
-                    <CollectPointsTable chartData={this.state.currentChart} />
+                    <CollectPointsTable selectedDate={this.getMomentDate()} chartData={this.state.currentChart} />
                 </div>
             </div>
         );
@@ -67,5 +78,5 @@ var CollectPointsApp = React.createClass({
 });
 
 module.exports = CollectPointsApp;
-React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={targetDate} monthNames={monthNames}/>, document.getElementById("collectPointsReactContent"));
+React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={targetDate}/>, document.getElementById("collectPointsReactContent"));
 

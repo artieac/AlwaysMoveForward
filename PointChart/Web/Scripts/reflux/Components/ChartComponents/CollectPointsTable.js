@@ -1,6 +1,7 @@
 ﻿var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
+var moment = require('moment');
 var completedTaskActions = require('../../actions/completedTaskActions');
 var completedTaskStore = require('../../stores/completedTaskStore');
 
@@ -19,18 +20,7 @@ var CollectPointsRow = React.createClass({
 
 var CollectPointsTableBody = React.createClass({  
     render: function () {
-        if(typeof this.props.tableBodyData !== 'undefined'){             
-            return (
-                <tbody>
-                    {this.props.tableBodyData.map(function (currentRow) {
-                        return <CollectPointsRow key={currentRow.Id} rowData={currentRow} />
-                        }.bind(this))}              
-                </tbody>
-            );        
-        }
-        else{
             return ( <tbody></tbody>);
-        }        
     }
 });
 
@@ -45,18 +35,38 @@ var CollectPointsTable = React.createClass({
         };
     },
 
+    componentDidMount: function () {
+        // Add event listeners in componentDidMount
+        this.listenTo(completedTaskStore, this.handleGetAllTasks);
+        completedTaskActions.getByChartId(6, this.props.selectedDate.month() + 1, this.props.selectedDate.date(), this.props.selectedDate.year());        
+    },
+    
+    handleGetAllTasks: function (updateMessage) {
+        this.setState({allTasks: updateMessage});
+    },
+
     render: function() {
+        var momentDate = moment();
+        
+        if(typeof this.state.allTasks !== 'undefined' && typeof this.state.allTasks.Calendar !== 'undefined'){
+            momentDate = moment(this.state.allTasks.Calendar.WeekStartDate);
+        }
+
         return (
             <div>
                 <div>
                     <table className="table table-striped table-bordered">
                         <thead> 
-                            <th width="20%">Name</th>
-                            <th width="20%">Points</th>
-                            <th width="20%">Max Per Day</th>
-                            <th width="20%">Times Completed</th>
+                            <th width="20%">Task</th>
+                            <th>{ momentDate.format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
+                            <th>{ momentDate.add(1, "days").format("MM/DD/YYYY")}</th>
                         </thead>                    
-                        <CollectPointsTableBody tableBodyData={this.props.chartData.Tasks}/>
+                        <CollectPointsTableBody tableBodyData={this.state.allTasks.CompletedTasks}/>
                     </table>
                 </div>
             </div>

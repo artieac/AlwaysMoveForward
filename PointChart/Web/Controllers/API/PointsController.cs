@@ -26,17 +26,16 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return retVal;
         }
 
-        [Route("api/Chart/{id}/CompleteTask/{month}/{day}/{year}"), HttpGet()]
+        [Route("api/Chart/{id}/CompleteTask/{year}/{month}/{day}"), HttpGet()]
         [WebAPIAuthorization]
-        public CompletedTasksModel GetCompletedTasksForWeek(long id, int month, int day, int year)
+        public CompletedTasksModel GetCompletedTasksForWeek(long id, int year, int month, int day)
         {
             CompletedTasksModel retVal = new CompletedTasksModel();
 
             DateTime targetDate = DateTime.Parse(month + "/" + day + "/" + year);
 
             retVal.Calendar = new AlwaysMoveForward.PointChart.Web.Models.CalendarModel(id, targetDate);
-            retVal.Calendar.WeekStartDate = AlwaysMoveForward.Common.Utilities.Utils.DetermineStartOfWeek(targetDate);
-
+            
             Chart targetChart = this.Services.Charts.GetById(id);
             retVal.CompletedTasks = new Dictionary<long, IDictionary<DateTime, CompletedTask>>();
 

@@ -33,12 +33,20 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult CollectPoints(long id)
         {
             DateTime today = DateTime.Now;
-            return this.CollectPoints(id, today.Month, today.Day, today.Year);
+            return this.CollectPoints(id, today.Year, today.Month, today.Day);
         }
 
-        [Route("Home/CollectPoints/{id}/{month}/{day}/{year}"), HttpGet()]
+        [Route("Home/CollectPoints/{id}/{year}/{month}"), HttpGet()]
         [CookieAuthenticationParser]
-        public ActionResult CollectPoints(long id, int month, int day, int year)
+        public ActionResult CollectPoints(long id, int year, int month)
+        {
+            DateTime today = DateTime.Parse(month + "/1/" + year);
+            return this.CollectPoints(id, today.Year, today.Month, today.Day);
+        }
+
+        [Route("Home/CollectPoints/{id}/{year}/{month}/{day}"), HttpGet()]
+        [CookieAuthenticationParser]
+        public ActionResult CollectPoints(long id, int year, int month, int day)
         {
             Models.UI.CollectPointsModel retVal = new Models.UI.CollectPointsModel();
             retVal.ChartId = id;
