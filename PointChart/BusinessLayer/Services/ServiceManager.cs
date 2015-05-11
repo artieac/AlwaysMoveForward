@@ -55,7 +55,10 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             {
                 if (this.chartService == null)
                 {
-                    this.chartService = new ChartService(this.UnitOfWork, this.PointChartRepositoryManager.Charts, this.PointChartRepositoryManager.UserRepository);
+                    this.chartService = new ChartService(   this.UnitOfWork, 
+                                                            this.PointChartRepositoryManager.Charts, 
+                                                            this.PointChartRepositoryManager.UserRepository, 
+                                                            this.PointChartRepositoryManager.CompletedTaskRepository);
                 }
 
                 return this.chartService;
@@ -89,5 +92,20 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                 return this.completedTaskService;
             }
         }
+
+        private PointService pointService;
+        public PointService PointService
+        {
+            get
+            {
+                if (this.pointService == null)
+                {
+                    this.pointService = new PointService(this.UnitOfWork, this.PointChartRepositoryManager.PointsSpent, this.PointChartRepositoryManager.UserRepository);
+                }
+
+                return this.pointService;
+            }
+        }
+
     }
 }

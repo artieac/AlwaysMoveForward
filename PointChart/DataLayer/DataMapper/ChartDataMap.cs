@@ -17,6 +17,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DataMapper
 
         public static void ConfigureAutoMapper()
         {
+            PointChartUserDataMap.ConfigureAutoMapper();
             TaskDataMap.ConfigureAutoMapper();
 
             var existingMap = Mapper.FindTypeMapFor<Chart, DTO.Chart>();

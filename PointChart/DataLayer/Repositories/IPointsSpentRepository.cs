@@ -10,5 +10,6 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
     public interface IPointsSpentRepository : INHibernateRepository<PointsSpent, long>
     {
+        IList<PointsSpent> GetByPointEarner(PointChartUser pointEarner);
     }
 }

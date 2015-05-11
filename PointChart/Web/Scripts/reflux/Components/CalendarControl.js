@@ -91,7 +91,7 @@ var CalendarControl = React.createClass({
                     {this.renderMonthLabel()}
                     <span className="changeMonth" onClick={this.next}> &gt; </span>
                 </div>
-                <table class="calendarDates">
+                <table className="calendarDates">
                     {this.renderWeeks()}                
                 </table>
                 </div>);

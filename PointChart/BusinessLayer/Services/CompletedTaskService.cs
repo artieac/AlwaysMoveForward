@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
         protected ICompletedTaskRepository CompletedTaskRepository { get; private set; }
 
-        public IList<CompletedTask> GetAllByChart(long chartId, PointChartUser currentUser)
+        public IList<CompletedTask> GetByChart(long chartId, PointChartUser currentUser)
         {
             IList<CompletedTask> retVal = new List<CompletedTask>();
 
@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return retVal;
         }
 
-        public IList<CompletedTask> GetAllByChart(long chartId, DateTime dateCompleted, PointChartUser currentUser)
+        public IList<CompletedTask> GetByChart(long chartId, DateTime dateCompleted, PointChartUser currentUser)
         {
             IList<CompletedTask> retVal = new List<CompletedTask>();
 
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return retVal;
         }
 
-        public IList<CompletedTask> GetAllByChart(long chartId, DateTime startDate, DateTime endDate, PointChartUser currentUser)
+        public IList<CompletedTask> GetByChart(long chartId, DateTime startDate, DateTime endDate, PointChartUser currentUser)
         {
             IList<CompletedTask> retVal = new List<CompletedTask>();
 
@@ -63,31 +63,44 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 
             if (targetChart != null && (targetChart.IsCreator(currentUser) || targetChart.IsPointEarner(currentUser)))
             {
-                this.CompletedTaskRepository.GetByChart(targetChart, startDate, endDate);
+                retVal = this.CompletedTaskRepository.GetByChart(targetChart, startDate, endDate);
             }
 
             return retVal;
         }
 
-        public CompletedTask CompleteTask(long chartId, long taskId, int timesCompleted, PointChartUser currentUser)
+        public CompletedTask CompleteTask(long chartId, long taskId, int timesCompleted, DateTime dateCompleted, PointChartUser currentUser)
         {
             CompletedTask retVal = null;
 
             Chart targetChart = this.ChartRepository.GetById(chartId);
             Task targetTask = targetChart.GetTask(taskId);
 
-            if (targetChart != null && 
-                targetTask != null && 
-                (targetChart.IsCreator(currentUser) || targetChart.IsPointEarner(currentUser)))
+            if (timesCompleted == 0)
             {
-                CompletedTask newTask = new CompletedTask();
-                newTask.DateCompleted = DateTime.UtcNow;
-                newTask.ChartId = targetChart.Id;
-                newTask.NumberOfTimesCompleted = timesCompleted;
-                newTask.TaskId = targetTask.Id;
-                newTask.PointValue = targetTask.Points;
+                this.DeleteCompletedTask(chartId, taskId, dateCompleted, currentUser);
+            }
+            else
+            {
+                if (targetChart != null &&
+                    targetTask != null &&
+                    (targetChart.IsCreator(currentUser) || targetChart.IsPointEarner(currentUser)))
+                {
+                    CompletedTask completedTask = this.CompletedTaskRepository.GetByChartTaskAndDate(targetChart, targetTask, dateCompleted);
 
-                retVal = this.CompletedTaskRepository.Save(newTask);
+                    if (completedTask == null)
+                    {
+                        completedTask = new CompletedTask();
+                        completedTask.ChartId = targetChart.Id;
+                        completedTask.TaskId = targetTask.Id;
+                        completedTask.DateCompleted = dateCompleted;
+                    }
+
+                    completedTask.NumberOfTimesCompleted = timesCompleted;
+                    completedTask.PointValue = targetTask.Points;
+
+                    retVal = this.CompletedTaskRepository.Save(completedTask);
+                }
             }
 
             return retVal;
@@ -112,6 +125,20 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                     retVal = true;
                 }
             }
+            return retVal;
+        }
+
+        public IDictionary<long, IList<CompletedTask>> GetByPointEarner(long pointEarnerId, PointChartUser currentUser)
+        {
+            IDictionary<long, IList<CompletedTask>> retVal = new Dictionary<long, IList<CompletedTask>>();
+
+            IList<Chart> foundCharts = this.ChartRepository.GetByPointEarner(pointEarnerId);
+
+            for(int i = 0; i < foundCharts.Count; i++)
+            {
+                retVal.Add(foundCharts[i].Id, this.GetByChart(foundCharts[i].Id, currentUser));
+            }
+
             return retVal;
         }
     }

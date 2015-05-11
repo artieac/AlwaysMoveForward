@@ -35,6 +35,46 @@ var completedTaskStore = Reflux.createStore({
 
         this.trigger(this.completedTasks);
         return this.completedTasks;
+    },
+
+    onAddCompletedTask: function (chartId, targetTaskId, inputValue, completedYear, completedMonth, completedDay){
+       var completedTaskData = {
+           TaskId: targetTaskId,
+           TimesCompleted: inputValue,
+            Year: completedYear,
+            Month: completedMonth,
+            Day: completedDay
+        };
+        
+        console.log(JSON.stringify(completedTaskData));
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/api/Chart/" + chartId + "/CompleteTask",
+            data: JSON.stringify(completedTaskData),
+            contentType: "application/json; charset=utf-8",
+            success: function (restData) {
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    onAddCompletedTasks: function (completedTasks) {  
+        console.log(JSON.stringify(completedTasks));
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/api/Chart/" + completedTasks.chartId + "/CompleteTasks",
+            data: JSON.stringify(completedTasks),
+            contentType: "application/json; charset=utf-8",
+            success: function (restData) {
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
     }
 });
 

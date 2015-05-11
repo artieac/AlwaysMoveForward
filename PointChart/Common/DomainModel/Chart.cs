@@ -43,11 +43,6 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// </summary>
         public IList<Task> Tasks { get; set; }
         
-        /// <summary>
-        /// Gets and sets all the completed instances of the tasks.
-        /// </summary>
-        public IList<CompletedTask> CompletedTasks { get; set; } 
-
         public Task GetTask(long taskId)
         {
             return this.Tasks.FirstOrDefault(t => t.Id == taskId);

@@ -50,33 +50,44 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             return new DataMapper.PointChartUserDataMap();
         }
 
-        public PointChartUser GetByOAuthServiceUserId(long userId)
+        public DTO.User GetDTOByOAuthServiceUserId(long oauthServiceId)
         {
-            DTO.User retVal = this.UnitOfWork.CurrentSession.Query<DTO.User>()
-                .Where(r => r.OAuthServiceUserId == userId)
+            return this.UnitOfWork.CurrentSession.Query<DTO.User>()
+                .Where(r => r.OAuthServiceUserId == oauthServiceId)
                 .FirstOrDefault();
+        }
 
-            return this.GetDataMapper().Map(retVal);
+        public PointChartUser GetByOAuthServiceUserId(long oauthServiceId)
+        {
+            return this.GetDataMapper().Map(this.GetDTOByOAuthServiceUserId(oauthServiceId));
         }
 
         public override PointChartUser Save(PointChartUser itemToSave)
         {
-            if (itemToSave != null && itemToSave.PointEarners != null)
+            if (itemToSave != null)
             {
                 DTO.User dtoItem = this.GetDTOById(itemToSave.Id);
 
+                if(dtoItem == null)
+                {
+                    dtoItem = this.GetDTOByOAuthServiceUserId(itemToSave.OAuthServiceUserId);
+                }
+
                 if (dtoItem != null)
                 {
-                    foreach (PointChartUser domainListItem in itemToSave.PointEarners)
+                    if (itemToSave.PointEarners != null)
                     {
-                        if (dtoItem.PointEarners.FirstOrDefault(t => t.Id == domainListItem.Id) == null)
+                        foreach (PointChartUser domainListItem in itemToSave.PointEarners)
                         {
-                            DTO.User existsTest = this.UnitOfWork.CurrentSession.Query<DTO.User>()
-                                .Where(t => t.Id == domainListItem.Id).FirstOrDefault();
-
-                            if (existsTest != null)
+                            if (dtoItem.PointEarners.FirstOrDefault(t => t.Id == domainListItem.Id) == null)
                             {
-                                dtoItem.PointEarners.Add(existsTest);
+                                DTO.User existsTest = this.UnitOfWork.CurrentSession.Query<DTO.User>()
+                                    .Where(t => t.Id == domainListItem.Id).FirstOrDefault();
+
+                                if (existsTest != null)
+                                {
+                                    dtoItem.PointEarners.Add(existsTest);
+                                }
                             }
                         }
                     }

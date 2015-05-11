@@ -56,7 +56,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public IList<CompletedTask> GetByChart(Chart chart, DateTime startDate, DateTime endDate)
         {
             IList<DTO.CompletedTask> retVal = this.UnitOfWork.CurrentSession.Query<DTO.CompletedTask>()
-                .Where(r => r.ChartId == chart.Id && r.DateCompleted.Date > startDate.Date && r.DateCompleted.Date < endDate.Date)
+                .Where(r => r.ChartId == chart.Id && r.DateCompleted.Date >= startDate.Date && r.DateCompleted.Date <= endDate.Date)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);

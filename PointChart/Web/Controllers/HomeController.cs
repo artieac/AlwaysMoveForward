@@ -23,13 +23,20 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             return this.View(model);
         }
 
-        [CookieAuthenticationParser]
+        [Route("Chart/{id}"), HttpGet()]
+        [MVCAuthorization]
+        public ActionResult Get(long id)
+        {
+            return View("Chart", id);
+        }
+
+        [MVCAuthorization]
         public ActionResult PointEarners()
         {
             return this.View();
         }
 
-        [CookieAuthenticationParser]
+        [MVCAuthorization]
         public ActionResult CollectPoints(long id)
         {
             DateTime today = DateTime.Now;
@@ -37,7 +44,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         }
 
         [Route("Home/CollectPoints/{id}/{year}/{month}"), HttpGet()]
-        [CookieAuthenticationParser]
+        [MVCAuthorization]
         public ActionResult CollectPoints(long id, int year, int month)
         {
             DateTime today = DateTime.Parse(month + "/1/" + year);
@@ -45,7 +52,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         }
 
         [Route("Home/CollectPoints/{id}/{year}/{month}/{day}"), HttpGet()]
-        [CookieAuthenticationParser]
+        [MVCAuthorization]
         public ActionResult CollectPoints(long id, int year, int month, int day)
         {
             Models.UI.CollectPointsModel retVal = new Models.UI.CollectPointsModel();

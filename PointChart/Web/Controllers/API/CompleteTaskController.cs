@@ -39,7 +39,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             Chart targetChart = this.Services.Charts.GetById(id);
             retVal.CompletedTasks = new Dictionary<long, IDictionary<DateTime, CompletedTask>>();
 
-            IList<CompletedTask> completedTasks = this.Services.CompletedTaskService.GetAllByChart(id, retVal.Calendar.WeekStartDate, retVal.Calendar.WeekStartDate.AddDays(7), this.CurrentPrincipal.CurrentUser);
+            IList<CompletedTask> completedTasks = this.Services.CompletedTaskService.GetByChart(id, retVal.Calendar.WeekStartDate, retVal.Calendar.WeekStartDate.AddDays(7), this.CurrentPrincipal.CurrentUser);
 
             foreach (CompletedTask completedTask in completedTasks)
             {
@@ -51,21 +51,63 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
                 retVal.CompletedTasks[completedTask.TaskId].Add(completedTask.DateCompleted, completedTask);
             }
 
+            
             return retVal;
+        }
+
+        private CompletedTask SaveCompletedTask(long id, CompletedTaskModel taskInput)
+        {
+            DateTime dateCompleted = DateTime.Parse(taskInput.Month + "/" + taskInput.Day + "/" + taskInput.Year);
+            return this.Services.CompletedTaskService.CompleteTask(id, taskInput.TaskId, taskInput.TimesCompleted, dateCompleted, this.CurrentPrincipal.CurrentUser);
         }
 
         [Route("api/Chart/{id}/CompleteTask"), HttpPost()]
         [WebAPIAuthorization]
-        public CompletedTask Post(long id, [FromBody]TaskInput taskInput)
+        public CompletedTask Post(long id, [FromBody]CompletedTaskModel taskInput)
         {
-            return this.Services.CompletedTaskService.CompleteTask(id, taskInput.Id, taskInput.TimesCompleted, this.CurrentPrincipal.CurrentUser);
+            return this.SaveCompletedTask(id, taskInput);
         }
 
-        [Route("api/Chart/{id}/Task/CompleteTask"), HttpPut()]
+        [Route("api/Chart/{id}/CompleteTask"), HttpPut()]
         [WebAPIAuthorization]
-        public CompletedTask Put(int id, [FromBody]TaskInput taskInput)
+        public CompletedTask Put(int id, [FromBody]CompletedTaskModel taskInput)
         {
-            return this.Services.CompletedTaskService.CompleteTask(id, taskInput.Id, taskInput.TimesCompleted, this.CurrentPrincipal.CurrentUser);
+            return this.SaveCompletedTask(id, taskInput);
+        }
+
+        private IList<CompletedTask> SaveCompletedTasks(long id, CompletedTasksInputModel taskInput)
+        {
+            IList<CompletedTask> retVal = new List<CompletedTask>();
+
+            if (taskInput != null && taskInput.TimesTaskCompleted != null)
+            {
+                for (int i = 0; i < taskInput.TimesTaskCompleted.Count(); i++)
+                {
+                    Task targetTask = this.Services.Tasks.GetById(taskInput.TaskId);
+
+                    if (targetTask != null)
+                    {
+                        DateTime dateCompleted = DateTime.Parse(taskInput.TimesTaskCompleted[i].Month + "/" + taskInput.TimesTaskCompleted[i].Day + "/" + taskInput.TimesTaskCompleted[i].Year);
+                        retVal.Add(this.Services.CompletedTaskService.CompleteTask(id, taskInput.TaskId, taskInput.TimesTaskCompleted[i].TimesCompleted, dateCompleted, this.CurrentPrincipal.CurrentUser));
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
+        [Route("api/Chart/{id}/CompleteTasks"), HttpPost()]
+        [WebAPIAuthorization]
+        public IList<CompletedTask> Post(long id, [FromBody]CompletedTasksInputModel taskInput)
+        {
+            return this.SaveCompletedTasks(id, taskInput);
+        }
+
+        [Route("api/Chart/{id}/CompleteTasks"), HttpPut()]
+        [WebAPIAuthorization]
+        public IList<CompletedTask> Put(long id, [FromBody]CompletedTasksInputModel taskInput)
+        {
+            return this.SaveCompletedTasks(id, taskInput);
         }
 
         [Route("api/Chart/{id}/CompleteTask/{taskId}/{month}/{day}/{year}"), HttpDelete()]

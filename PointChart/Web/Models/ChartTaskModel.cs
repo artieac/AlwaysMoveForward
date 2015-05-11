@@ -12,7 +12,6 @@ namespace AlwaysMoveForward.PointChart.Web.Models
         public PointChartUser PointEarner { get; set; }
         public Chart Chart { get; set; }
         public IList<Task> ChartTasks { get; set; }
-        public IList<Task> Tasks { get; set; }
         public IDictionary<long, IDictionary<DateTime, CompletedTask>> CompletedTasks { get; set; }
         public CalendarModel Calendar { get; set; }
     }

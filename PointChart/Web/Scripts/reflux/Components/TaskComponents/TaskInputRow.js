@@ -1,5 +1,4 @@
 ﻿var React = require('react');
-var Button = require('react-bootstrap').Button;
 
 // Actions
 var taskActions = require("../../actions/taskActions");
@@ -19,7 +18,7 @@ var TaskInputRow = React.createClass({
                 <td><input type="text" ref="points" defaultValue=''/></td>
                 <td><input type="text" ref="maxPerDay" defaultValue=''/></td>
                 <td>
-                    <Button bsStyle='success' onClick={this.onAddTask}>Save</Button>
+                    <button type="button" className="btn btn-primary" onClick={this.onAddTask}>Save</button>
                 </td>
             </tr>
         );

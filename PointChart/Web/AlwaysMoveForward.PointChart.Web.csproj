@@ -554,6 +554,7 @@
     <None Include="Scripts\reflux\apps\HomePageApp.js" />
     <Content Include="Scripts\reflux\actions\completedTaskActions.js" />
     <Content Include="Scripts\reflux\actions\pointEarnerActions.js" />
+    <Content Include="Scripts\reflux\actions\pointsSpentActions.js" />
     <Content Include="Scripts\reflux\apps\CollectPointsApp.js" />
     <Content Include="Scripts\reflux\apps\EditChartApp.js" />
     <Content Include="Scripts\reflux\Components\CalendarControl.js" />
@@ -569,6 +570,7 @@
     <Content Include="Scripts\reflux\stores\chartStore.js" />
     <Content Include="Scripts\reflux\stores\completedTaskStore.js" />
     <Content Include="Scripts\reflux\stores\pointEarnerStore.js" />
+    <Content Include="Scripts\reflux\stores\pointsSpentStore.js" />
     <Content Include="Scripts\reflux\stores\taskStore.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -604,11 +606,11 @@
     <Compile Include="Code\Utilities\Utils.cs" />
     <Compile Include="Code\Utilities\WebConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
-    <Compile Include="Controllers\API\PointsController.cs" />
+    <Compile Include="Controllers\API\CompleteTaskController.cs" />
     <Compile Include="Controllers\API\PointEarnerController.cs" />
     <Compile Include="Controllers\API\BaseAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\UI\ChartController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\API\ChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UI\TaskController.cs" />
@@ -619,9 +621,13 @@
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
     <Compile Include="Models\API\ChartInput.cs" />
+    <Compile Include="Models\API\CompletedTasksInputModel.cs" />
     <Compile Include="Models\API\CompletedTasksModel.cs" />
+    <Compile Include="Models\API\CompleteTaskModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
+    <Compile Include="Models\API\PointInfo.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
+    <Compile Include="Models\API\TimesTaskCompleted.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartTaskModel.cs" />
@@ -645,7 +651,7 @@
     <Content Include="Content\less\TabControl.less" />
     <Content Include="Content\less\ThemeDefaults.less" />
     <Content Include="Scripts\errors.json" />
-    <Content Include="Views\Chart\Index.cshtml" />
+    <Content Include="Views\Home\Chart.cshtml" />
     <Content Include="Views\Home\CollectPoints.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -49,7 +49,7 @@
     <Compile Include="Services\ChartService.cs" />
     <Compile Include="Services\CompletedTaskService.cs" />
     <Compile Include="Services\IServiceManager.cs" />
-    <Compile Include="Services\PointChartService.cs" />
+    <Compile Include="Services\PointService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Services\ServiceManagerBuilder.cs" />
     <Compile Include="Services\TaskService.cs" />

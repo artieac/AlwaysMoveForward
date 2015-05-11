@@ -75,7 +75,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
             return null;
         }
 
-        public Task GetById(int id)
+        public Task GetById(long id)
         {
             return this.TaskRepository.GetById(id);
         }

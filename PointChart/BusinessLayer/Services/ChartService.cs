@@ -15,11 +15,15 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
 {
     public class ChartService 
     {      
-        public ChartService(IUnitOfWork unitOfWork, IChartRepository chartRepository, IUserRepository userRepository) 
+        public ChartService(IUnitOfWork unitOfWork, 
+                            IChartRepository chartRepository, 
+                            IUserRepository userRepository,
+                            ICompletedTaskRepository completedTaskRepository) 
         {
             this.UnitOfWork = unitOfWork;
             this.ChartRepository = chartRepository;
             this.UserRepository = userRepository;
+            this.CompletedTaskRepository = completedTaskRepository;
         }
 
         protected IUnitOfWork UnitOfWork { get; private set; }
@@ -27,6 +31,8 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         protected IChartRepository ChartRepository { get; private set; }
 
         protected IUserRepository UserRepository { get; private set; }
+
+        protected ICompletedTaskRepository CompletedTaskRepository { get; private set; }
 
         public Chart GetById(long chartId)
         {
@@ -146,7 +152,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                     }
                 }
 
-                retVal = targetChart.CompletedTasks.FirstOrDefault(t => t.Id == taskId && t.DateCompleted.Date == dateCompleted.Date);
+                retVal = this.CompletedTaskRepository.GetByChartTaskAndDate(targetChart, targetTask, dateCompleted);
 
                 if (retVal == null)
                 {
@@ -156,7 +162,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
                         retVal.DateCompleted = dateCompleted;
                         retVal.NumberOfTimesCompleted = numberOfTimesCompleted;
                         pointsToAdd = numberOfTimesCompleted * targetTask.Points;
-                        targetChart.CompletedTasks.Add(retVal);
+                        retVal = this.CompletedTaskRepository.Save(retVal);
                     }
                 }
                 else

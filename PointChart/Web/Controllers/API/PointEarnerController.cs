@@ -42,9 +42,35 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
 
         [Route("api/PointEarner/{id}/Points"), HttpGet()]
         [WebAPIAuthorization]
-        public long GetPointsByPointEarner(long id)
+        public PointInfo GetPointInformation(long id)
         {
-            return 0;
+            PointInfo retVal = new PointInfo(); ;
+
+            IList<PointsSpent> pointsSpent = this.Services.PointService.GetPointsSpent(id);
+
+            if(pointsSpent != null)
+            {
+                for(int i = 0; i < pointsSpent.Count; i++)
+                {
+                    retVal.PointsSpent += pointsSpent[i].Amount;
+                }
+            }
+
+            IDictionary<long, IList<CompletedTask>> completedTasks = this.Services.CompletedTaskService.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
+
+            foreach(long chartId in completedTasks.Keys)
+            {
+                double chartPointsEarned = 0.0;
+
+                for(int i = 0; i < completedTasks[chartId].Count; i++)
+                {
+                    chartPointsEarned = completedTasks[chartId][i].NumberOfTimesCompleted * completedTasks[chartId][i].PointValue;    
+                }
+
+                retVal.PointsEarned.Add(chartId, chartPointsEarned);
+            }
+
+            return retVal;
         }
 
         // POST api/<controller>

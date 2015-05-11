@@ -1,5 +1,4 @@
 ﻿var React = require('react');
-var Button = require('react-bootstrap').Button;
 
 // Actions
 var taskActions = require("../../actions/taskActions");
@@ -59,7 +58,7 @@ var TaskRow = React.createClass({
                 <td>
                     { 
                         this.state.showEditable ? 
-                            <Button bsStyle='success' onClick={this.handleSaveClick}>Save</Button> : 
+                            <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button> :
 						    <img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
 				    }
                 </td>

@@ -34,5 +34,14 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         {
             return new DataMapper.PointsSpentDataMap();
         }
+
+        public IList<PointsSpent> GetByPointEarner(PointChartUser pointEarner)
+        {
+            IList<DTO.PointsSpent> retVal = this.UnitOfWork.CurrentSession.Query<DTO.PointsSpent>()
+                .Where(r => r.PointEarner.Id == pointEarner.Id)
+                .ToList();
+
+            return this.GetDataMapper().Map(retVal);
+        }
     }
 }

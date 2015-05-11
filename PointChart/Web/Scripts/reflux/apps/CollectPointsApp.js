@@ -51,21 +51,58 @@ var CollectPointsApp = React.createClass({
         return retVal;
     },
 
+    getExportEmptyUrl: function(){
+        return "/Export/Empty/" + this.state.currentChart.Id + "?fileType=excel";
+    },
+
+    getExportCompletedyUrl: function(){
+        return "/Export/Completed/" + this.state.currentChart.Id + "/" + this.props.selectedDate.getFullYear() + "/" + (this.props.selectedDate.getMonth() + 1) + "/" + (this.props.selectedDate.getDate()) + "?fileType=excel";
+    },
+
     render: function(){
         return ( 
             <div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <div>
-                            <label>Chart Name: </label>
-                            <label>{this.state.currentChart.Name}</label>
+                    <div className="col-md-9">
+                        <div className="row">
+                            <div className="col-md-8">Chart Name: {this.state.currentChart.Name}</div>
+                            <div className="col-md-2">
+                                <a href={this.getExportEmptyUrl()}><img src="/Content/images/paper_white.png" alt="Export Empty" /></a>
+                                &nbsp;
+                                <a href={this.getExportCompletedyUrl()}><img src="/Content/images/download.png" alt="Download" /></a>
+                            </div>
                         </div>
-                        <div>
-                            <label>Point Earner: </label>
-                            <label>{this.getPointEarnerName()}</label>
+                        <div className="row">
+                            <div className="col-md-12">Point Earner: {this.getPointEarnerName()}</div>
+                        </div>
+                        <br/>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <span>Points Earned (this chart)</span>
+                            </div>
+                            <div className="col-md-3">
+                                <span>Points Earned (other charts)</span>
+                            </div>
+                            <div className="col-md-3">
+                                <span>Points Spent</span>
+                            </div>
+                            <div className="col-md-3">
+                                <span>Total Points</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <span>Points Earned</span>
+                            </div>
+                            <div className="col-md-3">
+                                <span>Points Spent</span>
+                            </div>
+                            <div className="col-md-3">
+                                <span>Total Points</span>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <CalendarControl selected={this.getMomentDate()} chartId={this.props.chartId}/>
                     </div>
                 </div>
