@@ -637,6 +637,7 @@
     <Compile Include="Models\UI\CollectPointsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointsDetail.js" />
     <Content Include="Scripts\reflux\Components\GenericDropDown.js" />
     <Content Include="Scripts\reflux\apps\PointEarnerManagementApp.js" />
     <Content Include="Scripts\reflux\Components\TaskComponents\TaskRow.js" />

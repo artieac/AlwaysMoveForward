@@ -17,16 +17,16 @@ var pointsSpentStore = Reflux.createStore({
         this.pointsDetail = {};
     },
 
-    onGetPointsDetail: function (chartId) {
+    onGetPointsDetail: function (pointEarnerId) {
         this.pointsDetail = {};
 
         jQuery.ajax({
-            url: '/api/Chart/' + chartId,
+            url: '/api/PointEarner/' + pointEarnerId + '/Points',
             async: false,
             dataType: 'json',
             success: function (restData) {
                 console.log(restData);
-                this.currentChart = restData;
+                this.pointsDetail = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());

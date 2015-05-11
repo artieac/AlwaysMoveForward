@@ -4,9 +4,9 @@ var Reflux = require('reflux');
 var moment = require('moment');
 var chartStore = require('../stores/chartStore');
 var chartActions = require('../actions/chartActions');
-var pointEarnerStore = require('../stores/chartStore');
 var CollectPointsTable = require('../Components/ChartComponents/CollectPointsTable');
 var CalendarControl = require('../Components/CalendarControl');
+var PointsDetail = require('../Components/PointEarnerComponents/PointsDetail');
 
 var CollectPointsApp = React.createClass({
     mixins: [
@@ -23,7 +23,7 @@ var CollectPointsApp = React.createClass({
     componentDidMount: function () {
         // Add event listeners in componentDidMount
         this.listenTo(chartStore, this.handleGetChart);
-        chartActions.getChart(this.props.chartId);        
+        chartActions.getChart(this.props.chartId);           
     },
     
     handleGetChart: function (updateMessage) {
@@ -77,29 +77,7 @@ var CollectPointsApp = React.createClass({
                         </div>
                         <br/>
                         <div className="row">
-                            <div className="col-md-3">
-                                <span>Points Earned (this chart)</span>
-                            </div>
-                            <div className="col-md-3">
-                                <span>Points Earned (other charts)</span>
-                            </div>
-                            <div className="col-md-3">
-                                <span>Points Spent</span>
-                            </div>
-                            <div className="col-md-3">
-                                <span>Total Points</span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-3">
-                                <span>Points Earned</span>
-                            </div>
-                            <div className="col-md-3">
-                                <span>Points Spent</span>
-                            </div>
-                            <div className="col-md-3">
-                                <span>Total Points</span>
-                            </div>
+                            <PointsDetail chartId={this.state.currentChart.Id}/>
                         </div>
                     </div>
                     <div className="col-md-3">
