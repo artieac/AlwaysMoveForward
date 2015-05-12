@@ -67,5 +67,13 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
             retVal.SelectedDate = DateTime.Parse(month + "/" + day + "/" + year);
             return this.View(retVal);
         }
+
+        [Route("Home/SpendPoints/{id}"), HttpGet()]
+        [MVCAuthorization]
+        public ActionResult CollectPoints(long id)
+        {
+            IList<PointsSpent> retVal = this.Services.PointService.GetPointsSpent(id);
+            return this.View(retVal);
+        }
     }
 }

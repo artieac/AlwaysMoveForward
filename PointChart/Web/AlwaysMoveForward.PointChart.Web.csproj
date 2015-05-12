@@ -624,6 +624,7 @@
     <Compile Include="Models\API\CompletedTasksInputModel.cs" />
     <Compile Include="Models\API\CompletedTasksModel.cs" />
     <Compile Include="Models\API\CompleteTaskModel.cs" />
+    <Compile Include="Models\API\PointEarnerModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\PointInfo.cs" />
     <Compile Include="Models\API\TaskInput.cs" />

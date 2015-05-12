@@ -2,16 +2,16 @@
 
 var PointEarnerRow = React.createClass({    
     handleRemoveClick: function(){
-        this.props.handleRemovePointEarner(this.props.rowData);
+        this.props.handleRemovePointEarner(this.props.rowData.PointEarner);
     },
 
     render: function () {
         return (
             <tr>
-                <td>{this.props.rowData.FirstName}</td>
-                <td>{this.props.rowData.LastName}</td>
+                <td>{this.props.rowData.PointEarner.FirstName}</td>
+                <td>{this.props.rowData.PointEarner.LastName}</td>
                 <td>{this.props.rowData.PointsEarned}</td>
-                <td>{this.props.rowData.PointsSpent}</td>
+                <td><a href="/Home/SpendPoints/{this.props.rowData.PointEarner.Id}">{this.props.rowData.PointsSpent}</a></td>
                 <td>
                     <img src="/Content/images/action_delete.png" class="deleteList" alt="" onClick={this.handleRemoveClick} />
                 </td>

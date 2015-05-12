@@ -16,15 +16,22 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
     {
         [Route("api/PointEarners"), HttpGet()]
         [WebAPIAuthorization]
-        public IList<PointChartUser> Get()
+        public IList<PointEarnerModel> Get()
         {
-            IList<PointChartUser> retVal = new List<PointChartUser>();
+            IList<PointEarnerModel> retVal = new List<PointEarnerModel>();
 
             if(this.CurrentPrincipal!=null)
             {
                 if(this.CurrentPrincipal.CurrentUser != null)
                 {
-                    retVal = this.CurrentPrincipal.CurrentUser.PointEarners;
+                    for (int i = 0; i < this.CurrentPrincipal.CurrentUser.PointEarners.Count; i++ )
+                    {
+                        PointEarnerModel model = new PointEarnerModel();
+                        model.PointEarner = this.CurrentPrincipal.CurrentUser.PointEarners[i];
+                        model.PointsEarned = 0;
+                        model.PointsSpent = 0;
+                        retVal.Add(model);
+                    }
                 }
             }
 
