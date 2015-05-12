@@ -57,32 +57,16 @@ var PointsDetail = React.createClass({
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-3">
-                        <span>Points Earned (this chart)</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>Points Earned (other charts)</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>Points Spent</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>Total Points</span>
-                    </div>
+                    <div className="col-md-3">Points Earned<br/>(this chart)</div>
+                    <div className="col-md-3">Points Earned<br/>(other charts)</div>
+                    <div className="col-md-3">Points Spent</div>
+                    <div className="col-md-3">Total Points</div>
                 </div>
                 <div className="row">
-                    <div className="col-md-3">
-                        <span>{this.getCurrentChartPointsEarned()}</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>{this.getOtherChartPointsEarned()}</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>{this.state.pointsDetail.PointsSpent}</span>
-                    </div>
-                    <div className="col-md-3">
-                        <span>{(this.getCurrentChartPointsEarned() + this.getOtherChartPointsEarned()) - this.state.pointsDetail.PointsSpent}</span>
-                    </div>
+                    <div className="col-md-3">{this.getCurrentChartPointsEarned()}</div>
+                    <div className="col-md-3">{this.getOtherChartPointsEarned()}</div>
+                    <div className="col-md-3">{this.state.pointsDetail.PointsSpent}</div>
+                    <div className="col-md-3">{(this.getCurrentChartPointsEarned() + this.getOtherChartPointsEarned()) - this.state.pointsDetail.PointsSpent}</div>
                 </div>
             </div>
         );

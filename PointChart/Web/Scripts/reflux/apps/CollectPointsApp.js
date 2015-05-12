@@ -65,7 +65,7 @@ var CollectPointsApp = React.createClass({
                 <div className="row">
                     <div className="col-md-9">
                         <div className="row">
-                            <div className="col-md-8">Chart Name: {this.state.currentChart.Name}</div>
+                            <div className="col-md-6">Chart Name: {this.state.currentChart.Name}</div>
                             <div className="col-md-2">
                                 <a href={this.getExportEmptyUrl()}><img src="/Content/images/paper_white.png" alt="Export Empty" /></a>
                                 &nbsp;
