@@ -9,5 +9,6 @@ namespace AlwaysMoveForward.PointChart.Web.Models.UI
     {
         public DateTime SelectedDate { get; set; }
         public long ChartId { get; set; }
+        public long PointEarnerId { get; set; }
     }
 }

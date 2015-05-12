@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.DTO
         [NHibernate.Mapping.Attributes.Property]
         public virtual DateTime DateSpent { get; set; }
 
-        [NHibernate.Mapping.Attributes.ManyToOne(Name = "PointEarner", ClassType = typeof(DTO.User), Column = "PointEarnerId")]
-        public virtual DTO.User PointEarner { get; set; }
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual long PointEarnerId { get; set; }
     }
 }

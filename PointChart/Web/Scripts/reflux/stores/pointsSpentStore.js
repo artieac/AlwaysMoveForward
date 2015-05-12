@@ -25,7 +25,6 @@ var pointsSpentStore = Reflux.createStore({
             async: false,
             dataType: 'json',
             success: function (restData) {
-                console.log(restData);
                 this.pointsDetail = restData;
             }.bind(this),
             error: function (xhr, status, err) {
@@ -33,8 +32,9 @@ var pointsSpentStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger(this.pointsDetail);
+        this.trigger((this.pointsDetail  || {}));
         return this.pointsDetail;
+
     },
 
     onSpendPoints: function (chartId, chartName, pointEarnerId, tasks) {

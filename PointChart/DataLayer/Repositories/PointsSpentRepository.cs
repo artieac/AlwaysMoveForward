@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
         public IList<PointsSpent> GetByPointEarner(PointChartUser pointEarner)
         {
             IList<DTO.PointsSpent> retVal = this.UnitOfWork.CurrentSession.Query<DTO.PointsSpent>()
-                .Where(r => r.PointEarner.Id == pointEarner.Id)
+                .Where(r => r.PointEarnerId == pointEarner.Id)
                 .ToList();
 
             return this.GetDataMapper().Map(retVal);

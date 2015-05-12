@@ -29,6 +29,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         {
             this.UnitOfWork = unitOfWork;
             this.PointsSpentRepository = pointsSpentRepository;
+            this.UserRepository = userRepository;
         }
 
         public IUnitOfWork UnitOfWork { get; private set; }

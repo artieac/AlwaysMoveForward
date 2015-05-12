@@ -56,7 +56,14 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         public ActionResult CollectPoints(long id, int year, int month, int day)
         {
             Models.UI.CollectPointsModel retVal = new Models.UI.CollectPointsModel();
-            retVal.ChartId = id;
+            Chart targetChart = this.Services.Charts.GetById(id);
+
+            if(targetChart!=null)
+            {
+                retVal.ChartId = id;
+                retVal.PointEarnerId = targetChart.PointEarner.Id;
+            }
+
             retVal.SelectedDate = DateTime.Parse(month + "/" + day + "/" + year);
             return this.View(retVal);
         }

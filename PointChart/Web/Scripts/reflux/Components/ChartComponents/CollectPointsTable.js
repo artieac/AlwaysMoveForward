@@ -25,11 +25,8 @@ var CollectPointsRow = React.createClass({
         };
 
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getSundayTimesCompleted();
-        console.log("1:" + JSON.stringify(completedTasks));
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getMondayTimesCompleted();
-        console.log("2:" + JSON.stringify(completedTasks));
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getTuesdayTimesCompleted();
-        console.log("3:" + JSON.stringify(completedTasks));
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getWednesdayTimesCompleted();
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getThursdayTimesCompleted();
         completedTasks.timesTaskCompleted[completedTasks.timesTaskCompleted.length] = this.getFridayTimesCompleted();
@@ -223,21 +220,21 @@ var CollectPointsTable = React.createClass({
 
         return (
             <div>
-                <div>
-                    <table className="table table-striped table-bordered">
-                        <thead> 
-                            <th width="20%">Task</th>
-                            <th width="10%">{ columnDates[0].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[1].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[2].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[3].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[4].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[5].format("MM/DD/YYYY")}</th>
-                            <th width="10%">{ columnDates[6].format("MM/DD/YYYY")}</th>
-                        </thead>                    
-                        <CollectPointsTableBody columnDates={columnDates} chartData={this.props.chartData} tableBodyData={this.state.allTasks.CompletedTasks}/>
-                    </table>
-                </div>
+                <br/>
+                <table className="table table-striped table-bordered">
+                    <thead> 
+                        <th width="20%">Task</th>
+                        <th width="10%">{ columnDates[0].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[1].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[2].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[3].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[4].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[5].format("MM/DD/YYYY")}</th>
+                        <th width="10%">{ columnDates[6].format("MM/DD/YYYY")}</th>
+                        <th width="5%"></th>
+                    </thead>                    
+                    <CollectPointsTableBody columnDates={columnDates} chartData={this.props.chartData} tableBodyData={this.state.allTasks.CompletedTasks}/>
+                </table>
             </div>
         );
     }

@@ -37,5 +37,7 @@ namespace AlwaysMoveForward.PointChart.Common.DomainModel
         /// Gets and sets the description of how the points were spent
         /// </summary>
         public string Description { get; set; }
+
+        public long PointEarnerId { get; set; }
     }
 }

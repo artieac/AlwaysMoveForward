@@ -77,7 +77,7 @@ var CollectPointsApp = React.createClass({
                         </div>
                         <br/>
                         <div className="row">
-                            <PointsDetail chartId={this.state.currentChart.Id}/>
+                            <PointsDetail chartId={this.props.chartId} pointEarnerId={this.props.pointEarnerId}/>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -93,5 +93,5 @@ var CollectPointsApp = React.createClass({
 });
 
 module.exports = CollectPointsApp;
-React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={targetDate}/>, document.getElementById("collectPointsReactContent"));
+React.render(<CollectPointsApp chartId={chartIdentifer} selectedDate={targetDate} pointEarnerId={pointEarnerId}/>, document.getElementById("collectPointsReactContent"));
 
