@@ -41,7 +41,7 @@ CREATE TABLE `AMFUsers`(
 	`PasswordSalt` nvarchar(50) NOT NULL,
 	`PasswordHash` nvarchar(50) NOT NULL,
 	`PasswordHint` nvarchar(255) NULL,
-	`DateCreated` datetime(7) NOT NULL,
+	`DateCreated` datetime NOT NULL,
 	`UserStatus` int NOT NULL,
 	`Role` int NOT NULL,
 	`ResetToken` nvarchar(36) NULL,
