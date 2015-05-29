@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Code\reflux\apps\SpendPointsApp.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -263,16 +264,16 @@
     <Content Include="Scripts\dist\PointEarnerManagementApp.js" />
     <Content Include="Scripts\dist\TaskPageApp.js" />
     <Content Include="Scripts\dist\vendorBundle.js" />
-    <Content Include="Scripts\gulp\config.js" />
-    <Content Include="Scripts\gulp\index.js" />
-    <Content Include="Scripts\gulp\tasks\browserify.js" />
-    <Content Include="Scripts\gulp\tasks\lessCompile.js" />
-    <Content Include="Scripts\gulp\tasks\transform.js" />
-    <Content Include="Scripts\gulp\tasks\uglify.js" />
-    <Content Include="Scripts\gulp\tasks\watch.js" />
-    <Content Include="Scripts\gulp\tasks\watchify.js" />
-    <Content Include="Scripts\gulp\util\bundleLogger.js" />
-    <Content Include="Scripts\gulp\util\handleErrors.js" />
+    <None Include="Code\gulp\config.js" />
+    <None Include="Code\gulp\index.js" />
+    <None Include="Code\gulp\tasks\browserify.js" />
+    <None Include="Code\gulp\tasks\lessCompile.js" />
+    <None Include="Code\gulp\tasks\transform.js" />
+    <None Include="Code\gulp\tasks\uglify.js" />
+    <None Include="Code\gulp\tasks\watch.js" />
+    <None Include="Code\gulp\tasks\watchify.js" />
+    <None Include="Code\gulp\util\bundleLogger.js" />
+    <None Include="Code\gulp\util\handleErrors.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
@@ -548,30 +549,30 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\npm.js" />
-    <None Include="Scripts\reflux\actions\chartActions.js" />
-    <None Include="Scripts\reflux\actions\chartCollectionActions.js" />
-    <None Include="Scripts\reflux\actions\taskActions.js" />
-    <None Include="Scripts\reflux\apps\HomePageApp.js" />
-    <Content Include="Scripts\reflux\actions\completedTaskActions.js" />
-    <Content Include="Scripts\reflux\actions\pointEarnerActions.js" />
-    <Content Include="Scripts\reflux\actions\pointsSpentActions.js" />
-    <Content Include="Scripts\reflux\apps\CollectPointsApp.js" />
-    <Content Include="Scripts\reflux\apps\EditChartApp.js" />
-    <Content Include="Scripts\reflux\Components\CalendarControl.js" />
-    <Content Include="Scripts\reflux\Components\ChartComponents\ChartSummaryTable.js" />
-    <Content Include="Scripts\reflux\Components\ChartComponents\TaskSelectionTable.js" />
-    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointEarnerSearch.js" />
-    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointEarnerTable.js" />
-    <Content Include="Scripts\reflux\Components\ChartComponents\CollectPointsTable.js" />
-    <Content Include="Scripts\reflux\Components\TaskComponents\TaskInputRow.js" />
-    <Content Include="Scripts\reflux\Components\TaskComponents\TaskTable.js" />
-    <Content Include="Scripts\reflux\mixins\pluralize.js" />
-    <Content Include="Scripts\reflux\stores\chartCollectionStore.js" />
-    <Content Include="Scripts\reflux\stores\chartStore.js" />
-    <Content Include="Scripts\reflux\stores\completedTaskStore.js" />
-    <Content Include="Scripts\reflux\stores\pointEarnerStore.js" />
-    <Content Include="Scripts\reflux\stores\pointsSpentStore.js" />
-    <Content Include="Scripts\reflux\stores\taskStore.js" />
+    <None Include="Code\reflux\actions\chartActions.js" />
+    <None Include="Code\reflux\actions\chartCollectionActions.js" />
+    <None Include="Code\reflux\actions\taskActions.js" />
+    <None Include="Code\reflux\apps\HomePageApp.js" />
+    <None Include="Code\reflux\actions\completedTaskActions.js" />
+    <None Include="Code\reflux\actions\pointEarnerActions.js" />
+    <None Include="Code\reflux\actions\pointsSpentActions.js" />
+    <None Include="Code\reflux\apps\CollectPointsApp.js" />
+    <None Include="Code\reflux\apps\EditChartApp.js" />
+    <None Include="Code\reflux\Components\CalendarControl.js" />
+    <None Include="Code\reflux\Components\ChartComponents\ChartSummaryTable.js" />
+    <None Include="Code\reflux\Components\ChartComponents\TaskSelectionTable.js" />
+    <None Include="Code\reflux\Components\PointEarnerComponents\PointEarnerSearch.js" />
+    <None Include="Code\reflux\Components\PointEarnerComponents\PointEarnerTable.js" />
+    <None Include="Code\reflux\Components\ChartComponents\CollectPointsTable.js" />
+    <None Include="Code\reflux\Components\TaskComponents\TaskInputRow.js" />
+    <None Include="Code\reflux\Components\TaskComponents\TaskTable.js" />
+    <None Include="Code\reflux\mixins\pluralize.js" />
+    <None Include="Code\reflux\stores\chartCollectionStore.js" />
+    <None Include="Code\reflux\stores\chartStore.js" />
+    <None Include="Code\reflux\stores\completedTaskStore.js" />
+    <None Include="Code\reflux\stores\pointEarnerStore.js" />
+    <None Include="Code\reflux\stores\pointsSpentStore.js" />
+    <None Include="Code\reflux\stores\taskStore.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
@@ -638,11 +639,11 @@
     <Compile Include="Models\UI\CollectPointsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Scripts\reflux\Components\PointEarnerComponents\PointsDetail.js" />
-    <Content Include="Scripts\reflux\Components\GenericDropDown.js" />
-    <Content Include="Scripts\reflux\apps\PointEarnerManagementApp.js" />
-    <Content Include="Scripts\reflux\Components\TaskComponents\TaskRow.js" />
-    <Content Include="Scripts\reflux\apps\TaskPageApp.js" />
+    <None Include="Code\reflux\Components\PointEarnerComponents\PointsDetail.js" />
+    <None Include="Code\reflux\Components\GenericDropDown.js" />
+    <None Include="Code\reflux\apps\PointEarnerManagementApp.js" />
+    <None Include="Code\reflux\Components\TaskComponents\TaskRow.js" />
+    <None Include="Code\reflux\apps\TaskPageApp.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -655,6 +656,7 @@
     <Content Include="Scripts\errors.json" />
     <Content Include="Views\Home\Chart.cshtml" />
     <Content Include="Views\Home\CollectPoints.cshtml" />
+    <Content Include="Views\Home\SpendPoints.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

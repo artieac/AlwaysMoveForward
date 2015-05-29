@@ -45,9 +45,9 @@
 //gulp.task('build', ['browserify']);
 
 var gulp = require('gulp');
-var browserify = require('./Scripts/gulp/tasks/browserify');
-var watchify = require('./Scripts/gulp/tasks/watchify');
-var lessCompile = require('./Scripts/gulp/tasks/lessCompile');
+var browserify = require('./Code/gulp/tasks/browserify');
+var watchify = require('./Code/gulp/tasks/watchify');
+var lessCompile = require('./Code/gulp/tasks/lessCompile');
 
 gulp.task('build', ['lessCompile', 'browserify']);
 gulp.task('default', ['build', 'watchify']);

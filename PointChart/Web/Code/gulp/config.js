@@ -1,5 +1,5 @@
 ﻿var dest = "./Scripts/dist";
-var src = './Scripts/reflux';
+var src = './Code/reflux';
 
 var reactify = require('reactify');
 
@@ -20,7 +20,7 @@ module.exports = {
                 outputName: 'vendorBundle.js',                
             },
             {
-                entries: ['./Scripts/reflux/apps/HomePageApp.js'],
+                entries: ['./Code/reflux/apps/HomePageApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'HomePageApp.js',
@@ -28,7 +28,7 @@ module.exports = {
                 external: ['jquery', 'react', 'reflux', 'react-router']
             },
             {
-                entries: ['./Scripts/reflux/apps/TaskPageApp.js'],
+                entries: ['./Code/reflux/apps/TaskPageApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'TaskPageApp.js',
@@ -36,7 +36,7 @@ module.exports = {
                 external: ['jquery', 'react', 'reflux', 'react-router']
             },
             {
-                entries: ['./Scripts/reflux/apps/EditChartApp.js'],
+                entries: ['./Code/reflux/apps/EditChartApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'EditChartApp.js',
@@ -44,7 +44,7 @@ module.exports = {
                 external: ['jquery', 'react', 'reflux', 'react-router']
             },
             {
-                entries: ['./Scripts/reflux/apps/PointEarnerManagementApp.js'],
+                entries: ['./Code/reflux/apps/PointEarnerManagementApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'PointEarnerManagementApp.js',
@@ -52,16 +52,22 @@ module.exports = {
                 external: ['jquery', 'react', 'reflux', 'react-router']
             },
             {
-                entries: ['./Scripts/reflux/apps/CollectPointsApp.js'],
+                entries: ['./Code/reflux/apps/CollectPointsApp.js'],
                 transform: [reactify],
                 dest: dest,
                 outputName: 'CollectPointsApp.js'
+            },
+            {
+                entries: ['./Code/reflux/apps/SpendPointsApp.js'],
+                transform: [reactify],
+                dest: dest,
+                outputName: 'SpendPointsApp.js'
             }
 ]
     },
     filePaths: {
-        appSource: ['./Scripts/reflux/actions/*.js', './Scripts/reflux/Components/*.js', './Scripts/reflux/stores/*.js'],
-        sourceDestination: '/Scripts/reflux',
+        appSource: ['./Code/reflux/actions/*.js', './Code/reflux/Components/*.js', './Code/reflux/stores/*.js'],
+        sourceDestination: '/Code/reflux',
         outputPath: './Scripts/dist',
         buildDestination: './Scripts/dist/build',
         vendorBundleFileName: 'vendor',
