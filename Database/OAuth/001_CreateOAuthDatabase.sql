@@ -95,10 +95,6 @@ CREATE UNIQUE INDEX `IX_RequestTokens_Token` ON `RequestTokens`
 	`Token` ASC
 );
 
-/****** Object:  ForeignKey [FK_AccessTokens_AccessTokens]    Script Date: 03/12/2015 12:16:42 ******/
-ALTER TABLE `AccessTokens`  ADD  CONSTRAINT `FK_AccessTokens_AccessTokens` FOREIGN KEY(`Id`)
-REFERENCES `AccessTokens` (`Id`);
-
 /****** Object:  ForeignKey [FK_RequestTokens_AccessTokens]    Script Date: 03/12/2015 12:16:42 ******/
 ALTER TABLE `RequestTokens`  ADD  CONSTRAINT `FK_RequestTokens_AccessTokens` FOREIGN KEY(`AccessTokenId`)
 REFERENCES `AccessTokens` (`Id`);
