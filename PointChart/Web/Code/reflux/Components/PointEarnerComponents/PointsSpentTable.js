@@ -35,7 +35,7 @@ var PointsSpentRow = React.createClass({
     render: function () {
         return (
             <tr>
-                <td>{this.props.rowData.Date}</td>
+                <td>{this.props.rowData.DateSpent}</td>
                 <td>{this.props.rowData.Amount}</td>
                 <td>{this.props.rowData.Description}</td>
                 <td>
@@ -70,23 +70,23 @@ var PointsSpentTableBody = React.createClass({
 
 var PointsSpentTable = React.createClass({   
     mixins: [
-        Reflux.connect(pointsSpentStore, "pointsDetail"),
+        Reflux.connect(pointsSpentStore, "spentPoints"),
     ],
 
     getInitialState: function() {
         return { 
-            pointsDetail: []
+            spentPoints: []
         };    
     },
 
     componentDidMount: function () {
         // Add event listeners in componentDidMount
         this.listenTo(pointsSpentStore, this.updatePointsSpent);
-        pointsSpentActions.getPointsDetail(this.props.pointEarnerId);
+        pointsSpentActions.getSpentPoints(this.props.pointEarnerId);
     },
 
     updatePointsSpent: function (updateMessage) {
-        this.setState({pointsDetail: updateMessage.pointsDetail});
+        this.setState({spentPoints: updateMessage.spentPoints});
     },
 
     handleRemoveSpentPoints: function() {
@@ -104,7 +104,7 @@ var PointsSpentTable = React.createClass({
                         <th width="20%"></th>
                         <td></td>
                     </thead>                    
-                    <PointsSpentTableBody tableBodyData={this.state.tableData} pointEarnerId={this.props.pointEarnerId} handleRemoveSpentPoints={this.props.handleRemoveSpentPoints}/>
+                    <PointsSpentTableBody tableBodyData={this.state.spentPoints} pointEarnerId={this.props.pointEarnerId} handleRemoveSpentPoints={this.props.handleRemoveSpentPoints}/>
                 </table>
             </div>
         );

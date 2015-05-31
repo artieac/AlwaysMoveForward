@@ -12,9 +12,11 @@ var pointsSpentStore = Reflux.createStore({
     listenables: [pointsSpentActions],
 
     pointsDetail: {},
+    spentPoints: {},
 
     init: function () {
         this.pointsDetail = {};
+        this.spentPoints = {};
     },
 
     onGetPointsDetail: function (pointEarnerId) {
@@ -32,21 +34,41 @@ var pointsSpentStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.pointsDetail  || {}));
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
         return this.pointsDetail;
+
+    },
+
+    onGetSpentPoints: function (pointEarnerId) {
+        this.spentPoints = {};
+
+        jQuery.ajax({
+            url: '/api/PointEarner/' + pointEarnerId + '/SpentPoints',
+            async: false,
+            dataType: 'json',
+            success: function (restData) {
+                this.spentPoints = restData;
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
+        return this.spentPoints;
 
     },
 
     onSpendPoints: function (pointEarnerId, date, amountSpent, reason) {
         var spendPointsData = {
-            Date: date,
+            DateSpent: date,
             AmountSpent: amountSpent,
-            Reason: reason
+            Description: reason
         };
 
         jQuery.ajax({
-            method: "PUT",
-            url: "/api/PointEarner/" + pointEarnerId + '/Points',
+            method: "POST",
+            url: "/api/PointEarner/" + pointEarnerId + '/SpentPoints',
             data: JSON.stringify(spendPointsData),
             contentType: "application/json; charset=utf-8",
             success: function (restData) {
@@ -58,7 +80,7 @@ var pointsSpentStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.pointsDetail || {}));
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
         return this.pointsDetail;
     }
 });

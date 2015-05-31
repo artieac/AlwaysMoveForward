@@ -47,39 +47,6 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             return this.Services.UserService.SearchByEmail(emailAddress, accessToken);
         }
 
-        [Route("api/PointEarner/{id}/Points"), HttpGet()]
-        [WebAPIAuthorization]
-        public PointInfo GetPointInformation(long id)
-        {
-            PointInfo retVal = new PointInfo(); ;
-
-            IList<PointsSpent> pointsSpent = this.Services.PointService.GetPointsSpent(id);
-
-            if(pointsSpent != null)
-            {
-                for(int i = 0; i < pointsSpent.Count; i++)
-                {
-                    retVal.PointsSpent += pointsSpent[i].Amount;
-                }
-            }
-
-            IDictionary<long, IList<CompletedTask>> completedTasks = this.Services.CompletedTaskService.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
-
-            foreach(long chartId in completedTasks.Keys)
-            {
-                double chartPointsEarned = 0.0;
-
-                for(int i = 0; i < completedTasks[chartId].Count; i++)
-                {
-                    chartPointsEarned = completedTasks[chartId][i].NumberOfTimesCompleted * completedTasks[chartId][i].PointValue;    
-                }
-
-                retVal.PointsEarned.Add(chartId, chartPointsEarned);
-            }
-
-            return retVal;
-        }
-
         // POST api/<controller>
         [WebAPIAuthorization]
         public void Post([FromBody]PointEarnerInput pointEarnerData)
@@ -117,13 +84,55 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
             this.Services.UserService.RemovePointEarner(id, this.CurrentPrincipal.CurrentUser);
         }
 
-        [Route("api/PointEarner/{id}/Points"), HttpPut()]
+        [Route("api/PointEarner/{id}/Points"), HttpGet()]
         [WebAPIAuthorization]
-        public IList<PointsSpent> SpendPoints(long id, DateTime dateSpent, long amountSpent, string description)           
+        public PointInfo GetPointInformation(long id)
+        {
+            PointInfo retVal = new PointInfo(); ;
+
+            IList<PointsSpent> pointsSpent = this.Services.PointService.GetPointsSpent(id);
+
+            if (pointsSpent != null)
+            {
+                for (int i = 0; i < pointsSpent.Count; i++)
+                {
+                    retVal.PointsSpent += pointsSpent[i].Amount;
+                }
+            }
+
+            IDictionary<long, IList<CompletedTask>> completedTasks = this.Services.CompletedTaskService.GetByPointEarner(id, this.CurrentPrincipal.CurrentUser);
+
+            foreach (long chartId in completedTasks.Keys)
+            {
+                double chartPointsEarned = 0.0;
+
+                for (int i = 0; i < completedTasks[chartId].Count; i++)
+                {
+                    chartPointsEarned = completedTasks[chartId][i].NumberOfTimesCompleted * completedTasks[chartId][i].PointValue;
+                }
+
+                retVal.PointsEarned.Add(chartId, chartPointsEarned);
+            }
+
+            return retVal;
+        }
+
+        [Route("api/PointEarner/{id}/SpentPoints")]
+        [HttpGet]
+        [WebAPIAuthorization]
+        public IList<PointsSpent> GetSpentPoints(long id)
+        {
+            return this.Services.PointService.GetPointsSpent(id);
+        }
+
+        [Route("api/PointEarner/{id}/SpentPoints")]
+        [HttpPost]
+        [WebAPIAuthorization]
+        public IList<PointsSpent> SpendPoints(long id, [FromBody]SpendPointsInput input)
         {
             IList<PointsSpent> retVal = new List<PointsSpent>();
 
-            this.Services.PointService.SpendPoints(id, amountSpent, dateSpent, description);
+            this.Services.PointService.SpendPoints(id, input.AmountSpent, input.DateSpent, input.Description);
             retVal = this.Services.PointService.GetPointsSpent(id);
             return retVal;
         }

@@ -629,6 +629,7 @@
     <Compile Include="Models\API\PointEarnerModel.cs" />
     <Compile Include="Models\API\PointEarnerInput.cs" />
     <Compile Include="Models\API\PointInfo.cs" />
+    <Compile Include="Models\API\SpendPointsInput.cs" />
     <Compile Include="Models\API\TaskInput.cs" />
     <Compile Include="Models\API\TimesTaskCompleted.cs" />
     <Compile Include="Models\CalendarModel.cs" />
