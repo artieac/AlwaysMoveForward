@@ -1,4 +1,5 @@
-﻿var React = require('react');
+﻿'use strict'
+var React = require('react');
 
 var PointEarnerRow = React.createClass({    
     handleRemoveClick: function(){
@@ -11,7 +12,7 @@ var PointEarnerRow = React.createClass({
                 <td>{this.props.rowData.PointEarner.FirstName}</td>
                 <td>{this.props.rowData.PointEarner.LastName}</td>
                 <td>{this.props.rowData.PointsEarned}</td>
-                <td><a href="/Home/SpendPoints/{this.props.rowData.PointEarner.Id}">{this.props.rowData.PointsSpent}</a></td>
+                <td><a href={'/Home/SpendPoints/' + this.props.rowData.PointEarner.Id}>{this.props.rowData.PointsSpent}</a></td>
                 <td>
                     <img src="/Content/images/action_delete.png" class="deleteList" alt="" onClick={this.handleRemoveClick} />
                 </td>

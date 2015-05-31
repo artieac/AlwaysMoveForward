@@ -72,8 +72,7 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers
         [MVCAuthorization]
         public ActionResult SpendPoints(long id)
         {
-            IList<PointsSpent> retVal = this.Services.PointService.GetPointsSpent(id);
-            return this.View(retVal);
+            return this.View(id);
         }
     }
 }

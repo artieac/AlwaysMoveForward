@@ -1,4 +1,5 @@
-﻿/** @jsx React.DOM */
+﻿'use strict'
+/** @jsx React.DOM */
 var React = require('react');
 var Reflux = require('reflux');
 var moment = require('moment');

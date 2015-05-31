@@ -1,4 +1,5 @@
-﻿var React = require('react');
+﻿'use strict'
+var React = require('react');
 var Moment = require('moment');
 
 var WeekDates = React.createClass({

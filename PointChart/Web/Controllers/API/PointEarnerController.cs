@@ -116,5 +116,16 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         {
             this.Services.UserService.RemovePointEarner(id, this.CurrentPrincipal.CurrentUser);
         }
+
+        [Route("api/PointEarner/{id}/Points"), HttpPut()]
+        [WebAPIAuthorization]
+        public IList<PointsSpent> SpendPoints(long id, DateTime dateSpent, long amountSpent, string description)           
+        {
+            IList<PointsSpent> retVal = new List<PointsSpent>();
+
+            this.Services.PointService.SpendPoints(id, amountSpent, dateSpent, description);
+            retVal = this.Services.PointService.GetPointsSpent(id);
+            return retVal;
+        }
     }
 }
