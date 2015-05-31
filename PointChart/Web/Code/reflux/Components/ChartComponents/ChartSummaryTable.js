@@ -1,4 +1,5 @@
-﻿/// <reference path="../ChartSummaryTable/ChartSummaryRow.js" />
+﻿'use strict'
+/// <reference path="../ChartSummaryTable/ChartSummaryRow.js" />
 var React = require('react');
 
 var ChartSummaryRow = React.createClass({

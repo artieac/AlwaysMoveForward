@@ -1,9 +1,8 @@
-﻿/** @jsx React.DOM */
+﻿'use strict'
+/** @jsx React.DOM */
 var React = require('react');
 var Reflux = require('reflux');
-var moment = require('moment');
-var pointsSpentStore = require('../stores/pointsSpentStore');
-var pointsSpentActions = require('../actions/pointsSpentActions');
+var PointsSpentTable = require('../Components/PointEarnerComponents/PointsSpentTable');
 
 var SpendPointsApp = React.createClass({
     mixins: [
@@ -23,11 +22,14 @@ var SpendPointsApp = React.createClass({
     render: function(){
         return ( 
             <div>
+                <div>
+                    <PointsSpentTable pointEarnerId={this.props.pointEarnerId}/>
+                </div>
             </div>
         );
     }
 });
 
 module.exports = SpendPointsApp;
-React.render(<SpendPointsApp />, document.getElementById("spendPointsReactContent"));
+React.render(<SpendPointsApp pointEarnerId={pointEarnerId}/>, document.getElementById("spendPointsReactContent"));
 

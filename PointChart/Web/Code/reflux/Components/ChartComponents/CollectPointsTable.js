@@ -1,4 +1,5 @@
-﻿var jQuery = require('jquery');
+﻿'use strict'
+var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
 var moment = require('moment');

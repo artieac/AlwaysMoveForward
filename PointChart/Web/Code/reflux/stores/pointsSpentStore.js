@@ -37,26 +37,29 @@ var pointsSpentStore = Reflux.createStore({
 
     },
 
-    onSpendPoints: function (chartId, chartName, pointEarnerId, tasks) {
-        var chartData = {
-            Name: chartName,
-            PointEarnerId: pointEarnerId,
-            Tasks: tasks
+    onSpendPoints: function (pointEarnerId, date, amountSpent, reason) {
+        var spendPointsData = {
+            Date: date,
+            AmountSpent: amountSpent,
+            Reason: reason
         };
 
         jQuery.ajax({
             method: "PUT",
-            url: "/api/Chart/" + chartId,
-            data: JSON.stringify(chartData),
+            url: "/api/PointEarner/" + pointEarnerId + '/Points',
+            data: JSON.stringify(spendPointsData),
             contentType: "application/json; charset=utf-8",
             success: function (restData) {
                 console.log(restData);
-                this.onGetAllTasks();
+                this.pointsDetail = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
+
+        this.trigger((this.pointsDetail || {}));
+        return this.pointsDetail;
     }
 });
 
