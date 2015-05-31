@@ -521,6 +521,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="package.json" />
+    <None Include="Properties\PublishProfiles\PointChart.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />
