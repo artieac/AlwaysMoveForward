@@ -15,10 +15,13 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -30,37 +33,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         private const string GuestUserName = "guest";
         private static AnotherBlogUser guestUser = null;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base()
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IOAuthRepository oauthRepository) : base()
         {
             this.UnitOfWork = unitOfWork;
             this.UserRepository = userRepository;
+            this.OAuthRepository = oauthRepository;
         }
 
         protected IUnitOfWork UnitOfWork { get; private set; }
 
         protected IUserRepository UserRepository { get; private set; }
 
-        public bool IsValidEmail(string emailString)
-        {
-            return Regex.IsMatch(emailString, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
-        }
+        protected IOAuthRepository OAuthRepository { get; private set; }
 
-        public AnotherBlogUser Login(string userName, string password)
-        {
-            AnotherBlogUser retVal = this.UserRepository.GetByUserNameAndPassword(userName, AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password));
-
-            if (retVal != null)
-            {
-                if (retVal.IsActive == false)
-                {
-                    retVal = null;
-                }
-            }
-
-            return retVal;
-        }
-
-        public AnotherBlogUser Save(string userName, string password, string email, int userId, bool isSiteAdmin, bool isApprovedCommenter, bool isActive, string userAbout, string displayName)
+        public AnotherBlogUser Save(long userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
             AnotherBlogUser userToSave = null;
 
@@ -74,11 +60,8 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 userToSave = new AnotherBlogUser();
             }
 
-            userToSave.UserName = userName;
             userToSave.IsSiteAdministrator = isSiteAdmin;
             userToSave.ApprovedCommenter = isApprovedCommenter;
-            userToSave.IsActive = isActive;
-            userToSave.DisplayName = displayName;
 
             if (userAbout != null)
             {
@@ -89,17 +72,19 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 userToSave.About = string.Empty;
             }
 
-            if (password != string.Empty)
-            {
-                userToSave.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(password);
-            }
-
-            userToSave.Email = email;
-
             return this.UserRepository.Save(userToSave);
         }
 
-        public void Delete(int userId)
+        public AnotherBlogUser Save(AnotherBlogUser user)
+        {
+            if(user != null)
+            {
+                user = this.UserRepository.Save(user);
+            }
+
+            return user;
+        }
+        public void Delete(long userId)
         {
             AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
 
@@ -113,36 +98,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        public void SendPassword(string userEmail, EmailConfiguration emailConfig)
-        {
-            AnotherBlogUser changePasswordUser = this.UserRepository.GetByEmail(userEmail);
-
-            string emailBody = "A user was not found with that email address.  Please try again.";
-
-            if (changePasswordUser != null)
-            {
-                string newPassword = AnotherBlogUser.GenerateNewPassword();
-
-                emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-                changePasswordUser.Password = AlwaysMoveForward.Common.Encryption.MD5HashHelper.HashString(newPassword);
-
-                this.UserRepository.Save(changePasswordUser);
-            }
-
-            EmailManager emailManager = new EmailManager(emailConfig);
-            emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
-        }
-
-        public AnotherBlogUser GetByEmail(string userEmail)
-        {
-            return this.UserRepository.GetByEmail(userEmail);
-        }
-
         public AnotherBlogUser GetDefaultUser()
         {
             if (UserService.guestUser == null)
             {
-                UserService.guestUser = this.UserRepository.GetByUserName(UserService.GuestUserName);
+                UserService.guestUser = new AnotherBlogUser();
+                guestUser.ApprovedCommenter = false;
+                guestUser.IsSiteAdministrator = false;
+                guestUser.Roles = new Dictionary<int, RoleType.Id>();
             }
 
             return UserService.guestUser;
@@ -153,12 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.GetAll();
         }
 
-        public AnotherBlogUser GetByUserName(string userName)
-        {
-            return this.UserRepository.GetByUserName(userName);
-        }
-
-        public AnotherBlogUser GetById(int userId)
+        public AnotherBlogUser GetById(long userId)
         {
             return this.UserRepository.GetById(userId);
         }      
@@ -168,7 +126,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
         }
 
-        public AnotherBlogUser AddBlogRole(int userId, int blogId, RoleType.Id roleId)
+        public AnotherBlogUser AddBlogRole(long userId, int blogId, RoleType.Id roleId)
         {
             AnotherBlogUser retVal = null;
 
@@ -196,7 +154,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public AnotherBlogUser RemoveBlogRole(int userId, int blogId)
+        public AnotherBlogUser RemoveBlogRole(long userId, int blogId)
         {
             AnotherBlogUser retVal = null;
 
@@ -224,5 +182,37 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
+        public AnotherBlogUser GetFromAMFUser(IOAuthToken accessToken)
+        {
+            AnotherBlogUser retVal = null;
+
+            AlwaysMoveForward.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
+
+            if (amfUser != null)
+            {
+                retVal = this.UserRepository.GetByOAuthServiceUserId(amfUser.Id);
+
+                if (retVal == null)
+                {
+                    retVal = new AnotherBlogUser();
+                    retVal.OAuthServiceUserId = amfUser.Id;
+                    retVal.FirstName = amfUser.FirstName;
+                    retVal.LastName = amfUser.LastName;
+                    retVal.IsSiteAdministrator = false;
+                    retVal.ApprovedCommenter = false;
+                }
+
+                retVal.AccessToken = accessToken.Token;
+                retVal.AccessTokenSecret = accessToken.Secret;
+                retVal = this.UserRepository.Save(retVal);
+            }
+
+            return retVal;
+        }
+
+        public User GetAMFUserInfo(IOAuthToken oauthToken)
+        {
+            return this.OAuthRepository.GetUserInfo(oauthToken);
+        }
     }
 }

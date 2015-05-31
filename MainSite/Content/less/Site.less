@@ -1,0 +1,168 @@
+﻿@import "ThemeDefaults.less";
+
+body
+{
+	font-family:Arial, Tahoma, Verdana, Sans-Serif;
+	font-size:medium;
+    color:@foreGroundColor;
+}
+
+.subBody
+{
+	width:80%;
+	margin-left:10%;	
+}
+
+.label{
+    width:100px;
+    font-size:medium;
+    color:@foreGroundColor;
+    text-align:right;
+    display:inline-block;
+}
+
+.wideLabel
+{
+    .label;
+    width:200px;
+}
+
+.header
+{
+	 display:block;
+	 height:300px;
+     width:100%;
+}
+
+@metaContentBackgroundColor: @alternateBackgroundColor;
+@metaContentTextColor: @alternateTextColor;
+@metaContentTitleColor: @alternateTitleColor;
+@metaContentBorderColor: @alternateBorderColor;
+
+.introText {
+    font-size:medium;
+    color:black;
+}
+
+.spacedColumnContainer {
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+	padding-top:10px;
+	padding-bottom:10px;
+
+    .spacedColumn
+    {
+        vertical-align: top;
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+	    text-align:center;
+
+        .textSection
+        {
+	        padding-top:10px;
+	        padding-bottom:10px;
+            text-align:center;	
+            width:150px;
+
+            h3
+            {
+		        font-size:medium;
+                font-weight:bold;
+            }
+
+            .textDetail
+	        {
+		        font-size:small;
+                text-align:center;
+                color:black;	
+	        }
+        }
+
+        .btn-circle
+        {
+            font-size:medium;       
+            height:150px;
+            width:150px;
+            background-color:@alternateforeGroundColor;
+            color:@foreGroundColor;
+        }
+
+        .btn-circle:hover, .btn-circle:focus, .btn-circle:active, .btn-circle.active, .open>.dropdown-toggle.btn-circle {
+            color: @alternateforeGroundColor;
+            background-color: @foreGroundColor;
+            border-color: @alternateforeGroundColor; /*set the color you want here*/
+        }
+    }
+    
+    .stretch { width: 100%; display: inline-block; font-size: 0; line-height: 0;}
+}
+
+.mainContentPanel
+{
+	text-align:center;
+	width:80%;
+    margin-left:10%;
+	height:100%;
+
+	.bodyContainer
+	{
+		display:block;
+	
+		.bodyContent
+		{
+			width:100%;
+		
+			.contentPageTitle
+			{
+				font-size:larger;
+				color:@foreGroundColor;
+				text-align:center;
+			}
+		}
+	}
+}
+
+/* 3 FOOTER */
+
+.footer 
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 75px;
+	text-align: left;
+	font-size: 10px;
+
+	.footerCopyright
+	{
+		float:left;
+		width:30%;
+		text-align:left;
+	}
+
+	.footerAbout
+	{
+		float:right;
+		width:30%;
+		text-align:right;
+	}
+}
+
+.aboutContent
+{
+    text-align:left;
+    font-size:small;
+    color:black;
+}
+
+.errorMessage
+{
+	color:Red;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+

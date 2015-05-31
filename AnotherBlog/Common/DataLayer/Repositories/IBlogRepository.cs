@@ -22,6 +22,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
     {
         Blog GetByName(string name);
         Blog GetBySubFolder(string subFolder);
-        IList<Blog> GetByUserId(int userId);
+        IList<Blog> GetByUserId(long userId);
     }
 }

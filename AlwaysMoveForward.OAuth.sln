@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Common", "OAuth\Common\AlwaysMoveForward.OAuth.Common.csproj", "{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevDefined.OAuth", "OAuth\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj", "{61B700B6-3911-4CEF-8751-7F42CA765068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{600387A0-6903-47FD-AA6C-9ADF4CFE491E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common.DataLayer.NHibernate", "Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj", "{F9803443-3ED7-4FB4-B758-5D3419983163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.DataLayer", "OAuth\DataLayer\AlwaysMoveForward.OAuth.DataLayer.csproj", "{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.BusinessLayer", "OAuth\BusinessLayer\AlwaysMoveForward.OAuth.BusinessLayer.csproj", "{121FB691-35D7-4AD4-980D-0D7D823A6C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.UnitTests", "OAuth\UnitTests\AlwaysMoveForward.OAuth.UnitTests.csproj", "{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client", "OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj", "{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Client.RestSharp", "OAuth\Client.RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj", "{28E86E9B-61AE-4720-AE00-AEAE7F739971}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth.Web", "OAuth\Web\AlwaysMoveForward.OAuth.Web.csproj", "{007DC392-854B-4822-926A-74E21E5B062E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C678EF-E731-41AD-8F3F-841F5E20B0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B700B6-3911-4CEF-8751-7F42CA765068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B700B6-3911-4CEF-8751-7F42CA765068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B700B6-3911-4CEF-8751-7F42CA765068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF9E6BA-FE69-4BD8-8F7B-8B1F36AEEB55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121FB691-35D7-4AD4-980D-0D7D823A6C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E413AB6-B470-4E01-BFA8-CB81ABC059CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05CD4FE-F0C1-4F5D-8002-37F2FDB49538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E86E9B-61AE-4720-AE00-AEAE7F739971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007DC392-854B-4822-926A-74E21E5B062E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007DC392-854B-4822-926A-74E21E5B062E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007DC392-854B-4822-926A-74E21E5B062E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007DC392-854B-4822-926A-74E21E5B062E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

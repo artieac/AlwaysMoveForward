@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 

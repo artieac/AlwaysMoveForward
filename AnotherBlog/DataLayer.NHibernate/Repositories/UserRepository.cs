@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
     /// This class contains all the code to extract AnotherBlogUser data from the repository using LINQ
     /// </summary>
     /// <param name="dataContext"></param>
-    public class UserRepository : NHibernateRepositoryBase<AnotherBlogUser, UserDTO, int>, IUserRepository
+    public class UserRepository : NHibernateRepository<AnotherBlogUser, UserDTO, long>, IUserRepository
     {
         public UserRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -39,10 +39,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override UserDTO GetDTOById(AnotherBlogUser domainInstance)
         {
-            return this.GetDTOById(domainInstance.UserId);
+            return this.GetDTOById(domainInstance.Id);
         }
 
-        protected override UserDTO GetDTOById(int idSource)
+        protected override UserDTO GetDTOById(long idSource)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.Add(Expression.Eq("UserId", idSource));
@@ -53,41 +53,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             return new UserDataMap(); 
         }
-
-        /// <summary>
-        /// Get a specific by their user name.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public AnotherBlogUser GetByUserName(string userName)
-        {
-            return this.GetByProperty("UserName", userName);
-        }
-        /// <summary>
-        /// This method is used by the login.  If no match is found then something doesn't jibe in the login attempt.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public AnotherBlogUser GetByUserNameAndPassword(string userName, string password)
-        {
-            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
-            criteria.Add(Expression.Eq("UserName", userName));
-            criteria.Add(Expression.Eq("Password", password));
-
-            return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
-        }
-
-        /// <summary>
-        /// Get a specific user by email
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns></returns>
-        public AnotherBlogUser GetByEmail(string userEmail)
-        {
-            return this.GetByProperty("Email", userEmail);
-        }
-
+     
         /// <summary>
         /// Get all users that have the Administrator or Blogger role for the specific blog.
         /// </summary>
@@ -99,6 +65,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.CreateCriteria("UserBlogs")
                 .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
             return this.GetDataMapper().Map(criteria.List<UserDTO>());
+        }
+
+        public AnotherBlogUser GetByOAuthServiceUserId(long userId)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
+            criteria.Add(Expression.Eq("OAuthServiceUserId", userId));
+            return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
         }
     }
 }

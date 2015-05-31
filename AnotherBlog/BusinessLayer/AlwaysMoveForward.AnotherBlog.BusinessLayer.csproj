@@ -70,6 +70,7 @@
     <Compile Include="Service\BlogService.cs" />
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="Service\ServiceManagerBuilder.cs" />
+    <Compile Include="Service\SiteInfoService.cs" />
     <Compile Include="Service\UploadedFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -100,6 +101,14 @@
     <ProjectReference Include="..\..\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
       <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
       <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Client.RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj">
       <Project>{ee543152-b86a-43f0-974f-aa97dd094bff}</Project>

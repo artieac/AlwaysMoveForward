@@ -29,7 +29,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class PollRepository : NHibernateRepositoryBase<PollQuestion, PollQuestionDTO, int>, IPollRepository
+    public class PollRepository : NHibernateRepository<PollQuestion, PollQuestionDTO, int>, IPollRepository
     {
         public PollRepository(UnitOfWork unitOfWork)
             : base(unitOfWork)

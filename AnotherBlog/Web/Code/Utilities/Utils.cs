@@ -46,19 +46,18 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (MvcApplication.WebSiteConfiguration.EnableSSL == true)
             {
-                retVal = "http://" + siteAuthority;
-
-                if (!string.IsNullOrEmpty(blogSubFolder))
-                {
-                    retVal += "/" + blogSubFolder;
-                }
+                retVal = "https://" + siteAuthority;
             }
             else
             {
-                if (!string.IsNullOrEmpty(blogSubFolder))
-                {
-                    retVal = "/" + blogSubFolder;
-                }
+                retVal = "http://";
+            }
+
+            retVal += siteAuthority;
+
+            if (!string.IsNullOrEmpty(blogSubFolder))
+            {
+                retVal += "/" + blogSubFolder;
             }
 
             if (!targetUrl.StartsWith("/"))

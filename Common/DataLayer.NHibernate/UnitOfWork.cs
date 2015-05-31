@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Reflection;
-
 using NHibernate;
 using NHC = NHibernate.Cfg;
-
-using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
@@ -32,44 +30,9 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         }
 
         /// <summary>
-        /// A reference to the nhibernate configuration
-        /// </summary>
-        private NHC.Configuration nhibernateConfig;
-
-        /// <summary>
-        /// Gets the current instance of the NHibernate configuration.  It will allocate it if one doesn't already exist
-        /// </summary>
-        protected NHC.Configuration NHibernateConfiguration
-        {
-            get
-            {
-                if (this.nhibernateConfig == null)
-                {
-                    this.nhibernateConfig = new NHC.Configuration();
-
-                    if (!string.IsNullOrEmpty(this.ConnectionString))
-                    {
-                        IDictionary<string, string> properties = new Dictionary<string, string>();
-                        properties.Add(ConfigurationProperties.ConnectionString, this.ConnectionString);
-                        this.nhibernateConfig.SetProperties(properties);
-                    }
-
-                    this.nhibernateConfig.Configure();
-                }
-
-                return this.nhibernateConfig;
-            }
-        }
-
-        /// <summary>
         /// The passed in connection string (if one was passed in)
         /// </summary>
         protected string ConnectionString { get; set; }
-
-        /// <summary>
-        /// An NHibernate session factory
-        /// </summary>
-        private ISessionFactory sessionFactory;
 
         /// <summary>
         /// The current NHibernate session
@@ -77,18 +40,11 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         private ISession currentSession;
 
         /// <summary>
-        /// Gets an instance of session factory based on the nhibernate configuration
+        /// Gets the current configuration instance.
         /// </summary>
-        private ISessionFactory SessionFactory
+        public NHC.Configuration NHibernateConfiguration
         {
-            get
-            {
-                if (sessionFactory == null)
-                {
-                    sessionFactory = this.NHibernateConfiguration.BuildSessionFactory();
-                }
-                return sessionFactory;
-            }
+            get { return NHibernateSessionFactory.GetConfiguration(this.ConnectionString); }
         }
 
         /// <summary>
@@ -114,7 +70,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// </summary>
         private void StartSession()
         {
-            this.currentSession = this.SessionFactory.OpenSession(); ;
+            this.currentSession = NHibernateSessionFactory.BuildSessionFactory(this.ConnectionString).OpenSession(); ;
         }
 
         /// <summary>
@@ -125,9 +81,9 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
             if (this.currentSession != null)
             {
                 this.currentSession.Dispose();
-                this.currentSession = null;
             }
         }
+
 
         /// <summary>
         /// Begins a transaction with a default isolation level

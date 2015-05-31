@@ -27,24 +27,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.UserId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Type = "Int32", Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Column = "UserId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int UserId { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual string UserName { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual string Password { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual string Email { get; set; }
+        public virtual long UserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool ApprovedCommenter { get; set; }
-
-        [NHibernate.Mapping.Attributes.Property]
-        public virtual bool IsActive { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool IsSiteAdministrator { get; set; }
@@ -53,7 +41,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual string DisplayName { get; set; }
+        public virtual long OAuthServiceUserId { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string FirstName { get; set; }
+        
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string LastName { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string AccessToken { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string AccessTokenSecret { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogUsers", Cascade = "All-Delete-Orphan", Inverse = true)]
         [NHibernate.Mapping.Attributes.Key(1, Column = "UserId")]

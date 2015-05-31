@@ -1,0 +1,27 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.TaskModel
+@using AlwaysMoveForward.PointChart.Common.DomainModel;           
+@{
+    ViewBag.Title = "Charts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+
+}
+<form id="addTaskForm" action="/Task/Add" method="post">
+    <input type="hidden" name="addTaskName" id="addTaskName" value="" />
+    <input type="hidden" id="addTaskPoints" name="addTaskPoints" />
+    <input type="hidden" id="addTaskMaxPerDay" name="addTaskMaxPerDay" />
+</form>
+<form id="editTaskForm" action="/Task/Edit" method="post">
+    <input type="hidden" id="editTaskId" name="editTaskId" value="" />
+    <input type="hidden" name="editTaskName" id="editTaskName" value="" />
+    <input type="hidden" id="editTaskPoints" name="editTaskPoints" />
+    <input type="hidden" id="editTaskMaxPerDay" name="editTaskMaxPerDay" />
+</form>
+<div id="taskPageReactContent"></div>
+<script src="@Url.Content("~/Scripts/dist/TaskPageApp.js")" type="text/javascript"></script>
+
+
+

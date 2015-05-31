@@ -31,7 +31,5 @@ namespace AlwaysMoveForward.Common.DataLayer
         TDomainType Save(TDomainType itemToSave);
         
         bool Delete(TDomainType itemToDelete);
-        
-        bool DeleteDependencies(TDomainType parentItem);
     }
 }

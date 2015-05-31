@@ -1,0 +1,18 @@
+﻿@model AlwaysMoveForward.PointChart.Web.Models.UI.CollectPointsModel
+@{
+    ViewBag.Title = "Collect Points";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerPlugins
+{
+    <link href="@Url.Content("~/Content/css/Calendar.css")" rel="stylesheet" type="text/css" />
+}
+
+<div id="collectPointsReactContent"></div>
+<script type="text/javascript">
+    var chartIdentifer = '@Model.ChartId';
+    var targetDate = new Date(@Model.SelectedDate.Year, @Model.SelectedDate.Month - 1, @Model.SelectedDate.Day);
+    var pointEarnerId = @Model.PointEarnerId;
+</script>
+<script src="@Url.Content("~/Scripts/dist/CollectPointsApp.js")" type="text/javascript"></script>

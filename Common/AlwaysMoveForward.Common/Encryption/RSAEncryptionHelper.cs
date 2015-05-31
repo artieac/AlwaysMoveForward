@@ -1,21 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AlwaysMoveForward.Common.Encryption
 {
+    /// <summary>
+    /// RSA Encryption Help Class
+    /// </summary>
     public class RSAEncryptionHelper
     {
-        private const int RSAKeySize = 2048;
-      
+        /// <summary>
+        /// The default RSA Key Size
+        /// </summary>
+        public const int DEFAULT_KEY_SIZE = 2048;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public RSAEncryptionHelper() : this(DEFAULT_KEY_SIZE) { }
+        
+        /// <summary>
+        /// A constructor that takes a key size as a parameter.
+        /// </summary>
+        /// <param name="rsaKeySize">The size of the RSA key to use when encrypting/decrypting</param>
+        public RSAEncryptionHelper(int rsaKeySize)
+        {
+            this.KeySize = rsaKeySize;
+        }
+        
+        /// <summary>
+        /// Gets the size of the RSA key to use when encrypting/decrypting
+        /// </summary>
+        public int KeySize { get; private set; }
+        
+        /// <summary>
+        /// Encrypt some plain text
+        /// </summary>
+        /// <param name="plainData">plaintext string</param>
+        /// <param name="certificate">encryption certificate</param>
+        /// <returns>encrypted string</returns>
         public string Encrypt(string plainData, X509Certificate2 certificate)
         {
             return this.Encrypt(plainData, false, certificate);
         }
 
+        /// <summary>
+        /// Encrypt some plain text with optional padding
+        /// </summary>
+        /// <param name="plainData">plaintext string</param>
+        /// <param name="useOAEPPadding">use OAEP Padding</param>
+        /// <param name="certificate">encryption certificate</param>
+        /// <returns>encrypted string</returns>
         public string Encrypt(string plainData, bool useOAEPPadding, X509Certificate2 certificate)
         {
             string retVal = string.Empty;
@@ -30,31 +65,52 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Encrypt(byte[] plainData, bool useOAEPPadding, X509Certificate2 certificate)
+        /// <summary>
+        /// Encrypt some plaintext byte array using padding
+        /// </summary>
+        /// <param name="plainData">Plaintext byte array</param>
+        /// <param name="useOAEP">Use OAEP Padding</param>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>encrypted byte array</returns>
+        public byte[] Encrypt(byte[] plainData, bool useOAEP, X509Certificate2 certificate)
         {
             if (plainData == null)
             {
                 throw new ArgumentNullException("plainData");
             }
+
             if (certificate == null)
             {
                 throw new ArgumentNullException("certificate");
             }
 
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RSAKeySize))
+            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(this.KeySize))
             {
                 // Note that we use the public key to encrypt
                 provider.FromXmlString(this.GetPublicKey(certificate));
 
-                return provider.Encrypt(plainData, useOAEPPadding);
+                return provider.Encrypt(plainData, useOAEP);
             }
         }
 
+        /// <summary>
+        /// Decrypt an encrypted string with a certificate
+        /// </summary>
+        /// <param name="encryptedData">Encrypted string</param>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>Decrypted string</returns>
         public string Decrypt(string encryptedData, X509Certificate2 certificate)
         {
             return this.Decrypt(encryptedData, false, certificate);
         }
 
+        /// <summary>
+        /// Decrypt an encrypted string with padding and a certificate 
+        /// </summary>
+        /// <param name="encryptedData">Encrypted string</param>
+        /// <param name="useOAEPPadding">Use OAEP Padding</param>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>Decrypted string</returns>
         public string Decrypt(string encryptedData, bool useOAEPPadding, X509Certificate2 certificate)
         {
             string retVal = string.Empty;
@@ -69,26 +125,39 @@ namespace AlwaysMoveForward.Common.Encryption
             return retVal;
         }
 
-        public byte[] Decrypt(byte[] encryptedData, bool useOEAPPadding, X509Certificate2 certificate)
+        /// <summary>
+        /// Decrypt given a byte array, padding and a certificate
+        /// </summary>
+        /// <param name="encryptedData">Encrypted byte array</param>
+        /// <param name="useOAEP">Use OAEP Padding</param>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>Decrypted byte array</returns>
+        public byte[] Decrypt(byte[] encryptedData, bool useOAEP, X509Certificate2 certificate)
         {
             if (encryptedData == null)
             {
                 throw new ArgumentNullException("encryptedData");
             }
+
             if (certificate == null)
             {
                 throw new ArgumentNullException("certificate");
             }
 
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RSAKeySize))
+            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(this.KeySize))
             {
                 // Note that we use the private key to decrypt
                 provider.FromXmlString(this.GetXmlKeyPair(certificate));
 
-                return provider.Decrypt(encryptedData, useOEAPPadding);
+                return provider.Decrypt(encryptedData, useOAEP);
             }
         }
 
+        /// <summary>
+        /// Get the public key given a certificate
+        /// </summary>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>The public key</returns>
         public string GetPublicKey(X509Certificate2 certificate)
         {
             if (certificate == null)
@@ -99,6 +168,11 @@ namespace AlwaysMoveForward.Common.Encryption
             return certificate.PublicKey.Key.ToXmlString(false);
         }
 
+        /// <summary>
+        /// Get an XML key pair given a certificate
+        /// </summary>
+        /// <param name="certificate">Encryption Certificate</param>
+        /// <returns>XML Key Pair</returns>
         public string GetXmlKeyPair(X509Certificate2 certificate)
         {
             if (certificate == null)

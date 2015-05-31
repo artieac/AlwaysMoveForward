@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.Common.Encryption
 {
     public class KeyFileEncryptionConfiguration : ConfigurationSection
     {
-        public const string DefaultSection = "Vistaprint/Digital/KeyFileEncryptionConfiguration";
+        public const string DefaultSection = "AlwaysMoveForward/KeyFileEncryptionConfiguration";
 
         public const string EncryptionKeyFileSetting = "KeyFile";
         public const string KeyFilePasswordSetting = "KeyFilePassword";

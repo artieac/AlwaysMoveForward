@@ -1,0 +1,62 @@
+﻿@import "ThemeDefaults.less";
+
+.tabControl
+{
+	height: 50px;
+    width: 100%;
+	background-color: @foreGroundColor;
+	color: @foreGroundTextColor;
+	
+	ul
+	{
+		.ulDefaults;
+		height:100%;
+		list-style: none;
+		font-size: small;   
+		display: table; 
+
+		.tabItem
+		{
+			height:100%;
+			padding: 0 1em 0 1em;
+			display:table-cell;
+			color:@foreGroundTextColor;
+			background-color: @foreGroundColor;
+			vertical-align:middle;
+		
+			.unselectedLink
+			{
+				text-decoration:none;
+				color:@foreGroundTextColor;
+			}
+
+			a{	.unselectedLink } 
+			a:selected{	.unselectedLink } 
+			a:visited{	.unselectedLink } 
+		}
+
+		.selectedTabItem 
+		{
+			height:100%;
+			padding: 0 1em 0 1em;
+			display:table-cell;
+			background-color:@mainBackgroundColor;
+			color: @foreGroundTextColor;
+			vertical-align:middle;
+			border-style:solid;
+			border-width: thin;
+			border-color: @foreGroundColor;
+				
+			.selectedLink
+			{
+ 				text-decoration:none;
+				color: @foreGroundColor;
+			}
+
+			a{	.selectedLink } 
+			a:selected{	.selectedLink } 
+			a:visited{	.selectedLink } 
+		}
+	}
+}
+

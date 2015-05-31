@@ -17,11 +17,10 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IUserRepository : IRepository<AnotherBlogUser, int>
+    public interface IUserRepository : IRepository<AnotherBlogUser, long>
     {
-        AnotherBlogUser GetByUserName(string userName);
-        AnotherBlogUser GetByUserNameAndPassword(string userName, string password);
-        AnotherBlogUser GetByEmail(string userEmail);
         IList<AnotherBlogUser> GetBlogWriters(int blogId);
+
+        AnotherBlogUser GetByOAuthServiceUserId(long userId);
     }
 }

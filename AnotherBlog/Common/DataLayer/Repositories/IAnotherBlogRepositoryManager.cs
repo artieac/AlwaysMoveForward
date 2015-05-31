@@ -13,16 +13,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IAnotherBlogRepositoryManager : IRepositoryManager
+    public interface IAnotherBlogRepositoryManager
     {
+        IDbInfoRepository DbInfo { get; }
+        ISiteInfoRepository SiteInfo { get; }
         IBlogEntryRepository BlogEntries { get; }
         IBlogRepository Blogs { get; }
         ITagRepository Tags { get; }

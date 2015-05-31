@@ -12,22 +12,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer.Repositories;
+using AlwaysMoveForward.Common.Business;
+using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using CommonBusiness = AlwaysMoveForward.Common.Business;
+using AlwaysMoveForward.AnotherBlog.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
-    public class ServiceManager : CommonBusiness.ServiceManager
+    public class ServiceManager
     {
-        public new IAnotherBlogRepositoryManager RepositoryManager { get { return base.RepositoryManager as IAnotherBlogRepositoryManager; } }
+        public ServiceManager(
+            UnitOfWork unitOfWork, 
+            IAnotherBlogRepositoryManager repositoryManager, 
+            OAuthClientBase oauthClient)
+        {
+            this.UnitOfWork = unitOfWork;
+            this.RepositoryManager = repositoryManager;
+            this.OAuthClient = oauthClient;
+        }
 
-        public ServiceManager(IUnitOfWork unitOfWork, IAnotherBlogRepositoryManager repositoryManager) : base(new CommonBusiness.ServiceContext(unitOfWork, repositoryManager)) { }
+        public UnitOfWork UnitOfWork { get; set; }
+
+        public IAnotherBlogRepositoryManager RepositoryManager { get; set; }
+
+        public OAuthClientBase OAuthClient { get; private set; }
+
+        private SiteInfoService siteInfo;
+        public SiteInfoService SiteInfoService
+        {
+            get
+            {
+                if (this.siteInfo == null)
+                {
+                    this.siteInfo = new SiteInfoService(this.UnitOfWork, this.RepositoryManager.SiteInfo);
+                }
+
+                return this.siteInfo;
+            }
+        }
 
         private BlogEntryService blogEntryService;
         public BlogEntryService BlogEntryService
@@ -106,21 +132,21 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository);
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository,  new OAuthRepository(this.OAuthClient));
                 }
 
                 return this.userService;
             }
         }
 
-        private CommonBusiness.PollService pollService;
-        public CommonBusiness.PollService PollService
+        private PollService pollService;
+        public PollService PollService
         {
             get
             {
                 if (this.pollService == null)
                 {
-                    this.pollService = new CommonBusiness.PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
+                    this.pollService = new PollService(this.UnitOfWork, this.RepositoryManager.PollRepository);
                 }
 
                 return this.pollService;

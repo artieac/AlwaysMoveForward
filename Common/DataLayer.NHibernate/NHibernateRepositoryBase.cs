@@ -1,29 +1,20 @@
-﻿/**
- * Copyright (c) 2009 Arthur Correa.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Common Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.opensource.org/licenses/cpl1.0.php
- *
- * Contributors:
- *    Arthur Correa – initial contribution
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-
-using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
-    public abstract class NHibernateRepositoryBase<TDomainType, TDTOType, TIdType> : RepositoryBase<UnitOfWork, TDomainType, TDTOType, TIdType>, IRepository<TDomainType, TIdType> 
+    /// <summary>
+    /// A base class for an NHibernate repository that implements some common methods
+    /// </summary>
+    /// <typeparam name="TDomainType">The domain type to return</typeparam>
+    /// <typeparam name="TDTOType">The dto type to use for querying</typeparam>
+    public abstract class NHibernateRepository<TDomainType, TDTOType, TIdType>
         where TDomainType : class, new()
         where TDTOType : class, new()
     {
@@ -31,7 +22,45 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// The default constructor that takes the current unit of work as a parameter
         /// </summary>
         /// <param name="unitOfWork">The current unit of work</param>
-        protected NHibernateRepositoryBase(UnitOfWork unitOfWork) : base(unitOfWork) { }
+        protected NHibernateRepository(UnitOfWork unitOfWork)
+        {
+            this.UnitOfWork = unitOfWork;
+        }
+
+        /// <summary>
+        /// Gets the current unit of work
+        /// </summary>
+        public UnitOfWork UnitOfWork { get; private set; }
+
+        /// <summary>
+        /// Gets the associated DataMapper.  This allows for common functionality to be implemented in this base class
+        /// </summary>
+        /// <returns>An instance of the appropriate DataMapper</returns>
+        protected abstract DataMapBase<TDomainType, TDTOType> GetDataMapper();
+
+        /// <summary>
+        /// Get an instance of the dto by its database id (which is domain type specfic, so this is abstract)
+        /// </summary>
+        /// <param name="domainInstance">A domain object instance</param>
+        /// <returns>An instance of the DTO type</returns>
+        protected abstract TDTOType GetDTOById(TDomainType domainInstance);
+
+        /// <summary>
+        /// Gets an instance of the DTO object based upon the domain object.  This allows for common functionality to be implemented in this base class
+        /// </summary>
+        /// <param name="idSource">An instance of the related Domain type</param>
+        /// <returns>An instance of the DTO object</returns>
+        protected abstract TDTOType GetDTOById(TIdType idSource);
+
+        /// <summary>
+        /// Gets an instance of the Domain object based upon the specific id object
+        /// </summary>
+        /// <param name="idValue">The id object instance</param>
+        /// <returns>A Domain object instance</returns>
+        public TDomainType GetById(TIdType idValue)
+        {
+            return this.GetDataMapper().Map(this.GetDTOById(idValue));
+        }
 
         /// <summary>
         /// Get a Domain instance by a specific property and value
@@ -39,7 +68,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <param name="idPropertyName">The property name</param>
         /// <param name="idValue">The value to search for</param>
         /// <returns>A domain object instance</returns>
-        public override TDomainType GetByProperty(string idPropertyName, object idValue)
+        public TDomainType GetByProperty(string idPropertyName, object idValue)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
@@ -51,7 +80,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// Get all instances found in the database
         /// </summary>
         /// <returns>A list of domain objects</returns>
-        public override IList<TDomainType> GetAll()
+        public IList<TDomainType> GetAll()
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
             return this.GetDataMapper().Map(criteria.List<TDTOType>());
@@ -63,7 +92,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <param name="idPropertyName">The name of the property</param>
         /// <param name="idValue">The value of the property</param>
         /// <returns>A list of domain objects</returns>
-        public override IList<TDomainType> GetAllByProperty(string idPropertyName, object idValue)
+        public IList<TDomainType> GetAllByProperty(string idPropertyName, object idValue)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
@@ -95,7 +124,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// </summary>
         /// <param name="itemToSave">The item values to save</param>
         /// <returns>The saved domain object</returns>
-        public override TDomainType Save(TDomainType itemToSave)
+        public virtual TDomainType Save(TDomainType itemToSave)
         {
             if (itemToSave != null)
             {
@@ -126,7 +155,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// Remove the object from the data store
         /// </summary>
         /// <param name="itemToDelete">The object to delete</param>
-        public override bool Delete(TDomainType itemToDelete)
+        public virtual bool Delete(TDomainType itemToDelete)
         {
             bool retVal = false;
 

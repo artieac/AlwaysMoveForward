@@ -6,8 +6,13 @@ using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
-    public class AnotherBlogUser : User
+    public class AnotherBlogUser : RemoteOAuthUser
     {
+        public AnotherBlogUser() : base()
+        {
+
+        }
+
         public bool ApprovedCommenter { get; set; }
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }
