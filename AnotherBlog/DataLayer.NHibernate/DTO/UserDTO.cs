@@ -27,9 +27,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.UserId = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Type = "Int32", Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Column = "UserId", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int UserId { get; set; }
+        public virtual long UserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool ApprovedCommenter { get; set; }

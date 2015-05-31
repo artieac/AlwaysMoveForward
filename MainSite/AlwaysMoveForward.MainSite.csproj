@@ -126,15 +126,29 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <None Include="Content\ThemeDefaults.less" />
-    <None Include="Content\Site.less" />
-    <None Include="Content\NavBar.less" />
+    <None Include="Content\less\ThemeDefaults.less" />
+    <None Include="Content\less\Site.less" />
+    <None Include="Content\less\NavBar.less" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CarouselModel.cs" />
+    <None Include="package.json" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Code\gulp\config.js" />
+    <None Include="Code\gulp\index.js" />
+    <None Include="Code\gulp\tasks\browserify.js" />
+    <None Include="Code\gulp\tasks\lessCompile.js" />
+    <None Include="Code\gulp\tasks\transform.js" />
+    <None Include="Code\gulp\tasks\uglify.js" />
+    <None Include="Code\gulp\tasks\watch.js" />
+    <None Include="Code\gulp\tasks\watchify.js" />
+    <None Include="Code\gulp\util\bundleLogger.js" />
+    <None Include="Code\gulp\util\handleErrors.js" />
+    <None Include="gulpfile.js" />
+    <Content Include="Content\NavBar.css" />
+    <Content Include="Content\ThemeDefaults.css" />
     <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +224,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\AlwaysMoveForward Main Site.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.9.1-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
