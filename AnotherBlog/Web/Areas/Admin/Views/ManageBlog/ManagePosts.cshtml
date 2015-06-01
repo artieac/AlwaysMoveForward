@@ -44,7 +44,7 @@
                         {
                             <tr>
                                 <td><a href="/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder/@blogPost.Post.EntryId">@blogPost.Post.Title</a></td>
-                                <td>@blogPost.Author.DisplayName</td>
+                                <td>@blogPost.Author.GetDisplayName()</td>
                                 <td>@blogPost.Post.DateCreated</td>
                                 <td>@blogPost.Post.IsPublished</td>
                                 <td>@blogPost.Post.DatePosted</td>
