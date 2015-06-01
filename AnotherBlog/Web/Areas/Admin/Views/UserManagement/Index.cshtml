@@ -26,20 +26,16 @@
         <thead>
             <tr>
                 <th width="20%">User</th>
-                <th width="20%">Display Name</th>
-                <th width="20%">Email</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
         @{
-            foreach (User blogUser in @Model.Users)
+            foreach (AnotherBlogUser blogUser in @Model.Users)
             {   
                 <tr>
-                    <td><a href="/Admin/UserManagement/Edit/@blogUser.UserId.ToString()">@blogUser.UserName</a></td>
-                    <td>@blogUser.DisplayName</td>
-                    <td>@blogUser.Email</td>
-                    <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.UserId.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
+                    <td><a href="/Admin/UserManagement/Edit/@blogUser.Id.ToString()">@blogUser.GetDisplayName()</a></td>
+                    <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.Id.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
                 </tr>
             }
         }

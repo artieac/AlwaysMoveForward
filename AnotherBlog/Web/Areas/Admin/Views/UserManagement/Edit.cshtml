@@ -45,23 +45,11 @@
                     <br />
                 </div>
             }
-            <form id="saveForm" action="/Admin/UserManagement/Edit/@Model.CurrentUser.UserId" method="post">
+            <form id="saveForm" action="/Admin/UserManagement/Edit/@Model.CurrentUser.Id" method="post">
                 <input type="hidden" name="performSave" value="true" />
                 <div>
-                    <span class="wideLabel">user name:</span>
-                    <input type="text" name="userName" id="userName" value="@Model.CurrentUser.UserName" />
-                </div>
-                <div>
-                    <span class="wideLabel">password:</span>
-                    <input type="password" name="password" id="password" />
-                </div>
-                <div>
-                    <span class="wideLabel">email:</span>
-                    <input type="text" name="email" id="email" value="@Model.CurrentUser.Email" />
-                </div>
-                <div>
                     <span class="wideLabel">display name:</span>
-                    <input type="text" name="displayName" id="displayName" value="@Model.CurrentUser.DisplayName" />
+                    <input type="text" name="displayName" id="displayName" value="@Model.CurrentUser.GetDisplayName()" />
                 </div>
                 <div>
                     <span class="wideLabel">site Administrator:</span>
@@ -72,10 +60,6 @@
                     @Html.CheckBox("approvedCommenter", @Model.CurrentUser.ApprovedCommenter)
                 </div>
                 <div>
-                    <span class="wideLabel">active:</span>
-                    @Html.CheckBox("isActive", @Model.CurrentUser.IsActive)
-                </div>
-                <div>
                     <span class="label">about:</span>
                     <textarea id="userAbout" name="userAbout">@Model.CurrentUser.About</textarea>
                 </div>
@@ -84,14 +68,14 @@
             </form>
             <div id="userBlogsContainer" name="userBlogsContainer">
                 <form id="viewUserBlogs" action="/Admin/UserManagement/ManageBlogs" method="post">
-                    <input type="hidden" name="userId" value="@Model.CurrentUser.UserId" />
+                    <input type="hidden" name="userId" value="@Model.CurrentUser.Id" />
                 </form>
                 <script type="text/javascript">
                     ManageUsers.EditUserInitializeUserBlogs();
                 </script>
             </div>
             <form id="userAddBlogForm" action="/Admin/UserManagement/AddBlog" method="post">
-                <input type="hidden" name="userId" value="@Model.CurrentUser.UserId"/>
+                <input type="hidden" name="userId" value="@Model.CurrentUser.Id"/>
                 <label>Grant Access</label>
                 <div>
                     <span class="label">blog:</span>
