@@ -56,7 +56,7 @@ var CollectPointsApp = React.createClass({
         return "/Export/Empty/" + this.state.currentChart.Id + "?fileType=excel";
     },
 
-    getExportCompletedyUrl: function(){
+    getExportCompletedUrl: function(){
         return "/Export/Completed/" + this.state.currentChart.Id + "/" + this.props.selectedDate.getFullYear() + "/" + (this.props.selectedDate.getMonth() + 1) + "/" + (this.props.selectedDate.getDate()) + "?fileType=excel";
     },
 
@@ -70,11 +70,11 @@ var CollectPointsApp = React.createClass({
                             <div className="col-md-2">
                                 <a href={this.getExportEmptyUrl()}><img src="/Content/images/paper_white.png" alt="Export Empty" /></a>
                                 &nbsp;
-                                <a href={this.getExportCompletedyUrl()}><img src="/Content/images/download.png" alt="Download" /></a>
+                                <a href={this.getExportCompletedUrl()}><img src="/Content/images/download.png" alt="Download" /></a>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-12">Point Earner: {this.getPointEarnerName()}</div>
+                            <div className="col-md-8">Point Earner: {this.getPointEarnerName()}</div>
                         </div>
                         <br/>
                         <div className="row">
