@@ -1,5 +1,4 @@
-﻿'use strict'
-/** @jsx React.DOM */
+﻿/** @jsx React.DOM */
 var React = require('react');
 var Reflux = require('reflux');
 var moment = require('moment');
@@ -84,7 +83,7 @@ var CollectPointsApp = React.createClass({
                     </div>
                 </div>
                 <div>
-                    <CollectPointsTable selectedDate={this.getMomentDate()} chartData={this.state.currentChart} />
+                    <CollectPointsTable selectedDate={this.getMomentDate()} chartData={this.state.currentChart} chartId={this.props.chartId}/>
                 </div>
             </div>
         );

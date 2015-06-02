@@ -23,11 +23,10 @@ body {
 }
 .header {
   display: block;
-  height: 50px;
 }
 .header .siteTitle {
   font-size: x-large;
-  color: #ffffff;
+  color: #5493e0;
   font-style: oblique;
   text-decoration: none;
 }
@@ -40,7 +39,7 @@ body {
 .header .loginDiv .loginLabel {
   font-size: small;
   padding-right: 2px;
-  color: #ffffff;
+  color: #5493e0;
 }
 .mainContentPanel {
   text-align: left;

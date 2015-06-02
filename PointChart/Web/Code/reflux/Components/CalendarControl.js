@@ -86,7 +86,7 @@ var CalendarControl = React.createClass({
 
     render: function() {
         return ( 
-            <div class="contentSection">
+            <div className="contentSection">
                 <div className="monthTitle">
                     <span className="changeMonth" onClick={this.previous}> &lt; </span>
                     {this.renderMonthLabel()}

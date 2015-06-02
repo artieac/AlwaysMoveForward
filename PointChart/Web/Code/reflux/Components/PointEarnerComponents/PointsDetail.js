@@ -24,8 +24,7 @@ var PointsDetail = React.createClass({
     },
 
     updatePointsDetail: function (updateMessage) {
-        console.log(JSON.stringify(updateMessage));
-        this.setState({pointsDetail: updateMessage});
+        this.setState({pointsDetail: updateMessage.pointsDetail});
     },
 
     getCurrentChartPointsEarned: function(){
@@ -56,7 +55,7 @@ var PointsDetail = React.createClass({
     render: function(){
         return (
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-9">
                     <div className="row">
                         <div className="col-md-3">Points Earned<br/>(this chart)</div>
                         <div className="col-md-3">Points Earned<br/>(other charts)</div>

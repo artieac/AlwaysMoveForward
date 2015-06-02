@@ -197,7 +197,7 @@ var CollectPointsTable = React.createClass({
     componentDidMount: function () {
         // Add event listeners in componentDidMount
         this.listenTo(completedTaskStore, this.handleGetAllTasks);
-        completedTaskActions.getByChartId(6, this.props.selectedDate.month() + 1, this.props.selectedDate.date(), this.props.selectedDate.year());        
+        completedTaskActions.getByChartId(this.props.chartId, this.props.selectedDate.month() + 1, this.props.selectedDate.date(), this.props.selectedDate.year());        
     },
     
     handleGetAllTasks: function (updateMessage) {
