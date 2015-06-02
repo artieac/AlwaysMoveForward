@@ -59,14 +59,15 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
             {
                 DTO.Chart dtoItem = this.GetDTOById(itemToSave.Id);
 
+                if(dtoItem == null)
+                {
+                    dtoItem = new DTO.Chart();
+                    dtoItem.PointEarner = new DTO.User();
+                    dtoItem.Tasks = new List<DTO.Task>();
+                }
+
                 if (dtoItem != null)
                 {
-                    if(dtoItem.PointEarner.Id != itemToSave.PointEarner.Id)
-                    {
-                        dtoItem.PointEarner = this.UnitOfWork.CurrentSession.Query<DTO.User>()
-                            .Where(p => p.Id == itemToSave.PointEarner.Id).FirstOrDefault();
-                    }
-
                     foreach (Task domainTask in itemToSave.Tasks)
                     {
                         if (dtoItem.Tasks.FirstOrDefault(t => t.Id == domainTask.Id) == null)
@@ -80,10 +81,22 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
                             }
                         }
                     }
+
+                    dtoItem = this.GetDataMapper().Map(itemToSave, dtoItem);
+                    dtoItem.PointEarner = this.UnitOfWork.CurrentSession.Query<DTO.User>()
+                            .Where(p => p.Id == itemToSave.PointEarner.Id).FirstOrDefault();
+
+                    if (dtoItem != null)
+                    {
+                        this.UnitOfWork.CurrentSession.SaveOrUpdate(dtoItem);
+                        this.UnitOfWork.Flush();
+                    }
+
+                    itemToSave = this.GetDataMapper().Map(dtoItem);
                 }
             }
 
-            return base.Save(itemToSave);
+            return itemToSave;
         }
     }
 }

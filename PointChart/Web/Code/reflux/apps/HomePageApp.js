@@ -42,11 +42,11 @@ var HomePageApp = React.createClass({
             <div>
                 <div>
                     <h2>Charts you Created</h2>
-                    <ChartSummaryTable tableData={this.state.chartCreatedCollection}/> 
+                    <ChartSummaryTable tableData={this.state.chartCreatedCollection} showNew={true}/> 
                 </div>
                 <div>
                     <h2>Charts you are assigned to</h2>
-                    <ChartSummaryTable tableData={this.state.chartEarnerCollection}/> 
+                    <ChartSummaryTable tableData={this.state.chartEarnerCollection} showNew={false}/> 
                 </div>
             </div>
         );

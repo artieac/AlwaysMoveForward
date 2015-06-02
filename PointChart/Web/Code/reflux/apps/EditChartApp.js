@@ -47,7 +47,7 @@ var EditChartApp = React.createClass({
     },
 
     handleGetAllPointEarners: function(updateMessage){
-        this.setState({allPointEarners: updateMessage});
+        this.setState({allPointEarners: updateMessage.allPointEarners});
     },
 
     render: function(){

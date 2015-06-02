@@ -26,7 +26,7 @@ var GenericDropDown = React.createClass({
 	render: function() {
 		var selectionText = "";
 
-		if(typeof this.props.selected !== 'undefined'){
+		if(typeof this.props.selected !== 'undefined' && this.props.selected !== null){
 			selectionText = this.props.selected.Name;
 		}
 
