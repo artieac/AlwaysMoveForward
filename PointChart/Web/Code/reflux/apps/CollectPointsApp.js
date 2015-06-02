@@ -77,9 +77,7 @@ var CollectPointsApp = React.createClass({
                             <div className="col-md-8">Point Earner: {this.getPointEarnerName()}</div>
                         </div>
                         <br/>
-                        <div className="row">
-                            <PointsDetail chartId={this.props.chartId} pointEarnerId={this.props.pointEarnerId}/>
-                        </div>
+                        <PointsDetail chartId={this.props.chartId} pointEarnerId={this.props.pointEarnerId}/>
                     </div>
                     <div className="col-md-3">
                         <CalendarControl selected={this.getMomentDate()} chartId={this.props.chartId}/>
