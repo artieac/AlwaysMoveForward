@@ -41,7 +41,7 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         {
             Task retVal = null;
 
-            if (this.TaskRepository.GetByName(taskName) == null)
+            if (this.TaskRepository.GetByName(taskName, currentUser.Id) == null)
             {
                 retVal = new Task();
                 retVal.Name = taskName;

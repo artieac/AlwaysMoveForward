@@ -29,13 +29,18 @@ var ChartSummaryRow = React.createClass({
 
 var ChartSummaryTableBody = React.createClass({
     render: function () {
-        return (
-            <tbody>
-                {this.props.tableBodyData.map(function (currentRow) {
-                    return <ChartSummaryRow key={currentRow.Id} rowData={currentRow}/>
-                    })}
-            </tbody>
-        );
+        if(typeof this.props.tableBodyData !== 'undefined' && this.props.tableBodyData.constructor === Array){
+            return (
+                <tbody>
+                    {this.props.tableBodyData.map(function (currentRow) {
+                        return <ChartSummaryRow key={currentRow.Id} rowData={currentRow}/>
+                        })}
+                </tbody>
+            );
+        }
+        else{
+            return(<tbody></tbody>);
+        }
     }
 });
 
