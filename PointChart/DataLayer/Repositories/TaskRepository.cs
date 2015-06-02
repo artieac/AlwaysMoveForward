@@ -35,10 +35,10 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
                .FirstOrDefault();
         }
 
-        public Task GetByName(string taskName)
+        public Task GetByName(string taskName, long creatorId)
         {
             DTO.Task retVal = this.UnitOfWork.CurrentSession.Query<DTO.Task>()
-                .Where(r => r.Name == taskName)
+                .Where(r => r.Name == taskName && r.CreatorId == creatorId)
                 .FirstOrDefault();
 
             return this.GetDataMapper().Map(retVal);

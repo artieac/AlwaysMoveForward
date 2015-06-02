@@ -9,7 +9,7 @@ namespace AlwaysMoveForward.PointChart.DataLayer.Repositories
 {
     public interface ITaskRepository : INHibernateRepository<Task, long>
     {
-        Task GetByName(string taskName);
+        Task GetByName(string taskName, long creatorId);
 
         IList<Task> GetByUserId(long userId);
     }
