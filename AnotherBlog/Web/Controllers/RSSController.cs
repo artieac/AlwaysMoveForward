@@ -43,6 +43,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             RSSModel model = this.InitializeRSSModel(blogSubFolder);
             model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
 
+            model.Scheme = this.Request.Url.Scheme;
+            model.Authority = this.Request.Url.Authority;
+
             Blog targetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
 
             if (targetBlog == null)

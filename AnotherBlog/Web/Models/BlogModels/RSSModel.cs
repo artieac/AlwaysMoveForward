@@ -19,6 +19,10 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels
 {
     public class RSSModel
     {
+        public string Scheme { get; set; }
+
+        public string Authority { get; set; }
+
         public CommonBlogModel BlogCommon { get; set; }
 
         public Dictionary<Blog, IList<BlogPost>> BlogEntries { get; set; }
