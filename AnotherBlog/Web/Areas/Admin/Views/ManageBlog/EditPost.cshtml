@@ -34,20 +34,19 @@
         <div class="panel-header">
             Edit Blog Post
         </div>
-        <div class="panel-body">
+        <div>
             <br />
             <form id="saveForm" action="/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder/@Model.EntryList[0].Post.EntryId.ToString()" method="post">
                 <input type="hidden" id="performSave" name="performSave" value="true" />
                 <div>
-                    <span class="label">title:</span>
-                    <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" />
+                    <label for="title" class="sr-only">Title</label>
+                    <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" class="form-control" placeholder="Title" required autofocus />
                 </div>
                 <div>
-                    <span class="label">is published:</span>
-                    <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>      } />
+                    <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>      } /> Is Published
                 </div>
                 <div>
-                    <span class="label">entry</span>
+                    <label for="entryText" class="sr-only">Entry Text</label>
                     <textarea id="entryText" name="entryText">@Model.EntryList[0].Post.EntryText</textarea>
                 </div>
                 @{
@@ -67,8 +66,8 @@
                     }
                 }
                 <div>
-                    <span class="label">tags</span>
-                    <input class="blogEntryTextBox" type="text" id="tagInput" name="tagInput" value="@tagsAsString" />
+                    <label for="tagInput" class="sr-only">Tags</label>
+                    <input type="text" id="tagInput" name="tagInput" value="@tagsAsString" class="form-control" placeholder="Tags" required />
                 </div>
                 <button type="button" class="btn btn-primary" id="saveButton" name="saveButton">Save</button>
             </form>

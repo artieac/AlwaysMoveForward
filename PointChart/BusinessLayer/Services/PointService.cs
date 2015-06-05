@@ -36,13 +36,16 @@ namespace AlwaysMoveForward.PointChart.BusinessLayer.Services
         public IPointsSpentRepository PointsSpentRepository { get; private set; }
         public IUserRepository UserRepository { get; private set; }
 
-        public PointsSpent SpendPoints(double amountSpent, DateTime dateSpent, string description)
+        public PointsSpent SpendPoints(long pointEarnerId, double amountSpent, DateTime dateSpent, string description)
         {
             PointsSpent retVal = null;
 
-            if(amountSpent >= 0)
+            PointChartUser pointEarner = this.UserRepository.GetById(pointEarnerId);
+
+            if(pointEarnerId != null && amountSpent >= 0)
             {
                 PointsSpent pointsSpent = new PointsSpent();
+                pointsSpent.PointEarnerId = pointEarnerId;
                 pointsSpent.Amount = amountSpent;
                 pointsSpent.DateSpent = dateSpent;
                 pointsSpent.Description = description;

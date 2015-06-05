@@ -39,12 +39,14 @@ var chartCollectionStore = Reflux.createStore({
     },
 
     onUpdateChartCreatorCollection: function () {
-        this.trigger((this.chartCreatedCollection = this.onUpdateChartCollection('creator') || {}));
+        this.chartCreatedCollection = this.onUpdateChartCollection('creator');
+        this.trigger({ chartCreatedCollection: this.chartCreatedCollection, chartEarnerCollection: this.chartEarnerCollection });
         return this.chartCreatedCollection;
     },
 
     onUpdateChartEarnerCollection: function () {
-        this.trigger((this.chartEarnerCollection = this.onUpdateChartCollection('pointEarner') || {}));
+        this.chartEarnerCollection = this.onUpdateChartCollection('pointEarner');
+        this.trigger({ chartCreatedCollection: this.chartCreatedCollection, chartEarnerCollection: this.chartEarnerCollection });
         return this.chartEarnerCollection;
     }
 });

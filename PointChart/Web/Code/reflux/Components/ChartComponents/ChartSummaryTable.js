@@ -1,4 +1,5 @@
-﻿/// <reference path="../ChartSummaryTable/ChartSummaryRow.js" />
+﻿'use strict'
+/// <reference path="../ChartSummaryTable/ChartSummaryRow.js" />
 var React = require('react');
 
 var ChartSummaryRow = React.createClass({
@@ -28,14 +29,38 @@ var ChartSummaryRow = React.createClass({
 
 var ChartSummaryTableBody = React.createClass({
     render: function () {
-        return (
-            <tbody>
-                {this.props.tableBodyData.map(function (currentRow) {
-                    return <ChartSummaryRow key={currentRow.Id} rowData={currentRow}/>
-                    })}
-            </tbody>
-        );
+        if(typeof this.props.tableBodyData !== 'undefined' && this.props.tableBodyData.constructor === Array){
+            return (
+                <tbody>
+                    {this.props.tableBodyData.map(function (currentRow) {
+                        return <ChartSummaryRow key={currentRow.Id} rowData={currentRow}/>
+                        })}
+                </tbody>
+            );
+        }
+        else{
+            return(<tbody></tbody>);
+        }
     }
+});
+
+var NewChartButton = React.createClass({
+    onAddTask: function(){
+        location.href="/chart/-1";
+    },
+
+    render: function(){
+        if(this.props.showNew===true)
+        {
+            return(<span>
+                    <button type="button" className="btn btn-primary" onClick={this.onAddTask}>New Chart</button>
+                   </span>);
+        }
+        else
+        {
+            return(<span></span>)
+        }
+    }    
 });
 
 var ChartSummaryTable = React.createClass({
@@ -56,7 +81,7 @@ var ChartSummaryTable = React.createClass({
                             <th>Task Count</th>
                             <th>Point Earner</th>
                             <th>Points Earned</th>
-                            <th></th>
+                            <th><NewChartButton showNew={this.props.showNew}/></th>
                         </thead>                    
                         <ChartSummaryTableBody tableBodyData={this.props.tableData}/>
                     </table>

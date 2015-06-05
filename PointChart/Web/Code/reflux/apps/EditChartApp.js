@@ -1,4 +1,5 @@
-﻿/** @jsx React.DOM */
+﻿'use strict'
+/** @jsx React.DOM */
 var React = require('react');
 var Reflux = require('reflux');
 var chartStore = require('../stores/chartStore');
@@ -46,7 +47,7 @@ var EditChartApp = React.createClass({
     },
 
     handleGetAllPointEarners: function(updateMessage){
-        this.setState({allPointEarners: updateMessage});
+        this.setState({allPointEarners: updateMessage.allPointEarners});
     },
 
     render: function(){

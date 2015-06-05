@@ -12,9 +12,11 @@ var pointsSpentStore = Reflux.createStore({
     listenables: [pointsSpentActions],
 
     pointsDetail: {},
+    spentPoints: {},
 
     init: function () {
         this.pointsDetail = {};
+        this.spentPoints = {};
     },
 
     onGetPointsDetail: function (pointEarnerId) {
@@ -32,31 +34,54 @@ var pointsSpentStore = Reflux.createStore({
             }.bind(this)
         });
 
-        this.trigger((this.pointsDetail  || {}));
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
         return this.pointsDetail;
 
     },
 
-    onSpendPoints: function (chartId, chartName, pointEarnerId, tasks) {
-        var chartData = {
-            Name: chartName,
-            PointEarnerId: pointEarnerId,
-            Tasks: tasks
-        };
+    onGetSpentPoints: function (pointEarnerId) {
+        this.spentPoints = {};
 
         jQuery.ajax({
-            method: "PUT",
-            url: "/api/Chart/" + chartId,
-            data: JSON.stringify(chartData),
-            contentType: "application/json; charset=utf-8",
+            url: '/api/PointEarner/' + pointEarnerId + '/SpentPoints',
+            async: false,
+            dataType: 'json',
             success: function (restData) {
-                console.log(restData);
-                this.onGetAllTasks();
+                this.spentPoints = restData;
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(url, status, err.toString());
             }.bind(this)
         });
+
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
+        return this.spentPoints;
+
+    },
+
+    onSpendPoints: function (pointEarnerId, date, amountSpent, reason) {
+        var spendPointsData = {
+            DateSpent: date,
+            AmountSpent: amountSpent,
+            Description: reason
+        };
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/api/PointEarner/" + pointEarnerId + '/SpentPoints',
+            data: JSON.stringify(spendPointsData),
+            contentType: "application/json; charset=utf-8",
+            success: function (restData) {
+                console.log(restData);
+                this.pointsDetail = restData;
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+
+        this.trigger({ pointsDetail: this.pointsDetail, spentPoints: this.spentPoints });
+        return this.pointsDetail;
     }
 });
 

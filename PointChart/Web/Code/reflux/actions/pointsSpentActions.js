@@ -7,7 +7,8 @@ var Reflux = require('reflux');
 
 var pointsSpentActions = ({
     'getPointsDetail': {},
-    'spendPoints': {}
+    'spendPoints': {},
+    'getSpentPoints': {}
 });
 
 module.exports = Reflux.createActions(pointsSpentActions);

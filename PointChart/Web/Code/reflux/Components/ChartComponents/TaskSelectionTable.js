@@ -1,4 +1,5 @@
-﻿var jQuery = require('jquery');
+﻿'use strict'
+var jQuery = require('jquery');
 var React = require('react');
 var Reflux = require('reflux');
 var GenericDropDown = require('../GenericDropDown');
@@ -29,7 +30,8 @@ var TaskSelectionTableBody = React.createClass({
         var retVal = false;
         
         if(typeof this.props.chartData !== 'undefined' &&
-            typeof this.props.chartData.Tasks !== 'undefined'){
+            typeof this.props.chartData.Tasks !== 'undefined' && 
+            this.props.chartData.Tasks !== null){
             for(var i = 0; i < this.props.chartData.Tasks.length; i++){
                 if(this.props.chartData.Tasks[i].Id == taskId){
                     retVal = true;
@@ -58,6 +60,18 @@ var TaskSelectionTableBody = React.createClass({
 });
 
 var TaskSelectionTable = React.createClass({
+    getPointEarnerList: function() {
+        var retVal = [];
+
+        for(var i = 0; i < this.props.pointEarners.length; i++){
+            retVal[i] = this.props.pointEarners[i].PointEarner;
+            retVal[i].Name = retVal[i].FirstName + ' ' + retVal[i].LastName;
+        }
+
+        console.log("PointEarnerList:" + JSON.stringify(retVal));
+        return retVal;
+    },
+
     getSelectedTasks: function() {
         var retVal = [];
         
@@ -94,12 +108,10 @@ var TaskSelectionTable = React.createClass({
     },
 
     render: function() {
-        for(var i = 0; i < this.props.pointEarners.length; i++){
-            this.props.pointEarners[i].Name = this.props.pointEarners[i].FirstName + ' ' + this.props.pointEarners[i].LastName;
-        }
-
-        if(typeof this.props.chartData !== 'undefined' && typeof this.props.chartData.PointEarner !== 'undefined'){
-            this.props.chartData.PointEarner.Name = this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName;
+        if(typeof this.props.chartData !== 'undefined' && this.props.chartData!==null){
+            if(typeof this.props.chartData.PointEarner !== 'undefined' && this.props.chartData.PointEarner !== null){
+                this.props.chartData.PointEarner.Name = this.props.chartData.PointEarner.FirstName + ' ' + this.props.chartData.PointEarner.LastName;
+            }
         }
 
         return (
@@ -109,7 +121,7 @@ var TaskSelectionTable = React.createClass({
                         <input type="text" ref="chartName" value={this.props.chartData.Name} onChange={this.handleNameChange}/>
                     </div>
                     <div className="col-md-3">
-                        <GenericDropDown ref="selectedPointEarner" listData={this.props.pointEarners} selected={this.props.chartData.PointEarner} onSelectedChange={this.handleSelectedChange} />
+                        <GenericDropDown ref="selectedPointEarner" listData={this.getPointEarnerList()} selected={this.props.chartData.PointEarner} onSelectedChange={this.handleSelectedChange} />
                     </div>
                     <div className="col-md-3">
                         <button type="button" className="btn btn-primary" onClick={this.handleSaveClick}>Save</button>

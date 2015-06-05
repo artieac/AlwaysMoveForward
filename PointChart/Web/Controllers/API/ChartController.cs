@@ -49,7 +49,18 @@ namespace AlwaysMoveForward.PointChart.Web.Controllers.API
         [WebAPIAuthorization]
         public Chart Get(long id)
         {
-            return this.Services.Charts.GetById(id);
+            Chart retVal = null;
+
+            if (id > 0)
+            {
+                retVal = this.Services.Charts.GetById(id);
+            }
+            else
+            {
+                retVal = new Chart();
+            }
+
+            return retVal;
         }
 
         // POST api/<controller>

@@ -24,8 +24,7 @@ var PointsDetail = React.createClass({
     },
 
     updatePointsDetail: function (updateMessage) {
-        console.log(JSON.stringify(updateMessage));
-        this.setState({pointsDetail: updateMessage});
+        this.setState({pointsDetail: updateMessage.pointsDetail});
     },
 
     getCurrentChartPointsEarned: function(){
@@ -55,20 +54,22 @@ var PointsDetail = React.createClass({
 
     render: function(){
         return (
-            <div>
-                <div className="row">
-                    <div className="col-md-3">Points Earned<br/>(this chart)</div>
-                    <div className="col-md-3">Points Earned<br/>(other charts)</div>
-                    <div className="col-md-3">Points Spent</div>
-                    <div className="col-md-3">Total Points</div>
+            <div className="row">
+                <div className="col-md-9">
+                    <div className="row">
+                        <div className="col-md-3">Points Earned<br/>(this chart)</div>
+                        <div className="col-md-3">Points Earned<br/>(other charts)</div>
+                        <div className="col-md-3">Points Spent</div>
+                        <div className="col-md-3">Total Points</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-3">{this.getCurrentChartPointsEarned()}</div>
+                        <div className="col-md-3">{this.getOtherChartPointsEarned()}</div>
+                        <div className="col-md-3">{this.state.pointsDetail.PointsSpent}</div>
+                        <div className="col-md-3">{(this.getCurrentChartPointsEarned() + this.getOtherChartPointsEarned()) - this.state.pointsDetail.PointsSpent}</div>
+                    </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-3">{this.getCurrentChartPointsEarned()}</div>
-                    <div className="col-md-3">{this.getOtherChartPointsEarned()}</div>
-                    <div className="col-md-3">{this.state.pointsDetail.PointsSpent}</div>
-                    <div className="col-md-3">{(this.getCurrentChartPointsEarned() + this.getOtherChartPointsEarned()) - this.state.pointsDetail.PointsSpent}</div>
-                </div>
-            </div>
+            </div>        
         );
     }
 });
