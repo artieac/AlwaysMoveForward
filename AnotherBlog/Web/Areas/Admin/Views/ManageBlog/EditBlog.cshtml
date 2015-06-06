@@ -34,7 +34,7 @@
         </div>
         <div class="panel-body">
             <br />
-            <form id="saveForm" action='/Admin/ManageBlog/EditBlog/@Model.Common.TargetBlog.BlogId' method=" post">
+            <form id="saveForm" action='/Admin/ManageBlog/EditBlog/@Model.Common.TargetBlog.Id' method=" post">
                 <input type="hidden" id="savingBlog" name="savingBlog" value="savingBlog" />
                 @if (ViewData.ModelState.IsValid == false)
                 {

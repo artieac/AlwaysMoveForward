@@ -19,7 +19,7 @@
             <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
             @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
             { 
-                <option id="@blogItem.BlogId" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.BlogId == ViewBag.Common.TargetBlog.BlogId)
+                <option id="@blogItem.Id" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.Id == ViewBag.Common.TargetBlog.Id)
                                                                                             {<text> selected </text>}>@blogItem.Name</option>
             }            
             </select>

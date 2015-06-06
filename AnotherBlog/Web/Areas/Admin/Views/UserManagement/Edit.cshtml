@@ -82,7 +82,7 @@
                     <select id="targetBlog" name="targetBlog">
                         @foreach (int blogKey in @Model.Blogs.Keys)
                         {
-                            <option id="@Model.Blogs[blogKey].Name" name="@Model.Blogs[blogKey].Name" value="@Model.Blogs[blogKey].BlogId.ToString()">@Model.Blogs[blogKey].Name</option>
+                            <option id="@Model.Blogs[blogKey].Name" name="@Model.Blogs[blogKey].Name" value="@Model.Blogs[blogKey].Id.ToString()">@Model.Blogs[blogKey].Name</option>
                         }
                     </select>
                 </div>
