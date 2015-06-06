@@ -31,7 +31,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public BlogList Create(Blog targetBlog)
         {
             BlogList retVal = new BlogList();
-            retVal.BlogId = targetBlog.BlogId;
+            retVal.BlogId = targetBlog.Id;
 
             return retVal;
         }
@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<BlogList> GetByBlog(Blog targetBlog)
         {
-            return this.BlogListRepository.GetByBlog(targetBlog.BlogId);
+            return this.BlogListRepository.GetByBlog(targetBlog.Id);
         }
 
         public bool DeleteBlogList(BlogList targetBlogList)
@@ -64,7 +64,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogListRepository.GetByNameAndBlogId(listName, targetBlog.BlogId);
+                retVal = this.BlogListRepository.GetByNameAndBlogId(listName, targetBlog.Id);
             }
 
             return retVal;
@@ -100,12 +100,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
             else
             {
-                itemToSave = this.BlogListRepository.GetByIdAndBlogId(blogListId, targetBlog.BlogId);
+                itemToSave = this.BlogListRepository.GetByIdAndBlogId(blogListId, targetBlog.Id);
             }
 
             itemToSave.Name = name;
             itemToSave.ShowOrdered = showOrdered;
-            itemToSave.BlogId = targetBlog.BlogId;
+            itemToSave.Id = targetBlog.Id;
 
             return this.Save(itemToSave);
         }

@@ -41,13 +41,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         protected override BlogDTO GetDTOById(Blog domainInstance)
         {
-            return this.GetDTOById(domainInstance.BlogId);
+            return this.GetDTOById(domainInstance.Id);
         }
 
         protected override BlogDTO GetDTOById(int idSource)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogDTO>();
-            criteria.Add(Expression.Eq("BlogId", idSource));
+            criteria.Add(Expression.Eq("Id", idSource));
 
             return criteria.UniqueResult<BlogDTO>();
         }
@@ -83,11 +83,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public IList<Blog> GetByUserId(long userId)
         {
             DetachedCriteria blogRoles = DetachedCriteria.For<BlogUserDTO>();
-            blogRoles.CreateCriteria("User").Add(Expression.Eq("UserId", userId));
+            blogRoles.CreateCriteria("User").Add(Expression.Eq("Id", userId));
             blogRoles.SetProjection(Projections.Distinct(Projections.Property("BlogId")));
 
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogDTO>();
-            criteria.Add(Subqueries.PropertyIn("BlogId", blogRoles));
+            criteria.Add(Subqueries.PropertyIn("Id", blogRoles));
             return this.GetDataMapper().Map(criteria.List<BlogDTO>());
         }
     }

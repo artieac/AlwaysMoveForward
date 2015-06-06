@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             return user;
         }
-        public void Delete(long userId)
+        public void Delete(int userId)
         {
             AnotherBlogUser targetUser = this.UserRepository.GetById(userId);
 
@@ -116,17 +116,17 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.UserRepository.GetAll();
         }
 
-        public AnotherBlogUser GetById(long userId)
+        public AnotherBlogUser GetById(int userId)
         {
             return this.UserRepository.GetById(userId);
         }      
 
         public IList<AnotherBlogUser> GetBlogWriters(Blog targetBlog)
         {
-            return this.UserRepository.GetBlogWriters(targetBlog.BlogId);
+            return this.UserRepository.GetBlogWriters(targetBlog.Id);
         }
 
-        public AnotherBlogUser AddBlogRole(long userId, int blogId, RoleType.Id roleId)
+        public AnotherBlogUser AddBlogRole(int userId, int blogId, RoleType.Id roleId)
         {
             AnotherBlogUser retVal = null;
 
@@ -154,7 +154,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public AnotherBlogUser RemoveBlogRole(long userId, int blogId)
+        public AnotherBlogUser RemoveBlogRole(int userId, int blogId)
         {
             AnotherBlogUser retVal = null;
 

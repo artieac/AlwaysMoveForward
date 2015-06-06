@@ -32,12 +32,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
             protected override EntryCommentsDTO FindItemInList(IList<EntryCommentsDTO> destinationList, Comment searchTarget)
             {
-                return destinationList.FirstOrDefault(t => t.CommentId == searchTarget.CommentId);
+                return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
             }
 
             protected override Comment FindItemInList(IList<Comment> sourceList, EntryCommentsDTO searchTarget)
             {
-                return sourceList.FirstOrDefault(t => t.CommentId == searchTarget.CommentId);
+                return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
             }
         }
 

@@ -33,10 +33,10 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public Comment()
         {
-            this.CommentId = -1;
+            this.Id = -1;
         }
 
-        public int CommentId { get; set; }
+        public int Id { get; set; }
         public CommentStatus Status { get; set; }
         public string Link { get; set; }
         public string AuthorEmail { get; set; }

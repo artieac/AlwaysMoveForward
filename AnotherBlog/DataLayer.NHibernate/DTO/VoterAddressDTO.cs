@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
             this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Type = "Int32", Column = "VoterAddressId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
         public virtual int Id { get; set; }
 

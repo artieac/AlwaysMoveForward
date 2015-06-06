@@ -19,6 +19,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
     {
         public string BlogSubFolder { get; set; }
 
-        public int EntryId { get; set; }
+        public long EntryId { get; set; }
     }
 }

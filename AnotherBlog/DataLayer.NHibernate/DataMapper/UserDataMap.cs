@@ -125,14 +125,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             {
                 AutoMapper.Mapper.CreateMap<AnotherBlogUser, UserDTO>()
                     .ForMember(dest => dest.Roles, opt => opt.ResolveUsing<BlogUserDTOListResolver>())
-                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<UserDTO, AnotherBlogUser>() == null)
             {
                 AutoMapper.Mapper.CreateMap<UserDTO, AnotherBlogUser>()
                     .ForMember(dest => dest.Roles, opt => opt.ResolveUsing<BlogUserListResolver>())
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
             }
 
 #if DEBUG

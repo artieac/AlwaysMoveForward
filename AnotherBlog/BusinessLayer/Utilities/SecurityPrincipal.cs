@@ -146,9 +146,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                     if(targetBlog != null)
                     {
-                        if(this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
+                        if (this.CurrentUser.Roles.ContainsKey(targetBlog.Id))
                         {
-                            if (this.CurrentUser.Roles[targetBlog.BlogId].ToString() == targetRole)
+                            if (this.CurrentUser.Roles[targetBlog.Id].ToString() == targetRole)
                             {
                                 retVal = true;
                             }
@@ -187,9 +187,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 {
                     if (targetBlog != null)
                     {
-                        if (this.CurrentUser.Roles.ContainsKey(targetBlog.BlogId))
+                        if (this.CurrentUser.Roles.ContainsKey(targetBlog.Id))
                         {
-                            if (targetRole.Contains(this.CurrentUser.Roles[targetBlog.BlogId].ToString()))
+                            if (targetRole.Contains(this.CurrentUser.Roles[targetBlog.Id].ToString()))
                             {
                                 retVal = true;
                             }

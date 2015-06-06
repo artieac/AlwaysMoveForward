@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
         {
             this.AuthorEmail = comment.AuthorEmail;
             this.AuthorName = comment.AuthorName;
-            this.CommentId = comment.CommentId;
+            this.Id = comment.Id;
             this.DatePosted = comment.DatePosted;
             this.Link = comment.Link;
             this.Status = comment.Status;

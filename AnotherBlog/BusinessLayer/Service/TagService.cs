@@ -42,12 +42,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public IList<Tag> GetAll(Blog targetBlog)
         {
-            return this.TagRepository.GetAll(targetBlog.BlogId);
+            return this.TagRepository.GetAll(targetBlog.Id);
         }
 
         public IList GetAllWithCount(Blog targetBlog)
         {
-            return this.TagRepository.GetAllWithCount(targetBlog.BlogId);
+            return this.TagRepository.GetAllWithCount(targetBlog.Id);
         }
     }
 }

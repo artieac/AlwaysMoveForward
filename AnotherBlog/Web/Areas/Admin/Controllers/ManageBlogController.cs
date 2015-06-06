@@ -137,7 +137,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                             {
                                 try
                                 {
-                                    model.Common.TargetBlog = Services.BlogService.Save(model.Common.TargetBlog.BlogId, model.Common.TargetBlog.Name, model.Common.TargetBlog.SubFolder, description, about, blogWelcome, blogTheme);
+                                    model.Common.TargetBlog = Services.BlogService.Save(model.Common.TargetBlog.Id, model.Common.TargetBlog.Name, model.Common.TargetBlog.SubFolder, description, about, blogWelcome, blogTheme);
                                     this.Services.UnitOfWork.EndTransaction(true);
                                 }
                                 catch (Exception e)
@@ -326,7 +326,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             }
 
             AjaxSaveModel retVal = new AjaxSaveModel();
-            retVal.EntryId = currentPost.EntryId;
+            retVal.EntryId = currentPost.Id;
             retVal.BlogSubFolder = model.Common.TargetBlog.SubFolder;
 
             return this.Json(retVal);
@@ -352,7 +352,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                         foreach(Comment comment in post.Comments)
                         {
                             CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.EntryId;
+                            newItem.BlogPostId = post.Id;
                             model.Add(newItem);
                         }
                     }
@@ -366,7 +366,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                         foreach (Comment comment in post.FilteredComments(targetStatus))
                         {
                             CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.EntryId;
+                            newItem.BlogPostId = post.Id;
                             model.Add(newItem);
                         }
                     }
