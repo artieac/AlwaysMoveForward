@@ -23,12 +23,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
     {
         public BlogPostDTO()
         {
-            this.EntryId = -1;
+            this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="EntryId", Type = "Int32", Column = "EntryId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name="Id", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int EntryId { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool IsPublished { get; set; }
@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual IList<TagDTO> Tags { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "EntryComments", Cascade = "All-Delete-Orphan", Inverse = true)]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "CommentId")]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "Id")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(EntryCommentsDTO))]
         public virtual IList<EntryCommentsDTO> Comments { get; set; }
     }

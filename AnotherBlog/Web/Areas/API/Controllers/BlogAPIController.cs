@@ -23,7 +23,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
             for (int i = 0; i < allBlogs.Count; i++)
             {
                 BlogListItem newItem = new BlogListItem();
-                newItem.Id = allBlogs[i].BlogId;
+                newItem.Id = allBlogs[i].Id;
                 newItem.Name = allBlogs[i].Name;
                 newItem.RelatedLink = allBlogs[i].SubFolder;
                 model.ListItems.Add(newItem);

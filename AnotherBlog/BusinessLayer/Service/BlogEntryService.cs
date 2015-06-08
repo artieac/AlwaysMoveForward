@@ -132,13 +132,13 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 if (trimmedName != string.Empty)
                 {
-                    Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.BlogId);
+                    Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.Id);
 
                     if (currentTag == null)
                     {
                         currentTag = new Tag();
                         currentTag.Name = trimmedName;
-                        currentTag.BlogId = targetPost.Blog.BlogId;
+                        currentTag.BlogId = targetPost.Blog.Id;
                     }
 
                     targetPost.Tags.Add(currentTag);
@@ -167,7 +167,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                this.BlogEntryRepository.GetAllByBlog(targetBlog.BlogId, false, -1, DefaultPostSort, true);
+                this.BlogEntryRepository.GetAllByBlog(targetBlog.Id, false, -1, DefaultPostSort, true);
             }
 
             return retVal;
@@ -193,7 +193,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetAllByBlog(targetBlog.BlogId, publishedOnly, maxResults, sortColumn, sortAscending);
+                retVal = this.BlogEntryRepository.GetAllByBlog(targetBlog.Id, publishedOnly, maxResults, sortColumn, sortAscending);
             }
 
             return retVal;
@@ -227,7 +227,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetByTitle(blogTitle, targetBlog.BlogId);
+                retVal = this.BlogEntryRepository.GetByTitle(blogTitle, targetBlog.Id);
             }
 
             return retVal;
@@ -244,7 +244,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetByDateAndTitle(blogTitle, postDate, targetBlog.BlogId);
+                retVal = this.BlogEntryRepository.GetByDateAndTitle(blogTitle, postDate, targetBlog.Id);
             }
 
             return retVal;
@@ -262,7 +262,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetByTag(targetBlog.BlogId, tag, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByTag(targetBlog.Id, tag, publishedOnly);
             }
             return retVal;
         }
@@ -278,7 +278,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetByMonth(blogDate, targetBlog.BlogId, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByMonth(blogDate, targetBlog.Id, publishedOnly);
             }
             return retVal;
         }
@@ -294,7 +294,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetByDate(blogDate, targetBlog.BlogId, publishedOnly);
+                retVal = this.BlogEntryRepository.GetByDate(blogDate, targetBlog.Id, publishedOnly);
             }
             return retVal;
         }
@@ -305,7 +305,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetMostRecent(targetBlog.BlogId, true);
+                retVal = this.BlogEntryRepository.GetMostRecent(targetBlog.Id, true);
             }
 
             return retVal;
@@ -332,7 +332,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetPreviousEntry(targetBlog.BlogId, currentEntry.EntryId);
+                retVal = this.BlogEntryRepository.GetPreviousEntry(targetBlog.Id, currentEntry.Id);
             }
 
             return retVal;
@@ -344,7 +344,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetBlog != null)
             {
-                retVal = this.BlogEntryRepository.GetNextEntry(targetBlog.BlogId, currentEntry.EntryId);
+                retVal = this.BlogEntryRepository.GetNextEntry(targetBlog.Id, currentEntry.Id);
             }
 
             return retVal;
@@ -359,7 +359,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             if (targetBlog != null)
             {
-                return this.BlogEntryRepository.GetArchiveDates(targetBlog.BlogId);
+                return this.BlogEntryRepository.GetArchiveDates(targetBlog.Id);
             }
             else
             {

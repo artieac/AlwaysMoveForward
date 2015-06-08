@@ -23,12 +23,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public BlogDTO()
             : base()
         {
-            this.BlogId = -1;
+            this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="BlogId", Type = "Int32", Column = "BlogId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int BlogId { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string Name { get; set; }
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual int CurrentPollId { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntries", Cascade="Save-Update")]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "EntryId")]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "BlogId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(BlogListDTO))]
         public virtual IList<BlogPostDTO> Posts { get; set; }
     }

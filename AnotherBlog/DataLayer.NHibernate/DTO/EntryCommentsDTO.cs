@@ -22,12 +22,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
     {
         public EntryCommentsDTO() : base()
         {
-            this.CommentId = -1;
+            this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="CommentId", Type = "Int32", Column = "CommentId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual int CommentId { get; set; }
+        public virtual int Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual int Status { get; set; }

@@ -20,7 +20,7 @@
             <div class="blogTitleSection">
                 <div class="blogTitle">
                     <label>@Model.Post.Title</label>
-                    <div class="blogSubTitle">by @Model.Author.DisplayName on @Model.Post.DatePosted.ToShortDateString()</div>
+                    <div class="blogSubTitle">by @Model.Author.GetDisplayName() on @Model.Post.DatePosted.ToShortDateString()</div>
                 </div>
             </div>
 <!--
@@ -54,7 +54,7 @@
         </div>
         <br /><br />
         <div style="padding-left:10px;width:90%" id="commentSection" name="commentSection" ng-controller="BlogController">                    
-            @Html.Partial("ViewComments", Model.Post.EntryId)
+            @Html.Partial("ViewComments", Model.Post.Id)
             <br /> 
             <form id="submitCommentForm" name="submitCommentForm" action='/@Model.BlogCommon.TargetBlog.SubFolder/Blog/SaveComment' method="post" novalidate >
                 <label>Leave a comment</label>
@@ -72,8 +72,8 @@
                         {
                             if (currentPrincipal.CurrentUser != null)
                             {
-                                authorName = currentPrincipal.CurrentUser.UserName;
-                                authorEmail = currentPrincipal.CurrentUser.Email;
+                                authorName = currentPrincipal.CurrentUser.GetDisplayName();
+  //                              authorEmail = currentPrincipal.CurrentUser.Email;
                             }
                         }
                     }
@@ -108,9 +108,9 @@
                         <td colspan="2"><textarea class="commentAreaInput" id="commentText" name="commentText" cols="40" rows="5" ng-model="newComment.commentText"></textarea></td>
                     </span>
                 </div>
-                <input type="hidden" id="entryId" name="entryId" value="@Model.Post.EntryId.ToString()" ng-model="newComment.entryId"/>
+                <input type="hidden" id="entryId" name="entryId" value="@Model.Post.Id.ToString()" ng-model="newComment.entryId"/>
                 <input type="hidden" id="blogName" name="blogName" value="@Model.BlogCommon.TargetBlog.Name" />                
-                <button type="button" class="btn btn-primary" id="submitCommentButton" ng-click="submitComment('@ViewBag.BlogSubFolder', '@Model.Post.EntryId.ToString()');"  ng-disabled="submitCommentForm.$invalid">Submit Comment</button>
+                <button type="button" class="btn btn-primary" id="submitCommentButton" ng-click="submitComment('@ViewBag.BlogSubFolder', '@Model.Post.Id.ToString()');"  ng-disabled="submitCommentForm.$invalid">Submit Comment</button>
             </form>
         </div>
     </div>

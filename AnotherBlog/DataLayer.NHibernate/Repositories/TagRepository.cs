@@ -70,7 +70,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         /// <returns></returns>
         public IList GetAllWithCount(int? blogId)
         {
-            string queryString = "SELECT  COUNT(bet.BlogEntryTagId) AS Count, t.name as TagName";
+            string queryString = "SELECT  COUNT(bet.Id) AS Count, t.name as TagName";
             queryString += " FROM Tags t, BlogEntryTags as bet";
             queryString += " WHERE (bet.TagId = t.id)";
 
@@ -128,7 +128,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public IList<Tag> GetByBlogEntryId(int blogEntryId)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
-            criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("EntryId", blogEntryId));
+            criteria.CreateCriteria("BlogEntries").Add(Expression.Eq("Id", blogEntryId));
             return this.GetDataMapper().Map(criteria.List<TagDTO>());
         }
     }

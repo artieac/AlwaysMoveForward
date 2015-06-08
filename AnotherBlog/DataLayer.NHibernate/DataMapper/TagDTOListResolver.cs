@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         protected override TagDTO FindItemInList(IList<TagDTO> destinationList, Tag searchTarget)
         {
-            return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
+            return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id && t.Name == searchTarget.Name);
         }
 
         protected override Tag FindItemInList(IList<Tag> sourceList, TagDTO searchTarget)

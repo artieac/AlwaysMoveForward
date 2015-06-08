@@ -25,12 +25,12 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public BlogPost()
         {
-            this.EntryId = -1;
+            this.Id = -1;
             this.DatePosted = BlogPost.StartDate;
             this.Tags = new List<Tag>();
         }
 
-        public int EntryId { get; set; }
+        public int Id { get; set; }
         public bool IsPublished { get; set; }
         public Blog Blog { get; set; }
         public AnotherBlogUser Author { get; set; }
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public Comment UpdateCommentStatus(int commentId, Comment.CommentStatus commentStatus)
         {
-            Comment targetComment = this.Comments.Where(comment => comment.CommentId == commentId).First();
+            Comment targetComment = this.Comments.Where(comment => comment.Id == commentId).First();
 
             if(targetComment != null)
             {

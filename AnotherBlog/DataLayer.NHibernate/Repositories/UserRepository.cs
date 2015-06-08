@@ -45,7 +45,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         protected override UserDTO GetDTOById(long idSource)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
-            criteria.Add(Expression.Eq("UserId", idSource));
+            criteria.Add(Expression.Eq("Id", idSource));
             return criteria.UniqueResult<UserDTO>();
         }
 
@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.CreateCriteria("UserBlogs")
-                .CreateCriteria("Blog").Add(Expression.Eq("BlogId", blogId));
+                .CreateCriteria("Blog").Add(Expression.Eq("Id", blogId));
             return this.GetDataMapper().Map(criteria.List<UserDTO>());
         }
 

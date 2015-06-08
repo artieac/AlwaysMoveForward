@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             for (int i = 0; i < blogs.Count; i++)
             {
-                model.Blogs.Add(blogs[i].BlogId, blogs[i]);
+                model.Blogs.Add(blogs[i].Id, blogs[i]);
             }
 
             int targetUserId = 0;
@@ -105,7 +105,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             for (int i = 0; i < blogs.Count; i++)
             {
-                model.Blogs.Add(blogs[i].BlogId, blogs[i]);
+                model.Blogs.Add(blogs[i].Id, blogs[i]);
             }
 
 
@@ -123,7 +123,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             for (int i = 0; i < blogs.Count; i++)
             {
-                model.Blogs.Add(blogs[i].BlogId, blogs[i]);
+                model.Blogs.Add(blogs[i].Id, blogs[i]);
             }
 
             model.CurrentUser = Services.UserService.GetById(targetUser);
@@ -148,7 +148,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             for (int i = 0; i < blogs.Count; i++)
             {
-                model.Blogs.Add(blogs[i].BlogId, blogs[i]);
+                model.Blogs.Add(blogs[i].Id, blogs[i]);
             }
 
             model.BlogsUserCanAccess = this.Services.BlogService.GetByUserId(model.CurrentUser.Id);

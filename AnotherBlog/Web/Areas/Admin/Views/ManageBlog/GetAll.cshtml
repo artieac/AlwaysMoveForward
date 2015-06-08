@@ -34,7 +34,7 @@
                 foreach (Blog blogItem in ViewData.Model.Blogs)
                 {
                     <tr>
-                        <td><a href="/Admin/ManageBlog/EditBlog/@blogItem.BlogId.ToString()">@blogItem.Name</a></td>
+                        <td><a href="/Admin/ManageBlog/EditBlog/@blogItem.Id.ToString()">@blogItem.Name</a></td>
                         <td>@blogItem.Description</td>
                     </tr>
                 }

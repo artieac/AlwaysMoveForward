@@ -21,10 +21,10 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
     {
         public Blog()
         {
-            this.BlogId = -1;
+            this.Id = -1;
         }
 
-        public int BlogId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string SubFolder { get; set; }

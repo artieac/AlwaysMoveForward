@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Controllers
             }
             else
             {
-                postList = Services.BlogEntryService.GetMostRead(targetBlog.BlogId, 5);
+                postList = Services.BlogEntryService.GetMostRead(targetBlog.Id, 5);
             }
 
             retVal.OpenLinkInNewWindow = false;

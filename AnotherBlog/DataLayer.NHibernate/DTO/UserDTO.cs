@@ -24,12 +24,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
     {
         public UserDTO() : base()
         {
-            this.UserId = -1;
+            this.Id = -1;
         }
 
-        [NHibernate.Mapping.Attributes.Id(0, Name="UserId", Column = "UserId", UnsavedValue = "-1")]
+        [NHibernate.Mapping.Attributes.Id(0, Name = "Id", Column = "Id", UnsavedValue = "-1")]
         [NHibernate.Mapping.Attributes.Generator(1, Class = "native")]
-        public virtual long UserId { get; set; }
+        public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual bool ApprovedCommenter { get; set; }
