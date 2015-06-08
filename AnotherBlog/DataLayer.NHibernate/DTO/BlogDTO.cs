@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual string Theme { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual long CurrentPollId { get; set; }
+        public virtual int CurrentPollId { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "BlogEntries", Cascade="Save-Update")]
         [NHibernate.Mapping.Attributes.Key(1, Column = "BlogId")]
