@@ -1,0 +1,74 @@
+﻿@model AlwaysMoveForward.MainSite.Models.CarouselModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.CarouselModel = Model;
+    ViewBag.Page = 0;
+}
+
+@section headerPlugins
+{
+    <script src="@Url.Content("~/Scripts/Controllers/BlogPostController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Controllers/TwitterController.js")" type="text/javascript"></script>
+}
+
+<div class="bodyContent">
+    <div class="introText">
+        I am a software architect, coach, Disney fan, and family man.  This site contains my thoughts on those subjects, and also 
+        shares some experiements I built for my own use as a way to play with new technologies or patterns.  
+    </div>
+    <div class="spacedColumnContainer">
+        <div class="spacedColumn">
+            <div>
+                <form action="http://blog.alwaysmoveforward.com">
+                    <button class="btn btn-circle glyphicon glyphicon-th-list"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>Blog</h3>
+                <span class="textDetail">Here I blog about anything from Software Architecture to trips to Walt Disney World.</span>
+            </div>
+        </div>
+        <div class="spacedColumn">
+            <div>
+                <form action="http://pointchart.alwaysmoveforward.com">
+                    <button class="btn btn-circle glyphicon glyphicon-calendar"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>Point Chart</h3>                
+                <span class="textDetail">
+                    A site for setting up Point Charts for children.
+                </span>
+            </div>
+        </div>
+        <div class="spacedColumn">
+            <div>
+                <form action="/Home/About">
+                    <button class="btn btn-circle glyphicon glyphicon-user"></button>
+                </form>
+            </div>
+            <div class="textSection">
+                <h3>About</h3>
+                <span class="textDetail">
+                    Information about me.
+                </span>
+            </div>
+        </div>
+        <span class="stretch"/>
+    </div>
+    <div class="row">
+        <div class="col-md-8" ng-controller="BlogPostController">
+            <div class="blogPostSection" ng-init="getMostRecent('@AlwaysMoveForward.MainSite.MvcApplication.BlogUrlRoot')">
+                <div class="blogPostTitle">{{ mostRecentBlogPost.Title }}</div>
+                <div class="blogPostPosted">Posted {{ formatDate(mostRecentBlogPost.DatePosted) | date:"MM/dd/yyyy" }}</div>
+                <div class="blogPostText" ng-bind-html="mostRecentBlogPost.ShortEntryText"></div>
+                <div><a href="{{ mostRecentBlogPost.BlogPostUrl }}">more...</a></div> 
+            </div>
+        </div>
+        <div class="col-md-4" ng-controller="TwitterController">
+            <div class="" ng-init="getTwitterPosts()">
+
+            </div>
+        </div>
+    </div>
+</div>
