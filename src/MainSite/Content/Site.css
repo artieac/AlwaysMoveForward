@@ -115,6 +115,10 @@ body {
   color: #5493e0;
   text-align: center;
 }
+.externalDataSection div.row {
+  padding-top: 10px;
+  border-top: 1px solid;
+}
 .blogPostSection {
   text-align: left;
 }
