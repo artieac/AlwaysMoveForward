@@ -99,13 +99,10 @@ body {
   line-height: 0;
 }
 .mainContentPanel {
-  text-align: center;
-  width: 80%;
-  margin-left: 10%;
-  height: 100%;
+  text-align: left;
 }
 .mainContentPanel .bodyContainer {
-  display: block;
+  text-align: left;
 }
 .mainContentPanel .bodyContainer .bodyContent {
   width: 100%;
@@ -118,6 +115,9 @@ body {
 .externalDataSection div.row {
   padding-top: 10px;
   border-top: 1px solid;
+}
+.bottomAdContainer {
+  text-align: center;
 }
 .blogPostSection {
   text-align: left;

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace AlwaysMoveForward.Common.Utilities
@@ -52,6 +53,33 @@ namespace AlwaysMoveForward.Common.Utilities
                 retVal.Remove(scriptStart, (scriptEnd + 9) - scriptStart);
             }
 
+            return retVal;
+        }
+
+        /// <summary>
+        /// Url Encode a string, also replace spaces with underscores and
+        /// . with %2E, for some reason . cause problems with mvc routes
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string EncodeForUrl(string source)
+        {
+            string retVal = source.Replace(" ", "_");
+            retVal = retVal.Replace(".", ";;");
+            return WebUtility.UrlEncode(retVal);
+        }
+
+        /// <summary>
+        /// Url Decode a string, also replace with underscores with spaces and
+        /// . with %2E, for some reason . cause problems with mvc routes
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string DecodeFromUrl(string source)
+        {
+            string retVal = WebUtility.UrlDecode(source);
+            retVal = retVal.Replace(";;", ".");
+            retVal = retVal.Replace("_", " ");
             return retVal;
         }
 
