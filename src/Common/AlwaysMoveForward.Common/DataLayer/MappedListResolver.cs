@@ -46,6 +46,10 @@ namespace AlwaysMoveForward.Common.DataLayer
                     {
                         destinationList.Add(Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i]));
                     }
+                    else
+                    {
+                        destinationListAddUpdateItem = Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i], destinationListAddUpdateItem);
+                    }
                 }
             }
 
