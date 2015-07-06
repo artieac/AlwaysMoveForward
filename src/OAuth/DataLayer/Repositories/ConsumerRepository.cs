@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Framework;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.DataLayer.DataMapper;
@@ -53,6 +54,16 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
             ICriteria criteria = ((UnitOfWork)this.UnitOfWork).CurrentSession.CreateCriteria<DTO.Consumer>();
             criteria.Add(Expression.Eq(DTO.Consumer.ConsumerKeyFieldName, consumerKey));
             return criteria.UniqueResult<DTO.Consumer>();
+        }
+
+        public IList<Consumer> GetAll(int pageIndex, int pageSize)
+        {
+            IList<DTO.Consumer> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Consumer>()
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return this.GetDataMapper().Map(retVal);
         }
 
         /// <summary>

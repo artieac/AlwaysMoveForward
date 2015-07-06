@@ -40,6 +40,11 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             return this.ConsumerRepository.GetAll();
         }
 
+        public IList<Consumer> GetAll(int pageIndex, int pageSize)
+        {
+            return this.ConsumerRepository.GetAll(pageIndex, pageSize);
+        }
+
         /// <summary>
         /// Save a consumer
         /// </summary>

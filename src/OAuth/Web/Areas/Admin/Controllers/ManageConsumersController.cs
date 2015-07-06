@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth.Web.Code;
@@ -21,10 +22,17 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// Lists all the consumers
         /// </summary>
         /// <returns>A view</returns>
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            IList<Consumer> consumers = this.ServiceManager.ConsumerService.GetAll();
-            return this.View(consumers);
+            int pageIndex = 0;
+
+            if (page.HasValue)
+            {
+                pageIndex = page.Value - 1;
+            }
+
+            IPagedList<Consumer> retVal = new PagedList<Consumer>(this.ServiceManager.ConsumerService.GetAll(), pageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
+            return this.View(retVal);
         }
 
         /// <summary>

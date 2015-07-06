@@ -21,6 +21,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// </summary>
         /// <returns>A list of consumers</returns>
         IList<Consumer> GetAll();
+        IList<Consumer> GetAll(int pageIndex, int pageSize);
 
         /// <summary>
         /// Creates a new consumer and saves it to the database.

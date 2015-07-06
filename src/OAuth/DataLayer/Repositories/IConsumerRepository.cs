@@ -13,6 +13,8 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
     /// </summary>
     public interface IConsumerRepository : INHibernateRepository<Consumer, string>
     {
+        IList<Consumer> GetAll(int pageIndex, int pageSize);
+
         /// <summary>
         /// Get a Consumer by its key
         /// </summary>

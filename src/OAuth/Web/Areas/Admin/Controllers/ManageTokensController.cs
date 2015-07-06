@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth.Web.Code;
@@ -23,7 +24,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// <param name="userName">A username to search for</param>
         /// <param name="consumerKey">A consumer key to search for</param>
         /// <returns>A view</returns>
-        public ActionResult Index(OAuthTokensModel model)
+        public ActionResult Index(OAuthTokensModel model, int? page)
         {
             OAuthTokensModel retVal = new OAuthTokensModel();
 
@@ -44,16 +45,23 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 
             retVal.UserName = model.UserName;
 
+            int currentPageIndex = 0;
+
+            if(page.HasValue)
+            {
+                currentPageIndex = page.Value - 1;
+            }
+
             if (!string.IsNullOrEmpty(model.UserName))
             {
                 AMFUserLogin tempUser = new AMFUserLogin();
                 tempUser.Email = model.UserName;
-                retVal.Tokens = this.ServiceManager.TokenService.GetByUser(tempUser, model.StartDate, model.EndDate);
+                retVal.Tokens =  new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByUser(tempUser, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
             }
 
             if (!string.IsNullOrEmpty(model.ConsumerKey))
             {
-                retVal.Tokens = this.ServiceManager.TokenService.GetByConsumerKey(model.ConsumerKey, model.StartDate, model.EndDate);
+                retVal.Tokens = new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByConsumerKey(model.ConsumerKey, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
             }
 
             retVal.UserName = model.UserName;

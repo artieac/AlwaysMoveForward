@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 
 namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Models
@@ -10,7 +11,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Models
     {
         public OAuthTokensModel()
         {
-            this.Tokens = new List<RequestToken>();
+            this.Tokens = new PagedList<RequestToken>();
         }
 
         /// <summary>
@@ -36,6 +37,6 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Models
         /// <summary>
         /// Gets and sets the login history associated with the user name
         /// </summary>
-        public IList<RequestToken> Tokens { get; set; }
+        public IPagedList<RequestToken> Tokens { get; set; }
     }
 }

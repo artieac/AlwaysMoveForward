@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -111,6 +115,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Pager.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -159,6 +164,9 @@
     <Compile Include="Code\AccessTokenAuthorizationFilter.cs" />
     <Compile Include="Code\CookieAuthorizationAttribute.cs" />
     <Compile Include="Code\Constants.cs" />
+    <Compile Include="Code\Extensions\FilterExtension.cs" />
+    <Compile Include="Code\Extensions\Pager.cs" />
+    <Compile Include="Code\Extensions\PagerExtensions.cs" />
     <Compile Include="Code\OAuthServiceProviderFactory.cs" />
     <Compile Include="Code\MVCAuthorizationAttribute.cs" />
     <Compile Include="Code\WebAPIAuthorizationAttribute.cs" />

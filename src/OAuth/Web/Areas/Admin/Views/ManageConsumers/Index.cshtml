@@ -1,8 +1,12 @@
-﻿
+﻿@model AlwaysMoveForward.Common.Utilities.IPagedList<AlwaysMoveForward.OAuth.Common.DomainModel.Consumer>
 @{
     ViewBag.Title = "Manage Consumers";
     ViewBag.SelectedTab = 1;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section headerPlugins
+{
+    <link href="@Url.Content("~/Content/Pager.css")" rel="stylesheet" type="text/css" />
 }
 <div class="bodyContent">
     <div class="contentPageTitle">
@@ -35,5 +39,8 @@
             }
         </tbody>
     </table>
+    <div class="pager">
+        @Html.Pager(@Model.PageSize, @Model.PageNumber, @Model.TotalItemCount, "Index")
+    </div>
 </div>
 

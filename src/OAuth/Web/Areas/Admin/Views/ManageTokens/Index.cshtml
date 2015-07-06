@@ -6,6 +6,7 @@
 }
 @section headerPlugins
 {
+    <link href="@Url.Content("~/Content/Pager.css")" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -91,6 +92,9 @@
                     }
                 </tbody>
             </table>
+            <div class="pager">
+                @Html.Pager(@Model.Tokens.PageSize, @Model.Tokens.PageNumber, @Model.Tokens.TotalItemCount, "Index", new { UserName = @Model.UserName, ConsumerKey = @Model.ConsumerKey, StartDate = @Model.StartDate, EndDate = @Model.EndDate });
+            </div>
         </div>
     </div>
 </div>
