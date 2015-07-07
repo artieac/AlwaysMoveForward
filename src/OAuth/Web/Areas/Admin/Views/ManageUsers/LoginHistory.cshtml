@@ -6,6 +6,7 @@
 }
 @section headerPlugins
 {
+    <link href="@Url.Content("~/Content/Pager.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
             $("#searchFormSubmitButton").click(function () {
@@ -46,6 +47,9 @@
                     }
                 </tbody>
             </table>
+            <div class="pager">
+                @Html.Pager(@Model.LoginHistory.PageSize, @Model.LoginHistory.PageNumber, @Model.LoginHistory.TotalItemCount, "LoginHistory", new { userName = @Model.UserName });
+            </div>
         </div>
     </div>
 </div>

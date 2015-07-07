@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth.Web.Code;
@@ -21,9 +22,16 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// Displays a list of users
         /// </summary>
         /// <returns>A view</returns>
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            IList<AMFUserLogin> users = this.ServiceManager.UserService.GetAll();
+            int currentPageIndex = 0;
+
+            if(page.HasValue)
+            {
+                currentPageIndex = page.Value - 1;
+            }
+
+            IPagedList<AMFUserLogin> users = new PagedList<AMFUserLogin>(this.ServiceManager.UserService.GetAll(), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
             return this.View(users);
         }
 
@@ -62,7 +70,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="userName">The users name</param>
         /// <returns>A view</returns>
-        public ActionResult LoginHistory(string userName)
+        public ActionResult LoginHistory(string userName, int? page)
         {
             LoginHistoryModel retVal = new LoginHistoryModel();
 
@@ -70,7 +78,14 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 
             if(!string.IsNullOrEmpty(userName))
             {
-                retVal.LoginHistory = this.ServiceManager.UserService.GetLoginHistory(userName);
+                int currentPageIndex = 0;
+
+                if(page.HasValue)
+                {
+                    currentPageIndex = page.Value - 1;
+                }
+
+                retVal.LoginHistory = new PagedList<LoginAttempt>(this.ServiceManager.UserService.GetLoginHistory(userName), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
             }
 
             return this.View(retVal);

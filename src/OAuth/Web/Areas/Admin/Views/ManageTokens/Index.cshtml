@@ -59,6 +59,7 @@
                         <th>Access Token</th>
                         <th>Access Token Grant</th>
                         <th>Access Token Expiration</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +88,9 @@
                                     <td>@requestToken.AccessToken.DateGranted</td>
                                     <td>@requestToken.AccessToken.ExpirationDate</td>
                                 }
+                                <td>
+                                    <a href="/Admin/ManageTokens/Delete/@requestToken.Id.ToString()"><img src="/Content/Images/delete.png"/></a>
+                                </td>
                             </tr>
                         }
                     }
