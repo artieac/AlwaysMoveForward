@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 
             if(model.StartDate == null || model.StartDate == DateTime.MinValue)
             {
-                model.StartDate = DateTime.UtcNow.AddHours(-1);
+                model.StartDate = DateTime.UtcNow.AddDays(-1);
             }
 
             if (model.EndDate == null || model.EndDate == DateTime.MinValue)
