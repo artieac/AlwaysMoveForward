@@ -560,5 +560,19 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
             return retVal;
         }
+
+        public bool Delete(long id)
+        {
+            bool retVal = false;
+
+            RequestToken targetToken = this.RequestTokenRepository.GetById(id);
+
+            if(targetToken!=null)
+            {
+                retVal = this.RequestTokenRepository.Delete(targetToken);
+            }
+
+            return retVal;
+        }
     }
 }
