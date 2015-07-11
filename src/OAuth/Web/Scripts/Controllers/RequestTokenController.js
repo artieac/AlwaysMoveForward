@@ -35,7 +35,7 @@
     $scope.deleteRequestToken = function (id, page) {
         var deleteTokenRequest = $resource('/api/RequestToken/:id', {id: id});
         deleteTokenRequest.delete(function (data) {
-            $scope.requestTokens = $scope.getTokensByPage(page);
+            $scope.getTokensByPage(page);
         });
     }
 });

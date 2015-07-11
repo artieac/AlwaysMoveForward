@@ -103,5 +103,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         IList<LoginAttempt> GetLoginHistory(string userName);
 
         void ResetPassword(string userEmail, EmailConfiguration emailConfig);
+
+        bool Delete(long id);
     }
 }

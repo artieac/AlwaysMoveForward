@@ -21,7 +21,7 @@
     $scope.deleteUser = function (id, page) {
         var deleteRequest = $resource('/api/User/:id', { id: id });
         deleteRequest.delete(function (data) {
-            $scope.users = $scope.getUsersByPage(page);
+            $scope.getUsersByPage(page);
         });
     }
 });

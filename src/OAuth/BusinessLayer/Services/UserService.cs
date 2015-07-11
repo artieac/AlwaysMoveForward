@@ -290,5 +290,19 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
             }
         }
+
+        public bool Delete(long id)
+        {
+            bool retVal = false;
+
+            AMFUserLogin targetUser = this.UserRepository.GetById(id);
+
+            if(targetUser!=null)
+            {
+                retVal = this.UserRepository.Delete(targetUser);
+            }
+
+            return retVal;
+        }
     }
 }

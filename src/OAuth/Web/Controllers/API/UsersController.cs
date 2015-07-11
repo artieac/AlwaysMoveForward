@@ -90,8 +90,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
         [WebApiAuthorization(Roles=RoleType.Names.Administrator)]
         public void Delete(long id)
         {
-//            this.Services.UserService.Delete();
+            this.Services.UserService.Delete(id);
         }
-
     }
 }
