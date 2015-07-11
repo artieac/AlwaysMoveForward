@@ -18,9 +18,9 @@ using AlwaysMoveForward.OAuth.Common;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Client.Configuration;
 
-namespace AlwaysMoveForward.OAuth.Web.Code
+namespace AlwaysMoveForward.OAuth.Web.Code.Filters
 {
-    public class AccessTokenAuthorizationFilter
+    public class OAuthAuthenticationParser
     {
         public static OAuthServerSecurityPrincipal ProcessOAuthHeader()
         {

@@ -14,7 +14,7 @@
     }
 
     $scope.getTokensByPage = function (page) {
-        if ($scope.searchForm.consumerKey !== undefined) {
+        if ($scope.searchForm.consumerKey !== undefined && $scope.searchForm.consumerKey) {
             $scope.getTokensByPageAndConsumerKey(page, $scope.searchForm.consumerKey, $scope.searchForm.startDate, $scope.searchForm.endDate);
         }
         else {
@@ -24,12 +24,18 @@
 
     $scope.getTokensByPageAndConsumerKey = function (page, consumerKey, startDate, endDate) {
         var getTokensRequest = $resource('/api/Consumer/:consumerKey/RequestTokens?page=:page&startDate=:startDate&endDate=:endDate');
-        $scope.requestTokens = getTokensRequest.query({page: page, consumerKey: consumerKey, startDate: startDate, endDate: endDate});
+        $scope.requestTokens = getTokensRequest.get({page: page, consumerKey: consumerKey, startDate: startDate, endDate: endDate});
     }
 
     $scope.getTokensByPageAndUserName = function (page, userName, startDate, endDate) {
         var getTokensRequest = $resource('/api/User/:userName/RequestTokens?page=:page&startDate=:startDate&endDate=:endDate');
-        $scope.requestTokens = getTokensRequest.query({ page: page, userName: userName, startDate: startDate, endDate: endDate });
+        $scope.requestTokens = getTokensRequest.get({ page: page, userName: userName, startDate: startDate, endDate: endDate });
     }
 
+    $scope.deleteRequestToken = function (id, page) {
+        var deleteTokenRequest = $resource('/api/RequestToken/:id', {id: id});
+        deleteTokenRequest.delete(function (data) {
+            $scope.requestTokens = $scope.getTokensByPage(page);
+        });
+    }
 });

@@ -49,7 +49,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.Id = 0;
             this.DateCreated = DateTime.UtcNow;
             this.UserStatus = UserStatus.Active;
-            this.Role = OAuthRoles.User;
+            this.Role = RoleType.Id.User;
         }
 
         public void UpdatePassword(string unencryptedPassword)
@@ -87,6 +87,6 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the current user role
         /// </summary>
-        public OAuthRoles Role { get; set; }
+        public RoleType.Id Role { get; set; }
     }
 }

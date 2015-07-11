@@ -14,7 +14,5 @@ namespace AlwaysMoveForward.OAuth.Web.Code
         /// The login route.
         /// </summary>
         public const string LoginRoute = "/User/Signin";
-
-        public const int PageSize = 5;
     }
 }

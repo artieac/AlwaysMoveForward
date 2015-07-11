@@ -51,7 +51,7 @@
     <Compile Include="DomainModel\Consumer.cs" />
     <Compile Include="DomainModel\ConsumerNonce.cs" />
     <Compile Include="DomainModel\IOAuthEndpoints.cs" />
-    <Compile Include="DomainModel\OAuthRoles.cs" />
+    <Compile Include="DomainModel\RoleType.cs" />
     <Compile Include="DomainModel\LoginAttempt.cs" />
     <Compile Include="DomainModel\RequestToken.cs" />
     <Compile Include="DomainModel\AMFUserLogin.cs" />

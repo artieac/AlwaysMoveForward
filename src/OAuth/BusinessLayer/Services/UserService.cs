@@ -74,7 +74,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="userLogin">The source user</param>
         /// <returns>The updated user</returns>       
-        public AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole)
+        public AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, RoleType.Id userRole)
         {
             AMFUserLogin retVal = this.UserRepository.GetById(userId);
 

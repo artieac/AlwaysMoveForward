@@ -6,16 +6,18 @@ using System.Net.Http;
 using System.Web.Http;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Web.Models.API;
+using AlwaysMoveForward.OAuth.Web.Models;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
 
 namespace AlwaysMoveForward.OAuth.Web.Controllers.API
 {
     public class RequestTokensController : BaseAPIController
     {
         [Route("api/Consumer/{consumerKey}/RequestTokens"), HttpGet()]
-        public IPagedList<RequestToken> GetByConsumerKey(int? page, string consumerKey, DateTime? startDate, DateTime? endDate)
+        [WebApiAuthorization(Roles = RoleType.Names.Administrator)]
+        public PagedListModel<RequestToken> GetByConsumerKey(int? page, string consumerKey, DateTime? startDate, DateTime? endDate)
         {
-            IPagedList<RequestToken> retVal = new PagedList<RequestToken>();
+            IList<RequestToken> retVal = new List<RequestToken>();
 
             DateTime searchStartDate = DateTime.UtcNow.AddDays(-1);
 
@@ -40,16 +42,17 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
 
             if (!string.IsNullOrEmpty(consumerKey))
             {
-                retVal = new PagedList<RequestToken>(this.Services.TokenService.GetByConsumerKey(consumerKey, searchStartDate, searchEndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
+                retVal = this.Services.TokenService.GetByConsumerKey(consumerKey, searchStartDate, searchEndDate);
             }
 
-            return retVal;
+            return new PagedListModel<RequestToken>(retVal, currentPageIndex);
         }
 
         [Route("api/User/{userName}/RequestTokens"), HttpGet()]
-        public IPagedList<RequestToken> GetByUserName(int? page, string userName, DateTime? startDate, DateTime? endDate)
+        [WebApiAuthorization(Roles = RoleType.Names.Administrator)]
+        public PagedListModel<RequestToken> GetByUserName(int? page, string userName, DateTime? startDate, DateTime? endDate)
         {
-            IPagedList<RequestToken> retVal = new PagedList<RequestToken>();
+            IList<RequestToken> retVal = new List<RequestToken>();
 
             DateTime searchStartDate = DateTime.UtcNow.AddDays(-1);
 
@@ -75,10 +78,10 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
             if (!string.IsNullOrEmpty(userName))
             {
                 AMFUserLogin targetUser = this.Services.UserService.GetByEmail(userName);
-                retVal = new PagedList<RequestToken>(this.Services.TokenService.GetByUser(targetUser, searchStartDate, searchEndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
+                retVal = this.Services.TokenService.GetByUser(targetUser, searchStartDate, searchEndDate);
             }
 
-            return retVal;
+            return new PagedListModel<RequestToken>(retVal, currentPageIndex);
         }
 
         // GET api/<controller>/5
@@ -97,9 +100,11 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
         {
         }
 
-        // DELETE api/<controller>/5
+        [Route("api/RequestToken/{id}"), HttpDelete()]
+        [WebApiAuthorization(Roles = RoleType.Names.Administrator)]
         public void Delete(int id)
         {
+//            this.Services.TokenService.Delete(id);
         }
     }
 }

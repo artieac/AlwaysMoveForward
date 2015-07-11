@@ -5,13 +5,16 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Web.Code;
+using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
+using AlwaysMoveForward.OAuth.Web.Models;
 
 namespace AlwaysMoveForward.OAuth.Web.Controllers.API
 {
     public class UsersController : BaseAPIController
     {
-        [WebAPIAuthorization]
+        [Route("api/User"), HttpGet()]
+        [WebApiAuthorization]
         public User Get()
         {
             User retVal = null;
@@ -28,7 +31,8 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
             return retVal;
         }
 
-        [WebAPIAuthorization]
+        [Route("api/User/{id}"), HttpGet()]
+        [WebApiAuthorization]
         public User Get(long id)
         {
             User retVal = null;
@@ -46,7 +50,23 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
             return retVal;
         }
 
-        [WebAPIAuthorization]
+        [Route("api/Users"), HttpGet()]
+        [WebApiAuthorization(Roles = RoleType.Names.Administrator)]
+        public PagedListModel<User> GetAll(int? page)
+        {
+            int currentPageIndex = 0;
+
+            if(page.HasValue)
+            {
+                currentPageIndex = page.Value - 1;
+            }
+
+            IList<User> retVal = this.Services.UserService.GetAll().Cast<User>().ToList();
+            return new PagedListModel<AlwaysMoveForward.Common.DomainModel.User>(retVal, currentPageIndex);
+        }
+
+        [Route("api/Users/{emailAddress}"), HttpGet()]
+        [WebApiAuthorization]
         public IList<User> Get(string emailAddress)
         {
             IList<User> retVal = new List<User>();
@@ -65,5 +85,13 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
 
             return retVal;
         }
+
+        [Route("api/User/{id}"), HttpDelete()]
+        [WebApiAuthorization(Roles=RoleType.Names.Administrator)]
+        public void Delete(long id)
+        {
+//            this.Services.UserService.Delete();
+        }
+
     }
 }

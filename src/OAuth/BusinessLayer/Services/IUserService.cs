@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <param name="userStatus"></param>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole);
+        AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, RoleType.Id userRole);
 
         /// <summary>
         /// Update a user with values a regular user can change.

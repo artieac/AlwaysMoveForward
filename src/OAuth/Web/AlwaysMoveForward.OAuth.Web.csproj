@@ -154,6 +154,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Controllers\RequestTokenController.js" />
+    <Content Include="Scripts\Controllers\UserController.js" />
     <Content Include="Scripts\datepicker\css\datepicker.css" />
     <Content Include="Scripts\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Scripts\errors.json" />
@@ -948,16 +949,16 @@
     <Compile Include="Areas\Admin\Controllers\ManageUsersController.cs" />
     <Compile Include="Areas\Admin\Models\LoginHistoryModel.cs" />
     <Compile Include="Areas\Admin\Models\OAuthTokensModel.cs" />
+    <Compile Include="Code\Filters\CookieAuthenticationParser.cs" />
+    <Compile Include="Code\Filters\MVCAuthorizationAttribute.cs" />
+    <Compile Include="Code\Filters\WebApiAuthorizationAttribute.cs" />
     <Compile Include="Models\API\OAuthTokensModel.cs" />
-    <Compile Include="Code\AccessTokenAuthorizationFilter.cs" />
-    <Compile Include="Code\CookieAuthorizationAttribute.cs" />
+    <Compile Include="Code\Filters\OAuthAuthenticationParser.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\Extensions\FilterExtension.cs" />
     <Compile Include="Code\Extensions\Pager.cs" />
     <Compile Include="Code\Extensions\PagerExtensions.cs" />
     <Compile Include="Code\OAuthServiceProviderFactory.cs" />
-    <Compile Include="Code\MVCAuthorizationAttribute.cs" />
-    <Compile Include="Code\WebAPIAuthorizationAttribute.cs" />
     <Compile Include="Code\XmlResult.cs" />
     <Compile Include="Controllers\API\BaseAPIController.cs" />
     <Compile Include="Controllers\API\RequestTokensController.cs" />
@@ -973,6 +974,8 @@
     <Compile Include="Models\API\UsetDetailModel.cs" />
     <Compile Include="Models\AuthorizeConsumerModel.cs" />
     <Compile Include="Models\ConsumerKeyModel.cs" />
+    <Compile Include="Models\PagedListModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Models\PasswordHintModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
