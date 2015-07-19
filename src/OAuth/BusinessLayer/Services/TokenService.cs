@@ -8,6 +8,7 @@ using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
@@ -112,17 +113,8 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 throw new ArgumentNullException("context");
             }
 
-            Realm parsedRealm = Realm.Parse(context.Realm);
- 
-            RequestToken retVal = new RequestToken
-            {
-                ConsumerKey = context.ConsumerKey,
-                Realm = parsedRealm,
-                Token = Guid.NewGuid().ToString(),
-                Secret = Guid.NewGuid().ToString(),
-                CallbackUrl = context.CallbackUrl
-            };
-
+            Realm parsedRealm = Realm.Parse(context.Realm); 
+            RequestToken retVal = TokenFactory.CreateRequestToken(context.ConsumerKey, parsedRealm, context.CallbackUrl);
             retVal = this.RequestTokenRepository.Save(retVal);
 
             return retVal;
@@ -293,18 +285,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 {
                     Consumer tokenConsumer = this.ConsumerRepository.GetByConsumerKey(authorizedRequestToken.ConsumerKey);
 
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = authorizedRequestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddHours(tokenConsumer.AccessTokenLifetime),
-                        Realm = authorizedRequestToken.Realm,
-                        Token = Guid.NewGuid().ToString(),
-                        Secret = Guid.NewGuid().ToString(),
-                        UserName = authorizedRequestToken.UserName,
-                        UserId = authorizedRequestToken.UserId
-                    };
-
+                    AccessToken newAccessToken = TokenFactory.CreateAccessToken(authorizedRequestToken, tokenConsumer.AccessTokenLifetime);
                     authorizedRequestToken.AccessToken = newAccessToken;
                     authorizedRequestToken.State = TokenState.AccessGranted;
 

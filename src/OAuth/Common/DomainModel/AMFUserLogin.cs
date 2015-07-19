@@ -24,7 +24,19 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public static double AccountLockTimeout = 30;
 
-        public static string GenerateNewPassword()
+
+        /// <summary>
+        /// Initialize id so that it is marked as unsaved.
+        /// </summary>
+        public AMFUserLogin()
+        {
+            this.Id = 0;
+            this.DateCreated = DateTime.UtcNow;
+            this.UserStatus = UserStatus.Active;
+            this.Role = RoleType.Id.User;
+        }
+
+        public string GenerateNewPassword()
         {
             string retVal = string.Empty;
             Random random = new Random();
@@ -38,20 +50,11 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
 
             retVal = sb.ToString();
 
+            this.UpdatePassword(retVal);
+
             return retVal;
         }
-
-        /// <summary>
-        /// Initialize id so that it is marked as unsaved.
-        /// </summary>
-        public AMFUserLogin()
-        {
-            this.Id = 0;
-            this.DateCreated = DateTime.UtcNow;
-            this.UserStatus = UserStatus.Active;
-            this.Role = RoleType.Id.User;
-        }
-
+        
         public void UpdatePassword(string unencryptedPassword)
         {
             SHA1HashUtility passwordHashUtility = new SHA1HashUtility();

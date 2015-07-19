@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Storage;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
@@ -70,18 +71,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <returns>A new consumer</returns>
         public Consumer Create(string consumerName, string contactEmail)
         {
-            Consumer newConsumer = null;
-
-            if (!string.IsNullOrEmpty(consumerName) && !string.IsNullOrEmpty(contactEmail))
-            {
-                newConsumer = new Consumer();
-                newConsumer.ConsumerKey = Guid.NewGuid().ToString();
-                newConsumer.ConsumerSecret = Guid.NewGuid().ToString();
-                newConsumer.Name = consumerName;
-                newConsumer.ContactEmail = contactEmail;
-                newConsumer.PublicKey = string.Empty;
-            }
-
+            Consumer newConsumer = ConsumerFactory.Create(consumerName, contactEmail);
             return this.ConsumerRepository.Save(newConsumer);
         }
 

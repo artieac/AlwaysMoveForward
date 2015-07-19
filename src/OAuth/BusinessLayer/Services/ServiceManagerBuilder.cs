@@ -1,5 +1,6 @@
 ﻿using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
