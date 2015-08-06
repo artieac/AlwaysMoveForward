@@ -14,15 +14,10 @@ namespace AlwaysMoveForward.OAuth.UnitTests.OAuth
     {
         private RequestToken CreateRequestToken(bool usedUp)
         {
-            RequestToken retVal = new RequestToken();
-            retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
-            retVal.Realm = TokenConstants.TestRealm;
+            RequestToken retVal = new RequestToken(ConsumerConstants.TestConsumerKey, TokenConstants.TestRealm, "http://localhost/oauth/callback");
             retVal.Token = TokenConstants.TestRequestToken;
             retVal.Secret = TokenConstants.TestRequestTokenSecret;
-            retVal.CallbackUrl = "http://localhost/oauth/callback";
-            retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
-            retVal.DateAuthorized = DateTime.UtcNow;
-
+            retVal.Authorize(retVal.Realm);
             return retVal;
         }
 

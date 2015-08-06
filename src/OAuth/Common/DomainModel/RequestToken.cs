@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DevDefined.OAuth.Framework;
 using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.Factories;
 
 namespace AlwaysMoveForward.OAuth.Common.DomainModel
 {
@@ -29,20 +29,27 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.DateAuthorized = DateTime.MaxValue;
         }
 
+        public RequestToken(string consumerKey, Realm parsedRealm, string callbackUrl)
+            : base()
+        {
+            this.ConsumerKey = consumerKey;
+            this.Realm = parsedRealm;
+            this.CallbackUrl = callbackUrl;
+        }
         /// <summary>
         /// Gets or sets the Database id
         /// </summary>
-        public long Id { get; set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the callback url
         /// </summary>
-        public String CallbackUrl { get; set; }
+        public String CallbackUrl { get; private set; }
 
         /// <summary>
         /// Gets or sets the current access state
         /// </summary>
-        public TokenState State { get; set; }
+        public TokenState State { get; private set; }
 
         /// <summary>
         /// Gets or sets the session handle (used by DevDefined)
@@ -76,7 +83,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the realm.
         /// </summary>
-        public Realm Realm { get; set; }
+        public Realm Realm { get; private set; }
 
         /// <summary>
         /// An explicit implementation to satisfy the IConsumer interface
@@ -100,12 +107,82 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the realm.
         /// </summary>
-        public DateTime ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets the created date
         /// </summary>
-        public virtual DateTime DateCreated { get; set; }
+        public virtual DateTime DateCreated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the verifier code established during authorization
+        /// </summary>
+        public string VerifierCode { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the user that authorized this token
+        /// </summary>
+        public long UserId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the username of the user that authorized this token
+        /// </summary>
+        public string UserName { get; private set; }
+
+        /// <summary>
+        /// The date that the request token was authorized
+        /// </summary>
+        public DateTime? DateAuthorized { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Access token associated with this request
+        /// </summary>
+        public AccessToken AccessToken { get; private set; }
+
+        public void GenerateToken()
+        {
+            this.Token = Guid.NewGuid().ToString();
+            this.Secret = Guid.NewGuid().ToString();
+        }
+
+        public void DenyAccess()
+        {
+            this.State = TokenState.AccessDenied;
+        }
+
+        public void Authorize(Realm realm)
+        {
+            this.Authorize(realm, RequestTokenAuthorizer.GenerateVerifierCode());
+        }
+
+        public void Authorize(Realm realm, string verifierCode)
+        {
+            if (realm != null)
+            {
+                this.DateAuthorized = DateTime.UtcNow;
+                this.UserName = realm.DataName;
+                this.UserId = long.Parse(realm.DataId);
+                this.VerifierCode = verifierCode;
+                this.State = TokenState.AccessGranted;
+            }
+        }
+
+        public void Authorize(AMFUserLogin currentUser)
+        {
+            this.Authorize(currentUser, RequestTokenAuthorizer.GenerateVerifierCode());
+        }
+
+        public void Authorize(AMFUserLogin currentUser, string verifierCode)
+        {
+            if(currentUser != null)
+            {
+                this.DateAuthorized = DateTime.UtcNow;
+                this.UserName = currentUser.Email;
+                this.UserId = currentUser.Id;
+                this.VerifierCode = verifierCode;
+                this.State = TokenState.AccessGranted;
+            }
+        }
 
         public bool UsedUp
         {
@@ -113,7 +190,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             {
                 bool retVal = false;
 
-                if((this.IsAuthorized() == true  && this.AccessToken != null) ||
+                if ((this.IsAuthorized() == true && this.AccessToken != null) ||
                    this.ExpirationDate < DateTime.UtcNow)
                 {
                     retVal = true;
@@ -122,30 +199,6 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
                 return retVal;
             }
         }
-        /// <summary>
-        /// Gets or sets the verifier code established during authorization
-        /// </summary>
-        public string VerifierCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user that authorized this token
-        /// </summary>
-        public long UserId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the username of the user that authorized this token
-        /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// The date that the request token was authorized
-        /// </summary>
-        public DateTime? DateAuthorized { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Access token associated with this request
-        /// </summary>
-        public AccessToken AccessToken { get; set; }
 
         public bool IsAuthorized()
         {
@@ -188,6 +241,18 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             }
 
             return retVal;
+        }
+
+        public AccessToken GrantAccessToken(Consumer consumer)
+        {
+            if (this.IsAuthorized() == true && this.AccessToken == null)
+            {
+                AccessToken newAccessToken = TokenFactory.CreateAccessToken(this, consumer.AccessTokenLifetime);
+                this.AccessToken = newAccessToken;
+                this.State = TokenState.AccessGranted;               
+            }
+
+            return this.AccessToken;
         }
     }
 }

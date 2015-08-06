@@ -45,8 +45,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
             retVal.Email = userName;
             retVal.FirstName = string.Empty;
             retVal.LastName = string.Empty;
-            retVal.PasswordHash = hashedPassword;
-            retVal.PasswordSalt = passwordSalt;
+            retVal.UpdatePassword(hashedPassword, passwordSalt);
 
             return retVal;
         }

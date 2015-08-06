@@ -11,6 +11,15 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
 {
     public class MockRequestTokenRepositoryHelper
     {
+        private static Consumer CreateConsumer(string consumerKey)
+        {
+            Consumer retVal = new Consumer();
+            retVal.ConsumerKey = consumerKey;
+            retVal.AccessTokenLifetime = 5000;
+
+            return retVal;
+        }
+
         public static void ConfigureAllMethods(Mock<IRequestTokenRepository> repositoryObject)
         {
             MockRequestTokenRepositoryHelper.ConfigureGetByConsumerKey(repositoryObject);
@@ -30,69 +39,53 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
             return retVal;
         }
 
-        public static RequestToken AuthorizeRequestToken(RequestToken originalToken, string verifierCode)
-        {
-            RequestToken retVal = originalToken;
-            retVal.DateAuthorized = DateTime.Now;
-            retVal.UserId = UserConstants.TestUserId;
-            retVal.UserName = UserConstants.TestUserName;
-            retVal.VerifierCode = verifierCode;
-            return retVal;
-        }
-
-        public static AccessToken GenerateAccessToken(string accessToken)
-        {
-            AccessToken retVal = new AccessToken();
-            retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
-            retVal.DateGranted = DateTime.Now;
-            retVal.ExpirationDate = DateTime.Now.AddYears(5);
-            retVal.Token = accessToken;
-            retVal.Secret = TokenConstants.TestAccessTokenSecret;
-            retVal.Realm = TokenConstants.TestRealm;
-            return retVal;
-        }
-
-
         public static RequestToken GenerateRequestToken(string consumerKey, string tokenValue, string requestTokenSecret, string verifierCode, string accessToken)
         {
             RequestToken retVal = null;
+            Consumer consumer = MockRequestTokenRepositoryHelper.CreateConsumer(consumerKey);
 
             if (tokenValue == TokenConstants.TestRequestToken 
                 || tokenValue == TokenConstants.TestRequestTokenWithAuthorization
                 || tokenValue == TokenConstants.TestRequestTokenWithAccessToken)
             {
-                retVal = new RequestToken();
-                retVal.ConsumerKey = consumerKey;
-                retVal.Realm = TokenConstants.TestRealm;
+                retVal = new RequestToken(consumerKey, TokenConstants.TestRealm, string.Empty);
                 retVal.Token = tokenValue;
                 retVal.Secret = requestTokenSecret;
-                retVal.CallbackUrl = TokenConstants.TestCallbackUrl;
-                retVal.ExpirationDate = DateTime.UtcNow.AddDays(1);
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAuthorization)
                 {
-                    retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
+                    retVal.Authorize(retVal.Realm);
                 }
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAccessToken)
                 {
-                    retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
-                    retVal.AccessToken = MockRequestTokenRepositoryHelper.GenerateAccessToken(accessToken);
+                    retVal.Authorize(retVal.Realm);
+                    retVal.GrantAccessToken(consumer);
+                    retVal.AccessToken.Token = accessToken;
+                    retVal.AccessToken.Secret = TokenConstants.TestAccessTokenSecret;
                 }
             }
             else if (tokenValue == TokenConstants.TestAccessToken)
             {
-                retVal = new RequestToken();
-                retVal.ConsumerKey = consumerKey;
-                retVal.Realm = TokenConstants.TestRealm;
+                retVal = new RequestToken(consumerKey, TokenConstants.TestRealm, TokenConstants.TestCallbackUrl);
                 retVal.Token = TokenConstants.TestRequestToken;
-                retVal.Secret = requestTokenSecret;
-                retVal.CallbackUrl = TokenConstants.TestCallbackUrl;
-                retVal.ExpirationDate = DateTime.UtcNow.AddDays(1);
-                retVal = MockRequestTokenRepositoryHelper.AuthorizeRequestToken(retVal, verifierCode);
-                retVal.AccessToken = MockRequestTokenRepositoryHelper.GenerateAccessToken(tokenValue);
+                retVal.Secret = TokenConstants.TestRequestTokenSecret;
+                retVal.Authorize(retVal.Realm, verifierCode);
+                retVal.GrantAccessToken(consumer);
+                retVal.AccessToken.Token = tokenValue;
+                retVal.AccessToken.Secret = TokenConstants.TestAccessTokenSecret;
             }
 
+            return retVal;
+        }
+
+        public static AccessToken GenerateAccessToken(string accessToken)
+        {
+            AccessToken retVal = new AccessToken(DateTime.Now.AddYears(5), string.Empty, 0);
+            retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
+            retVal.Token = accessToken;
+            retVal.Secret = TokenConstants.TestAccessTokenSecret;
+            retVal.Realm = TokenConstants.TestRealm;
             return retVal;
         }
 

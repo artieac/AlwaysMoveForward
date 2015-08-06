@@ -21,6 +21,11 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
     /// </summary>
     public class UserController : ControllerBase
     {        
+        public ActionResult EmbeddedSignin()
+        {
+            return this.View();
+        }
+
         /// <summary>
         /// Show the initial sign in page
         /// </summary>

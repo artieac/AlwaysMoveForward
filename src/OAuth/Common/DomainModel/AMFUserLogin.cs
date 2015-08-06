@@ -62,20 +62,25 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
         }
 
+        public void UpdatePassword(string passwordHash, string passwordSalt)
+        {
+            this.PasswordHash = passwordHash;
+            this.PasswordSalt = passwordSalt;
+        }
         /// <summary>
         /// The salt associated with the hashed password
         /// </summary>
-        public string PasswordSalt { get; set; }
+        public string PasswordSalt { get; private set; }
 
         /// <summary>
         /// Gets or sets the actually hashed password
         /// </summary>
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
 
         /// <summary>
         /// Gets or sets the date time that the user is created
         /// </summary>
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; private set; }
 
         /// <summary>
         /// Gets or sets the forgotten password hint

@@ -285,10 +285,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 {
                     Consumer tokenConsumer = this.ConsumerRepository.GetByConsumerKey(authorizedRequestToken.ConsumerKey);
 
-                    AccessToken newAccessToken = TokenFactory.CreateAccessToken(authorizedRequestToken, tokenConsumer.AccessTokenLifetime);
-                    authorizedRequestToken.AccessToken = newAccessToken;
-                    authorizedRequestToken.State = TokenState.AccessGranted;
-
+                    authorizedRequestToken.GrantAccessToken(tokenConsumer);
                     authorizedRequestToken = this.RequestTokenRepository.Save(authorizedRequestToken);
 
                     if (authorizedRequestToken != null && authorizedRequestToken.AccessToken != null)
@@ -316,7 +313,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (foundToken != null)
                 {
-                    foundToken.State = TokenState.AccessDenied;
+                    foundToken.DenyAccess();
                     retVal = this.RequestTokenRepository.Save(foundToken);
                 }
             }
@@ -404,11 +401,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.DateAuthorized = DateTime.UtcNow;
-                    retVal.UserName = currentUser.Email;
-                    retVal.UserId = currentUser.Id;
-                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
-                    retVal.State = TokenState.AccessGranted;
+                    retVal.Authorize(currentUser);
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }
             }
@@ -432,17 +425,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.DateAuthorized = DateTime.UtcNow;
-                    Realm parsedRealm = retVal.Realm;
-
-                    if (parsedRealm != null)
-                    {
-                        retVal.UserName = parsedRealm.DataName;
-                        retVal.UserId = long.Parse(parsedRealm.DataId);
-                    }
-
-                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
-                    retVal.State = TokenState.AccessGranted;
+                    retVal.Authorize(retVal.Realm);
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }
                 else

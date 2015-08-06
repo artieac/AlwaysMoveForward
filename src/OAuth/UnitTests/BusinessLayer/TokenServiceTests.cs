@@ -20,9 +20,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
 
         private RequestToken CreateRequestToken(bool usedUp)
         {
-            RequestToken retVal = new RequestToken();
-            retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
-            retVal.Realm = TokenConstants.TestRealm;
+            RequestToken retVal = new RequestToken(ConsumerConstants.TestConsumerKey, TokenConstants.TestRealm, string.Empty);
             retVal.Token = TokenConstants.TestRequestToken;
             retVal.Secret = TokenConstants.TestRequestTokenSecret;
 
