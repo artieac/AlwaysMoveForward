@@ -48,18 +48,18 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
                 || tokenValue == TokenConstants.TestRequestTokenWithAuthorization
                 || tokenValue == TokenConstants.TestRequestTokenWithAccessToken)
             {
-                retVal = new RequestToken(consumerKey, TokenConstants.TestRealm, string.Empty);
+                retVal = new RequestToken(consumerKey, TokenConstants.TestRealm, TokenConstants.TestCallbackUrl);
                 retVal.Token = tokenValue;
                 retVal.Secret = requestTokenSecret;
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAuthorization)
                 {
-                    retVal.Authorize(retVal.Realm);
+                    retVal.Authorize(retVal.Realm, TokenConstants.TestVerifierCode);
                 }
 
                 if (tokenValue == TokenConstants.TestRequestTokenWithAccessToken)
                 {
-                    retVal.Authorize(retVal.Realm);
+                    retVal.Authorize(retVal.Realm, TokenConstants.TestVerifierCode);
                     retVal.GrantAccessToken(consumer);
                     retVal.AccessToken.Token = accessToken;
                     retVal.AccessToken.Secret = TokenConstants.TestAccessTokenSecret;

@@ -30,11 +30,11 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         }
 
         public RequestToken(string consumerKey, Realm parsedRealm, string callbackUrl)
-            : base()
+            : this()
         {
             this.ConsumerKey = consumerKey;
             this.Realm = parsedRealm;
-            this.CallbackUrl = callbackUrl;
+            this.CallbackUrl = callbackUrl;          
         }
         /// <summary>
         /// Gets or sets the Database id

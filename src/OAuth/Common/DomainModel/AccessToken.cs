@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.DateCreated = DateTime.UtcNow;
         }
 
-        public AccessToken(DateTime expirationDate, string userName, long userId) : base()
+        public AccessToken(DateTime expirationDate, string userName, long userId) : this()
         {
             this.ExpirationDate = expirationDate;
             this.UserId = userId;
