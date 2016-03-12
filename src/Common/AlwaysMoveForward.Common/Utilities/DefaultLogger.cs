@@ -25,22 +25,22 @@ namespace AlwaysMoveForward.Common.Utilities
             }
         }
 
-        public override void Debug(string message)
+        protected override void LogDebug(string message)
         {
             this.Logger.Debug(message);
         }
 
-        public override void Error(string message)
+        protected override void LogError(string message)
         {
             this.Logger.Error(message);
         }
 
-        public override void Info(string message)
+        protected override void LogInfo(string message)
         {
             this.Logger.Info(message);
         }
 
-        public override void Warn(string message)
+        protected override void LogWarn(string message)
         {
             this.Logger.Warn(message);
         }

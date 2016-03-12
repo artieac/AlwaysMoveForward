@@ -48,7 +48,7 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Error("SerializationUtilities", "SerializeObjectToXml", e);
+                LogManager.GetLogger().Error(e);
             }
 
             return retVal;
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Error("SerializationUtilities", "DeserializeXmlToObject", e);
+                LogManager.GetLogger().Error(e);
             }
 
             return retVal;
@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.Common.Utilities
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Error("SerializationUtilities", "DeserializeXmlToObject", e);
+                LogManager.GetLogger().Error(e);
             }
 
             return retVal;
