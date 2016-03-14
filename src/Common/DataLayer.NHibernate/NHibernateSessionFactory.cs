@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHC = NHibernate.Cfg;
+using AlwaysMoveForward.Common.Utilities;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
@@ -45,6 +46,10 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
                 {
                     properties.Add(ConfigurationProperties.ConnectionString, connectionString);
                 }
+                else
+                {
+                    LogManager.GetLogger().Error("Missing connection string");
+                }
 
                 // Lock so more than 1 thread can't do the configuration
                 lock (configurationLock)
@@ -78,17 +83,28 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
                 // Lock so more than 1 thread can't do the configuration
                 lock (sessionFactoryLock)
                 {
-                    // Since threads held up by the lock will go to this next line, make one more check to see if it isn't null
-                    // if it is, then this is that same original thread that grabbed the lock, go ahead and allocate
-                    // If not then another thread already allocated an instance to just bow out.
-                    if (NHibernateSessionFactory.sessionFactory == null)
+                    try
                     {
-                        NHC.Configuration nhibernateConfiguration = NHibernateSessionFactory.GetConfiguration(connectionString);
-
-                        if (nhibernateConfiguration != null)
+                        // Since threads held up by the lock will go to this next line, make one more check to see if it isn't null
+                        // if it is, then this is that same original thread that grabbed the lock, go ahead and allocate
+                        // If not then another thread already allocated an instance to just bow out.
+                        if (NHibernateSessionFactory.sessionFactory == null)
                         {
-                            NHibernateSessionFactory.sessionFactory = nhibernateConfiguration.BuildSessionFactory();
+                            NHC.Configuration nhibernateConfiguration = NHibernateSessionFactory.GetConfiguration(connectionString);
+
+                            if (nhibernateConfiguration != null)
+                            {
+                                NHibernateSessionFactory.sessionFactory = nhibernateConfiguration.BuildSessionFactory();
+                            }
+                            else
+                            {
+                                LogManager.GetLogger().Error("Missing Nhibernate Configuration");
+                            }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
                     }
                 }
             }

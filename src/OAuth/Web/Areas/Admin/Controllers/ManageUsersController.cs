@@ -4,9 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
-using AlwaysMoveForward.OAuth.Web.Code;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
 using AlwaysMoveForward.OAuth.Web.Areas.Admin.Models;
 
 namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
@@ -14,16 +15,23 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
     /// <summary>
     /// Manage the users int he system
     /// </summary>
-    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
+    [MVCAuthorization(Roles = RoleType.Names.Administrator)]
     public class ManageUsersController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         /// <summary>
         /// Displays a list of users
         /// </summary>
         /// <returns>A view</returns>
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            IList<AMFUserLogin> users = this.ServiceManager.UserService.GetAll();
+            int currentPageIndex = 0;
+
+            if(page.HasValue)
+            {
+                currentPageIndex = page.Value - 1;
+            }
+
+            IPagedList<AMFUserLogin> users = new PagedList<AMFUserLogin>(this.ServiceManager.UserService.GetAll(), currentPageIndex, AlwaysMoveForward.OAuth.Web.Models.PagedListModel<int>.PageSize);
             return this.View(users);
         }
 
@@ -32,6 +40,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The user id</param>
         /// <returns>A view</returns>
+        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
         public ActionResult Edit(int id)
         {
             AMFUserLogin retVal = this.ServiceManager.UserService.GetUserById(id);
@@ -43,6 +52,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="user">The user to save</param>
         /// <returns>A view</returns>
+        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
         public ActionResult Save(AMFUserLogin user)
         {
             if (user != null)
@@ -62,7 +72,8 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="userName">The users name</param>
         /// <returns>A view</returns>
-        public ActionResult LoginHistory(string userName)
+        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
+        public ActionResult LoginHistory(string userName, int? page)
         {
             LoginHistoryModel retVal = new LoginHistoryModel();
 
@@ -70,7 +81,14 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 
             if(!string.IsNullOrEmpty(userName))
             {
-                retVal.LoginHistory = this.ServiceManager.UserService.GetLoginHistory(userName);
+                int currentPageIndex = 0;
+
+                if(page.HasValue)
+                {
+                    currentPageIndex = page.Value - 1;
+                }
+
+                retVal.LoginHistory = new PagedList<LoginAttempt>(this.ServiceManager.UserService.GetLoginHistory(userName), currentPageIndex, AlwaysMoveForward.OAuth.Web.Models.PagedListModel<int>.PageSize);
             }
 
             return this.View(retVal);

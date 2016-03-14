@@ -11,9 +11,9 @@ namespace AlwaysMoveForward.OAuth.Client
 {
     public class OAuthRepository : IOAuthRepository
     {
-        private const string GetUserInfoAction = "api/Users";
+        private const string GetUserInfoAction = "api/User";
         private const string GetByEmailAction = "api/Users";
-        private const string GetUserByIdAction = "api/Users";
+        private const string GetUserByIdAction = "api/User";
 
         public OAuthRepository(OAuthClientBase oauthClient)
         {

@@ -8,6 +8,7 @@ using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
@@ -112,17 +113,8 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 throw new ArgumentNullException("context");
             }
 
-            Realm parsedRealm = Realm.Parse(context.Realm);
- 
-            RequestToken retVal = new RequestToken
-            {
-                ConsumerKey = context.ConsumerKey,
-                Realm = parsedRealm,
-                Token = Guid.NewGuid().ToString(),
-                Secret = Guid.NewGuid().ToString(),
-                CallbackUrl = context.CallbackUrl
-            };
-
+            Realm parsedRealm = Realm.Parse(context.Realm); 
+            RequestToken retVal = TokenFactory.CreateRequestToken(context.ConsumerKey, parsedRealm, context.CallbackUrl);
             retVal = this.RequestTokenRepository.Save(retVal);
 
             return retVal;
@@ -293,21 +285,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 {
                     Consumer tokenConsumer = this.ConsumerRepository.GetByConsumerKey(authorizedRequestToken.ConsumerKey);
 
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = authorizedRequestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddHours(tokenConsumer.AccessTokenLifetime),
-                        Realm = authorizedRequestToken.Realm,
-                        Token = Guid.NewGuid().ToString(),
-                        Secret = Guid.NewGuid().ToString(),
-                        UserName = authorizedRequestToken.UserName,
-                        UserId = authorizedRequestToken.UserId
-                    };
-
-                    authorizedRequestToken.AccessToken = newAccessToken;
-                    authorizedRequestToken.State = TokenState.AccessGranted;
-
+                    authorizedRequestToken.GrantAccessToken(tokenConsumer);
                     authorizedRequestToken = this.RequestTokenRepository.Save(authorizedRequestToken);
 
                     if (authorizedRequestToken != null && authorizedRequestToken.AccessToken != null)
@@ -335,7 +313,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (foundToken != null)
                 {
-                    foundToken.State = TokenState.AccessDenied;
+                    foundToken.DenyAccess();
                     retVal = this.RequestTokenRepository.Save(foundToken);
                 }
             }
@@ -423,11 +401,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.DateAuthorized = DateTime.UtcNow;
-                    retVal.UserName = currentUser.Email;
-                    retVal.UserId = currentUser.Id;
-                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
-                    retVal.State = TokenState.AccessGranted;
+                    retVal.Authorize(currentUser);
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }
             }
@@ -451,17 +425,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 
                 if (retVal != null && retVal.State != TokenState.AccessDenied && retVal.IsAuthorized() == false)
                 {
-                    retVal.DateAuthorized = DateTime.UtcNow;
-                    Realm parsedRealm = retVal.Realm;
-
-                    if (parsedRealm != null)
-                    {
-                        retVal.UserName = parsedRealm.DataName;
-                        retVal.UserId = long.Parse(parsedRealm.DataId);
-                    }
-
-                    retVal.VerifierCode = RequestTokenAuthorizer.GenerateVerifierCode();
-                    retVal.State = TokenState.AccessGranted;
+                    retVal.Authorize(retVal.Realm);
                     retVal = this.RequestTokenRepository.Save(retVal);
                 }
                 else
@@ -556,6 +520,20 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             if (!string.IsNullOrEmpty(consumerKey))
             {
                 retVal = this.RequestTokenRepository.GetByConsumerKey(consumerKey, startDate, endDate);
+            }
+
+            return retVal;
+        }
+
+        public bool Delete(long id)
+        {
+            bool retVal = false;
+
+            RequestToken targetToken = this.RequestTokenRepository.GetById(id);
+
+            if(targetToken!=null)
+            {
+                retVal = this.RequestTokenRepository.Delete(targetToken);
             }
 
             return retVal;

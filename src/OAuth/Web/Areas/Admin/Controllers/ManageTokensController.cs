@@ -7,7 +7,7 @@ using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.BusinessLayer.Services;
-using AlwaysMoveForward.OAuth.Web.Code;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
 using AlwaysMoveForward.OAuth.Web.Areas.Admin.Models;
 
 namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
@@ -15,7 +15,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
     /// <summary>
     /// Allow the admin tool to manage tokens
     /// </summary>
-    [CookieAuthorizationAttribute(RequiredRoles = "Administrator")]
+    [MVCAuthorization(Roles = "Administrator")]
     public class ManageTokensController : AlwaysMoveForward.OAuth.Web.Controllers.ControllerBase
     {
         /// <summary>
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
 
             if(model.StartDate == null || model.StartDate == DateTime.MinValue)
             {
-                model.StartDate = DateTime.UtcNow.AddHours(-1);
+                model.StartDate = DateTime.UtcNow.AddDays(-1);
             }
 
             if (model.EndDate == null || model.EndDate == DateTime.MinValue)
@@ -56,12 +56,12 @@ namespace AlwaysMoveForward.OAuth.Web.Areas.Admin.Controllers
             {
                 AMFUserLogin tempUser = new AMFUserLogin();
                 tempUser.Email = model.UserName;
-                retVal.Tokens =  new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByUser(tempUser, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
+                retVal.Tokens = new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByUser(tempUser, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Models.PagedListModel<int>.PageSize);
             }
 
             if (!string.IsNullOrEmpty(model.ConsumerKey))
             {
-                retVal.Tokens = new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByConsumerKey(model.ConsumerKey, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Code.Constants.PageSize);
+                retVal.Tokens = new PagedList<RequestToken>(this.ServiceManager.TokenService.GetByConsumerKey(model.ConsumerKey, model.StartDate, model.EndDate), currentPageIndex, AlwaysMoveForward.OAuth.Web.Models.PagedListModel<int>.PageSize);
             }
 
             retVal.UserName = model.UserName;

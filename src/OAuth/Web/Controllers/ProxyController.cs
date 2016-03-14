@@ -15,7 +15,7 @@ using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Web.Models;
-using AlwaysMoveForward.OAuth.Web.Code;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
 
 namespace AlwaysMoveForward.OAuth.Web.Controllers
 {

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Security.Principal;
+using System.Runtime.CompilerServices;
 
 namespace AlwaysMoveForward.Common.Utilities
 {
     public abstract class LoggerBase
     {
-        public abstract void Debug(string message);
-        public abstract void Error(string message);
-        public abstract void Info(string message);
-        public abstract void Warn(string message);
+        private const string messageDelimiter = ":";
+
+        protected abstract void LogDebug(string message);
+        protected abstract void LogError(string message);
+        protected abstract void LogInfo(string message);
+        protected abstract void LogWarn(string message);
 
         public IPrincipal CurrentPrincial
         {
@@ -25,97 +28,81 @@ namespace AlwaysMoveForward.Common.Utilities
             }
         }
 
-        public void Error(Exception e)
+        private string GenerateBaseMessage(string className, string methodName)
+        {
+            string retVal = string.Empty;
+            
+            if(String.IsNullOrEmpty(className))
+            {
+                className = string.Empty;
+            }
+
+            if(string.IsNullOrEmpty(methodName))
+            {
+                methodName = string.Empty;
+            }
+
+            // Get logged in user name
+            if (this.CurrentPrincial != null)
+            {
+                retVal = this.CurrentPrincial.Identity.Name + LoggerBase.messageDelimiter;
+            }
+
+            // Attach class name method name and message
+            retVal += className + LoggerBase.messageDelimiter + methodName;
+            
+            return retVal;
+        }
+
+        public void Error(Exception e, [CallerFilePath] string className = null, [CallerMemberName] string methodName = null)
         {
             // Log Error message
-            string message = string.Empty;
-
-            // Get logged in user name
-            if (this.CurrentPrincial != null)
-            {
-                message = this.CurrentPrincial.Identity.Name + ":";
-            }
-
-            // Get Exception type and message
-            message += e.GetType().Name + ":" + e.Message;
+            string fullMessage = this.GenerateBaseMessage(className, methodName);
+            
+            // Attach class name method name and message
+            fullMessage += LoggerBase.messageDelimiter + e.GetType().Name + LoggerBase.messageDelimiter + e.Message;
 
             if (e.InnerException != null)
             {
                 // Attach inner exception if any
-                message += ":InnerException:";
-                message += e.InnerException.GetType().Name + ":" + e.InnerException.Message;
+                fullMessage += LoggerBase.messageDelimiter + "InnerException:";
+                fullMessage += e.InnerException.GetType().Name + LoggerBase.messageDelimiter + e.InnerException.Message;
             }
 
-            this.Error(message);
+            this.LogError(fullMessage);
         }
 
-        public void Info(string className, string methodName, string message)
+        public void Info(string message, [CallerFilePath] string className = null, [CallerMemberName] string methodName = null)
         {
-            string fullMessage = string.Empty;
-
-            // Get logged in user name
-            if (this.CurrentPrincial != null)
-            {
-                fullMessage = this.CurrentPrincial.Identity.Name + ":";
-            }
+            // Log Error message
+            string fullMessage = this.GenerateBaseMessage(className, methodName);
 
             // Attach class name method name and message
-            fullMessage += className + ":" + methodName + ":" + message;
+            fullMessage += LoggerBase.messageDelimiter + message;
 
-            this.Info(fullMessage);
+            this.LogInfo(fullMessage);
         }
 
-        public void Debug(string className, string methodName, string message)
+        public void Debug(string message, [CallerFilePath] string className = null, [CallerMemberName] string methodName = null)
         {
-            string fullMessage = string.Empty;
-
-            // Get logged in user name
-            if (this.CurrentPrincial != null)
-            {
-                fullMessage = this.CurrentPrincial.Identity.Name + ":";
-            }
+            // Log Error message
+            string fullMessage = this.GenerateBaseMessage(className, methodName);
 
             // Attach class name method name and message
-            fullMessage += className + ":" + methodName + ":" + message;
-            this.Debug(fullMessage);
+            fullMessage += LoggerBase.messageDelimiter + message;
+
+            this.LogDebug(fullMessage);
         }
 
-        public void Error(string className, string methodName, string errorMessage)
+        public void Error(string message, [CallerFilePath] string className = null, [CallerMemberName] string methodName = null)
         {
-            string fullMessage = string.Empty;
-
-            // Get logged in user name
-            if (this.CurrentPrincial != null)
-            {
-                fullMessage = this.CurrentPrincial.Identity.Name + ":";
-            }
+            // Log Error message
+            string fullMessage = this.GenerateBaseMessage(className, methodName);
 
             // Attach class name method name and message
-            fullMessage += className + ":" + methodName + ":" + errorMessage;
-            this.Error(fullMessage);
-        }
+            fullMessage += LoggerBase.messageDelimiter + message;
 
-        public void Error(string className, string methodName, Exception e)
-        {
-            string fullMessage = string.Empty;
-
-            // Get logged in user name
-            if (this.CurrentPrincial != null)
-            {
-                fullMessage = this.CurrentPrincial.Identity.Name + ":";
-            }
-
-            // Attach class name method name and message
-            fullMessage += className + ":" + methodName + ":" + e.GetType().Name + ":" + e.Message;
-
-            if (e.InnerException != null)
-            {
-                // Attach inner exception if any
-                fullMessage += ":InnerException:";
-                fullMessage += e.InnerException.GetType().Name + ":" + e.InnerException.Message;
-            }
-
-            this.Error(fullMessage);
+            this.LogError(fullMessage);
         }
     }
 }

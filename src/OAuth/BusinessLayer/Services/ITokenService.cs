@@ -84,5 +84,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// <param name="consumerKey">The consumer key</param>
         /// <returns>A list of request tokens</returns>
         IList<RequestToken> GetByConsumerKey(string consumerKey, DateTime startDate, DateTime endDate);
+
+        bool Delete(long id);
     }
 }

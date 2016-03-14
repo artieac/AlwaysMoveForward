@@ -30,9 +30,9 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         public override bool IsInRole(string role)
         {
             bool retVal = false;
-            OAuthRoles targetRole;
+            RoleType.Id targetRole;
             
-            if(Enum.TryParse<OAuthRoles>(role, out targetRole))
+            if(Enum.TryParse<RoleType.Id>(role, out targetRole))
             {
                 if (this.User.Role == targetRole)
                 {

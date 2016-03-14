@@ -7,6 +7,7 @@ using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
@@ -57,13 +58,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         {
             AMFUserLogin retVal = null;
 
-            AMFUserLogin userLogin = new AMFUserLogin();
-            userLogin.Email = userName;
-            userLogin.FirstName = firstName;
-            userLogin.LastName = lastName;
-            userLogin.PasswordHint = passwordHint;
-            userLogin.UpdatePassword(password);
-
+            AMFUserLogin userLogin = UserFactory.Create(userName, password, firstName, lastName, passwordHint);
             retVal = this.UserRepository.Save(userLogin);
 
             return retVal;
@@ -74,7 +69,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
         /// </summary>
         /// <param name="userLogin">The source user</param>
         /// <returns>The updated user</returns>       
-        public AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, OAuthRoles userRole)
+        public AMFUserLogin Update(long userId, string firstName, string lastName, UserStatus userStatus, RoleType.Id userRole)
         {
             AMFUserLogin retVal = this.UserRepository.GetById(userId);
 
@@ -187,12 +182,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 source = string.Empty;
             }
 
-            LoginAttempt newLoginAttempt = new LoginAttempt();
-            newLoginAttempt.AttemptDate = DateTime.UtcNow;
-            newLoginAttempt.WasSuccessfull = didLoginSucceed;
-            newLoginAttempt.Source = source;
-            newLoginAttempt.UserName = userName;
-
+            LoginAttempt newLoginAttempt = LoginAttemptFactory.Create(didLoginSucceed, source, userName);
             this.LoginAttemptRepository.Save(newLoginAttempt);
 
             UserStatus retVal = UserStatus.Active;            
@@ -277,11 +267,8 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
             {
                 if (targetUser != null)
                 {
-                    string newPassword = AMFUserLogin.GenerateNewPassword();
-
+                    string newPassword = targetUser.GenerateNewPassword();
                     emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
-
-                    targetUser.UpdatePassword(newPassword);
 
                     this.UserRepository.Save(targetUser);
                 }
@@ -289,6 +276,20 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 EmailManager emailManager = new EmailManager(emailConfig);
                 emailManager.SendEmail(emailConfig.FromAddress, userEmail, "New Password", emailBody);
             }
+        }
+
+        public bool Delete(long id)
+        {
+            bool retVal = false;
+
+            AMFUserLogin targetUser = this.UserRepository.GetById(id);
+
+            if(targetUser!=null)
+            {
+                retVal = this.UserRepository.Delete(targetUser);
+            }
+
+            return retVal;
         }
     }
 }

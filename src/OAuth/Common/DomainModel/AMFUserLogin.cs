@@ -24,7 +24,19 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public static double AccountLockTimeout = 30;
 
-        public static string GenerateNewPassword()
+
+        /// <summary>
+        /// Initialize id so that it is marked as unsaved.
+        /// </summary>
+        public AMFUserLogin()
+        {
+            this.Id = 0;
+            this.DateCreated = DateTime.UtcNow;
+            this.UserStatus = UserStatus.Active;
+            this.Role = RoleType.Id.User;
+        }
+
+        public string GenerateNewPassword()
         {
             string retVal = string.Empty;
             Random random = new Random();
@@ -38,20 +50,11 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
 
             retVal = sb.ToString();
 
+            this.UpdatePassword(retVal);
+
             return retVal;
         }
-
-        /// <summary>
-        /// Initialize id so that it is marked as unsaved.
-        /// </summary>
-        public AMFUserLogin()
-        {
-            this.Id = 0;
-            this.DateCreated = DateTime.UtcNow;
-            this.UserStatus = UserStatus.Active;
-            this.Role = OAuthRoles.User;
-        }
-
+        
         public void UpdatePassword(string unencryptedPassword)
         {
             SHA1HashUtility passwordHashUtility = new SHA1HashUtility();
@@ -59,20 +62,25 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
         }
 
+        public void UpdatePassword(string passwordHash, string passwordSalt)
+        {
+            this.PasswordHash = passwordHash;
+            this.PasswordSalt = passwordSalt;
+        }
         /// <summary>
         /// The salt associated with the hashed password
         /// </summary>
-        public string PasswordSalt { get; set; }
+        public string PasswordSalt { get; private set; }
 
         /// <summary>
         /// Gets or sets the actually hashed password
         /// </summary>
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
 
         /// <summary>
         /// Gets or sets the date time that the user is created
         /// </summary>
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; private set; }
 
         /// <summary>
         /// Gets or sets the forgotten password hint
@@ -87,6 +95,6 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the current user role
         /// </summary>
-        public OAuthRoles Role { get; set; }
+        public RoleType.Id Role { get; set; }
     }
 }

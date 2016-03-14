@@ -27,8 +27,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
             retVal.Email = emailAddress;
             retVal.FirstName = "Artie";
             retVal.LastName = "Test";
-            retVal.PasswordHash = TestHashedPassword;
-            retVal.PasswordSalt = TestPasswordSalt;
+            retVal.UpdatePassword(TestHashedPassword, TestPasswordSalt);
 
             return retVal;
         }

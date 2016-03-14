@@ -14,16 +14,23 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
     [TestFixture]
     public class RequestTokenRepositoryTests : RepositoryTestBase
     {
+        private Consumer CreateConsumer(string consumerKey)
+        {
+            OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
+            Consumer retVal = new Consumer();
+            retVal.ConsumerKey = keyConfiguration.ConsumerKey;
+            retVal.AccessTokenLifetime = 5000;
+
+            return retVal;
+        }
+
         private RequestToken CreateTestRequestToken(string token, string tokenSecret)
         {
             OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
 
-            RequestToken retVal = new RequestToken();
-            retVal.ConsumerKey = keyConfiguration.ConsumerKey;
-            retVal.Realm = TokenConstants.TestRealm;
+            RequestToken retVal = new RequestToken(keyConfiguration.ConsumerKey, TokenConstants.TestRealm, TokenConstants.TestCallbackUrl);
             retVal.Token = token;
             retVal.Secret = tokenSecret;
-            retVal.CallbackUrl = TokenConstants.TestCallbackUrl;
             return retVal;
         }
 
@@ -83,8 +90,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                     if (foundItem.IsAuthorized() == false)
                     {
                         Realm targetRealm = foundItem.Realm;
-                        foundItem.DateAuthorized = DateTime.UtcNow;
-                        foundItem.VerifierCode = TokenConstants.TestVerifierCode;
+                        foundItem.Authorize(targetRealm, TokenConstants.TestVerifierCode);
 
                         using (this.UnitOfWork.BeginTransaction())
                         {
@@ -132,16 +138,16 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
         public void RequestTokenRepositoryTestGetAccessTokenByRequestToken()
         {
             RequestToken requestToken = this.RepositoryManager.RequestTokenRepository.GetByToken(TokenConstants.TestRequestToken);
+            Consumer consumer = this.CreateConsumer(requestToken.ConsumerKey);
             
             if (requestToken == null)
             {
                 requestToken = this.CreateTestRequestToken(TokenConstants.TestRequestToken, Guid.NewGuid().ToString("N"));
 
                 Realm targetRealm = requestToken.Realm;
-                requestToken.DateAuthorized = DateTime.UtcNow;
-                requestToken.UserName = UserConstants.TestUserName;
-                requestToken.UserId = UserConstants.TestUserId;
-                requestToken.VerifierCode = TokenConstants.TestVerifierCode;
+                targetRealm.DataId = UserConstants.TestUserId.ToString();
+                targetRealm.DataName = UserConstants.TestUserName;
+                requestToken.Authorize(targetRealm, TokenConstants.TestVerifierCode);
 
                 using (this.UnitOfWork.BeginTransaction())
                 {
@@ -158,20 +164,9 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                 if (accessToken == null)
                 {
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = requestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddDays(20),
-                        Realm = requestToken.Realm,
-                        Token = TokenConstants.TestAccessToken,
-                        Secret = TokenConstants.TestAccessTokenSecret,
-                        UserName = requestToken.UserName,
-                        UserId = requestToken.UserId
-                    };
-
-                    requestToken.AccessToken = newAccessToken;
-                    requestToken.State = TokenState.AccessGranted;
+                    requestToken.GrantAccessToken(consumer);
+                    requestToken.AccessToken.Token = TokenConstants.TestAccessToken;
+                    requestToken.AccessToken.Secret = TokenConstants.TestAccessTokenSecret;
 
                     using (this.UnitOfWork.BeginTransaction())
                     {
@@ -191,6 +186,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
         public void RequestTokenRepositoryTestGetAccessToken()
         {
             AccessToken foundItem = this.RepositoryManager.RequestTokenRepository.GetAccessToken(TokenConstants.TestAccessToken);
+            Consumer consumer = null;
 
             if (foundItem == null)
             {
@@ -201,10 +197,9 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
                     requestToken = this.CreateTestRequestToken(TokenConstants.TestRequestToken, Guid.NewGuid().ToString("N"));
 
                     Realm targetRealm = requestToken.Realm;
-                    requestToken.DateAuthorized = DateTime.UtcNow;
-                    requestToken.UserName = UserConstants.TestUserName;
-                    requestToken.UserId = UserConstants.TestUserId;
-                    requestToken.VerifierCode = TokenConstants.TestVerifierCode;
+                    targetRealm.DataId = UserConstants.TestUserId.ToString();
+                    targetRealm.DataName = UserConstants.TestUserName;
+                    requestToken.Authorize(targetRealm, TokenConstants.TestVerifierCode);
 
                     using (this.UnitOfWork.BeginTransaction())
                     {
@@ -217,20 +212,10 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                 if (requestToken != null)
                 {
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = requestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddDays(20),
-                        Realm = requestToken.Realm,
-                        Token = TokenConstants.TestAccessToken,
-                        Secret = TokenConstants.TestAccessTokenSecret,
-                        UserName = requestToken.UserName,
-                        UserId = requestToken.UserId
-                    };
-
-                    requestToken.AccessToken = newAccessToken;
-                    requestToken.State = TokenState.AccessGranted;
+                    consumer = this.CreateConsumer(requestToken.ConsumerKey); 
+                    requestToken.GrantAccessToken(consumer);
+                    requestToken.AccessToken.Token = TokenConstants.TestAccessToken;
+                    requestToken.AccessToken.Secret = TokenConstants.TestAccessTokenSecret;
 
                     using (this.UnitOfWork.BeginTransaction())
                     {

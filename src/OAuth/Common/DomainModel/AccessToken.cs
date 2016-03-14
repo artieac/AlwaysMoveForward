@@ -21,30 +21,36 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
             this.DateCreated = DateTime.UtcNow;
         }
 
+        public AccessToken(DateTime expirationDate, string userName, long userId) : this()
+        {
+            this.ExpirationDate = expirationDate;
+            this.UserId = userId;
+            this.UserName = userName;
+        }
         /// <summary>
         /// Gets or sets the database id
         /// </summary>
-        public long Id { get; set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// The date and time that this access token was granted
         /// </summary>
-        public DateTime DateGranted { get; set; }
+        public DateTime DateGranted { get; private set; }
 
         /// <summary>
         /// Gets or sets the expiration date
         /// </summary>
-        public DateTime ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets the username
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Gets or sets the user id
         /// </summary>
-        public long UserId { get; set; }
+        public long UserId { get; private set; }
 
         /// <summary>
         /// Gets or sets the SessionHandle (used with DevDefined)
@@ -64,7 +70,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets when this access token was created.
         /// </summary>
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; private set; }
 
         /// <summary>
         /// Gets or sets the access token secret
@@ -85,6 +91,11 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public Realm Realm { get; set; }
 
+        public void GenerateToken()
+        {
+            this.Token = Guid.NewGuid().ToString();
+            this.Secret = Guid.NewGuid().ToString();
+        }
         /// <summary>
         /// An explicit implementation to satisfy the IConsumer interface
         /// </summary>

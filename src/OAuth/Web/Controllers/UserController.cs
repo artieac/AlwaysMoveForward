@@ -12,7 +12,7 @@ using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Web.Models;
-using AlwaysMoveForward.OAuth.Web.Code;
+using AlwaysMoveForward.OAuth.Web.Code.Filters;
 
 namespace AlwaysMoveForward.OAuth.Web.Controllers
 {
@@ -21,6 +21,11 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
     /// </summary>
     public class UserController : ControllerBase
     {        
+        public ActionResult EmbeddedSignin()
+        {
+            return this.View();
+        }
+
         /// <summary>
         /// Show the initial sign in page
         /// </summary>
@@ -121,7 +126,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
                     }
                     else
                     {
-                        if(this.CurrentPrincipal.IsInRole(OAuthRoles.Administrator.ToString()))
+                        if(this.CurrentPrincipal.IsInRole(RoleType.Names.Administrator))
                         {
                             return this.Redirect("/Admin/Management/Index");
                         }
@@ -141,18 +146,44 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
         /// </summary>
         /// <param name="oauthToken">The request token</param>
         /// <returns>The view that gives the user the option to grant or deny access</returns>
-        [CookieAuthorization]
+        [MVCAuthorization]
         public ActionResult GrantAccess(string oauthToken)
         {
             TokenModel model = new TokenModel() { Token = oauthToken };
             return this.View("GrantAccess", model);              
         }
 
+        private void EliminateUserCookie()
+        {
+            try
+            {
+                string cookieName = FormsAuthentication.FormsCookieName;
+                HttpCookie authCookie = this.Response.Cookies[cookieName];
+
+                if (authCookie != null)
+                {
+                    authCookie.Expires = DateTime.Now.AddDays(-1);
+                }
+            }
+            catch (Exception e)
+            {
+                LogManager.GetLogger().Error(e);
+            }
+        }
+
+        [MVCAuthorization]
+        public ActionResult Signout()
+        {
+            this.EliminateUserCookie();
+            this.CurrentPrincipal = new OAuthServerSecurityPrincipal(null);
+            return this.Signin(string.Empty);
+        }
+
         /// <summary>
         /// Approves access for the request token
         /// </summary>
         /// <param name="oauthToken">The request token</param>
-        [CookieAuthorization]
+        [MVCAuthorization]
         public void ApproveAccess(string oauthToken)
         {
             try
@@ -178,7 +209,7 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers
         /// Denies access to the request token
         /// </summary>
         /// <param name="oauthToken">the request token</param>
-        [CookieAuthorization]
+        [MVCAuthorization]
         public void DenyAccess(string oauthToken)
         {
             this.RedirectToClient(this.ServiceManager.TokenService.DenyRequestToken(oauthToken), false);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
