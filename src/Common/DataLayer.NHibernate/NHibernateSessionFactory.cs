@@ -5,6 +5,7 @@ using System.Text;
 using NHibernate;
 using NHC = NHibernate.Cfg;
 using AlwaysMoveForward.Common.Utilities;
+using NHM = NHibernate.Mapping.Attributes;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
@@ -75,7 +76,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// </summary>
         /// <param name="connectionString">The database connection string in case the NHibernate COnfiguration has not yet been allocated</param>
         /// <returns>The static instance of the session factory</returns>
-        public static ISessionFactory BuildSessionFactory(string connectionString)
+        public static ISessionFactory BuildSessionFactory(NHC.Configuration nhibernateConfiguration,  System.Reflection.Assembly mappingAssembly)
         {
             // Only try to allocate if the sessionFactory is null
             if (NHibernateSessionFactory.sessionFactory == null)
@@ -90,10 +91,12 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
                         // If not then another thread already allocated an instance to just bow out.
                         if (NHibernateSessionFactory.sessionFactory == null)
                         {
-                            NHC.Configuration nhibernateConfiguration = NHibernateSessionFactory.GetConfiguration(connectionString);
-
                             if (nhibernateConfiguration != null)
                             {
+                                // Enable validation (optional)
+                                // Here, we serialize all decorated classes (but you can also do it class by class)
+                                NHM.HbmSerializer.Default.Validate = true;
+                                nhibernateConfiguration.AddInputStream(NHM.HbmSerializer.Default.Serialize(mappingAssembly));
                                 NHibernateSessionFactory.sessionFactory = nhibernateConfiguration.BuildSessionFactory();
                             }
                             else

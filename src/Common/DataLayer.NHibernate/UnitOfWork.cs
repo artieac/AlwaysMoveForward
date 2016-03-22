@@ -7,13 +7,14 @@ using System.Reflection;
 using NHibernate;
 using NHC = NHibernate.Cfg;
 using AlwaysMoveForward.Common;
+using AlwaysMoveForward.Common.Utilities;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// A unit of work made to work with NHibernate transactions
     /// </summary>
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public abstract class UnitOfWork : IUnitOfWork, IDisposable
     {
         /// <summary>
         /// A default constructor that will result in using NHibernate configuration settings just from the .config file
@@ -61,6 +62,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 
                 return this.currentSession;
             }
+            set { this.currentSession = value; }
         }
 
         #region IUnitOfWork Members
@@ -68,10 +70,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <summary>
         /// Starts a new session
         /// </summary>
-        private void StartSession()
-        {
-            this.currentSession = NHibernateSessionFactory.BuildSessionFactory(this.ConnectionString).OpenSession(); ;
-        }
+        protected abstract void StartSession();
 
         /// <summary>
         /// Ends the current session
@@ -103,14 +102,13 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         {
             IDisposable retVal = null;
 
-            if (this.currentSession == null)
+            if (this.CurrentSession != null)
             {
-                this.StartSession();
+                retVal = this.CurrentSession.BeginTransaction();
             }
-
-            if (this.currentSession != null)
+            else
             {
-                retVal = this.currentSession.BeginTransaction();
+                LogManager.GetLogger().Error("Unable to start transaction, no session established.");
             }
 
             return retVal;
@@ -122,24 +120,28 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <param name="canCommit">Can the current transaction be commited to the database</param>
         public void EndTransaction(bool canCommit)
         {
-            if (this.currentSession != null)
+            if (this.CurrentSession != null)
             {
-                if (this.currentSession.Transaction != null)
+                if (this.CurrentSession.Transaction != null)
                 {
-                    if (this.currentSession.Transaction.IsActive)
+                    if (this.CurrentSession.Transaction.IsActive)
                     {
                         if (canCommit)
                         {
-                            this.currentSession.Transaction.Commit();
+                            this.CurrentSession.Transaction.Commit();
                         }
                         else
                         {
-                            this.currentSession.Transaction.Rollback();
+                            this.CurrentSession.Transaction.Rollback();
                         }
                     }
 
-                    this.currentSession.Transaction.Dispose();
+                    this.CurrentSession.Transaction.Dispose();
                 }
+            }
+            else
+            {
+                LogManager.GetLogger().Error("Unable to end transaction, no session established.");
             }
         }
 

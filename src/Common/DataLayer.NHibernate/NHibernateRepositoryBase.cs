@@ -5,6 +5,7 @@ using System.Text;
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
 
 namespace AlwaysMoveForward.Common.DataLayer.NHibernate
@@ -82,8 +83,11 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <returns>A list of domain objects</returns>
         public IList<TDomainType> GetAll()
         {
+            LogManager.GetLogger().Info("Index getting all" + typeof(TDomainType).ToString());
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
-            return this.GetDataMapper().Map(criteria.List<TDTOType>());
+            IList<TDTOType> retVal = criteria.List<TDTOType>();
+            LogManager.GetLogger().Info("Index found " + retVal.Count);
+            return this.GetDataMapper().Map(retVal);
         }
 
         /// <summary>

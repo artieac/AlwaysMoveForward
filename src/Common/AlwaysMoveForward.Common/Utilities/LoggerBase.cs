@@ -49,7 +49,7 @@ namespace AlwaysMoveForward.Common.Utilities
             }
 
             // Attach class name method name and message
-            retVal += className + LoggerBase.messageDelimiter + methodName;
+            retVal += "Class Name - " + className + LoggerBase.messageDelimiter + "Method Name - " + methodName;
             
             return retVal;
         }
