@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.OAuth.UnitTests.BusinessLayer
         /// Tests getting the user by id
         /// </summary>
         [Test]
-        [Ignore]
+        [Ignore("Don't run")]
         public void UserServiceTestGetUserById()
         {
             User foundItem = this.ServiceManager.UserService.GetUserById(UserConstants.TestUserId);

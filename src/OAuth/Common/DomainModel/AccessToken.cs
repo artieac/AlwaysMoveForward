@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
     /// <summary>
     /// A class to represent an Access Token
     /// </summary>
-    public class AccessToken : IToken, IAccessToken
+    public class AccessToken : DevDefined.OAuth.Framework.IToken
     {
         /// <summary>
         /// A default constructor for the class
@@ -67,19 +67,16 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public string Secret { get; set; }
 
-        /// <summary>
-        /// Gets or sets when this access token was created.
-        /// </summary>
-        public DateTime DateCreated { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the access token secret
-        /// </summary>
-        string IToken.TokenSecret 
+        string IToken.TokenSecret
         {
             get { return this.Secret; }
             set { this.Secret = value; }
         }
+        
+        /// <summary>
+        /// Gets or sets when this access token was created.
+        /// </summary>
+        public DateTime DateCreated { get; private set; }
 
         /// <summary>
         /// Gets or sets the consumer key

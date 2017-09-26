@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Web.Models;
 using AlwaysMoveForward.OAuth.Web.Code.Filters;
+using System.Web.Mvc;
 
 namespace AlwaysMoveForward.OAuth.Web.Controllers.API
 {
@@ -91,12 +91,12 @@ namespace AlwaysMoveForward.OAuth.Web.Controllers.API
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public void Post([System.Web.Http.FromBody]string value)
         {
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [System.Web.Http.FromBody]string value)
         {
         }
 

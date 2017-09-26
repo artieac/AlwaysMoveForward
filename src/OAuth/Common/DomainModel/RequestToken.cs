@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
     /// <summary>
     /// A class representing a Request Token
     /// </summary>
-    public class RequestToken : IToken, IOAuthToken
+    public class RequestToken : IToken
     {       
         /// <summary>
         /// The default lifetime for RequestTokens
@@ -66,10 +66,7 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public string Secret { get; set; }
 
-        /// <summary>
-        /// Gets or sets the secret
-        /// </summary>
-        string IToken.TokenSecret 
+        string IToken.TokenSecret
         {
             get { return this.Secret; }
             set { this.Secret = value; }
@@ -235,8 +232,8 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
                         retVal += "&";
                     }
 
-                    retVal += Constants.TokenParameter + "=" + UriUtility.UrlEncode(this.Token);
-                    retVal += "&" + Constants.VerifierCodeParameter + "=" + UriUtility.UrlEncode(this.VerifierCode);
+                    retVal += Constants.TokenParameter + "=" + System.Net.WebUtility.UrlEncode(this.Token);
+                    retVal += "&" + Constants.VerifierCodeParameter + "=" + System.Net.WebUtility   .UrlEncode(this.VerifierCode);
                 }
             }
 

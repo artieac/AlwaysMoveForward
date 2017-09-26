@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DevDefined.OAuth.Framework;
 using NHibernate;
 using NHibernate.Criterion;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
+using IdentityServer3.Core.Models;
+using System.Threading.Tasks;
 
 namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
 {

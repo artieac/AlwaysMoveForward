@@ -11,11 +11,6 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
     /// <typeparam name="TDomainType">The domain type returned by the repository</typeparam>
     public interface INHibernateRepository<TDomainType, TIdType> : IRepository<TDomainType, TIdType> where TDomainType : class
     {       
-        /// <summary>
-        /// Save the Domain item to the database and return it back to the caller.
-        /// </summary>
-        /// <param name="itemToSave"></param>
-        /// <returns></returns>
-        TDomainType Save(TDomainType itemToSave);
+
     }
 }

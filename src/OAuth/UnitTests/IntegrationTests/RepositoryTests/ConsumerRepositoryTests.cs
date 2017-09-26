@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Don't run")]
         public void ConsumerRepositoryTestsGetByRequestToken()
         {
             Consumer foundItem = this.RepositoryManager.ConsumerRepository.GetByRequestToken(TokenConstants.TestRequestToken);

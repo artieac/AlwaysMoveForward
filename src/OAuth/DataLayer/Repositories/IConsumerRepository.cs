@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DevDefined.OAuth.Storage;
 using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 

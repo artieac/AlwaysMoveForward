@@ -1,0 +1,98 @@
+.blueButton {
+  min-height: 30px;
+  line-height: 20px;
+  width: 200px;
+  background-color: #5493E0;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+}
+.blueButton span {
+  font-size: small;
+  display: inline-block;
+  color: #FFFFFF;
+  vertical-align: middle;
+}
+body {
+  font-family: Arial, Tahoma, Verdana, Sans-Serif;
+  font-size: medium;
+}
+.loginPanel {
+  width: 50%;
+  margin-left: 25%;
+  text-align: center;
+}
+.loginPanel .panel-body {
+  text-align: center;
+}
+.loginPanel .panel-body .label {
+  text-align: right;
+  color: black;
+  font-size: small;
+  display: inline-block;
+  width: 125px;
+}
+.adminPage {
+  width: 80%;
+  margin-left: 10%;
+}
+.adminPage .label {
+  text-align: right;
+  color: black;
+  font-size: small;
+  display: inline-block;
+  width: 125px;
+}
+#loginContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+#loginContainer #loginPanel {
+  text-align: left;
+}
+#loginContainer #loginPanel .blueButton {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+#loginContainer #footerSection {
+  text-align: center;
+}
+#registerContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+#registerContainer #registerPanel {
+  text-align: left;
+}
+#registerContainer #registerPanel .blueButton {
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  text-align: center;
+}
+#registerContainer .loginLabel {
+  width: 150px;
+}
+#divForgotPassword {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  text-align: center;
+}
+#divForgotPassword .blueButton {
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+.forgotPasswordSection {
+  margin-top: 1%;
+}
+.forgotPasswordSection .forgotPasswordLabel {
+  font-size: small;
+  font-weight: bold;
+}

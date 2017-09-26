@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using DevDefined.OAuth.Framework;
 using DevDefined.OAuth.Framework.Signing;
-using DevDefined.OAuth.Storage;
-using DevDefined.OAuth.Utility;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.Common.Security;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Common.Factories;
 using AlwaysMoveForward.OAuth.DataLayer.Repositories;
+using DevDefined.OAuth.Utility;
+using DevDefined.OAuth.Storage;
 
 namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
 {
@@ -17,7 +17,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
     /// This services does the primary business rules for working with Request/Access tokens
     /// And acts as the IToken store for the DevDefined codebase
     /// </summary>
-    public class TokenService : ITokenService, ITokenStore
+    public class TokenService : ITokenService
     {
         /// <summary>
         /// A constructor that takes the repositories to retrieve consumer and token info
