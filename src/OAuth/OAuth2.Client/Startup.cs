@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.OAuth2.Client.Code;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.DataProtection;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace OAuth2.Client
 {
@@ -58,6 +61,17 @@ namespace OAuth2.Client
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions
+            //{
+            //    Authority = Constants.Authority,
+            //    RequireHttpsMetadata = false,
+
+            //    Audience = "api1",
+
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true              
+            //});
+
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
                 AuthenticationScheme = "oidc",
@@ -67,8 +81,16 @@ namespace OAuth2.Client
                 RequireHttpsMetadata = false,
 
                 ClientId = "abcd",
+                ClientSecret = Hash256("abcd"),
+                CallbackPath = "/home/callback",
+
+                ResponseType = "code id_token",
+                Scope = { "offline_access", "api1.full_access" },
+
+                GetClaimsFromUserInfoEndpoint = true,
 
                 SaveTokens = true
+
             });
 
             //app.UseJwtBearerAuthentication(new JwtBearerOptions
@@ -90,6 +112,21 @@ namespace OAuth2.Client
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public static string Hash256(string text)
+        {
+            string retVal;
+
+            using (var sha256 = SHA256.Create())
+            {
+                // Send a sample text to hash.  
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+                // Get the hashed string.  
+                retVal = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+
+            return retVal;
         }
     }
 }

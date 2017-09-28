@@ -1,12 +1,12 @@
-﻿using IdentityServer4.Stores;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4;
+using IdentityServer4.Stores;
 using IdentityServer4.Models;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using IdentityServer4;
 
 namespace AlwaysMoveForward.OAuth2.Web.Code
 {
@@ -47,6 +47,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 retVal.AccessTokenLifetime = foundItem.AccessTokenLifetime;
                 retVal.ClientId = clientId;
                 retVal.ClientName = foundItem.Name;
+                retVal.ClientSecrets = new List<Secret>() { new Secret(foundItem.ConsumerSecret.Sha256()) };
 
                 retVal.RedirectUris = new List<string>();
                 retVal.RedirectUris.Add("http://localhost:53109/home/callback");
@@ -56,13 +57,15 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 retVal.PostLogoutRedirectUris = new List<string>();
                 retVal.PostLogoutRedirectUris.Add("http://localhost:53109/home/logout");
 
-                retVal.AllowedGrantTypes = GrantTypes.Implicit;
+                retVal.AllowedGrantTypes = GrantTypes.HybridAndClientCredentials;
                 retVal.AllowAccessTokensViaBrowser = true;
+
+                retVal.AlwaysIncludeUserClaimsInIdToken = true;
+                retVal.AllowOfflineAccess = true;
 
                 retVal.AllowedScopes = new List<string>();
                 retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.OpenId);
                 retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.Profile);
-                retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.Email);
                 retVal.AllowedScopes.Add("api1");
                 retVal.AllowedScopes.Add("api1.full_access");
                 retVal.AllowedScopes.Add("api1.read_only");

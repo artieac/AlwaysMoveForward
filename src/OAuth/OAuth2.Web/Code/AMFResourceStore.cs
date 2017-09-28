@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityModel;
+using IdentityServer4;
 
 namespace AlwaysMoveForward.OAuth2.Web.Code
 {
@@ -23,25 +24,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 // secret for using introspection endpoint
                 ApiSecrets =
                 {
-                    new Secret("secret".Sha256())
+                    new Secret("abcd".Sha256())
                 },
 
                 // include the following using claims in access token (in addition to subject id)
-                UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Email },
+                UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Email, JwtClaimTypes.Role },
 
                 // this API defines two scopes
                 Scopes =
                 {
-                    new Scope()
-                    {
-                        Name = "api1.full_access",
-                        DisplayName = "Full access to API 2",
-                    },
-                    new Scope
-                    {
-                        Name = "api1.read_only",
-                        DisplayName = "Read only access to API 2"
-                    }
+                    new Scope("api1.full_access"),
+                    new Scope("api1.read_only"),
+                    new Scope(IdentityServerConstants.StandardScopes.OpenId),
+                    new Scope(IdentityServerConstants.StandardScopes.Profile),
                 }
             };
 
@@ -67,18 +62,23 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
         {
             IList<ApiResource> retVal = new List<ApiResource>();
 
-            foreach(string scopeName in scopeNames)
+            //foreach(string scopeName in scopeNames)
+            //{
+            //    for (int i = 0; i < AMFResourceStore.resources.Count; i++)
+            //    {
+            //        foreach(Scope scope in AMFResourceStore.resources[i].Scopes)
+            //        {
+            //            if (scope.Name == scopeName)
+            //            {
+            //                retVal.Add(AMFResourceStore.resources[i]);
+            //            }
+            //        }
+            //    }
+            //}
+
+            for (int i = 0; i < AMFResourceStore.resources.Count; i++)
             {
-                for (int i = 0; i < AMFResourceStore.resources.Count; i++)
-                {
-                    foreach(Scope scope in AMFResourceStore.resources[i].Scopes)
-                    {
-                        if (scope.Name == scopeName)
-                        {
-                            retVal.Add(AMFResourceStore.resources[i]);
-                        }
-                    }
-                }
+                retVal.Add(AMFResourceStore.resources[i]);
             }
 
             return Task.FromResult(retVal as IEnumerable<ApiResource>);
