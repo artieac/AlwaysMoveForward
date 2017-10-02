@@ -64,11 +64,11 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 retVal.AllowOfflineAccess = true;
 
                 retVal.AllowedScopes = new List<string>();
-                retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.OpenId);
-                retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.Profile);
                 retVal.AllowedScopes.Add("api1");
                 retVal.AllowedScopes.Add("api1.full_access");
                 retVal.AllowedScopes.Add("api1.read_only");
+                retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.OpenId);
+                retVal.AllowedScopes.Add(IdentityServerConstants.StandardScopes.Profile);
             }
 
             return Task.FromResult(retVal);

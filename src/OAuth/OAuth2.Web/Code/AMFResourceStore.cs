@@ -33,9 +33,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 // this API defines two scopes
                 Scopes =
                 {
-                    new Scope("api1.full_access"),
-                    new Scope("api1.read_only"),
-                    new Scope(IdentityServerConstants.StandardScopes.OpenId),
+                    new Scope("api1.full_access", "Full access to the API"),
+                    new Scope("api1.read_only", "Read Only access to the API"),
                     new Scope(IdentityServerConstants.StandardScopes.Profile),
                 }
             };
@@ -62,23 +61,18 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
         {
             IList<ApiResource> retVal = new List<ApiResource>();
 
-            //foreach(string scopeName in scopeNames)
-            //{
-            //    for (int i = 0; i < AMFResourceStore.resources.Count; i++)
-            //    {
-            //        foreach(Scope scope in AMFResourceStore.resources[i].Scopes)
-            //        {
-            //            if (scope.Name == scopeName)
-            //            {
-            //                retVal.Add(AMFResourceStore.resources[i]);
-            //            }
-            //        }
-            //    }
-            //}
-
-            for (int i = 0; i < AMFResourceStore.resources.Count; i++)
+            foreach (string scopeName in scopeNames)
             {
-                retVal.Add(AMFResourceStore.resources[i]);
+                for (int i = 0; i < AMFResourceStore.resources.Count; i++)
+                {
+                    foreach (Scope scope in AMFResourceStore.resources[i].Scopes)
+                    {
+                        if (scope.Name == scopeName)
+                        {
+                            retVal.Add(AMFResourceStore.resources[i]);
+                        }
+                    }
+                }
             }
 
             return Task.FromResult(retVal as IEnumerable<ApiResource>);

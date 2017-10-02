@@ -10,19 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\**" />
-    <Content Remove="Areas\**" />
-    <EmbeddedResource Remove="Areas\**" />
-    <None Remove="Areas\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="log-20170714.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Styles\definitions.less" />
     <Content Include="Styles\styles.less" />
+    <Content Include="wwwroot\js\Controllers\RequestTokenController.js" />
+    <Content Include="wwwroot\js\Controllers\UserController.js" />
+    <Content Include="wwwroot\js\Modules\FactoryModule.js" />
+    <Content Include="wwwroot\js\Modules\ServiceDefinitionModule.js" />
     <Content Include="wwwroot\js\UI\EmbeddedHelpers.js" />
     <Content Include="wwwroot\js\UI\Register.js" />
     <Content Include="wwwroot\js\UI\SignIn.js" />
@@ -50,6 +47,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Account\ForgotPassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\RegisterCompleted.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Home\About.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Home\Contact.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Home\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

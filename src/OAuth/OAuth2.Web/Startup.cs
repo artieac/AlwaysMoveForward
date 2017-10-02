@@ -86,7 +86,6 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             loggerFactory.AddSerilog(Log.Logger);
 
-
             app.UseIdentity();
 
             // Adds IdentityServer
@@ -96,6 +95,10 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "area",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

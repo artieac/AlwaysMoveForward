@@ -65,7 +65,10 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
 
             if(foundUser!=null)
             {
-                retVal = true;
+                if(foundUser.UserStatus == UserStatus.Active)
+                {
+                    retVal = true;
+                }
             }
 
             return Task.FromResult(retVal);

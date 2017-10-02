@@ -6,6 +6,8 @@
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "less": "v2.7.2"
+    "less": "v2.7.2",
+    "angular": "v1.6.7-build.5472+sha.05fdf91",
+    "angular-resource": "v1.6.7-build.5472+sha.05fdf91"
   }
 }

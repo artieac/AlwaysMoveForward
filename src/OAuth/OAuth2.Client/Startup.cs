@@ -12,6 +12,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.DataProtection;
 using System.Security.Cryptography;
 using System.Text;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace OAuth2.Client
 {
@@ -81,16 +83,29 @@ namespace OAuth2.Client
                 RequireHttpsMetadata = false,
 
                 ClientId = "abcd",
-                ClientSecret = Hash256("abcd"),
-                CallbackPath = "/home/callback",
+                ClientSecret = "abcd",
+                CallbackPath = "/Home/Callback",
 
                 ResponseType = "code id_token",
                 Scope = { "offline_access", "api1.full_access" },
-
+                
                 GetClaimsFromUserInfoEndpoint = true,
-
-                SaveTokens = true
-
+                SaveTokens = true,
+                TokenValidationParameters = new
+                Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    NameClaimType = JwtClaimTypes.Name,
+                    RoleClaimType = JwtClaimTypes.Role,
+                },
+                Events = new OpenIdConnectEvents()
+                {
+                    OnRemoteFailure = context =>
+                    {
+                        context.Response.Redirect("/Home/Error");
+                        context.HandleResponse();
+                        return Task.FromResult(0);
+                    }
+                }
             });
 
             //app.UseJwtBearerAuthentication(new JwtBearerOptions

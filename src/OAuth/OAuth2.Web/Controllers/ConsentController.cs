@@ -1,8 +1,4 @@
-﻿using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
-using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
-using AlwaysMoveForward.OAuth2.Web.Models;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth2.Common.DomainModel;
+using AlwaysMoveForward.OAuth2.Common.Utilities;
+using AlwaysMoveForward.OAuth2.Web.Models.Consent;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
