@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
     /// the calls through to the contained user, but for now I'm just implementing the IPrincipal and we'll see how it goes
     /// </summary>
     /// <typeparam name="TUser">User Type</typeparam>
-    public abstract class SecurityPrincipalBase<TUser> : IPrincipal, IIdentity where TUser : class
+    public abstract class SecurityPrincipalBase<TUser> : ClaimsIdentity, IPrincipal where TUser : class
     {
         /// <summary>
         ///  An enumeration that defines what Authentication Types AlwaysMoveForward supports
@@ -38,13 +38,6 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
             this.AuthenticationType = authenticationType.ToString();
         }
 
-        ClaimsPrincipal claimsPrincipal;
-
-        public ClaimsPrincipal ClaimsPrincipal
-        {
-            get { return this.claimsPrincipal; }
-        }
-
         /// <summary>
         ///  Gets the current user
         /// </summary>
@@ -62,7 +55,17 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
         /// </summary>
         public virtual bool IsAuthenticated
         {
-            get { return this.claimsPrincipal.Identity.IsAuthenticated; }
+            get
+            {
+                bool retVal = false;
+
+                if (this.User != null)
+                {
+                    retVal = true;
+                }
+
+                return retVal;
+            }
         }
 
         /// <summary>
@@ -80,7 +83,7 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
         /// </summary>
         public IIdentity Identity
         {
-            get { return this.claimsPrincipal.Identity; }
+            get { return this; }
         }
 
         /// <summary>
@@ -92,9 +95,13 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
         /// <returns>Whether or not it's in a particular role</returns>
         public virtual bool IsInRole(string role)
         {
-            return this.claimsPrincipal.IsInRole(role);
+            return true;
         }
 
         #endregion
+        public ClaimsPrincipal GetClaimsPrincipal()
+        {
+            return new ClaimsPrincipal(this as IPrincipal); 
+        }
     }
 }

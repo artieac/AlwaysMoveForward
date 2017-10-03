@@ -7,16 +7,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IdentityServer4;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Code;
 using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using Microsoft.AspNetCore.Identity;
+using IdentityServer4;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
-using System.IdentityModel.Tokens.Jwt;
-using IdentityServer4.Configuration;
 using IdentityServer4.Stores;
 using Serilog;
 using System.IO;
@@ -69,6 +66,11 @@ namespace AlwaysMoveForward.OAuth2.Web
                 .AddClientStore<AMFClientStore>()
                 .AddProfileService<AMFProfileService>()
                 .AddResourceStore<AMFResourceStore>();
+
+            services.AddAuthentication(o =>
+            {
+                o.SignInScheme = SiteConstants.AuthenticationScheme;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +92,8 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             // Adds IdentityServer
             app.UseIdentityServer();
+
+            app.UseCookieAuthentication();
 
             app.UseStaticFiles();
 

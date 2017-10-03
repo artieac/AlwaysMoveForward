@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OAuth2.Common\AlwaysMoveForward.OAuth2.Common.csproj" />
     <ProjectReference Include="..\OAuth2.DataLayer\AlwaysMoveForward.OAuth2.DataLayer.csproj" />
   </ItemGroup>
 

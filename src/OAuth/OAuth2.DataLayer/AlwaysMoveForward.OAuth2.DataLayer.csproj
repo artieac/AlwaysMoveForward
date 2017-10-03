@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OAuth2.Common\AlwaysMoveForward.OAuth2.Common.csproj" />
+    <ProjectReference Include="..\OAuth2.Common\AlwaysMoveForward.OAuth2.Common.csproj" />
   </ItemGroup>
 
 </Project>

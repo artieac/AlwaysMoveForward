@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Http.Authentication;
 using IdentityServer4.Services;
 using IdentityServer4;
 using AlwaysMoveForward.OAuth2.Web.Models.Account;
+using System.Security.Claims;
+using AlwaysMoveForward.OAuth2.Web.Code;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -41,7 +43,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         public ActionResult Login(string returnUrl, string consumerName)
         {
             // Clear the existing external cookie to ensure a clean login process
-            HttpContext.Authentication.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
+            HttpContext.Authentication.SignOutAsync(SiteConstants.AuthenticationScheme);
 
             LoginModel retVal = new LoginModel();
             retVal.ReturnUrl = returnUrl;
@@ -74,12 +76,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                         ExpiresUtc = DateTimeOffset.UtcNow.Add(DefaultUserOptions.RememberMeLoginDuration)
                     };
 
-                    HttpContext.Authentication.SignInAsync("Password", targetUser.Email, props);
+                    ClaimsPrincipalFactory claimsPrincipalFactory = new ClaimsPrincipalFactory();
+                    //                    HttpContext.Authentication.SignInAsync(SiteConstants.AuthenticationScheme, claimsPrincipalFactory.Create(targetUser), props);
+                    //                    HttpContext.Authentication.SignInAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme, claimsPrincipalFactory.Create(targetUser), props);
+                    //_events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
+                    HttpContext.Authentication.SignInAsync(targetUser.Id.ToString(), targetUser.Email, props);
 
                     // make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
-                    if (targetUser.IsInRole(RoleType.Names.Administrator))
+                    if (string.IsNullOrEmpty(input.ReturnUrl))
                     {
-                        return this.Redirect("/Admin/Management/Index");
+                        if (targetUser.IsInRole(RoleType.Names.Administrator))
+                        {
+                            return this.Redirect(SiteConstants.PageLocations.AdminHome);
+                        }
                     }
                     else
                     {
@@ -96,7 +105,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return this.Login(input.ReturnUrl, "");
+            LoginModel loginModel = new LoginModel() { ReturnUrl = input.ReturnUrl };
+            return this.View("Login", loginModel);
         }
 
         /// <summary>
@@ -156,7 +166,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
-            HttpContext.Authentication.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
+            HttpContext.Authentication.SignOutAsync(SiteConstants.AuthenticationScheme);
             LoginModel retVal = new LoginModel();
             return this.View("Login", retVal);
         }

@@ -10,6 +10,7 @@ using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Web.Models.Consent;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -35,6 +36,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// <param name="returnUrl"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(string returnUrl)
         {
             ConsentViewModel retVal = new ConsentViewModel();
@@ -106,6 +108,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// Approves access for the request token
         /// </summary>
         /// <param name="redirectUrl">the return url</param>
+        [Authorize]
         public async Task<IActionResult> ApproveAccess(string redirectUrl, IList<string> ScopesConsented)
         {
             try
@@ -143,15 +146,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                 LogManager.GetLogger().Error(e);
             }
 
-            return View("Error");
-        }
-
-        /// <summary>
-        /// Denies access to the request token
-        /// </summary>
-        /// <param name="redirectUrl">the return url</param>
-        public async Task<IActionResult> DenyAccess(string redirectUrl)
-        {
             return View("Error");
         }
     }
