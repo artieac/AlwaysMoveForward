@@ -95,6 +95,8 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             app.UseCookieAuthentication();
 
+            app.UseJwtAuthentication();
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
