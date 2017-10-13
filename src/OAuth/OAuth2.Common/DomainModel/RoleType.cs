@@ -32,6 +32,8 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel
         {
             public const string User = "User";
             public const string Administrator = "Administrator";
+
+            public static string Adminstrator { get; set; }
         }
     }
 }

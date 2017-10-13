@@ -7,15 +7,15 @@ using IdentityServer4.Models;
 using IdentityModel;
 using IdentityServer4;
 
-namespace AlwaysMoveForward.OAuth2.Web.Code
+namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
 {
-    public class AMFResourceStore : IResourceStore
+    public class ResourceStore : IResourceStore
     {
         static IList<ApiResource> resources = new List<ApiResource>();
 
-        static AMFResourceStore()
+        static ResourceStore()
         {
-            AMFResourceStore.resources = new List<ApiResource>();
+            ResourceStore.resources = new List<ApiResource>();
 
             ApiResource newItem = new ApiResource
             {
@@ -39,18 +39,18 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                 }
             };
 
-            AMFResourceStore.resources.Add(newItem);
+            ResourceStore.resources.Add(newItem);
         }
 
         public Task<ApiResource> FindApiResourceAsync(string name)
         {
             ApiResource retVal = null;
 
-            for(int i = 0; i < AMFResourceStore.resources.Count; i++)
+            for(int i = 0; i < ResourceStore.resources.Count; i++)
             {
-                if(AMFResourceStore.resources[i].Name == name)
+                if(ResourceStore.resources[i].Name == name)
                 {
-                    retVal = AMFResourceStore.resources[i];
+                    retVal = ResourceStore.resources[i];
                 }
             }
 
@@ -63,13 +63,13 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
 
             foreach (string scopeName in scopeNames)
             {
-                for (int i = 0; i < AMFResourceStore.resources.Count; i++)
+                for (int i = 0; i < ResourceStore.resources.Count; i++)
                 {
-                    foreach (Scope scope in AMFResourceStore.resources[i].Scopes)
+                    foreach (Scope scope in ResourceStore.resources[i].Scopes)
                     {
                         if (scope.Name == scopeName)
                         {
-                            retVal.Add(AMFResourceStore.resources[i]);
+                            retVal.Add(ResourceStore.resources[i]);
                         }
                     }
                 }
@@ -86,7 +86,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
         public Task<Resources> GetAllResources()
         {
             Resources retVal = new Resources();
-            retVal.ApiResources = AMFResourceStore.resources;
+            retVal.ApiResources = ResourceStore.resources;
             retVal.IdentityResources = Config.GetIdentityResources().ToArray();
             return Task.FromResult(retVal);
         }

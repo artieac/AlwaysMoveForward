@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
     /// the calls through to the contained user, but for now I'm just implementing the IPrincipal and we'll see how it goes
     /// </summary>
     /// <typeparam name="TUser">User Type</typeparam>
-    public abstract class SecurityPrincipalBase<TUser> : ClaimsIdentity, IPrincipal where TUser : class
+    public abstract class SecurityPrincipalBase<TUser> : IIdentity, IPrincipal where TUser : class
     {
         /// <summary>
         ///  An enumeration that defines what Authentication Types AlwaysMoveForward supports
@@ -99,9 +99,5 @@ namespace AlwaysMoveForward.OAuth2.Common.Security
         }
 
         #endregion
-        public ClaimsPrincipal GetClaimsPrincipal()
-        {
-            return new ClaimsPrincipal(this as IPrincipal); 
-        }
     }
 }

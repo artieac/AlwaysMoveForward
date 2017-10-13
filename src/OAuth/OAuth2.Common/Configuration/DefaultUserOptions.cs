@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth2.Common.Configuration
 
         public static bool AllowRememberLogin = true;
 
-        public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
+        public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(14);
 
 
 

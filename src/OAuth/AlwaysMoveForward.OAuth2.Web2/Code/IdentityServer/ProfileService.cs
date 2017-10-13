@@ -7,12 +7,13 @@ using IdentityServer4.Models;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using System.Security.Claims;
+using IdentityModel;
 
-namespace AlwaysMoveForward.OAuth2.Web.Code
+namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
 {
-    public class AMFProfileService : IProfileService
+    public class ProfileService : IProfileService
     {
-        public AMFProfileService(ServiceManagerBuilder serviceManagerBuilder)
+        public ProfileService(ServiceManagerBuilder serviceManagerBuilder)
         {
             this.ServiceManagerBuilder = serviceManagerBuilder;
         }
@@ -53,6 +54,45 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
                         break;
                     }
                 }
+            }
+
+            if (foundUser != null)
+            {
+                IList<Claim> issuedClaims = new List<Claim>();
+
+                foreach (string requestedClaim in context.RequestedClaimTypes)
+                {
+                    Claim newClaim = null;
+
+                    switch (requestedClaim)
+                    {
+                        case JwtClaimTypes.Name:
+                            newClaim = new Claim(JwtClaimTypes.Name, foundUser.GetDisplayName());
+                            context.IssuedClaims.Add(newClaim);
+                            issuedClaims.Add(newClaim);
+                            break;
+                        case JwtClaimTypes.Email:
+                            newClaim = new Claim(JwtClaimTypes.Email, foundUser.Email);
+                            context.IssuedClaims.Add(newClaim);
+                            issuedClaims.Add(newClaim);
+                            break;
+                        case JwtClaimTypes.Role:
+                            if (foundUser.IsInRole(RoleType.Names.Administrator))
+                            {
+                                newClaim = new Claim(JwtClaimTypes.Role, RoleType.Names.Administrator);
+                                context.IssuedClaims.Add(newClaim);
+                            }
+                            else
+                            {
+                                newClaim = new Claim(JwtClaimTypes.Role, RoleType.Names.User);
+                                context.IssuedClaims.Add(newClaim);
+                            }
+                            issuedClaims.Add(newClaim);
+                            break;
+                    }
+                }
+
+                context.AddFilteredClaims(issuedClaims);
             }
 
             return Task.FromResult(foundUser);

@@ -18,6 +18,8 @@ using IdentityServer4;
 using AlwaysMoveForward.OAuth2.Web.Models.Account;
 using System.Security.Claims;
 using AlwaysMoveForward.OAuth2.Web.Code;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -27,11 +29,58 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
     public class AccountController : AMFControllerBase
     {
         private readonly IIdentityServerInteractionService _idsInteractionService;
+        private readonly SignInManager<AMFUserLogin> _signInManager;
+        private readonly UserManager<AMFUserLogin> _userManager;
 
         public AccountController(ServiceManagerBuilder serviceManagerBuilder,
+                                SignInManager<AMFUserLogin> signInManager,
+                                UserManager<AMFUserLogin> userManager,
                                 IIdentityServerInteractionService interaction) : base(serviceManagerBuilder)
         {
             this._idsInteractionService = interaction;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
+        private void EstablishCookies(AMFUserLogin targetUser)
+        {
+            Microsoft.AspNetCore.Authentication.AuthenticationProperties props = new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.Add(DefaultUserOptions.RememberMeLoginDuration)
+            };
+
+            ClaimsPrincipalFactory claimsPrincipalFactory = new ClaimsPrincipalFactory();
+            ClaimsPrincipal claimsPrincipal = claimsPrincipalFactory.Create(targetUser);
+            HttpContext.User = claimsPrincipal;
+
+            HttpContext.SignInAsync(SiteConstants.AuthenticationScheme, claimsPrincipal, props);
+        }
+        private void RemoveCookies()
+        {
+            HttpContext.SignOutAsync(SiteConstants.AuthenticationScheme);
+            HttpContext.SignOutAsync();
+            HttpContext.User = null;
         }
 
         /// <summary>
@@ -43,7 +92,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         public ActionResult Login(string returnUrl, string consumerName)
         {
             // Clear the existing external cookie to ensure a clean login process
-            HttpContext.Authentication.SignOutAsync(SiteConstants.AuthenticationScheme);
+            this.RemoveCookies();
 
             LoginModel retVal = new LoginModel();
             retVal.ReturnUrl = returnUrl;
@@ -61,50 +110,22 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// <returns>The Grant Access view or the sign in screen again</returns>
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ProcessLogin(ProcessLoginInput input)
+        public async Task<IActionResult> ProcessLogin(ProcessLoginInput input)
         {
             if (ModelState.IsValid)
             {
-                AMFUserLogin targetUser = this.ServiceManager.UserService.LogonUser(input.UserName, input.Password, this.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.ToString());
-
-                if (targetUser != null)
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
+                if (result.Succeeded)
                 {
-                    AuthenticationProperties props = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.Add(DefaultUserOptions.RememberMeLoginDuration)
-                    };
-
-                    ClaimsPrincipalFactory claimsPrincipalFactory = new ClaimsPrincipalFactory();
-                    //                    HttpContext.Authentication.SignInAsync(SiteConstants.AuthenticationScheme, claimsPrincipalFactory.Create(targetUser), props);
-                    //                    HttpContext.Authentication.SignInAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme, claimsPrincipalFactory.Create(targetUser), props);
-                    //_events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
-                    HttpContext.Authentication.SignInAsync(targetUser.Id.ToString(), targetUser.Email, props);
-
-                    // make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
-                    if (string.IsNullOrEmpty(input.ReturnUrl))
-                    {
-                        if (targetUser.IsInRole(RoleType.Names.Administrator))
-                        {
-                            return this.Redirect(SiteConstants.PageLocations.AdminHome);
-                        }
-                    }
-                    else
-                    {
-                        if (_idsInteractionService.IsValidReturnUrl(input.ReturnUrl))
-                        {
-                            return Redirect(input.ReturnUrl);
-                        }
-                    }
-
-                    return Redirect("~/");
+//                    this.Logg.LogInformation(1, "User logged in.");
+                    return RedirectToLocal(input.ReturnUrl);
                 }
-
-                ModelState.AddModelError("", DefaultUserOptions.InvalidCredentialsErrorMessage);
             }
 
             // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", DefaultUserOptions.InvalidCredentialsErrorMessage);
             LoginModel loginModel = new LoginModel() { ReturnUrl = input.ReturnUrl };
             return this.View("Login", loginModel);
         }
@@ -130,43 +151,58 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ProcessRegister(ProcessRegisterInput registerModel)
+        public async Task<IActionResult> ProcessRegister(ProcessRegisterInput registerModel)
         {
-            AMFUserLogin registeredUser = null;
+            AMFUserLogin registerUser = null;
 
-            if (registerModel != null)
+            if (ModelState.IsValid)
             {
-                registeredUser = this.ServiceManager.UserService.GetByEmail(registerModel.UserEmail);
+                registerUser = this.ServiceManager.UserService.GetByEmail(registerModel.UserEmail);
 
-                if (registeredUser == null)
+                if (registerUser == null)
                 {
-                    registeredUser = this.ServiceManager.UserService.Register(registerModel.UserEmail, registerModel.Password, registerModel.PasswordHint, registerModel.FirstName, registerModel.LastName);
+                    registerUser = new AMFUserLogin();
+                    registerUser.Email = registerModel.UserEmail;
+                    registerUser.FirstName = registerModel.FirstName;
+                    registerUser.LastName = registerModel.LastName;
+                    registerUser.Role = RoleType.Id.User;
+                    registerUser.UserStatus = UserStatus.Active;
                 }
-                else
+
+                var result = await _userManager.CreateAsync(registerUser, registerModel.Password);
+
+                if (result.Succeeded)
                 {
-                    RegisterModel model = new RegisterModel() { ReturnUrl = registerModel.ReturnUrl, FoundUser = true };
-                    return this.View("Register", model);
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _signInManager.SignInAsync(registerUser, isPersistent: false);
+//                    _logger.LogInformation(3, "User created a new account with password.");
+                    return RedirectToLocal(registerModel.ReturnUrl);
                 }
+                AddErrors(result);
             }
 
-            if (registeredUser != null)
+            if (registerUser != null)
             {
                 LoginModel model = new LoginModel() { ReturnUrl = registerModel.ReturnUrl };
                 return this.View("Login", model);
             }
             else
             {
-                EditModel model = new EditModel(registeredUser);
+                EditModel model = new EditModel(registerUser);
                 return this.View("Register", model);
             }
         }
-  
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
-            HttpContext.Authentication.SignOutAsync(SiteConstants.AuthenticationScheme);
+            this.RemoveCookies();
             LoginModel retVal = new LoginModel();
             return this.View("Login", retVal);
         }
@@ -214,10 +250,11 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
 
             if (editModel != null)
             {
-                registeredUser = this.ServiceManager.UserService.Update(editModel.Id, editModel.FirstName, editModel.LastName, editModel.Password);
-
+                registeredUser = this.ServiceManager.UserService.Update(editModel.Id, editModel.FirstName, editModel.LastName);
+               
                 if(registeredUser != null)
                 {
+//                    registeredUser.UpdatePassword(editModel.Password);
                     return this.View("ProcessSignin", registeredUser);
                 }
                 else

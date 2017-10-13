@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Code;
+using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
+using AlwaysMoveForward.OAuth2.Web.Code.AspNetIdentity;
 using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using IdentityServer4;
@@ -17,6 +19,10 @@ using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Serilog;
 using System.IO;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace AlwaysMoveForward.OAuth2.Web
 {
@@ -44,33 +50,38 @@ namespace AlwaysMoveForward.OAuth2.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DatabaseConfiguration>(Configuration.GetSection("Database"));
-            
+
             // Add framework services.
             services.AddMvc();
 
             services.AddScoped<ServiceManagerBuilder>();
             services.AddScoped<IServiceManager, ServiceManager>();
 
-            services.AddTransient<IClientStore, AMFClientStore>();
-            services.AddTransient<IProfileService, AMFProfileService>();
-            services.AddTransient<IResourceStore, AMFResourceStore>();
+            services.AddTransient<IClientStore, ClientStore>();
+            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IResourceStore, ResourceStore>();
+            services.AddTransient<IUserStore<AMFUserLogin>, UserStore > ();
+            services.AddTransient<IUserPasswordStore<AMFUserLogin>, UserStore>();
+            services.AddTransient<IRoleStore<string>, RoleStore>();
             services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
-            services.AddIdentity<AMFUserLogin, string>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<AMFUserLogin, string> (o => {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 1;
+            })
+            .AddDefaultTokenProviders();
 
             // Adds IdentityServer
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
-                .AddClientStore<AMFClientStore>()
-                .AddProfileService<AMFProfileService>()
-                .AddResourceStore<AMFResourceStore>();
-
-            services.AddAuthentication(o =>
-            {
-                o.SignInScheme = SiteConstants.AuthenticationScheme;
-            });
+                .AddClientStore<ClientStore>()
+                .AddProfileService<ProfileService>()
+                .AddResourceStore<ResourceStore>()
+                .AddAspNetIdentity<AMFUserLogin>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,10 +103,6 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             // Adds IdentityServer
             app.UseIdentityServer();
-
-            app.UseCookieAuthentication();
-
-            app.UseJwtAuthentication();
 
             app.UseStaticFiles();
 

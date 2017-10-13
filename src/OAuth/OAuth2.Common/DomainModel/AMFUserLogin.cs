@@ -35,46 +35,29 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel
             this.Role = RoleType.Id.User;
         }
 
-        public string GenerateNewPassword()
-        {
-            string retVal = string.Empty;
-            Random random = new Random();
-            string legalChars = "abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890";
-            StringBuilder sb = new StringBuilder();
+        //public string GenerateNewPassword()
+        //{
+        //    string retVal = string.Empty;
+        //    Random random = new Random();
+        //    string legalChars = "abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890";
+        //    StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < 10; i++)
-            {
-                sb.Append(legalChars.Substring(random.Next(0, legalChars.Length - 1), 1));
-            }
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        sb.Append(legalChars.Substring(random.Next(0, legalChars.Length - 1), 1));
+        //    }
 
-            retVal = sb.ToString();
+        //    retVal = sb.ToString();
 
-            this.UpdatePassword(retVal);
+        //    this.UpdatePassword(retVal);
 
-            return retVal;
-        }
-        
-        public void UpdatePassword(string unencryptedPassword)
-        {
-            SHA1HashUtility passwordHashUtility = new SHA1HashUtility();
-            this.PasswordHash = passwordHashUtility.HashPassword(unencryptedPassword);
-            this.PasswordSalt = Convert.ToBase64String(passwordHashUtility.Salt);
-        }
-
-        public void UpdatePassword(string passwordHash, string passwordSalt)
-        {
-            this.PasswordHash = passwordHash;
-            this.PasswordSalt = passwordSalt;
-        }
-        /// <summary>
-        /// The salt associated with the hashed password
-        /// </summary>
-        public string PasswordSalt { get; private set; }
+        //    return retVal;
+        //}
 
         /// <summary>
         /// Gets or sets the actually hashed password
         /// </summary>
-        public string PasswordHash { get; private set; }
+        public string PasswordHash { get; set; }
 
         /// <summary>
         /// Gets or sets the date time that the user is created

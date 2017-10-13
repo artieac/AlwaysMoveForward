@@ -28,6 +28,11 @@ namespace OAuth2.Client.Controllers
             return View("Index");
         }
 
+        public IActionResult LogoutTest()
+        {
+            return View("Index");
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

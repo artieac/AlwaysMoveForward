@@ -16,23 +16,16 @@
   <ItemGroup>
     <Content Include="Styles\definitions.less" />
     <Content Include="Styles\styles.less" />
-    <Content Include="wwwroot\js\Controllers\RequestTokenController.js" />
-    <Content Include="wwwroot\js\Controllers\UserController.js" />
-    <Content Include="wwwroot\js\Modules\FactoryModule.js" />
-    <Content Include="wwwroot\js\Modules\ServiceDefinitionModule.js" />
-    <Content Include="wwwroot\js\UI\EmbeddedHelpers.js" />
-    <Content Include="wwwroot\js\UI\Register.js" />
-    <Content Include="wwwroot\js\UI\SignIn.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="1.5.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="3.2.0" />

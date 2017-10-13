@@ -9,14 +9,14 @@ namespace AlwaysMoveForward.OAuth2.Common.Factories
 {
     public class UserFactory
     {
-        public static AMFUserLogin Create(string userName, string password, string firstName, string lastName, string passwordHint)
+        public static AMFUserLogin Create(string userName, string firstName, string lastName, string passwordHash)
         {
             AMFUserLogin retVal = new AMFUserLogin();
             retVal.Email = userName;
             retVal.FirstName = firstName;
             retVal.LastName = lastName;
-            retVal.PasswordHint = passwordHint;
-            retVal.UpdatePassword(password);
+            retVal.PasswordHint = "";            
+            retVal.PasswordHash = passwordHash;
 
             return retVal;
         }

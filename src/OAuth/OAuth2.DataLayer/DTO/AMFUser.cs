@@ -23,7 +23,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DTO
         /// </summary>
         public AMFUser()
         {
-            this.Id = 0;
+            this.Id = 0;           
         }
 
         public long Id { get; set; }
@@ -33,8 +33,6 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DTO
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public string PasswordSalt { get; set; }
 
         public string PasswordHash { get; set; }
 

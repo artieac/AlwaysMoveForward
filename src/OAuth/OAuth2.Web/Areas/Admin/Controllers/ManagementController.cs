@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AlwaysMoveForward.OAuth2.Web.Code;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/[controller]/[action]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = SiteConstants.AuthenticationScheme)]
     public class ManagementController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
         public ManagementController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }

@@ -8,11 +8,11 @@ using IdentityServer4.Models;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 
-namespace AlwaysMoveForward.OAuth2.Web.Code
+namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
 {
-    public class AMFClientStore : IClientStore
+    public class ClientStore : IClientStore
     {
-        public AMFClientStore(ServiceManagerBuilder serviceManagerBuilder)
+        public ClientStore(ServiceManagerBuilder serviceManagerBuilder)
         {
             this.ServiceManagerBuilder = serviceManagerBuilder;
         }
