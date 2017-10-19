@@ -9,8 +9,10 @@ namespace AlwaysMoveForward.OAuth2.Client.Code
     {
 
         public const string Authority = "http://localhost:55482";
+//        public const string Authority = "http://localhost:49866";
 
-        public const string SampleApi = "http://localhost:53109/";
+        public const string SampleApi = "http://localhost:55482/";
+//        public const string SampleApi = "http://localhost:49866/";
 
     }
 }

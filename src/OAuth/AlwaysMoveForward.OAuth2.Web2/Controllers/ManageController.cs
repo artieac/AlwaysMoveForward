@@ -11,6 +11,8 @@ using AlwaysMoveForward.OAuth2.Web2.Models;
 using AlwaysMoveForward.OAuth2.Web2.Models.ManageViewModels;
 using AlwaysMoveForward.OAuth2.Web2.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace AlwaysMoveForward.OAuth2.Web2.Controllers
 {
@@ -291,12 +293,14 @@ namespace AlwaysMoveForward.OAuth2.Web2.Controllers
                 return View("Error");
             }
             var userLogins = await _userManager.GetLoginsAsync(user);
-            var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
+            IEnumerable<AuthenticationScheme> externaAuthentications = await _signInManager.GetExternalAuthenticationSchemesAsync();
+            var otherLogins = externaAuthentications.Where(auth => userLogins.All(ul => auth.Name != ul.LoginProvider)).ToList();
+
             ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
-                OtherLogins = otherLogins
+                OtherLogins = new List<AuthenticationDescription>() // otherLogins
             });
         }
 
@@ -307,7 +311,7 @@ namespace AlwaysMoveForward.OAuth2.Web2.Controllers
         public async Task<IActionResult> LinkLogin(string provider)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await HttpContext.SignOutAsync(_externalCookieScheme);
 
             // Request a redirect to the external login provider to link a login for the current user
             var redirectUrl = Url.Action(nameof(LinkLoginCallback), "Manage");

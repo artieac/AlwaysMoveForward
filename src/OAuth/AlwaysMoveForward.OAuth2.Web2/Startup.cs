@@ -20,6 +20,7 @@ using AlwaysMoveForward.OAuth2.Web.Code.AspNetIdentity;
 using IdentityServer4.Validation;
 using Serilog;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IO;
 
 namespace AlwaysMoveForward.OAuth2.Web2
 {
@@ -40,6 +41,12 @@ namespace AlwaysMoveForward.OAuth2.Web2
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()
+               .WriteTo.Console()
+               .WriteTo.RollingFile(Path.Combine(env.ContentRootPath, @"c:\personal\log-{Date}.txt"))
+               .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -58,9 +65,9 @@ namespace AlwaysMoveForward.OAuth2.Web2
             services.AddTransient<IClientStore, ClientStore>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IResourceStore, ResourceStore>();
-            services.AddTransient<IUserStore<AMFUserLogin>, UserStore>();
-            services.AddTransient<IUserPasswordStore<AMFUserLogin>, UserStore>();
-            services.AddTransient<IRoleStore<string>, RoleStore>();
+            services.AddScoped<IUserStore<AMFUserLogin>, UserStore>();
+            services.AddScoped<IUserPasswordStore<AMFUserLogin>, UserStore>();
+            services.AddScoped<IRoleStore<string>, RoleStore>();
             services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
             services.AddIdentity<AMFUserLogin, string>(o => {
@@ -72,10 +79,16 @@ namespace AlwaysMoveForward.OAuth2.Web2
             })
             .AddDefaultTokenProviders();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = SiteConstants.AuthenticationScheme;
+                options.DefaultChallengeScheme = SiteConstants.AuthenticationScheme;
+                options.DefaultSignOutScheme = SiteConstants.AuthenticationScheme;
+            })
             .AddCookie(options => {
                 options.LoginPath = "/Account/LogIn";
                 options.LogoutPath = "/Account/LogOff";
+
             });
 
             services.AddMvc();

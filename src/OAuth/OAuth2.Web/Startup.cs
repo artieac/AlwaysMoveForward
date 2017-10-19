@@ -39,7 +39,7 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.LiterateConsole()
+                .WriteTo.Console()
                 .WriteTo.RollingFile(Path.Combine(env.ContentRootPath, @"c:\personal\log-{Date}.txt"))           
                 .CreateLogger();
         }
@@ -63,6 +63,7 @@ namespace AlwaysMoveForward.OAuth2.Web
             services.AddTransient<IUserStore<AMFUserLogin>, UserStore > ();
             services.AddTransient<IUserPasswordStore<AMFUserLogin>, UserStore>();
             services.AddTransient<IRoleStore<string>, RoleStore>();
+            services.AddScoped<IUserClaimsPrincipalFactory<AMFUserLogin>, AppClaimsPrincipalFactory>();
             services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
             services.AddIdentity<AMFUserLogin, string> (o => {
@@ -74,9 +75,19 @@ namespace AlwaysMoveForward.OAuth2.Web
             })
             .AddDefaultTokenProviders();
 
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultScheme = SiteConstants.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = SiteConstants.AuthenticationScheme;
+            //    options.DefaultSignInScheme = SiteConstants.AuthenticationScheme;
+            //    options.DefaultSignOutScheme = SiteConstants.AuthenticationScheme;
+            //    options.DefaultAuthenticateScheme = SiteConstants.AuthenticationScheme;
+            //    options.DefaultForbidScheme = SiteConstants.AuthenticationScheme;
+            //});
+
             // Adds IdentityServer
             services.AddIdentityServer()
-                .AddTemporarySigningCredential()
+                .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddClientStore<ClientStore>()
                 .AddProfileService<ProfileService>()
@@ -99,7 +110,7 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             loggerFactory.AddSerilog(Log.Logger);
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
             // Adds IdentityServer
             app.UseIdentityServer();

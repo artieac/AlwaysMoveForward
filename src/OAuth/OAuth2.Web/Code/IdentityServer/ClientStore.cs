@@ -52,7 +52,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                 retVal.RedirectUris = new List<string>();
                 retVal.RedirectUris.Add("http://localhost:53109/home/callback");
 
-                retVal.LogoutUri = "http://localhost:53109/home/logout";
+                retVal.BackChannelLogoutUri = "http://localhost:53109/home/logout";
 
                 retVal.PostLogoutRedirectUris = new List<string>();
                 retVal.PostLogoutRedirectUris.Add("http://localhost:53109/home/logout");

@@ -20,6 +20,7 @@ using System.Security.Claims;
 using AlwaysMoveForward.OAuth2.Web.Code;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -31,16 +32,22 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         private readonly IIdentityServerInteractionService _idsInteractionService;
         private readonly SignInManager<AMFUserLogin> _signInManager;
         private readonly UserManager<AMFUserLogin> _userManager;
+        private readonly ILoggerFactory _loggerFactory;
 
         public AccountController(ServiceManagerBuilder serviceManagerBuilder,
                                 SignInManager<AMFUserLogin> signInManager,
                                 UserManager<AMFUserLogin> userManager,
-                                IIdentityServerInteractionService interaction) : base(serviceManagerBuilder)
+                                IIdentityServerInteractionService interaction,
+                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder)
         {
             this._idsInteractionService = interaction;
             this._signInManager = signInManager;
             this._userManager = userManager;
+
+            this.Logger = loggerFactory.CreateLogger<AccountController>();
         }
+
+        public ILogger Logger { get; private set; }
 
         private void AddErrors(IdentityResult result)
         {
@@ -118,9 +125,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
-//                    this.Logg.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(input.ReturnUrl);
+                {                    
+                    this.Logger.LogInformation(1, "User logged in.");
+                    AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(input.UserName);
+                    await _signInManager.SignInAsync(userLogin, isPersistent: false);
+
+                    if (String.IsNullOrEmpty(input.ReturnUrl) == true && this.User.IsInRole(RoleType.Names.Administrator))
+                    {
+                        return this.Redirect("/Admin/Management/Index");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(input.ReturnUrl);
+                    }
                 }
             }
 

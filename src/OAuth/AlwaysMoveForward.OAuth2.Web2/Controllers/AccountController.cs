@@ -14,6 +14,7 @@ using AlwaysMoveForward.OAuth2.Web2.Models.AccountViewModels;
 using AlwaysMoveForward.OAuth2.Web2.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace AlwaysMoveForward.OAuth2.Web2.Controllers
 {
@@ -31,14 +32,13 @@ namespace AlwaysMoveForward.OAuth2.Web2.Controllers
             ServiceManagerBuilder serviceManagerBuilder, 
             UserManager<AMFUserLogin> userManager,
             SignInManager<AMFUserLogin> signInManager,
-            IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory) : base(serviceManagerBuilder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
+            _externalCookieScheme = "external";
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -51,7 +51,7 @@ namespace AlwaysMoveForward.OAuth2.Web2.Controllers
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await _signInManager.SignOutAsync();
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -72,6 +72,8 @@ namespace AlwaysMoveForward.OAuth2.Web2.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(model.Email);
+                    await _signInManager.SignInAsync(userLogin, isPersistent: false);
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }

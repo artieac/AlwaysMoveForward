@@ -28,8 +28,9 @@ namespace OAuth2.Client.Controllers
             return View("Index");
         }
 
-        public IActionResult LogoutTest()
+        public async Task<IActionResult> LogoutTest()
         {
+            await HttpContext.Authentication.SignOutAsync("Cookies");
             return View("Index");
         }
 
@@ -64,10 +65,10 @@ namespace OAuth2.Client.Controllers
 
             if (!string.IsNullOrEmpty(error)) throw new Exception(error);
 
-            //if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
+            if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
 
 
-//            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
 
 
             var user = await ValidateIdentityToken(idToken);

@@ -83,7 +83,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
             return Task.FromResult(Config.GetIdentityResources());
         }
 
-        public Task<Resources> GetAllResources()
+        public Task<Resources> GetAllResourcesAsync()
         {
             Resources retVal = new Resources();
             retVal.ApiResources = ResourceStore.resources;

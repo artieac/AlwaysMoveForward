@@ -92,7 +92,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                     }
                 }
 
-                context.AddFilteredClaims(issuedClaims);
+                context.AddRequestedClaims(issuedClaims);
             }
 
             return Task.FromResult(foundUser);
