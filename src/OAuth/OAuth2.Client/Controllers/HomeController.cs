@@ -53,32 +53,37 @@ namespace OAuth2.Client.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Callback()
+        public async Task<IActionResult> HandleCallback()
         {
-            var state = Request.Form["state"].FirstOrDefault();
+//            var state = Request.Form["state"].FirstOrDefault();
 
-            var idToken = Request.Form["id_token"].FirstOrDefault();
+//            var idToken = Request.Form["id_token"].FirstOrDefault();
 
-            var error = Request.Form["error"].FirstOrDefault();
+//            var error = Request.Form["error"].FirstOrDefault();
 
 
 
-            if (!string.IsNullOrEmpty(error)) throw new Exception(error);
+//            if (!string.IsNullOrEmpty(error)) throw new Exception(error);
 
-            if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
+ //           if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
 
 
             var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
 
 
-            var user = await ValidateIdentityToken(idToken);
+//            var user = await ValidateIdentityToken(idToken);
 
 
 
-            await HttpContext.Authentication.SignInAsync("Cookies", user);
+//            await HttpContext.Authentication.SignInAsync("Cookies", user);
 
             return Redirect("/home/secure");
 
+        }
+
+        public async Task<IActionResult> Secure()
+        {
+            return View();
         }
 
         private async Task<ClaimsPrincipal> ValidateIdentityToken(string idToken)

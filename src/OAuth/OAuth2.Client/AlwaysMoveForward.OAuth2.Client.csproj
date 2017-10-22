@@ -6,6 +6,7 @@
 
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+    <AssemblyName>AlwaysMoveForward.OAuth2.Client</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="2.10.0" />

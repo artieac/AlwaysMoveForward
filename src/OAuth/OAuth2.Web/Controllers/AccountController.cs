@@ -69,26 +69,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
             }
         }
 
-        private void EstablishCookies(AMFUserLogin targetUser)
-        {
-            Microsoft.AspNetCore.Authentication.AuthenticationProperties props = new Microsoft.AspNetCore.Authentication.AuthenticationProperties
-            {
-                IsPersistent = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.Add(DefaultUserOptions.RememberMeLoginDuration)
-            };
-
-            ClaimsPrincipalFactory claimsPrincipalFactory = new ClaimsPrincipalFactory();
-            ClaimsPrincipal claimsPrincipal = claimsPrincipalFactory.Create(targetUser);
-            HttpContext.User = claimsPrincipal;
-
-            HttpContext.SignInAsync(SiteConstants.AuthenticationScheme, claimsPrincipal, props);
-        }
-        private void RemoveCookies()
-        {
-            HttpContext.SignOutAsync(SiteConstants.AuthenticationScheme);
-            HttpContext.SignOutAsync();
-            HttpContext.User = null;
-        }
 
         /// <summary>
         /// Show the initial sign in page
@@ -98,9 +78,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string consumerName)
         {
-            // Clear the existing external cookie to ensure a clean login process
-            this.RemoveCookies();
-
             LoginModel retVal = new LoginModel();
             retVal.ReturnUrl = returnUrl;
             retVal.ConsumerName = consumerName;
@@ -130,7 +107,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                     AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(input.UserName);
                     await _signInManager.SignInAsync(userLogin, isPersistent: false);
 
-                    if (String.IsNullOrEmpty(input.ReturnUrl) == true && this.User.IsInRole(RoleType.Names.Administrator))
+                    String foo = this.Request.Query["redirect_uri"];
+
+                    if (String.IsNullOrEmpty(input.ReturnUrl) == true && userLogin.IsInRole(RoleType.Names.Administrator))
                     {
                         return this.Redirect("/Admin/Management/Index");
                     }
@@ -217,9 +196,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            this.RemoveCookies();
+            await _signInManager.SignOutAsync();
             LoginModel retVal = new LoginModel();
             return this.View("Login", retVal);
         }

@@ -63,7 +63,7 @@ namespace AlwaysMoveForward.OAuth2.Web
             services.AddTransient<IUserStore<AMFUserLogin>, UserStore > ();
             services.AddTransient<IUserPasswordStore<AMFUserLogin>, UserStore>();
             services.AddTransient<IRoleStore<string>, RoleStore>();
-            services.AddScoped<IUserClaimsPrincipalFactory<AMFUserLogin>, AppClaimsPrincipalFactory>();
+            services.AddScoped<IUserClaimsPrincipalFactory<AMFUserLogin>, ClaimsPrincipalFactory>();
             services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
             services.AddIdentity<AMFUserLogin, string> (o => {

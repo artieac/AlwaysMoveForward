@@ -84,7 +84,7 @@ namespace OAuth2.Client
 
                 ClientId = "abcd",
                 ClientSecret = "abcd",
-                CallbackPath = "/Home/Callback",
+                CallbackPath = "/home/handlecallback",
 
                 ResponseType = "code id_token",
                 Scope = { "offline_access", "api1.full_access" },
