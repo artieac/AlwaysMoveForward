@@ -12,11 +12,21 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace OAuth2.Client.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILoggerFactory _loggerFactory;
+
+        public HomeController(ILoggerFactory loggerFactory) 
+        {
+            this.Logger = loggerFactory.CreateLogger<HomeController>();
+        }
+
+        public ILogger Logger { get; private set; }
+
         public IActionResult Index()
         {
             return View();
@@ -53,29 +63,32 @@ namespace OAuth2.Client.Controllers
             return View();
         }
 
-        public async Task<IActionResult> HandleCallback()
+        [HttpGet]
+        public ActionResult HandleCallback()
         {
-//            var state = Request.Form["state"].FirstOrDefault();
+            this.Logger.LogDebug("In callback");
 
-//            var idToken = Request.Form["id_token"].FirstOrDefault();
+            var state = Request.Form["state"].FirstOrDefault();
 
-//            var error = Request.Form["error"].FirstOrDefault();
+            var idToken = Request.Form["id_token"].FirstOrDefault();
 
-
-
-//            if (!string.IsNullOrEmpty(error)) throw new Exception(error);
-
- //           if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
-
-
-            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
-
-
-//            var user = await ValidateIdentityToken(idToken);
+            var error = Request.Form["error"].FirstOrDefault();
 
 
 
-//            await HttpContext.Authentication.SignInAsync("Cookies", user);
+            if (!string.IsNullOrEmpty(error)) throw new Exception(error);
+
+            if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
+
+
+            var accessToken = HttpContext.Authentication.GetTokenAsync("access_token");
+
+
+            var user = ValidateIdentityToken(idToken);
+
+
+
+            HttpContext.Authentication.SignInAsync("Cookies", user.Result);
 
             return Redirect("/home/secure");
 

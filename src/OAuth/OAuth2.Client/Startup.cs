@@ -14,6 +14,8 @@ using System.Security.Cryptography;
 using System.Text;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Serilog;
+using System.IO;
 
 namespace OAuth2.Client
 {
@@ -27,6 +29,12 @@ namespace OAuth2.Client
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()
+               .WriteTo.Console()
+               .WriteTo.RollingFile(Path.Combine(env.ContentRootPath, @"c:\personal\clientlog-{Date}.txt"))
+               .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -84,7 +92,6 @@ namespace OAuth2.Client
 
                 ClientId = "abcd",
                 ClientSecret = "abcd",
-                CallbackPath = "/home/handlecallback",
 
                 ResponseType = "code id_token",
                 Scope = { "offline_access", "api1.full_access" },
