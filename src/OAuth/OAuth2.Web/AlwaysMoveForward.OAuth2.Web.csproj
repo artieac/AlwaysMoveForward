@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\ManageTokens\**" />
+    <Content Remove="Areas\Admin\Views\ManageTokens\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\ManageTokens\**" />
+    <None Remove="Areas\Admin\Views\ManageTokens\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="log-20170714.txt" />
   </ItemGroup>
 

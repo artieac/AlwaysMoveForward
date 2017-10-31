@@ -1,6 +1,6 @@
 ﻿
-@model AlwaysMoveForward.OAuth.Common.DomainModel.AMFUserLogin
-@using AlwaysMoveForward.OAuth.Common.DomainModel;
+@model AlwaysMoveForward.OAuth2.Common.DomainModel.AMFUserLogin
+@using AlwaysMoveForward.OAuth2.Common.DomainModel;
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -46,8 +46,8 @@
             <div>
                 <span class="label">Role:</span>
                 <select name="role" id="role">
-                    <option value="@OAuthRoles.User" @if (@Model.Role == OAuthRoles.User) { <text> selected </text>    }>User</option>
-                    <option value="@OAuthRoles.Administrator" @if (@Model.Role == OAuthRoles.Administrator)
+                    <option value="@RoleType.Id.User" @if (@Model.Role == RoleType.Id.User) { <text> selected </text>    }>User</option>
+                    <option value="@RoleType.Id.Administrator" @if (@Model.Role == RoleType.Id.Administrator)
                                                              { <text> selected </text>     }>Administrator</option>
                 </select>
             </div>

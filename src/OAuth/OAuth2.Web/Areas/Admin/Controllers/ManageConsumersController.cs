@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     /// </summary>
     [Area("Admin")]
     [Route("admin/[controller]/[action]")]
-    [Authorize]
+    [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageConsumersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
         public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }

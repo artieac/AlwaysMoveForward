@@ -1,4 +1,4 @@
-﻿@model AlwaysMoveForward.OAuth.Web.Areas.Admin.Models.LoginHistoryModel
+﻿@model AlwaysMoveForward.OAuth2.Web.Areas.Admin.Models.LoginHistoryModel
 @{
     ViewBag.Title = "Index";
     ViewBag.SelectedTab = 3;
@@ -6,7 +6,7 @@
 }
 @section headerPlugins
 {
-    <link href="@Url.Content("~/Content/Pager.css")" rel="stylesheet" type="text/css" />
+    <link href="~/css/Pager.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
             $("#searchFormSubmitButton").click(function () {
@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (AlwaysMoveForward.OAuth.Common.DomainModel.LoginAttempt loginAttempt in @Model.LoginHistory)
+                        foreach (AlwaysMoveForward.OAuth2.Common.DomainModel.LoginAttempt loginAttempt in @Model.LoginHistory)
                         {
                             <tr>
                                 <td>@loginAttempt.AttemptDate</td>
