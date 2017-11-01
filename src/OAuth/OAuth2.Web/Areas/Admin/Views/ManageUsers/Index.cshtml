@@ -45,15 +45,15 @@
     </table>
     <a href="/Admin/ManageUsers/Edit">Add User</a>
     <div class="pager" ng-if="users">
-        <span ng-if="users.Paging.IsFirstPage" class="disabled">&lt;</span>
-        <a ng-if="!users.Paging.IsFirstPage" ng-click="getUsersByPage(users.Paging.PageNumber - 1)">&lt;</a>
+        <span ng-if="users.paging.isFirstPage" class="disabled">&lt;</span>
+        <a ng-if="!users.paging.isFirstPage" ng-click="getUsersByPage(users.paging.pageNumber - 1)">&lt;</a>
 
-        <span ng-repeat="n in pages(users.Paging.PageCount)">
-            <span class="current" ng-if="users.Paging.PageNumber==n">{{n}}</span>
-            <a ng-if="users.Paging.PageNumber!=n" ng-click="getUsersByPage(n)">{{n}}</a>
+        <span ng-repeat="n in pages(users.paging.pageCount)">
+            <span class="current" ng-if="users.paging.pageNumber==n">{{n}}</span>
+            <a ng-if="users.paging.pageNumber!=n" ng-click="getUsersByPage(n)">{{n}}</a>
         </span>
-        <span ng-if="users.Paging.IsLastPage" class="disabled">&gt;</span>
-        <a ng-if="!users.Paging.IsLastPage" ng-click="getUsersByPage(users.Paging.PageNumber + 1)">&gt;</a>
+        <span ng-if="users.paging.isLastPage" class="disabled">&gt;</span>
+        <a ng-if="!users.paging.isLastPage" ng-click="getUsersByPage(users.paging.pageNumber + 1)">&gt;</a>
     </div>
 </div>
 

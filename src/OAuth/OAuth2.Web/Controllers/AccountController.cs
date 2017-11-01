@@ -96,6 +96,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ProcessLogin(ProcessLoginInput input)
         {
+            string remoteIPAddress = this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString();
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -106,9 +108,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                     this.Logger.LogInformation(1, "User logged in.");
                     AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(input.UserName);
                     await _signInManager.SignInAsync(userLogin, isPersistent: false);
-
-                    String foo = this.Request.Query["redirect_uri"];
-
+                    this.ServiceManager.UserService.AddLoginAttempt(true, this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString(), input.UserName, userLogin);
+    
                     if (String.IsNullOrEmpty(input.ReturnUrl) == true && userLogin.IsInRole(RoleType.Names.Administrator))
                     {
                         return this.Redirect("/Admin/Management/Index");
@@ -119,6 +120,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                     }
                 }
             }
+
+            this.ServiceManager.UserService.AddLoginAttempt(false, this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString(), input.UserName, null);
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", DefaultUserOptions.InvalidCredentialsErrorMessage);
