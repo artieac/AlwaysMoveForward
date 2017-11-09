@@ -13,7 +13,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
     public class UsersController : AMFControllerBase
     {
         public UsersController(ServiceManagerBuilder serviceManagerBuilder,
-                               ILoggerFactory loggerFactory) : base(serviceManagerBuilder)
+                                ILoggerFactory loggerFactory) 
+                                : base(serviceManagerBuilder, loggerFactory.CreateLogger<UsersController>())
         {
             this.Logger = loggerFactory.CreateLogger<UsersController>();
         }

@@ -32,22 +32,17 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         private readonly IIdentityServerInteractionService _idsInteractionService;
         private readonly SignInManager<AMFUserLogin> _signInManager;
         private readonly UserManager<AMFUserLogin> _userManager;
-        private readonly ILoggerFactory _loggerFactory;
 
         public AccountController(ServiceManagerBuilder serviceManagerBuilder,
                                 SignInManager<AMFUserLogin> signInManager,
                                 UserManager<AMFUserLogin> userManager,
                                 IIdentityServerInteractionService interaction,
-                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder)
+                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder, loggerFactory.CreateLogger<AccountController>())
         {
             this._idsInteractionService = interaction;
             this._signInManager = signInManager;
             this._userManager = userManager;
-
-            this.Logger = loggerFactory.CreateLogger<AccountController>();
         }
-
-        public ILogger Logger { get; private set; }
 
         private void AddErrors(IdentityResult result)
         {

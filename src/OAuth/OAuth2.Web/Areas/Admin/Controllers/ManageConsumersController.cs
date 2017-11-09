@@ -6,6 +6,7 @@ using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
@@ -17,7 +18,10 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageConsumersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }
+        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder,
+                                     ILoggerFactory loggerFactory)
+                                     : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManageUsersController>()) { }
+
         /// <summary>
         /// Lists all the consumers
         /// </summary>

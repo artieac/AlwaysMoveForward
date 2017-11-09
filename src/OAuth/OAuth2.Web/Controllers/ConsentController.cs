@@ -12,6 +12,7 @@ using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Web.Models.Consent;
 using Microsoft.AspNetCore.Authorization;
 using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -22,7 +23,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
     {
         public ConsentController(ServiceManagerBuilder serviceManagerBuilder,
                                 IIdentityServerInteractionService interaction,
-                                IResourceStore resourceStore) : base(serviceManagerBuilder)
+                                IResourceStore resourceStore,
+                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder, loggerFactory.CreateLogger<ConsentController>())
         {
             this.IdentityServerInteractionService = interaction;
             this.ResourceStore = resourceStore;

@@ -8,6 +8,7 @@ using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Areas.Admin.Models;
 using AlwaysMoveForward.OAuth2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
@@ -19,7 +20,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageUsersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }
+        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder,
+                                     ILoggerFactory loggerFactory) 
+                                     : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManageUsersController>()) { }
 
 
         /// <summary>

@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Code;
 using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
 using AlwaysMoveForward.OAuth2.Web.Code.AspNetIdentity;
 using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using IdentityServer4;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Serilog;
-using System.IO;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace AlwaysMoveForward.OAuth2.Web
 {
@@ -85,13 +80,30 @@ namespace AlwaysMoveForward.OAuth2.Web
             //    options.DefaultForbidScheme = SiteConstants.AuthenticationScheme;
             //});
 
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            string connectionString = Configuration.GetValue<string>("Database:ConnectionString");
+
             // Adds IdentityServer
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
+                .AddConfigurationStore(options=>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(connectionString);
+                })
+                // this adds the operational data from DB (codes, tokens, consents)
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(connectionString);
+
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                    options.TokenCleanupInterval = 30;
+                })
                 .AddClientStore<ClientStore>()
                 .AddProfileService<ProfileService>()
-                .AddResourceStore<ResourceStore>()
                 .AddAspNetIdentity<AMFUserLogin>();
         }
 

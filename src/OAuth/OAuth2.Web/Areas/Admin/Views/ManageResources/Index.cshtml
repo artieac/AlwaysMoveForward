@@ -1,0 +1,41 @@
+﻿@model IList<IdentityServer4.Models.ApiResource>
+@using AlwaysMoveForward.OAuth2.Web.Code.Extensions;
+@{
+	ViewBag.Title = "Manage Resources";
+	ViewBag.SelectedTab = 2;
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section headerPlugins
+{
+	<link href="~/css/Pager.css" rel="stylesheet" type="text/css" />
+}
+<div class="bodyContent">
+	<div class="contentPageTitle">
+		<H1>Manage Resources</H1>
+	</div>
+	<a href="/Admin/ManageResources/Edit">Add Resource</a>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th width="20%">Resource Name</th>
+				<th width="20%">Display Name</th>
+				<th width="20%">Enabled</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (IdentityServer4.Models.ApiResource apiResources in @Model)
+				{
+					<tr>
+						<td><a href="/Admin/ManageConsumers/Edit/@apiResources.Name">@apiResources.Name</a></td>
+						<td>@apiResources.DisplayName</td>
+						<td>@apiResources.Enabled</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<a href="/Admin/ManageResources/Edit">Add Resource</a>
+</div>
+
+
