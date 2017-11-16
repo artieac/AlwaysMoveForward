@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.OAuth2.Web2.Services;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
 using AlwaysMoveForward.OAuth2.Web.Code;
@@ -21,6 +20,7 @@ using IdentityServer4.Validation;
 using Serilog;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IO;
+using AlwaysMoveForward.Core.Common.Configuration;
 
 namespace AlwaysMoveForward.OAuth2.Web2
 {

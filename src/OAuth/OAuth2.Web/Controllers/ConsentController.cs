@@ -8,11 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Web.Models.Consent;
 using Microsoft.AspNetCore.Authorization;
 using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
 using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -89,17 +89,17 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                     }
                     else
                     {
-                        LogManager.GetLogger().Error("No scopes matching: {0}", request.ScopesRequested.Aggregate((x, y) => x + ", " + y));
+                        LogManager.CreateLogger<ConsentController>().LogError("No scopes matching: {0}", request.ScopesRequested.Aggregate((x, y) => x + ", " + y));
                     }
                 }
                 else
                 {
-                    LogManager.GetLogger().Error("Invalid client id: {0}", request.ClientId);
+                    LogManager.CreateLogger<ConsentController>().LogError("Invalid client id: {0}", request.ClientId);
                 }
             }
             else
             {
-                LogManager.GetLogger().Error("No consent request matching request: {0}", returnUrl);
+                LogManager.CreateLogger<ConsentController>().LogError("No consent request matching request: {0}", returnUrl);
             }
 
             return View(retVal);
@@ -168,7 +168,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<ConsentController>().LogError(e, e.Message);
             }
 
             return View("Error");

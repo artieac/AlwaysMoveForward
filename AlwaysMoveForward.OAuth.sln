@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{600387A0-6903-47FD-AA6C-9ADF4CFE491E}"
 EndProject
@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForward.OAuth2.Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForward.OAuth2.Common", "src\OAuth\OAuth2.Common\AlwaysMoveForward.OAuth2.Common.csproj", "{71ED9A75-D9C8-4A01-81FD-896986481930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.OAuth2.Web2", "src\OAuth\AlwaysMoveForward.OAuth2.Web2\AlwaysMoveForward.OAuth2.Web2.csproj", "{D4FE492B-32CA-411A-9600-235E09D39BAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForward.OAuth2.Web2", "src\OAuth\AlwaysMoveForward.OAuth2.Web2\AlwaysMoveForward.OAuth2.Web2.csproj", "{D4FE492B-32CA-411A-9600-235E09D39BAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Core.Common.DataLayer.Dapper", "src\Common\DataLayer.Dapper\AlwaysMoveForward.Core.Common.DataLayer.Dapper.csproj", "{AF245B65-7ED9-45B3-A740-6A162AFE88D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Core.Common", "src\Common\Core.Common\AlwaysMoveForward.Core.Common.csproj", "{147BDD2D-819E-410A-8B0B-9AC189145B1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,14 @@ Global
 		{D4FE492B-32CA-411A-9600-235E09D39BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4FE492B-32CA-411A-9600-235E09D39BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4FE492B-32CA-411A-9600-235E09D39BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF245B65-7ED9-45B3-A740-6A162AFE88D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF245B65-7ED9-45B3-A740-6A162AFE88D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF245B65-7ED9-45B3-A740-6A162AFE88D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF245B65-7ED9-45B3-A740-6A162AFE88D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{147BDD2D-819E-410A-8B0B-9AC189145B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{147BDD2D-819E-410A-8B0B-9AC189145B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{147BDD2D-819E-410A-8B0B-9AC189145B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{147BDD2D-819E-410A-8B0B-9AC189145B1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
+using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -26,11 +27,6 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// Gets the current User service instance
         /// </summary>
         IUserService UserService { get; }
-
-        /// <summary>
-        /// A service for whitelisting routes
-        /// </summary>
-        IWhiteListService WhiteListService { get; }
     }
 }
 

@@ -21,6 +21,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                     cfg.CreateMap<DTO.AMFUser, AMFUserLogin>();
                     cfg.CreateMap<Consumer, DTO.Consumer>();
                     cfg.CreateMap<DTO.Consumer, Consumer>();
+                    cfg.CreateMap<ProtectedResource, DTO.ProtectedResource>();
+                    cfg.CreateMap<DTO.ProtectedResource, ProtectedResource>();
                 });
 
 #if DEBUG

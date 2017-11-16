@@ -1,9 +1,9 @@
-﻿using AlwaysMoveForward.OAuth2.Common.DataLayer;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
+﻿using AlwaysMoveForward.Core.Common.Configuration;
+using AlwaysMoveForward.Core.Common.DataLayer;
+using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth2.Common.Encryption;
 using Microsoft.Extensions.Options;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             {
                 string connectionString = string.Empty;
 
-                if (this.DatabaseConfiguration.EncryptionMethod == AlwaysMoveForward.OAuth2.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+                if (this.DatabaseConfiguration.EncryptionMethod == AlwaysMoveForward.Core.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
                 {
                     connectionString = this.DatabaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt);
                 }

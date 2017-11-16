@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using AlwaysMoveForward.OAuth2.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
+using AlwaysMoveForward.Core.Common.DataLayer;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {

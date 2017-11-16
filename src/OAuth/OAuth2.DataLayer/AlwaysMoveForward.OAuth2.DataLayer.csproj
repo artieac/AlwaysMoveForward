@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.1.1" />
-    <PackageReference Include="Dapper" Version="1.50.2" />
-    <PackageReference Include="Dapper.Contrib" Version="1.50.0" />
+    <Compile Remove="Repositories\EntityFrameworkRepositoryBase.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Core.Common\AlwaysMoveForward.Core.Common.csproj" />
+    <ProjectReference Include="..\..\Common\DataLayer.Dapper\AlwaysMoveForward.Core.Common.DataLayer.Dapper.csproj" />
     <ProjectReference Include="..\OAuth2.Common\AlwaysMoveForward.OAuth2.Common.csproj" />
   </ItemGroup>
 

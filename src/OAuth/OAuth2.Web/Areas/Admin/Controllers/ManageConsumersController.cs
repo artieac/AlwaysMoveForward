@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {

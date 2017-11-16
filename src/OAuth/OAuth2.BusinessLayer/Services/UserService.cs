@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Encryption;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
 using IdentityServer4.Models;
 using System.Security.Claims;
 using IdentityModel;
+using AlwaysMoveForward.Core.Common.Configuration;
+using AlwaysMoveForward.Core.Common.Business;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {

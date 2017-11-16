@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

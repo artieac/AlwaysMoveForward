@@ -14,8 +14,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Code.Extensions
 {

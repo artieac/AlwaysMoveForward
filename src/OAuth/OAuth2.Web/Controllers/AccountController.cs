@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.Security;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Web.Models;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using System;
@@ -16,11 +14,9 @@ using Microsoft.AspNetCore.Http.Authentication;
 using IdentityServer4.Services;
 using IdentityServer4;
 using AlwaysMoveForward.OAuth2.Web.Models.Account;
-using System.Security.Claims;
-using AlwaysMoveForward.OAuth2.Web.Code;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -32,16 +28,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         private readonly IIdentityServerInteractionService _idsInteractionService;
         private readonly SignInManager<AMFUserLogin> _signInManager;
         private readonly UserManager<AMFUserLogin> _userManager;
+        private readonly EmailConfiguration _emailConfiguration;
 
         public AccountController(ServiceManagerBuilder serviceManagerBuilder,
                                 SignInManager<AMFUserLogin> signInManager,
                                 UserManager<AMFUserLogin> userManager,
                                 IIdentityServerInteractionService interaction,
-                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder, loggerFactory.CreateLogger<AccountController>())
+                                ILoggerFactory loggerFactory,
+                                IOptions<EmailConfiguration> emailConfigurationSection) : base(serviceManagerBuilder, loggerFactory.CreateLogger<AccountController>())
         {
             this._idsInteractionService = interaction;
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._emailConfiguration = emailConfigurationSection.Value;
         }
 
         private void AddErrors(IdentityResult result)
@@ -229,7 +228,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         public ActionResult ResetPassword(string returnUrl, string userEmail, string resetToken)
         {
             LoginModel model = new LoginModel() { ReturnUrl = returnUrl };
-            this.ServiceManager.UserService.ResetPassword(userEmail, EmailConfiguration.GetInstance());
+            this.ServiceManager.UserService.ResetPassword(userEmail, this._emailConfiguration);
             return this.View("Login", model);
         }
 

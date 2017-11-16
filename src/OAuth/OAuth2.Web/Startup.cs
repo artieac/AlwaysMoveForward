@@ -12,12 +12,12 @@ using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Code;
 using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
 using AlwaysMoveForward.OAuth2.Web.Code.AspNetIdentity;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Serilog;
+using AlwaysMoveForward.Core.Common.Configuration;
 
 namespace AlwaysMoveForward.OAuth2.Web
 {

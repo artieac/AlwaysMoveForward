@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlwaysMoveForward.OAuth2.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.Security;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
+using AlwaysMoveForward.Core.Common.DataLayer;
+using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -76,27 +76,6 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
                 return this.userService;
             }
-        }
-
-        /// <summary>
-        /// The service containing the Whitelist business rules
-        /// </summary>
-        private IWhiteListService whitelistService;
-
-        /// <summary>
-        /// Gets the current Token service
-        /// </summary>
-        public IWhiteListService WhiteListService
-        {
-            get
-            {
-                if (this.whitelistService == null)
-                {
-                    this.whitelistService = new WhiteListService();
-                }
-
-                return this.whitelistService;
-            }
-        }
+        }       
     }
 }

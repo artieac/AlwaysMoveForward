@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.DataLayer.DataMapper;
 using Dapper;
+using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
@@ -31,7 +31,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override AlwaysMoveForward.OAuth2.Common.DataLayer.DataMapBase<Consumer, DTO.Consumer> GetDataMapper()
+        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<Consumer, DTO.Consumer> GetDataMapper()
         {
             return new DataMapper.ConsumerDataMapper(); 
         }

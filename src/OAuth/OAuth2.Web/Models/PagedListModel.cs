@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AlwaysMoveForward.Core.Common.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Models
 {
