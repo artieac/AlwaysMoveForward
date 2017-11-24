@@ -14,6 +14,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.Core.Common.Utilities
 {
@@ -48,7 +49,7 @@ namespace AlwaysMoveForward.Core.Common.Utilities
             }
             catch (Exception e)
             {
-//                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<SerializationUtilities>().LogError(e, e.Message);
             }
 
             return retVal;
@@ -66,7 +67,7 @@ namespace AlwaysMoveForward.Core.Common.Utilities
             }
             catch (Exception e)
             {
-//                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<SerializationUtilities>().LogError(e, e.Message);
             }
 
             return retVal;
@@ -84,7 +85,7 @@ namespace AlwaysMoveForward.Core.Common.Utilities
             }
             catch (Exception e)
             {
-//                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<SerializationUtilities>().LogError(e, e.Message);
             }
 
             return retVal;
@@ -134,7 +135,7 @@ namespace AlwaysMoveForward.Core.Common.Utilities
                 }
                 catch (Exception e)
                 {
-//                    LogManager.GetLogger().Error(e);
+                    LogManager.CreateLogger<SerializationUtilities>().LogError(e, e.Message);
                 }
             }
 
@@ -163,7 +164,7 @@ namespace AlwaysMoveForward.Core.Common.Utilities
             }
             catch (Exception e)
             {
-//                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<SerializationUtilities>().LogError(e, e.Message);
             }
 
             return retVal;

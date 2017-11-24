@@ -62,23 +62,13 @@ namespace AlwaysMoveForward.OAuth2.Web
             services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
             services.AddIdentity<AMFUserLogin, string> (o => {
-                o.Password.RequireDigit = false;
+                o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 1;
+                o.Password.RequireUppercase = true;
+                o.Password.RequireNonAlphanumeric = true;
+                o.Password.RequiredLength = 8;
             })
             .AddDefaultTokenProviders();
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultScheme = SiteConstants.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = SiteConstants.AuthenticationScheme;
-            //    options.DefaultSignInScheme = SiteConstants.AuthenticationScheme;
-            //    options.DefaultSignOutScheme = SiteConstants.AuthenticationScheme;
-            //    options.DefaultAuthenticateScheme = SiteConstants.AuthenticationScheme;
-            //    options.DefaultForbidScheme = SiteConstants.AuthenticationScheme;
-            //});
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -90,13 +80,13 @@ namespace AlwaysMoveForward.OAuth2.Web
                 .AddConfigurationStore(options=>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseMySql(connectionString);
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseMySql(connectionString);
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;

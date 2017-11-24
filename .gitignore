@@ -3,6 +3,7 @@
 [Oo]bj/
 node_modules/
 dist/
+.vs/
 
 # mstest test results
 TestResults
@@ -112,3 +113,4 @@ UpgradeLog*.XML
 [Ll]ogs/
 *.log
 *.bak
+

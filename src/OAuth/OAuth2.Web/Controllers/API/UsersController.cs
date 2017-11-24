@@ -12,11 +12,10 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
 {
     public class UsersController : AMFControllerBase
     {
-        public UsersController(ServiceManagerBuilder serviceManagerBuilder,
-                                ILoggerFactory loggerFactory) 
-                                : base(serviceManagerBuilder, loggerFactory.CreateLogger<UsersController>())
+        public UsersController(ServiceManagerBuilder serviceManagerBuilder) 
+                                : base(serviceManagerBuilder)
         {
-            this.Logger = loggerFactory.CreateLogger<UsersController>();
+
         }
 
         [Route("api/User"), HttpGet()]
@@ -36,8 +35,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
 
             return retVal;
         }
-
-        public ILogger Logger { get; private set; }
 
         [Route("api/User/{id}"), HttpGet()]
         [Authorize]

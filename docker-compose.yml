@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  alwaysmoveforward.oauth2.web:
+    image: alwaysmoveforward.oauth2.web
+    build:
+      context: ./src/OAuth/OAuth2.Web
+      dockerfile: Dockerfile

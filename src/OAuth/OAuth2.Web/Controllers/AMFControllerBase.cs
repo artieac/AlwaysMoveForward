@@ -11,12 +11,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
     /// </summary>
     public class AMFControllerBase : Microsoft.AspNetCore.Mvc.Controller
     {
-        private readonly ILogger _loggerFactory;
-
-        public AMFControllerBase(ServiceManagerBuilder serviceManagerBuilder, ILogger logger)
+        public AMFControllerBase(ServiceManagerBuilder serviceManagerBuilder)
         {
             this.ServiceManagerBuilder = serviceManagerBuilder;
-            this.Logger = logger;
         }
         /// <summary>
         /// The service manager instance for the current controller context
@@ -24,8 +21,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         private ServiceManagerBuilder ServiceManagerBuilder { get; set; }
 
         private IServiceManager serviceManager;
-
-        public ILogger Logger { get; private set; }
 
         /// <summary>
         /// Gets the current instance of the service manager

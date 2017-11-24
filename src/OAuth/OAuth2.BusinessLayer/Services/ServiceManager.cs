@@ -6,7 +6,6 @@ using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
 using AlwaysMoveForward.Core.Common.DataLayer;
-using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {

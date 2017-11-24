@@ -11,9 +11,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
     public class HomeController : AMFControllerBase
     {
-        public HomeController(ServiceManagerBuilder serviceManagerBuilder,
-                              ILoggerFactory loggerFactory) 
-                              : base(serviceManagerBuilder, loggerFactory.CreateLogger<HomeController>()) { }
+        public HomeController(ServiceManagerBuilder serviceManagerBuilder) 
+                              : base(serviceManagerBuilder) { }
 
         public IActionResult Index()
         {

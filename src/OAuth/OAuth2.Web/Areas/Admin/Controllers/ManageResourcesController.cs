@@ -18,9 +18,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     public class ManageResourcesController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
         public ManageResourcesController(ServiceManagerBuilder serviceManagerBuilder,
-                                        IResourceStore resourceStore,
-                                        ILoggerFactory loggerFactory)
-                                        : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManageUsersController>())
+                                        IResourceStore resourceStore)
+                                        : base(serviceManagerBuilder)
         {
             this.ResourceStore = resourceStore;
         }

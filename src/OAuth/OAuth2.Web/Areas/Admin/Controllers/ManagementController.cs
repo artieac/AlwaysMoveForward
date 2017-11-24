@@ -15,9 +15,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManagementController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManagementController(ServiceManagerBuilder serviceManagerBuilder,
-                                    ILoggerFactory loggerFactory) 
-                                    : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManagementController>()) { }
+        public ManagementController(ServiceManagerBuilder serviceManagerBuilder) 
+                                    : base(serviceManagerBuilder) { }
 
         // GET: Admin/Management
         public ActionResult Index()

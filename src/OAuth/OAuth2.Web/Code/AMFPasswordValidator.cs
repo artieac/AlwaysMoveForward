@@ -1,8 +1,10 @@
-﻿using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
+﻿using AlwaysMoveForward.Core.Common.Utilities;
+using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +67,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code
             catch (Exception ex)
             {
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Invalid username or password");
+                LogManager.CreateLogger<AMFPasswordValidator>().LogError(ex, ex.Message);
             }
         }
 

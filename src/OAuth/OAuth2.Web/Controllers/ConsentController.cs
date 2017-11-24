@@ -23,8 +23,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
     {
         public ConsentController(ServiceManagerBuilder serviceManagerBuilder,
                                 IIdentityServerInteractionService interaction,
-                                IResourceStore resourceStore,
-                                ILoggerFactory loggerFactory) : base(serviceManagerBuilder, loggerFactory.CreateLogger<ConsentController>())
+                                IResourceStore resourceStore) : base(serviceManagerBuilder)
         {
             this.IdentityServerInteractionService = interaction;
             this.ResourceStore = resourceStore;

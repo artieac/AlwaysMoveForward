@@ -20,9 +20,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageUsersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder,
-                                     ILoggerFactory loggerFactory) 
-                                     : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManageUsersController>()) { }
+        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder) 
+                                     : base(serviceManagerBuilder) { }
 
 
         /// <summary>

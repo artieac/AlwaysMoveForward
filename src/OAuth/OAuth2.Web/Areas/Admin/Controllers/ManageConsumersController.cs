@@ -18,9 +18,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageConsumersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder,
-                                     ILoggerFactory loggerFactory)
-                                     : base(serviceManagerBuilder, loggerFactory.CreateLogger<ManageUsersController>()) { }
+        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder)
+                                     : base(serviceManagerBuilder) { }
 
         /// <summary>
         /// Lists all the consumers

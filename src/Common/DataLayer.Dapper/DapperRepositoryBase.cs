@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.Core.Common.DataLayer.Dapper
     /// </summary>
     /// <typeparam name="TDomainType">The domain typeto return</typeparam>
     /// <typeparam name="TDTOType">The dto type to read/write with</typeparam>
-    public abstract class DapperRepositoryBase<TDomainType, TDTOType, TIdType> : RepositoryBase<UnitOfWork, TDomainType, TDTOType, TIdType>
+    public abstract class DapperRepositoryBase<TDomainType, TDTOType, TIdType> : RepositoryBase<DapperUnitOfWork, TDomainType, TDTOType, TIdType>
         where TDomainType : class, new()
         where TDTOType : class, new()
     {
@@ -21,16 +21,16 @@ namespace AlwaysMoveForward.Core.Common.DataLayer.Dapper
         /// The constructor that takes the current unit of work as a parameter
         /// </summary>
         /// <param name="unitOfWork"></param>
-        protected DapperRepositoryBase(IUnitOfWork unitOfWork, string tableName) : base(unitOfWork as UnitOfWork)
+        protected DapperRepositoryBase(IUnitOfWork unitOfWork, string tableName) : base(unitOfWork as DapperUnitOfWork)
         {
-            this.UnitOfWork = unitOfWork as UnitOfWork;
+            this.UnitOfWork = unitOfWork as DapperUnitOfWork;
             this.TableName = tableName;
         }
 
         /// <summary>
         /// Gets the current unit of work
         /// </summary>
-        public UnitOfWork UnitOfWork { get; private set; }
+        public DapperUnitOfWork UnitOfWork { get; private set; }
 
         protected string TableName { get; private set; } 
 

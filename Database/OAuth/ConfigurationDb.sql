@@ -1,612 +1,428 @@
-IF OBJECT_ID(N'__EFMigrationsHistory') IS NULL
 
-BEGIN
+CREATE TABLE `EFMigrationsHistory` (
 
-    CREATE TABLE [__EFMigrationsHistory] (
+        `MigrationId` nvarchar(150) NOT NULL,
 
-        [MigrationId] nvarchar(150) NOT NULL,
-
-        [ProductVersion] nvarchar(32) NOT NULL,
-
-        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
-
+        `ProductVersion` nvarchar(32) NOT NULL,
+		 PRIMARY KEY(`MigrationId`),
+		UNIQUE INDEX `IX_MigrationHistory_Id` (`MigrationId` ASC)
     );
 
-END;
+
+CREATE TABLE `ApiResources` (
+
+    `Id` int NOT NULL AUTO_INCREMENT,
+
+    `Description` nvarchar(1000) NULL,
+
+    `DisplayName` nvarchar(200) NULL,
+
+    `Enabled` bit NOT NULL,
+
+    `Name` nvarchar(200) NOT NULL,
+
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ApiResources_Id` (`Id` ASC)
+);
 
 
+CREATE TABLE `Clients` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
+
+    `AbsoluteRefreshTokenLifetime` int NOT NULL,
+
+    `AccessTokenLifetime` int NOT NULL,
+
+    `AccessTokenType` int NOT NULL,
+
+    `AllowAccessTokensViaBrowser` bit NOT NULL,
+
+    `AllowOfflineAccess` bit NOT NULL,
+
+    `AllowPlainTextPkce` bit NOT NULL,
+
+    `AllowRememberConsent` bit NOT NULL,
+
+    `AlwaysIncludeUserClaimsInIdToken` bit NOT NULL,
+
+    `AlwaysSendClientClaims` bit NOT NULL,
+
+    `AuthorizationCodeLifetime` int NOT NULL,
+
+    `BackChannelLogoutSessionRequired` bit NOT NULL,
+
+    `BackChannelLogoutUri` nvarchar(2000) NULL,
+
+    `ClientClaimsPrefix` nvarchar(200) NULL,
+
+    `ClientId` nvarchar(200) NOT NULL,
+
+    `ClientName` nvarchar(200) NULL,
+
+    `ClientUri` nvarchar(2000) NULL,
+
+    `ConsentLifetime` int NULL,
+
+    `Description` nvarchar(1000) NULL,
+
+    `EnableLocalLogin` bit NOT NULL,
+
+    `Enabled` bit NOT NULL,
+
+    `FrontChannelLogoutSessionRequired` bit NOT NULL,
+
+    `FrontChannelLogoutUri` nvarchar(2000) NULL,
+
+    `IdentityTokenLifetime` int NOT NULL,
+
+    `IncludeJwtId` bit NOT NULL,
+
+    `LogoUri` nvarchar(2000) NULL,
+
+    `PairWiseSubjectSalt` nvarchar(200) NULL,
+
+    `ProtocolType` nvarchar(200) NOT NULL,
+
+    `RefreshTokenExpiration` int NOT NULL,
+
+    `RefreshTokenUsage` int NOT NULL,
+
+    `RequireClientSecret` bit NOT NULL,
+
+    `RequireConsent` bit NOT NULL,
+
+    `RequirePkce` bit NOT NULL,
+
+    `SlidingRefreshTokenLifetime` int NOT NULL,
+
+    `UpdateAccessTokenClaimsOnRefresh` bit NOT NULL,
+
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_Clients_Id` (`Id` ASC)
+);
 
 
+CREATE TABLE `IdentityResources` (
 
-CREATE TABLE [ApiResources] (
+    `Id` int NOT NULL AUTO_INCREMENT,
 
-    [Id] int NOT NULL IDENTITY,
+    `Description` nvarchar(1000) NULL,
 
-    [Description] nvarchar(1000) NULL,
+    `DisplayName` nvarchar(200) NULL,
 
-    [DisplayName] nvarchar(200) NULL,
+    `Emphasize` bit NOT NULL,
 
-    [Enabled] bit NOT NULL,
+    `Enabled` bit NOT NULL,
 
-    [Name] nvarchar(200) NOT NULL,
+    `Name` nvarchar(200) NOT NULL,
 
-    CONSTRAINT [PK_ApiResources] PRIMARY KEY ([Id])
+    `Required` bit NOT NULL,
+
+    `ShowInDiscoveryDocument` bit NOT NULL,
+
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_IdentityResources_Id` (`Id` ASC)
+);
+
+
+CREATE TABLE `ApiClaims` (
+
+    `Id` int NOT NULL AUTO_INCREMENT,
+
+    `ApiResourceId` int NOT NULL,
+
+    `Type` nvarchar(200) NOT NULL,
+
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ApiClaims_Id` (`Id` ASC),
+    CONSTRAINT `FK_ApiClaims_ApiResources_ApiResourceId` FOREIGN KEY (`ApiResourceId`) REFERENCES `ApiResources` (`Id`) ON DELETE CASCADE
 
 );
 
 
 
-GO
+CREATE TABLE `ApiScopes` (
 
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ApiResourceId` int NOT NULL,
 
-CREATE TABLE [Clients] (
+    `Description` nvarchar(1000) NULL,
 
-    [Id] int NOT NULL IDENTITY,
+    `DisplayName` nvarchar(200) NULL,
 
-    [AbsoluteRefreshTokenLifetime] int NOT NULL,
+    `Emphasize` bit NOT NULL,
 
-    [AccessTokenLifetime] int NOT NULL,
+    `Name` nvarchar(200) NOT NULL,
 
-    [AccessTokenType] int NOT NULL,
+    `Required` bit NOT NULL,
 
-    [AllowAccessTokensViaBrowser] bit NOT NULL,
+    `ShowInDiscoveryDocument` bit NOT NULL,
 
-    [AllowOfflineAccess] bit NOT NULL,
-
-    [AllowPlainTextPkce] bit NOT NULL,
-
-    [AllowRememberConsent] bit NOT NULL,
-
-    [AlwaysIncludeUserClaimsInIdToken] bit NOT NULL,
-
-    [AlwaysSendClientClaims] bit NOT NULL,
-
-    [AuthorizationCodeLifetime] int NOT NULL,
-
-    [BackChannelLogoutSessionRequired] bit NOT NULL,
-
-    [BackChannelLogoutUri] nvarchar(2000) NULL,
-
-    [ClientClaimsPrefix] nvarchar(200) NULL,
-
-    [ClientId] nvarchar(200) NOT NULL,
-
-    [ClientName] nvarchar(200) NULL,
-
-    [ClientUri] nvarchar(2000) NULL,
-
-    [ConsentLifetime] int NULL,
-
-    [Description] nvarchar(1000) NULL,
-
-    [EnableLocalLogin] bit NOT NULL,
-
-    [Enabled] bit NOT NULL,
-
-    [FrontChannelLogoutSessionRequired] bit NOT NULL,
-
-    [FrontChannelLogoutUri] nvarchar(2000) NULL,
-
-    [IdentityTokenLifetime] int NOT NULL,
-
-    [IncludeJwtId] bit NOT NULL,
-
-    [LogoUri] nvarchar(2000) NULL,
-
-    [PairWiseSubjectSalt] nvarchar(200) NULL,
-
-    [ProtocolType] nvarchar(200) NOT NULL,
-
-    [RefreshTokenExpiration] int NOT NULL,
-
-    [RefreshTokenUsage] int NOT NULL,
-
-    [RequireClientSecret] bit NOT NULL,
-
-    [RequireConsent] bit NOT NULL,
-
-    [RequirePkce] bit NOT NULL,
-
-    [SlidingRefreshTokenLifetime] int NOT NULL,
-
-    [UpdateAccessTokenClaimsOnRefresh] bit NOT NULL,
-
-    CONSTRAINT [PK_Clients] PRIMARY KEY ([Id])
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ApiScopes_Id` (`Id` ASC),
+    CONSTRAINT `FK_ApiScopes_ApiResources_ApiResourceId` FOREIGN KEY (`ApiResourceId`) REFERENCES `ApiResources` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ApiSecrets` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ApiResourceId` int NOT NULL,
 
+    `Description` nvarchar(1000) NULL,
 
-CREATE TABLE [IdentityResources] (
+    `Expiration` datetime NULL,
 
-    [Id] int NOT NULL IDENTITY,
+    `Type` nvarchar(250) NULL,
 
-    [Description] nvarchar(1000) NULL,
+    `Value` nvarchar(2000) NULL,
 
-    [DisplayName] nvarchar(200) NULL,
-
-    [Emphasize] bit NOT NULL,
-
-    [Enabled] bit NOT NULL,
-
-    [Name] nvarchar(200) NOT NULL,
-
-    [Required] bit NOT NULL,
-
-    [ShowInDiscoveryDocument] bit NOT NULL,
-
-    CONSTRAINT [PK_IdentityResources] PRIMARY KEY ([Id])
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ApiSecrets_Id` (`Id` ASC),
+    CONSTRAINT `FK_ApiSecrets_ApiResources_ApiResourceId` FOREIGN KEY (`ApiResourceId`) REFERENCES `ApiResources` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientClaims` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `Type` nvarchar(250) NOT NULL,
 
-CREATE TABLE [ApiClaims] (
+    `Value` nvarchar(250) NOT NULL,
 
-    [Id] int NOT NULL IDENTITY,
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientClaims_Id` (`Id` ASC),
+    CONSTRAINT `FK_ClientClaims_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
-    [ApiResourceId] int NOT NULL,
+);
 
-    [Type] nvarchar(200) NOT NULL,
+CREATE TABLE `ClientCorsOrigins` (
 
-    CONSTRAINT [PK_ApiClaims] PRIMARY KEY ([Id]),
+    `Id` int NOT NULL AUTO_INCREMENT,
 
-    CONSTRAINT [FK_ApiClaims_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE
+    `ClientId` int NOT NULL,
+
+    `Origin` nvarchar(150) NOT NULL,
+
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientCorsOrigins_Id` (`Id` ASC),
+    CONSTRAINT `FK_ClientCorsOrigins_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientGrantTypes` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `GrantType` nvarchar(250) NOT NULL,
 
-CREATE TABLE [ApiScopes] (
-
-    [Id] int NOT NULL IDENTITY,
-
-    [ApiResourceId] int NOT NULL,
-
-    [Description] nvarchar(1000) NULL,
-
-    [DisplayName] nvarchar(200) NULL,
-
-    [Emphasize] bit NOT NULL,
-
-    [Name] nvarchar(200) NOT NULL,
-
-    [Required] bit NOT NULL,
-
-    [ShowInDiscoveryDocument] bit NOT NULL,
-
-    CONSTRAINT [PK_ApiScopes] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ApiScopes_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientGrantTypes_Id` (`Id` ASC),
+    CONSTRAINT `FK_ClientGrantTypes_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientIdPRestrictions` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `Provider` nvarchar(200) NOT NULL,
 
-CREATE TABLE [ApiSecrets] (
-
-    [Id] int NOT NULL IDENTITY,
-
-    [ApiResourceId] int NOT NULL,
-
-    [Description] nvarchar(1000) NULL,
-
-    [Expiration] datetime2 NULL,
-
-    [Type] nvarchar(250) NULL,
-
-    [Value] nvarchar(2000) NULL,
-
-    CONSTRAINT [PK_ApiSecrets] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ApiSecrets_ApiResources_ApiResourceId] FOREIGN KEY ([ApiResourceId]) REFERENCES [ApiResources] ([Id]) ON DELETE CASCADE
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientIdPRestrictions_Id` (`Id` ASC),
+    CONSTRAINT `FK_ClientIdPRestrictions_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientPostLogoutRedirectUris` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `PostLogoutRedirectUri` nvarchar(2000) NOT NULL,
 
-CREATE TABLE [ClientClaims] (
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientPostLogoutRedirectUris_Id` (`Id` ASC),
 
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [Type] nvarchar(250) NOT NULL,
-
-    [Value] nvarchar(250) NOT NULL,
-
-    CONSTRAINT [PK_ClientClaims] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientClaims_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_ClientPostLogoutRedirectUris_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientProperties` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `Key` nvarchar(250) NOT NULL,
 
-CREATE TABLE [ClientCorsOrigins] (
+    `Value` nvarchar(2000) NOT NULL,
 
-    [Id] int NOT NULL IDENTITY,
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientProperties_Id` (`Id` ASC),
 
-    [ClientId] int NOT NULL,
-
-    [Origin] nvarchar(150) NOT NULL,
-
-    CONSTRAINT [PK_ClientCorsOrigins] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientCorsOrigins_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_ClientProperties_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientRedirectUris` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `RedirectUri` nvarchar(2000) NOT NULL,
 
-CREATE TABLE [ClientGrantTypes] (
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientRedirectUris_Id` (`Id` ASC),
 
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [GrantType] nvarchar(250) NOT NULL,
-
-    CONSTRAINT [PK_ClientGrantTypes] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientGrantTypes_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_ClientRedirectUris_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientScopes` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `Scope` nvarchar(200) NOT NULL,
 
-CREATE TABLE [ClientIdPRestrictions] (
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientScopes_Id` (`Id` ASC),
 
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [Provider] nvarchar(200) NOT NULL,
-
-    CONSTRAINT [PK_ClientIdPRestrictions] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientIdPRestrictions_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_ClientScopes_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ClientSecrets` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ClientId` int NOT NULL,
 
+    `Description` nvarchar(2000) NULL,
 
-CREATE TABLE [ClientPostLogoutRedirectUris] (
+    `Expiration` datetime NULL,
 
-    [Id] int NOT NULL IDENTITY,
+    `Type` nvarchar(250) NULL,
 
-    [ClientId] int NOT NULL,
+    `Value` nvarchar(2000) NOT NULL,
 
-    [PostLogoutRedirectUri] nvarchar(2000) NOT NULL,
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ClientSecrets_Id` (`Id` ASC),
 
-    CONSTRAINT [PK_ClientPostLogoutRedirectUris] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientPostLogoutRedirectUris_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
-
-);
-
-
-
-GO
-
-
-
-CREATE TABLE [ClientProperties] (
-
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [Key] nvarchar(250) NOT NULL,
-
-    [Value] nvarchar(2000) NOT NULL,
-
-    CONSTRAINT [PK_ClientProperties] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientProperties_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_ClientSecrets_Clients_ClientId` FOREIGN KEY (`ClientId`) REFERENCES `Clients` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `IdentityClaims` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `IdentityResourceId` int NOT NULL,
 
+    `Type` nvarchar(200) NOT NULL,
 
-CREATE TABLE [ClientRedirectUris] (
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_IdentityClaims_Id` (`Id` ASC),
 
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [RedirectUri] nvarchar(2000) NOT NULL,
-
-    CONSTRAINT [PK_ClientRedirectUris] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientRedirectUris_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    CONSTRAINT `FK_IdentityClaims_IdentityResources_IdentityResourceId` FOREIGN KEY (`IdentityResourceId`) REFERENCES `IdentityResources` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE TABLE `ApiScopeClaims` (
 
-GO
+    `Id` int NOT NULL AUTO_INCREMENT,
 
+    `ApiScopeId` int NOT NULL,
 
+    `Type` nvarchar(200) NOT NULL,
 
-CREATE TABLE [ClientScopes] (
-
-    [Id] int NOT NULL IDENTITY,
-
-    [ClientId] int NOT NULL,
-
-    [Scope] nvarchar(200) NOT NULL,
-
-    CONSTRAINT [PK_ClientScopes] PRIMARY KEY ([Id]),
-
-    CONSTRAINT [FK_ClientScopes_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+    PRIMARY KEY(`Id`),
+	UNIQUE INDEX `IX_ApiScopeClaims_Id` (`Id` ASC),
+    CONSTRAINT `FK_ApiScopeClaims_ApiScopes_ApiScopeId` FOREIGN KEY (`ApiScopeId`) REFERENCES `ApiScopes` (`Id`) ON DELETE CASCADE
 
 );
 
 
+CREATE INDEX `IX_ApiClaims_ApiResourceId` ON `ApiClaims` (`ApiResourceId`);
 
-GO
 
+CREATE UNIQUE INDEX `IX_ApiResources_Name` ON `ApiResources` (`Name`);
 
 
-CREATE TABLE [ClientSecrets] (
+CREATE INDEX `IX_ApiScopeClaims_ApiScopeId` ON `ApiScopeClaims` (`ApiScopeId`);
 
-    [Id] int NOT NULL IDENTITY,
 
-    [ClientId] int NOT NULL,
+CREATE INDEX `IX_ApiScopes_ApiResourceId` ON `ApiScopes` (`ApiResourceId`);
 
-    [Description] nvarchar(2000) NULL,
 
-    [Expiration] datetime2 NULL,
+CREATE UNIQUE INDEX `IX_ApiScopes_Name` ON `ApiScopes` (`Name`);
 
-    [Type] nvarchar(250) NULL,
 
-    [Value] nvarchar(2000) NOT NULL,
+CREATE INDEX `IX_ApiSecrets_ApiResourceId` ON `ApiSecrets` (`ApiResourceId`);
 
-    CONSTRAINT [PK_ClientSecrets] PRIMARY KEY ([Id]),
 
-    CONSTRAINT [FK_ClientSecrets_Clients_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Clients] ([Id]) ON DELETE CASCADE
+CREATE INDEX `IX_ClientClaims_ClientId` ON `ClientClaims` (`ClientId`);
 
-);
 
+CREATE INDEX `IX_ClientCorsOrigins_ClientId` ON `ClientCorsOrigins` (`ClientId`);
 
 
-GO
+CREATE INDEX `IX_ClientGrantTypes_ClientId` ON `ClientGrantTypes` (`ClientId`);
 
 
+CREATE INDEX `IX_ClientIdPRestrictions_ClientId` ON `ClientIdPRestrictions` (`ClientId`);
 
-CREATE TABLE [IdentityClaims] (
 
-    [Id] int NOT NULL IDENTITY,
+CREATE INDEX `IX_ClientPostLogoutRedirectUris_ClientId` ON `ClientPostLogoutRedirectUris` (`ClientId`);
 
-    [IdentityResourceId] int NOT NULL,
 
-    [Type] nvarchar(200) NOT NULL,
+CREATE INDEX `IX_ClientProperties_ClientId` ON `ClientProperties` (`ClientId`);
 
-    CONSTRAINT [PK_IdentityClaims] PRIMARY KEY ([Id]),
 
-    CONSTRAINT [FK_IdentityClaims_IdentityResources_IdentityResourceId] FOREIGN KEY ([IdentityResourceId]) REFERENCES [IdentityResources] ([Id]) ON DELETE CASCADE
+CREATE INDEX `IX_ClientRedirectUris_ClientId` ON `ClientRedirectUris` (`ClientId`);
 
-);
 
+CREATE UNIQUE INDEX `IX_Clients_ClientId` ON `Clients` (`ClientId`);
 
 
-GO
+CREATE INDEX `IX_ClientScopes_ClientId` ON `ClientScopes` (`ClientId`);
 
 
+CREATE INDEX `IX_ClientSecrets_ClientId` ON `ClientSecrets` (`ClientId`);
 
-CREATE TABLE [ApiScopeClaims] (
 
-    [Id] int NOT NULL IDENTITY,
+CREATE INDEX `IX_IdentityClaims_IdentityResourceId` ON `IdentityClaims` (`IdentityResourceId`);
 
-    [ApiScopeId] int NOT NULL,
 
-    [Type] nvarchar(200) NOT NULL,
+CREATE UNIQUE INDEX `IX_IdentityResources_Name` ON `IdentityResources` (`Name`);
 
-    CONSTRAINT [PK_ApiScopeClaims] PRIMARY KEY ([Id]),
 
-    CONSTRAINT [FK_ApiScopeClaims_ApiScopes_ApiScopeId] FOREIGN KEY ([ApiScopeId]) REFERENCES [ApiScopes] ([Id]) ON DELETE CASCADE
-
-);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ApiClaims_ApiResourceId] ON [ApiClaims] ([ApiResourceId]);
-
-
-
-GO
-
-
-
-CREATE UNIQUE INDEX [IX_ApiResources_Name] ON [ApiResources] ([Name]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ApiScopeClaims_ApiScopeId] ON [ApiScopeClaims] ([ApiScopeId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ApiScopes_ApiResourceId] ON [ApiScopes] ([ApiResourceId]);
-
-
-
-GO
-
-
-
-CREATE UNIQUE INDEX [IX_ApiScopes_Name] ON [ApiScopes] ([Name]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ApiSecrets_ApiResourceId] ON [ApiSecrets] ([ApiResourceId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientClaims_ClientId] ON [ClientClaims] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientCorsOrigins_ClientId] ON [ClientCorsOrigins] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientGrantTypes_ClientId] ON [ClientGrantTypes] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientIdPRestrictions_ClientId] ON [ClientIdPRestrictions] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientPostLogoutRedirectUris_ClientId] ON [ClientPostLogoutRedirectUris] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientProperties_ClientId] ON [ClientProperties] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientRedirectUris_ClientId] ON [ClientRedirectUris] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE UNIQUE INDEX [IX_Clients_ClientId] ON [Clients] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientScopes_ClientId] ON [ClientScopes] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_ClientSecrets_ClientId] ON [ClientSecrets] ([ClientId]);
-
-
-
-GO
-
-
-
-CREATE INDEX [IX_IdentityClaims_IdentityResourceId] ON [IdentityClaims] ([IdentityResourceId]);
-
-
-
-GO
-
-
-
-CREATE UNIQUE INDEX [IX_IdentityResources_Name] ON [IdentityResources] ([Name]);
-
-
-
-GO
-
-
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+INSERT INTO `EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
 
 VALUES (N'20170927170433_Config', N'2.0.0-rtm-26452');
-
-
-
-GO
 

@@ -17,6 +17,7 @@ using AlwaysMoveForward.OAuth2.Web.Models.Account;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.Core.Common.Configuration;
 using Microsoft.Extensions.Options;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -34,8 +35,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                                 SignInManager<AMFUserLogin> signInManager,
                                 UserManager<AMFUserLogin> userManager,
                                 IIdentityServerInteractionService interaction,
-                                ILoggerFactory loggerFactory,
-                                IOptions<EmailConfiguration> emailConfigurationSection) : base(serviceManagerBuilder, loggerFactory.CreateLogger<AccountController>())
+                                IOptions<EmailConfiguration> emailConfigurationSection) : base(serviceManagerBuilder)
         {
             this._idsInteractionService = interaction;
             this._signInManager = signInManager;
@@ -99,7 +99,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                 var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {                    
-                    this.Logger.LogInformation(1, "User logged in.");
+                    LogManager.CreateLogger<AccountController>().LogDebug("User logged in.");
                     AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(input.UserName);
                     await _signInManager.SignInAsync(userLogin, isPersistent: false);
                     this.ServiceManager.UserService.AddLoginAttempt(true, this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString(), input.UserName, userLogin);
