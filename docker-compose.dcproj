@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>97615ad9-a9f1-451f-9223-2419111fd0b3</ProjectGuid>
+    <ProjectGuid>3eea1560-4f3b-4b10-b4a6-ab13170ee7f7</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
     <DockerServiceUrl>http://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>alwaysmoveforward.oauth2.web</DockerServiceName>
