@@ -5,30 +5,41 @@ using System.Text;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.DataLayer.DataMapper;
 using Dapper;
-using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
+using AlwaysMoveForward.Core.DataLayer.EntityFramework;
+using AlwaysMoveForward.OAuth2.DataLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
     /// <summary>
     /// A repository that retrieves a AMFUserLogin
     /// </summary>
-    public class AMFUserRepository : DapperRepositoryBase<AMFUserLogin, DTO.AMFUser, long>, IAMFUserRepository
+    public class AMFUserRepository : EntityFrameworkRepositoryBase<AMFUserLogin, Models.Amfusers, Models.AMFOAuthDbContext, long>, IAMFUserRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work
         /// </summary>
         /// <param name="unitOfWork">A unit of Work instance</param>
-        public AMFUserRepository(UnitOfWork unitOfWork)
-            : base(unitOfWork, "AMFUsers") 
+        public AMFUserRepository(NewUnitOfWork unitOfWork)
+            : base(unitOfWork) 
         { 
         
         }
-       
+
+        protected override DbSet<Amfusers> GetEntityInstance()
+        {
+            return this.UnitOfWork.DataContext.Amfusers;
+        }
+
+        protected override string IdPropertyName
+        {
+            get { return "Id"; }
+        }
         /// <summary>
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<AMFUserLogin, DTO.AMFUser> GetDataMapper()
+        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<AMFUserLogin, Models.Amfusers> GetDataMapper()
         {
             return new DataMapper.AMFUserLoginDataMapper(); 
         }
@@ -38,9 +49,16 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// </summary>
         /// <param name="idSource">The domain object to pull the id from</param>
         /// <returns>An instance of the DTO</returns>
-        protected override DTO.AMFUser GetDTOById(AMFUserLogin idSource)
+        protected override Models.Amfusers GetDTOById(AMFUserLogin idSource)
         {
             return this.GetDTOById(idSource.Id);
+        }
+
+        protected override Models.Amfusers GetDTOById(long id)
+        {
+            Models.Amfusers retVal = this.UnitOfWork.DataContext.Amfusers.Where(c => c.Id == id).FirstOrDefault();
+
+            return retVal;
         }
 
         /// <summary>
@@ -50,12 +68,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// <returns>The found domain object instance</returns>
         public AMFUserLogin GetByEmail(string emailAddress)
         {
-            var query = "Select * FROM " + this.TableName + " WHERE Email = @propertyValue";
-            var dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("@propertyValue", emailAddress);
-
-            DTO.AMFUser retVal = this.UnitOfWork.CurrentSession.QueryFirstOrDefault<DTO.AMFUser>(query, dynamicParameters);
-
+            Models.Amfusers retVal = this.UnitOfWork.DataContext.Amfusers.Where(u => u.Email == emailAddress).FirstOrDefault();
+            
             return this.GetDataMapper().Map(retVal);
         }
 
@@ -65,12 +79,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// <param name="email">Search the email field for similar strings</param>
         /// <returns>The user if one is found</returns>
         public IList<AMFUserLogin> SearchByEmail(string emailAddress)
-        {
-            var query = "Select * FROM " + this.TableName + " WHERE Email = @propertyValue";
-            var dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("propertyValue", emailAddress);
-
-            IEnumerable<DTO.AMFUser> retVal = this.UnitOfWork.CurrentSession.Query<DTO.AMFUser>(query, dynamicParameters).ToList();
+        {            
+            IEnumerable<Models.Amfusers> retVal = this.UnitOfWork.DataContext.Amfusers.Where(u => u.Email == emailAddress);
 
             return this.GetDataMapper().Map(retVal);
         }

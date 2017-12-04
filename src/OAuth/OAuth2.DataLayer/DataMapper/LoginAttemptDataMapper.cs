@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
     /// <summary>
     /// A data mapper going to/from the domain model and the dto
     /// </summary>
-    internal class LoginAttemptDataMapper : DataMapBase<LoginAttempt, DTO.LoginAttempt>
+    internal class LoginAttemptDataMapper : DataMapBase<LoginAttempt, Models.LoginAttempts>
     {
         /// <summary>
         /// The static constructor sets up automapper
@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override LoginAttempt Map(DTO.LoginAttempt source, LoginAttempt destination)
+        public override LoginAttempt Map(Models.LoginAttempts source, LoginAttempt destination)
         {
             return Mapper.Map(source, destination);
         }
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override DTO.LoginAttempt Map(LoginAttempt source, DTO.LoginAttempt destination)
+        public override Models.LoginAttempts Map(LoginAttempt source, Models.LoginAttempts destination)
         {
             return Mapper.Map(source, destination);
         }

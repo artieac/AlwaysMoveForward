@@ -6,6 +6,15 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
 {
     public partial class AMFOAuthDbContext : DbContext
     {
+        public AMFOAuthDbContext(string connectionString)
+        {
+            this.ConnectionString = connectionString;
+        }
+
+        public AMFOAuthDbContext(DbContextOptions contextOptions) : base(contextOptions) { }
+
+        public string ConnectionString { get; private set; }
+
         public virtual DbSet<AccessTokens> AccessTokens { get; set; }
         public virtual DbSet<Amfusers> Amfusers { get; set; }
         public virtual DbSet<ApiClaims> ApiClaims { get; set; }
@@ -30,6 +39,14 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
         public virtual DbSet<LoginAttempts> LoginAttempts { get; set; }
         public virtual DbSet<PersistedGrants> PersistedGrants { get; set; }
         public virtual DbSet<RequestTokens> RequestTokens { get; set; }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(this.ConnectionString);
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

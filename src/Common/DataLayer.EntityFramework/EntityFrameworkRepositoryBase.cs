@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AlwaysMoveForward.Core.Common.DataLayer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,39 +8,32 @@ using System.Text;
 
 namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
 {
-    public abstract class EntityFrameworkRepositoryBase<DomainClass, DTOClass, TDataContext> 
-        where DomainClass : class, new()
-        where DTOClass : class, DomainClass, new()
+    public abstract class EntityFrameworkRepositoryBase<TDomainType, TDTOType, TDataContext, TIDType> : RepositoryBase<EFUnitOfWork<TDataContext>, TDomainType, TDTOType, TIDType>
+        where TDomainType : class, new()
+        where TDTOType : class, new()
         where TDataContext : DbContext
     {
-        public EntityFrameworkRepositoryBase(EFUnitOfWork<TDataContext> _unitOfWork) 
+        public EntityFrameworkRepositoryBase(EFUnitOfWork<TDataContext> _unitOfWork) : base(_unitOfWork)
         {
-            this.UnitOfWork = UnitOfWork;
-        }
-
-        private EFUnitOfWork<TDataContext> UnitOfWork { get; set; }
-        public DomainClass Create()
-        {
-            return new DTOClass();
         }
 
         protected abstract string IdPropertyName { get; }
 
-        protected abstract DbSet<DTOClass> GetEntityInstance();
+        protected abstract DbSet<TDTOType> GetEntityInstance();
 
-        public virtual DTOClass GetDTOByDomain(DomainClass domainEntity)
+        public virtual TDTOType GetDTOByDomain(TDomainType domainEntity)
         {
-            Object idValue = typeof(DomainClass).GetProperty(this.IdPropertyName).GetValue(domainEntity, null);
+            Object idValue = typeof(TDomainType).GetProperty(this.IdPropertyName).GetValue(domainEntity, null);
             return this.GetDTOByProperty(this.IdPropertyName, idValue);
         }
 
-        public DTOClass GetDTOByProperty(String propertyName, object idValue)
+        public TDTOType GetDTOByProperty(String propertyName, object idValue)
         {
-            DTOClass retVal = null;
+            TDTOType retVal = null;
 
-            ParameterExpression dtoParameter = Expression.Parameter(typeof(DTOClass), "dtoParam");
+            ParameterExpression dtoParameter = Expression.Parameter(typeof(TDTOType), "dtoParam");
 
-            Expression<Func<DTOClass, bool>> whereExpression = Expression.Lambda<Func<DTOClass, bool>>
+            Expression<Func<TDTOType, bool>> whereExpression = Expression.Lambda<Func<TDTOType, bool>>
             (
                 Expression.Equal
                 (
@@ -53,7 +47,7 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
                 new[] { dtoParameter }
             );
 
-            IQueryable<DTOClass> dtoItems = this.GetEntityInstance().Where(whereExpression);
+            IQueryable<TDTOType> dtoItems = this.GetEntityInstance().Where(whereExpression);
 
             if (dtoItems != null && dtoItems.Count() > 0)
             {
@@ -63,22 +57,22 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
             return retVal;
         }
 
-        public DomainClass GetByProperty(string propertyName, object idValue)
+        public override TDomainType GetByProperty(string propertyName, object idValue)
         {
-            return this.GetDTOByProperty(propertyName, idValue);
+            return this.GetDataMapper().Map(this.GetDTOByProperty(propertyName, idValue));
         }
 
-        public IList<DomainClass> GetAll()
+        public override IList<TDomainType> GetAll()
         {
-            IQueryable<DTOClass> dtoList = from foundItem in this.GetEntityInstance() select foundItem;
-            return dtoList.ToList<DomainClass>();
+            IQueryable<TDTOType> dtoList = from foundItem in this.GetEntityInstance() select foundItem;
+            return this.GetDataMapper().Map(dtoList);
         }
 
-        public IList<DomainClass> GetAllByProperty(string propertyName, object idValue)
+        public override IList<TDomainType> GetAllByProperty(string propertyName, object idValue)
         {
-            ParameterExpression dtoParameter = Expression.Parameter(typeof(DTOClass), "dtoParam");
+            ParameterExpression dtoParameter = Expression.Parameter(typeof(TDTOType), "dtoParam");
 
-            Expression<Func<DTOClass, bool>> whereExpression = Expression.Lambda<Func<DTOClass, bool>>
+            Expression<Func<TDTOType, bool>> whereExpression = Expression.Lambda<Func<TDTOType, bool>>
             (
                 Expression.Equal
                 (
@@ -92,24 +86,24 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
                 new[] { dtoParameter }
             );
 
-            IQueryable<DTOClass> dtoList = this.GetEntityInstance().Where(whereExpression);
+            IQueryable<TDTOType> dtoList = this.GetEntityInstance().Where(whereExpression);
 
-            return dtoList.ToList<DomainClass>();
+            return this.GetDataMapper().Map(dtoList);
         }
 
-        public DomainClass Save(DomainClass itemToSave)
+        public override TDomainType Save(TDomainType itemToSave)
         {
             if (itemToSave != null)
             {
-                DTOClass dtoItemToSave = this.GetDTOByDomain(itemToSave);
+                TDTOType dtoItemToSave = this.GetDTOByDomain(itemToSave);
 
                 if (dtoItemToSave == null)
                 {
-                    dtoItemToSave = itemToSave as DTOClass;
+                    dtoItemToSave = itemToSave as TDTOType;
 
                     if (dtoItemToSave != null)
                     {
-                        ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Add<DTOClass>(dtoItemToSave);
+                        ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Add<TDTOType>(dtoItemToSave);
                     }
                 }
 
@@ -123,17 +117,17 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
         /// Remove the blog entry
         /// </summary>
         /// <param name="saveItem"></param>
-        public bool Delete(DomainClass itemToDelete)
+        public override bool Delete(TDomainType itemToDelete)
         {
             bool retVal = false;
 
             if (itemToDelete != null)
             {
-                DTOClass dtoItemToDelete = this.GetDTOByDomain(itemToDelete);
+                TDTOType dtoItemToDelete = this.GetDTOByDomain(itemToDelete);
 
                 if (dtoItemToDelete != null)
                 {
-                    ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Remove<DTOClass>(dtoItemToDelete);
+                    ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Remove<TDTOType>(dtoItemToDelete);
                     ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.SaveChanges();
                 }
 

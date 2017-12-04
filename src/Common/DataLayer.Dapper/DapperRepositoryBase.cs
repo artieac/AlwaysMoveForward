@@ -23,14 +23,8 @@ namespace AlwaysMoveForward.Core.Common.DataLayer.Dapper
         /// <param name="unitOfWork"></param>
         protected DapperRepositoryBase(IUnitOfWork unitOfWork, string tableName) : base(unitOfWork as DapperUnitOfWork)
         {
-            this.UnitOfWork = unitOfWork as DapperUnitOfWork;
             this.TableName = tableName;
         }
-
-        /// <summary>
-        /// Gets the current unit of work
-        /// </summary>
-        public DapperUnitOfWork UnitOfWork { get; private set; }
 
         protected string TableName { get; private set; } 
 

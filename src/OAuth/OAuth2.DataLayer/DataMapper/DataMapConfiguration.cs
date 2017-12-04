@@ -15,12 +15,12 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             if(isConfigured == false)
             {
                 Mapper.Initialize(cfg => {
-                    cfg.CreateMap<LoginAttempt, DTO.LoginAttempt>();
-                    cfg.CreateMap<DTO.LoginAttempt, LoginAttempt>();
-                    cfg.CreateMap<AMFUserLogin, DTO.AMFUser>();
-                    cfg.CreateMap<DTO.AMFUser, AMFUserLogin>();
-                    cfg.CreateMap<Consumer, DTO.Consumer>();
-                    cfg.CreateMap<DTO.Consumer, Consumer>();
+                    cfg.CreateMap<LoginAttempt, Models.LoginAttempts>();
+                    cfg.CreateMap<Models.LoginAttempts, LoginAttempt>();
+                    cfg.CreateMap<AMFUserLogin, Models.Amfusers>();
+                    cfg.CreateMap<Models.Amfusers, AMFUserLogin>();
+                    cfg.CreateMap<Consumer, Models.Consumers>();
+                    cfg.CreateMap<Models.Consumers, Consumer>();
                 });
 
 #if DEBUG

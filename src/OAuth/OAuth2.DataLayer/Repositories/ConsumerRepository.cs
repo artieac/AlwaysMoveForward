@@ -4,24 +4,34 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using Dapper;
-using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
+using AlwaysMoveForward.Core.DataLayer.EntityFramework;
+using AlwaysMoveForward.OAuth2.DataLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
     /// <summary>
     /// The consumer repository implementation
     /// </summary>
-    public class ConsumerRepository : DapperRepositoryBase<Consumer, DTO.Consumer, string>, IConsumerRepository
+    public class ConsumerRepository : EntityFrameworkRepositoryBase<Consumer, Models.Consumers, Models.AMFOAuthDbContext, string>, IConsumerRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work
         /// </summary>
         /// <param name="unitOfWork">A unit of Work instance</param>
-        public ConsumerRepository(UnitOfWork unitOfWork) : base(unitOfWork, "Consumers") 
+        public ConsumerRepository(NewUnitOfWork unitOfWork) : base(unitOfWork) 
         { 
         
         }
-       
+
+        protected override string IdPropertyName
+        {
+            get { return "Id"; }
+        }
+        protected override DbSet<Consumers> GetEntityInstance()
+        {
+            return this.UnitOfWork.DataContext.Consumers;
+        }
         public Consumer GetById(Consumer target)
         {
             return this.GetDataMapper().Map(this.GetDTOById(target.ConsumerKey));
@@ -31,7 +41,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<Consumer, DTO.Consumer> GetDataMapper()
+        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<Consumer, Models.Consumers> GetDataMapper()
         {
             return new DataMapper.ConsumerDataMapper(); 
         }
@@ -41,17 +51,21 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// </summary>
         /// <param name="idSource">The domain object to pull the id from</param>
         /// <returns>An instance of the DTO</returns>
-        protected override DTO.Consumer GetDTOById(Consumer idSource)
+        protected override Models.Consumers GetDTOById(Consumer idSource)
         {
             return this.GetDTOById(idSource.ConsumerKey);
         }
 
-        protected override DTO.Consumer GetDTOById(string id)
+        protected override Models.Consumers GetDTOById(string id)
         {
-            DTO.Consumer retVal = this.UnitOfWork.CurrentSession.QueryFirstOrDefault<DTO.Consumer>("Select * FROM " + this.TableName + " WHERE ConsumerKey = @Id",
-                        new { id });
+            Models.Consumers retVal = this.UnitOfWork.DataContext.Consumers.Where(c => c.ConsumerKey == id).FirstOrDefault();
 
             return retVal;
+        }
+
+        public IList<Consumer> GetAll(int pageIndex, int pageSize)
+        {
+            return this.GetAll();
         }
 
         /// <summary>
@@ -71,12 +85,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// <returns>An instance of a consumer</returns>
         public IList<Consumer> GetByContactEmail(string contactEmail)
         {
-            var query = "Select * FROM " + this.TableName + " WHERE ContactEmail = @contactEmail";
-            var dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("contactEmail", contactEmail);
-
-            IList<DTO.Consumer> retVal = this.UnitOfWork.CurrentSession.Query<DTO.Consumer>(query, dynamicParameters).ToList();
-
+            IList<Models.Consumers> retVal = this.UnitOfWork.DataContext.Consumers.Where(c => c.ContactEmail == contactEmail).ToList();
+            
             return this.GetDataMapper().Map(retVal);
         }
 

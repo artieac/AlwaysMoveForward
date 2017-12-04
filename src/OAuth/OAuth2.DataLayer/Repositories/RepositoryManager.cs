@@ -15,15 +15,18 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// The constructor that takes a unit of work as a parameter
         /// </summary>
         /// <param name="unitOfWork">The unit of work</param>
-        public RepositoryManager(UnitOfWork unitOfWork)
+        public RepositoryManager(UnitOfWork unitOfWork, NewUnitOfWork newUnitOfWork)
         {
             this.UnitOfWork = unitOfWork;
+            this.NewUnitOfWork = newUnitOfWork;
         }
 
         /// <summary>
         /// The contained instance of the Unit Of Work
         /// </summary>
         protected UnitOfWork UnitOfWork { get; set; }
+
+        protected NewUnitOfWork NewUnitOfWork { get; set; }
 
         /// <summary>
         /// The current instance of the ConsumerRepository
@@ -39,7 +42,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.consumerRepository == null)
                 {
-                    this.consumerRepository = new ConsumerRepository(this.UnitOfWork);
+                    this.consumerRepository = new ConsumerRepository(this.NewUnitOfWork);
                 }
 
                 return this.consumerRepository;
@@ -60,7 +63,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new AMFUserRepository(this.UnitOfWork);
+                    this.userRepository = new AMFUserRepository(this.NewUnitOfWork);
                 }
 
                 return this.userRepository;
@@ -81,7 +84,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.loginAttemptRepository == null)
                 {
-                    this.loginAttemptRepository = new LoginAttemptRepository(this.UnitOfWork);
+                    this.loginAttemptRepository = new LoginAttemptRepository(this.NewUnitOfWork);
                 }
 
                 return this.loginAttemptRepository;

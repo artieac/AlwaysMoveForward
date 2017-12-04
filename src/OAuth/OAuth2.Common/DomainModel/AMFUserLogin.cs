@@ -63,6 +63,8 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel
         /// </summary>
         public DateTime DateCreated { get; private set; }
 
+        public string PasswordSalt { get; set; }
+
         /// <summary>
         /// Gets or sets the forgotten password hint
         /// </summary>
