@@ -6,7 +6,6 @@ using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.DataLayer.DataMapper;
 using Dapper;
 using AlwaysMoveForward.Core.DataLayer.EntityFramework;
-using AlwaysMoveForward.OAuth2.DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
@@ -26,7 +25,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         
         }
 
-        protected override DbSet<Amfusers> GetEntityInstance()
+        protected override DbSet<Models.Amfusers> GetEntityInstance()
         {
             return this.UnitOfWork.DataContext.Amfusers;
         }
