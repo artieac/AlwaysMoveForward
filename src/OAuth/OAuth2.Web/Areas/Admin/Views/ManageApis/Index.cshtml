@@ -1,0 +1,64 @@
+﻿@{
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	ViewBag.Common = Model.Common;
+}
+
+@section headerPlugins
+	{
+	<script src="/Scripts/Controllers/ManageListsController.js" type="text/javascript"></script>
+}
+
+@{
+	Dictionary<String, String> readonlyAttributes = new Dictionary<string, string>();
+	readonlyAttributes.Add("class", "readonly");
+	readonlyAttributes.Add("disabled", "true");
+
+}
+<form id="changeForm" action="/Admin/ManageLists/Index/"></form>
+<form id="saveForm" action="/Admin/ManageLists/Index/">
+	<input type="hidden" id="performSave" name="performSave" value="true" />
+</form>
+<div class="bodyContent" ng-controller="ManageApisController">
+	<div class="contentPageTitle">
+		<label>Manage Apis</label>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th width="1%">&nbsp;</th>
+				<th width="20%">Name</th>
+				<th width="20%">Display Name</th>
+				<th width="20%">Description</th>
+				<th width="10%">Enabled</th>
+			</tr>
+		</thead>
+		<tbody ng-init="getAll();">
+			<tr ng-repeat="apiResource in apiResources">
+				<td><input type="radio" name="selectedList" value="{{apiResource.Id}}" /></td>
+				<td><input type="text" name="apiResourceName" value="{{ apiResource.Name }}"/></td>
+				<td><input type="text" name="apiResourceDisplayName" value="{{ apiResource.DisplayName }}"/></td>
+				<td><input type="text" name="apiResourceDescription" value="{{ apiResource.Description }}" /></td>
+				<td><input type="checkbox" name="apiResourceEnabled" value="{{ apiResource.Enabled }}" /></td>
+				<td>
+					<a ng-click="deleteApiResource(apiResource.Id);">
+						<img src="/Content/images/action_delete.png" class="deleteList" alt="" />
+					</a>
+					<button class="btn btn-primary" ng-click="saveApiResource();">Save</button>
+				</td>
+			</tr>
+			<tr ng-form="newApiResourceForm">
+				<td></td>
+				<td><input type="text" name="newApiResourceName" ng-model="apiResource.name" required /></td>
+				<td><input type="text" name="newApiResourceDisplayName" ng-model="apiResource.displayName" required /></td>
+				<td><input type="text" name="newApiResourceDescription" ng-model="apiResource.description" required /></td>
+				<td><input type="checkbox" name="newApiResourceEnabled" ng-model="apiResource.Enabled" value="false" /></td>
+				<td><input type="button" class="btn btn-primary" value="Add Api Resource" ng-click="addApiResource();" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+</div>
+
+
+
+

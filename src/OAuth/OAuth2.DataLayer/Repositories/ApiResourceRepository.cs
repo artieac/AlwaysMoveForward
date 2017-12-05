@@ -1,5 +1,6 @@
 ﻿using AlwaysMoveForward.Core.DataLayer.EntityFramework;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
-    public class ApiResourceRepository : EntityFrameworkRepositoryBase<ApiResources, Models.ApiResources, Models.AMFOAuthDbContext, long>
+    public class ApiResourceRepository : EntityFrameworkRepositoryBase<ApiResources, Models.ApiResources, Models.AMFOAuthDbContext, long>, IApiResourceRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work

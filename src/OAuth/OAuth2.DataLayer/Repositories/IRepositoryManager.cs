@@ -23,5 +23,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// Gets the current instance of the loginAttemptRepository
         /// </summary>
         ILoginAttemptRepository LoginAttemptRepository { get; }
+
+        IApiResourceRepository ApiResourceRepository { get; }
     }
 }

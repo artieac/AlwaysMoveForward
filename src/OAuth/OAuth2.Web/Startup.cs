@@ -80,13 +80,13 @@ namespace AlwaysMoveForward.OAuth2.Web
                 .AddConfigurationStore(options=>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseMySql(connectionString);
+                        builder.UseMySQL(connectionString);
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseMySql(connectionString);
+                        builder.UseMySQL(connectionString);
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;

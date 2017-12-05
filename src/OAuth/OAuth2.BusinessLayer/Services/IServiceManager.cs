@@ -26,6 +26,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// Gets the current User service instance
         /// </summary>
         IUserService UserService { get; }
+
+        IApiResourcesService ApiResourceService { get; }
     }
 }
 

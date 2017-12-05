@@ -11,6 +11,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
     /// <summary>
     /// The service manager for the OAuth services
+    /// TBD:  In .Net Core this can be switched to scoped dependency injection
     /// </summary>
     public class ServiceManager : IServiceManager
     {
@@ -75,6 +76,24 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
                 return this.userService;
             }
-        }       
+        }
+
+        private IApiResourcesService apiResourceService;
+
+        /// <summary>
+        /// Gets the current ApiResource service
+        /// </summary>
+        public IApiResourcesService ApiResourceService
+        {
+            get
+            {
+                if (this.apiResourceService == null)
+                {
+                    this.apiResourceService = new ApiResourceService(this.RepositoryManager.ApiResourceRepository);
+                }
+
+                return this.apiResourceService;
+            }
+        }
     }
 }
