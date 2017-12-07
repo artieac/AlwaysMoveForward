@@ -33,5 +33,39 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
             IList<ApiResources> retVal = this.ServiceManager.ApiResourceService.GetAll();
             return retVal;
         }
+
+        [Produces("application/json")]
+        [Route("api/ApiResource"), HttpPost()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ApiResources Add([FromBody]ApiResources newResource)
+        {
+            return this.ServiceManager.ApiResourceService.Add(newResource.Name, newResource.DisplayName, newResource.Description, newResource.Enabled);
+        }
+
+        [Produces("application/json")]
+        [Route("api/ApiResource/{id}/Secrets"), HttpPut()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ApiResources UpdateSecrets(long id, [FromBody]string secret)
+        {
+            ApiResources retVal = this.ServiceManager.ApiResourceService.AddSecret(id, secret);
+            return retVal;
+        }
+
+        [Produces("application/json")]
+        [Route("api/ApiResource/{id}/Claim"), HttpPut()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ApiResources UpdateClaims(long id, [FromBody]string claim)
+        {
+            ApiResources retVal = this.ServiceManager.ApiResourceService.AddClaim(id, claim);
+            return retVal;
+        }
+
+        [Produces("application/json")]
+        [Route("api/ApiResource/{id}/Scope"), HttpPut()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ApiResources UpdateScopes(long id, [FromBody]ApiResources newResource)
+        {
+            return this.ServiceManager.ApiResourceService.Update(newResource.Id, newResource.Name, newResource.DisplayName, newResource.Description, newResource.Enabled);
+        }
     }
 }

@@ -10,5 +10,13 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         IList<ApiResources> GetAll();
 
         ApiResources GetById(long id);
+
+        ApiResources Add(string name, string displayName, string description, bool enabled);
+
+        ApiResources Update(long id, string name, string displayName, string description, bool enabled);
+
+        ApiResources AddSecret(long id, string secret);
+
+        ApiResources AddClaim(long id, string claim);
     }
 }

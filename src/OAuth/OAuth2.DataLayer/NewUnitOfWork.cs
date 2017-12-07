@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer
                 if (this.dbContext == null)
                 {
                     var optionsBuilder = new DbContextOptionsBuilder<AMFOAuthDbContext>();
-                    optionsBuilder.UseMySQL(this.ConnectionString);
+                    optionsBuilder.UseSqlServer(this.ConnectionString);
                     dbContext = new AMFOAuthDbContext(optionsBuilder.Options);
                 }
 

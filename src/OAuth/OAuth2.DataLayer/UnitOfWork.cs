@@ -1,5 +1,4 @@
 ﻿using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +13,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer
         {
             if (this.currentSession == null)
             {
-                this.currentSession = new MySqlConnection(this.ConnectionString);
+//                this.currentSession = new MySqlConnection(this.ConnectionString);
             }
         }
     }

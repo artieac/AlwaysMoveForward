@@ -99,12 +99,13 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
 
                 if (dtoItemToSave == null)
                 {
-                    dtoItemToSave = itemToSave as TDTOType;
-
-                    if (dtoItemToSave != null)
-                    {
-                        ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Add<TDTOType>(dtoItemToSave);
-                    }
+                    dtoItemToSave = this.GetDataMapper().Map(itemToSave);
+                    ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Add<TDTOType>(dtoItemToSave);
+                }
+                else
+                {
+                    dtoItemToSave = this.GetDataMapper().Map(itemToSave, dtoItemToSave);
+                    ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.Update<TDTOType>(dtoItemToSave);
                 }
 
                 ((EFUnitOfWork<TDataContext>)this.UnitOfWork).DataContext.SaveChanges();

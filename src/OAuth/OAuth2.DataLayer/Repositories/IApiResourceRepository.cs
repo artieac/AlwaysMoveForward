@@ -10,5 +10,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         IList<ApiResources> GetAll();
 
         ApiResources GetById(long id);
+
+        ApiResources Save(ApiResources newResource);
     }
 }

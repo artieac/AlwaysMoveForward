@@ -56,6 +56,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("AccessTokens", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.Id);
 
                 entity.HasIndex(e => e.Token)
@@ -95,6 +100,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                 entity.HasIndex(e => e.Email)
                     .IsUnique();
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+                
                 entity.HasIndex(e => e.Id);
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
@@ -126,6 +136,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ApiClaims", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ApiResourceId);
 
                 entity.Property(e => e.Type)
@@ -140,6 +155,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ApiResources>(entity =>
             {
                 entity.ToTable("ApiResources", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.Name)
                     .IsUnique();
@@ -157,6 +177,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ApiScopeClaims", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ApiScopeId);
 
                 entity.Property(e => e.Type)
@@ -171,6 +196,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ApiScopes>(entity =>
             {
                 entity.ToTable("ApiScopes", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ApiResourceId);
 
@@ -194,6 +224,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ApiSecrets", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ApiResourceId);
 
                 entity.Property(e => e.Description).HasMaxLength(1000);
@@ -210,6 +245,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ClientClaims>(entity =>
             {
                 entity.ToTable("ClientClaims", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ClientId);
 
@@ -230,6 +270,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ClientCorsOrigins", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.Origin)
@@ -244,6 +289,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ClientGrantTypes>(entity =>
             {
                 entity.ToTable("ClientGrantTypes", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ClientId);
 
@@ -260,6 +310,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ClientIdPRestrictions", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.Provider)
@@ -275,6 +330,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ClientPostLogoutRedirectUris", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.PostLogoutRedirectUri)
@@ -289,6 +349,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ClientProperties>(entity =>
             {
                 entity.ToTable("ClientProperties", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ClientId);
 
@@ -309,6 +374,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ClientRedirectUris", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.RedirectUri)
@@ -323,6 +393,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<Clients>(entity =>
             {
                 entity.ToTable("Clients", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ClientId)
                     .IsUnique();
@@ -356,6 +431,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("ClientScopes", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.Scope)
@@ -370,6 +450,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<ClientSecrets>(entity =>
             {
                 entity.ToTable("ClientSecrets", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.ClientId);
 
@@ -438,6 +523,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             {
                 entity.ToTable("IdentityClaims", "dbo");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
+
                 entity.HasIndex(e => e.IdentityResourceId);
 
                 entity.Property(e => e.Type)
@@ -452,6 +542,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<IdentityResources>(entity =>
             {
                 entity.ToTable("IdentityResources", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.Name)
                     .IsUnique();
@@ -468,6 +563,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<LoginAttempts>(entity =>
             {
                 entity.ToTable("LoginAttempts", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.Id);
 
@@ -512,6 +612,11 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
             modelBuilder.Entity<RequestTokens>(entity =>
             {
                 entity.ToTable("RequestTokens", "dbo");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn();
 
                 entity.HasIndex(e => e.Id);
 
