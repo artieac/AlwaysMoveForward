@@ -50,7 +50,12 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 
         protected override Models.ApiResources GetDTOById(long id)
         {
-            Models.ApiResources retVal = this.UnitOfWork.DataContext.ApiResources.Where(c => c.Id == id).FirstOrDefault();
+            Models.ApiResources retVal = this.UnitOfWork.DataContext.ApiResources
+                .Where(apiResource => apiResource.Id == id)
+                .Include(apiResource => apiResource.ApiClaims)
+                .Include(apiResource => apiResource.ApiScopes)
+                .Include(apiResource => apiResource.ApiSecrets)
+                .FirstOrDefault();
 
             return retVal;
         }

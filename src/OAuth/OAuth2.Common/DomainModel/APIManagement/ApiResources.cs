@@ -30,7 +30,6 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
             {
                 ApiClaims newClaim = new ApiClaims();
                 newClaim.ApiResourceId = this.Id;
-                newClaim.ApiResource = this;
                 newClaim.Type = claim;
 
                 this.ApiClaims.Add(newClaim);
@@ -51,7 +50,6 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
             {
                 ApiSecrets newSecret = new ApiSecrets();
                 newSecret.ApiResourceId = this.Id;
-                newSecret.ApiResource = this;
                 newSecret.Expiration = DateTime.Parse("01/01/2099"); //TBD
                 newSecret.Type = "string";
                 newSecret.Value = secret;

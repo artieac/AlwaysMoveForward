@@ -22,16 +22,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                     cfg.CreateMap<Models.Amfusers, AMFUserLogin>();
                     cfg.CreateMap<Consumer, Models.Consumers>();
                     cfg.CreateMap<Models.Consumers, Consumer>();
-                    cfg.CreateMap<ApiClaims, Models.ApiClaims>();
-                    cfg.CreateMap<Models.ApiClaims, ApiClaims>();
-                    cfg.CreateMap<ApiScopeClaims, Models.ApiScopeClaims>();
-                    cfg.CreateMap<Models.ApiScopeClaims, ApiScopeClaims>();
-                    cfg.CreateMap<ApiSecrets, Models.ApiSecrets>();
-                    cfg.CreateMap<Models.ApiSecrets, ApiSecrets>();
-                    cfg.CreateMap<ApiScopes, Models.ApiScopes>();
-                    cfg.CreateMap<Models.ApiScopes, ApiScopes>();
-                    cfg.CreateMap<ApiResources, Models.ApiResources>();
-                    cfg.CreateMap<Models.ApiResources, ApiResources>();
+                    ApiResourceDataMapper.Configure(cfg);
                 });
 
 #if DEBUG

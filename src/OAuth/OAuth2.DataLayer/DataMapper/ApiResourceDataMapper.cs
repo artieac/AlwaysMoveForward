@@ -8,8 +8,7 @@ using System.Text;
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {
     internal class ApiResourceDataMapper : DataMapBase<ApiResources, Models.ApiResources>
-    {
-        /// <summary>
+    {       
         /// The static constructor sets up automapper
         /// </summary>
         static ApiResourceDataMapper()
@@ -17,6 +16,28 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             DataMapConfiguration.Configure();
         }
 
+        public static void Configure(IMapperConfigurationExpression cfg)
+        {
+            cfg.CreateMap<ApiClaims, Models.ApiClaims>()
+                .ForMember(source => source.ApiResource, opt => opt.Ignore());
+            cfg.CreateMap<Models.ApiClaims, ApiClaims>();
+            cfg.CreateMap<ApiScopeClaims, Models.ApiScopeClaims>();
+            cfg.CreateMap<Models.ApiScopeClaims, ApiScopeClaims>();
+            cfg.CreateMap<ApiSecrets, Models.ApiSecrets>()
+                .ForMember(source => source.ApiResource, opt => opt.Ignore());
+            cfg.CreateMap<Models.ApiSecrets, ApiSecrets>();
+            cfg.CreateMap<ApiScopes, Models.ApiScopes>();
+            cfg.CreateMap<Models.ApiScopes, ApiScopes>();
+            cfg.CreateMap<ApiResources, Models.ApiResources>()
+                .AfterMap((source, destination) =>
+                {
+                    foreach (var child in destination.ApiSecrets)
+                        child.ApiResource = destination;
+                    foreach (var child in destination.ApiClaims)
+                        child.ApiResource = destination;
+                });
+            cfg.CreateMap<Models.ApiResources, ApiResources>();
+        }
         /// <summary>
         /// Tell AutoMapper what you want to map
         /// </summary>

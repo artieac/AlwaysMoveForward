@@ -12,7 +12,5 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
         public DateTime? Expiration { get; set; }
         public string Type { get; set; }
         public string Value { get; set; }
-
-        public ApiResources ApiResource { get; set; }
     }
 }

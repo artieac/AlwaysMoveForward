@@ -23,10 +23,17 @@
 			});
 	}
 
-	$scope.updateApiClaim = function (id, claim) {
-		var targetCheckbox = jQuery('input[name=' + claim + ']);
+	$scope.deleteApiSecret = function (id) {
+		$http.delete('/api/ApiResource/' + id + '/Secret/' + secretId)
+			.then(function (data) {
+				$scope.currentApiResource = data;
+			});
+	}
 
-		if(targetCheckbox.is(':checked')){
+	$scope.updateApiClaim = function (id, claim) {
+		var targetCheckbox = jQuery("input[name='" + claim + "']");
+
+		if (targetCheckbox.is(':checked')) {
 			$http.post('/api/ApiResource/' + id + '/Claim', claim)
 				.then(function (data) {
 					$scope.currentApiResource = data;

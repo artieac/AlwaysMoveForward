@@ -30,16 +30,16 @@
 		</thead>
 		<tbody ng-init="getAll();">
 			<tr ng-repeat="apiResource in apiResources">
-				<td><input type="radio" name="selectedApi" value="{{apiResource.Id}}" /></td>
-				<td>{{ apiResource.Name }}</td>
-				<td>{{ apiResource.DisplayName }}/></td>
-				<td>{{ apiResource.Description }}/></td>
-				<td>{{ apiResource.Enabled }}/></td>
-				<td><a href="/UpdateClaims">Manage Claims</a></td>
-				<td><a href="/UpdateSecrets">Manage Secrets</a></td>
-				<td><a href="/UpdateScopes">Manage Scopes</a></td>
+				<td><input type="radio" name="selectedApi" value="{{apiResource.id}}" /></td>
+				<td>{{ apiResource.name }}</td>
+				<td>{{ apiResource.displayName }}</td>
+				<td>{{ apiResource.description }}</td>
+				<td>{{ apiResource.enabled }}</td>
+				<td><a href="Claims/{{apiResource.id}}">Manage Claims</a></td>
+				<td><a href="Secrets/{{apiResource.id}}">Manage Secrets</a></td>
+				<td><a href="Scopes/{{apiResource.id}}">Manage Scopes</a></td>
 				<td>
-					<a ng-click="deleteApiResource(apiResource.Id);">
+					<a ng-click="deleteApiResource(apiResource.id);">
 						<img src="~/images/action_delete.png" class="deleteList" alt="" />
 					</a>
 					<button class="btn btn-primary" ng-click="saveApiResource();">Save</button>
