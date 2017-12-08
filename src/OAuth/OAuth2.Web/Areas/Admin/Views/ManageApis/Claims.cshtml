@@ -42,13 +42,13 @@
 			<table class="table table-striped">
 				<tbody>
 					<tr>
-						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Name" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Name');">@IdentityModel.JwtClaimTypes.Name</></td>
+						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Name" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Name');" ng-checked="hasClaim(currentApiResource, '@IdentityModel.JwtClaimTypes.Name');">@IdentityModel.JwtClaimTypes.Name</></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Email" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Email');">@IdentityModel.JwtClaimTypes.Email</></td>
+						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Email" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Email');" ng-checked="hasClaim(currentApiResource, '@IdentityModel.JwtClaimTypes.Email');">@IdentityModel.JwtClaimTypes.Email</></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Role" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Role');">@IdentityModel.JwtClaimTypes.Role</></td>
+						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Role" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Role');" ng-checked="hasClaim(currentApiResource, '@IdentityModel.JwtClaimTypes.Role');">@IdentityModel.JwtClaimTypes.Role</></td>
 					</tr>
 				</tbody>
 			</table>

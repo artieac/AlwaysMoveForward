@@ -9,7 +9,5 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
         public int Id { get; set; }
         public int ApiResourceId { get; set; }
         public string Type { get; set; }
-
-        public ApiResources ApiResource { get; set; }
     }
 }

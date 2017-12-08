@@ -9,6 +9,23 @@
 		$scope.currentApiResource = getApiResourcesRequest.get();
 	}
 
+	$scope.hasClaim = function (apiResource, targetClaim) {
+		var retVal = false;
+
+		if (apiResource != null && apiResource !== undefined) {
+			if (apiResource.apiClaims != null && apiResource.apiClaims !== undefined) {
+				for (var i = 0; i < apiResource.apiClaims.length; i++) {
+					if (apiResource.apiClaims[i].type === targetClaim) {
+						retVal = true;
+						break;
+					}
+				}
+			}
+		}
+
+		return retVal;
+	}
+
 	$scope.addApiResource = function () {
 		$http.post('/api/ApiResource', $scope.newApiResource)
 			.then(function (data) {

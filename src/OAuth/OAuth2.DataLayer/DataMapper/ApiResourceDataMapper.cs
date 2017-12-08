@@ -31,6 +31,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             cfg.CreateMap<Models.ApiScopes, ApiScopes>();
             cfg.CreateMap<ApiResources, Models.ApiResources>()
                 .ForMember(source => source.ApiSecrets, opt => opt.Ignore())
+                .ForMember(source => source.ApiClaims, opt => opt.Ignore())
                 .AfterMap((source, destination) =>
                 {
                     foreach (var child in source.ApiSecrets)
@@ -43,6 +44,10 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                             dtoChild.Expiration = child.Expiration;
                             dtoChild.Type = child.Type;
                             dtoChild.Value = child.Value;
+                        }
+                        else
+                        {
+                            destination.ApiSecrets.Add(Mapper.Map(child, new Models.ApiSecrets()));
                         }
                     }
 
@@ -57,6 +62,10 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                         {
                             dtoChild.ApiResourceId = child.ApiResourceId;
                             dtoChild.Type = child.Type;
+                        }
+                        else
+                        {
+                            destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
                         }
                     }
 
