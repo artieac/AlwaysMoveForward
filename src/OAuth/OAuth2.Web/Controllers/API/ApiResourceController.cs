@@ -55,9 +55,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Produces("application/json")]
         [Route("api/ApiResource/{id}/Claim"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources UpdateClaims(long id, [FromBody]string input)
+        public ApiResources UpdateClaims(long id, [FromBody]ClaimInputModel input)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.AddClaim(id, input);
+            ApiResources retVal = this.ServiceManager.ApiResourceService.AddClaim(id, input.Value);
             return retVal;
         }
 

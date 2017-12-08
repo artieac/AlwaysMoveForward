@@ -3,6 +3,7 @@ using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
@@ -29,10 +30,36 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             cfg.CreateMap<ApiScopes, Models.ApiScopes>();
             cfg.CreateMap<Models.ApiScopes, ApiScopes>();
             cfg.CreateMap<ApiResources, Models.ApiResources>()
+                .ForMember(source => source.ApiSecrets, opt => opt.Ignore())
                 .AfterMap((source, destination) =>
                 {
+                    foreach (var child in source.ApiSecrets)
+                    {
+                        Models.ApiSecrets dtoChild = destination.ApiSecrets.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+
+                        if (dtoChild != null)
+                        {
+                            dtoChild.ApiResourceId = child.ApiResourceId;
+                            dtoChild.Expiration = child.Expiration;
+                            dtoChild.Type = child.Type;
+                            dtoChild.Value = child.Value;
+                        }
+                    }
+
                     foreach (var child in destination.ApiSecrets)
                         child.ApiResource = destination;
+
+                    foreach (var child in source.ApiClaims)
+                    {
+                        Models.ApiClaims dtoChild = destination.ApiClaims.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+
+                        if (dtoChild != null)
+                        {
+                            dtoChild.ApiResourceId = child.ApiResourceId;
+                            dtoChild.Type = child.Type;
+                        }
+                    }
+
                     foreach (var child in destination.ApiClaims)
                         child.ApiResource = destination;
                 });

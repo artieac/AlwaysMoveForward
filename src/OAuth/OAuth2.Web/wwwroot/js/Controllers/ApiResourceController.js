@@ -33,8 +33,10 @@
 	$scope.updateApiClaim = function (id, claim) {
 		var targetCheckbox = jQuery("input[name='" + claim + "']");
 
-		if (targetCheckbox.is(':checked')) {
-			$http.post('/api/ApiResource/' + id + '/Claim', claim)
+		if (targetCheckbox.is(':checked')){
+			var claimData = { value: claim };
+		
+			$http.post('/api/ApiResource/' + id + '/Claim', claimData)
 				.then(function (data) {
 					$scope.currentApiResource = data;
 				});
