@@ -20,35 +20,35 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         [Route("admin/ManageApis/Index")]
         public IActionResult Index()
         {
-            IList<ApiResources> retVal = this.ServiceManager.ApiResourceService.GetAll();
+            IList<ProtectedApiResource> retVal = this.ServiceManager.ApiResourceService.GetAll();
             return View(retVal);
         }
 
         [Route("admin/ManageApis/Edit/{id}")]
         public IActionResult Edit(long id)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.GetById(id);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.GetById(id);
             return this.View(retVal);
         }
 
         [Route("admin/ManageApis/Secrets/{id}")]
         public IActionResult Secrets(long id)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.GetById(id);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.GetById(id);
             return this.View(retVal);
         }
 
         [Route("admin/ManageApis/Claims/{id}")]
         public IActionResult Claims(long id)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.GetById(id);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.GetById(id);
             return this.View(retVal);
         }
 
         [Route("admin/ManageApis/Scopes/{id}")]
         public IActionResult Scopes(long id)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.GetById(id);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.GetById(id);
             return this.View(retVal);
         }
     }

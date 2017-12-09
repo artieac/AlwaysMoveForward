@@ -2,6 +2,7 @@
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 using AlwaysMoveForward.OAuth2.Web.Models.API;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,24 +22,24 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
 
         [Route("api/ApiResource/{id}"), HttpGet()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources Get(long id)
+        public ProtectedApiResource Get(long id)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.GetById(id);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.GetById(id);
             return retVal;
         }
 
         [Route("api/ApiResources"), HttpGet()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public IList<ApiResources> GetAll()
+        public IList<ProtectedApiResource> GetAll()
         {
-            IList<ApiResources> retVal = this.ServiceManager.ApiResourceService.GetAll();
+            IList<ProtectedApiResource> retVal = this.ServiceManager.ApiResourceService.GetAll();
             return retVal;
         }
 
         [Produces("application/json")]
         [Route("api/ApiResource"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources Add([FromBody]ApiResources newResource)
+        public ProtectedApiResource Add([FromBody]ProtectedApiResource newResource)
         {
             return this.ServiceManager.ApiResourceService.Add(newResource.Name, newResource.DisplayName, newResource.Description, newResource.Enabled);
         }
@@ -46,18 +47,18 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Produces("application/json")]
         [Route("api/ApiResource/{id}/Secret"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources UpdateSecrets(long id, [FromBody]SecretInputModel input)
+        public ProtectedApiResource UpdateSecrets(long id, [FromBody]SecretInputModel input)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.AddSecret(id, input.Secret);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddSecret(id, input.Secret.Sha256(), ProtectedApiSecret.SecretEncryptionType.SHA256);
             return retVal;
         }
 
         [Produces("application/json")]
         [Route("api/ApiResource/{id}/Claim"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources UpdateClaims(long id, [FromBody]ClaimInputModel input)
+        public ProtectedApiResource UpdateClaims(long id, [FromBody]ClaimInputModel input)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.AddClaim(id, input.Value);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddClaim(id, input.Value);
             return retVal;
         }
 
@@ -65,9 +66,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Consumes("application/json")]
         [Route("api/ApiResource/{id}/Scope"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources UpdateScopes(long id, [FromBody]ScopeInputModel input)
+        public ProtectedApiResource UpdateScopes(long id, [FromBody]ScopeInputModel input)
         {
-            ApiResources retVal = this.ServiceManager.ApiResourceService.AddScope(id, input.Name, input.Description);
+            ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddScope(id, input.Name, input.Description);
             return retVal;
         }
     }

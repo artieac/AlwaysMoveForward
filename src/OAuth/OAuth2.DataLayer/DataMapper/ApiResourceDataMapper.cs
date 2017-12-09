@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {
-    internal class ApiResourceDataMapper : DataMapBase<ApiResources, Models.ApiResources>
+    internal class ApiResourceDataMapper : DataMapBase<ProtectedApiResource, Models.ApiResources>
     {       
         /// The static constructor sets up automapper
         /// </summary>
@@ -19,78 +19,88 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 
         public static void Configure(IMapperConfigurationExpression cfg)
         {
-            cfg.CreateMap<ApiClaims, Models.ApiClaims>()
+            cfg.CreateMap<ProtectedApiClaim, Models.ApiClaims>()
                 .ForMember(source => source.ApiResource, opt => opt.Ignore());
-            cfg.CreateMap<Models.ApiClaims, ApiClaims>();
-            cfg.CreateMap<ApiScopeClaims, Models.ApiScopeClaims>();
-            cfg.CreateMap<Models.ApiScopeClaims, ApiScopeClaims>();
-            cfg.CreateMap<ApiSecrets, Models.ApiSecrets>()
+            cfg.CreateMap<Models.ApiClaims, ProtectedApiClaim>();
+            cfg.CreateMap<ProtectedApiScopeClaim, Models.ApiScopeClaims>();
+            cfg.CreateMap<Models.ApiScopeClaims, ProtectedApiScopeClaim>();
+            cfg.CreateMap<ProtectedApiSecret, Models.ApiSecrets>()
                 .ForMember(source => source.ApiResource, opt => opt.Ignore());
-            cfg.CreateMap<Models.ApiSecrets, ApiSecrets>();
-            cfg.CreateMap<ApiScopes, Models.ApiScopes>()
+            cfg.CreateMap<Models.ApiSecrets, ProtectedApiSecret>();
+            cfg.CreateMap<ProtectedApiScope, Models.ApiScopes>()
                 .ForMember(source => source.ApiResource, opt => opt.Ignore());
-            cfg.CreateMap<Models.ApiScopes, ApiScopes>();
-            cfg.CreateMap<ApiResources, Models.ApiResources>()
+            cfg.CreateMap<Models.ApiScopes, ProtectedApiScope>();
+            cfg.CreateMap<ProtectedApiResource, Models.ApiResources>()
                 .ForMember(source => source.ApiSecrets, opt => opt.Ignore())
                 .ForMember(source => source.ApiClaims, opt => opt.Ignore())
+                .ForMember(source => source.ApiScopes, opt => opt.Ignore())
                 .AfterMap((source, destination) =>
                 {
-                    foreach (var child in source.ApiSecrets)
+                    if (source.ApiSecrets != null)
                     {
-                        Models.ApiSecrets dtoChild = destination.ApiSecrets.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+                        foreach (var child in source.ApiSecrets)
+                        {
+                            Models.ApiSecrets dtoChild = destination.ApiSecrets.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
 
-                        if (dtoChild != null)
-                        {
-                            dtoChild.ApiResourceId = child.ApiResourceId;
-                            dtoChild.Expiration = child.Expiration;
-                            dtoChild.Type = child.Type;
-                            dtoChild.Value = child.Value;
-                        }
-                        else
-                        {
-                            destination.ApiSecrets.Add(Mapper.Map(child, new Models.ApiSecrets()));
+                            if (dtoChild != null)
+                            {
+                                dtoChild.ApiResourceId = child.ApiResourceId;
+                                dtoChild.Expiration = child.Expiration;
+                                dtoChild.Type = child.Type;
+                                dtoChild.Value = child.Value;
+                            }
+                            else
+                            {
+                                destination.ApiSecrets.Add(Mapper.Map(child, new Models.ApiSecrets()));
+                            }
                         }
                     }
 
                     foreach (var child in destination.ApiSecrets)
                         child.ApiResource = destination;
 
-                    foreach (var child in source.ApiClaims)
+                    if (source.ApiClaims != null)
                     {
-                        Models.ApiClaims dtoChild = destination.ApiClaims.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+                        foreach (var child in source.ApiClaims)
+                        {
+                            Models.ApiClaims dtoChild = destination.ApiClaims.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
 
-                        if (dtoChild != null)
-                        {
-                            dtoChild.ApiResourceId = child.ApiResourceId;
-                            dtoChild.Type = child.Type;
-                        }
-                        else
-                        {
-                            destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
+                            if (dtoChild != null)
+                            {
+                                dtoChild.ApiResourceId = child.ApiResourceId;
+                                dtoChild.Type = child.Type;
+                            }
+                            else
+                            {
+                                destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
+                            }
                         }
                     }
 
                     foreach (var child in destination.ApiClaims)
                         child.ApiResource = destination;
 
-                    foreach (var child in source.ApiScopes)
+                    if (source.ApiScopes != null)
                     {
-                        Models.ApiScopes dtoChild = destination.ApiScopes.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+                        foreach (var child in source.ApiScopes)
+                        {
+                            Models.ApiScopes dtoChild = destination.ApiScopes.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
 
-                        if (dtoChild != null)
-                        {
-                            dtoChild.ApiResourceId = child.ApiResourceId;
-//                            dtoChild.ApiScopeClaims = child.ApiScopeClaims;
-                            dtoChild.Description = child.Description;
-                            dtoChild.DisplayName = child.DisplayName;
-                            dtoChild.Emphasize = child.Emphasize;
-                            dtoChild.Name = child.Name;
-                            dtoChild.Required = child.Required;
-                            dtoChild.ShowInDiscoveryDocument = child.ShowInDiscoveryDocument;
-                        }
-                        else
-                        {
-                            destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
+                            if (dtoChild != null)
+                            {
+                                dtoChild.ApiResourceId = child.ApiResourceId;
+                                //                            dtoChild.ApiScopeClaims = child.ApiScopeClaims;
+                                dtoChild.Description = child.Description;
+                                dtoChild.DisplayName = child.DisplayName;
+                                dtoChild.Emphasize = child.Emphasize;
+                                dtoChild.Name = child.Name;
+                                dtoChild.Required = child.Required;
+                                dtoChild.ShowInDiscoveryDocument = child.ShowInDiscoveryDocument;
+                            }
+                            else
+                            {
+                                destination.ApiScopes.Add(Mapper.Map(child, new Models.ApiScopes()));
+                            }
                         }
                     }
 
@@ -98,7 +108,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                         child.ApiResource = destination;
 
                 });
-            cfg.CreateMap<Models.ApiResources, ApiResources>();
+            cfg.CreateMap<Models.ApiResources, ProtectedApiResource>();
         }
         /// <summary>
         /// Tell AutoMapper what you want to map
@@ -106,7 +116,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override ApiResources Map(Models.ApiResources source, ApiResources destination)
+        public override ProtectedApiResource Map(Models.ApiResources source, ProtectedApiResource destination)
         {
             return Mapper.Map(source, destination);
         }
@@ -117,7 +127,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override Models.ApiResources Map(ApiResources source, Models.ApiResources destination)
+        public override Models.ApiResources Map(ProtectedApiResource source, Models.ApiResources destination)
         {
             return Mapper.Map(source, destination);
         }

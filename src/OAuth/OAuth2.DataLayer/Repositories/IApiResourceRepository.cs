@@ -7,14 +7,14 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
     public interface IApiResourceRepository
     {
-        IList<ApiResources> GetAll();
+        IList<ProtectedApiResource> GetAll();
 
-        ApiResources GetById(long id);
+        ProtectedApiResource GetById(long id);
 
-        ApiResources GetByName(string name);
+        ProtectedApiResource GetByName(string name);
 
-        IList<ApiResources> GetByScopes(IList<string> scopeNames);
+        IList<ProtectedApiResource> GetByScopes(IList<string> scopeNames);
 
-        ApiResources Save(ApiResources newResource);
+        ProtectedApiResource Save(ProtectedApiResource newResource);
     }
 }

@@ -16,6 +16,7 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Serilog;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace OAuth2.Client
 {
@@ -44,6 +45,48 @@ namespace OAuth2.Client
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+//            .AddCookie("Cookies")
+            .AddOpenIdConnect(options => SetOpenIdConnectOptions(options));
+        }
+        private void SetOpenIdConnectOptions(OpenIdConnectOptions options)
+        {
+//            options.AuthenticationScheme = "oidc";
+            options.SignInScheme = "Cookies";
+
+            options.Authority = Constants.Authority;
+            options.RequireHttpsMetadata = false;
+
+            options.ClientId = "abcd";
+            options.ClientSecret = "abcd";
+
+            options.CallbackPath = "/home/handlecallback";
+            options.ResponseType = "code id_token";
+
+            options.Scope.Add("offline_access");
+            options.Scope.Add("api1.full_access");
+
+            options.GetClaimsFromUserInfoEndpoint = true;
+            options.SaveTokens = true;
+            options.TokenValidationParameters = new
+                Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                NameClaimType = JwtClaimTypes.Name,
+                RoleClaimType = JwtClaimTypes.Role,
+            };
+            options.Events = new OpenIdConnectEvents()
+            {
+                OnRemoteFailure = context =>
+                {
+                    context.Response.Redirect("/Home/Error");
+                    context.HandleResponse();
+                    return Task.FromResult(0);
+                }
+            };
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,10 +107,7 @@ namespace OAuth2.Client
 
             app.UseStaticFiles();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Cookies"
-            });
+            app.UseAuthentication();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -81,39 +121,6 @@ namespace OAuth2.Client
             //    AutomaticAuthenticate = true,
             //    AutomaticChallenge = true              
             //});
-
-            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
-            {
-                AuthenticationScheme = "oidc",
-                SignInScheme = "Cookies",
-
-                Authority = Constants.Authority,
-                RequireHttpsMetadata = false,
-
-                ClientId = "abcd",
-                ClientSecret = "abcd",
-
-                ResponseType = "code id_token",
-                Scope = { "offline_access", "api1.full_access" },
-                
-                GetClaimsFromUserInfoEndpoint = true,
-                SaveTokens = true,
-                TokenValidationParameters = new
-                Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    NameClaimType = JwtClaimTypes.Name,
-                    RoleClaimType = JwtClaimTypes.Role,
-                },
-                Events = new OpenIdConnectEvents()
-                {
-                    OnRemoteFailure = context =>
-                    {
-                        context.Response.Redirect("/Home/Error");
-                        context.HandleResponse();
-                        return Task.FromResult(0);
-                    }
-                }
-            });
 
             //app.UseJwtBearerAuthentication(new JwtBearerOptions
             //{

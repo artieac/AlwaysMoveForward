@@ -40,7 +40,7 @@ namespace OAuth2.Client.Controllers
 
         public async Task<IActionResult> LogoutTest()
         {
-            await HttpContext.Authentication.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("Cookies");
             return View("Index");
         }
 
@@ -81,14 +81,14 @@ namespace OAuth2.Client.Controllers
             if (!string.Equals(state, "random_state")) throw new Exception("invalid state");
 
 
-            var accessToken = HttpContext.Authentication.GetTokenAsync("access_token");
+            var accessToken = HttpContext.GetTokenAsync("access_token");
 
 
             var user = ValidateIdentityToken(idToken);
 
 
 
-            HttpContext.Authentication.SignInAsync("Cookies", user.Result);
+            HttpContext.SignInAsync("Cookies", user.Result);
 
             return Redirect("/home/secure");
 

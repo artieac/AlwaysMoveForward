@@ -28,8 +28,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
 
         static ResourceStore()
         {
-            ResourceStore.resources = new List<ApiResource>();
-
             ApiResource newItem = new ApiResource
             {
                 Name = "api1",
@@ -50,8 +48,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                     new Scope("api1.read_only", "Read Only access to the API")
                 }
             };
-
-            ResourceStore.resources.Add(newItem);
         }
 
         public ResourceStore(ServiceManagerBuilder serviceManagerBuilder)
@@ -75,28 +71,28 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                 return this.serviceManager;
             }
         }
-        private ApiResource MapApiResource(ApiResources storedApiResource)
+        private ApiResource MapApiResource(ProtectedApiResource storedApiResource)
         {
             ApiResource retVal = new ApiResource();
             retVal.Name = storedApiResource.Name;
 
             retVal.ApiSecrets = new List<Secret>();
 
-            foreach(ApiSecrets secret in storedApiResource.ApiSecrets)
+            foreach(ProtectedApiSecret secret in storedApiResource.ApiSecrets)
             {
                 retVal.ApiSecrets.Add(new Secret(secret.Value));
             }
 
             retVal.UserClaims = new List<string>();
 
-            foreach (ApiClaims claim in storedApiResource.ApiClaims)
+            foreach (ProtectedApiClaim claim in storedApiResource.ApiClaims)
             {
                 retVal.UserClaims.Add(claim.Type);
             }
 
             retVal.Scopes = new List<Scope>();
 
-            foreach (ApiScopes scope in storedApiResource.ApiScopes)
+            foreach (ProtectedApiScope scope in storedApiResource.ApiScopes)
             {
                 retVal.Scopes.Add(new Scope(scope.Name, scope.Description));
             }
@@ -106,7 +102,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
         public Task<ApiResource> FindApiResourceAsync(string name)
         {
             ApiResource retVal = null;
-            ApiResources targetResource = this.ServiceManager.ApiResourceService.GetByName(name);
+            ProtectedApiResource targetResource = this.ServiceManager.ApiResourceService.GetByName(name);
 
             if(targetResource!=null)
             {
@@ -118,17 +114,51 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
 
         public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            IList<ApiResource> retVal = new List<ApiResource>();
-
-            IList<ApiResources> foundItems = this.ServiceManager.ApiResourceService.GetByScopes(scopeNames.ToList());
-
-            if(foundItems != null)
+            if (ResourceStore.resources == null)
             {
-                foreach(ApiResources apiResource in foundItems)
+                ResourceStore.resources = new List<ApiResource>();
+
+                IList<ProtectedApiResource> foundItems = this.ServiceManager.ApiResourceService.GetByScopes(scopeNames.ToList());
+
+                if (foundItems != null)
                 {
-                    retVal.Add(this.MapApiResource(apiResource));
+                    foreach (ProtectedApiResource apiResource in foundItems)
+                    {
+                        ResourceStore.resources.Add(this.MapApiResource(apiResource));
+                    }
                 }
             }
+
+            IDictionary<string, bool> addedResources = new Dictionary<string, bool>();
+            IList<ApiResource> retVal = new List<ApiResource>();
+
+            foreach (string scopeName in scopeNames)
+            {
+                for (int i = 0; i < ResourceStore.resources.Count; i++)
+                {
+                    foreach (Scope scope in ResourceStore.resources[i].Scopes)
+                    {
+                        if (scope.Name == scopeName)
+                        {
+                            if (!addedResources.ContainsKey(ResourceStore.resources[i].Name))
+                            {
+                                retVal.Add(ResourceStore.resources[i]);
+                                addedResources.Add(ResourceStore.resources[i].Name, true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //IList<ApiResources> foundItems = this.ServiceManager.ApiResourceService.GetByScopes(scopeNames.ToList());
+
+            //if(foundItems != null)
+            //{
+            //    foreach(ApiResources apiResource in foundItems)
+            //    {
+            //        retVal.Add(this.MapApiResource(apiResource));
+            //    }
+            //}
 
             return Task.FromResult(retVal as IEnumerable<ApiResource>);
         }
@@ -142,11 +172,11 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
         {
             Resources retVal = new Resources();
 
-            IList<ApiResources> foundItems = this.ServiceManager.ApiResourceService.GetAll();
+            IList<ProtectedApiResource> foundItems = this.ServiceManager.ApiResourceService.GetAll();
 
             retVal.ApiResources = new List<ApiResource>();
 
-            foreach (ApiResources apiResource in foundItems)
+            foreach (ProtectedApiResource apiResource in foundItems)
             {
                 retVal.ApiResources.Add(this.MapApiResource(apiResource));
             }

@@ -78,12 +78,12 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             }
         }
 
-        private IApiResourcesService apiResourceService;
+        private IApiResourceService apiResourceService;
 
         /// <summary>
         /// Gets the current ApiResource service
         /// </summary>
-        public IApiResourcesService ApiResourceService
+        public IApiResourceService ApiResourceService
         {
             get
             {

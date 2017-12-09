@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
-    public class ApiResourceRepository : EntityFrameworkRepositoryBase<ApiResources, Models.ApiResources, Models.AMFOAuthDbContext, long>, IApiResourceRepository
+    public class ApiResourceRepository : EntityFrameworkRepositoryBase<ProtectedApiResource, Models.ApiResources, Models.AMFOAuthDbContext, long>, IApiResourceRepository
     {
         /// <summary>
         /// The constructor, it takes a unit of work
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// A data mapper instance to assist the base class
         /// </summary>
         /// <returns>The data mapper</returns>
-        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<ApiResources, Models.ApiResources> GetDataMapper()
+        protected override AlwaysMoveForward.Core.Common.DataLayer.DataMapBase<ProtectedApiResource, Models.ApiResources> GetDataMapper()
         {
             return new DataMapper.ApiResourceDataMapper();
         }
@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// </summary>
         /// <param name="idSource">The domain object to pull the id from</param>
         /// <returns>An instance of the DTO</returns>
-        protected override Models.ApiResources GetDTOById(ApiResources idSource)
+        protected override Models.ApiResources GetDTOById(ProtectedApiResource idSource)
         {
             return this.GetDTOById(idSource.Id);
         }
@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             return retVal;
         }
 
-        public ApiResources GetByName(string name)
+        public ProtectedApiResource GetByName(string name)
         {
             Models.ApiResources retVal = this.UnitOfWork.DataContext.ApiResources
                 .Where(apiResource => apiResource.Name == name)
@@ -72,7 +72,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             return this.GetDataMapper().Map(retVal);
         }
 
-        public IList<ApiResources> GetByScopes(IList<string> scopeNames)
+        public IList<ProtectedApiResource> GetByScopes(IList<string> scopeNames)
         {
             IQueryable<Models.ApiResources> retVal = from apiResource in this.UnitOfWork.DataContext.ApiResources
                                                         .Include(apiResource => apiResource.ApiScopes)

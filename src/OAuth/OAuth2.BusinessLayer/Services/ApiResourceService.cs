@@ -7,7 +7,7 @@ using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
-    public class ApiResourceService : IApiResourcesService
+    public class ApiResourceService : IApiResourceService
     {
         public ApiResourceService(IApiResourceRepository apiResourceRepository)
         {
@@ -16,24 +16,24 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
         public IApiResourceRepository ApiResourceRepository { get; private set; }
 
-        public IList<ApiResources> GetAll()
+        public IList<ProtectedApiResource> GetAll()
         {
             return this.ApiResourceRepository.GetAll();
         }
 
-        public ApiResources GetById(long id)
+        public ProtectedApiResource GetById(long id)
         {
             return this.ApiResourceRepository.GetById(id);
         }
 
-        public ApiResources GetByName(string name)
+        public ProtectedApiResource GetByName(string name)
         {
             return this.ApiResourceRepository.GetByName(name);
         }
 
-        public IList<ApiResources> GetByScopes(IList<string> scopes)
+        public IList<ProtectedApiResource> GetByScopes(IList<string> scopes)
         {
-            IList<ApiResources> retVal = new List<ApiResources>();
+            IList<ProtectedApiResource> retVal = new List<ProtectedApiResource>();
 
             if(scopes!=null && scopes.Count > 0)
             {
@@ -42,9 +42,9 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
             return retVal;
         }
-        public ApiResources Add(string name, string displayName, string description, bool enabled)
+        public ProtectedApiResource Add(string name, string displayName, string description, bool enabled)
         {
-            ApiResources newResource = new ApiResources();
+            ProtectedApiResource newResource = new ProtectedApiResource();
             newResource.Name = name;
             newResource.DisplayName = displayName;
             newResource.Description = description;
@@ -53,9 +53,9 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return this.ApiResourceRepository.Save(newResource);
         }
 
-        public ApiResources Update(long id, string name, string displayName, string description, bool enabled)
+        public ProtectedApiResource Update(long id, string name, string displayName, string description, bool enabled)
         {
-            ApiResources targetResource = this.ApiResourceRepository.GetById(id);
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
             if(targetResource != null)
             {
@@ -70,22 +70,22 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return targetResource;
         }
 
-        public ApiResources AddSecret(long id, string secret)
+        public ProtectedApiResource AddSecret(long id, string secret, string encryptionType)
         {
-            ApiResources targetResource = this.ApiResourceRepository.GetById(id);
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
             if (targetResource != null)
             {
-                targetResource.AddSecret(secret);
+                targetResource.AddSecret(secret, encryptionType);
                 targetResource = this.ApiResourceRepository.Save(targetResource);
             }
 
             return targetResource;
         }
 
-        public ApiResources AddClaim(long id, string claim)
+        public ProtectedApiResource AddClaim(long id, string claim)
         {
-            ApiResources targetResource = this.ApiResourceRepository.GetById(id);
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
             if (targetResource != null)
             {
@@ -96,9 +96,9 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return targetResource;
         }
 
-        public ApiResources AddScope(long id, string name, string description)
+        public ProtectedApiResource AddScope(long id, string name, string description)
         {
-            ApiResources targetResource = this.ApiResourceRepository.GetById(id);
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
             if (targetResource != null)
             {
