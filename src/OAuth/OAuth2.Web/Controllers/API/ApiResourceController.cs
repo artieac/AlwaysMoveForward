@@ -71,5 +71,15 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
             ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddScope(id, input.Name, input.Description);
             return retVal;
         }
+
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [Route("api/ApiResource/{resourceId}/Scope/{scopeId}"), HttpDelete()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public bool UpdateScopes(long resourceId, long scopeId)
+        {
+            return this.ServiceManager.ApiResourceService.DeleteScope(resourceId, scopeId);
+        }
+
     }
 }

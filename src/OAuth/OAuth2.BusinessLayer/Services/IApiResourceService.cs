@@ -24,5 +24,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         ProtectedApiResource AddClaim(long id, string claim);
 
         ProtectedApiResource AddScope(long id, string name, string description);
+
+        bool DeleteScope(long resourceId, long scopeId);
     }
 }

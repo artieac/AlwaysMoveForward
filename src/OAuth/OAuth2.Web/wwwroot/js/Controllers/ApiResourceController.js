@@ -72,4 +72,11 @@
 				$scope.currentApiResource = data;
 			});
 	}
+
+	$scope.deleteApiScope = function (resourceId, scopeId) {
+		$http.delete('/api/ApiResource/' + resourceId + '/Scope/' + scopeId)
+			.then(function (data) {
+				$scope.getById(resourceId);
+			});
+	}
 });

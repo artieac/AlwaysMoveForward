@@ -93,6 +93,7 @@ namespace AlwaysMoveForward.OAuth2.Web
                     options.TokenCleanupInterval = 30;
                 })
                 .AddClientStore<ClientStore>()
+                .AddResourceStore<ResourceStore>()
                 .AddProfileService<ProfileService>()
                 .AddAspNetIdentity<AMFUserLogin>();
         }

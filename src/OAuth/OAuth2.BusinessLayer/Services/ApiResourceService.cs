@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
+using System.Linq;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -35,7 +36,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         {
             IList<ProtectedApiResource> retVal = new List<ProtectedApiResource>();
 
-            if(scopes!=null && scopes.Count > 0)
+            if (scopes != null && scopes.Count > 0)
             {
                 retVal = this.ApiResourceRepository.GetByScopes(scopes);
             }
@@ -57,7 +58,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         {
             ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
-            if(targetResource != null)
+            if (targetResource != null)
             {
                 targetResource.Name = name;
                 targetResource.DisplayName = displayName;
@@ -107,6 +108,30 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             }
 
             return targetResource;
+        }
+
+        public bool DeleteScope(long resourceId, long scopeId)
+        {
+            bool retVal = false;
+
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(resourceId);
+
+            if (targetResource != null)
+            {
+                if (targetResource.ApiScopes != null)
+                {
+                    ProtectedApiScope targetScope = targetResource.ApiScopes.Where(scope => scope.Id == scopeId).FirstOrDefault();
+
+                    if(targetScope!=null)
+                    {
+                        targetResource.ApiScopes.Remove(targetScope);
+                        this.ApiResourceRepository.Save(targetResource);
+                        retVal = true;
+                    }
+                }
+            }
+
+            return retVal;
         }
     }
 }

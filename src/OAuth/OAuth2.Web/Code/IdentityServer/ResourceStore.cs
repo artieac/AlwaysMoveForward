@@ -20,9 +20,11 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
         {
             return new List<IdentityResource>
             {
-                new IdentityServer4.Models.IdentityResources.OpenId(),
-                new IdentityServer4.Models.IdentityResources.Email(),
-                new IdentityServer4.Models.IdentityResources.Profile()
+                new IdentityResources.OpenId(),
+                new IdentityResources.Address(),
+                new IdentityResources.Phone(),
+                new IdentityResources.Email(),
+                new IdentityResources.Profile()
             };
         }
 
@@ -45,7 +47,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                 Scopes =
                 {
                     new Scope("api1.full_access", "Full access to the API"),
-                    new Scope("api1.read_only", "Read Only access to the API")
+                    new Scope("api1.read_only", "Read Only access to the API"),
                 }
             };
         }
