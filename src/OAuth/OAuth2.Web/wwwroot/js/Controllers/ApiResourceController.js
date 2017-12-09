@@ -12,7 +12,7 @@
 	$scope.hasClaim = function (apiResource, targetClaim) {
 		var retVal = false;
 
-		if (apiResource != null && apiResource !== undefined) {
+		if (apiResource !== null && apiResource !== undefined) {
 			if (apiResource.apiClaims != null && apiResource.apiClaims !== undefined) {
 				for (var i = 0; i < apiResource.apiClaims.length; i++) {
 					if (apiResource.apiClaims[i].type === targetClaim) {
@@ -67,7 +67,7 @@
 	}
 
 	$scope.addApiScope = function (id) {
-		$http.post('/api/ApiResource/' + id + '/Scope', $scope.apiResource)
+		$http.post('/api/ApiResource/' + id + '/Scope', $scope.apiScope)
 			.then(function (data) {
 				$scope.currentApiResource = data;
 			});

@@ -27,7 +27,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             cfg.CreateMap<ApiSecrets, Models.ApiSecrets>()
                 .ForMember(source => source.ApiResource, opt => opt.Ignore());
             cfg.CreateMap<Models.ApiSecrets, ApiSecrets>();
-            cfg.CreateMap<ApiScopes, Models.ApiScopes>();
+            cfg.CreateMap<ApiScopes, Models.ApiScopes>()
+                .ForMember(source => source.ApiResource, opt => opt.Ignore());
             cfg.CreateMap<Models.ApiScopes, ApiScopes>();
             cfg.CreateMap<ApiResources, Models.ApiResources>()
                 .ForMember(source => source.ApiSecrets, opt => opt.Ignore())
@@ -71,6 +72,31 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 
                     foreach (var child in destination.ApiClaims)
                         child.ApiResource = destination;
+
+                    foreach (var child in source.ApiScopes)
+                    {
+                        Models.ApiScopes dtoChild = destination.ApiScopes.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+
+                        if (dtoChild != null)
+                        {
+                            dtoChild.ApiResourceId = child.ApiResourceId;
+//                            dtoChild.ApiScopeClaims = child.ApiScopeClaims;
+                            dtoChild.Description = child.Description;
+                            dtoChild.DisplayName = child.DisplayName;
+                            dtoChild.Emphasize = child.Emphasize;
+                            dtoChild.Name = child.Name;
+                            dtoChild.Required = child.Required;
+                            dtoChild.ShowInDiscoveryDocument = child.ShowInDiscoveryDocument;
+                        }
+                        else
+                        {
+                            destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
+                        }
+                    }
+
+                    foreach (var child in destination.ApiScopes)
+                        child.ApiResource = destination;
+
                 });
             cfg.CreateMap<Models.ApiResources, ApiResources>();
         }

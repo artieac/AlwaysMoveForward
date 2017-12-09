@@ -26,6 +26,22 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return this.ApiResourceRepository.GetById(id);
         }
 
+        public ApiResources GetByName(string name)
+        {
+            return this.ApiResourceRepository.GetByName(name);
+        }
+
+        public IList<ApiResources> GetByScopes(IList<string> scopes)
+        {
+            IList<ApiResources> retVal = new List<ApiResources>();
+
+            if(scopes!=null && scopes.Count > 0)
+            {
+                retVal = this.ApiResourceRepository.GetByScopes(scopes);
+            }
+
+            return retVal;
+        }
         public ApiResources Add(string name, string displayName, string description, bool enabled)
         {
             ApiResources newResource = new ApiResources();
@@ -74,6 +90,19 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             if (targetResource != null)
             {
                 targetResource.AddClaim(claim);
+                targetResource = this.ApiResourceRepository.Save(targetResource);
+            }
+
+            return targetResource;
+        }
+
+        public ApiResources AddScope(long id, string name, string description)
+        {
+            ApiResources targetResource = this.ApiResourceRepository.GetById(id);
+
+            if (targetResource != null)
+            {
+                targetResource.AddScope(name, description);
                 targetResource = this.ApiResourceRepository.Save(targetResource);
             }
 

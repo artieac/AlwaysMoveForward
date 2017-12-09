@@ -37,6 +37,24 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
         }
 
         public IList<ApiScopes> ApiScopes { get; set; }
+        public void AddScope(string name, string description)
+        {
+            if (this.ApiScopes == null)
+            {
+                this.ApiScopes = new List<ApiScopes>();
+            }
+
+            if (this.ApiScopes != null)
+            {
+                ApiScopes newScope = new ApiScopes();
+                newScope.ApiResourceId = this.Id;
+                newScope.Name = name;
+                newScope.Description = description;
+
+                this.ApiScopes.Add(newScope);
+            }
+        }
+
         public IList<ApiSecrets> ApiSecrets { get; set; }
 
         public void AddSecret(string secret)

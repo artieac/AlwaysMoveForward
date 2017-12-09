@@ -11,6 +11,10 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 
         ApiResources GetById(long id);
 
+        ApiResources GetByName(string name);
+
+        IList<ApiResources> GetByScopes(IList<string> scopeNames);
+
         ApiResources Save(ApiResources newResource);
     }
 }

@@ -19,7 +19,6 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement
         public bool Required { get; set; }
         public bool ShowInDiscoveryDocument { get; set; }
 
-        public ApiResources ApiResource { get; set; }
         public IList<ApiScopeClaims> ApiScopeClaims { get; set; }
     }
 }

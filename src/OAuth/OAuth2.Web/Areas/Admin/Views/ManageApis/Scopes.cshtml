@@ -16,66 +16,49 @@
 	readonlyAttributes.Add("disabled", "true");
 
 }
-<div class="bodyContent">
+<div class="bodyContent" ng-controller="ApiResourceController">
+	<div class="bodyContent" ng-init="getById(@Model.Id);">
 		<div class="contentPageTitle">
-			<label>Manage Apis</label>
+			<label>Manage Scopes</label>
 		</div>
-		<input type="hidden" name="selectedApi" value="@Model.Id" />
-		<input type="text" name="apiResourceName" value="@Model.Name" />
-		<input type="text" name="apiResourceDisplayName" value="@Model.DisplayName" />
-		<input type="text" name="apiResourceDescription" value="@Model.Description" />
-		<input type="checkbox" name="apiResourceEnabled" value="@Model.Enabled" />
+		<input type="hidden" name="selectedApi" value="{{currentApiResource.id}}" />
+		<p>
+			Resource Name: <span>{{currentApiResource.name}}</span>
+		</p>
+		<p>
+			Display Name: <span>{{currentApiResource.displayName}}</span>
+		</p>
+		<p>
+			Description: <span>{{currentApiResource.description}}</span>
+		</p>
+		<p>
+			Enabled: <span>{{currentApiResource.enabled}}</span>
+		</p>
 
 		<div class="panel-heading">
 			<h3 class="panel-title">Secrets</h3>
 		</div>
 		<div class="panel-body">
-
-		</div>
-		<div class="panel-heading">
-			<h3 class="panel-title">Claims</h3>
-		</div>
-		<div class="panel-body">
-			<input type="checkbox" id="@IdentityModel.JwtClaimTypes.Name" value="@IdentityModel.JwtClaimTypes.Name" checked=false/>
-			<input type="checkbox" id="@IdentityModel.JwtClaimTypes.Email" value="@IdentityModel.JwtClaimTypes.Email" checked=false />
-			<input type="checkbox" id="@IdentityModel.JwtClaimTypes.Role" value="@IdentityModel.JwtClaimTypes.Role" checked=false />
-		</div>
-		<div class="panel-heading">
-			<h3 class="panel-title">Scopes</h3>
-		</div>
-		<div class="panel-body">
 			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th width="20%">Name</th>
-						<th width="20%">Display Name</th>
-						<th width="20%">Description</th>
-						<th width="10%">Required</th>
-					</tr>
-				</thead>
 				<tbody>
-					@foreach (ApiScopes scope in @Model.ApiScopes)
-					{
-					<tr>
-						<td>@scope.Name</td>
-						<td>@scope.DisplayName</td>
-						<td>@scope.Description</td>
-						<td>@scope.Required</td>
+					<tr ng-repeat="scope in currentApiResource.apiScopes">
+						<td>{{scope.name}}</td>
+						<td>{{scope.description}}</td>
+						<td>
+							<a ng-click="deleteApiScope(currentApiResource.id, scope.id);">
+								<img src="~/images/action_delete.png" class="deleteList" alt="" />
+							</a>
+						</td>
 					</tr>
-					}
-					<tr ng-form="newApiResourceForm">
-						<td></td>
-						<td><input type="text" name="newApiResourceName" ng-model="newApiResource.name" required /></td>
-						<td><input type="text" name="newApiResourceDisplayName" ng-model="newApiResource.displayName" required /></td>
-						<td><input type="text" name="newApiResourceDescription" ng-model="newApiResource.description" required /></td>
-						<td><input type="checkbox" name="newApiResourceEnabled" ng-model="newApiResource.enabled" value="false" /></td>
-						<td><input type="button" class="btn btn-primary" value="Add Api Resource" ng-click="addApiResource();" /></td>
+					<tr ng-form="newApiScopeForm">
+						<td><input type="text" name="newApiScopeName" ng-model="apiScope.name" required /></td>
+						<td><input type="text" name="newApiScopeDescription" ng-model="apiScope.description" required /></td>
+						<td><input type="button" class="btn btn-primary" value="Add Scope" ng-click="addApiScope(currentApiResource.id);" /></td>
 					</tr>
 				</tbody>
 			</table>
-			<br />
 		</div>
-	</form>
+	</div>
 </div>
 
 

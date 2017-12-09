@@ -59,5 +59,30 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 
             return retVal;
         }
+
+        public ApiResources GetByName(string name)
+        {
+            Models.ApiResources retVal = this.UnitOfWork.DataContext.ApiResources
+                .Where(apiResource => apiResource.Name == name)
+                .Include(apiResource => apiResource.ApiClaims)
+                .Include(apiResource => apiResource.ApiScopes)
+                .Include(apiResource => apiResource.ApiSecrets)
+                .FirstOrDefault();
+
+            return this.GetDataMapper().Map(retVal);
+        }
+
+        public IList<ApiResources> GetByScopes(IList<string> scopeNames)
+        {
+            IQueryable<Models.ApiResources> retVal = from apiResource in this.UnitOfWork.DataContext.ApiResources
+                                                        .Include(apiResource => apiResource.ApiScopes)
+                                                        .Include(apiResource => apiResource.ApiClaims)
+                                                        .Include(apiResource => apiResource.ApiScopes)
+                                                        .Include(apiResource => apiResource.ApiSecrets)
+                                                        where apiResource.ApiScopes.Any(scope => scopeNames.Contains(scope.Name))
+                                                        select apiResource;
+
+            return this.GetDataMapper().Map(retVal);
+        }
     }
 }

@@ -5,24 +5,36 @@ using AutoMapper;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {
-    public abstract class MappedListResolver<
-       TDomainListItem,
-       TDTOListItem>
-        : AutoMapper.
-       : IValueResolver<TDomainListItem, TDTOListItem, >
+    public abstract class MappedListResolver<TSourceContainer, TDestinationContainer, TDomainListItem, TDTOListItem>
+       where TSourceContainer : class
+       where TDestinationContainer : class
        where TDomainListItem : class
        where TDTOListItem : class
     {
-        public ResolutionResult Resolve(ResolutionResult source)
+        public MappedListResolver(TSourceContainer sourceContainer, TDestinationContainer destinationContainer)
         {
-            IList<TDTOListItem> destinationList = this.GetDestinationList(source);
+            this.SourceContainer = sourceContainer;
+            this.DestinationContainer = destinationContainer;
+        }
+
+        protected TSourceContainer SourceContainer { get; private set; }
+        protected TDestinationContainer DestinationContainer { get; private set; }
+
+        protected abstract IList<TDomainListItem> GetSourceList(TSourceContainer source);
+        protected abstract IList<TDTOListItem> GetDestinationList(TDestinationContainer destination);
+        protected abstract TDTOListItem FindItemInList(IList<TDTOListItem> destinationList, TDomainListItem searchTarget);
+        protected abstract TDomainListItem FindItemInList(IList<TDomainListItem> sourceList, TDTOListItem searchTarget);
+
+        public void MapList()
+        {
+            IList<TDTOListItem> destinationList = this.GetDestinationList(this.DestinationContainer);
 
             if (destinationList == null)
             {
                 destinationList = new List<TDTOListItem>();
             }
 
-            IList<TDomainListItem> sourceList = this.GetSourceList(source);
+            IList<TDomainListItem> sourceList = this.GetSourceList(this.SourceContainer);
 
             if (sourceList != null)
             {
@@ -52,16 +64,6 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                     }
                 }
             }
-
-            return source.New(destinationList, typeof(IList<TDTOListItem>));
         }
-
-        protected abstract IList<TDTOListItem> GetDestinationList(ResolutionResult source);
-
-        protected abstract IList<TDomainListItem> GetSourceList(ResolutionResult source);
-
-        protected abstract TDTOListItem FindItemInList(IList<TDTOListItem> destinationList, TDomainListItem searchTarget);
-
-        protected abstract TDomainListItem FindItemInList(IList<TDomainListItem> sourceList, TDTOListItem searchTarget);
     }
 }

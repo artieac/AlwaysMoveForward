@@ -62,11 +62,13 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         }
 
         [Produces("application/json")]
+        [Consumes("application/json")]
         [Route("api/ApiResource/{id}/Scope"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ApiResources UpdateScopes(long id, [FromBody]ApiResources newResource)
+        public ApiResources UpdateScopes(long id, [FromBody]ScopeInputModel input)
         {
-            return this.ServiceManager.ApiResourceService.Update(newResource.Id, newResource.Name, newResource.DisplayName, newResource.Description, newResource.Enabled);
+            ApiResources retVal = this.ServiceManager.ApiResourceService.AddScope(id, input.Name, input.Description);
+            return retVal;
         }
     }
 }

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataMapper\MappedListResolver.cs" />
     <Compile Remove="Repositories\EntityFrameworkRepositoryBase.cs" />
   </ItemGroup>
 
