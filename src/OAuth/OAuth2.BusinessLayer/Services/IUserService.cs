@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using System.Security.Claims;
+using AlwaysMoveForward.Core.Common.Configuration;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -19,6 +19,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// <returns>A list of users</returns>
         IList<AMFUserLogin> GetAll();
 
+        AMFUserLogin Create(AMFUserLogin newUser);
+
         /// <summary>
         /// Register a user with the system
         /// </summary>
@@ -27,7 +29,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// <param name="firstName">The users first name</param>
         /// <param name="lastName">The users last name</param>
         /// <returns>An instance of a user</returns>
-        AMFUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName);
+        AMFUserLogin Create(string userName, string firstName, string lastName, string passwordHash);
 
         /// <summary>
         /// Update a user with values an admin can change
@@ -48,15 +50,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// <param name="lastName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        AMFUserLogin Update(long userId, string firstName, string lastName, string password);
-
-        /// <summary>
-        /// Logon a user by the username and password
-        /// </summary>
-        /// <param name="userName">The username</param>
-        /// <param name="password">The unencrypted password</param>
-        /// <returns>The user if one is found to match</returns>
-        AMFUserLogin LogonUser(string userName, string password, string loginSource);
+        AMFUserLogin Update(long userId, string firstName, string lastName);
 
         /// <summary>
         /// Find a user by its id
@@ -103,6 +97,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         IList<LoginAttempt> GetLoginHistory(string userName);
 
         void ResetPassword(string userEmail, EmailConfiguration emailConfig);
+
+        void SetPassword(long userId, string password);
 
         bool Delete(long id);
 

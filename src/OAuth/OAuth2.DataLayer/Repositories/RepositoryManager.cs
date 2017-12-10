@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlwaysMoveForward.Core.Common.DataLayer.Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 {
     /// <summary>
     /// Wraps up instances of the repositories so they can all participate in the same unit of work
+    /// TBD:  In .Net Core this can be switched to scoped dependency injection
     /// </summary>
     public class RepositoryManager : IRepositoryManager
     {
@@ -14,15 +16,18 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         /// The constructor that takes a unit of work as a parameter
         /// </summary>
         /// <param name="unitOfWork">The unit of work</param>
-        public RepositoryManager(UnitOfWork unitOfWork)
+        public RepositoryManager(UnitOfWork unitOfWork, NewUnitOfWork newUnitOfWork)
         {
             this.UnitOfWork = unitOfWork;
+            this.NewUnitOfWork = newUnitOfWork;
         }
 
         /// <summary>
         /// The contained instance of the Unit Of Work
         /// </summary>
         protected UnitOfWork UnitOfWork { get; set; }
+
+        protected NewUnitOfWork NewUnitOfWork { get; set; }
 
         /// <summary>
         /// The current instance of the ConsumerRepository
@@ -38,7 +43,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.consumerRepository == null)
                 {
-                    this.consumerRepository = new ConsumerRepository(this.UnitOfWork);
+                    this.consumerRepository = new ConsumerRepository(this.NewUnitOfWork);
                 }
 
                 return this.consumerRepository;
@@ -59,7 +64,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new AMFUserRepository(this.UnitOfWork);
+                    this.userRepository = new AMFUserRepository(this.NewUnitOfWork);
                 }
 
                 return this.userRepository;
@@ -80,10 +85,31 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
             {
                 if (this.loginAttemptRepository == null)
                 {
-                    this.loginAttemptRepository = new LoginAttemptRepository(this.UnitOfWork);
+                    this.loginAttemptRepository = new LoginAttemptRepository(this.NewUnitOfWork);
                 }
 
                 return this.loginAttemptRepository;
+            }
+        }
+
+        /// <summary>
+        /// The current instance of the ApiResourceRepository
+        /// </summary>
+        private IApiResourceRepository apiResourceRepository;
+
+        /// <summary>
+        /// Gets the current instance of the loginAttemptRepository
+        /// </summary>
+        public IApiResourceRepository ApiResourceRepository
+        {
+            get
+            {
+                if (this.apiResourceRepository == null)
+                {
+                    this.apiResourceRepository = new ApiResourceRepository(this.NewUnitOfWork);
+                }
+
+                return this.apiResourceRepository;
             }
         }
     }

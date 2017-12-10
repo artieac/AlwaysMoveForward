@@ -27,10 +27,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// </summary>
         IUserService UserService { get; }
 
-        /// <summary>
-        /// A service for whitelisting routes
-        /// </summary>
-        IWhiteListService WhiteListService { get; }
+        IApiResourceService ApiResourceService { get; }
     }
 }
 

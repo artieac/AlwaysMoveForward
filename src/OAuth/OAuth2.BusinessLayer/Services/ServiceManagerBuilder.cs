@@ -1,9 +1,8 @@
-﻿using AlwaysMoveForward.OAuth2.Common.DataLayer;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
+﻿using AlwaysMoveForward.Core.Common.Configuration;
+using AlwaysMoveForward.Core.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth2.Common.Encryption;
 using Microsoft.Extensions.Options;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
@@ -38,7 +37,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             {
                 string connectionString = string.Empty;
 
-                if (this.DatabaseConfiguration.EncryptionMethod == AlwaysMoveForward.OAuth2.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+                if (this.DatabaseConfiguration.EncryptionMethod == AlwaysMoveForward.Core.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
                 {
                     connectionString = this.DatabaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt);
                 }
@@ -62,7 +61,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         public IServiceManager Create(string connectionString)
         {
             IUnitOfWork unitOfWork = this.CreateUnitOfWork(connectionString);
-            IRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
+            IUnitOfWork newUnitOfWork = this.CreateNewUnitOfWork(connectionString);
+            IRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork, newUnitOfWork);
             return this.CreateServiceManager(unitOfWork, repositoryManager);
         }
 
@@ -87,14 +87,18 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return new UnitOfWork(connectionString);
         }
 
+        public virtual IUnitOfWork CreateNewUnitOfWork(string connectionString)
+        {
+            return new NewUnitOfWork(connectionString);        
+        }
         /// <summary>
         /// Creates domain data repository manager with a given unit of work
         /// </summary>
         /// <param name="unitOfWork">Mongo unit of work</param>
         /// <returns>Domain data repository manager</returns>
-        public virtual IRepositoryManager CreateRepositoryManager(IUnitOfWork nhunitOfWork)
+        public virtual IRepositoryManager CreateRepositoryManager(IUnitOfWork unitOfWork, IUnitOfWork newUnitOfWork)
         {
-            return new RepositoryManager(nhunitOfWork as UnitOfWork);
+            return new RepositoryManager(unitOfWork as UnitOfWork, newUnitOfWork as NewUnitOfWork);
         }
     }
 }

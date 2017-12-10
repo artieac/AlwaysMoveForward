@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.Security;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Web.Models;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using System;
@@ -14,6 +12,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using IdentityServer4.Services;
+using IdentityServer4;
+using AlwaysMoveForward.OAuth2.Web.Models.Account;
+using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Configuration;
+using Microsoft.Extensions.Options;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -23,96 +27,56 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
     public class AccountController : AMFControllerBase
     {
         private readonly IIdentityServerInteractionService _idsInteractionService;
+        private readonly SignInManager<AMFUserLogin> _signInManager;
+        private readonly UserManager<AMFUserLogin> _userManager;
+        private readonly EmailConfiguration _emailConfiguration;
 
         public AccountController(ServiceManagerBuilder serviceManagerBuilder,
-                                IIdentityServerInteractionService interaction) : base(serviceManagerBuilder)
+                                SignInManager<AMFUserLogin> signInManager,
+                                UserManager<AMFUserLogin> userManager,
+                                IIdentityServerInteractionService interaction,
+                                IOptions<EmailConfiguration> emailConfigurationSection) : base(serviceManagerBuilder)
         {
             this._idsInteractionService = interaction;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+            this._emailConfiguration = emailConfigurationSection.Value;
         }
 
-        public ActionResult EmbeddedSignin()
+        private void AddErrors(IdentityResult result)
         {
-            return this.View();
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
 
         /// <summary>
         /// Show the initial sign in page
         /// </summary>
-        /// <param name="oauth_Token">The oauth token that this sign in is trying to authorize.</param>
+        /// <param name="returnUrl">The url to return to after login.</param>
         /// <returns>The index view</returns>
         [AllowAnonymous]
-        public ActionResult Login(string oauth_Token)
+        public ActionResult Login(string returnUrl, string consumerName)
         {
-            TokenModel model = new TokenModel() { Token = oauth_Token };
+            LoginModel retVal = new LoginModel();
+            retVal.ReturnUrl = returnUrl;
+            retVal.ConsumerName = consumerName;
 
-            Consumer consumer = this.ServiceManager.ConsumerService.GetByRequestToken(oauth_Token);
-
-            if (consumer != null)
-            {
-                model.ConsumerName = consumer.Name;
-            }
-
-            return this.View("Login", model);
-        }
-
-        /// <summary>
-        /// Returns the Signup view for registration.
-        /// </summary>
-        /// <returns>The MVC View for a registaration</returns>
-        [AllowAnonymous]
-        public ActionResult SignUp(string oauthToken)
-        {
-            TokenModel model = new TokenModel() { Token = oauthToken };
-            return this.View(model);
-        }
-
-        /// <summary>
-        /// Setup the logged in user on the current thread and setup an auth cookie.
-        /// </summary>
-        /// <param name="user"></param>
-        private void SetCurrentUser(AMFUserLogin user)
-        {
-//            this.CurrentPrincipal = new OAuthServerSecurityPrincipal(user);
-//            FormsAuthentication.SetAuthCookie(user.Id.ToString(), false);
-        }
-
-        /// <summary>
-        /// Register a new user with the site
-        /// </summary>
-        /// <param name="registerModel">The incoming parameters used to register the user</param>
-        /// <returns>The Registered user view</returns>
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel registerModel)
-        {
-            AMFUserLogin registeredUser = null;
-
-            if (registerModel != null)
-            {
-                registeredUser = this.ServiceManager.UserService.GetByEmail(registerModel.UserEmail);
-
-                if (registeredUser == null)
-                {
-                    registeredUser = this.ServiceManager.UserService.Register(registerModel.UserEmail, registerModel.Password, registerModel.PasswordHint, registerModel.FirstName, registerModel.LastName);
-                }
-                else
-                {
-                    TokenModel model = new TokenModel() { Token = registerModel.OAuthToken };
-                    return this.View("Signin", model);
-                }
-            }
-
-            if (registeredUser != null)
-            {
-                this.SetCurrentUser(registeredUser);
-                TokenModel model = new TokenModel() { Token = registerModel.OAuthToken };
-                return this.View(model);
-            }
-            else
-            {
-                return this.View("SignUp", new { oauthToken = registerModel.OAuthToken });
-            }
+            return View(retVal);
         }
 
         /// <summary>
@@ -124,120 +88,117 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// <returns>The Grant Access view or the sign in screen again</returns>
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ProcessSignin(string userName, string password, string returnUrl)
+        public async Task<IActionResult> ProcessLogin(ProcessLoginInput input)
         {
+            string remoteIPAddress = this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString();
+
             if (ModelState.IsValid)
             {
-                AMFUserLogin targetUser = this.ServiceManager.UserService.LogonUser(userName, password, this.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.ToString());
-
-                if (targetUser != null)
-                {
-                    AuthenticationProperties props = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.Add(DefaultUserOptions.RememberMeLoginDuration)
-                    };               
-
-                    HttpContext.Authentication.SignInAsync("Password", targetUser.Email, props);
-
-                    // make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
-                    if(targetUser.IsInRole(RoleType.Names.Administrator))
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {                    
+                    LogManager.CreateLogger<AccountController>().LogDebug("User logged in.");
+                    AMFUserLogin userLogin = this.ServiceManager.UserService.GetByEmail(input.UserName);
+                    await _signInManager.SignInAsync(userLogin, isPersistent: false);
+                    this.ServiceManager.UserService.AddLoginAttempt(true, this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString(), input.UserName, userLogin);
+    
+                    if (String.IsNullOrEmpty(input.ReturnUrl) == true && userLogin.IsInRole(RoleType.Names.Administrator))
                     {
                         return this.Redirect("/Admin/Management/Index");
                     }
                     else
                     {
-                        if (_idsInteractionService.IsValidReturnUrl(returnUrl))
-                        {
-                            return Redirect(returnUrl);
-                        }
+                        return RedirectToLocal(input.ReturnUrl);
                     }
-
-                    return Redirect("~/");
-
                 }
-
-                ModelState.AddModelError("", DefaultUserOptions.InvalidCredentialsErrorMessage);
             }
+
+            this.ServiceManager.UserService.AddLoginAttempt(false, this.HttpContext.Connection.RemoteIpAdd‌​ress.ToString(), input.UserName, null);
 
             // If we got this far, something failed, redisplay form
-            return this.Login(returnUrl);
+            ModelState.AddModelError("", DefaultUserOptions.InvalidCredentialsErrorMessage);
+            LoginModel loginModel = new LoginModel() { ReturnUrl = input.ReturnUrl };
+            return this.View("Login", loginModel);
         }
 
-        private void EliminateUserCookie()
+        /// <summary>
+        /// Returns the Signup view for registration.
+        /// </summary>
+        /// <returns>The MVC View for a registaration</returns>
+        [AllowAnonymous]
+        public ActionResult Register(string returnUrl)
         {
-            try
-            {
-//                string cookieName = FormsAuthentication.FormsCookieName;
-//                HttpCookie authCookie = this.Response.Cookies[cookieName];
+            RegisterModel retVal = new RegisterModel();
+            retVal.ReturnUrl = returnUrl;
+            return this.View(retVal);
+        }
 
-//                if (authCookie != null)
-//                {
-//                    authCookie.Expires = DateTime.Now.AddDays(-1);
-//                }
-            }
-            catch (Exception e)
+
+        /// <summary>
+        /// Register a new user with the site
+        /// </summary>
+        /// <param name="registerModel">The incoming parameters used to register the user</param>
+        /// <returns>The Registered user view</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcessRegister(ProcessRegisterInput registerModel)
+        {
+            AMFUserLogin registerUser = null;
+
+            if (ModelState.IsValid)
             {
-                LogManager.GetLogger().Error(e);
+                registerUser = this.ServiceManager.UserService.GetByEmail(registerModel.UserEmail);
+
+                if (registerUser == null)
+                {
+                    registerUser = new AMFUserLogin();
+                    registerUser.Email = registerModel.UserEmail;
+                    registerUser.FirstName = registerModel.FirstName;
+                    registerUser.LastName = registerModel.LastName;
+                    registerUser.Role = RoleType.Id.User;
+                    registerUser.UserStatus = UserStatus.Active;
+                }
+
+                var result = await _userManager.CreateAsync(registerUser, registerModel.Password);
+
+                if (result.Succeeded)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _signInManager.SignInAsync(registerUser, isPersistent: false);
+//                    _logger.LogInformation(3, "User created a new account with password.");
+                    return RedirectToLocal(registerModel.ReturnUrl);
+                }
+                AddErrors(result);
+            }
+
+            if (registerUser != null)
+            {
+                LoginModel model = new LoginModel() { ReturnUrl = registerModel.ReturnUrl };
+                return this.View("Login", model);
+            }
+            else
+            {
+                EditModel model = new EditModel(registerUser);
+                return this.View("Register", model);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signout()
+        public async Task<IActionResult> Logout()
         {
-            this.EliminateUserCookie();
-//            this.CurrentPrincipal = new OAuthServerSecurityPrincipal(null);
-            return this.Login(string.Empty);
+            await _signInManager.SignOutAsync();
+            LoginModel retVal = new LoginModel();
+            return this.View("Login", retVal);
         }
-
-        /// <summary>
-        /// Redirect the caller to the oauth call back once the user has been approved/denied
-        /// </summary>
-        /// <param name="requestToken">The oauth token</param>
-        /// <param name="granted">Whether or not access ahs been granted</param>
-//        void RedirectToClient(RequestToken requestToken, bool granted)
-//        {
-//            string consumerKey = string.Empty;
-//            string callBackUrl = string.Empty;
-//            string verifier = string.Empty;
-//            string oauthToken = string.Empty;
-//
-//            if (requestToken != null)
-//            {
-//                consumerKey = requestToken.ConsumerKey;
-//                oauthToken = requestToken.Token;
-//
-//                if (requestToken.IsAuthorized() == true)
-//                {
-//                    verifier = requestToken.VerifierCode;
-//                    callBackUrl = requestToken.GenerateCallBackUrl();
-//                }
-//            }
-
-//            if (!string.IsNullOrEmpty(callBackUrl))
-//            {
-//                this.Response.Redirect(callBackUrl, true);
-//            }
-//            else
-//            {
-//                if (granted)
-//                {
-//                    string successMessage = string.Format(
-//                      "You have been successfully granted Access, To complete the process, please provide <I>{0}</I> with this verification code: <B>{1}</B>",
-//                      consumerKey, HttpUtility.HtmlEncode(verifier));
-
-//                    this.Response.Write(successMessage);
-//                }
-//                else
-//                {
-//                    this.Response.Write("Denied");
-//                }
-
-//                this.Response.End();
-//            }
-//        }
 
         /// <summary>
         /// this action returns the partial view to show the password hint
@@ -258,38 +219,41 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
             return this.View(retVal);
         }
 
-        public ActionResult ForgotPassword(string oauthToken)
+        public ActionResult ForgotPassword(string returnUrl)
         {
-            TokenModel model = new TokenModel() { Token = oauthToken };
+            LoginModel model = new LoginModel() { ReturnUrl = returnUrl };
             return this.View(model);
         }
 
-        public ActionResult ResetPassword(string oauthToken, string userEmail, string resetToken)
+        public ActionResult ResetPassword(string returnUrl, string userEmail, string resetToken)
         {
-            TokenModel model = new TokenModel() { Token = oauthToken };
-            this.ServiceManager.UserService.ResetPassword(userEmail, EmailConfiguration.GetInstance());
-            return this.View("Login", new { oauth_token = oauthToken });
+            LoginModel model = new LoginModel() { ReturnUrl = returnUrl };
+            this.ServiceManager.UserService.ResetPassword(userEmail, this._emailConfiguration);
+            return this.View("Login", model);
         }
 
         /// <summary>
         /// Register a new user with the site
         /// </summary>
-        /// <param name="registerModel">The incoming parameters used to register the user</param>
+        /// <param name="editModel">The incoming parameters used to register the user</param>
         /// <returns>The Registered user view</returns>
-        public ActionResult Edit(RegisterModel registerModel)
+        public ActionResult Edit(EditModel editModel)
         {
             AMFUserLogin registeredUser = null;
 
-            if (registerModel != null)
+            if (editModel != null)
             {
-                registeredUser = this.ServiceManager.UserService.Update(registerModel.Id, registerModel.FirstName, registerModel.LastName, registerModel.Password);
-
-                if (registeredUser != null)
+                registeredUser = this.ServiceManager.UserService.Update(editModel.Id, editModel.FirstName, editModel.LastName);
+               
+                if(registeredUser != null)
                 {
-                    this.SetCurrentUser(registeredUser);
+//                    registeredUser.UpdatePassword(editModel.Password);
+                    return this.View("ProcessSignin", registeredUser);
                 }
-
-                return this.View("ProcessSignin", registeredUser);
+                else
+                {
+                    return this.View("Login");
+                }
             }
             else
             {

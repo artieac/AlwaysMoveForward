@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth2.Common.Encryption;
+using AlwaysMoveForward.Core.Common.Encryption;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {

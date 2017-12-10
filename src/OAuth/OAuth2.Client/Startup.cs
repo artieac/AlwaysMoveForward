@@ -9,6 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.OAuth2.Client.Code;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.DataProtection;
+using System.Security.Cryptography;
+using System.Text;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Serilog;
+using System.IO;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace OAuth2.Client
 {
@@ -22,6 +30,12 @@ namespace OAuth2.Client
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()
+               .WriteTo.Console()
+               .WriteTo.RollingFile(Path.Combine(env.ContentRootPath, @"c:\personal\clientlog-{Date}.txt"))
+               .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -31,6 +45,48 @@ namespace OAuth2.Client
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+//            .AddCookie("Cookies")
+            .AddOpenIdConnect(options => SetOpenIdConnectOptions(options));
+        }
+        private void SetOpenIdConnectOptions(OpenIdConnectOptions options)
+        {
+//            options.AuthenticationScheme = "oidc";
+            options.SignInScheme = "Cookies";
+
+            options.Authority = Constants.Authority;
+            options.RequireHttpsMetadata = false;
+
+            options.ClientId = "abcd";
+            options.ClientSecret = "abcd";
+
+            options.CallbackPath = "/home/handlecallback";
+            options.ResponseType = "code id_token";
+
+            options.Scope.Add("offline_access");
+            options.Scope.Add("api1.full_access");
+
+            options.GetClaimsFromUserInfoEndpoint = true;
+            options.SaveTokens = true;
+            options.TokenValidationParameters = new
+                Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                NameClaimType = JwtClaimTypes.Name,
+                RoleClaimType = JwtClaimTypes.Role,
+            };
+            options.Events = new OpenIdConnectEvents()
+            {
+                OnRemoteFailure = context =>
+                {
+                    context.Response.Redirect("/Home/Error");
+                    context.HandleResponse();
+                    return Task.FromResult(0);
+                }
+            };
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,25 +107,20 @@ namespace OAuth2.Client
 
             app.UseStaticFiles();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Cookies"
-            });
+            app.UseAuthentication();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
-            {
-                AuthenticationScheme = "oidc",
-                SignInScheme = "Cookies",
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions
+            //{
+            //    Authority = Constants.Authority,
+            //    RequireHttpsMetadata = false,
 
-                Authority = Constants.Authority,
-                RequireHttpsMetadata = false,
+            //    Audience = "api1",
 
-                ClientId = "abcd",
-
-                SaveTokens = true
-            });
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true              
+            //});
 
             //app.UseJwtBearerAuthentication(new JwtBearerOptions
             //{
@@ -90,6 +141,21 @@ namespace OAuth2.Client
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public static string Hash256(string text)
+        {
+            string retVal;
+
+            using (var sha256 = SHA256.Create())
+            {
+                // Send a sample text to hash.  
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+                // Get the hashed string.  
+                retVal = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+
+            return retVal;
         }
     }
 }

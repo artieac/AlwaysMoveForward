@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using AlwaysMoveForward.OAuth2.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
+using AlwaysMoveForward.Core.Common.DataLayer;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {
     /// <summary>
     /// A data mapper going to/from the domain model and the dto
     /// </summary>
-    internal class ConsumerDataMapper : DataMapBase<Consumer, DTO.Consumer>
+    internal class ConsumerDataMapper : DataMapBase<Consumer, Models.Consumers>
     {
         /// <summary>
         /// The static constructor sets up automapper
@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override Consumer Map(DTO.Consumer source, Consumer destination)
+        public override Consumer Map(Models.Consumers source, Consumer destination)
         {
             return Mapper.Map(source, destination);
         }
@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         /// <param name="source">the source of the data</param>
         /// <param name="destination">The destination instance of the data</param>
         /// <returns>The destination populated with the source</returns>
-        public override DTO.Consumer Map(Consumer source, DTO.Consumer destination)
+        public override Models.Consumers Map(Consumer source, Models.Consumers destination)
         {
             return Mapper.Map(source, destination);
         }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlwaysMoveForward.OAuth2.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.Security;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
+using AlwaysMoveForward.Core.Common.DataLayer;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
     /// <summary>
     /// The service manager for the OAuth services
+    /// TBD:  In .Net Core this can be switched to scoped dependency injection
     /// </summary>
     public class ServiceManager : IServiceManager
     {
@@ -78,24 +78,21 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             }
         }
 
-        /// <summary>
-        /// The service containing the Whitelist business rules
-        /// </summary>
-        private IWhiteListService whitelistService;
+        private IApiResourceService apiResourceService;
 
         /// <summary>
-        /// Gets the current Token service
+        /// Gets the current ApiResource service
         /// </summary>
-        public IWhiteListService WhiteListService
+        public IApiResourceService ApiResourceService
         {
             get
             {
-                if (this.whitelistService == null)
+                if (this.apiResourceService == null)
                 {
-                    this.whitelistService = new WhiteListService();
+                    this.apiResourceService = new ApiResourceService(this.RepositoryManager.ApiResourceRepository);
                 }
 
-                return this.whitelistService;
+                return this.apiResourceService;
             }
         }
     }

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
     public class HomeController : AMFControllerBase
     {
-        public HomeController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }
+        public HomeController(ServiceManagerBuilder serviceManagerBuilder) 
+                              : base(serviceManagerBuilder) { }
 
         public IActionResult Index()
         {

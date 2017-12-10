@@ -1,8 +1,4 @@
-﻿using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
-using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
-using AlwaysMoveForward.OAuth2.Web.Models;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
+using AlwaysMoveForward.OAuth2.Common.DomainModel;
+using AlwaysMoveForward.OAuth2.Web.Models.Consent;
+using Microsoft.AspNetCore.Authorization;
+using AlwaysMoveForward.OAuth2.Web.Code.IdentityServer;
+using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Controllers
 {
@@ -29,12 +32,26 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         public IIdentityServerInteractionService IdentityServerInteractionService { get; private set; }
         public IResourceStore ResourceStore { get; private set; }
 
+
+        private ScopeViewModel GetOfflineAccessScope(bool check)
+        {
+            return new ScopeViewModel
+            {
+                Name = IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess,
+                DisplayName = ConsentOptions.OfflineAccessDisplayName,
+                Description = ConsentOptions.OfflineAccessDescription,
+                Emphasize = true,
+                Checked = check
+            };
+        }
+        
         /// <summary>
         /// Shows the consent screen
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(string returnUrl)
         {
             ConsentViewModel retVal = new ConsentViewModel();
@@ -55,22 +72,33 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                         retVal.ClientUrl = String.Empty;
                         retVal.ClientLogoUrl = String.Empty;
 
-                        retVal.IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, true)).ToArray();
-                        retVal.ResourceScopes = resources.ApiResources.SelectMany(x => x.Scopes).Select(x => CreateScopeViewModel(x, true)).ToArray();                       
+                        retVal.IdentityScopes = resources.IdentityResources.Where(x => request.ScopesRequested.Contains(x.Name))
+                            .Select(x => CreateScopeViewModel(x, true));
+                        retVal.ResourceScopes = resources.ApiResources.SelectMany(x => x.Scopes)
+                            .Where(x => request.ScopesRequested.Contains(x.Name))
+                            .Select(x => CreateScopeViewModel(x, true));
+
+                        if(request.ScopesRequested.Contains(IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess) && ConsentOptions.EnableOfflineAccess)
+                        {
+                            retVal.ResourceScopes = retVal.ResourceScopes.Union(new ScopeViewModel[]
+                            {
+                                GetOfflineAccessScope(true)
+                            });
+                        }
                     }
                     else
                     {
-                        LogManager.GetLogger().Error("No scopes matching: {0}", request.ScopesRequested.Aggregate((x, y) => x + ", " + y));
+                        LogManager.CreateLogger<ConsentController>().LogError("No scopes matching: {0}", request.ScopesRequested.Aggregate((x, y) => x + ", " + y));
                     }
                 }
                 else
                 {
-                    LogManager.GetLogger().Error("Invalid client id: {0}", request.ClientId);
+                    LogManager.CreateLogger<ConsentController>().LogError("Invalid client id: {0}", request.ClientId);
                 }
             }
             else
             {
-                LogManager.GetLogger().Error("No consent request matching request: {0}", returnUrl);
+                LogManager.CreateLogger<ConsentController>().LogError("No consent request matching request: {0}", returnUrl);
             }
 
             return View(retVal);
@@ -86,6 +114,17 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                 Emphasize = identity.Emphasize,
                 Required = identity.Required,
                 Checked = check || identity.Required,
+            };
+        }
+
+        public ScopeViewModel CreateScopeViewModel(ApiResource targetResource, bool check)
+        {
+            return new ScopeViewModel
+            {
+                Name = targetResource.Name,
+                DisplayName = targetResource.DisplayName,
+                Description = targetResource.Description,
+                Checked = check,
             };
         }
 
@@ -106,31 +145,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// Approves access for the request token
         /// </summary>
         /// <param name="redirectUrl">the return url</param>
-        public async Task<IActionResult> ApproveAccess(string redirectUrl, IList<string> ScopesConsented)
+        [Authorize]
+        public async Task<IActionResult> ApproveAccess(string redirectUrl, IList<string> scopesConsented)
         {
             try
             {
-                //                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                //                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-
-                //                AMFUserLogin currentUser = this.ServiceManager.UserService.GetUserById(int.Parse(ticket.Name));
-
-                //                if (currentUser != null)
-                //                {
-                //                    this.CurrentPrincipal = new OAuthServerSecurityPrincipal(currentUser);
-                //                    this.RedirectToClient(this.ServiceManager.TokenService.CreateVerifierAndAssociateUserInfo(oauthToken, currentUser), true);
-                //                }
-
-                // validate return url is still valid
-
                 AuthorizationRequest request = await this.IdentityServerInteractionService.GetAuthorizationContextAsync(redirectUrl);
 
                 if (request != null)
                 {
                     ConsentResponse consentResponse = new ConsentResponse
                     {
-                        RememberConsent = false,
-                        ScopesConsented = ScopesConsented
+                        RememberConsent = true,
+                        ScopesConsented = scopesConsented
                     };
 
                     await this.IdentityServerInteractionService.GrantConsentAsync(request, consentResponse);
@@ -140,18 +167,9 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Error(e);
+                LogManager.CreateLogger<ConsentController>().LogError(e, e.Message);
             }
 
-            return View("Error");
-        }
-
-        /// <summary>
-        /// Denies access to the request token
-        /// </summary>
-        /// <param name="redirectUrl">the return url</param>
-        public async Task<IActionResult> DenyAccess(string redirectUrl)
-        {
             return View("Error");
         }
     }

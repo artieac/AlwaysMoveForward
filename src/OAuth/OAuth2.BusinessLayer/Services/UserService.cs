@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlwaysMoveForward.OAuth2.Common.Configuration;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Encryption;
 using AlwaysMoveForward.OAuth2.Common.Factories;
 using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
 using IdentityServer4.Models;
 using System.Security.Claims;
 using IdentityModel;
+using AlwaysMoveForward.Core.Common.Configuration;
+using AlwaysMoveForward.Core.Common.Business;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -50,6 +49,11 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return this.UserRepository.GetAll();
         }
 
+        public AMFUserLogin Create(AMFUserLogin newUser)
+        {
+            return this.Create(newUser.Email, newUser.FirstName, newUser.LastName, newUser.PasswordHash);
+        }
+
         /// <summary>
         /// Register a user with the system
         /// </summary>
@@ -59,11 +63,11 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// <param name="firstName">The users password</param>
         /// <param name="lastName">The users last name</param>
         /// <returns>An instance of a user</returns>
-        public AMFUserLogin Register(string userName, string password, string passwordHint, string firstName, string lastName)
+        public AMFUserLogin Create(string userName, string firstName, string lastName, string passwordHash)
         {
             AMFUserLogin retVal = null;
 
-            AMFUserLogin userLogin = UserFactory.Create(userName, password, firstName, lastName, passwordHint);
+            AMFUserLogin userLogin = UserFactory.Create(userName, firstName, lastName, passwordHash);
             retVal = this.UserRepository.Save(userLogin);
 
             return retVal;
@@ -96,7 +100,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         /// </summary>
         /// <param name="userLogin">The source user</param>
         /// <returns>The updated user</returns>       
-        public AMFUserLogin Update(long userId, string firstName, string lastName, string password)
+        public AMFUserLogin Update(long userId, string firstName, string lastName)
         {
             AMFUserLogin retVal = this.UserRepository.GetById(userId);
 
@@ -104,43 +108,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             {
                 retVal.FirstName = firstName;
                 retVal.LastName = lastName;
-                retVal.UpdatePassword(password);
 
                 retVal = this.UserRepository.Save(retVal);
-            }
-
-            return retVal;
-        }
-
-        /// <summary>
-        /// Logon a user by the username and password
-        /// </summary>
-        /// <param name="userName">The username</param>
-        /// <param name="password">The unencrypted password</param>
-        /// <returns>The user if one is found to match</returns>
-        public AMFUserLogin LogonUser(string userName, string password, string loginSource)
-        {
-            AMFUserLogin retVal = null;
-
-            AMFUserLogin targetUser = this.UserRepository.GetByEmail(userName);
-
-            if (targetUser != null && targetUser.UserStatus == UserStatus.Active)
-            {
-                byte[] passwordSalt = Convert.FromBase64String(targetUser.PasswordSalt);
-
-                if (SHA1HashUtility.ValidatePassword(password, targetUser.PasswordHash, passwordSalt, AMFUserLogin.SaltIterations) == true)
-                {
-                    retVal = targetUser;
-                }
-            }
-
-            if (retVal == null)
-            {
-                this.AddLoginAttempt(false, loginSource, userName, targetUser);
-            }
-            else
-            {
-                this.AddLoginAttempt(true, loginSource, userName, targetUser);
             }
 
             return retVal;
@@ -262,6 +231,13 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return this.LoginAttemptRepository.GetByUserName(userName);
         }
 
+        public void SetPassword(long userId, string passwordHash)
+        {
+            AMFUserLogin targetUser = this.UserRepository.GetById(userId);
+            targetUser.PasswordHash = passwordHash;                       
+            this.UserRepository.Save(targetUser);
+        }
+
         public void ResetPassword(string userEmail, EmailConfiguration emailConfig)
         {
             AMFUserLogin targetUser = this.UserRepository.GetByEmail(userEmail);
@@ -272,7 +248,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             {
                 if (targetUser != null)
                 {
-                    string newPassword = targetUser.GenerateNewPassword();
+                    string newPassword = "";// targetUser.GenerateNewPassword();
                     emailBody = "Sorry you had a problem entering your password, your new password is " + newPassword;
 
                     this.UserRepository.Save(targetUser);
@@ -299,20 +275,22 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
         public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            AMFUserLogin loggedInUser = this.LogonUser(context.UserName, context.Password, context.Request.Client.ClientUri);
+            GrantValidationResult result;
 
-            if (loggedInUser == null)
+            AMFUserLogin loggedInUser = this.GetByEmail(context.UserName);
+
+            if (loggedInUser != null)
             {
-                var result = new GrantValidationResult(TokenRequestErrors.InvalidRequest, "Username Or Password Incorrect");
-                return Task.FromResult(result);
-            }
-            else
-            {
-                var result = new GrantValidationResult( subject: loggedInUser.Email,
+                if (context.Password == loggedInUser.PasswordHash)
+                {
+                    result = new GrantValidationResult(subject: loggedInUser.Email,
                                                         authenticationMethod: "password");
-
-                return Task.FromResult(result);
+                    return Task.FromResult(result);
+                }               
             }
+
+            result = new GrantValidationResult(TokenRequestErrors.InvalidRequest, "Username Or Password Incorrect");
+            return Task.FromResult(result);
         }
 
         public Task GetProfileDataAsync(ProfileDataRequestContext context)

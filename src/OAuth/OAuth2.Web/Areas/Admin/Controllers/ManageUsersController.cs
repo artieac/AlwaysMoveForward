@@ -3,20 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using AlwaysMoveForward.OAuth2.Web.Areas.Admin.Models;
 using AlwaysMoveForward.OAuth2.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
     /// <summary>
     /// Manage the users int he system
     /// </summary>
-//    [MVCAuthorization(Roles = RoleType.Names.Administrator)]
+    [Area("Admin")]
+    [Route("admin/[controller]/[action]")]
+    [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageUsersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }
+        public ManageUsersController(ServiceManagerBuilder serviceManagerBuilder) 
+                                     : base(serviceManagerBuilder) { }
 
 
         /// <summary>
@@ -41,7 +46,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The user id</param>
         /// <returns>A view</returns>
-//        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
         public ActionResult Edit(int id)
         {
             AMFUserLogin retVal = this.ServiceManager.UserService.GetUserById(id);
@@ -53,7 +57,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="user">The user to save</param>
         /// <returns>A view</returns>
-//        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
         public ActionResult Save(AMFUserLogin user)
         {
             if (user != null)
@@ -73,7 +76,6 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="userName">The users name</param>
         /// <returns>A view</returns>
-//        [MVCAuthorization(Roles = RoleType.Names.Administrator)]
         public ActionResult LoginHistory(string userName, int? page)
         {
             LoginHistoryModel retVal = new LoginHistoryModel();

@@ -1,4 +1,5 @@
-﻿@model AlwaysMoveForward.Common.Utilities.IPagedList<AlwaysMoveForward.OAuth.Common.DomainModel.Consumer>
+﻿@model AlwaysMoveForward.Core.Common.Utilities.IPagedList<AlwaysMoveForward.OAuth2.Common.DomainModel.Consumer>
+@using AlwaysMoveForward.OAuth2.Web.Code.Extensions;
 @{
     ViewBag.Title = "Manage Consumers";
     ViewBag.SelectedTab = 1;
@@ -6,7 +7,7 @@
 }
 @section headerPlugins
 {
-    <link href="@Url.Content("~/Content/Pager.css")" rel="stylesheet" type="text/css" />
+    <link href="~/css/Pager.css" rel="stylesheet" type="text/css" />
 }
 <div class="bodyContent">
     <div class="contentPageTitle">
@@ -25,7 +26,7 @@
         </thead>
         <tbody>
             @{
-                foreach (AlwaysMoveForward.OAuth.Common.DomainModel.Consumer oauthConsumer in @Model)
+                foreach (AlwaysMoveForward.OAuth2.Common.DomainModel.Consumer oauthConsumer in @Model)
                 {
                     <tr>
                         <td><a href="/Admin/ManageConsumers/Edit/@oauthConsumer.ConsumerKey.ToString()">@oauthConsumer.ConsumerKey</a></td>

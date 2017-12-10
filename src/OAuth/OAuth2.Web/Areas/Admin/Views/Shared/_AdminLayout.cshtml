@@ -5,9 +5,10 @@
 }
 @section headerPlugins
 {
-    <script src="@Url.Content("~/Scripts/angular.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/angular-resource.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Modules/ServiceDefinitionModule.js")" type="text/javascript"></script>
+    <script src="~/lib/angular/angular.min.js")" type="text/javascript"></script>
+    <script src="~/lib/angular-resource/angular-resource.js")" type="text/javascript"></script>
+	<script src="~/lib/angular-route/angular-route.js" )" type="text/javascript"></script>
+    <script src="~/js/Modules/ServiceDefinitionModule.js" type="text/javascript"></script>
     @RenderSection("headerPlugins", false)
 }
 <div class="adminPage">
@@ -25,15 +26,21 @@
                         <li @if (@ViewBag.SelectedTab == 1) { <text> class='active' </text>      }>
                             <a href="/Admin/ManageConsumers/Index">Consumers</a>
                         </li>
-                        <li @if (@ViewBag.SelectedTab == 4) { <text> class='active' </text>       }>
+						<li @if (@ViewBag.SelectedTab == 2) { <text> class='active' </text>      }>
+							<a href="/Admin/ManageResources/Index">Resources</a>
+						</li>
+                        <li @if (@ViewBag.SelectedTab == 3) { <text> class='active' </text>       }>
                             <a href="/Admin/ManageTokens/Index">OAuth Tokens</a>
                         </li>
-                        <li @if (@ViewBag.SelectedTab == 2) { <text> class='active' </text>    }>
+                        <li @if (@ViewBag.SelectedTab == 4) { <text> class='active' </text>    }>
                             <a href="/Admin/ManageUsers/Index">Users</a>
                         </li>
-                        <li @if (@ViewBag.SelectedTab == 3) { <text> class='active' </text>     }>
+                        <li @if (@ViewBag.SelectedTab == 5) { <text> class='active' </text>     }>
                             <a href="/Admin/ManageUsers/LoginHistory">Login History</a>
                         </li>
+						<li @if (@ViewBag.SelectedTab == 6) { <text> class='active' </text>      }>
+							<a href="/Admin/ManageApis/Index">Apis</a>
+						</li>
                     </ul>
                 </div>
             </div>

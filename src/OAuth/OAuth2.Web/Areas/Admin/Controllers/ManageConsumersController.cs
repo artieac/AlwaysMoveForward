@@ -3,18 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
-using AlwaysMoveForward.OAuth2.Common.Utilities;
 using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using AlwaysMoveForward.Core.Common.Utilities;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
     /// <summary>
     /// This class provides the UI elemetns to manage the consumers 
     /// </summary>
-//    [MVCAuthorization(Roles = "Administrator")]
+    [Area("Admin")]
+    [Route("admin/[controller]/[action]")]
+    [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageConsumersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
-        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder) : base(serviceManagerBuilder) { }
+        public ManageConsumersController(ServiceManagerBuilder serviceManagerBuilder)
+                                     : base(serviceManagerBuilder) { }
+
         /// <summary>
         /// Lists all the consumers
         /// </summary>
