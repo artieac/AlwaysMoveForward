@@ -156,7 +156,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
                 {
                     ConsentResponse consentResponse = new ConsentResponse
                     {
-                        RememberConsent = false,
+                        RememberConsent = true,
                         ScopesConsented = scopesConsented
                     };
 

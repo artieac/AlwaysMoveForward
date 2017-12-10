@@ -69,8 +69,6 @@ namespace OAuth2.Client
 
             options.Scope.Add("offline_access");
             options.Scope.Add("api1.full_access");
-            options.Scope.Add("openid");
-            options.Scope.Add("profile");
 
             options.GetClaimsFromUserInfoEndpoint = true;
             options.SaveTokens = true;
