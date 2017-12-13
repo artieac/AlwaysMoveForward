@@ -1,10 +1,9 @@
-﻿using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
-using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 using System.Linq;
+using AlwaysMoveForward.OAuth2.DataLayer.Repositories;
+using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {

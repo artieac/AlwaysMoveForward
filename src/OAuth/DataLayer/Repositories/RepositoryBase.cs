@@ -29,6 +29,6 @@ namespace AlwaysMoveForward.OAuth.DataLayer.Repositories
         /// <summary>
         /// Gets the current unit of work
         /// </summary>
-        public UnitOfWork UnitOfWork { get; private set; }
+        public  new UnitOfWork UnitOfWork { get; private set; }
     }
 }

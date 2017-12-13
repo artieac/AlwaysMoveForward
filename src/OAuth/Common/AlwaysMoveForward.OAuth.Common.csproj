@@ -86,10 +86,6 @@
       <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
       <Name>AlwaysMoveForward.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Client\AlwaysMoveForward.OAuth.Client.csproj">
-      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
-      <Name>AlwaysMoveForward.OAuth.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevDefined\DevDefined.OAuth\DevDefined.OAuth.csproj">
       <Project>{61b700b6-3911-4cef-8751-7f42ca765068}</Project>
       <Name>DevDefined.OAuth</Name>
