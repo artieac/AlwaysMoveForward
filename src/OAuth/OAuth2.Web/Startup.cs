@@ -74,7 +74,8 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            string connectionString = Configuration.GetValue<string>("Database:ConnectionString");
+            DatabaseConfiguration dbConfiguration = new DatabaseConfiguration();
+            Configuration.GetSection("Database").Bind(dbConfiguration);
 
             // Adds IdentityServer
             services.AddIdentityServer()
@@ -82,13 +83,13 @@ namespace AlwaysMoveForward.OAuth2.Web
                 .AddConfigurationStore(options=>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseSqlServer(dbConfiguration.ConnectionString);
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseSqlServer(dbConfiguration.ConnectionString);
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
