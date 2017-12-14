@@ -1,0 +1,191 @@
+node('oauth2-docker-build') {
+
+    currentBuild.result = "SUCCESS"
+    
+    def serviceName = "alwaysmoveforward.oauth2.web"
+    def baseVersion = '1.0';
+    def branchName = env.BRANCH_NAME.replaceAll("[^\\p{L}\\p{Nd}]+", "-").toLowerCase()
+    def k8sServiceName = "alwaysmoveforward.oauth2.web-${branchName}".toLowerCase()
+    def dnsName = k8sServiceName
+    def version = "${baseVersion}.${env.BUILD_NUMBER}"
+    def imageTag = branchName + '-' + version
+	def developmentEnvironment = "Development"
+    def productionEnvironment = "Production"
+
+    if(branchName == 'master') {
+        k8sServiceName = "alwaysmoveforward.oauth2.web"
+        dnsName = "discount"
+        imageTag = version
+    }
+    
+    try {
+
+       stage('Debug'){
+            echo env.BRANCH_NAME
+            echo env.CHANGE_ID
+            echo env.CHANGE_URL
+            echo env.CHANGE_TITLE
+            echo env.CHANGE_AUTHOR
+            echo env.CHANGE_AUTHOR_DISPLAY_NAME
+            echo env.CHANGE_AUTHOR_EMAIL
+            echo env.CHANGE_TARGET
+            echo env.BUILD_NUMBER
+            echo env.BUILD_ID
+            echo env.BUILD_DISPLAY_NAME
+            echo env.JOB_NAME
+            echo env.JOB_BASE_NAME
+            echo env.BUILD_TAG
+            echo env.EXECUTOR_NUMBER
+            echo env.BUILD_URL
+            echo env.JOB_URL
+       }
+       stage('Preparation') {
+
+            checkout scm
+
+            echo "BRANCH: ${branchName}"
+            echo "BUILD_VERSION: ${version}"
+            echo "Docker Image Tag: ${imageTag}"
+            echo "Kubernetes Service Name: ${k8sServiceName}"
+            echo "DNS Name ${dnsName}"
+            echo "Prep finished"
+        
+       }
+
+       stage('Build Image') {
+	   
+            sh "sh buildImage.sh build ${imageTag}"
+
+       }
+
+       stage('Publish Image'){
+
+            sh "sh buildImage.sh push ${imageTag}"
+
+       }   
+
+       stage('Clean Up') {
+
+            sh "sh buildImage.sh remove ${imageTag}"
+       }
+
+	   stage('Deploy to Kubernetes Integration') {
+           
+           // Only deploy if its the master branch or a pull request
+           if(branchName == 'master' || branchName.startsWith("pr-")) {
+
+                echo "Deploying to Kubernetes"
+                echo "Service name: ${serviceName}"
+                echo "Branch name: ${branchName}"
+                echo "Kubernetes Service Name: ${k8sServiceName}"
+                echo "Environment: ${developmentEnvironment}"
+                echo "DNS Name: ${dnsName}"
+                echo "Tag: ${imageTag}"
+
+                sh "sh deploy.sh -e ${developmentEnvironment} -t ${imageTag} -s ${k8sServiceName} -b ${branchName} -d ${dnsName}"
+           }
+           else{
+               echo "Branch is not MASTER nor a PR. Not deploying to Kubernetes"
+           }
+       }
+       stage('Deploy to Kubernetes Production') {
+           
+           // Delay pushing to production if this is the 'master'
+           // branch to allow user cancellation
+           if(branchName == 'master'){
+                int timeoutInSeconds = 600      // 10 minutes
+                long startTime = System.currentTimeMillis()
+                try {
+                    timeout(time: timeoutInSeconds, unit: 'SECONDS') {
+                        input 'Deploy to production?'
+                    }
+                } catch (err) {
+                    long timePassed = System.currentTimeMillis() - startTime
+                    if (timePassed >= timeoutInSeconds * 1000) {
+                        echo 'Timed out'
+                    } else {
+                        echo "User aborted"
+                        throw err
+                    }
+                }           
+
+				echo "Deploying to Kubernetes"
+				echo "Service name: ${serviceName}"
+                echo "Branch name: ${branchName}"
+				echo "Kubernetes Service Name: ${k8sServiceName}"
+				echo "Environment: ${productionEnvironment}"
+				echo "DNS Name: ${dnsName}"
+				echo "Tag: ${imageTag}"
+				
+				sh "sh deploy.sh -e ${productionEnvironment} -t ${imageTag} -s ${k8sServiceName} -b ${branchName} -d ${dnsName}"
+				
+				sendDeployedNotification(serviceName, branchName, imageTag, getServiceUrl(branchName, dnsName, false))				
+		   }
+		   else{
+				    echo "Branch is not MASTER. Not deploying to Kubernetes Production"
+		   }
+       }
+       stage('Deploy to Kubernetes Failover') {
+           
+           // Delay pushing to production if this is the 'master'
+           // branch to allow user cancellation
+           if(branchName == 'master'){
+                int timeoutInSeconds = 600      // 10 minutes
+                long startTime = System.currentTimeMillis()
+                try {
+                    timeout(time: timeoutInSeconds, unit: 'SECONDS') {
+                        input 'Deploy to failover?'
+                    }
+                } catch (err) {
+                    long timePassed = System.currentTimeMillis() - startTime
+                    if (timePassed >= timeoutInSeconds * 1000) {
+                        echo 'Timed out'
+                    } else {
+                        echo "User aborted"
+                        throw err
+                    }
+                }           
+
+				echo "Deploying to Kubernetes Failover Cluster"
+				echo "Service name: ${serviceName}"
+                echo "Branch name: ${branchName}"
+				echo "Kubernetes Service Name: ${k8sServiceName}"
+				echo "Environment: ${productionEnvironment}"
+				echo "DNS Name: ${dnsName}"
+				echo "Tag: ${imageTag}"
+				
+				sh "sh deploy.sh -e ${productionEnvironment} -t ${imageTag} -s ${k8sServiceName} -b ${branchName} -d ${dnsName} -f true"
+				
+				sendDeployedNotification(serviceName, branchName, imageTag, getServiceUrl(branchName, dnsName, true))				
+		   }
+		   else{
+				    echo "Branch is not MASTER. Not deploying to Kubernetes Production"
+		   }
+       }
+	   stage('Deployment Swagger Endpoint') {
+			echo getServiceUrl(branchName, dnsName, false)
+            if(branchName == 'master'){
+                echo getServiceUrl(branchName, dnsName, true)
+            }
+       } 
+    }
+
+    catch (err) {
+
+        currentBuild.result = "FAILURE"
+		
+		sendBrokenBuildNotification(serviceName, branchName)
+
+        throw err
+    }
+}
+
+def getServiceUrl(branchName, dnsName, failover){
+    if (failover == true){
+        return "http://${dnsName}.amf-aws-us-east-2.clusters.vpsvc.com/swagger"
+    } else if (branchName.toLowerCase() == 'master'){
+        return "http://${dnsName}.amf-aws-us-east-1.clusters.vpsvc.com/swagger"
+    } else {
+        return "http://${dnsName}.integration.pricing.vpsvc.com/swagger"
+    }
+}

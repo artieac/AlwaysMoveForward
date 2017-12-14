@@ -18,6 +18,8 @@ using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Serilog;
 using AlwaysMoveForward.Core.Common.Configuration;
+using AlwaysMoveForward.Core.Common.Encryption;
+using System;
 
 namespace AlwaysMoveForward.OAuth2.Web
 {
@@ -72,7 +74,8 @@ namespace AlwaysMoveForward.OAuth2.Web
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            string connectionString = Configuration.GetValue<string>("Database:ConnectionString");
+            DatabaseConfiguration dbConfiguration = new DatabaseConfiguration();
+            Configuration.GetSection("Database").Bind(dbConfiguration);
 
             // Adds IdentityServer
             services.AddIdentityServer()
@@ -80,13 +83,13 @@ namespace AlwaysMoveForward.OAuth2.Web
                 .AddConfigurationStore(options=>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseSqlServer(dbConfiguration.ConnectionString);
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                        builder.UseSqlServer(dbConfiguration.ConnectionString);
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
@@ -130,6 +133,22 @@ namespace AlwaysMoveForward.OAuth2.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public AESConfiguration LoadAESConfigurationSettings()
+        {
+            AESConfiguration retVal = new AESConfiguration();
+            retVal.EncryptionKey = Environment.GetEnvironmentVariable("AES_ENCRYPTION_KEY");
+            retVal.Salt = Environment.GetEnvironmentVariable("AES_ENCRYPTION_SALT");
+            return retVal;
+        }
+
+        public DatabaseConfiguration LoadDatabaseConfigurationSettings()
+        {
+            DatabaseConfiguration retVal = new DatabaseConfiguration();
+            retVal.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            retVal.DatabaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
+            return retVal;
         }
     }
 }

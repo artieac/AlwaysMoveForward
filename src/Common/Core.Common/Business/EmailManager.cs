@@ -10,6 +10,7 @@
  */
 using AlwaysMoveForward.Core.Common.Configuration;
 using AlwaysMoveForward.Core.Common.Utilities;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace AlwaysMoveForward.Core.Common.Business
             }
             catch (Exception e)
             {
-//                LogManager.CreateLogger<EmailManager>().LogError(e, e.Message);
+                LogManager.CreateLogger<EmailManager>().LogError(e, e.Message);
             }
         }
     }

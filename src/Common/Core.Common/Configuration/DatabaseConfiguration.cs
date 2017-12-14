@@ -1,4 +1,6 @@
-﻿namespace AlwaysMoveForward.Core.Common.Configuration
+﻿using System;
+
+namespace AlwaysMoveForward.Core.Common.Configuration
 {
     /// <summary>
     /// A class to simplify getting the configuration settings for a database
@@ -11,16 +13,61 @@
         public DatabaseConfiguration()
         { }
 
+        private string connectionString;
+
         /// <summary>
         /// Gets or sets the connection string found in the config file.
         /// </summary>
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.connectionString))
+                {
+                    if (!string.IsNullOrEmpty(this.ConnectionStringEnvironmentSetting))
+                    {
+                        this.connectionString = Environment.GetEnvironmentVariable(this.ConnectionStringEnvironmentSetting);
+                    }
+                }
+
+                return this.connectionString;
+            }
+            set
+            {
+                this.connectionString = value;
+            }
+        }
+        
+        public string ConnectionStringEnvironmentSetting { get; set; }
+
+        private string databaseName;
 
         /// <summary>
         /// Gets or sets database name found in the config file
         /// </summary>
-        public string DatabaseName { get; set; }
+        public string DatabaseName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.databaseName))
+                {
+                    if (!string.IsNullOrEmpty(this.DatabaseNameEnvironmentSetting))
+                    {
+                        this.databaseName = Environment.GetEnvironmentVariable(this.DatabaseNameEnvironmentSetting);
+                    }
+                }
 
+                return this.databaseName;
+            }
+            set
+            {
+                this.databaseName = value;
+            }
+        }
+
+        public string DatabaseNameEnvironmentSetting { get; set; }
+
+       
         /// <summary>
         /// Get the connection string decrypted
         /// </summary>

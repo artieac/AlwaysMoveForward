@@ -1,0 +1,29 @@
+function Auth-ECR {
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory=$true, Position=0)]
+        [string]
+        $AccessKey,
+         
+        [parameter(Mandatory=$true, Position=1)]
+        [string]
+        $SecretKey,
+         
+        [parameter()]
+        [string]
+        $Region = "us-east-1"
+    )
+     
+    # Get the authorization token
+    $token = Get-ECRAuthorizationToken -AccessKey $AccessKey -SecretKey $SecretKey -Region $Region `
+        -ErrorAction Stop
+     
+    # Split the token into username and password segments
+    $tokenSegments = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($token.AuthorizationToken)).Split(":")
+     
+    # Get the host name without https, as this can confuse some Windows machines 
+    $hostName = (New-Object System.Uri $token.ProxyEndpoint).DnsSafeHost
+     
+    # Perform login
+    docker login -u $($tokenSegments[0]) -p $($tokenSegments[1]) -e none $hostName
+}
