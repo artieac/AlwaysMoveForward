@@ -47,10 +47,19 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Produces("application/json")]
         [Route("api/ApiResource/{id}/Secret"), HttpPost()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public ProtectedApiResource UpdateSecrets(long id, [FromBody]SecretInputModel input)
+        public ProtectedApiResource AddSecret(long id, [FromBody]SecretInputModel input)
         {
             ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddSecret(id, input.Secret.Sha256(), ProtectedApiSecret.SecretEncryptionType.SHA256);
             return retVal;
+        }
+
+        [Produces("application/json")]
+        [Route("api/ApiResource/{id}/Secret/{secretId}"), HttpDelete()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public bool DeleteSecret(long id, long secretId)
+        {
+            this.ServiceManager.ApiResourceService.DeleteSecret(id, secretId);
+            return this.ServiceManager.ApiResourceService.GetById(resourceId);
         }
 
         [Produces("application/json")]
@@ -60,6 +69,16 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         {
             ProtectedApiResource retVal = this.ServiceManager.ApiResourceService.AddClaim(id, input.Value);
             return retVal;
+        }
+
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [Route("api/ApiResource/{resourceId}/Claim/{claim}"), HttpDelete()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ProtectedApiResource DeleteClaim(long resourceId, string claim)
+        {
+            this.ServiceManager.ApiResourceService.DeleteClaim(resourceId, claim);
+            return this.ServiceManager.ApiResourceService.GetById(resourceId);
         }
 
         [Produces("application/json")]
@@ -76,10 +95,10 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Consumes("application/json")]
         [Route("api/ApiResource/{resourceId}/Scope/{scopeId}"), HttpDelete()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public bool UpdateScopes(long resourceId, long scopeId)
+        public ProtectedApiResource DeleteScope(long resourceId, long scopeId)
         {
-            return this.ServiceManager.ApiResourceService.DeleteScope(resourceId, scopeId);
+            this.ServiceManager.ApiResourceService.DeleteScope(resourceId, scopeId);
+            return this.ServiceManager.ApiResourceService.GetById(resourceId);
         }
-
     }
 }

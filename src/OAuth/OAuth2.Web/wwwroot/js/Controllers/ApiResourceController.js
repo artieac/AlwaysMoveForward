@@ -36,14 +36,14 @@
 	$scope.addApiSecret = function (id) {
 		$http.post('/api/ApiResource/' + id + '/Secret', $scope.apiResource)
 			.then(function (data) {
-				$scope.currentApiResource = data;
+				$scope.getById(id);
 			});
 	}
 
-	$scope.deleteApiSecret = function (id) {
+	$scope.deleteApiSecret = function (id, secretId) {
 		$http.delete('/api/ApiResource/' + id + '/Secret/' + secretId)
 			.then(function (data) {
-				$scope.currentApiResource = data;
+				$scope.getById(id);
 			});
 	}
 
@@ -55,13 +55,13 @@
 		
 			$http.post('/api/ApiResource/' + id + '/Claim', claimData)
 				.then(function (data) {
-					$scope.currentApiResource = data;
+					$scope.getById(id);
 				});
 		}
 		else {
-			$http.delete('/api/ApiResource/' + id + '/Claim', claim)
+			$http.delete('/api/ApiResource/' + id + '/Claim/' + claim)
 				.then(function (data) {
-					$scope.currentApiResource = data;
+					$scope.getById(id);
 				});
 		}
 	}

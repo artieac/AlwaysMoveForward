@@ -38,20 +38,38 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                 {
                     if (source.ApiSecrets != null)
                     {
-                        foreach (var child in source.ApiSecrets)
+                        foreach (var sourceChild in source.ApiSecrets)
                         {
-                            Models.ApiSecrets dtoChild = destination.ApiSecrets.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+                            Models.ApiSecrets dtoChild = destination.ApiSecrets.Where(destinationSecret => destinationSecret.Id == sourceChild.Id).FirstOrDefault();
 
                             if (dtoChild != null)
                             {
-                                dtoChild.ApiResourceId = child.ApiResourceId;
-                                dtoChild.Expiration = child.Expiration;
-                                dtoChild.Type = child.Type;
-                                dtoChild.Value = child.Value;
+                                dtoChild.ApiResourceId = sourceChild.ApiResourceId;
+                                dtoChild.Expiration = sourceChild.Expiration;
+                                dtoChild.Type = sourceChild.Type;
+                                dtoChild.Value = sourceChild.Value;
                             }
                             else
                             {
-                                destination.ApiSecrets.Add(Mapper.Map(child, new Models.ApiSecrets()));
+                                destination.ApiSecrets.Add(Mapper.Map(sourceChild, new Models.ApiSecrets()));
+                            }
+                        }
+
+                        if (destination.ApiSecrets != null)
+                        {
+                            for(int i = destination.ApiSecrets.Count() - 1; i > -1; i--)
+                            {
+                                var destinationChild = destination.ApiSecrets.ElementAt(i);
+
+                                if(destinationChild.Id > 0)
+                                {
+                                    ProtectedApiSecret sourceChild = source.ApiSecrets.Where(sourceSecret => sourceSecret.Id > 0 && sourceSecret.Id == destinationChild.Id).FirstOrDefault();
+
+                                    if (sourceChild == null)
+                                    {
+                                        destination.ApiSecrets.Remove(destinationChild);
+                                    }
+                                }
                             }
                         }
                     }
@@ -75,6 +93,24 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                                 destination.ApiClaims.Add(Mapper.Map(child, new Models.ApiClaims()));
                             }
                         }
+
+                        if (destination.ApiClaims != null)
+                        {
+                            for (int i = destination.ApiClaims.Count() - 1; i > -1; i--)
+                            {
+                                var destinationChild = destination.ApiClaims.ElementAt(i);
+
+                                if (destinationChild.Id > 0)
+                                {
+                                    ProtectedApiClaim sourceChild = source.ApiClaims.Where(sourceClaim => sourceClaim.Id == destinationChild.Id).FirstOrDefault();
+
+                                    if (sourceChild == null)
+                                    {
+                                        destination.ApiClaims.Remove(destinationChild);
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     foreach (var child in destination.ApiClaims)
@@ -84,7 +120,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                     {
                         foreach (var child in source.ApiScopes)
                         {
-                            Models.ApiScopes dtoChild = destination.ApiScopes.Where(destResource => destResource.Id == child.Id).FirstOrDefault();
+                            Models.ApiScopes dtoChild = destination.ApiScopes.Where(destinationScope => destinationScope.Id == child.Id).FirstOrDefault();
 
                             if (dtoChild != null)
                             {
@@ -100,6 +136,24 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                             else
                             {
                                 destination.ApiScopes.Add(Mapper.Map(child, new Models.ApiScopes()));
+                            }
+                        }
+
+                        if (destination.ApiScopes != null)
+                        {
+                            for (int i = destination.ApiScopes.Count() - 1; i > -1; i--)
+                            {
+                                var destinationChild = destination.ApiScopes.ElementAt(i);
+
+                                if(destinationChild.Id > 0)
+                                {
+                                    ProtectedApiScope sourceChild = source.ApiScopes.Where(sourceScope => sourceScope.Id == destinationChild.Id).FirstOrDefault();
+
+                                    if (sourceChild == null)
+                                    {
+                                        destination.ApiScopes.Remove(destinationChild);
+                                    }
+                                }
                             }
                         }
                     }

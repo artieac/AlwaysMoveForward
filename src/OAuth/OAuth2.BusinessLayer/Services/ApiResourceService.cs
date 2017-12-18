@@ -83,17 +83,73 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             return targetResource;
         }
 
+        public bool DeleteSecret(long resourceId, long secretId)
+        {
+            bool retVal = false;
+
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(resourceId);
+
+            if (targetResource != null)
+            {
+                if (targetResource.ApiScopes != null)
+                {
+                    ProtectedApiSecret targetSecret = targetResource.ApiSecrets.Where(secret => secret.Id == secretId).FirstOrDefault();
+
+                    if (targetSecret != null)
+                    {
+                        targetResource.ApiSecrets.Remove(targetSecret);
+                        this.ApiResourceRepository.Save(targetResource);
+                        retVal = true;
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
         public ProtectedApiResource AddClaim(long id, string claim)
         {
             ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(id);
 
             if (targetResource != null)
             {
-                targetResource.AddClaim(claim);
-                targetResource = this.ApiResourceRepository.Save(targetResource);
+                if (targetResource.ApiClaims != null)
+                {
+                    ProtectedApiClaim targetClaim = targetResource.ApiClaims.Where(claimInstance => claimInstance.Type == claim).FirstOrDefault();
+
+                    if (targetClaim == null)
+                    {
+                        targetResource.AddClaim(claim);
+                        targetResource = this.ApiResourceRepository.Save(targetResource);
+                    }
+                }
             }
 
             return targetResource;
+        }
+
+        public bool DeleteClaim(long resourceId, string claim)
+        {
+            bool retVal = false;
+
+            ProtectedApiResource targetResource = this.ApiResourceRepository.GetById(resourceId);
+
+            if (targetResource != null)
+            {
+                if (targetResource.ApiClaims != null)
+                {
+                    ProtectedApiClaim targetClaim = targetResource.ApiClaims.Where(claimInstance => claimInstance.Type == claim).FirstOrDefault();
+
+                    if (targetClaim != null)
+                    {
+                        targetResource.ApiClaims.Remove(targetClaim);
+                        this.ApiResourceRepository.Save(targetResource);
+                        retVal = true;
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         public ProtectedApiResource AddScope(long id, string name, string description)

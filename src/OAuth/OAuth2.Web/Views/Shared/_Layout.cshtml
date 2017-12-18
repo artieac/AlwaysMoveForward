@@ -21,27 +21,6 @@
 	@RenderSection("headerPlugins", false)
 </head>
 <body id="bodyPage" class="ie8 ie6to8 internetexplorer windows locale-us lang-us brand-2014">
-	<nav id="headerNavigation" class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebApplication2</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-				</ul>
-				@await Html.PartialAsync("_LoginPartial")
-			</div>
-		</div>
-	</nav>
 	@RenderBody()
 </body>
 </html>

@@ -1,0 +1,39 @@
+.blueButton {
+  min-height: 30px;
+  line-height: 20px;
+  width: 200px;
+  background-color: #5493E0;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+}
+.blueButton span {
+  font-size: small;
+  display: inline-block;
+  color: #FFFFFF;
+  vertical-align: middle;
+}
+.navbar {
+  border-color: #5493E0;
+  background-color: #5493E0;
+  color: #FFFFFF;
+}
+.navbar .navbar-nav > li > a,
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+  color: #FFFFFF;
+}
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+  color: #5493E0;
+  background-color: #FFFFFF;
+}
+.navbar .navbar-nav > .open > a,
+.navbar .navbar-nav > .open > a:hover,
+.navbar .navbar-nav > .open > a:focus {
+  color: #5493E0;
+  background-color: #5493E0;
+}

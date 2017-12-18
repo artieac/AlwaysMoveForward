@@ -21,7 +21,11 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
         ProtectedApiResource AddSecret(long id, string secret, string encryptionType);
 
+        bool DeleteSecret(long resourceId, long secretId);
+
         ProtectedApiResource AddClaim(long id, string claim);
+
+        bool DeleteClaim(long resourceId, string claim);
 
         ProtectedApiResource AddScope(long id, string name, string description);
 

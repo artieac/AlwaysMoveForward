@@ -22,24 +22,32 @@
 			<label>Manage Apis</label>
 		</div>
 		<input type="hidden" name="selectedApi" value="{{currentApiResource.id}}" />
-		<p>
-			Resource Name: <span>{{currentApiResource.name}}</span>
-		</p>
-		<p>
-			Display Name: <span>{{currentApiResource.displayName}}</span>
-		</p>
-		<p>
-			Description: <span>{{currentApiResource.description}}</span>
-		</p>
-		<p>
-			Enabled: <span>{{currentApiResource.enabled}}</span>
-		</p>
-
+		<div class="row">
+			<div class="col-sm-2">Resource Name:</div>
+			<div class="col-sm-2">{{currentApiResource.name}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">Display Name:</div>
+			<div class="col-sm-2">{{currentApiResource.displayName}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">Description:</div>
+			<div class="col-sm-2">{{currentApiResource.description}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">Enabled:</div>
+			<div class="col-sm-2">{{currentApiResource.enabled}}</div>
+		</div>
 		<div class="panel-heading">
-			<h3 class="panel-title">Secrets</h3>
+			<h3 class="panel-title">Claims</h3>
 		</div>
 		<div class="panel-body">
 			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th width="1%">Claim</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<td><input type="checkbox" name="@IdentityModel.JwtClaimTypes.Name" ng-click="updateApiClaim(currentApiResource.id, '@IdentityModel.JwtClaimTypes.Name');" ng-checked="hasClaim(currentApiResource, '@IdentityModel.JwtClaimTypes.Name');">@IdentityModel.JwtClaimTypes.Name</></td>
