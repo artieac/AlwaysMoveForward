@@ -59,7 +59,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         public bool DeleteSecret(long id, long secretId)
         {
             this.ServiceManager.ApiResourceService.DeleteSecret(id, secretId);
-            return this.ServiceManager.ApiResourceService.GetById(resourceId);
+            return true;
         }
 
         [Produces("application/json")]

@@ -21,7 +21,6 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="1%">&nbsp;</th>
 				<th width="20%">Name</th>
 				<th width="20%">Display Name</th>
 				<th width="20%">Description</th>
@@ -30,7 +29,6 @@
 		</thead>
 		<tbody ng-init="getAll();">
 			<tr ng-repeat="apiResource in apiResources">
-				<td><input type="radio" name="selectedApi" value="{{apiResource.id}}" /></td>
 				<td>{{ apiResource.name }}</td>
 				<td>{{ apiResource.displayName }}</td>
 				<td>{{ apiResource.description }}</td>
@@ -46,7 +44,6 @@
 				</td>
 			</tr>
 			<tr ng-form="newApiResourceForm">
-				<td></td>
 				<td><input type="text" name="newApiResourceName" ng-model="newApiResource.name" required /></td>
 				<td><input type="text" name="newApiResourceDisplayName" ng-model="newApiResource.displayName" required /></td>
 				<td><input type="text" name="newApiResourceDescription" ng-model="newApiResource.description" required /></td>

@@ -69,7 +69,7 @@
 	$scope.addApiScope = function (id) {
 		$http.post('/api/ApiResource/' + id + '/Scope', $scope.apiScope)
 			.then(function (data) {
-				$scope.currentApiResource = data;
+				$scope.getById(id);
 			});
 	}
 

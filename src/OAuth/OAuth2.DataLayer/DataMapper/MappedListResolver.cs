@@ -5,11 +5,11 @@ using AutoMapper;
 
 namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
 {
-    public abstract class MappedListResolver<TSourceContainer, TDestinationContainer, TDomainListItem, TDTOListItem>
+    public abstract class MappedListResolver<TSourceContainer, TDestinationContainer, TSourceListItem, TDestinationListItem>
        where TSourceContainer : class
        where TDestinationContainer : class
-       where TDomainListItem : class
-       where TDTOListItem : class
+       where TSourceListItem : class
+       where TDestinationListItem : class
     {
         public MappedListResolver(TSourceContainer sourceContainer, TDestinationContainer destinationContainer)
         {
@@ -20,28 +20,30 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
         protected TSourceContainer SourceContainer { get; private set; }
         protected TDestinationContainer DestinationContainer { get; private set; }
 
-        protected abstract IList<TDomainListItem> GetSourceList(TSourceContainer source);
-        protected abstract IList<TDTOListItem> GetDestinationList(TDestinationContainer destination);
-        protected abstract TDTOListItem FindItemInList(IList<TDTOListItem> destinationList, TDomainListItem searchTarget);
-        protected abstract TDomainListItem FindItemInList(IList<TDomainListItem> sourceList, TDTOListItem searchTarget);
+        protected abstract IList<TSourceListItem> GetSourceList();
+        protected abstract IList<TDestinationListItem> GetDestinationList();
+        protected abstract TDestinationListItem FindItemInList(IList<TDestinationListItem> destinationList, TSourceListItem searchTarget);
+        protected abstract TSourceListItem FindItemInList(IList<TSourceListItem> sourceList, TDestinationListItem searchTarget);
 
-        public void MapList()
+        protected abstract void SetDestinationContainer(TDestinationListItem listItem, TDestinationContainer destinationContainer);
+
+        public IList<TDestinationListItem> MapList()
         {
-            IList<TDTOListItem> destinationList = this.GetDestinationList(this.DestinationContainer);
+            IList<TDestinationListItem> destinationList = this.GetDestinationList();
 
             if (destinationList == null)
             {
-                destinationList = new List<TDTOListItem>();
+                destinationList = new List<TDestinationListItem>();
             }
 
-            IList<TDomainListItem> sourceList = this.GetSourceList(this.SourceContainer);
+            IList<TSourceListItem> sourceList = this.GetSourceList();
 
             if (sourceList != null)
             {
                 // go through and remove any items that were removed in the domain and need to be removed in the dto
                 for (int i = destinationList.Count - 1; i > -1; i--)
                 {
-                    TDomainListItem destinationListDeleteItem = this.FindItemInList(sourceList, destinationList[i]);
+                    TSourceListItem destinationListDeleteItem = this.FindItemInList(sourceList, destinationList[i]);
 
                     if (destinationListDeleteItem == null)
                     {
@@ -52,18 +54,25 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                 // add in all of the new items, or update items already in the list
                 for (int i = 0; i < sourceList.Count; i++)
                 {
-                    TDTOListItem destinationListAddUpdateItem = this.FindItemInList(destinationList, sourceList[i]);
+                    TDestinationListItem destinationListAddUpdateItem = this.FindItemInList(destinationList, sourceList[i]);
 
                     if (destinationListAddUpdateItem == null)
                     {
-                        destinationList.Add(Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i]));
+                        destinationList.Add(Mapper.Map<TSourceListItem, TDestinationListItem>(sourceList[i]));
                     }
                     else
                     {
-                        destinationListAddUpdateItem = Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i], destinationListAddUpdateItem);
+                        destinationListAddUpdateItem = Mapper.Map<TSourceListItem, TDestinationListItem>(sourceList[i], destinationListAddUpdateItem);
                     }
                 }
+
+                foreach (var child in destinationList)
+                {
+                    this.SetDestinationContainer(child, this.DestinationContainer);
+                }
             }
+
+            return destinationList;
         }
     }
 }
