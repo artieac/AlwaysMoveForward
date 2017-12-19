@@ -49,6 +49,7 @@ namespace OAuth2.Client
             services.AddAuthentication(options => {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
 //            .AddCookie("Cookies")
             .AddOpenIdConnect(options => SetOpenIdConnectOptions(options));
@@ -57,14 +58,15 @@ namespace OAuth2.Client
         {
 //            options.AuthenticationScheme = "oidc";
             options.SignInScheme = "Cookies";
+            options.SignOutScheme = "Cookies";
 
             options.Authority = Constants.Authority;
             options.RequireHttpsMetadata = false;
 
             options.ClientId = "abcd";
             options.ClientSecret = "abcd";
-
-            options.CallbackPath = "/home/handlecallback";
+         
+            options.CallbackPath = "/Home/HandleCallback";
             options.ResponseType = "code id_token";
 
             options.Scope.Add("offline_access");

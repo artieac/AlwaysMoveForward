@@ -40,7 +40,7 @@ namespace OAuth2.Client.Controllers
 
         public async Task<IActionResult> LogoutTest()
         {
-            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync();
             return View("Index");
         }
 

@@ -61,9 +61,9 @@ namespace AlwaysMoveForward.OAuth2.Web
             services.AddTransient<IUserPasswordStore<AMFUserLogin>, UserStore>();
             services.AddTransient<IRoleStore<string>, RoleStore>();
             services.AddScoped<IUserClaimsPrincipalFactory<AMFUserLogin>, ClaimsPrincipalFactory>();
-            services.AddTransient<IResourceOwnerPasswordValidator, AMFPasswordValidator>();
 
-            services.AddIdentity<AMFUserLogin, string> (o => {
+            services.AddIdentity<AMFUserLogin, string>(o =>
+            {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = true;
@@ -133,22 +133,6 @@ namespace AlwaysMoveForward.OAuth2.Web
                     name: "default",
                     template: "{controller=Account}/{action=Login}/{id?}");
             });
-        }
-
-        public AESConfiguration LoadAESConfigurationSettings()
-        {
-            AESConfiguration retVal = new AESConfiguration();
-            retVal.EncryptionKey = Environment.GetEnvironmentVariable("AES_ENCRYPTION_KEY");
-            retVal.Salt = Environment.GetEnvironmentVariable("AES_ENCRYPTION_SALT");
-            return retVal;
-        }
-
-        public DatabaseConfiguration LoadDatabaseConfigurationSettings()
-        {
-            DatabaseConfiguration retVal = new DatabaseConfiguration();
-            retVal.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-            retVal.DatabaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
-            return retVal;
         }
     }
 }

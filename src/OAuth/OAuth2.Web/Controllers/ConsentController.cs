@@ -51,6 +51,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// <param name="returnUrl"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("Consent/Index")]
         [Authorize]
         public async Task<IActionResult> Index(string returnUrl)
         {

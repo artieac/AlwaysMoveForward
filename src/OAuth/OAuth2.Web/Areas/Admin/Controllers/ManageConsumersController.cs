@@ -13,8 +13,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
     /// <summary>
     /// This class provides the UI elemetns to manage the consumers 
     /// </summary>
-    [Area("Admin")]
-    [Route("admin/[controller]/[action]")]
+    [Area("admin")]
     [Authorize(Roles = RoleType.Names.Administrator)]
     public class ManageConsumersController : AlwaysMoveForward.OAuth2.Web.Controllers.AMFControllerBase
     {
@@ -43,6 +42,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The consumer key</param>
         /// <returns>A view</returns>
+        [Route("admin/ManageConsumers/Edit/{id}")]
         public ActionResult Edit(string id)
         {
             Consumer retVal = this.ServiceManager.ConsumerService.GetConsumer(id);
