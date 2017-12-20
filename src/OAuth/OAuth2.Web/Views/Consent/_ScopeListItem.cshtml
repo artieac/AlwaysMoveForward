@@ -1,6 +1,6 @@
 ﻿@model AlwaysMoveForward.OAuth2.Web.Models.Consent.ScopeViewModel
 
-<li class="list-group-item">
+<li class="list-group-item" name="consentOptions">
 	<label>
 		<input class="consent-scopecheck"
 			   type="checkbox"
@@ -13,16 +13,16 @@
 		<input type="hidden"
 				name="ScopesConsented"
 				value="@Model.Name" />
-		}
-
-		<strong>@Model.DisplayName</strong>
 	</label>
 
-	@if (Model.Description != null)
-	{
-		<div class="consent-description">
+	<div class="consent-description">
+		@if (Model.Description != null)
+		{
 			<label for="scopes_@Model.Name">@Model.Description</label>
-		</div>
-	}
-
+		}
+		else
+		{
+			<label for="scopes_@Model.Name">@Model.DisplayName</label>
+		}
+	</div>
 </li>

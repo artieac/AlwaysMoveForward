@@ -5,7 +5,7 @@ using System.Text;
 using AlwaysMoveForward.OAuth2.DataLayer.Models;
 using System.Linq;
 
-namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
+namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper.ListResolvers
 {
     internal class ApiSecretListResolver : MappedListResolver<ProtectedApiResource, Models.ApiResources, ProtectedApiSecret, Models.ApiSecrets>
     {

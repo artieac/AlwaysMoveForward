@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
+namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper.ListResolvers
 {
     internal class ApiClaimListResolver : MappedListResolver<ProtectedApiResource, Models.ApiResources, ProtectedApiClaim, Models.ApiClaims>
     {

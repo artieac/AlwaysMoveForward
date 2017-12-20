@@ -70,6 +70,8 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers
         /// <param name="returnUrl">The url to return to after login.</param>
         /// <returns>The index view</returns>
         [AllowAnonymous]
+        [Route("Account/Index")]
+        [Route("Account/Login")]
         public ActionResult Login(string returnUrl, string consumerName)
         {
             LoginModel retVal = new LoginModel();

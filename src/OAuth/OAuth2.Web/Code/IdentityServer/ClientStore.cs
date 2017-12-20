@@ -50,7 +50,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Code.IdentityServer
                 retVal.ClientSecrets = new List<Secret>() { new Secret(foundItem.ConsumerSecret.Sha256()) };
 
                 retVal.RedirectUris = new List<string>();
-                retVal.RedirectUris.Add("http://localhost:53109/Home/HandleCallback");
+                retVal.RedirectUris.Add("http://localhost:53109/home/handlecallback");
 
                 retVal.BackChannelLogoutUri = "http://localhost:53109/home/logout";
 

@@ -43,22 +43,30 @@ namespace OAuth2.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddMvc();
-
             services.AddAuthentication(options => {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-//            .AddCookie("Cookies")
+            .AddCookie(options => SetCookieOptions(options))
             .AddOpenIdConnect(options => SetOpenIdConnectOptions(options));
+
+            // Add framework services.
+            services.AddMvc();
         }
+
+        private void SetCookieOptions(CookieAuthenticationOptions options)
+        {
+            options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/login");
+            options.SlidingExpiration = true;
+        }
+
         private void SetOpenIdConnectOptions(OpenIdConnectOptions options)
         {
 //            options.AuthenticationScheme = "oidc";
-            options.SignInScheme = "Cookies";
-            options.SignOutScheme = "Cookies";
+            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.SignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
             options.Authority = Constants.Authority;
             options.RequireHttpsMetadata = false;
@@ -66,7 +74,7 @@ namespace OAuth2.Client
             options.ClientId = "abcd";
             options.ClientSecret = "abcd";
          
-            options.CallbackPath = "/Home/HandleCallback";
+            options.CallbackPath = "/home/handlecallback";
             options.ResponseType = "code id_token";
 
             options.Scope.Add("offline_access");

@@ -23,6 +23,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
                     cfg.CreateMap<Consumer, Models.Consumers>();
                     cfg.CreateMap<Models.Consumers, Consumer>();
                     ApiResourceDataMapper.Configure(cfg);
+//                    ClientDataMapper.Configure(cfg);
                 });
 
 #if DEBUG

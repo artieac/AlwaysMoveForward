@@ -1,5 +1,6 @@
 ﻿using AlwaysMoveForward.Core.Common.DataLayer;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
+using AlwaysMoveForward.OAuth2.DataLayer.DataMapper.ListResolvers;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
