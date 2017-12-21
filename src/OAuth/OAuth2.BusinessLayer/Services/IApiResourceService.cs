@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -30,5 +31,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         ProtectedApiResource AddScope(long id, string name, string description);
 
         bool DeleteScope(long resourceId, long scopeId);
+
+        IList<ProtectedApiScope> GetAvailableScopes();
     }
 }

@@ -1,18 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement
 {
     public class Client
     {
+        public const int DefaultAccessTokenLifetime = 7800;
         public Client()
         {
-//            ClientClaims = new HashSet<ClientClaims>();
-//            ClientCorsOrigins = new HashSet<ClientCorsOrigins>();
-//            ClientGrantTypes = new HashSet<ClientGrantTypes>();
-//            ClientIdPrestrictions = new HashSet<ClientIdPrestrictions>();
-//            ClientPostLogoutRedirectUris = new HashSet<ClientPostLogoutRedirectUris>();
-//            ClientProperties = new HashSet<ClientProperties>();
+            this.AbsoluteRefreshTokenLifetime = DefaultAccessTokenLifetime;
+            this.AccessTokenLifetime = DefaultAccessTokenLifetime;
+            this.AccessTokenType = 0;
+            this.AllowAccessTokensViaBrowser = false;
+            this.AllowOfflineAccess = false;
+            this.AllowPlainTextPkce = false;
+            this.AllowRememberConsent = true;
+            this.AlwaysIncludeUserClaimsInIdToken = false;
+            this.AlwaysSendClientClaims = false;
+            this.AuthorizationCodeLifetime = DefaultAccessTokenLifetime;
+            this.BackChannelLogoutSessionRequired = false;
+            this.BackChannelLogoutUri = "";
+            this.ClientClaimsPrefix = "";
+            this.ClientId = "";
+            this.ClientName = "";
+            this.ClientUri = "";
+            this.ConsentLifetime = DefaultAccessTokenLifetime;
+            this.Description = "";
+            this.Enabled = true;
+            this.EnableLocalLogin = false;
+            this.FrontChannelLogoutSessionRequired = false;
+            this.FrontChannelLogoutUri = "";
+            this.IdentityTokenLifetime = DefaultAccessTokenLifetime;
+            this.IncludeJwtId = false;
+            this.LogoUri = "";
+            this.PairWiseSubjectSalt = "";
+            this.ProtocolType = "";
+            this.RefreshTokenExpiration = DefaultAccessTokenLifetime;
+            this.RefreshTokenUsage = 0;
+            this.RequireClientSecret = false;
+            this.RequireConsent = false;
+            this.RequirePkce = false;
+            this.SlidingRefreshTokenLifetime = DefaultAccessTokenLifetime;
+            this.UpdateAccessTokenClaimsOnRefresh = true;
+            //            ClientClaims = new HashSet<ClientClaims>();
+            //            ClientCorsOrigins = new HashSet<ClientCorsOrigins>();
+            //            ClientGrantTypes = new HashSet<ClientGrantTypes>();
+            //            ClientIdPrestrictions = new HashSet<ClientIdPrestrictions>();
+            //            ClientPostLogoutRedirectUris = new HashSet<ClientPostLogoutRedirectUris>();
+            //            ClientProperties = new HashSet<ClientProperties>();
             ClientRedirectUris = new List<ClientRedirectUri>();
             ClientScopes = new List<ClientScope>();
             ClientSecrets = new List<ClientSecret>();
@@ -61,7 +97,111 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement
         //public ICollection<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
         //public ICollection<ClientProperties> ClientProperties { get; set; }
         public IList<ClientRedirectUri> ClientRedirectUris { get; set; }
+
+        public void AddRedirectUri(string redirectUri)
+        {
+            if (this.ClientRedirectUris == null)
+            {
+                this.ClientRedirectUris = new List<ClientRedirectUri>();
+            }
+
+            ClientRedirectUri newItem = new ClientRedirectUri();
+            newItem.ClientId = this.Id;
+            newItem.RedirectUri = redirectUri;
+            this.ClientRedirectUris.Add(newItem);
+        }
+
+        public void RemoveRedirectUri(int redirectUriId)
+        {
+            if (this.ClientRedirectUris != null)
+            {
+                ClientRedirectUri targetItem = this.ClientRedirectUris.Where(redirectUri => redirectUri.Id == redirectUriId).FirstOrDefault();
+
+                if (targetItem != null)
+                {
+                    this.ClientRedirectUris.Remove(targetItem);
+                }
+            }
+        }
+
         public IList<ClientScope> ClientScopes { get; set; }
+
+        public void UpdateScopes(IList<string> scopes)
+        {
+            for(int i = 0; i < scopes.Count; i++)
+            {
+                ClientScope foundItem = this.ClientScopes.Where(scope => scope.Scope == scopes[i]).FirstOrDefault();
+
+                if(foundItem == null)
+                {
+                    this.AddScope(scopes[i]);
+                }
+            }
+
+            for(int j = this.ClientScopes.Count - 1; j > -1; j--)
+            {
+                string foundItem = scopes.Where(scope => scope == this.ClientScopes[j].Scope).FirstOrDefault();
+
+                if(foundItem == null)
+                {
+                    this.ClientScopes.Remove(this.ClientScopes[j]);
+                }
+            }
+        }
+        public void AddScope(string scope)
+        {
+            if (this.ClientScopes == null)
+            {
+                this.ClientScopes = new List<ClientScope>();
+            }
+
+            ClientScope newItem = new ClientScope();
+            newItem.ClientId = this.Id;
+            newItem.Scope = scope;
+            this.ClientScopes.Add(newItem);
+        }
+
+        public void RemoveScope(int scopeId)
+        {
+            if (this.ClientScopes != null)
+            {
+                ClientScope targetScope = this.ClientScopes.Where(scope => scope.Id == scopeId).FirstOrDefault();
+
+                if (targetScope != null)
+                {
+                    this.ClientScopes.Remove(targetScope);
+                }
+            }
+        }
+
         public IList<ClientSecret> ClientSecrets { get; set; }
+
+        public void AddSecret(string secret, string encryptionType, string description)
+        {
+            if(this.ClientSecrets == null)
+            {
+                this.ClientSecrets = new List<ClientSecret>();
+            }
+
+            ClientSecret newSecret = new ClientSecret();
+            newSecret.ClientId = this.Id;
+            newSecret.Description = Description;
+            newSecret.Type = encryptionType;
+            newSecret.Value = secret;
+            this.ClientSecrets.Add(newSecret);
+        }
+
+        public void RemoveSecret(int secretId)
+        {
+            if (this.ClientSecrets != null)
+            {
+                ClientSecret targetSecret = this.ClientSecrets.Where(secret => secret.Id == secretId).FirstOrDefault();
+
+                if (targetSecret != null)
+                {
+                    this.ClientSecrets.Remove(targetSecret);
+                }
+            }
+        }
     }
 }

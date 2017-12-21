@@ -25,5 +25,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         ILoginAttemptRepository LoginAttemptRepository { get; }
 
         IApiResourceRepository ApiResourceRepository { get; }
+
+        IClientRepository ClientRepository { get; }
     }
 }

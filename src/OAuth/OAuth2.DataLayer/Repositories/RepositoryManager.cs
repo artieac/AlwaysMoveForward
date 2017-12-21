@@ -112,5 +112,27 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
                 return this.apiResourceRepository;
             }
         }
+
+        /// <summary>
+        /// The current instance of the ApiResourceRepository
+        /// </summary>
+        private IClientRepository clientRepository;
+
+        /// <summary>
+        /// Gets the current instance of the loginAttemptRepository
+        /// </summary>
+        public IClientRepository ClientRepository
+        {
+            get
+            {
+                if (this.clientRepository == null)
+                {
+                    this.clientRepository = new ClientRepository(this.NewUnitOfWork);
+                }
+
+                return this.clientRepository;
+            }
+        }
+
     }
 }

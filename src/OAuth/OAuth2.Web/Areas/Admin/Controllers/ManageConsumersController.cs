@@ -7,6 +7,7 @@ using AlwaysMoveForward.OAuth2.BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using AlwaysMoveForward.Core.Common.Utilities;
+using AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement;
 
 namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
 {
@@ -33,7 +34,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
                 pageIndex = page.Value - 1;
             }
 
-            IPagedList<Consumer> retVal = new PagedList<Consumer>(this.ServiceManager.ConsumerService.GetAll(), pageIndex, AlwaysMoveForward.OAuth2.Web.Models.PagedListModel<int>.PageSize);
+            IPagedList<Client> retVal = new PagedList<Client>(this.ServiceManager.ClientService.GetAll(), pageIndex, AlwaysMoveForward.OAuth2.Web.Models.PagedListModel<int>.PageSize);
             return this.View(retVal);
         }
 
@@ -42,10 +43,16 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The consumer key</param>
         /// <returns>A view</returns>
-        [Route("admin/ManageConsumers/Edit/{id}")]
-        public ActionResult Edit(string id)
+        [Route("admin/ManageConsumers/Edit/{id?}")]
+        public ActionResult Edit(long? id)
         {
-            Consumer retVal = this.ServiceManager.ConsumerService.GetConsumer(id);
+            long retVal = -1;
+
+            if (id.HasValue)
+            {
+                retVal = id.Value;
+            }
+
             return this.View(retVal);
         }
 
@@ -60,7 +67,7 @@ namespace AlwaysMoveForward.OAuth2.Web.Areas.Admin.Controllers
             {
                 using (this.ServiceManager.UnitOfWork.BeginTransaction())
                 {
-                    this.ServiceManager.ConsumerService.Save(consumer);
+                    Client newClient = this.ServiceManager.ClientService.Add(consumer.Name, consumer.Name, consumer.Name, true);
                     this.ServiceManager.UnitOfWork.EndTransaction(true);
                 }
             }

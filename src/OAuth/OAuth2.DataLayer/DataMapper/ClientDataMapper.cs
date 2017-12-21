@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.DataMapper
             cfg.CreateMap<Models.ClientSecrets, ClientSecret>();
             cfg.CreateMap<ClientScope, Models.ClientScopes>()
                 .ForMember(source => source.Client, opt => opt.Ignore());
-            cfg.CreateMap<Models.ClientScopes, Client>();
+            cfg.CreateMap<Models.ClientScopes, ClientScope>();
             cfg.CreateMap<Client, Models.Clients>()
                 .ForMember(source => source.ClientRedirectUris, opt => opt.Ignore())
                 .ForMember(source => source.ClientSecrets, opt => opt.Ignore())
