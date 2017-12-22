@@ -2,6 +2,8 @@
 using AlwaysMoveForward.OAuth2.Common.DomainModel;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.APIManagement;
 using AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement;
+using AlwaysMoveForward.OAuth2.Web.Models.API;
+using IdentityServer4;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,9 +23,15 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
 
         [Route("api/Scopes"), HttpGet()]
         [Authorize(Roles = RoleType.Names.Administrator)]
-        public IList<ProtectedApiScope> Get()
+        public AvailableScopesModel Get()
         {
-            IList<ProtectedApiScope> retVal = this.ServiceManager.ApiResourceService.GetAvailableScopes();
+            AvailableScopesModel retVal = new AvailableScopesModel();
+            retVal.ApiScopes = this.ServiceManager.ApiResourceService.GetAvailableScopes();
+
+            retVal.IdentityScopes = new List<string>();
+            retVal.IdentityScopes.Add(IdentityServerConstants.StandardScopes.OpenId);
+            retVal.IdentityScopes.Add(IdentityServerConstants.StandardScopes.Profile);
+
             return retVal;
         }
     }

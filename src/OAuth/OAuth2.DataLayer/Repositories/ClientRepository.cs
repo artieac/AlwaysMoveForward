@@ -56,6 +56,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
                 .Include(client => client.ClientRedirectUris)
                 .Include(client => client.ClientScopes)
                 .Include(client => client.ClientSecrets)
+                .Include(client => client.ClientGrantTypes)
                 .FirstOrDefault();
 
             return retVal;

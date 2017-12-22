@@ -301,9 +301,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(250);
 
-                //entity.HasOne(d => d.Client)
-                //    .WithMany(p => p.ClientGrantTypes)
-                //    .HasForeignKey(d => d.ClientId);
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.ClientGrantTypes)
+                    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientIdPrestrictions>(entity =>

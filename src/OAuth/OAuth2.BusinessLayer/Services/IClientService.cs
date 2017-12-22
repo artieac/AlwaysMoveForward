@@ -25,5 +25,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
         bool DeleteRedirectUri(long clientId, int redirectUriId);
 
+        Client AddGrantType(long clientId, string grantType);
+
+        bool DeleteGrantType(long clientId, string grantType);
     }
 }

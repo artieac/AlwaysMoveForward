@@ -12,11 +12,11 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement
             this.AbsoluteRefreshTokenLifetime = DefaultAccessTokenLifetime;
             this.AccessTokenLifetime = DefaultAccessTokenLifetime;
             this.AccessTokenType = 0;
-            this.AllowAccessTokensViaBrowser = false;
-            this.AllowOfflineAccess = false;
+            this.AllowAccessTokensViaBrowser = true;
+            this.AllowOfflineAccess = true;
             this.AllowPlainTextPkce = false;
             this.AllowRememberConsent = true;
-            this.AlwaysIncludeUserClaimsInIdToken = false;
+            this.AlwaysIncludeUserClaimsInIdToken = true;
             this.AlwaysSendClientClaims = false;
             this.AuthorizationCodeLifetime = DefaultAccessTokenLifetime;
             this.BackChannelLogoutSessionRequired = false;
@@ -28,18 +28,18 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement
             this.ConsentLifetime = DefaultAccessTokenLifetime;
             this.Description = "";
             this.Enabled = true;
-            this.EnableLocalLogin = false;
+            this.EnableLocalLogin = true;
             this.FrontChannelLogoutSessionRequired = false;
             this.FrontChannelLogoutUri = "";
             this.IdentityTokenLifetime = DefaultAccessTokenLifetime;
             this.IncludeJwtId = false;
             this.LogoUri = "";
             this.PairWiseSubjectSalt = "";
-            this.ProtocolType = "";
+            this.ProtocolType = "oidc";
             this.RefreshTokenExpiration = DefaultAccessTokenLifetime;
             this.RefreshTokenUsage = 0;
             this.RequireClientSecret = false;
-            this.RequireConsent = false;
+            this.RequireConsent = true;
             this.RequirePkce = false;
             this.SlidingRefreshTokenLifetime = DefaultAccessTokenLifetime;
             this.UpdateAccessTokenClaimsOnRefresh = true;
@@ -92,7 +92,39 @@ namespace AlwaysMoveForward.OAuth2.Common.DomainModel.ConsumerManagement
 
         //public ICollection<ClientClaims> ClientClaims { get; set; }
         //public ICollection<ClientCorsOrigins> ClientCorsOrigins { get; set; }
-        //public ICollection<ClientGrantTypes> ClientGrantTypes { get; set; }
+        public IList<ClientGrantType> ClientGrantTypes { get; set; }
+
+        public void AddGrantType(string grantType)
+        {
+            if (this.ClientGrantTypes == null)
+            {
+                this.ClientGrantTypes = new List<ClientGrantType>();
+            }
+
+            ClientGrantType targetItem = this.ClientGrantTypes.Where(targetGrantType => targetGrantType.GrantType == grantType).FirstOrDefault();
+
+            if(targetItem == null)
+            {
+                ClientGrantType newItem = new ClientGrantType();
+                newItem.ClientId = this.Id;
+                newItem.GrantType = grantType;
+                this.ClientGrantTypes.Add(newItem);
+            }
+        }
+
+        public void RemoveGrantType(string grantType)
+        {
+            if (this.ClientGrantTypes != null)
+            {
+                ClientGrantType targetItem = this.ClientGrantTypes.Where(targetGrantType => targetGrantType.GrantType == grantType).FirstOrDefault();
+
+                if (targetItem != null)
+                {
+                    this.ClientGrantTypes.Remove(targetItem);
+                }
+            }
+        }
+
         //public ICollection<ClientIdPrestrictions> ClientIdPrestrictions { get; set; }
         //public ICollection<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
         //public ICollection<ClientProperties> ClientProperties { get; set; }

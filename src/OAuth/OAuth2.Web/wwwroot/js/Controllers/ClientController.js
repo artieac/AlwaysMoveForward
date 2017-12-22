@@ -11,7 +11,12 @@
 
 	$scope.getAvailableScopes = function () {
 		var getAvailableScopesRequest = $resource('/api/Scopes');
-		$scope.availableScopes = getAvailableScopesRequest.query();
+		$scope.availableScopes = getAvailableScopesRequest.get();
+	}
+
+	$scope.getGrantTypes = function () {
+		var getGrantTypesRequest = $resource('/api/GrantTypes');
+		$scope.grantTypes = getGrantTypesRequest.query();
 	}
 
 	$scope.getById = function (clientId) {
@@ -45,9 +50,31 @@
 			});
 	}
 
+	$scope.hasScope = function (client, targetScope) {
+		var retVal = false;
+
+		if (client !== null && client !== undefined) {
+			if (client.clientScopes !== null && client.clientScopes !== undefined) {
+				for (var i = 0; i < client.clientScopes.length; i++) {
+					if (client.clientScopes[i].scope === targetScope) {
+						retVal = true;
+						break;
+					}
+				}
+			}
+		}
+
+		return retVal;
+	}
+
 	$scope.addSelectedScopes = function () {
 		var scopesToAdd = [];
 		$('#availableScopes option:selected')
+			.each(function () {
+				scopesToAdd.push($(this).text());
+			});
+
+		$('#identityScopes option:selected')
 			.each(function () {
 				scopesToAdd.push($(this).text());
 			});
@@ -67,11 +94,13 @@
 	$scope.updateScopes = function (clientId) {
 		var updateScopesModel = new Object();
 		updateScopesModel.scopes = [];
+
 		$('#selectedScopes')
 			.each(function () {
-				var textString = $(this).text();
-				textString = $.trim(textString.replace(/[\t\n]+/g, ' '))
-				updateScopesModel.scopes.push(textString);
+				var select = $(this);
+				$(select).children('option').each(function () {
+					updateScopesModel.scopes.push($(this).val());
+				});
 			});
 
 		$http.post('/api/Client/' + clientId + '/Scopes', updateScopesModel)
@@ -100,4 +129,41 @@
 				$scope.getById(clientId);
 			});
 	}
+
+	$scope.isGrantTypeSelected = function (grantType) {
+		var retVal = false;
+
+		if ($scope.currentClient !== null && $scope.currentClient !== undefined) {
+			if ($scope.currentClient.clientGrantTypes !== null && $scope.currentClient.clientGrantTypes !== undefined) {
+				for (var i = 0; i < $scope.currentClient.clientGrantTypes.length; i++) {
+					if ($scope.currentClient.clientGrantTypes[i].grantType === grantType) {
+						retVal = true;
+						break;
+					}
+				}
+			}
+		}
+
+		return retVal;		
+	}
+
+	$scope.updateGrantType = function (clientId, grantType) {
+		var targetCheckbox = jQuery("input[name='" + grantType + "']");
+
+		if (targetCheckbox.is(':checked')) {
+			var grantTypeData = { value: grantType };
+
+			$http.post('/api/Client/' + clientId + '/GrantType', grantTypeData)
+				.then(function (data) {
+					$scope.getById(clientId);
+				});
+		}
+		else {
+			$http.delete('/api/Client/' + clientId + '/GrantType/' + grantType)
+				.then(function (data) {
+					$scope.getById(id);
+				});
+		}
+	}
+
 });

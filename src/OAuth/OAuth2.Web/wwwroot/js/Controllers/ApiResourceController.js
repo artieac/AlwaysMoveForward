@@ -13,7 +13,7 @@
 		var retVal = false;
 
 		if (apiResource !== null && apiResource !== undefined) {
-			if (apiResource.apiClaims != null && apiResource.apiClaims !== undefined) {
+			if (apiResource.apiClaims !== null && apiResource.apiClaims !== undefined) {
 				for (var i = 0; i < apiResource.apiClaims.length; i++) {
 					if (apiResource.apiClaims[i].type === targetClaim) {
 						retVal = true;

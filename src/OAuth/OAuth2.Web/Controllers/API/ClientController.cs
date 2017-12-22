@@ -42,7 +42,14 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         [Authorize(Roles = RoleType.Names.Administrator)]
         public ConsumerManagement.Client Add([FromBody]ConsumerManagement.Client newResource)
         {
-            return this.ServiceManager.ClientService.Add(newResource.ClientName, newResource.ClientName, newResource.Description, newResource.Enabled);
+            if(newResource.Id > 0)
+            {
+                return this.ServiceManager.ClientService.Update(newResource.Id, newResource.ClientName, newResource.ClientName, newResource.Description, newResource.Enabled);
+            }
+            else
+            {
+                return this.ServiceManager.ClientService.Add(newResource.ClientName, newResource.ClientName, newResource.Description, newResource.Enabled);
+            }
         }
 
         [Produces("application/json")]
@@ -90,6 +97,26 @@ namespace AlwaysMoveForward.OAuth2.Web.Controllers.API
         {
             ConsumerManagement.Client retVal = this.ServiceManager.ClientService.UpdateScopes(id, input.Scopes);
             return retVal;
-        }      
+        }
+
+        [Produces("application/json")]
+        [Route("api/Client/{clientId}/GrantType"), HttpPost()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ConsumerManagement.Client UpdateClaims(long clientId, [FromBody]ClaimInputModel input)
+        {
+            ConsumerManagement.Client retVal = this.ServiceManager.ClientService.AddGrantType(clientId, input.Value);
+            return retVal;
+        }
+
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [Route("api/Client/{clientId}/GrantType/{grantType}"), HttpDelete()]
+        [Authorize(Roles = RoleType.Names.Administrator)]
+        public ConsumerManagement.Client DeleteClaim(long clientId, string grantType)
+        {
+            this.ServiceManager.ClientService.DeleteGrantType(clientId, grantType);
+            return this.ServiceManager.ClientService.GetById(clientId);
+        }
+
     }
 }

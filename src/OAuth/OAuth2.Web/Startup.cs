@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.OAuth2.Web
             services.AddScoped<ServiceManagerBuilder>();
             services.AddScoped<IServiceManager, ServiceManager>();
 
-            services.AddTransient<IClientStore, ClientStore>();
+//            services.AddTransient<IClientStore, ClientStore>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IResourceStore, ResourceStore>();
             services.AddTransient<IUserStore<AMFUserLogin>, UserStore > ();
@@ -95,7 +95,7 @@ namespace AlwaysMoveForward.OAuth2.Web
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
                 })
-                .AddClientStore<ClientStore>()
+//                .AddClientStore<ClientStore>()
                 .AddResourceStore<ResourceStore>()
                 .AddProfileService<ProfileService>()
                 .AddAspNetIdentity<AMFUserLogin>();

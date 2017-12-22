@@ -9,7 +9,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
         {
             //ClientClaims = new HashSet<ClientClaims>();
             //ClientCorsOrigins = new HashSet<ClientCorsOrigins>();
-            //ClientGrantTypes = new HashSet<ClientGrantTypes>();
+            ClientGrantTypes = new HashSet<ClientGrantTypes>();
             //ClientIdPrestrictions = new HashSet<ClientIdPrestrictions>();
             //ClientPostLogoutRedirectUris = new HashSet<ClientPostLogoutRedirectUris>();
             //ClientProperties = new HashSet<ClientProperties>();
@@ -56,7 +56,7 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
 
         //public ICollection<ClientClaims> ClientClaims { get; set; }
         //public ICollection<ClientCorsOrigins> ClientCorsOrigins { get; set; }
-        //public ICollection<ClientGrantTypes> ClientGrantTypes { get; set; }
+        public ICollection<ClientGrantTypes> ClientGrantTypes { get; set; }
         //public ICollection<ClientIdPrestrictions> ClientIdPrestrictions { get; set; }
         //public ICollection<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
         //public ICollection<ClientProperties> ClientProperties { get; set; }

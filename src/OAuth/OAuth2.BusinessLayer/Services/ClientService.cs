@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 {
@@ -40,6 +41,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             newItem.AlwaysIncludeUserClaimsInIdToken = true;
             newItem.AllowOfflineAccess = true;
             newItem.AccessTokenType = (int)id4.AccessTokenType.Jwt;
+            newItem.ProtocolType = ProtocolTypes.OpenIdConnect;
             return this.ClientRepository.Save(newItem);
         }
 
@@ -49,7 +51,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
             if (targetItem != null)
             {
-                targetItem.ClientName = name;
+                targetItem.ClientId = name;
+                targetItem.ClientName = displayName;
                 targetItem.ClientUri = "";
                 targetItem.Description = description;
                 targetItem.Enabled = enabled;
@@ -140,6 +143,36 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             if (targetItem != null)
             {
                 targetItem.RemoveRedirectUri(redirectUriId);
+                this.ClientRepository.Save(targetItem);
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        public Client AddGrantType(long clientId, string grantType)
+        {
+            Client targetItem = this.ClientRepository.GetById(clientId);
+
+            if (targetItem != null)
+            {
+                targetItem.AddGrantType(grantType);
+                targetItem = this.ClientRepository.Save(targetItem);
+            }
+
+            return targetItem;
+
+        }
+
+        public bool DeleteGrantType(long clientId, string grantType)
+        {
+            bool retVal = false;
+
+            Client targetItem = this.ClientRepository.GetById(clientId);
+
+            if (targetItem != null)
+            {
+                targetItem.RemoveGrantType(grantType);
                 this.ClientRepository.Save(targetItem);
                 retVal = true;
             }
