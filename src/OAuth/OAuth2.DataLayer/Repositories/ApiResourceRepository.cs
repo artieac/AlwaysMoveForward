@@ -84,5 +84,21 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
 
             return this.GetDataMapper().Map(retVal);
         }
+
+        public IList<ProtectedApiScope> GetAvailableScopes()
+        {
+            IList<ProtectedApiScope> retVal = new List<ProtectedApiScope>();
+            IQueryable<Models.ApiScopes> foundItems = from apiScopes in this.UnitOfWork.DataContext.ApiScopes select apiScopes;
+
+            if (foundItems != null)
+            {
+                foreach(Models.ApiScopes scope in foundItems)
+                {
+                    retVal.Add(AutoMapper.Mapper.Map<ProtectedApiScope>(scope));
+                }
+            }
+
+            return retVal;
+        }
     }
 }

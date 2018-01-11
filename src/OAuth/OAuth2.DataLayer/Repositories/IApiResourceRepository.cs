@@ -16,5 +16,8 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         IList<ProtectedApiResource> GetByScopes(IList<string> scopeNames);
 
         ProtectedApiResource Save(ProtectedApiResource newResource);
+
+        IList<ProtectedApiScope> GetAvailableScopes();
+
     }
 }

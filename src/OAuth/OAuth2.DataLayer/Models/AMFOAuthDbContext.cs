@@ -261,9 +261,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(250);
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientClaims)
-                    .HasForeignKey(d => d.ClientId);
+                //entity.HasOne(d => d.Client)
+                //    .WithMany(p => p.ClientClaims)
+                //    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientCorsOrigins>(entity =>
@@ -281,9 +281,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(150);
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientCorsOrigins)
-                    .HasForeignKey(d => d.ClientId);
+                //entity.HasOne(d => d.Client)
+                //    .WithMany(p => p.ClientCorsOrigins)
+                //    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientGrantTypes>(entity =>
@@ -321,9 +321,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientIdPrestrictions)
-                    .HasForeignKey(d => d.ClientId);
+                //entity.HasOne(d => d.Client)
+                //    .WithMany(p => p.ClientIdPrestrictions)
+                //    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientPostLogoutRedirectUris>(entity =>
@@ -341,9 +341,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(2000);
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientPostLogoutRedirectUris)
-                    .HasForeignKey(d => d.ClientId);
+                //entity.HasOne(d => d.Client)
+                //    .WithMany(p => p.ClientPostLogoutRedirectUris)
+                //    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientProperties>(entity =>
@@ -365,9 +365,9 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
                     .IsRequired()
                     .HasMaxLength(2000);
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientProperties)
-                    .HasForeignKey(d => d.ClientId);
+                //entity.HasOne(d => d.Client)
+                //    .WithMany(p => p.ClientProperties)
+                //    .HasForeignKey(d => d.ClientId);
             });
 
             modelBuilder.Entity<ClientRedirectUris>(entity =>

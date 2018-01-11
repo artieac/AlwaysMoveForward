@@ -95,5 +95,24 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
                 return this.apiResourceService;
             }
         }
+
+        private IClientService clientService;
+
+        /// <summary>
+        /// Gets the current ApiResource service
+        /// </summary>
+        public IClientService ClientService
+        {
+            get
+            {
+                if (this.clientService == null)
+                {
+                    this.clientService = new ClientService(this.RepositoryManager.ClientRepository);
+                }
+
+                return this.clientService;
+            }
+        }
+
     }
 }

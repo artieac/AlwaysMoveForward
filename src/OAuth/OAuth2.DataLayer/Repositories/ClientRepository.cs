@@ -53,10 +53,10 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Repositories
         {
             Models.Clients retVal = this.UnitOfWork.DataContext.Clients
                 .Where(client => client.Id == id)
-                .Include(client => client.ClientClaims)
                 .Include(client => client.ClientRedirectUris)
                 .Include(client => client.ClientScopes)
                 .Include(client => client.ClientSecrets)
+                .Include(client => client.ClientGrantTypes)
                 .FirstOrDefault();
 
             return retVal;

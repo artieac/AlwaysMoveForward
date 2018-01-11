@@ -91,7 +91,7 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
 
             if (targetResource != null)
             {
-                if (targetResource.ApiScopes != null)
+                if (targetResource.ApiSecrets != null)
                 {
                     ProtectedApiSecret targetSecret = targetResource.ApiSecrets.Where(secret => secret.Id == secretId).FirstOrDefault();
 
@@ -187,6 +187,11 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
             }
 
             return retVal;
+        }
+
+        public IList<ProtectedApiScope> GetAvailableScopes()
+        {
+            return this.ApiResourceRepository.GetAvailableScopes();
         }
     }
 }

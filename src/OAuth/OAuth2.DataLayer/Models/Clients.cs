@@ -7,12 +7,12 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
     {
         public Clients()
         {
-            ClientClaims = new HashSet<ClientClaims>();
-            ClientCorsOrigins = new HashSet<ClientCorsOrigins>();
+            //ClientClaims = new HashSet<ClientClaims>();
+            //ClientCorsOrigins = new HashSet<ClientCorsOrigins>();
             ClientGrantTypes = new HashSet<ClientGrantTypes>();
-            ClientIdPrestrictions = new HashSet<ClientIdPrestrictions>();
-            ClientPostLogoutRedirectUris = new HashSet<ClientPostLogoutRedirectUris>();
-            ClientProperties = new HashSet<ClientProperties>();
+            //ClientIdPrestrictions = new HashSet<ClientIdPrestrictions>();
+            //ClientPostLogoutRedirectUris = new HashSet<ClientPostLogoutRedirectUris>();
+            //ClientProperties = new HashSet<ClientProperties>();
             ClientRedirectUris = new HashSet<ClientRedirectUris>();
             ClientScopes = new HashSet<ClientScopes>();
             ClientSecrets = new HashSet<ClientSecrets>();
@@ -54,12 +54,12 @@ namespace AlwaysMoveForward.OAuth2.DataLayer.Models
         public int SlidingRefreshTokenLifetime { get; set; }
         public bool UpdateAccessTokenClaimsOnRefresh { get; set; }
 
-        public ICollection<ClientClaims> ClientClaims { get; set; }
-        public ICollection<ClientCorsOrigins> ClientCorsOrigins { get; set; }
+        //public ICollection<ClientClaims> ClientClaims { get; set; }
+        //public ICollection<ClientCorsOrigins> ClientCorsOrigins { get; set; }
         public ICollection<ClientGrantTypes> ClientGrantTypes { get; set; }
-        public ICollection<ClientIdPrestrictions> ClientIdPrestrictions { get; set; }
-        public ICollection<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
-        public ICollection<ClientProperties> ClientProperties { get; set; }
+        //public ICollection<ClientIdPrestrictions> ClientIdPrestrictions { get; set; }
+        //public ICollection<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
+        //public ICollection<ClientProperties> ClientProperties { get; set; }
         public ICollection<ClientRedirectUris> ClientRedirectUris { get; set; }
         public ICollection<ClientScopes> ClientScopes { get; set; }
         public ICollection<ClientSecrets> ClientSecrets { get; set; }

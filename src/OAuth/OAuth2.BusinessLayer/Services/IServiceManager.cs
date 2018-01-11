@@ -28,6 +28,8 @@ namespace AlwaysMoveForward.OAuth2.BusinessLayer.Services
         IUserService UserService { get; }
 
         IApiResourceService ApiResourceService { get; }
+
+        IClientService ClientService { get; }
     }
 }
 
