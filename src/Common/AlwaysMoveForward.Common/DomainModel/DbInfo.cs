@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DomainModel.DataMap;
+using PucksAndProgramming.Common.DomainModel.DataMap;
 
-namespace AlwaysMoveForward.Common.DomainModel
+namespace PucksAndProgramming.Common.DomainModel
 {
     public class DbInfo : IDbInfo
     {

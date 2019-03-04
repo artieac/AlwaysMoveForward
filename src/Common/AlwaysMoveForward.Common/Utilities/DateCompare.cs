@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.Utilities
+namespace PucksAndProgramming.Common.Utilities
 {
     public class DateCompare : IEqualityComparer<DateTime>
     {

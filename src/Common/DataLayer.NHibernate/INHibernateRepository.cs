@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.DataLayer.NHibernate
+namespace PucksAndProgramming.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// An interface to define common functions for an NHibernate repository

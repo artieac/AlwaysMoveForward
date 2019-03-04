@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using System.Runtime.CompilerServices;
 
-namespace AlwaysMoveForward.Common.Utilities
+namespace PucksAndProgramming.Common.Utilities
 {
     public abstract class LoggerBase
     {

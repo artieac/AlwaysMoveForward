@@ -1,0 +1,267 @@
+﻿body {
+	font-family: Roboto, sans-serif;
+	color: #333;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+h1 {
+	margin: 0px 0px 10px;
+	font-size: 38px;
+	line-height: 37px;
+	font-weight: 300;
+}
+
+h2 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	font-family: Roboto, sans-serif;
+	font-size: 32px;
+	line-height: 36px;
+	font-weight: 300;
+}
+
+h3 {
+	margin: 0px 0px 10px;
+	font-size: 24px;
+	line-height: 30px;
+	font-weight: 300;
+}
+
+h4 {
+	margin: 10px 0px;
+	font-size: 18px;
+	line-height: 24px;
+	font-weight: 400;
+}
+
+h5 {
+	margin: 10px 0px;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 400;
+}
+
+h6 {
+	margin: 10px 0px;
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 400;
+}
+
+p {
+	margin-top: 0px;
+	margin-bottom: 15px;
+	color: #9ea8a4;
+	font-size: 14px;
+	line-height: 23px;
+}
+
+.button {
+	display: inline-block;
+	padding: 14px 26px;
+	background-color: #25c485;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+}
+
+	.button:hover {
+		background-color: #b5b5b5;
+	}
+
+.header {
+	height: 530px;
+	background-image: url('../Content/images/IMG_20180418_093825.jpg');
+	background-position: 0% 0%;
+	background-size: auto 550px;
+	background-repeat: repeat;
+	background-attachment: fixed;
+	box-shadow: inset 0 3px 0 0 #000;
+}
+
+	.header.sub-page {
+		background-image: url('../Content/images/profile-dude-blue.jpg');
+		background-position: 50% 100%;
+	}
+
+.section {
+	padding-top: 65px;
+	padding-bottom: 65px;
+}
+
+	.section.grey {
+		background-color: #f0f0f0;
+	}
+
+	.section.green {
+		background-color: #f4f4f4;
+	}
+
+.nav-link {
+	display: block;
+	margin-bottom: 8px;
+	font-family: 'Roboto Condensed', sans-serif;
+	color: #69b9ff;
+	font-size: 18px;
+	font-weight: 300;
+	text-decoration: none;
+	text-transform: capitalize;
+}
+
+	.nav-link:hover {
+		color: #166bcc;
+	}
+
+.navigation {
+	position: fixed;
+	z-index: 10;
+	padding: 33px 19px 38px;
+	border-top: 3px solid #25c485;
+	background-color: #fff;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, .05);
+}
+
+.logo {
+	margin-bottom: 22px;
+	font-size: 33px;
+	line-height: 36px;
+	font-weight: 300;
+	text-align: right;
+	text-transform: capitalize;
+}
+
+.align-right {
+	padding-right: 25px;
+	text-align: right;
+}
+
+.image {
+	margin-bottom: 20px;
+}
+
+.thumbnail {
+	margin-right: 21px;
+	margin-bottom: 26px;
+	padding: 7px;
+	background-color: #fff;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, .06);
+}
+
+.journal-entry {
+	display: block;
+	margin-bottom: 19px;
+	padding: 18px 20px;
+	border: 1px solid #dce6e4;
+	-webkit-transition: background-color 300ms ease;
+	transition: background-color 300ms ease;
+	color: #333;
+	text-decoration: none;
+}
+
+	.journal-entry:hover {
+		background-color: #f2f7f6;
+	}
+
+.logo-link {
+	color: #333;
+	text-decoration: none;
+}
+
+.field {
+	height: 53px;
+	border: 1px solid #d1e6dd;
+	box-shadow: inset 0 1px 0 0 transparent;
+}
+
+	.field:focus {
+		border-color: #24c786;
+		box-shadow: inset 0 0 8px 0 transparent;
+	}
+
+	.field.comments {
+		height: 101px;
+	}
+
+.success {
+	padding: 47px;
+	background-color: #e3e3e3;
+	color: #000;
+	text-align: center;
+}
+
+.white-box {
+	padding: 15px;
+	border: 1px solid #dcebf7;
+	border-radius: 5px;
+	background-color: #fff;
+	text-align: center;
+}
+
+.grid-image {
+	display: block;
+	width: 35%;
+	margin: 20px auto;
+	padding: 20px;
+	border: 10px solid #fff;
+	border-radius: 50%;
+	background-color: #69b9ff;
+	box-shadow: 0 0 0 1px #2e9dff;
+	opacity: 1;
+}
+
+@media (max-width: 991px) {
+	.align-right {
+		padding-right: 10px;
+	}
+
+	.grid-image {
+		width: 50%;
+		padding: 15px;
+	}
+}
+
+@media (max-width: 767px) {
+	.header {
+		height: auto;
+		background-attachment: scroll;
+	}
+
+	.section {
+		padding-top: 29px;
+		padding-bottom: 29px;
+	}
+
+	.navigation {
+		position: static;
+		width: 50%;
+		padding-right: 10px;
+		padding-left: 10px;
+		background-color: hsla(0, 0%, 100%, .6);
+		box-shadow: 0 0 0 1px transparent;
+	}
+
+	.align-right {
+		text-align: left;
+	}
+
+	.thumbnail {
+		margin-right: 14px;
+		margin-bottom: 15px;
+	}
+
+	.white-box {
+		margin-bottom: 30px;
+	}
+
+	.grid-image {
+		width: 20%;
+		padding: 20px;
+	}
+}
+
+@media (max-width: 479px) {
+	.grid-image {
+		width: 35%;
+	}
+}

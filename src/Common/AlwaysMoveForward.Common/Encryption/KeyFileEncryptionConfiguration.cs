@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Encryption
+namespace PucksAndProgramming.Common.Encryption
 {
     public class KeyFileEncryptionConfiguration : ConfigurationSection
     {
-        public const string DefaultSection = "AlwaysMoveForward/KeyFileEncryptionConfiguration";
+        public const string DefaultSection = "PucksAndProgramming/KeyFileEncryptionConfiguration";
 
         public const string EncryptionKeyFileSetting = "KeyFile";
         public const string KeyFilePasswordSetting = "KeyFilePassword";

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AlwaysMoveForward.Common.Tools.EncryptionUtility.Properties {
+namespace PucksAndProgramming.Common.Tools.EncryptionUtility.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AlwaysMoveForward.Common.Tools.EncryptionUtility.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlwaysMoveForward.Common.Tools.EncryptionUtility.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PucksAndProgramming.Common.Tools.EncryptionUtility.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

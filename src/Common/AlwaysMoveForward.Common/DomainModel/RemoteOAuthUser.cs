@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.DomainModel
+namespace PucksAndProgramming.Common.DomainModel
 {
     public class RemoteOAuthUser : IRemoteOAuthUser
     {

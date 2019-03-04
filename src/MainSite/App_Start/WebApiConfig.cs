@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace AlwaysMoveForward.MainSite
+namespace PucksAndProgramming.MainSite
 {
     public static class WebApiConfig
     {

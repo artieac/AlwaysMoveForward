@@ -1,1 +1,0 @@
-docker build -t alwaysmoveforward.oauth2.web .

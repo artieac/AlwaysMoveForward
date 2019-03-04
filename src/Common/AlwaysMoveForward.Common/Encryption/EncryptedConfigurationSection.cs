@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Encryption
+namespace PucksAndProgramming.Common.Encryption
 {
     /// <summary>
     /// A class to simplify getting the configuration settings for a database

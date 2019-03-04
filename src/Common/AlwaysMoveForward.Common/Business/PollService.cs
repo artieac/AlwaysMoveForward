@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Net;
 
-using AlwaysMoveForward.Common.DomainModel.Poll;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DomainModel.Poll;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.Common.Business
+namespace PucksAndProgramming.Common.Business
 {
     /// <summary>
     /// This is the business layer that provides Polling logic

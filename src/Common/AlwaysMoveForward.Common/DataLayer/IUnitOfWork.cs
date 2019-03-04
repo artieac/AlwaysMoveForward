@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 
-namespace AlwaysMoveForward.Common.DataLayer
+namespace PucksAndProgramming.Common.DataLayer
 {
     public interface IUnitOfWork : IDisposable
     {

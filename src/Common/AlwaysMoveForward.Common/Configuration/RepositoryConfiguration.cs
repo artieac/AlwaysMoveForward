@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Configuration
+namespace PucksAndProgramming.Common.Configuration
 {
     public class RepositoryConfiguration : ConfigurationSection 
     {
@@ -22,7 +22,7 @@ namespace AlwaysMoveForward.Common.Configuration
         public const string ManagerAssemblySetting = "ManagerAssembly";
         public const string UnitOfWorkClassSetting = "UnitOfWorkClass";
 
-        public const string DefaultConfiguration = "AlwaysMoveForward/RepositoryConfiguration";
+        public const string DefaultConfiguration = "PucksAndProgramming/RepositoryConfiguration";
 
         public RepositoryConfiguration() { }
         public RepositoryConfiguration(string managerClass, string managerAssembly, string unitOfWorkClass)

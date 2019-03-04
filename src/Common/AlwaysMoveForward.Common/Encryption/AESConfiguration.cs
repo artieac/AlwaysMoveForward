@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Encryption
+namespace PucksAndProgramming.Common.Encryption
 {
     /// <summary>
     /// AES Encryption Configuration
@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.Common.Encryption
         /// <summary>
         /// Default Section Constant
         /// </summary>
-        public const string DEFAULT_SECTION = "AlwaysMoveForward/AESEncryptionConfiguration";
+        public const string DEFAULT_SECTION = "PucksAndProgramming/AESEncryptionConfiguration";
 
         /// <summary>
         /// Encryption Key Constant

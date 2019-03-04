@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Configuration
+namespace PucksAndProgramming.Common.Configuration
 {
     public class LoggingConfiguration : ConfigurationSection
     {
-        public const string DefaultConfigurationSetting = "AlwaysMoveForward/LoggingConfiguration";
+        public const string DefaultConfigurationSetting = "PucksAndProgramming/LoggingConfiguration";
 
         private const string SourceSetting = "Source";
         private const string LevelSetting = "Level";

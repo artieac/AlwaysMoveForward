@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.Security
+namespace PucksAndProgramming.Common.Security
 {
     /// <summary>
     /// Interface for request validate

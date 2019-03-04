@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="AlwaysMoveForward.MainSite.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="PucksAndProgramming.MainSite.MvcApplication" Language="C#" %>

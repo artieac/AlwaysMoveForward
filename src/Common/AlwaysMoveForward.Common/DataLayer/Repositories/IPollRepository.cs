@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DomainModel.Poll;
+using PucksAndProgramming.Common.DomainModel.Poll;
 
-namespace AlwaysMoveForward.Common.DataLayer.Repositories
+namespace PucksAndProgramming.Common.DataLayer.Repositories
 {
     public interface IPollRepository : IRepository<PollQuestion, int>
     {

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHC = NHibernate.Cfg;
-using AlwaysMoveForward.Common.Utilities;
+using PucksAndProgramming.Common.Utilities;
 using NHM = NHibernate.Mapping.Attributes;
 
-namespace AlwaysMoveForward.Common.DataLayer.NHibernate
+namespace PucksAndProgramming.Common.DataLayer.NHibernate
 {
     public class NHibernateSessionFactory
     {

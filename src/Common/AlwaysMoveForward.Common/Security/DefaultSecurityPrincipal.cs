@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DomainModel;
+using PucksAndProgramming.Common.DomainModel;
 
-namespace AlwaysMoveForward.Common.Security
+namespace PucksAndProgramming.Common.Security
 {
     /// <summary>
     /// A default DefaultSecurityPrincipal that works with a User
@@ -14,7 +14,7 @@ namespace AlwaysMoveForward.Common.Security
         /// <summary>
         /// The base class constructor override.
         /// </summary>
-        /// <param name="user">A AlwaysMoveForwardUser instance</param>
+        /// <param name="user">A PucksAndProgrammingUser instance</param>
         public DefaultSecurityPrincipal(User user) : base(user) { }
 
         /// <summary>

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.Common.Configuration
+namespace PucksAndProgramming.Common.Configuration
 {
     /// <summary>
     /// Defines the configuration file entries neccessary to drive email integration in the system.
@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.Common.Configuration
         public const string SmtpServerSetting = "SmtpServer";
         public const string SmtpPortSetting = "SmtpPort";
 
-        public const string DefaultConfiguration = "AlwaysMoveForward/EmailConfiguration";
+        public const string DefaultConfiguration = "PucksAndProgramming/EmailConfiguration";
 
         public static EmailConfiguration GetInstance()
         {

@@ -5,10 +5,10 @@ using System.Text;
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DataLayer;
 
-namespace AlwaysMoveForward.Common.DataLayer.NHibernate
+namespace PucksAndProgramming.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// A base class for an NHibernate repository that implements some common methods
@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <param name="idPropertyName">The property name</param>
         /// <param name="idValue">The value to search for</param>
         /// <returns>A domain object instance</returns>
-        public TDomainType GetByProperty(string idPropertyName, object idValue)
+        public virtual TDomainType GetByProperty(string idPropertyName, object idValue)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
@@ -81,7 +81,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// Get all instances found in the database
         /// </summary>
         /// <returns>A list of domain objects</returns>
-        public IList<TDomainType> GetAll()
+        public virtual IList<TDomainType> GetAll()
         {
             LogManager.GetLogger().Info("Index getting all" + typeof(TDomainType).ToString());
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
@@ -96,7 +96,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// <param name="idPropertyName">The name of the property</param>
         /// <param name="idValue">The value of the property</param>
         /// <returns>A list of domain objects</returns>
-        public IList<TDomainType> GetAllByProperty(string idPropertyName, object idValue)
+        public virtual IList<TDomainType> GetAllByProperty(string idPropertyName, object idValue)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TDTOType>();
             criteria.Add(Expression.Eq(idPropertyName, idValue));
@@ -108,7 +108,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// </summary>
         /// <param name="itemToSave">The item values to save</param>
         /// <returns>The saved domain object</returns>
-        public TDomainType Add(TDomainType itemToSave)
+        public virtual TDomainType Add(TDomainType itemToSave)
         {
             return this.Save(itemToSave);
         }
@@ -118,7 +118,7 @@ namespace AlwaysMoveForward.Common.DataLayer.NHibernate
         /// </summary>
         /// <param name="itemToSave">The item values to save</param>
         /// <returns>The saved domain object</returns>
-        public TDomainType Update(TDomainType itemToSave)
+        public virtual TDomainType Update(TDomainType itemToSave)
         {
             return this.Save(itemToSave);
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.Common.DataLayer
+namespace PucksAndProgramming.Common.DataLayer
 {
     public abstract class DataMapBase<TDomainType, TDtoType> where TDomainType : class where TDtoType : class
     {

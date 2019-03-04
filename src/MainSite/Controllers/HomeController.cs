@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using AlwaysMoveForward.MainSite.Models;
+using PucksAndProgramming.MainSite.Models;
 
-namespace AlwaysMoveForward.MainSite.Controllers
+namespace PucksAndProgramming.MainSite.Controllers
 {
     public class HomeController : Controller
     {
