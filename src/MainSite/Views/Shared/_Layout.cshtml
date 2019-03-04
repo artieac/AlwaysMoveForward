@@ -15,7 +15,15 @@
 	<script src="@Url.Content("~/Scripts/angular-resource.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/angular-sanitize.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/Modules/ServiceDefinitionModule.js")" type="text/javascript"></script>
-	<!-- Bootstrap -->
+	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -36,114 +44,39 @@
 
 	</script>
 	<link href="@Url.Content("~/Content/Normalize.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/MainPage.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/WebFlow.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/Services/BlogPostService.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/Controllers/BlogPostController.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/Controllers/TwitterController.js")" type="text/javascript"></script>
+	<link href="@Url.Content("~/Content/MainPage.css")" rel="stylesheet" type="text/css" />
 	@RenderSection("headerPlugins", false)
 </head>
 <body ng-app="theApp">
-	<div id="header" class="header">
-		<div class="w-container">
-			<div class="navigation">
-				<a href="#header" class="logo-link w-inline-block">
-					<h1 class="logo">Arthur Correa</h1>
-				</a>
-				<a href="#my-story" class="nav-link">About me</a>
-				<a href="#built" class="nav-link">Things I&#x27;ve Built</a>
-				<a href="#online" class="nav-link">Recent Blog Entries</a>
-				<a href="#" class="nav-link">Contact</a>
-			</div>
-		</div>
-	</div>
-	<div id="my-story" class="section">
-		<div class="w-container">
-			<div class="w-row">
-				<div class="align-right w-col w-col-4">
-					<h2>About me</h2>
-				</div>
-				<div class="w-col w-col-8">
-					<p>I am a software architect, hockey player,, Disney fan, and family man.</p>
-					<p>As a software architecture I&#x27;m a firm believer in modern practices such as Domain Driven Design, Microservices, Containers, CI/CD, Dev Ops and deploying to the cloud. I most enjoy designing and building distributed systems built using microservices, but I&#x27;m not too particular about what technology I use to build them. I have built production systems in Java, .Net/.Net Core, and Node deployed to AWS and Azure, but I'm open to other things as well.</p>
-					<p>As a hockey player. I&#x27;ve gone from someone that wants to play as competitively as I can and keep getting better to someone that just does it for fun and exercise. Nowadays I&#x27;m just happy if I can get up and down the ice without looking like an idiot.</p>
-					<p>I&#x27;m a big Disney fan. I've loved going to Disney World since I was a kid,, and I never seem to get sick of it. Everything from the theming, to the rides, to the food. Every time I go there I'm trying to soak it all in. My favorite park is probably Magic Kingdom, and my favorite ride is Splash Mountain.</p>
-					<p>And the best for last. As a family man I love to spend my time out of work with my family.  Either driving my kids to or from all their sports, playing board games, or going to Disney with them. &#x27;</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="built" class="section grey">
-		<div class="w-container">
-			<div class="w-row">
-				<div class="align-right w-col w-col-4">
-					<h2>Things I&#x27;ve Built</h2>
-				</div>
-				<div class="w-col w-col-8">
-					<div class="w-row">
-						<div class="w-col w-col-4">
-							<div class="white-box">
-								<img src="Content/images/noun_Radar_9219.png" srcset="Content/images/noun_Radar_9219-p-500.png 500w, Content/images/noun_Radar_9219.png 700w" sizes="(max-width: 479px) 27vw, (max-width: 767px) 19vw, (max-width: 991px) 8vw, 61.125px" alt="" class="grid-image">
-								<h3>Blog</h3>
-								<p>Here I blog about anything on the topics from Programming to Hockey to Disney. I wrote the blog software myself using  C#, .Net, MVC, and Angular. </p>
-							</div>
-						</div>
-						<div class="w-col w-col-4">
-							<div class="white-box">
-								<img src="Content/images/noun_Radar_9219.png" srcset="Content/images/noun_Radar_9219-p-500.png 500w, Content/images/noun_Radar_9219.png 700w" sizes="(max-width: 479px) 27vw, (max-width: 767px) 19vw, (max-width: 991px) 8vw, 61.125px" alt="" class="grid-image">
-								<h3>Technology Radar</h3>
-								<p>My personal Technology Radar. The site also lets you manage your own personal Technology Radar once you&#x27;ve logged in with Auth0. I wrote this with Java, Spring Boot, React and Docker.</p>
-							</div>
-						</div>
-						<div class="w-col w-col-4">
-							<div class="white-box">
-								<img src="https://uploads-ssl.webflow.com/5ab4147a43dc64b2180c31f3/5ab4147a43dc6406fc0c3206_social-01-white.svg" alt="" class="grid-image">
-								<h3>Point Chart</h3>
-								<p>A site for setting up Point Charts for children.  This was built using C#, .Net, MVC, and React</p>
-							</div>
-						</div>
+	@RenderBody()
+	<div class="section grey">
+		<div class="footer">
+			<div class="w-container">
+				<div class="row">
+					<div class="col-md-4">
+						<h5>about PucksAndProgramming</h5>
+						<p>Pucks And Programming is the personal site of Arthur Correa.</p>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="online" class="section">
-		<div class="w-container">
-			<div class="w-row">
-				<div class="align-right w-col w-col-4">
-					<h2>Recent Blog Entries</h2>
-				</div>
-				<a class="w-col w-col-8">
-					<a class="col-md-8" ng-controller="BlogPostController" ng-init="getMostRecent('@PucksAndProgramming.MainSite.MvcApplication.BlogUrlRoot')">
-						<div ng-show="waitingForData">
-							<img src="/Content/Images/waitingForData.gif" /> Loading most recent blog post
+					<div class="col-md-4">
+						<h5>useful links</h5>
+						<a href="#" class="footer-link">PucksAndProgramming.com</a>
+						<a href="http://blog.alwaysmoveforward.com" class="footer-link">Blog</a>
+						<a href="http://technologyradar.alwaysmoveforward.com" class="footer-link">Technology Radar</a>
+					</div>
+					<div class="col-md-4">
+						<h5>social</h5>
+						<div class="footer-link-wrapper w-clearfix">
+							<img src="/Content/images/social-18.svg" width="20" alt="" class="info-icon">
+							<a href="https://twitter.com/artieac" class="footer-link with-icon">Twitter</a>
 						</div>
-						<p ng-show="!waitingForData">
-							<a href="journal-page.html" class="journal-entry w-inline-block">
-								<h2>{{ mostRecentBlogPost.Title }}</h2>
-								<p>Posted {{ formatDate(mostRecentBlogPost.DatePosted) | date:"MM/dd/yyyy" }}<p>
-								<p ng-bind-html="mostRecentBlogPost.ShortEntryText"></p>
-							</a>
-						</p>
-					</a>
-			</div>
-		</div>
-	</div>
-	<div id="journal" class="section grey">
-		<div class="w-container">
-			<div class="w-row">
-				<div class="align-right w-col w-col-4">
-					<h2>Contact</h2>
-				</div>
-				<div class="w-col w-col-8">
-					<div class="w-form">
-						<form name="email-form" data-name="Email Form"><input type="text" name="name" data-name="Name" placeholder="Enter your name" maxlength="256" class="field w-input"><input type="email" name="email" data-name="Email" placeholder="Enter your email address" maxlength="256" required="" class="field w-input"><textarea placeholder="Example Text" maxlength="5000" class="field comments w-input"></textarea><input type="submit" value="Send Message" data-wait="Please wait..." class="button blue w-button"></form>
-						<div class="success w-form-done">
-							<h2>Thank you!</h2>
-							<p>Your submission has been received!</p>
+						<div class="footer-link-wrapper w-clearfix">
+							<img src="/Content/images/social-11.svg" width="20" alt="" class="info-icon">
+							<a href="https://www.pinterest.com/artieac/" class="footer-link with-icon">Pinterest</a>
 						</div>
-						<div class="w-form-fail">
-							<p>Oops! Something went wrong while submitting the form :(</p>
+						<div class="footer-link-wrapper w-clearfix">
+							<img src="/Content/images/social-07.svg" width="20" alt="" class="info-icon">
+							<a href="https://www.instagram.com/artiecorrea/" class="footer-link with-icon">Instagram</a>
 						</div>
 					</div>
 				</div>

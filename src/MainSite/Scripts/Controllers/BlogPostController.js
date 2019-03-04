@@ -1,5 +1,6 @@
 ﻿theApp.controller('BlogPostController', function ($scope, $resource, $http, $sce, $q) {
-    $scope.waitingForData = false;
+	$scope.waitingForData = false;
+	$scope.blogPosts = {};
 
     // @Function
     // Description  : Triggered while displaying expiry date in Customer Details screen.
@@ -8,13 +9,17 @@
         return dateOut;
     };
 
-    $scope.getMostRecent = function (urlRoot) {
-        $scope.waitingForData = true;
-        var getMostRecentBlogPost = $resource(urlRoot + '/api/BlogPost/MostRecent');
-        getMostRecentBlogPost.get()
-            .$promise.then(function(result){
-                $scope.mostRecentBlogPost = result;
-                $scope.waitingForData = false;
-            });
-    }    
+	$scope.getMostRecent = function (urlRoot, numberToGet) {
+		$scope.waitingForData = true;
+		$http.get(urlRoot + '/api/BlogPosts/' + numberToGet)
+			.then(function (result) {
+				$scope.blogPosts = result.data;
+				console.log(JSON.stringify($scope.blogPosts));
+				$scope.waitingForData = false;
+			})
+			.catch(function (response) {
+				$scope.waitingForData = false;
+				console.error('GetMostRecent error', response.status, response.data);
+			});
+	}
 });
