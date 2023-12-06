@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public interface IPagedList<T> : IList<T>
     {

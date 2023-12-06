@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// A utility class for performing an MD5 hash on a string.

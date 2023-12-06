@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// X.509 Certificate Manager
@@ -81,7 +81,6 @@ namespace PucksAndProgramming.Common.Encryption
         /// <summary>
         /// Gets a certificate file
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "Suppressed - Valid error")]
         public X509Certificate2 CertificateFile
         {
             get

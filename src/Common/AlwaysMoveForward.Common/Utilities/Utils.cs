@@ -15,7 +15,7 @@ using System.Text;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class Utils
     {

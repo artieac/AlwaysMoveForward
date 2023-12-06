@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// KeyFile Encryption Configuration
@@ -10,7 +10,7 @@ namespace PucksAndProgramming.Common.Encryption
         /// <summary>
         /// Default Section Constant
         /// </summary>
-        public const string DEFAULT_SECTION = "PucksAndProgramming/KeyFileEncryptionConfiguration";
+        public const string DEFAULT_SECTION = "AlwaysMoveForward/KeyFileEncryptionConfiguration";
 
         /// <summary>
         /// Key File Constant

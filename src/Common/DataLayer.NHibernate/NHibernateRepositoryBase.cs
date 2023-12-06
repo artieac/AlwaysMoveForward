@@ -5,10 +5,10 @@ using System.Text;
 using NHibernate;
 using NHibernate.Transform;
 using NHibernate.Criterion;
-using PucksAndProgramming.Common.Utilities;
-using PucksAndProgramming.Common.DataLayer;
+using AlwaysMoveForward.Common.Utilities;
+using AlwaysMoveForward.Common.DataLayer;
 
-namespace PucksAndProgramming.Common.DataLayer.NHibernate
+namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// A base class for an NHibernate repository that implements some common methods

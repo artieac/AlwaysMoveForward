@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
-using PucksAndProgramming.Common.DomainModel.DataMap;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 
-namespace PucksAndProgramming.Common.DomainModel
+namespace AlwaysMoveForward.Common.DomainModel
 {
     public class User
     {

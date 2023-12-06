@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PucksAndProgramming.Common.Tools.EncryptionUtility.Properties {
+namespace AlwaysMoveForward.Common.Tools.EncryptionUtility.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

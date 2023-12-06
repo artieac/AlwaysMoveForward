@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PucksAndProgramming.Common.DomainModel.Poll
+namespace AlwaysMoveForward.Common.DomainModel.Poll
 {
     public class PollOption
     {

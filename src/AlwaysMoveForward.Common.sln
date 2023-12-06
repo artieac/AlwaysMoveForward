@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForwardCommon.DataLayer.NHibernate", "Common\DataLayer.NHibernate\AlwaysMoveForwardCommon.DataLayer.NHibernate.csproj", "{F9803443-3ED7-4FB4-B758-5D3419983163}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForwardCommon.Tools.EncryptionUtility", "Common\Tools\EncryptionUtility\AlwaysMoveForwardCommon.Tools.EncryptionUtility.csproj", "{B08E997D-6C92-414E-A4DE-31D80AA2C718}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.MainSite", "MainSite\AlwaysMoveForward.MainSite.csproj", "{AC07908D-D7FA-49CF-A229-6A6675A3CD13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForward.Core.Common", "Common\Core.Common\AlwaysMoveForward.Core.Common.csproj", "{C5E14A3E-A410-4228-AB30-D238BB9EE857}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlwaysMoveForwardCommon", "Common\AlwaysMoveForward.Common\AlwaysMoveForwardCommon.csproj", "{B6ED63FB-8C85-4BF6-90AD-4F9B3874D82B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.MainSite.Core", "AlwaysMoveForward.MainSite.Core\AlwaysMoveForward.MainSite.Core.csproj", "{92A5CE28-1EED-41AF-9E31-C02342D10A99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9803443-3ED7-4FB4-B758-5D3419983163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B08E997D-6C92-414E-A4DE-31D80AA2C718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B08E997D-6C92-414E-A4DE-31D80AA2C718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B08E997D-6C92-414E-A4DE-31D80AA2C718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B08E997D-6C92-414E-A4DE-31D80AA2C718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC07908D-D7FA-49CF-A229-6A6675A3CD13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC07908D-D7FA-49CF-A229-6A6675A3CD13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC07908D-D7FA-49CF-A229-6A6675A3CD13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC07908D-D7FA-49CF-A229-6A6675A3CD13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E14A3E-A410-4228-AB30-D238BB9EE857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E14A3E-A410-4228-AB30-D238BB9EE857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E14A3E-A410-4228-AB30-D238BB9EE857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E14A3E-A410-4228-AB30-D238BB9EE857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6ED63FB-8C85-4BF6-90AD-4F9B3874D82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6ED63FB-8C85-4BF6-90AD-4F9B3874D82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6ED63FB-8C85-4BF6-90AD-4F9B3874D82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6ED63FB-8C85-4BF6-90AD-4F9B3874D82B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A5CE28-1EED-41AF-9E31-C02342D10A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A5CE28-1EED-41AF-9E31-C02342D10A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A5CE28-1EED-41AF-9E31-C02342D10A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A5CE28-1EED-41AF-9E31-C02342D10A99}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBF6DEFF-41DF-4B6E-B15C-35934C8AD7D4}
+	EndGlobalSection
+EndGlobal

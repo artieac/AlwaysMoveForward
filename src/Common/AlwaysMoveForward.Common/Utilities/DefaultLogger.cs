@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class DefaultLogger : LoggerBase
     {

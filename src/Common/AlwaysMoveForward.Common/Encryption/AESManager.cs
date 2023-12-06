@@ -2,9 +2,9 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using PucksAndProgramming.Common.Utilities;
+using AlwaysMoveForward.Common.Utilities;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// AES Encryption Manager

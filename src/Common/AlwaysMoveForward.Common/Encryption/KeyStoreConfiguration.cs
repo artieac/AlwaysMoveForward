@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// Key store Encryption Configuration
@@ -10,7 +10,7 @@ namespace PucksAndProgramming.Common.Encryption
         /// <summary>
         /// Default Section Constant
         /// </summary>
-        public const string DEFAULT_SECTION = "PucksAndProgramming/KeyStoreEncryptionConfiguration";
+        public const string DEFAULT_SECTION = "AlwaysMoveForward/KeyStoreEncryptionConfiguration";
 
         /// <summary>
         /// Store Name Constant

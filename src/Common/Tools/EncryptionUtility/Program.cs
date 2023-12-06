@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PucksAndProgramming.Common.Tools.EncryptionUtility
+namespace AlwaysMoveForward.Common.Tools.EncryptionUtility
 {
     /// <summary>
     /// Program Class for EncryptionUtility

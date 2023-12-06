@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using PucksAndProgramming.Common.Configuration;
+using AlwaysMoveForward.Common.Configuration;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class LogManager
     {

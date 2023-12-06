@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 
-namespace PucksAndProgramming.Common.DomainModel.Poll
+namespace AlwaysMoveForward.Common.DomainModel.Poll
 {
     public class VoterAddress
     {

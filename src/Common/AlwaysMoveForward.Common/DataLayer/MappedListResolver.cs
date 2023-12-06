@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 
-namespace PucksAndProgramming.Common.DataLayer
+namespace AlwaysMoveForward.Common.DataLayer
 {
+    /*
     public abstract class MappedListResolver<
         TDomainListItem, 
         TDTOListItem> 
-        : IValueResolver
+        : ITypeConverter
         where TDomainListItem : class
         where TDTOListItem : class
     {
-        public ResolutionResult Resolve(ResolutionResult source)
+        public TDTOListItem Convert(TDomainListItem source, TDTOListItem destination, ResolutionContext context)
         {
-            IList<TDTOListItem> destinationList = this.GetDestinationList(source);
+            IList<TDTOListItem> destinationList = this.GetDestinationList(context);
             
             if (destinationList == null)
             {
                 destinationList = new List<TDTOListItem>();
             }
 
-            IList<TDomainListItem> sourceList = this.GetSourceList(source);
+            IList<TDomainListItem> sourceList = this.GetSourceList(context);
 
             if (sourceList != null)
             {
@@ -56,12 +57,13 @@ namespace PucksAndProgramming.Common.DataLayer
             return source.New(destinationList, typeof(IList<TDTOListItem>));
         }
 
-        protected abstract IList<TDTOListItem> GetDestinationList(ResolutionResult source);
+        protected abstract IList<TDTOListItem> GetDestinationList(ResolutionContext contex);
 
-        protected abstract IList<TDomainListItem> GetSourceList(ResolutionResult source);
+        protected abstract IList<TDomainListItem> GetSourceList(ResolutionContext contex);
 
         protected abstract TDTOListItem FindItemInList(IList<TDTOListItem> destinationList, TDomainListItem searchTarget);
 
         protected abstract TDomainListItem FindItemInList(IList<TDomainListItem> sourceList, TDTOListItem searchTarget);
     }
+    */
 }

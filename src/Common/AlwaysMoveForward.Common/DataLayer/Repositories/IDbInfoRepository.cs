@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using PucksAndProgramming.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
 
-namespace PucksAndProgramming.Common.DataLayer.Repositories
+namespace AlwaysMoveForward.Common.DataLayer.Repositories
 {
     public interface IDbInfoRepository : IRepository<DbInfo, int>
     {

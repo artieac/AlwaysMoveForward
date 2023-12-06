@@ -1,4 +1,4 @@
-﻿namespace PucksAndProgramming.Common.Tools.EncryptionUtility
+﻿namespace AlwaysMoveForward.Common.Tools.EncryptionUtility
 {
     /// <summary>
     /// Encryption Form

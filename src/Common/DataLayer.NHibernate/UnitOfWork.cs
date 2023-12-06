@@ -6,10 +6,10 @@ using System.Data;
 using System.Reflection;
 using NHibernate;
 using NHC = NHibernate.Cfg;
-using PucksAndProgramming.Common;
-using PucksAndProgramming.Common.Utilities;
+using AlwaysMoveForward.Common;
+using AlwaysMoveForward.Common.Utilities;
 
-namespace PucksAndProgramming.Common.DataLayer.NHibernate
+namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// A unit of work made to work with NHibernate transactions
@@ -122,21 +122,21 @@ namespace PucksAndProgramming.Common.DataLayer.NHibernate
         {
             if (this.CurrentSession != null)
             {
-                if (this.CurrentSession.Transaction != null)
+                if (this.CurrentSession.GetCurrentTransaction() != null)
                 {
-                    if (this.CurrentSession.Transaction.IsActive)
+                    if (this.CurrentSession.GetCurrentTransaction().IsActive)
                     {
                         if (canCommit)
                         {
-                            this.CurrentSession.Transaction.Commit();
+                            this.CurrentSession.GetCurrentTransaction().Commit();
                         }
                         else
                         {
-                            this.CurrentSession.Transaction.Rollback();
+                            this.CurrentSession.GetCurrentTransaction().Rollback();
                         }
                     }
 
-                    this.CurrentSession.Transaction.Dispose();
+                    this.CurrentSession.GetCurrentTransaction().Dispose();
                 }
             }
             else

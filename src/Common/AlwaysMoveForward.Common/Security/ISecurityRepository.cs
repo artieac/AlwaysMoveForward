@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PucksAndProgramming.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
 
-namespace PucksAndProgramming.Common.Security
+namespace AlwaysMoveForward.Common.Security
 {
     public interface ISecurityRepository
     {

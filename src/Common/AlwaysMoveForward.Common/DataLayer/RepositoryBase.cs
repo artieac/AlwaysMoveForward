@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-using PucksAndProgramming.Common.Utilities;
+using AlwaysMoveForward.Common.Utilities;
 
-namespace PucksAndProgramming.Common.DataLayer
+namespace AlwaysMoveForward.Common.DataLayer
 {
     public abstract class RepositoryBase<TUnitOfWorkType, TDomainType, TDTOType, TIdType> 
         : IRepository<TDomainType, TIdType>

@@ -14,10 +14,10 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using PucksAndProgramming.Common.Configuration;
-using PucksAndProgramming.Common.Utilities;
+using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.Common.Utilities;
 
-namespace PucksAndProgramming.Common.Business
+namespace AlwaysMoveForward.Common.Business
 {
     /// <summary>
     /// This class drives all email sending from the system.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using PucksAndProgramming.Common.Encryption;
+using AlwaysMoveForward.Common.Encryption;
 
-namespace PucksAndProgramming.Common.Tools.EncryptionUtility
+namespace AlwaysMoveForward.Common.Tools.EncryptionUtility
 {
     /// <summary>
     /// Encryption Form Class

@@ -15,7 +15,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class SerializationUtilities
     {
