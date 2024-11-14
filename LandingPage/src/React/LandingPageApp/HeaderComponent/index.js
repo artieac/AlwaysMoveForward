@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import ReactDOM from 'react-dom';
 
-export const MyStoryComponent = () => {
+export const HeaderComponent = () => {
 
     return (
         <div id="my-story" class="section">
@@ -24,4 +24,4 @@ export const MyStoryComponent = () => {
     );
 }
 
-export default MyStoryComponent
+export default HeaderComponent
