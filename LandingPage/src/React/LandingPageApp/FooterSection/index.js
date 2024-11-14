@@ -19,14 +19,14 @@ export const FooterSection = () => {
                         <div className="col-md-4">
                             <h5>useful links</h5>
                             <a className="footer-link">AlwaysMoveForward.com</a>
-                            <a className="footer-link">Blog</a>
-                            <a className="footer-link">Your Radar</a>
+                            <a className="footer-link" href="http://blog.alwaysmoveforward.com">Blog</a>
+                            <a className="footer-link" href="https://technologyradar.alwaysmoveforward.com">Your Radar</a>
                         </div>
                         <div className="col-md-3">
                             <h5>social</h5>
                             <SocialLinkComponent
                                 image="images/social-09.svg"
-                                link="https://www.linkedin.com/in/arthur-correa-00864a1"
+                                link="https://www.linkedin.com/in/arthur--correa"
                                 title="Linked In" />
                             <SocialLinkComponent
                                 image="images/social-11.svg"

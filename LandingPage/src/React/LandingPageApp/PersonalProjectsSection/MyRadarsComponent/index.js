@@ -31,7 +31,7 @@ export const MyRadarsComponent = () => {
                             </div>
                             <div className="col-md-6">
                                 <ProjectCardComponent
-                                    targetUrl={ buildTechnologyRadarUrl("?userId=1&radarTemplateId=1&mostRecent=true") }
+                                    targetUrl={ buildTechnologyRadarUrl("?userId=1&radarTemplateId=1&fullView=true") }
                                     cardImage="images/noun_Radar_9219.png"
                                     cardTitle="Disney Radar"
                                     cardText="This is my Disney radar.  As I worked on the Technology one I realized there were other things I wanted to rate, and Disney was the top of the list."/>
