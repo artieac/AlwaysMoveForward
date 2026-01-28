@@ -1,11 +1,11 @@
-﻿using AlwaysMoveForward.Core.Common.DataLayer;
+﻿using AlwaysMoveForward.Common.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
 
-namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
+namespace AlwaysMoveForward.Common.DataLayer.EntityFramework
 {
     public abstract class EFUnitOfWork<TDataContext> : IUnitOfWork where TDataContext : DbContext
     {

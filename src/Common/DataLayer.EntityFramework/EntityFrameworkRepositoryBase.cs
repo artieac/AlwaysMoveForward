@@ -1,4 +1,4 @@
-﻿using AlwaysMoveForward.Core.Common.DataLayer;
+﻿using AlwaysMoveForward.Common.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
+namespace AlwaysMoveForward.Common.DataLayer.EntityFramework
 {
     public abstract class EntityFrameworkRepositoryBase<TDomainType, TDTOType, TDataContext, TIDType> : RepositoryBase<EFUnitOfWork<TDataContext>, TDomainType, TDTOType, TIDType>
         where TDomainType : class, new()
@@ -65,7 +65,7 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
         public override IList<TDomainType> GetAll()
         {
             IQueryable<TDTOType> dtoList = from foundItem in this.GetEntityInstance() select foundItem;
-            return this.GetDataMapper().Map(dtoList);
+            return this.GetDataMapper().Map(dtoList.ToList());
         }
 
         public override IList<TDomainType> GetAllByProperty(string propertyName, object idValue)
@@ -88,7 +88,7 @@ namespace AlwaysMoveForward.Core.DataLayer.EntityFramework
 
             IQueryable<TDTOType> dtoList = this.GetEntityInstance().Where(whereExpression);
 
-            return this.GetDataMapper().Map(dtoList);
+            return this.GetDataMapper().Map(dtoList.ToList());
         }
 
         public override TDomainType Save(TDomainType itemToSave)
