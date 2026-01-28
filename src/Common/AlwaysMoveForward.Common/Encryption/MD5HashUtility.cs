@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// A utility class for performing an MD5 hash on a string.
@@ -20,18 +20,20 @@ namespace PucksAndProgramming.Common.Encryption
         {
             string retVal = string.Empty;
 
-            MD5CryptoServiceProvider md5Service = new MD5CryptoServiceProvider();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(inVal);
-            byte[] hash = md5Service.ComputeHash(inputBytes);
-
-            // step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
+            using (MD5 md5 = MD5.Create())
             {
-                sb.Append(hash[i].ToString("X2"));
-            }
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(inVal);
+                byte[] hash = md5.ComputeHash(inputBytes);
 
-            retVal = sb.ToString();
+                // step 2, convert byte array to hex string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    sb.Append(hash[i].ToString("X2"));
+                }
+
+                retVal = sb.ToString();
+            }
 
             return retVal;
         }

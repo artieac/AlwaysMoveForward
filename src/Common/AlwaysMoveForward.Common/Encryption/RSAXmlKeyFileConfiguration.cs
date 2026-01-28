@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// AES Encryption Configuration
@@ -10,7 +10,7 @@ namespace PucksAndProgramming.Common.Encryption
         /// <summary>
         /// Default Section Constant
         /// </summary>
-        public const string DEFAULT_SECTION = "PucksAndProgramming/RSAXmlKeyFileConfiguration";
+        public const string DEFAULT_SECTION = "AlwaysMoveForward/RSAXmlKeyFileConfiguration";
 
         /// <summary>
         /// The path to the public key file

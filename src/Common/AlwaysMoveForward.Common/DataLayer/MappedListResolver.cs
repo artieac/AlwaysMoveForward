@@ -1,27 +1,27 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
 
-namespace PucksAndProgramming.Common.DataLayer
+namespace AlwaysMoveForward.Common.DataLayer
 {
-    public abstract class MappedListResolver<
-        TDomainListItem, 
-        TDTOListItem> 
-        : IValueResolver
+    /// <summary>
+    /// Abstract base class for resolving mapped lists between domain and DTO types.
+    /// Updated for AutoMapper 13.x API.
+    /// </summary>
+    /// <typeparam name="TSource">The source type containing the list</typeparam>
+    /// <typeparam name="TDestination">The destination type containing the list</typeparam>
+    /// <typeparam name="TDomainListItem">The domain list item type</typeparam>
+    /// <typeparam name="TDTOListItem">The DTO list item type</typeparam>
+    public abstract class MappedListResolver<TSource, TDestination, TDomainListItem, TDTOListItem>
+        : IValueResolver<TSource, TDestination, IList<TDTOListItem>>
         where TDomainListItem : class
         where TDTOListItem : class
     {
-        public ResolutionResult Resolve(ResolutionResult source)
+        public IList<TDTOListItem> Resolve(TSource source, TDestination destination, IList<TDTOListItem> destMember, ResolutionContext context)
         {
-            IList<TDTOListItem> destinationList = this.GetDestinationList(source);
-            
-            if (destinationList == null)
-            {
-                destinationList = new List<TDTOListItem>();
-            }
-
+            IList<TDTOListItem> destinationList = destMember ?? new List<TDTOListItem>();
             IList<TDomainListItem> sourceList = this.GetSourceList(source);
 
             if (sourceList != null)
@@ -36,29 +36,27 @@ namespace PucksAndProgramming.Common.DataLayer
                         destinationList.RemoveAt(i);
                     }
                 }
-                
+
                 // add in all of the new items, or update items already in the list
                 for (int i = 0; i < sourceList.Count; i++)
                 {
                     TDTOListItem destinationListAddUpdateItem = this.FindItemInList(destinationList, sourceList[i]);
-                    
+
                     if (destinationListAddUpdateItem == null)
                     {
-                        destinationList.Add(Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i]));
+                        destinationList.Add(context.Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i]));
                     }
                     else
                     {
-                        destinationListAddUpdateItem = Mapper.Map<TDomainListItem, TDTOListItem>(sourceList[i], destinationListAddUpdateItem);
+                        context.Mapper.Map(sourceList[i], destinationListAddUpdateItem);
                     }
                 }
             }
 
-            return source.New(destinationList, typeof(IList<TDTOListItem>));
+            return destinationList;
         }
 
-        protected abstract IList<TDTOListItem> GetDestinationList(ResolutionResult source);
-
-        protected abstract IList<TDomainListItem> GetSourceList(ResolutionResult source);
+        protected abstract IList<TDomainListItem> GetSourceList(TSource source);
 
         protected abstract TDTOListItem FindItemInList(IList<TDTOListItem> destinationList, TDomainListItem searchTarget);
 

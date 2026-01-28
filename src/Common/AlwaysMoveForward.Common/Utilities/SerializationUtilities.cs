@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/cpl1.0.php
  *
  * Contributors:
- *    Arthur Correa – initial contribution
+ *    Arthur Correa ï¿½ initial contribution
  */
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class SerializationUtilities
     {

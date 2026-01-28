@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using PucksAndProgramming.Common.Utilities;
+using AlwaysMoveForward.Common.Utilities;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// AES Encryption Manager
@@ -68,6 +68,21 @@ namespace PucksAndProgramming.Common.Encryption
         public string Salt { get; private set; }
 
         /// <summary>
+        /// Derives key and IV bytes using PBKDF2
+        /// </summary>
+        private (byte[] key, byte[] iv) DeriveKeyAndIV(string encryptionKey, string encryptionSalt)
+        {
+            byte[] passwordSaltBytes = Encoding.UTF8.GetBytes(encryptionSalt);
+
+            using (var pdb = new Rfc2898DeriveBytes(encryptionKey, passwordSaltBytes, this.KeyGenerationIterationCount, HashAlgorithmName.SHA512))
+            {
+                byte[] key = pdb.GetBytes(AlgorithmKeyBytes);
+                byte[] iv = pdb.GetBytes(AlgorithmInitializationVectorBytes);
+                return (key, iv);
+            }
+        }
+
+        /// <summary>
         /// Encrypt some plaintext
         /// </summary>
         /// <param name="plainText">The unencrypted plaintext</param>
@@ -90,20 +105,15 @@ namespace PucksAndProgramming.Common.Encryption
 
             if (!string.IsNullOrEmpty(plainText))
             {
-                // Declare the RijndaelManaged object
-                // Create a RijndaelManaged object
-                // with the specified key and IV.
-                using (RijndaelManaged aesAlg = new RijndaelManaged())
+                using (Aes aesAlg = Aes.Create())
                 {
                     try
                     {
-                        byte[] passwordSaltBytes = Encoding.UTF8.GetBytes(encryptionSalt);
+                        var (key, iv) = DeriveKeyAndIV(encryptionKey, encryptionSalt);
+                        aesAlg.Key = key;
+                        aesAlg.IV = iv;
 
-                        PasswordDeriveBytes pdb = new PasswordDeriveBytes(encryptionKey, passwordSaltBytes, AESEncryptionHashNames.SHA512.ToString(), this.KeyGenerationIterationCount);
-                        aesAlg.Key = pdb.GetBytes(AlgorithmKeyBytes);
-                        aesAlg.IV = pdb.GetBytes(AlgorithmInitializationVectorBytes);
-
-                        // Create a decrytor to perform the stream transform.
+                        // Create an encryptor to perform the stream transform.
                         ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
                         // Create the streams used for encryption.
@@ -120,14 +130,6 @@ namespace PucksAndProgramming.Common.Encryption
                     catch (Exception e)
                     {
                         LogManager.GetLogger().Error(e);
-                    }
-                    finally
-                    {
-                        // Clear the RijndaelManaged object.
-                        if (aesAlg != null)
-                        {
-                            aesAlg.Clear();
-                        }
                     }
                 }
             }
@@ -158,28 +160,22 @@ namespace PucksAndProgramming.Common.Encryption
 
             if (!string.IsNullOrEmpty(encryptedText))
             {
-                // Declare the RijndaelManaged object
-                // used to encrypt the data.
-                // Create a RijndaelManaged object
-                // with the specified key and IV.
-                using (RijndaelManaged aesAlg = new RijndaelManaged())
+                using (Aes aesAlg = Aes.Create())
                 {
                     try
                     {
                         byte[] encryptedTextBytes = Convert.FromBase64String(encryptedText);
-                        byte[] passwordSaltBytes = Encoding.UTF8.GetBytes(encryptionSalt);
 
-                        PasswordDeriveBytes pdb = new PasswordDeriveBytes(encryptionKey, passwordSaltBytes, AESEncryptionHashNames.SHA512.ToString(), this.KeyGenerationIterationCount);
-                        aesAlg.Key = pdb.GetBytes(AlgorithmKeyBytes);
-                        aesAlg.IV = pdb.GetBytes(AlgorithmInitializationVectorBytes);
+                        var (key, iv) = DeriveKeyAndIV(encryptionKey, encryptionSalt);
+                        aesAlg.Key = key;
+                        aesAlg.IV = iv;
 
-                        // Create a decrytor to perform the stream transform.
+                        // Create a decryptor to perform the stream transform.
                         ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-                        // Create the streams used for encryption.
+                        // Create the streams used for decryption.
                         MemoryStream memoryStreamDecrypt = new MemoryStream(encryptedTextBytes);
 
-                        // CA2202: Nested usings can have Dispose() called twice http://msdn.microsoft.com/en-us/library/ms182334.aspx
                         using (StreamReader streamReaderDecrypt = new StreamReader(new CryptoStream(memoryStreamDecrypt, decryptor, CryptoStreamMode.Read)))
                         {
                             // Read the decrypted bytes from the decrypting stream
@@ -190,14 +186,6 @@ namespace PucksAndProgramming.Common.Encryption
                     catch (Exception e)
                     {
                         LogManager.GetLogger().Error(e);
-                    }
-                    finally
-                    {
-                        // Clear the RijndaelManaged object.
-                        if (aesAlg != null)
-                        {
-                            aesAlg.Clear();
-                        }
                     }
                 }
             }

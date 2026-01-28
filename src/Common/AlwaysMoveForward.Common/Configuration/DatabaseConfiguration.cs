@@ -1,11 +1,11 @@
 ﻿using System.Configuration;
 
-namespace PucksAndProgramming.Common.Configuration
+namespace AlwaysMoveForward.Common.Configuration
 {
     /// <summary>
     /// A class to simplify getting the configuration settings for a database
     /// </summary>
-    public class DatabaseConfiguration : PucksAndProgramming.Common.Encryption.EncryptedConfigurationSection
+    public class DatabaseConfiguration : AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection
     {
         /// <summary>
         /// The value for the connnection string setting
@@ -20,7 +20,7 @@ namespace PucksAndProgramming.Common.Configuration
         /// <summary>
         /// The default app.config configuration section
         /// </summary>
-        public const string DEFAULT_SECTION = "PucksAndProgramming/DatabaseConfiguration";
+        public const string DEFAULT_SECTION = "AlwaysMoveForward/DatabaseConfiguration";
 
         /// <summary>
         /// Get the DatabaseConfiguration from the app.config using the default configuration section

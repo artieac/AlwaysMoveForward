@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PucksAndProgramming.Common.DataLayer.NHibernate
+namespace AlwaysMoveForward.Common.DataLayer.NHibernate
 {
     /// <summary>
     /// These values allow us to set NHibernate configuratin properties dynamically rather than only on the .config file
