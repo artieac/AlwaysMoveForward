@@ -5,7 +5,7 @@ namespace AlwaysMoveForward.Common.Encryption
     /// <summary>
     /// A class to simplify getting the configuration settings for a database
     /// </summary>
-    public class EncryptedConfigurationSection : ConfigurationSection
+    public class EncryptedConfigurationSection 
     {        
         /// <summary>
         /// The value for the encryption method setting
@@ -53,41 +53,14 @@ namespace AlwaysMoveForward.Common.Encryption
             Internal
         }
 
-        /// <summary>
-        /// Get the DatabaseConfiguration from the app.config using a specified default configuration section
-        /// </summary>
-        /// <param name="configurationSection">Configuration string</param>
-        /// <returns>Database configuration instance</returns>
-        public static EncryptedConfigurationSection GetInstance(string configurationSection)
-        {
-            return (EncryptedConfigurationSection)System.Configuration.ConfigurationManager.GetSection(configurationSection);
-        }
+        public EncryptionMethodOptions EncryptionMethod { get; set; }
+        public string EncryptionSetting {  get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public EncryptedConfigurationSection()
         { }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether or not it's encrypted
-        /// </summary>
-        [ConfigurationProperty(EncryptionMethodSetting, IsRequired = false, DefaultValue = EncryptionMethodOptions.None)]
-        public EncryptionMethodOptions EncryptionMethod
-        {
-            get { return (EncryptionMethodOptions)this[EncryptionMethodSetting]; }
-            set { this[EncryptionMethodSetting] = value; }
-        }
-
-        /// <summary>
-        /// Gets the configuration section that defines the encryption parameters
-        /// </summary>
-        [ConfigurationProperty(EncryptionConfigurationSetting, IsRequired = false, DefaultValue = "")]
-        public string EncryptionSetting
-        {
-            get { return (string)this[EncryptionConfigurationSetting]; }
-            set { this[EncryptionConfigurationSetting] = value; }
-        }
 
         /// <summary>
         /// This method decrypts a string using the configuration settings supplied
