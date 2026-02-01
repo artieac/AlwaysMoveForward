@@ -1,22 +1,12 @@
-﻿using System.Configuration;
+﻿using Microsoft.Extensions.Options;
 
 namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// A class to simplify getting the configuration settings for a database
     /// </summary>
-    public class EncryptedConfigurationSection 
-    {        
-        /// <summary>
-        /// The value for the encryption method setting
-        /// </summary>
-        private const string EncryptionMethodSetting = "EncryptionMethod";
-
-        /// <summary>
-        /// The value for the related encryption configuration key
-        /// </summary>
-        private const string EncryptionConfigurationSetting = "EncryptionSetting";
-
+    public class EncryptionConfiguration
+    {
         /// <summary>
         /// Possible options for the Encryption method
         /// </summary>
@@ -53,14 +43,33 @@ namespace AlwaysMoveForward.Common.Encryption
             Internal
         }
 
+        private readonly AESConfiguration _aesConfiguration;
+        private readonly KeyFileConfiguration _keyFileConfiguration;
+        private readonly KeyStoreConfiguration _keyStoreConfiguration;
+        private readonly RSAXmlKeyFileConfiguration _rsaXmlKeyFileConfiguration;
+
         public EncryptionMethodOptions EncryptionMethod { get; set; }
-        public string EncryptionSetting {  get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public EncryptedConfigurationSection()
+        public EncryptionConfiguration()
         { }
+
+        /// <summary>
+        /// Constructor with dependency injection
+        /// </summary>
+        public EncryptionConfiguration(
+            IOptions<AESConfiguration> aesConfiguration,
+            IOptions<KeyFileConfiguration> keyFileConfiguration,
+            IOptions<KeyStoreConfiguration> keyStoreConfiguration,
+            IOptions<RSAXmlKeyFileConfiguration> rsaXmlKeyFileConfiguration)
+        {
+            _aesConfiguration = aesConfiguration?.Value;
+            _keyFileConfiguration = keyFileConfiguration?.Value;
+            _keyStoreConfiguration = keyStoreConfiguration?.Value;
+            _rsaXmlKeyFileConfiguration = rsaXmlKeyFileConfiguration?.Value;
+        }
 
         /// <summary>
         /// This method decrypts a string using the configuration settings supplied
@@ -79,24 +88,32 @@ namespace AlwaysMoveForward.Common.Encryption
                         retVal = encryptedString;
                         break;
                     case EncryptionMethodOptions.AES:
-                        AESConfiguration aesconfiguration = AESConfiguration.GetInstance(this.EncryptionSetting);
-                        AESManager aesencryption = new AESManager(aesconfiguration.EncryptionKey, aesconfiguration.Salt);
-                        retVal = aesencryption.Decrypt(encryptedString);
+                        if (_aesConfiguration != null)
+                        {
+                            AESManager aesencryption = new AESManager(_aesConfiguration.EncryptionKey, _aesConfiguration.Salt);
+                            retVal = aesencryption.Decrypt(encryptedString);
+                        }
                         break;
                     case EncryptionMethodOptions.CertificateKeyFile:
-                        KeyFileConfiguration keyfileConfiguration = KeyFileConfiguration.GetInstance(this.EncryptionSetting);
-                        X509CertificateManager keyfileEncryption = new X509CertificateManager(keyfileConfiguration.KeyFile, keyfileConfiguration.KeyFilePassword);
-                        retVal = keyfileEncryption.Decrypt(encryptedString);
+                        if (_keyFileConfiguration != null)
+                        {
+                            X509CertificateManager keyfileEncryption = new X509CertificateManager(_keyFileConfiguration.KeyFile, _keyFileConfiguration.KeyFilePassword);
+                            retVal = keyfileEncryption.Decrypt(encryptedString);
+                        }
                         break;
                     case EncryptionMethodOptions.CertificateKeyStore:
-                        KeyStoreConfiguration keystoreConfiguration = KeyStoreConfiguration.GetInstance(this.EncryptionSetting);
-                        X509CertificateManager keystoreEncryption = new X509CertificateManager(keystoreConfiguration.StoreName, keystoreConfiguration.StoreLocation, keystoreConfiguration.CertificateName);
-                        retVal = keystoreEncryption.Decrypt(encryptedString);
+                        if (_keyStoreConfiguration != null)
+                        {
+                            X509CertificateManager keystoreEncryption = new X509CertificateManager(_keyStoreConfiguration.StoreName, _keyStoreConfiguration.StoreLocation, _keyStoreConfiguration.CertificateName);
+                            retVal = keystoreEncryption.Decrypt(encryptedString);
+                        }
                         break;
                     case EncryptionMethodOptions.RSAXmlKeyFile:
-                        RSAXmlKeyFileConfiguration rsaxmlKeyFileConfiguration = RSAXmlKeyFileConfiguration.GetInstance();
-                        RSAXmlKeyFileManager rsaxmlKeyFileEncryption = new RSAXmlKeyFileManager(rsaxmlKeyFileConfiguration.PublicKeyFile, rsaxmlKeyFileConfiguration.PrivateKeyFile);
-                        retVal = rsaxmlKeyFileEncryption.Decrypt(encryptedString);
+                        if (_rsaXmlKeyFileConfiguration != null)
+                        {
+                            RSAXmlKeyFileManager rsaxmlKeyFileEncryption = new RSAXmlKeyFileManager(_rsaXmlKeyFileConfiguration.PublicKeyFile, _rsaXmlKeyFileConfiguration.PrivateKeyFile);
+                            retVal = rsaxmlKeyFileEncryption.Decrypt(encryptedString);
+                        }
                         break;
                 }
             }

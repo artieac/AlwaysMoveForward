@@ -1,19 +1,27 @@
-﻿using System.Configuration;
+﻿using AlwaysMoveForward.Common.Encryption;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 namespace AlwaysMoveForward.Common.Configuration
 {
     /// <summary>
     /// A class to simplify getting the configuration settings for a database
     /// </summary>
-    public class DatabaseConfiguration : AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection
+    public class DatabaseConfiguration : AlwaysMoveForward.Common.Encryption.EncryptionConfiguration
     {
+        public const string DEFAULT_SECTION = "AlwaysMoveForward:Database";
+
         public string ConnectionString { get; set; } = string.Empty;
         public string DatabaseName { get; set; } = string.Empty;
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public DatabaseConfiguration()
+        public DatabaseConfiguration(IOptions<AESConfiguration> aesConfiguration,
+            IOptions<KeyFileConfiguration> keyFileConfiguration,
+            IOptions<KeyStoreConfiguration> keyStoreConfiguration,
+            IOptions<RSAXmlKeyFileConfiguration> rsaXmlKeyFileConfiguration)
+            : base(aesConfiguration, keyFileConfiguration, keyStoreConfiguration, rsaXmlKeyFileConfiguration)
         { }
 
         /// <summary>

@@ -9,13 +9,11 @@ namespace AlwaysMoveForward.Common.DomainModel
     {
         public RemoteOAuthUser() : base()
         {
-            this.OAuthServiceUserId = 0;
+            this.OAuthServiceUserId = "";
         }
 
-        public long OAuthServiceUserId { get; set; }
+        public String OAuthServiceUserId { get; set; }
         public string AccessToken { get; set; }
         public string AccessTokenSecret { get; set; }
-
-        public string ResetToken { get; set; }
     }
 }
