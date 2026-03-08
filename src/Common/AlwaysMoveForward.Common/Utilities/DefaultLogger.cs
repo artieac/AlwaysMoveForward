@@ -1,48 +1,39 @@
-﻿using System;
-using log4net;
+using System;
+using Microsoft.Extensions.Logging;
 
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class DefaultLogger : LoggerBase
     {
-        static DefaultLogger()
+        private readonly ILogger _logger;
+
+        public DefaultLogger() : this(null)
         {
-            log4net.Config.XmlConfigurator.Configure();
         }
 
-        private ILog logger = null;
-
-        public ILog Logger
+        public DefaultLogger(ILogger logger)
         {
-            get
-            {
-                if (this.logger == null)
-                {
-                    this.logger = log4net.LogManager.GetLogger(this.GetType());
-                }
-
-                return this.logger;
-            }
+            _logger = logger ?? LogManager.CreateDefaultLogger();
         }
 
         protected override void LogDebug(string message)
         {
-            this.Logger.Debug(message);
+            _logger?.LogDebug(message);
         }
 
         protected override void LogError(string message)
         {
-            this.Logger.Error(message);
+            _logger?.LogError(message);
         }
 
         protected override void LogInfo(string message)
         {
-            this.Logger.Info(message);
+            _logger?.LogInformation(message);
         }
 
         protected override void LogWarn(string message)
         {
-            this.Logger.Warn(message);
+            _logger?.LogWarning(message);
         }
     }
 }

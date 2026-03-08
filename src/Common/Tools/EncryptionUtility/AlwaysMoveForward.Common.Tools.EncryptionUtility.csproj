@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <RootNamespace>AlwaysMoveForward.Common.Tools.EncryptionUtility</RootNamespace>
+    <AssemblyName>AlwaysMoveForward.Common.Tools.EncryptionUtility</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj" />
+  </ItemGroup>
+
+</Project>

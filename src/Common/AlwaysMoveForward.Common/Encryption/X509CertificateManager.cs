@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// X.509 Certificate Manager

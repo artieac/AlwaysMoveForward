@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace PucksAndProgramming.Common.Configuration
+namespace AlwaysMoveForward.Common.Configuration
 {
     /// <summary>
     /// Defines the configuration file entries neccessary to drive email integration in the system.
@@ -25,17 +25,7 @@ namespace PucksAndProgramming.Common.Configuration
         public const string SmtpServerSetting = "SmtpServer";
         public const string SmtpPortSetting = "SmtpPort";
 
-        public const string DefaultConfiguration = "PucksAndProgramming/EmailConfiguration";
-
-        public static EmailConfiguration GetInstance()
-        {
-            return EmailConfiguration.GetInstance(DefaultConfiguration);
-        }
-
-        public static EmailConfiguration GetInstance(string configurationSection)
-        {
-            return (EmailConfiguration)System.Configuration.ConfigurationManager.GetSection(configurationSection);
-        }
+        public const string DefaultConfiguration = "AlwaysMoveForward/EmailConfiguration";
 
         public EmailConfiguration() { }
         public EmailConfiguration(string fromAddress, string smtpServer)
@@ -43,32 +33,9 @@ namespace PucksAndProgramming.Common.Configuration
             this.FromAddress = fromAddress;
             this.SmtpServer = smtpServer;
         }
-        /// <summary>
-        /// Define the email address outgoing emails are tagged with.
-        /// </summary>
-        [ConfigurationProperty(FromAddressSetting, IsRequired = true)]
-        public string FromAddress
-        {
-            get { return (string)this[FromAddressSetting]; }
-            set { this[FromAddressSetting] = value; }
-        }
-        /// <summary>
-        /// Define the email server to use
-        /// </summary>
-        [ConfigurationProperty(SmtpServerSetting, IsRequired = true)]
-        public string SmtpServer
-        {
-            get { return (string)this[SmtpServerSetting]; }
-            set { this[SmtpServerSetting] = value; }
-        }
-        /// <summary>
-        /// Define the email port to use
-        /// </summary>
-        [ConfigurationProperty(SmtpPortSetting, IsRequired = true)]
-        public int SmtpPort
-        {
-            get { return (int)this[SmtpPortSetting]; }
-            set { this[SmtpPortSetting] = value; }
-        }
+
+        public string FromAddress { get; set; }
+        public string SmtpServer { get; set; }
+        public int SmtpPort { get; set; }
     }
 }

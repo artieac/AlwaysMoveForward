@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using PucksAndProgramming.Common.DataLayer;
+using AlwaysMoveForward.Common.DataLayer;
 
-namespace PucksAndProgramming.Common.DataLayer
+namespace AlwaysMoveForward.Common.DataLayer
 {
     public interface IRepository<TDomainType, TIdType> 
         where TDomainType : class

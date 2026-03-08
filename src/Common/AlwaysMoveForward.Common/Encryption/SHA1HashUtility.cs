@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// Salted password hashing with PBKDF2-SHA1.
@@ -78,24 +78,20 @@ namespace PucksAndProgramming.Common.Encryption
         /// <returns>A hash of the password.</returns>
         private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes)
         {
-            Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);
-            pbkdf2.IterationCount = iterations;
-            return pbkdf2.GetBytes(outputBytes);
+            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA1))
+            {
+                return pbkdf2.GetBytes(outputBytes);
+            }
         }
 
         /// <summary>
-        /// Generate a salt using the .Net RNGCryptoServiceProvider
+        /// Generate a salt using the .Net RandomNumberGenerator
         /// </summary>
         /// <returns>The salt as a byte array</returns>
         private byte[] GenerateSalt()
         {
-            byte[] retVal;
-
-            // Generate a random salt
-            RNGCryptoServiceProvider csprng = new RNGCryptoServiceProvider();
-            retVal = new byte[SaltByteSize];
-            csprng.GetBytes(retVal);
-
+            byte[] retVal = new byte[SaltByteSize];
+            RandomNumberGenerator.Fill(retVal);
             return retVal;
         }
 

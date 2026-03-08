@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
-using PucksAndProgramming.Common.DomainModel.DataMap;
+using AlwaysMoveForward.Common.DomainModel.DataMap;
 
-namespace PucksAndProgramming.Common.DomainModel
+namespace AlwaysMoveForward.Common.DomainModel
 {
     public class User
     {
@@ -33,7 +33,6 @@ namespace PucksAndProgramming.Common.DomainModel
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string ResetToken { get; set; }
 
         public string GetDisplayName()
         {

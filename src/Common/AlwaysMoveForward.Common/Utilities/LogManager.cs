@@ -1,40 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
+using Microsoft.Extensions.Logging;
 
-using PucksAndProgramming.Common.Configuration;
-
-namespace PucksAndProgramming.Common.Utilities
+namespace AlwaysMoveForward.Common.Utilities
 {
     public class LogManager
     {
-        private static LoggerBase currentLogger;
+        private static ILoggerFactory _loggerFactory;
+        private static LoggerBase _currentLogger;
+        private static readonly object _lock = new object();
 
+        /// <summary>
+        /// Configure the LogManager with an ILoggerFactory from the DI container.
+        /// Call this during application startup.
+        /// </summary>
+        public static void Configure(ILoggerFactory loggerFactory)
+        {
+            lock (_lock)
+            {
+                _loggerFactory = loggerFactory;
+                _currentLogger = null; // Reset so it gets recreated with new factory
+            }
+        }
+
+        /// <summary>
+        /// Gets the current logger instance.
+        /// </summary>
         public static LoggerBase GetLogger()
         {
-            LogManager.currentLogger = null;
-
-            // Get Logger configuration from Config file
-            LoggingConfiguration logConfig = (LoggingConfiguration)System.Configuration.ConfigurationManager.GetSection(LoggingConfiguration.DefaultConfigurationSetting);
-
-            if (logConfig != null)
+            if (_currentLogger == null)
             {
-                if (!string.IsNullOrEmpty(logConfig.LoggingClass) &&
-                    !string.IsNullOrEmpty(logConfig.LoggingAssembly))
+                lock (_lock)
                 {
-                    // Create Logger instance of specified Logger class
-                    LogManager.currentLogger = Activator.CreateInstance(logConfig.LoggingAssembly, logConfig.LoggingClass).Unwrap() as LoggerBase;
+                    if (_currentLogger == null)
+                    {
+                        _currentLogger = new DefaultLogger(CreateDefaultLogger());
+                    }
                 }
             }
 
-            // If null create deafult logger
-            if (LogManager.currentLogger == null)
+            return _currentLogger;
+        }
+
+        /// <summary>
+        /// Creates a default ILogger instance.
+        /// </summary>
+        internal static ILogger CreateDefaultLogger()
+        {
+            if (_loggerFactory != null)
             {
-                LogManager.currentLogger = new DefaultLogger();
+                return _loggerFactory.CreateLogger("AlwaysMoveForward");
             }
 
-            return LogManager.currentLogger;
+            // Create a minimal console logger factory if none configured
+            var factory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Debug);
+            });
+
+            return factory.CreateLogger("AlwaysMoveForward");
+        }
+
+        /// <summary>
+        /// Creates a typed logger for a specific class.
+        /// </summary>
+        public static ILogger<T> CreateLogger<T>()
+        {
+            if (_loggerFactory != null)
+            {
+                return _loggerFactory.CreateLogger<T>();
+            }
+
+            var factory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Debug);
+            });
+
+            return factory.CreateLogger<T>();
         }
     }
 }

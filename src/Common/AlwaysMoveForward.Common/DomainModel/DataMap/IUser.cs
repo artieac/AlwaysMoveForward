@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PucksAndProgramming.Common.DomainModel.DataMap
+namespace AlwaysMoveForward.Common.DomainModel.DataMap
 {
     public interface IUser
     {

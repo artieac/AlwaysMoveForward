@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace PucksAndProgramming.Common.Encryption
+namespace AlwaysMoveForward.Common.Encryption
 {
     /// <summary>
     /// RSA Encryption Help Class
@@ -18,7 +18,7 @@ namespace PucksAndProgramming.Common.Encryption
         /// Default constructor
         /// </summary>
         public RSAEncryptionHelper() : this(DEFAULT_KEY_SIZE) { }
-        
+
         /// <summary>
         /// A constructor that takes a key size as a parameter.
         /// </summary>
@@ -27,12 +27,12 @@ namespace PucksAndProgramming.Common.Encryption
         {
             this.KeySize = rsaKeySize;
         }
-        
+
         /// <summary>
         /// Gets the size of the RSA key to use when encrypting/decrypting
         /// </summary>
         public int KeySize { get; private set; }
-        
+
         /// <summary>
         /// Encrypt some plain text
         /// </summary>
@@ -84,12 +84,15 @@ namespace PucksAndProgramming.Common.Encryption
                 throw new ArgumentNullException("certificate");
             }
 
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(this.KeySize))
+            using (RSA rsa = certificate.GetRSAPublicKey())
             {
-                // Note that we use the public key to encrypt
-                provider.FromXmlString(this.GetPublicKey(certificate));
+                if (rsa == null)
+                {
+                    throw new InvalidOperationException("Certificate does not contain an RSA public key");
+                }
 
-                return provider.Encrypt(plainData, useOAEP);
+                RSAEncryptionPadding padding = useOAEP ? RSAEncryptionPadding.OaepSHA1 : RSAEncryptionPadding.Pkcs1;
+                return rsa.Encrypt(plainData, padding);
             }
         }
 
@@ -105,7 +108,7 @@ namespace PucksAndProgramming.Common.Encryption
         }
 
         /// <summary>
-        /// Decrypt an encrypted string with padding and a certificate 
+        /// Decrypt an encrypted string with padding and a certificate
         /// </summary>
         /// <param name="encryptedData">Encrypted string</param>
         /// <param name="useOAEPPadding">Use OAEP Padding</param>
@@ -144,12 +147,20 @@ namespace PucksAndProgramming.Common.Encryption
                 throw new ArgumentNullException("certificate");
             }
 
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(this.KeySize))
+            if (!certificate.HasPrivateKey)
             {
-                // Note that we use the private key to decrypt
-                provider.FromXmlString(this.GetXmlKeyPair(certificate));
+                throw new ArgumentException("certificate does not have a private key");
+            }
 
-                return provider.Decrypt(encryptedData, useOAEP);
+            using (RSA rsa = certificate.GetRSAPrivateKey())
+            {
+                if (rsa == null)
+                {
+                    throw new InvalidOperationException("Certificate does not contain an RSA private key");
+                }
+
+                RSAEncryptionPadding padding = useOAEP ? RSAEncryptionPadding.OaepSHA1 : RSAEncryptionPadding.Pkcs1;
+                return rsa.Decrypt(encryptedData, padding);
             }
         }
 
@@ -157,7 +168,7 @@ namespace PucksAndProgramming.Common.Encryption
         /// Get the public key given a certificate
         /// </summary>
         /// <param name="certificate">Encryption Certificate</param>
-        /// <returns>The public key</returns>
+        /// <returns>The public key as XML string</returns>
         public string GetPublicKey(X509Certificate2 certificate)
         {
             if (certificate == null)
@@ -165,7 +176,15 @@ namespace PucksAndProgramming.Common.Encryption
                 throw new ArgumentNullException("certificate");
             }
 
-            return certificate.PublicKey.Key.ToXmlString(false);
+            using (RSA rsa = certificate.GetRSAPublicKey())
+            {
+                if (rsa == null)
+                {
+                    throw new InvalidOperationException("Certificate does not contain an RSA public key");
+                }
+
+                return rsa.ToXmlString(false);
+            }
         }
 
         /// <summary>
@@ -184,9 +203,15 @@ namespace PucksAndProgramming.Common.Encryption
             {
                 throw new ArgumentException("certificate does not have a private key");
             }
-            else
+
+            using (RSA rsa = certificate.GetRSAPrivateKey())
             {
-                return certificate.PrivateKey.ToXmlString(true);
+                if (rsa == null)
+                {
+                    throw new InvalidOperationException("Certificate does not contain an RSA private key");
+                }
+
+                return rsa.ToXmlString(true);
             }
         }
     }

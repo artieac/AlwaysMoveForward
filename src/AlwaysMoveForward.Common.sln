@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{600387A0-6903-47FD-AA6C-9ADF4CFE491E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common.Tools.EncryptionUtility", "Common\Tools\EncryptionUtility\AlwaysMoveForward.Common.Tools.EncryptionUtility.csproj", "{D9B64F40-B650-52F6-9C8D-EA288325CF76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common.DataLayer.EntityFramework", "Common\DataLayer.EntityFramework\AlwaysMoveForward.Common.DataLayer.EntityFramework.csproj", "{BF031E16-A555-83B8-0442-9634D8FE9C8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600387A0-6903-47FD-AA6C-9ADF4CFE491E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9B64F40-B650-52F6-9C8D-EA288325CF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B64F40-B650-52F6-9C8D-EA288325CF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B64F40-B650-52F6-9C8D-EA288325CF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B64F40-B650-52F6-9C8D-EA288325CF76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF031E16-A555-83B8-0442-9634D8FE9C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF031E16-A555-83B8-0442-9634D8FE9C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF031E16-A555-83B8-0442-9634D8FE9C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF031E16-A555-83B8-0442-9634D8FE9C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBF6DEFF-41DF-4B6E-B15C-35934C8AD7D4}
+	EndGlobalSection
+EndGlobal

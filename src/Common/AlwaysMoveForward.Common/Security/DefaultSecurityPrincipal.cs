@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PucksAndProgramming.Common.DomainModel;
+using AlwaysMoveForward.Common.DomainModel;
 
-namespace PucksAndProgramming.Common.Security
+namespace AlwaysMoveForward.Common.Security
 {
     /// <summary>
     /// A default DefaultSecurityPrincipal that works with a User
