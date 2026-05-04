@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.header-bg {
+    background-image: url('/images/IMG_20180418_093825.jpg');
+    background-position: 0% 0%;
+    background-size: auto 550px;
+    background-repeat: repeat;
+    background-attachment: fixed;
+}
+
+@theme {
+  --color-brand-green: #25c485;
+}

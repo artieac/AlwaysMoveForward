@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7231bde5-e6e1-4574-a0f3-538bb553b273" name="Changes" comment="" />
+    <list default="true" id="7231bde5-e6e1-4574-a0f3-538bb553b273" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/BlogComponent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/BlogComponent/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/MyRadarsComponent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/MyRadarsComponent/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +18,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="3CP3u9i566qrmdORCWytVx1Hbtc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -26,12 +31,17 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging UpgradeProjects",
+    "git-widget-placeholder": "updatetext",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Personal/sourcecode/AlwaysMoveForward"
+    "last_opened_file_path": "C:/Personal/sourcecode/AlwaysMoveForward/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/PlanningComponent"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Personal\sourcecode\AlwaysMoveForward\src\LandingPage\src\React\LandingPageApp\PersonalProjectsSection\PlanningComponent" />
+    </key>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7231bde5-e6e1-4574-a0f3-538bb553b273" name="Changes" comment="" />
