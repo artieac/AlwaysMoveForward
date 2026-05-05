@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7231bde5-e6e1-4574-a0f3-538bb553b273" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/BlogComponent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/BlogComponent/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/MyRadarsComponent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/MyRadarsComponent/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/Repositories/BlogRepository.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/Repositories/BlogRepository.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,17 +24,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "updatetext",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Personal/sourcecode/AlwaysMoveForward/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/PlanningComponent"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;updatetext&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Personal/sourcecode/AlwaysMoveForward/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/PlanningComponent&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Personal\sourcecode\AlwaysMoveForward\src\LandingPage\src\React\LandingPageApp\PersonalProjectsSection\PlanningComponent" />
