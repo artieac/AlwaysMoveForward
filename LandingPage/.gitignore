@@ -24,3 +24,6 @@ src/main/resources/static/script/dist/*
 package-lock.json
 
 application-production.properties
+
+# Carousel Images
+src/images/Carousel/
