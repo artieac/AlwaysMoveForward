@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7231bde5-e6e1-4574-a0f3-538bb553b273" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/Repositories/BlogRepository.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/Repositories/BlogRepository.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/public/images/Carousel/IMG_6029.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/public/images/Carousel/IMG_7116.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/public/images/Carousel/IMG_7718.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/public/images/Carousel/IMG_8025.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/HeaderComponent/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/React/LandingPageApp/HeaderComponent/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandingPage/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandingPage/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +35,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;updatetext&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Personal/sourcecode/AlwaysMoveForward/src/LandingPage/src/React/LandingPageApp/PersonalProjectsSection/PlanningComponent&quot;
